@@ -1,4 +1,13 @@
-﻿using System.Collections;
+﻿/*
+* Project: CandleLight 
+* Author: Shahir Chowdhury
+* Date: January 23, 2019
+* 
+* The MainMenu for the game CandleLight. It allows the user to select
+* basic game options, such as starting the game or quitting the game.
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using UnityEngine.SceneManagement;
@@ -7,13 +16,13 @@ using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour {
     
-    public GameObject firstToSelect;
+    public Button firstToSelect;
     EventSystem es;
 
     void OnEnable() {
         es = EventSystem.current;
 
-        es.SetSelectedGameObject(firstToSelect);
+        es.SetSelectedGameObject(firstToSelect.gameObject);
         firstToSelect.GetComponent<Button>().OnSelect(null);
     }
 
@@ -21,7 +30,3 @@ public class MainMenuScript : MonoBehaviour {
         Application.Quit();
     }
 }
-
-
-//TO DO:
-//Make unity script that refocuses on the last ui element selected in the event user clicks on a non game object
