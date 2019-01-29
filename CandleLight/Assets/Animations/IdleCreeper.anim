@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Gray
+  m_Name: IdleCreeper
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: d26f9ccfe13f84af792533294bd30298, type: 3}
+      value: {fileID: 21300000, guid: 7372f831d6e644e41a93d8484ac21e98, type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: 5938080747e654b7f8b8074f742a6abc, type: 3}
+      value: {fileID: 21300000, guid: d8a2e15c1a3f41648b24881bfc16a371, type: 3}
+    - time: 0.16666667
+      value: {fileID: 21300000, guid: f7d66aaaf50d1594595d15e831d95fd9, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: aa191c3998722e44a9f25a3c8fc3fdbd, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,14 +46,16 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: d26f9ccfe13f84af792533294bd30298, type: 3}
-    - {fileID: 21300000, guid: 5938080747e654b7f8b8074f742a6abc, type: 3}
+    - {fileID: 21300000, guid: 7372f831d6e644e41a93d8484ac21e98, type: 3}
+    - {fileID: 21300000, guid: d8a2e15c1a3f41648b24881bfc16a371, type: 3}
+    - {fileID: 21300000, guid: f7d66aaaf50d1594595d15e831d95fd9, type: 3}
+    - {fileID: 21300000, guid: aa191c3998722e44a9f25a3c8fc3fdbd, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.16666667
+    m_StopTime: 0.33333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

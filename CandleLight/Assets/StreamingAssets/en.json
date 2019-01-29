@@ -1,0 +1,68 @@
+{
+	"texts": [
+        {
+			"key": "candleLight_title",
+			"value": "CandleLight"
+		},
+		{
+			"key": "new_game_button",
+			"value": "New Game"
+		},
+		{
+			"key": "continue_button",
+			"value": "Continue"
+		},
+		{
+			"key": "options_button",
+			"value": "Options"
+		},
+		{
+			"key": "quit_button",
+			"value": "Quit"
+		},
+		{
+			"key": "select_class_title",
+			"value": "Select Your Class"
+		},
+		{
+			"key": "warrior_title",
+			"value": "Warrior"
+		},
+		{
+			"key": "mage_title",
+			"value": "Mage"
+		},
+		{
+			"key": "archer_title",
+			"value": "Archer"
+		},
+		{
+			"key": "thief_title",
+			"value": "Thief"
+		},
+		{
+			"key": "warrior_description",
+			"value": "Strength has solved all of your problems. There's nothing you can't tough out. Any pain you've endured has rewarded you twice over."
+		},
+		{
+			"key": "mage_description",
+			"value": "The mystical nature of this world unravels at the snap of your fingers. Some call this intelligence. You call it imagination."
+		},
+		{
+			"key": "archer_description",
+			"value": "Your ability to focus in any situation has made you a great hunter and scavenger. Your dexterity knows no bounds."
+		},
+		{
+			"key": "thief_description",
+			"value": "Quick, silent, and lucky. The only people who remember your face are the ones who see it before entering the gates of heaven."
+		},
+		{
+			"key": "select_button",
+			"value": "Select"
+		},
+		{
+			"key": "back_button",
+			"value": "Back"
+        }
+	]
+}
