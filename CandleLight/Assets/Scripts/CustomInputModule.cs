@@ -1,11 +1,10 @@
 using System;
 using UnityEngine.Serialization;
 
-namespace UnityEngine.EventSystems
-{
+namespace UnityEngine.EventSystems {
+
     [AddComponentMenu("Event/Standalone Input Module")]
-    public class CustomInputModule : PointerInputModule
-    {
+    public class CustomInputModule : PointerInputModule {
         private float m_PrevActionTime;
         Vector2 m_LastMoveVector;
         int m_ConsecutiveMoveCount = 0;
@@ -13,19 +12,16 @@ namespace UnityEngine.EventSystems
         private Vector2 m_LastMousePosition;
         private Vector2 m_MousePosition;
 
-        protected CustomInputModule()
-        {}
+        protected CustomInputModule() {}
 
         [Obsolete("Mode is no longer needed on input module as it handles both mouse and keyboard simultaneously.", false)]
-        public enum InputMode
-        {
+        public enum InputMode {
             Mouse,
             Buttons
         }
 
         [Obsolete("Mode is no longer needed on input module as it handles both mouse and keyboard simultaneously.", false)]
-        public InputMode inputMode
-        {
+        public InputMode inputMode {
             get { return InputMode.Mouse; }
         }
 
@@ -61,26 +57,22 @@ namespace UnityEngine.EventSystems
         private bool m_ForceModuleActive;
 
         [Obsolete("allowActivationOnMobileDevice has been deprecated. Use forceModuleActive instead (UnityUpgradable) -> forceModuleActive")]
-        public bool allowActivationOnMobileDevice
-        {
+        public bool allowActivationOnMobileDevice {
             get { return m_ForceModuleActive; }
             set { m_ForceModuleActive = value; }
         }
 
-        public bool forceModuleActive
-        {
+        public bool forceModuleActive {
             get { return m_ForceModuleActive; }
             set { m_ForceModuleActive = value; }
         }
 
-        public float inputActionsPerSecond
-        {
+        public float inputActionsPerSecond {
             get { return m_InputActionsPerSecond; }
             set { m_InputActionsPerSecond = value; }
         }
 
-        public float repeatDelay
-        {
+        public float repeatDelay {
             get { return m_RepeatDelay; }
             set { m_RepeatDelay = value; }
         }
@@ -88,8 +80,7 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Name of the horizontal axis for movement (if axis events are used).
         /// </summary>
-        public string horizontalAxis
-        {
+        public string horizontalAxis {
             get { return m_HorizontalAxis; }
             set { m_HorizontalAxis = value; }
         }
@@ -97,40 +88,34 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Name of the vertical axis for movement (if axis events are used).
         /// </summary>
-        public string verticalAxis
-        {
+        public string verticalAxis {
             get { return m_VerticalAxis; }
             set { m_VerticalAxis = value; }
         }
 
-        public string submitButton
-        {
+        public string submitButton {
             get { return m_SubmitButton; }
             set { m_SubmitButton = value; }
         }
 
-        public string cancelButton
-        {
+        public string cancelButton {
             get { return m_CancelButton; }
             set { m_CancelButton = value; }
         }
 
-        public override void UpdateModule()
-        {
+        public override void UpdateModule() {
             m_LastMousePosition = m_MousePosition;
             m_MousePosition = Input.mousePosition;
         }
 
-        public override bool IsModuleSupported()
-        {
+        public override bool IsModuleSupported() {
             // Check for mouse presence instead of whether touch is supported,
             // as you can connect mouse to a tablet and in that case we'd want
             // to use CustomInputModule for non-touch input events.
             return m_ForceModuleActive || Input.mousePresent;
         }
 
-        public override bool ShouldActivateModule()
-        {
+        public override bool ShouldActivateModule() {
             if (!base.ShouldActivateModule())
                 return false;
 
@@ -144,8 +129,7 @@ namespace UnityEngine.EventSystems
             return shouldActivate;
         }
 
-        public override void ActivateModule()
-        {
+        public override void ActivateModule() {
             base.ActivateModule();
             m_MousePosition = Input.mousePosition;
             m_LastMousePosition = Input.mousePosition;
@@ -157,18 +141,15 @@ namespace UnityEngine.EventSystems
             eventSystem.SetSelectedGameObject(toSelect, GetBaseEventData());
         }
 
-        public override void DeactivateModule()
-        {
+        public override void DeactivateModule() {
             base.DeactivateModule();
             ClearSelection();
         }
 
-        public override void Process()
-        {
+        public override void Process() {
             bool usedEvent = SendUpdateEventToSelectedObject();
 
-            if (eventSystem.sendNavigationEvents)
-            {
+            if (eventSystem.sendNavigationEvents) {
                 if (!usedEvent)
                     usedEvent |= SendMoveEventToSelectedObject();
 
@@ -182,8 +163,7 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Process submit keys.
         /// </summary>
-        protected bool SendSubmitEventToSelectedObject()
-        {
+        protected bool SendSubmitEventToSelectedObject() {
             if (eventSystem.currentSelectedGameObject == null)
                 return false;
 
@@ -196,21 +176,18 @@ namespace UnityEngine.EventSystems
             return data.used;
         }
 
-        private Vector2 GetRawMoveVector()
-        {
+        private Vector2 GetRawMoveVector() {
             Vector2 move = Vector2.zero;
             move.x = Input.GetAxisRaw(m_HorizontalAxis);
             move.y = Input.GetAxisRaw(m_VerticalAxis);
 
-            if (Input.GetButtonDown(m_HorizontalAxis))
-            {
+            if (Input.GetButtonDown(m_HorizontalAxis)) {
                 if (move.x < 0)
                     move.x = -1f;
                 if (move.x > 0)
                     move.x = 1f;
             }
-            if (Input.GetButtonDown(m_VerticalAxis))
-            {
+            if (Input.GetButtonDown(m_VerticalAxis)) {
                 if (move.y < 0)
                     move.y = -1f;
                 if (move.y > 0)
@@ -222,13 +199,11 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Process keyboard events.
         /// </summary>
-        protected bool SendMoveEventToSelectedObject()
-        {
+        protected bool SendMoveEventToSelectedObject() {
             float time = Time.unscaledTime;
 
             Vector2 movement = GetRawMoveVector();
-            if (Mathf.Approximately(movement.x, 0f) && Mathf.Approximately(movement.y, 0f))
-            {
+            if (Mathf.Approximately(movement.x, 0f) && Mathf.Approximately(movement.y, 0f)) {
                 m_ConsecutiveMoveCount = 0;
                 return false;
             }
@@ -236,8 +211,7 @@ namespace UnityEngine.EventSystems
             // If user pressed key again, always allow event
             bool allow = Input.GetButtonDown(m_HorizontalAxis) || Input.GetButtonDown(m_VerticalAxis);
             bool similarDir = (Vector2.Dot(movement, m_LastMoveVector) > 0);
-            if (!allow)
-            {
+            if (!allow) {
                 // Otherwise, user held down key or axis.
                 // If direction didn't change at least 90 degrees, wait for delay before allowing consequtive event.
                 if (similarDir && m_ConsecutiveMoveCount == 1)
@@ -260,16 +234,14 @@ namespace UnityEngine.EventSystems
             return axisEventData.used;
         }
 
-        protected void ProcessMouseEvent()
-        {
+        protected void ProcessMouseEvent() {
             ProcessMouseEvent(0);
         }
 
         /// <summary>
         /// Process all mouse events.
         /// </summary>
-        protected void ProcessMouseEvent(int id)
-        {
+        protected void ProcessMouseEvent(int id) {
             var mouseData = GetMousePointerEventData(id);
             var leftButtonData = mouseData.GetButtonState(PointerEventData.InputButton.Left).eventData;
 
@@ -284,15 +256,13 @@ namespace UnityEngine.EventSystems
             ProcessMousePress(mouseData.GetButtonState(PointerEventData.InputButton.Middle).eventData);
             ProcessDrag(mouseData.GetButtonState(PointerEventData.InputButton.Middle).eventData.buttonData);
 
-            if (!Mathf.Approximately(leftButtonData.buttonData.scrollDelta.sqrMagnitude, 0.0f))
-            {
+            if (!Mathf.Approximately(leftButtonData.buttonData.scrollDelta.sqrMagnitude, 0.0f)) {
                 var scrollHandler = ExecuteEvents.GetEventHandler<IScrollHandler>(leftButtonData.buttonData.pointerCurrentRaycast.gameObject);
                 ExecuteEvents.ExecuteHierarchy(scrollHandler, leftButtonData.buttonData, ExecuteEvents.scrollHandler);
             }
         }
 
-        protected bool SendUpdateEventToSelectedObject()
-        {
+        protected bool SendUpdateEventToSelectedObject() {
             if (eventSystem.currentSelectedGameObject == null)
                 return false;
 
@@ -304,14 +274,12 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Process the current mouse press.
         /// </summary>
-        protected void ProcessMousePress(MouseButtonEventData data)
-        {
+        protected void ProcessMousePress(MouseButtonEventData data) {
             var pointerEvent = data.buttonData;
             var currentOverGo = pointerEvent.pointerCurrentRaycast.gameObject;
 
             // PointerDown notification
-            if (data.PressedThisFrame())
-            {
+            if (data.PressedThisFrame()) {
                 pointerEvent.eligibleForClick = true;
                 pointerEvent.delta = Vector2.zero;
                 pointerEvent.dragging = false;
@@ -334,8 +302,7 @@ namespace UnityEngine.EventSystems
 
                 float time = Time.unscaledTime;
 
-                if (newPressed == pointerEvent.lastPress)
-                {
+                if (newPressed == pointerEvent.lastPress) {
                     var diffTime = time - pointerEvent.clickTime;
                     if (diffTime < 0.3f)
                         ++pointerEvent.clickCount;
@@ -344,8 +311,7 @@ namespace UnityEngine.EventSystems
 
                     pointerEvent.clickTime = time;
                 }
-                else
-                {
+                else {
                     pointerEvent.clickCount = 1;
                 }
 
@@ -362,8 +328,7 @@ namespace UnityEngine.EventSystems
             }
 
             // PointerUp notification
-            if (data.ReleasedThisFrame())
-            {
+            if (data.ReleasedThisFrame()) {
                 // Debug.Log("Executing pressup on: " + pointer.pointerPress);
                 ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerUpHandler);
 
@@ -373,12 +338,10 @@ namespace UnityEngine.EventSystems
                 var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
 
                 // PointerClick and Drop events
-                if (pointerEvent.pointerPress == pointerUpHandler && pointerEvent.eligibleForClick)
-                {
+                if (pointerEvent.pointerPress == pointerUpHandler && pointerEvent.eligibleForClick) {
                     ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
                 }
-                else if (pointerEvent.pointerDrag != null && pointerEvent.dragging)
-                {
+                else if (pointerEvent.pointerDrag != null && pointerEvent.dragging) {
                     ExecuteEvents.ExecuteHierarchy(currentOverGo, pointerEvent, ExecuteEvents.dropHandler);
                 }
 
@@ -396,8 +359,7 @@ namespace UnityEngine.EventSystems
                 // so that if we moused over somethign that ignored it before
                 // due to having pressed on something else
                 // it now gets it.
-                if (currentOverGo != pointerEvent.pointerEnter)
-                {
+                if (currentOverGo != pointerEvent.pointerEnter) {
                     HandlePointerExitAndEnter(pointerEvent, null);
                     HandlePointerExitAndEnter(pointerEvent, currentOverGo);
                 }

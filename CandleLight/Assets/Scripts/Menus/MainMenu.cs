@@ -19,11 +19,19 @@ public class MainMenu : MonoBehaviour {
     public Button firstToSelect;
     EventSystem es;
 
+    void Start() {
+        es = EventSystem.current;
+        es.SetSelectedGameObject(firstToSelect.gameObject);
+        firstToSelect.OnSelect(null);
+    }
+
     void OnEnable() {
         es = EventSystem.current;
-
-        es.SetSelectedGameObject(firstToSelect.gameObject);
-        firstToSelect.GetComponent<Button>().OnSelect(null);
+        // weird bug where first to select is not referenced in time
+        if (es != null) {
+            es.SetSelectedGameObject(firstToSelect.gameObject); 
+        }
+        firstToSelect.OnSelect(null);
     }
 
      public void QuitGame() {

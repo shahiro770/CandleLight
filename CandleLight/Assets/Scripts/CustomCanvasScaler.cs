@@ -1,26 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CustomCanvasScaler : CanvasScaler
-{
+public class CustomCanvasScaler : CanvasScaler {
+
     private Canvas m_RootCanvas;
     private const float kLogBase = 2;
 
-    protected override void OnEnable()
-    {
+    protected override void OnEnable() {
         m_RootCanvas = GetComponent<Canvas>();
         base.OnEnable();
     }
 
-    protected override void HandleScaleWithScreenSize()
-    {
+    protected override void HandleScaleWithScreenSize() {
+    
         Vector2 screenSize;
-        if (m_RootCanvas.worldCamera != null)
-        {
+        if (m_RootCanvas.worldCamera != null) {
             screenSize = new Vector2(m_RootCanvas.worldCamera.pixelWidth, m_RootCanvas.worldCamera.pixelHeight);
         }
-        else
-        {
+        else {
             screenSize = new Vector2(Screen.width, Screen.height);
         }
 
@@ -28,15 +25,13 @@ public class CustomCanvasScaler : CanvasScaler
         // resolution is always the desktops resolution since its part of the display API,
         // so we use the standard none multiple display method. (case 741751)
         int displayIndex = m_RootCanvas.targetDisplay;
-        if (displayIndex > 0 && displayIndex < Display.displays.Length)
-        {
+        if (displayIndex > 0 && displayIndex < Display.displays.Length) {
             Display disp = Display.displays[displayIndex];
             screenSize = new Vector2(disp.renderingWidth, disp.renderingHeight);
         }
 
         float scaleFactor = 0;
-        switch (m_ScreenMatchMode)
-        {
+        switch (m_ScreenMatchMode) {
             case ScreenMatchMode.MatchWidthOrHeight:
                 {
                     // We take the log of the relative width and height before taking the average.
