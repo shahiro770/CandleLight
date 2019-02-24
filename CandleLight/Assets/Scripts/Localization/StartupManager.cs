@@ -23,7 +23,7 @@ public class StartupManager : MonoBehaviour {
             yield return null;
         }
 
-        SceneManager.LoadScene ("MainMenu");
+        GameManager.instance.LoadNextScene("MainMenu");
     }
 
 }

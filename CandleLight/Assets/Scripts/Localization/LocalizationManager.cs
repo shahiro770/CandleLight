@@ -13,8 +13,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class LocalizationManager : MonoBehaviour
-{
+public class LocalizationManager : MonoBehaviour {
+    
     public static LocalizationManager instance;
     
     private Dictionary<string, string> localizedText;
@@ -28,10 +28,9 @@ public class LocalizationManager : MonoBehaviour
             instance = this;
         }
         else if (instance != this) {
-            Destroy (gameObject);
+            DestroyImmediate (gameObject);
+            instance = this;
         }
-
-        DontDestroyOnLoad(gameObject);
     }
 
     public void LoadLocalizedText(string fileName) {

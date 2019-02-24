@@ -13,14 +13,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class LocalizedText : MonoBehaviour
-{
+public class LocalizedText : MonoBehaviour {
+    
     public string key;
     public TextMeshProUGUI meshText; // text mesh pros are not always loaded in time, and this causes problems
 
+    private string keyText;
+    
     void Awake() {
         if (key != null) {
-            meshText.text = LocalizationManager.instance.GetLocalizedValue(key);   
+            meshText.text = LocalizationManager.instance.GetLocalizedValue(key);
+            keyText = meshText.text;   
         }
     }
 
@@ -32,5 +35,9 @@ public class LocalizedText : MonoBehaviour
     public void Clear() {
         key = null;
         meshText.text = null;
+    }
+
+    public void Append(string text) {
+        meshText.text = keyText + " " + text;
     }
 }
