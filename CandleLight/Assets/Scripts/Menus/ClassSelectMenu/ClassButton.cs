@@ -4,8 +4,8 @@
 * Date: January 23, 2019
 * 
 * ClassButtons are UI Button that the user can click to choose their starting class.
-* This class passes up the necessary information to indicate such information and change
-* visually to represent that they are selected.
+* This class button changes visually to represent when it is clicked.
+*
 */
 
 using System.Collections;
@@ -16,56 +16,45 @@ using UnityEngine.EventSystems;
 
 public class ClassButton : MonoBehaviour {
     
-    public Button b;
-    public string classString;
+    public Button b;                                    /// <value> Button component of the attached GO </value>
     
-    private SpriteState bSpriteState;
-    private Sprite initial;
-    private Sprite highlighted;
-    private Sprite pressed;
-    private string spriteMode = "NotSelected";
-    private string classDescription;
-    private Image i;
+    public string classString;                         /// <value> String of class  </value>    
+    public bool isReady { get; private set; } = false;  /// <value> Flag for when button is ready for other scripts to reference </value>
+    
+    private ButtonTransitionState bts;      /// <value> Button's visual state controller  </value>
+    private string classDescription;        /// <value> Description of class  </value>
 
+    /// <summary>
+    /// Awake to intialize bts and let other scripts know the button isReady
+    /// </summary> 
     void Awake() {
-        i = b.GetComponent<Image>();
-        bSpriteState = b.GetComponent<Button>().spriteState;
-
-        initial = i.sprite;
-        highlighted = bSpriteState.highlightedSprite;
-        pressed = bSpriteState.pressedSprite;
+        bts = b.GetComponent<ButtonTransitionState>();
+        isReady = true;
     }
 
+    /// <summary>
+    /// Call the button's OnSelect
+    /// This is done so the classButton can be treated as a wrapper for the normal button script
+    /// </summary> 
+    /// <param name="eventData"> Data for event system to read </param>
     public void OnSelect(BaseEventData eventData) {
         b.OnSelect(eventData);
     }
+    
+    /// <summary>
+    /// Update the button's sprite state when selected or not selected 
+    /// </summary> 
+    /// <param name="type"> Type of the sprite </param>
+    /// <seealso> ButtonTransitionState </seealso>
+    public void SetSprite(string type) {
+        bts.SetSprite(type);
+    }
 
+    /// <summary>
+    /// Returns the class string
+    /// </summary>
+    /// <returns> String containing the name of the class selected </returns>
     public string GetClassString() {
         return classString;
-    }
-    
-    // update sprite state when selected or not selected
-    public void SetSprite(int mode) {
-        if (mode == 0 && spriteMode == "Selected") {
-            i.sprite = initial;
-            ToggleSpriteState(); 
-        }
-        else if (mode == 1 && spriteMode == "NotSelected") {
-            i.sprite = bSpriteState.pressedSprite;
-            ToggleSpriteState();
-        }
-    }
-
-    // prevent highlighted sprite from appearing on top of the sprite when selected
-    public void ToggleSpriteState() {
-        if (spriteMode == "NotSelected") {
-            bSpriteState.highlightedSprite = pressed;
-            b.GetComponent<Button>().spriteState = bSpriteState;
-            spriteMode = "Selected";
-        } else {
-            bSpriteState.highlightedSprite = highlighted;
-            b.GetComponent<Button>().spriteState = bSpriteState;
-            spriteMode = "NotSelected";
-        }
     }
 }

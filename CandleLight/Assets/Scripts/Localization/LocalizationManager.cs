@@ -4,7 +4,8 @@
 * Date: January 28, 2019
 * 
 * LocalizationManager handles loading the appropriate language file and sending requested texts 
-* to LocalizationTexts. It is a singleton and is present in all scenes.
+* to LocalizationText components.
+* It is held within the Game scene where it can always be accessed globally.
 *
 */
 
@@ -15,13 +16,16 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour {
     
-    public static LocalizationManager instance;
+    public static LocalizationManager instance;                     /// <value> global instance </value>
     
-    private Dictionary<string, string> localizedText;
-    private bool isReady = false;
-    private string missingTextString = "Localized text not found";
+    private Dictionary<string, string> localizedText;               /// <value> Dictionary storing key value pairings of all localized text </value>
+    private string missingTextString = "Localized text not found";  /// <value> Error value if key does not exist </value>
+    public bool isReady { get; private set; } = false;              /// <value> Localization happens at the start, program loads while waiting </value>
 
     // Start is called before the first frame update
+    /// <summary>
+    /// Awake to instantiate singleton
+    /// </summary>
     void Awake()
     {
         if (instance == null) {
@@ -33,9 +37,15 @@ public class LocalizationManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Loads localized text from JSON file into the localizedText dictionary
+    /// </summary>
+    /// <param name="fileName"> Name of the file to be loaded.false Will vary depending on language </param>
+    /// <remark> Only english for now </remark> 
     public void LoadLocalizedText(string fileName) {
         localizedText = new Dictionary<string, string>();
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+        // StreamingAssetsPath will always be known to unity, regardless of hardware
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);  
         if (File.Exists(filePath)) {
             string dataAsJson = File.ReadAllText(filePath);
 
@@ -54,6 +64,13 @@ public class LocalizationManager : MonoBehaviour {
         isReady = true;
     }
 
+    /// <summary>
+    /// Returns text based on a key value
+    /// </summary>
+    /// <param name="key"> Key to grab localized text from the localizedText dictionary. Keys are same across languages </param>
+    /// <returns> 
+    /// Result text string if key value is found, error text otherwise
+    /// </returns>
     public string GetLocalizedValue(string key) {
         string result = missingTextString;
         if (localizedText.ContainsKey(key)) {
@@ -61,9 +78,5 @@ public class LocalizationManager : MonoBehaviour {
         }
 
         return result;
-    }
-
-    public bool GetIsReady() {
-        return isReady;
     }
 }

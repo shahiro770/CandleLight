@@ -3,7 +3,9 @@
 * Author: Shahir Chowdhury
 * Date: January 23, 2019
 * 
-* The ClassSelectMenuScript is used to control all elements on the class select menu UI.
+* The ClassSelectMenu class is used to control all elements on the class select menu UI.
+* It is the screen where the user chooses their class (Warrior, Mage, Archer, Thief) to start the
+* game with.
 * It stores information when the user clicks a ClassButton, and visually updates other UI
 * gameObjects in it.
 *
@@ -18,60 +20,76 @@ using UnityEngine.SceneManagement;
 
 public class ClassSelectMenu : MonoBehaviour {
    
-    public ClassButton firstToSelect; 
-    public ClassInfo classInfo;         // description of current class highlighted
-    public Button selectButton;         // current selected button
+    public Button selectButton;                 /// <value> Confirmation button  </value>
+    public ClassButton firstToSelect;           /// <value> First button to select on enabling </value>
+    public ClassInfo classInfo;                 /// <value> Displays information of a class </value>
     
-    private ClassButton[] classButtons;
-    private ColorBlock enabledBlock;        // colours for the select button when enabled
-    private ColorBlock disabledBlock;       // // colours for the select button when disabled
-    private EventSystem es;
-    private string classString = null;      // string of current selected class
-    private int classNum = 4;               // number of classes is 4 for now
-    private bool selectButtonEnabled = false;
+    private EventSystem es;                     /// <value> eventSystem reference </value>
+    private ButtonTransitionState sbBts;        /// <value> Confirmation button's visual state controller </value>   
+    private ClassButton[] classButtons;         /// <value> List of all class buttons </value>
+    private string classString = null;          /// <value> name of currently selected class </value>
+    private int classNum = 4;                   /// <value> Number of classes is 4 for now </value>
+    private bool selectButtonEnabled = false;   /// <value> Select button will only move to next scene if a class is selected </value>
 
+    /// <summary>
+    /// Awake to intialize eventSystem and select button's alternate colour blocks
+    /// </summary> 
     void Awake() {
-        enabledBlock = selectButton.colors; 
-        disabledBlock = selectButton.colors;
-        
-        enabledBlock.normalColor = new Color32(215, 215, 215, 255);
-        enabledBlock.highlightedColor = new Color32(255, 255, 255, 255);
-        enabledBlock.pressedColor = enabledBlock.highlightedColor;
-           
-        disabledBlock.normalColor = new Color32(196, 36, 48, 255);
-        disabledBlock.highlightedColor = new Color32(255, 0, 64, 255);
-        disabledBlock.pressedColor = disabledBlock.highlightedColor;
+        es = EventSystem.current;
+        classButtons = GetComponentsInChildren<ClassButton>();
+
+        ColorBlock sbEnabledBlock = selectButton.colors; 
+        sbEnabledBlock.normalColor = new Color32(215, 215, 215, 255);
+        sbEnabledBlock.highlightedColor = new Color32(255, 255, 255, 255);
+        sbEnabledBlock.pressedColor = sbEnabledBlock.highlightedColor;
+
+        sbBts = selectButton.GetComponent<ButtonTransitionState>();
+        sbBts.SetColorBlock("normalAlternate", sbEnabledBlock);
     }
 
+    /// <summary>
+    /// OnEnable to select first class button and revert previous selections due to switching menus
+    /// </summary> 
     void OnEnable() {
-        // select the first UI button as specified
-        es = EventSystem.current;
         es.SetSelectedGameObject(firstToSelect.b.gameObject);
-        firstToSelect.OnSelect(null);
+        firstToSelect.OnSelect(null);   // hack to ensure first button to select is visibly selected
         
-        classButtons = GetComponentsInChildren<ClassButton>();
-        for (int i = 0; i < classButtons.Length; i++) {
-            classButtons[i].SetSprite(0);
-        }
+        StartCoroutine(SetupButtons());
         classString = null;
         classInfo.SetClassInfo(classString);
-
         if (selectButtonEnabled) {
             ToggleSelectButton();
         }
     }
+    
+    /// <summary>
+    /// Reset class button sprites back to their default unselected sprites
+    /// </summary> 
+    private IEnumerator SetupButtons() {
+        for (int i = 0; i < classButtons.Length; i++) {
+            while (!classButtons[i].isReady) {  // hack to prevent unity from setting sprites on not-awake'd buttons
+                yield return null;
+            }
+            classButtons[i].SetSprite("normal");
+        }
+    }
 
-    // change class button's sprite state and enable the select button
+    /// <summary>
+    /// Visually show that a class has been selected.
+    /// Changes a class button's sprite state to pressed and enables the select button.
+    /// Also changes the displayed class info.
+    /// </summary> 
+    /// <param name="cb"> Class button to change appearance of </param>
     public void SelectClassButton(ClassButton cb) {
         SpriteState bSpriteState = cb.GetComponentInChildren<Button>().spriteState;
 
-        for (int i = 0; i < classNum;i++) {
+        for (int i = 0; i < classNum; i++) {
             if (cb != classButtons[i]) {
-                classButtons[i].SetSprite(0);
+                classButtons[i].SetSprite("normal");
             } else {
-                classButtons[i].SetSprite(1);
+                classButtons[i].SetSprite("pressed");
                 classString = classButtons[i].GetClassString();
-                classInfo.SetClassInfo(classString);
+                classInfo.SetClassInfo(classString); 
             }
         }
 
@@ -80,21 +98,26 @@ public class ClassSelectMenu : MonoBehaviour {
         }
     }
 
-    // toggle select button's sprite coloring
+    /// <summary>
+    /// Toggle select button's colouring to show if its enabled or disabled
+    /// </summary> 
     public void ToggleSelectButton() {
         if (!selectButtonEnabled) {
             selectButtonEnabled = true;
-            selectButton.colors = enabledBlock;
+            sbBts.SetColor("normalAlternate");
         }
         else {
             selectButtonEnabled = false;
-            selectButton.colors = disabledBlock;
+            sbBts.SetColor("normal");
         }
     }
 
+    /// <summary>
+    /// Starts the game by loading the next world map scene
+    /// </summary> 
+    /// <remark> TO DO: For now this just loads into combat as a warrior. World map scene still has to be made </remark>
     public void StartGame() {
-        if (selectButton.enabled) {
-            // TO DO: Start the game
+        if (selectButtonEnabled) {
             PartyManager.instance.AddPartyMember("Warrior");
             GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1"});
         }

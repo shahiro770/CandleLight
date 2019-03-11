@@ -15,8 +15,9 @@ public class Attack {
 
     public string nameKey { get; set; } // used to access localized text
 
-    private string name;
-    private int damage;
+    public string name { get; }
+    public string effect { get; }
+    public int damage { get; }
 
     public Attack(string name, int damage) {
         this.name = name;

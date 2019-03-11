@@ -14,15 +14,22 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Combat;
 
 namespace DataBank {
+
     public class GameDB : SqliteHelper {
     
-        const int maxAttacks = 4;
-        const string dbName = "GameDB.db";
+        const int maxAttacks = 4;               /// <value> Max number of attacks per character </value>
+        const string dbName = "GameDB.db";      /// <value> Name of database file to be accessed </value>
 
         public GameDB() : base(dbName) {}
         
+        /// <summary>
+        /// Initializes a monster game object with information fetched from the database
+        /// </summary>
+        /// <param name="nameID"> Name of the monster along with the monster's level </param>
+        /// <param name="monster"> Monster game object to be be initialized with fetched values</param>
         public void GetMonsterByNameID(string nameID, Monster monster) {
             using(dbConnection = base.GetConnection()) {
 
@@ -63,6 +70,11 @@ namespace DataBank {
             }          
         }
 
+        /// <summary>
+        /// Initializes a party member game object
+        /// </summary>
+        /// <param name="className"> Class of the party member </param>
+        /// <param name="pm"> PartyMember game object to be initialized with fetched values</param>
         public void GetPartyMemberByClass(string className, PartyMember pm) {
             using(dbConnection = base.GetConnection()) {
 
@@ -102,7 +114,12 @@ namespace DataBank {
             }          
         }
 
-        // returns an attack and its information, 
+        /// <summary>
+        /// Returns an attack from the attack table
+        /// </summary>
+        /// <param name="name"> Name of the attack</param>
+        /// <param name="dbConnection"> IDbConnectino to get attack with </param>
+        /// <returns> Returns an Attack with the information initialized </returns>
         public Attack GetAttack(string name, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Attacks WHERE Name = '" + name + "'";

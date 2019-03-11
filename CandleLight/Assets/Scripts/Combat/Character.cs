@@ -37,12 +37,16 @@ public abstract class Character : MonoBehaviour {
         this.attacks = attacks; 
     }
 
-    public virtual void LoseHP(int amount) {
+    public virtual IEnumerator LoseHP(int amount) {
         CHP -= amount;
+
+        yield break;
     }
 
-    public virtual void LoseMP(int amount) {
+    public virtual IEnumerator LoseMP(int amount) {
         CMP -= amount;
+
+        yield break;
     }
 
     public virtual void LogStats() {

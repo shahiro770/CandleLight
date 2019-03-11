@@ -22,8 +22,10 @@
 		{ "key": "MP_label", "value": "MP " },
 
 		{ "key": "flee_action", "value": "Flee" },
+		{ "key": "undo_action", "value": "Undo" },
 
 		{ "key": "slash_attack", "value": "Slash" },
+		{ "key": "bash_attack", "value": "Bash" },
 		{ "key": "none_attack", "value": ""}
 	]
 }
