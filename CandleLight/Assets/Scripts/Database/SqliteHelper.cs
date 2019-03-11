@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: February 11, 2019
 * 
-* The SqliteHelper class is used as an interface for other database classes.
+* The SqliteHelper class is used as an interface for other database manager classes.
 * It contains the outlines for what other databases in this program should have.
 *
 */
@@ -20,28 +20,43 @@ namespace DataBank
 {
     public class SqliteHelper
     {
-        private string tag;
-        private string dbConnectionString;
-        public IDbConnection dbConnection;
+        private string tag;                     /// <value> Name of database </value>
+        private string dbConnectionString;      /// <value> File path to database file</value>
+        public IDbConnection dbConnection;      /// <value> Open connection to database </value>
 
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="databaseFile"> Name of the database file to access </param>
         public SqliteHelper(string databaseFile)
         {
             tag = databaseFile + ":\t";
             dbConnectionString = "URI=file:" + Application.dataPath + "/Scripts/Database/" + databaseFile ;
         }
-
+        
+        /// <summary>
+        /// Destructor to close connection on destruction
+        /// </summary>
         ~SqliteHelper()
         {
             dbConnection.Close();
         }
 
-        // virtual functions
+        /// <summary>
+        /// Returns a data entry by the entry's id and the table
+        /// </summary>
+        /// <param name="id"> Id of the entry (unique) </param>
+        /// <param name="table"> Table to be accessed </param>
         public virtual void GetDataById(int id, string table)
         {
             Debug.Log(tag + "GetDataById is not implemented");
             throw null;
         }
 
+        /// <summary>
+        /// Returns an IDbConnection to interact with the database with
+        /// </summary>
+        /// <returns></returns>
         public IDbConnection GetConnection() {
             return new SqliteConnection(dbConnectionString);
         }

@@ -52,5 +52,14 @@
         "ProjectSettings/":true,
         "temp/":true,
         "Temp/":true
+    },
+
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [{
+            "scope": "entity.name.tag.localname",
+            "settings": {
+                "foreground": "#ff0000"
+            }
+        }]
     }
 }
