@@ -1,37 +1,52 @@
-﻿using System.Collections;
+﻿/*
+* Project: CandleLight 
+* Author: Shahir Chowdhury
+* Date: February 11, 2019
+* 
+* The CombatManager class is used to manage all classes during the combat scene.
+* Party members, monsters, actions, and turn ordering are all managed in the combat manager.
+*
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using DataBank;
 
-//STILL NEED A FUNCTION TO COLOUR THE UI THE AREA DEFAULT
+// STILL NEED A FUNCTION TO COLOUR THE UI THE AREA DEFAULT
+// ALSO A BUG WITH FLEE BEING UNFOUND AT START WITH GREYHIDE
 
 namespace Combat {
 
     public delegate void SelectMonsterDelegate(Monster m);
     public class CombatManager : MonoBehaviour {
 
-        private readonly bool PMTURN = true;
-        private readonly bool MTURN = false;
+        private readonly bool PMTURN = true;        /// <value> Flag for party member turn </value>
+        private readonly bool MTURN = false;        /// <value> Flag for monster turn </value>
 
-        public static CombatManager instance;
-        public Canvas enemyCanvas;
-        public StatusManager statusManager;
-        public ActionsManager am;
-        public GameObject monster;
-        public List<Monster> selectedMonsters = new List<Monster>();
+        public static CombatManager instance;       /// <value> Combat scene instance </value>
+        public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
+        public StatusManager statusManager;         /// <value> Manager for active party member's status </value>
+        public ActionsManager am;                   /// <value> Manager for active party member's actions </value>
+        public GameObject monster;                  /// <value> Monster GO to instantiate </value>
+        public List<Monster> selectedMonsters = new List<Monster>();        /// <value> List of monsters selected </value>
 
-        private List<Monster> monsters =  new List<Monster>();
-        private List<PartyMember> partyMembers = new List<PartyMember>();
-        private CharacterQueue cq = new CharacterQueue();
-        private Action selectedAction = null;
-        private PartyMember activePartyMember;
-        private Monster activeMonster;
-        private EventSystem es;
-        private bool turn;     
-        private int countID = 0;
+        private List<Monster> monsters =  new List<Monster>();              /// <value> List of monsters </value>
+        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of party members </value>
+        private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
+        private PartyMember activePartyMember;      /// <value> Current party member preparing to act </value>
+        private Monster activeMonster;              /// <value> Current monster preparing to act </value>
+        private EventSystem es;                     /// <value> EventSystem reference </value>
+        private Attack selectedAttack = null;       /// <value> Attack selected by party member </value>
+        private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
+        private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
+        
 
+        /// <summary>
+        /// Awake to instantiate singleton
+        /// </summary>
         void Awake() {
             if (instance == null) {
                 instance = this;
@@ -44,7 +59,9 @@ namespace Combat {
             es = EventSystem.current;
         }
 
-        // Start is called before the first frame update
+        /// <summary>
+        /// Start to initialize all monsters, characters, and combat queue before beginning combat
+        /// </summary>
         void Start() {
             am.cm = this;
 
@@ -64,6 +81,10 @@ namespace Combat {
             StartCombat();
         }
 
+        /// <summary>
+        /// Selects a monster to be attacked
+        /// </summary>
+        /// <param name="monsterToSelect"> Monster to select </param>
         public void SelectMonster(Monster monsterToSelect) {
             foreach (Monster m in selectedMonsters) {
                 m.DeselectMonster();
@@ -73,11 +94,17 @@ namespace Combat {
             monsterToSelect.SelectMonster();
             selectedMonsters.Add(monsterToSelect);
 
-            if (selectedAction != null) {
-                StartCoroutine(ExecuteAttack(selectedAction, monsterToSelect));
+            if (selectedAttack != null) {
+                Debug.Log("we attacking");
+                StartCoroutine(ExecuteAttack(selectedAttack, monsterToSelect));
             }
         }
 
+        /// <summary>
+        /// Selects multiple monster to be attacked
+        /// </summary>
+        /// <param name="monstersToSelect"> Monsters to select </param>
+        /// <remark> Needs to be worked on for the future </remark>
         public void SelectMonster(List<Monster> monstersToSelect) {
             foreach (Monster m in selectedMonsters) {
                 m.DeselectMonster();
@@ -90,27 +117,58 @@ namespace Combat {
             }
         }
 
+        /// <summary>
+        /// Starts combat by displaying the next party member's active turn
+        /// and determining which character moves next
+        /// </summary>
         private void StartCombat() {
-            SetActivePartyMember(); // active party member is not set
+            DisplayFirstPartyMember(); // active party member is not set
             GetNextTurn();
         }
 
+        /// <summary>
+        /// Ends combat
+        /// </summary>
+        /// <remark> 
+        /// For now, this leads back to the main menu. Later, this will need to lead to 
+        /// either a defeat screen or a rewards screen
+        /// </remark>
         private void EndCombat() {
             GameManager.instance.LoadNextScene("MainMenu");
         }
 
-        public void PreparePMAttack(Action a) {
-            selectedAction = a;
+        /// <summary>
+        /// Moves selection to the left most monster, and preventing all actions except for the
+        /// bottom-most action (undo) to be selected
+        /// </summary>
+        /// <param name="a"> Attack to be executed </param>
+        /// <remark> 
+        /// Will have to disable other player panel's in the future and make monster selection
+        /// more logical (e.g. selecting the last selected monster after the first attack, or
+        /// selecting the middle most monster by default)
+        /// </remark>
+        public void PreparePMAttack(Attack a) {
             monsters[0].SetNavigation(am.GetActionButton(4));
             am.SetButtonNavigation(4, "up", monsters[0].b);
 
             es.SetSelectedGameObject(monsters[0].b.gameObject);
         }
 
-        public IEnumerator ExecuteAttack(Action a, Monster m) {
-            am.DisableAllActionInteractions();
+        /// <summary>
+        /// Deals damage to a monster.
+        /// If the monster were to die, see if combat is finished, otherwise reset most of the UI
+        /// to as if it were the start of the player's turn, and then determine the next turn.
+        /// </summary>
+        /// <param name="a"> Attack to be executed </param>
+        /// <param name="m"> Monster to be attacked </param>
+        /// <returns> 
+        /// Yields to allow animations to play out when a monster is being attacked or
+        /// taking damage
+        /// </returns>
+        public IEnumerator ExecuteAttack(Attack a, Monster m) {
+            am.DisableAllActions();
             DisableAllMonsterSelection();
-            yield return StartCoroutine(m.LoseHP(a.a.damage));
+            yield return StartCoroutine(m.LoseHP(a.damage));
             if (m.CheckDeath()) {
                 cq.RemoveCharacter(m.ID);
                 yield return StartCoroutine(m.Die());
@@ -122,12 +180,19 @@ namespace Combat {
             GetNextTurn();
         }
 
+        /// <summary>
+        /// Revert actions UI to action selection phase
+        /// </summary>
         public void UndoPMAction() {
-            selectedAction = null;
+            selectedAttack = null;
             monsters[0].SetNavigation(am.GetActionButton(0));
             am.ResetFifthButtonNavigation();
         }
 
+        /// <summary>
+        /// Determine's who's turn it is in the queue and then prepares the attacking character
+        /// to either see their options if its a party member, or attack if its a monster.
+        /// </summary>
         public void GetNextTurn() {
             Character c = cq.GetNextCharacter();
 
@@ -140,15 +205,19 @@ namespace Combat {
             }  
 
             if (turn) {
+                DisplayActivePartyMember();
                 EnableAllMonsterSelection();
-                am.EnableAllActions();
-                
+                am.EnableAllActions();   
             } else {
                 am.DisableAllActions();
                 StartCoroutine(MonsterTurn());
             }
         }
 
+        /// <summary>
+        /// Checks if all party members or all monsters are defeated
+        /// </summary>
+        /// <returns></returns>
         public bool CheckBattleOver() {
             if (cq.CheckMonstersDefeated() || cq.CheckPartyDefeated()) {
                 return true;
@@ -157,25 +226,46 @@ namespace Combat {
             return false;
         }
 
+        /// <summary>
+        /// Start the active monster's turn
+        /// </summary>
+        /// <returns> Yields to allow monster attack animation to play </returns>
         private IEnumerator MonsterTurn() {
             yield return StartCoroutine(activeMonster.Attack(partyMembers));
             GetNextTurn();
         }
 
-        public void SetActivePartyMember() {
-            activePartyMember = cq.GetNextPM();
-            //activePartyMember.LogAttacks();
-
-            am.SetAttackActions(activePartyMember.attacks);
+        /// <summary>
+        /// Changes the UI to reflect the first party member in the queue's information
+        /// </summary>s
+        public void DisplayFirstPartyMember() {
+            activePartyMember = cq.GetFirstPM();        // ActivePartyMember will be redundantly set a second
+            am.SetAttackActions(activePartyMember.attacks, false);
             statusManager.Init(activePartyMember);
         }
 
+        /// <summary>
+        /// Changes the UI to reflect the active party member's information
+        /// </summary>s
+        public void DisplayActivePartyMember() {
+            if (activePartyMember != null) {
+                am.SetAttackActions(activePartyMember.attacks, false);
+                statusManager.Init(activePartyMember);
+            }
+        }
+
+        /// <summary>
+        /// Disables all interaction of monsters
+        /// </summary>
         public void DisableAllMonsterSelection() {
             foreach (Monster m in monsters) {
                 m.DisableInteraction();
             }
-        }
+        }  
 
+        /// <summary>
+        /// Enables selection of all monsters
+        /// </summary>
         public void EnableAllMonsterSelection() {
             foreach (Monster m in monsters) {
                 m.EnableInteraction();
@@ -186,6 +276,10 @@ namespace Combat {
             statusManager.Init(activePartyMember);
         } */
 
+        /// <summary>
+        /// Adds a monster GO to the enemy canvas, initializing its values and setting navigation
+        /// </summary>
+        /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
         private void AddMonster(string monsterName) {
             GameObject newMonster = Instantiate(monster);
             Monster monsterComponent = newMonster.GetComponent<Monster>() ;
@@ -203,15 +297,5 @@ namespace Combat {
                 am.SetButtonNavigation(1, "up", monsters[0].b);
             }
         }
-
-        private void SetActionSelectedNavigation() {
-
-        }
-
-        // void GetMonsters(string[] monsterNames) {
-        //     foreach (string monsterName in monsterNames) {
-        //         this.monsters.Add(DB.GetMonsterByNameID(monsterName));
-        //     }
-        // }
     }
 }

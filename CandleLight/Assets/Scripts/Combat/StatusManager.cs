@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿/*
+* Project: CandleLight 
+* Author: Shahir Chowdhury
+* Date: February 11, 2019
+* 
+* The StatusManager class is used to manage all status bars of a partyMember.
+* This includes the player's HPBar, MPBar, and EffectBar.
+*
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

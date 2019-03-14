@@ -39,9 +39,11 @@ namespace DataBank {
                     dbcmd.CommandText = "SELECT * FROM Monsters WHERE NameID = '" + nameID + "'";
                     
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
-                        string monsterName = "";
+                        string monsterSpriteName = "";
+                        string monsterDisplayName = "";
                         string monsterArea = "";
                         string monsterSize = "";
+                        string monsterAI = "";
                         int LVL = 0;
                         int HP = 0;
                         int MP = 0;
@@ -49,22 +51,24 @@ namespace DataBank {
                         Attack[] attacks = new Attack[4];
 
                         if (reader.Read()) {
-                            monsterName = reader.GetString(2);
-                            monsterArea = reader.GetString(3);
-                            monsterSize = reader.GetString(4);
-                            LVL = reader.GetInt32(5);
-                            HP = reader.GetInt32(6); 
-                            MP = reader.GetInt32(7);
-                            stats = new int[] { reader.GetInt32(8), reader.GetInt32(9), reader.GetInt32(10), reader.GetInt32(11) };
+                            monsterSpriteName = reader.GetString(2);
+                            monsterDisplayName = reader.GetString(3);
+                            monsterArea = reader.GetString(4);
+                            monsterSize = reader.GetString(5);
+                            monsterAI = reader.GetString(6);
+                            LVL = reader.GetInt32(7);
+                            HP = reader.GetInt32(8); 
+                            MP = reader.GetInt32(9);
+                            stats = new int[] { reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12), reader.GetInt32(13) };
 
                             for (int i = 0; i < maxAttacks; i++) {
-                                string attackName = reader.GetString(12 + i);
+                                string attackName = reader.GetString(14 + i);
                                 attacks[i] = GetAttack(attackName, dbConnection);
                             }
 
                         }
                         // need to figure out how to attach this information to a monster gameObject, can't use new
-                        monster.Init(monsterName, monsterArea, monsterSize, LVL, HP, MP, stats, attacks); 
+                        monster.Init(monsterSpriteName, monsterDisplayName, monsterArea, monsterSize, monsterAI, LVL, HP, MP, stats, attacks); 
                     }
                 }
             }          

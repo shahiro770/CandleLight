@@ -24,7 +24,7 @@ public class LocalizedText : MonoBehaviour {
     /// <summary>
     /// Start to intialize display text
     /// </summary>
-    void Start() {
+    void Awake() {
         if (key != null) {
             meshText.text = LocalizationManager.instance.GetLocalizedValue(key);
             keyText = meshText.text;   

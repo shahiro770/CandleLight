@@ -26,10 +26,10 @@ public class PartyMember : Character {
     /// When a PartyMember GO is instantiated, it needs to have its values initialized
     /// </summary> 
     /// <param name="personalInfo"> className, subClassName, memberName, and race in an array </param>
-    /// <param name="LVL"> Level </param>
+    /// <param name="LVL"> Power level </param>
     /// <param name="HP"> Health points </param>
     /// <param name="MP"> Mana Points </param>
-    /// <param name="attacks"> Attacks PartyMember can execute </param>
+    /// <param name="attacks"> List of known attacks (length 4)</param>
     public void Init(string[] personalInfo, int LVL, int HP, int MP, int[] stats, Attack[] attacks) {
         base.Init(LVL, HP, MP, stats, attacks);
         this.className = personalInfo[0];

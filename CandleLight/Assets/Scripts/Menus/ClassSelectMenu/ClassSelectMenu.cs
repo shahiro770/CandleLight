@@ -118,8 +118,8 @@ public class ClassSelectMenu : MonoBehaviour {
     /// <remark> TO DO: For now this just loads into combat as a warrior. World map scene still has to be made </remark>
     public void StartGame() {
         if (selectButtonEnabled) {
-            PartyManager.instance.AddPartyMember("Warrior");
-            GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1"});
+            PartyManager.instance.AddPartyMember("warrior");
+            GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1"});
         }
     }
 }
