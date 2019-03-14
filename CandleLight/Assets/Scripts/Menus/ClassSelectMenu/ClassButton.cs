@@ -18,10 +18,10 @@ public class ClassButton : MonoBehaviour {
     
     public Button b;                                    /// <value> Button component of the attached GO </value>
     
-    public string classString;                         /// <value> String of class  </value>    
+    public string classString;                          /// <value> String of class, can't be a property because unity won't allow inspector access </value>    
     public bool isReady { get; private set; } = false;  /// <value> Flag for when button is ready for other scripts to reference </value>
     
-    private ButtonTransitionState bts;      /// <value> Button's visual state controller  </value>
+    private ButtonTransitionState bts;      /// <value> Button's visual state controller </value>
     private string classDescription;        /// <value> Description of class  </value>
 
     /// <summary>

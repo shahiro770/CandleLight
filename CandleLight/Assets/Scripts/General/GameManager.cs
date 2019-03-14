@@ -16,12 +16,13 @@ using DataBank;
 
 public class GameManager : MonoBehaviour {
 
-    public static GameManager instance;         /// <value> global instance </value>
+    public static GameManager instance;             /// <value> global instance </value>
 
-    public GameDB DB { get; set; }              /// <value> Access to database to fetch and store information </value>
-    public string[] monsterNames { get; set; }  /// <value> list of monsters to be instantiated </value>
+    public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
+    public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
+    public string[] monsterNames { get; set; }      /// <value> list of monsters to be instantiated </value>
 
-    private string activeScene = "";            /// <value> current scene being displayed </value>
+    private string activeScene = "";                /// <value> current scene being displayed </value>
     private string initialScene = "Loading";
     private string combatScene = "Combat";
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour {
             instance = this;
         }
         
+        mainCamera = Camera.main;
         activeScene = initialScene;
         SceneManager.LoadScene(activeScene, LoadSceneMode.Additive);
         DB = new GameDB();
