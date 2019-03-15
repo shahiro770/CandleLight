@@ -16,7 +16,6 @@ using UnityEngine.EventSystems;
 using DataBank;
 
 // STILL NEED A FUNCTION TO COLOUR THE UI THE AREA DEFAULT
-// ALSO A BUG WITH FLEE BEING UNFOUND AT START WITH GREYHIDE
 
 namespace Combat {
 
@@ -27,22 +26,23 @@ namespace Combat {
         private readonly bool MTURN = false;        /// <value> Flag for monster turn </value>
 
         public static CombatManager instance;       /// <value> Combat scene instance </value>
+        
         public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
         public StatusManager statusManager;         /// <value> Manager for active party member's status </value>
         public ActionsManager am;                   /// <value> Manager for active party member's actions </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
-        public List<Monster> selectedMonsters = new List<Monster>();        /// <value> List of monsters selected </value>
-
-        private List<Monster> monsters =  new List<Monster>();              /// <value> List of monsters </value>
-        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of party members </value>
-        private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
-        private PartyMember activePartyMember;      /// <value> Current party member preparing to act </value>
-        private Monster activeMonster;              /// <value> Current monster preparing to act </value>
+        
         private EventSystem es;                     /// <value> EventSystem reference </value>
+        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of party members </value>
+        private PartyMember activePartyMember;      /// <value> Current party member preparing to act </value>
+        private List<Monster> monsters =  new List<Monster>();              /// <value> List of monsters </value>
+        private Monster activeMonster;              /// <value> Current monster preparing to act </value>
+        private List<Monster> selectedMonsters = new List<Monster>();       /// <value> List of monsters selected </value>
+        private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
         private Attack selectedAttack = null;       /// <value> Attack selected by party member </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
-        
+        private bool isFleePossible = true;         /// <value> Flag for if player can flee battle, will need to make this changeable in the future </value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -64,6 +64,7 @@ namespace Combat {
         /// </summary>
         void Start() {
             am.cm = this;
+            am.Init(isFleePossible);
 
             foreach (string monsterName in GameManager.instance.monsterNames) {
                 AddMonster(monsterName);
@@ -82,20 +83,39 @@ namespace Combat {
         }
 
         /// <summary>
+        /// Starts combat by displaying the next party member's active turn
+        /// and determining which character moves next
+        /// </summary>
+        private void StartCombat() {
+            DisplayFirstPartyMember(); // active party member is not set
+            GetNextTurn();
+        }
+
+        /// <summary>
+        /// Ends combat by returning to the main menu scene.
+        /// </summary>
+        /// <remark> 
+        /// For now, this leads back to the main menu. Later, this will need to lead to 
+        /// either a defeat screen or a rewards screen
+        /// </remark>
+        private void EndCombat() {
+            GameManager.instance.LoadNextScene("MainMenu");
+        }
+
+        /// <summary>
         /// Selects a monster to be attacked
         /// </summary>
         /// <param name="monsterToSelect"> Monster to select </param>
         public void SelectMonster(Monster monsterToSelect) {
             foreach (Monster m in selectedMonsters) {
-                m.DeselectMonster();
+                m.DeselectMonsterButton();
             }
             selectedMonsters.Clear();
 
-            monsterToSelect.SelectMonster();
             selectedMonsters.Add(monsterToSelect);
 
             if (selectedAttack != null) {
-                Debug.Log("we attacking");
+                monsterToSelect.SelectMonsterButton();
                 StartCoroutine(ExecuteAttack(selectedAttack, monsterToSelect));
             }
         }
@@ -107,34 +127,36 @@ namespace Combat {
         /// <remark> Needs to be worked on for the future </remark>
         public void SelectMonster(List<Monster> monstersToSelect) {
             foreach (Monster m in selectedMonsters) {
-                m.DeselectMonster();
+                m.DeselectMonsterButton();
             }
             selectedMonsters.Clear();
 
             foreach (Monster m in monstersToSelect) {
-                m.SelectMonster();
+                m.SelectMonsterButton();
                 selectedMonsters.Add(m);
             }
         }
 
         /// <summary>
-        /// Starts combat by displaying the next party member's active turn
-        /// and determining which character moves next
+        /// Adds a monster GO to the enemy canvas, initializing its values and setting navigation
         /// </summary>
-        private void StartCombat() {
-            DisplayFirstPartyMember(); // active party member is not set
-            GetNextTurn();
-        }
+        /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
+        private void AddMonster(string monsterName) {
+            GameObject newMonster = Instantiate(monster);
+            Monster monsterComponent = newMonster.GetComponent<Monster>() ;
+            
+            GameManager.instance.DB.GetMonsterByNameID(monsterName, monsterComponent);
+            monsterComponent.ID = countID++;
+            SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
+            monsterComponent.AddSMDListener(smd);
+            monsterComponent.SetNavigation(am.GetActionButton(0));
+            newMonster.transform.SetParent(enemyCanvas.transform, false);
+            monsters.Add(monsterComponent);
 
-        /// <summary>
-        /// Ends combat
-        /// </summary>
-        /// <remark> 
-        /// For now, this leads back to the main menu. Later, this will need to lead to 
-        /// either a defeat screen or a rewards screen
-        /// </remark>
-        private void EndCombat() {
-            GameManager.instance.LoadNextScene("MainMenu");
+            if (monsters.Count == 1) {
+                am.SetButtonNavigation(0, "up", monsters[0].b);
+                am.SetButtonNavigation(1, "up", monsters[0].b);
+            }
         }
 
         /// <summary>
@@ -148,6 +170,7 @@ namespace Combat {
         /// selecting the middle most monster by default)
         /// </remark>
         public void PreparePMAttack(Attack a) {
+            selectedAttack = a;
             monsters[0].SetNavigation(am.GetActionButton(4));
             am.SetButtonNavigation(4, "up", monsters[0].b);
 
@@ -176,12 +199,17 @@ namespace Combat {
                     EndCombat();
                 } 
             }
-            m.DeselectMonster();
+
+            m.DeselectMonsterButton();
+            am.ResetFifthButtonNavigation();
+            selectedAttack = null;
+            monsters[0].SetNavigation(am.GetActionButton(0));
+
             GetNextTurn();
         }
 
         /// <summary>
-        /// Revert actions UI to action selection phase
+        /// Revert target selection UI to action selection phase
         /// </summary>
         public void UndoPMAction() {
             selectedAttack = null;
@@ -232,7 +260,17 @@ namespace Combat {
         /// <returns> Yields to allow monster attack animation to play </returns>
         private IEnumerator MonsterTurn() {
             yield return StartCoroutine(activeMonster.Attack(partyMembers));
-            GetNextTurn();
+            foreach (PartyMember pm in partyMembers) {
+                if (pm.CheckDeath()) {
+                    cq.RemoveCharacter(pm.ID);
+                }
+            }
+            if (CheckBattleOver()) {
+                EndCombat();
+            } 
+            else {
+                GetNextTurn();
+            }
         }
 
         /// <summary>
@@ -240,7 +278,7 @@ namespace Combat {
         /// </summary>s
         public void DisplayFirstPartyMember() {
             activePartyMember = cq.GetFirstPM();        // ActivePartyMember will be redundantly set a second
-            am.SetAttackActions(activePartyMember.attacks, false);
+            am.SetAttackActions(activePartyMember.attacks);
             statusManager.Init(activePartyMember);
         }
 
@@ -249,7 +287,7 @@ namespace Combat {
         /// </summary>s
         public void DisplayActivePartyMember() {
             if (activePartyMember != null) {
-                am.SetAttackActions(activePartyMember.attacks, false);
+                am.SetAttackActions(activePartyMember.attacks);
                 statusManager.Init(activePartyMember);
             }
         }
@@ -275,27 +313,5 @@ namespace Combat {
         /* private void SetStatus() {
             statusManager.Init(activePartyMember);
         } */
-
-        /// <summary>
-        /// Adds a monster GO to the enemy canvas, initializing its values and setting navigation
-        /// </summary>
-        /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
-        private void AddMonster(string monsterName) {
-            GameObject newMonster = Instantiate(monster);
-            Monster monsterComponent = newMonster.GetComponent<Monster>() ;
-            
-            GameManager.instance.DB.GetMonsterByNameID(monsterName, monsterComponent);
-            monsterComponent.ID = countID++;
-            SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
-            monsterComponent.AddSMDListener(smd);
-            monsterComponent.SetNavigation(am.GetActionButton(0));
-            newMonster.transform.SetParent(enemyCanvas.transform, false);
-            monsters.Add(monsterComponent);
-
-            if (monsters.Count == 1) {
-                am.SetButtonNavigation(0, "up", monsters[0].b);
-                am.SetButtonNavigation(1, "up", monsters[0].b);
-            }
-        }
     }
 }

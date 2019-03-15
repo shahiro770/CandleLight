@@ -47,7 +47,9 @@ public class Action : MonoBehaviour
         }
         else if (actionType == "undo") {
             SetKey("undo_action");
-        } else if (actionType == "none") {
+        } 
+        else if (actionType == "none") {
+            SetKey("none_action");
             this.actionType = "none";
             Disable();
         }
@@ -109,6 +111,15 @@ public class Action : MonoBehaviour
         UnselectAction();
         isEnabled = false;          
         b.interactable = false;     // will make normal spriteState show disabled sprite
+        i.raycastTarget = false;
+    }
+
+    /// <summary>
+    /// Disables the button, only functionally
+    /// </summary>
+    public void FunctionallyDisable() {
+        isEnabled = false;          
+        b.interactable = false;
         i.raycastTarget = false;
     }
 

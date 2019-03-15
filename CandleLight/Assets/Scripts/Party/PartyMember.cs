@@ -55,6 +55,14 @@ public class PartyMember : Character {
     }
 
     /// <summary>
+    /// Check if the party member is dead
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckDeath() {
+        return CHP == 0;
+    }
+
+    /// <summary>
     /// Log stats informaton about the PartyMember for debugging
     /// </summary> 
     public override void LogStats() {
