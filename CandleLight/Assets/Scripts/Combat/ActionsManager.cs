@@ -22,6 +22,7 @@ public class ActionsManager : MonoBehaviour {
     
     private EventSystem es;                     /// <value> eventSystem reference </value>
     private Action selectedAction;              /// <value> Action that was selected </value>
+    private bool isLeavePossible;                /// <value> Flag for if player can leave scenario </value>
 
     /// <summary>
     /// Awake to get initialize event system
@@ -30,12 +31,16 @@ public class ActionsManager : MonoBehaviour {
         es = EventSystem.current;
     }
 
+    public void Init(bool isLeavePossible) {
+        this.isLeavePossible = isLeavePossible;
+    }
+
     /// <summary>
     /// Initialize all actions with interaction actions for exploration
     /// </summary>
     /// <param name="interactions"> List of interactions according to event </param>
     /// <remark> Has yet to be added </remark>
-    public void SetInteractionActions(Interaction[] interactions, bool isLeavePossible) {
+    public void SetInteractionActions(Interaction[] interactions) {
 
     }
 
@@ -44,11 +49,11 @@ public class ActionsManager : MonoBehaviour {
     /// </summary>
     /// <param name="attacks"> List of all attacks according to the partyMember </param>
     /// /// <param name="isFleePossible"> Flag for if event can be fled </param>
-    public void SetAttackActions(Attack[] attacks, bool isFleePossible) {
+    public void SetAttackActions(Attack[] attacks) {
         for (int i = 0; i < attacks.Length; i++) {
             actions[i].SetAction("attack", attacks[i]);
         }
-        if (isFleePossible) {
+        if (isLeavePossible) {
             actions[actions.Length - 1].SetAction("flee");  // last action will always be flee in combat if allowed
         }
         else {
@@ -75,7 +80,25 @@ public class ActionsManager : MonoBehaviour {
         }
     }
 
-    
+    /// <summary>
+    /// Notifies combat manager that player is going to attack, disabling all attack actions, 
+    /// changing button navigation, and changing some button options.
+    /// </summary>
+    /// <param name="a"> Name of action to be taken </param>
+    public void AttackActionSelected(Attack a) {
+        for (int i = 0; i < actions.Length - 1;i++) {
+            if (actions[i].actionType != "none" && actions[i] != selectedAction) {
+                actions[i].Disable();  
+            } 
+            if (actions[i] == selectedAction) {
+                actions[i].FunctionallyDisable();
+            }
+        }
+        actions[actions.Length - 1].SetAction("undo");
+
+        cm.PreparePMAttack(a);
+    }
+
     /// <summary>
     /// Reverts UI back to before an attack was selected, enabling all options that were selectable
     /// </summary>
@@ -89,25 +112,31 @@ public class ActionsManager : MonoBehaviour {
                 selectedAction = null;
             }
         }
-        actions[actions.Length - 1].SetAction("flee");
+        
+        if (isLeavePossible) {
+            actions[actions.Length - 1].SetAction("flee");
+        } else {
+            actions[actions.Length - 1].SetAction("none");
+        }
         
         cm.UndoPMAction();  // update combat manager to know party members can't attack yet
     }
 
     /// <summary>
-    /// Notifies combat manager that player is going to attack, disabling all attack actions, 
-    /// changing button navigation, and changing some button options.
+    /// Enable all useable actions
     /// </summary>
-    /// <param name="a"> Name of action to be taken </param>
-    public void AttackActionSelected(Attack a) {
-        for (int i = 0; i < actions.Length - 1;i++) {
+    public void EnableAllActions() {
+        for (int i = 0; i < actions.Length ;i++) {
             if (actions[i].actionType != "none") {
-                actions[i].Disable();  
-            } 
+                actions[i].Enable();  
+            }
+            if (actions[i] == selectedAction) {
+                actions[i].UnselectAction();
+                selectedAction = null;
+            }
         }
-        actions[actions.Length - 1].SetAction("undo");
 
-        cm.PreparePMAttack(a);
+        es.SetSelectedGameObject(actions[0].b.gameObject);  // make event system select first action
     }
 
     /// <summary>
@@ -119,14 +148,6 @@ public class ActionsManager : MonoBehaviour {
                 actions[i].Disable();  
             } 
         }
-    }
-
-    /// <summary>
-    /// Enable all useable actions
-    /// </summary>
-    public void EnableAllActions() {
-        UndoAttackActionSelected();
-        es.SetSelectedGameObject(actions[0].b.gameObject);  // make event system select first action
     }
 
     /// <summary>

@@ -97,15 +97,15 @@ namespace Combat {
         /// </summary>
         /// <param name="smd"> Delegate function only takes in a monster as a parameter </param>
         public void AddSMDListener(SelectMonsterDelegate smd) {
-            Debug.Log("we adding");
-            Debug.Log(smd);
+            //Debug.Log("we adding");
+            //Debug.Log(smd);
             b.onClick.AddListener(() => smd(this));
         }
 
         /// <summary>
-        /// Visually select monster
+        /// Visually select monster with pressed colour
         /// </summary>
-        public void SelectMonster() {
+        public void SelectMonsterButton() {
             bts.SetColor("pressed");
             selected = true;
         }
@@ -113,7 +113,7 @@ namespace Combat {
         /// <summary>
         /// Visually deselect monster
         /// </summary>
-        public void DeselectMonster() {
+        public void DeselectMonsterButton() {
             bts.SetColor("normal");
             selected = false;
         }
