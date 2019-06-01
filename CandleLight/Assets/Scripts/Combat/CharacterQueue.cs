@@ -8,7 +8,7 @@
 *
 */
 
-
+using Characters;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,13 +23,14 @@ using UnityEngine;
  */
 
 namespace Combat {
+
     public class CharacterQueue {
         
         private int monsterNumber;              /// <value> Number of monsters in queue </value>
         private int partyMemberNumber;          /// <value> Number of party members in queue </value>
         private int queueLength = 0;            /// <value> Length of the queue </value>
         private int queuePos = 0;               /// <value> Position in the queue </value>
-        private int dexConst = 0;               /// <value> Speed constant to beat in order to get a second turn in one queue </value>
+        //private int dexConst = 0;               /// <value> Speed constant to beat in order to get a second turn in one queue </value>
         private QueueNodeComparer characterOrder = new QueueNodeComparer();     /// <value> Character comparer to determine queue position </value>
         private List<QueueNode> combatQueue;    /// <value> List of characters, ordererd by the characterOrder </value>
 

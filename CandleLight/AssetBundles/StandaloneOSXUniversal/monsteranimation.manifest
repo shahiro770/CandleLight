@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2639213551
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5a563fb56eea9cd8169dacccbef49081
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e9ff7947e86ac18259f8d8c6c35c7861
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Animations/Animations/MDeathAnimation.anim
+- Assets/Resources/Animations/Animations/MNormalAttackAnimation.anim
+Dependencies: []

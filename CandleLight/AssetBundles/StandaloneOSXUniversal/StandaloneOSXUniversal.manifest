@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 41153703
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: creeper
+      Dependencies: {}
+    Info_1:
+      Name: monsteranimation
+      Dependencies: {}
+    Info_2:
+      Name: monster
+      Dependencies: {}
+    Info_3:
+      Name: partymemberanimation
+      Dependencies: {}

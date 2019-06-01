@@ -8,15 +8,16 @@
 *
 */
 
+using Characters;
+using Combat;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using Combat;
 
-namespace DataBank {
+namespace Database {
 
     public class GameDB : SqliteHelper {
     
@@ -26,7 +27,7 @@ namespace DataBank {
         public GameDB() : base(dbName) {}
         
         /// <summary>
-        /// Initializes a monster game object with information fetched from the database
+        /// Fetches information about a particular monster from the database to initialize a Monster component
         /// </summary>
         /// <param name="nameID"> Name of the monster along with the monster's level </param>
         /// <param name="monster"> Monster game object to be be initialized with fetched values</param>
@@ -39,6 +40,7 @@ namespace DataBank {
                     dbcmd.CommandText = "SELECT * FROM Monsters WHERE NameID = '" + nameID + "'";
                     
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        string monsterNameID = "";
                         string monsterSpriteName = "";
                         string monsterDisplayName = "";
                         string monsterArea = "";
@@ -51,6 +53,7 @@ namespace DataBank {
                         Attack[] attacks = new Attack[4];
 
                         if (reader.Read()) {
+                            monsterNameID = reader.GetString(1);
                             monsterSpriteName = reader.GetString(2);
                             monsterDisplayName = reader.GetString(3);
                             monsterArea = reader.GetString(4);
@@ -63,12 +66,11 @@ namespace DataBank {
 
                             for (int i = 0; i < maxAttacks; i++) {
                                 string attackName = reader.GetString(14 + i);
-                                attacks[i] = GetAttack(attackName, dbConnection);
+                                attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
 
                         }
-                        // need to figure out how to attach this information to a monster gameObject, can't use new
-                        monster.Init(monsterSpriteName, monsterDisplayName, monsterArea, monsterSize, monsterAI, LVL, HP, MP, stats, attacks); 
+                        monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, monsterSize, monsterAI, LVL, HP, MP, stats, attacks)); 
                     }
                 }
             }          
@@ -108,7 +110,7 @@ namespace DataBank {
 
                             for (int i = 0; i < maxAttacks; i++) {
                                 string attackName = reader.GetString(12 + i);
-                                attacks[i] = GetAttack(attackName, dbConnection);
+                                attacks[i] = GetAttack(attackName, false, dbConnection);
                             }
                         }
                         // need to figure out how to attach this information to a monster gameObject, can't use new
@@ -124,7 +126,7 @@ namespace DataBank {
         /// <param name="name"> Name of the attack</param>
         /// <param name="dbConnection"> IDbConnectino to get attack with </param>
         /// <returns> Returns an Attack with the information initialized </returns>
-        public Attack GetAttack(string name, IDbConnection dbConnection) {
+        public Attack GetAttack(string name, bool isMonster, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Attacks WHERE Name = '" + name + "'";
 
@@ -132,7 +134,12 @@ namespace DataBank {
                     Attack newAttack = null;
 
                     if (reader.Read()) {
-                        newAttack = new Attack( name, reader.GetInt32(2));
+                        if (isMonster) {
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3));
+                        }
+                        else {
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(4));
+                        }
                     }
 
                     return newAttack;
