@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 3622136873
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8ebaeb340f2202db0f7d39b63d11179e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Sprites/Test/Creeper/Layer 1_Mo01.png
+- Assets/Resources/Sprites/Test/Creeper/Layer 1_Mo04.png
+- Assets/Resources/Sprites/Test/Creeper/Layer 1_Mo03.png
+- Assets/Resources/Sprites/Test/Creeper/Layer 1_Mo02.png
+Dependencies: []

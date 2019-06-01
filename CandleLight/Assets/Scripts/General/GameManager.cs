@@ -8,61 +8,66 @@
 *
 */
 
+using Database;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DataBank;
 
-public class GameManager : MonoBehaviour {
 
-    public static GameManager instance;             /// <value> global instance </value>
+namespace General {
 
-    public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
-    public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
-    public string[] monsterNames { get; set; }      /// <value> list of monsters to be instantiated </value>
+    public class GameManager : MonoBehaviour {
 
-    private string activeScene = "";                /// <value> current scene being displayed </value>
-    private string initialScene = "Loading";
-    private string combatScene = "Combat";
+        public static GameManager instance;             /// <value> Global instance </value>
 
-    /// <summary>
-    /// Awake to instantiate singleton
-    /// </summary> 
-    void Awake() { 
-        if (instance == null) {
-            instance = this;
+        public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
+        public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
+        public string[] monsterNames { get; set; }      /// <value> List of monsters to be instantiated </value>
+
+        private string activeScene = "";                /// <value> Current scene being displayed </value>
+        private string initialScene = "Loading";        /// <value> Scene to begin game with </value>
+        private string combatScene = "Combat";          /// <value> Name of combat scene </value>
+
+        /// <summary>
+        /// Awake to instantiate singleton
+        /// </summary> 
+        void Awake() { 
+            if (instance == null) {
+                instance = this;
+            }
+            else if (instance != this) {
+                DestroyImmediate (gameObject);
+                instance = this;
+            }
+            
+            Screen.SetResolution(1920, 1080, false);    // have to figure out resizing, for now game's resolution is fixed
+            mainCamera = Camera.main;                   // store reference to camera for other game objects to obtain
+            activeScene = initialScene;
+            SceneManager.LoadScene(activeScene, LoadSceneMode.Additive);
+            DB = new GameDB();
         }
-        else if (instance != this) {
-            DestroyImmediate (gameObject);
-            instance = this;
+
+        /// <summary>
+        /// Additively load next scene and unload previous scene
+        /// </summary> 
+        /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
+        public void LoadNextScene(string sceneName) {
+            SceneManager.UnloadSceneAsync(activeScene);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            activeScene = sceneName;
         }
-        
-        mainCamera = Camera.main;
-        activeScene = initialScene;
-        SceneManager.LoadScene(activeScene, LoadSceneMode.Additive);
-        DB = new GameDB();
-    }
 
-    /// <summary>
-    /// Additively load next scene and unload previous scene
-    /// </summary> 
-    /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
-    public void LoadNextScene(string sceneName) {
-        SceneManager.UnloadSceneAsync(activeScene);
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        activeScene = sceneName;
-    }
-
-    /// <summary>
-    /// Additively loads combat scene and unload previous scene
-    /// </summary> 
-    /// <param name="monsterNames"> Names of the monsters to be instantiated </param>
-    /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
-    public void LoadCombatScene(string[] monsterNames) {
-        SceneManager.UnloadSceneAsync(activeScene);
-        SceneManager.LoadScene(combatScene, LoadSceneMode.Additive);
-        activeScene = combatScene;
-        this.monsterNames = monsterNames;
+        /// <summary>
+        /// Additively loads combat scene and unload previous scene
+        /// </summary> 
+        /// <param name="monsterNames"> Names of the monsters to be instantiated </param>
+        /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
+        public void LoadCombatScene(string[] monsterNames) {
+            SceneManager.UnloadSceneAsync(activeScene);
+            SceneManager.LoadScene(combatScene, LoadSceneMode.Additive);
+            activeScene = combatScene;
+            this.monsterNames = monsterNames;
+        }
     }
 }

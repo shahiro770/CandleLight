@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 590710291
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 316ccbd95ad464d9e0c3b860ab2be1ea
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 872f54559b8772c38fa07b8b8c2fb6ec
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Animations/Animations/PMSlashAttackAnimation.anim
+Dependencies: []

@@ -8,56 +8,62 @@
 *
 */
 
+using Characters;
+using Combat;
+using Database;
+using General;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DataBank;
 
-public class PartyManager : MonoBehaviour {
+namespace Party {
 
-    public static PartyManager instance;    /// <value> global instance </value>
-    public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
-    
-    private List<PartyMember> partyMembers = new List<PartyMember>();
+    public class PartyManager : MonoBehaviour {
 
-    /// <summary>
-    /// Awake to instantiate singleton
-    /// </summary> 
-    void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
-        else if (instance != this) {
-            DestroyImmediate (gameObject);
-            instance = this;
-        }
-    }
+        public static PartyManager instance;    /// <value> global instance </value>
+        public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
+        
+        private List<PartyMember> partyMembers = new List<PartyMember>();
 
-    /// <summary>
-    /// Adds a party member to the list of party members
-    /// </summary> 
-    /// <param name="className"> Class of the party member to be added </param>
-    public void AddPartyMember(string className) {
-        GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
-        GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
-        newMember.transform.SetParent(gameObject.transform, false);
-        partyMembers.Add(newMember.GetComponent<PartyMember>());
-    }
-    
-    /// <summary>
-    /// Returns a list containing all party members
-    /// </summary> 
-    /// <returns>
-    /// A list of party members. 
-    /// Each party member is assigned a unique ID in preparation for queueing in combat. 
-    /// ID is incremented for each party member.
-    /// </returns>
-    /// <param name="countID"> ID that is incremented and assigned to each party member for queuing </param>
-    public List<PartyMember> GetPartyMembers(ref int countID) {
-        foreach (PartyMember pm in partyMembers) {
-            pm.ID = countID++;
+        /// <summary>
+        /// Awake to instantiate singleton
+        /// </summary> 
+        void Awake() {
+            if (instance == null) {
+                instance = this;
+            }
+            else if (instance != this) {
+                DestroyImmediate (gameObject);
+                instance = this;
+            }
         }
 
-        return partyMembers;
+        /// <summary>
+        /// Adds a party member to the list of party members
+        /// </summary> 
+        /// <param name="className"> Class of the party member to be added </param>
+        public void AddPartyMember(string className) {
+            GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
+            GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
+            newMember.transform.SetParent(gameObject.transform, false);
+            partyMembers.Add(newMember.GetComponent<PartyMember>());
+        }
+        
+        /// <summary>
+        /// Returns a list containing all party members
+        /// </summary> 
+        /// <returns>
+        /// A list of party members. 
+        /// Each party member is assigned a unique ID in preparation for queueing in combat. 
+        /// ID is incremented for each party member.
+        /// </returns>
+        /// <param name="countID"> ID that is incremented and assigned to each party member for queuing </param>
+        public List<PartyMember> GetPartyMembers(ref int countID) {
+            foreach (PartyMember pm in partyMembers) {
+                pm.ID = countID++;
+            }
+
+            return partyMembers;
+        }
     }
 }

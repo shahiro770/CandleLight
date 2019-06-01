@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 1166324572
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 94c193de094cd6cf1a7ee7d1c4200b6c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Sprites/Enemies/Greywastes 1/LesserWraithWizard.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/FriendlyLesserWraith.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/GreyhideAlpha.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/LesserWraith.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/Greyhide.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/DarkblightedGreyhide.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/Darkblighted Goblin.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/DarkblightedGreyhideAlpha.png
+- Assets/Resources/Sprites/Enemies/Greywastes 1/Goblin.png
+Dependencies: []

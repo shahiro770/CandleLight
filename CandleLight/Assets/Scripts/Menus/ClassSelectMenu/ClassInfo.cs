@@ -8,36 +8,40 @@
 *
 */
 
+using Localization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClassInfo : MonoBehaviour {
-    
-    private LocalizedText[] classInfo;      /// <value> Reference to localized text </value>
-    
-    /// <summary>
-    /// Awake to get references to child components
-    /// </summary>
-    void Awake() {
-        classInfo = GetComponentsInChildren<LocalizedText>();
-    }
+namespace Menus.ClassSelectMenu {
 
-    /// <summary>
-    /// Change the displayed class description
-    /// </summary>
-    /// <param name="classString"> Changes the class description depending on the class. Null to clear </param>
-    public void SetClassInfo(string classString) {
-        if (classInfo == null)  {                   // weird behaviour where awake is not called in time
+    public class ClassInfo : MonoBehaviour {
+        
+        private LocalizedText[] classInfo;      /// <value> Reference to localized text </value>
+        
+        /// <summary>
+        /// Awake to get references to child components
+        /// </summary>
+        void Awake() {
             classInfo = GetComponentsInChildren<LocalizedText>();
         }
-        if (classString == null) {
-            classInfo[0].Clear();
-            classInfo[1].Clear();
-        }
-        else {
-            classInfo[0].SetKey(classString + "_title");
-            classInfo[1].SetKey(classString + "_description");
+
+        /// <summary>
+        /// Change the displayed class description
+        /// </summary>
+        /// <param name="classString"> Changes the class description depending on the class. Null to clear </param>
+        public void SetClassInfo(string classString) {
+            if (classInfo == null)  {                   // weird behaviour where awake is not called in time
+                classInfo = GetComponentsInChildren<LocalizedText>();
+            }
+            if (classString == null) {
+                classInfo[0].Clear();
+                classInfo[1].Clear();
+            }
+            else {
+                classInfo[0].SetKey(classString + "_title");
+                classInfo[1].SetKey(classString + "_description");
+            }
         }
     }
 }

@@ -8,18 +8,18 @@
 *
 */
 
+using Mono.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Mono.Data.Sqlite;
 using UnityEngine;
-using System.Data;
 
-namespace DataBank
-{
-    public class SqliteHelper
-    {
+namespace Database {
+
+    public class SqliteHelper {
         private string tag;                     /// <value> Name of database </value>
         private string dbConnectionString;      /// <value> File path to database file</value>
         public IDbConnection dbConnection;      /// <value> Open connection to database </value>
@@ -28,17 +28,22 @@ namespace DataBank
         /// Constructor 
         /// </summary>
         /// <param name="databaseFile"> Name of the database file to access </param>
-        public SqliteHelper(string databaseFile)
-        {
-            tag = databaseFile + ":\t";
-            dbConnectionString = "URI=file:" + Application.dataPath + "/Scripts/Database/" + databaseFile ;
+        public SqliteHelper(string databaseFileName) {
+            tag = databaseFileName + ":\t";
+
+            string dbPath = Path.Combine(Application.streamingAssetsPath, databaseFileName);  
+            if (System.IO.File.Exists(dbPath)) {
+                dbConnectionString = "URI=file:" + dbPath;
+            }
+            else {
+                Debug.Log ("ERROR: the file DB named " + databaseFileName + " doesn't exist anywhere");
+            }
         }
         
         /// <summary>
         /// Destructor to close connection on destruction
         /// </summary>
-        ~SqliteHelper()
-        {
+        ~SqliteHelper() {
             dbConnection.Close();
         }
 
@@ -47,8 +52,7 @@ namespace DataBank
         /// </summary>
         /// <param name="id"> Id of the entry (unique) </param>
         /// <param name="table"> Table to be accessed </param>
-        public virtual void GetDataById(int id, string table)
-        {
+        public virtual void GetDataById(int id, string table) {
             Debug.Log(tag + "GetDataById is not implemented");
             throw null;
         }
