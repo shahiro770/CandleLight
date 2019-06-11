@@ -28,7 +28,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="maxAmount"> Max amount, must be greater than 0 </param>
         /// <param name="currentAmount"> Current amount </param>
-        public void Init(int maxAmount, int currentAmount) {
+        public void SetMaxAndCurrent(int maxAmount, int currentAmount) {
             this.maxAmount = maxAmount;
             this.currentAmount = currentAmount;
             SetDisplay();
@@ -39,11 +39,11 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="maxAmount"> Max amount, must be greater than 0 </param>
         /// <param name="currentAmount"> Current amount </param>
-        /// <param name="size"> Vector, only width component matters for now </param>
-        public void Init (int maxAmount, int currentAmount, Vector2 size) {
+        /// <param name="vectorSize"> Vector, only width component matters for now </param>
+        public void SetMaxAndCurrent(int maxAmount, int currentAmount, Vector2 vectorSize) {
             this.maxAmount = maxAmount;
             this.currentAmount = currentAmount;
-            SetWidth(size.x);
+            SetWidth(vectorSize.x);
             SetDisplay();
         }
 
@@ -54,6 +54,15 @@ namespace PlayerUI {
         private void SetWidth(float width) {
             RectTransform rt = GetComponent<RectTransform>();
             rt.sizeDelta = new Vector2(width, rt.sizeDelta.y);  // maintain height
+        }
+
+        /// <summary>
+        /// Sets the max amount of points, and calls to update visually
+        /// </summary>
+        /// <param name="currentAmount"> Current amount </param>
+        public void SetMax(int maxAmount) {
+            this.maxAmount = maxAmount;
+            SetDisplay();
         }
 
         /// <summary>
@@ -72,6 +81,15 @@ namespace PlayerUI {
         private void SetDisplay() {
             text.Append(currentAmount.ToString());
             frontFill.fillAmount = currentAmount / maxAmount;
+        }
+
+
+        void DoStuff(Object something) {
+            // Do stuff
+        }
+
+        void DoSameStuffForADifferentReason(Object something) {
+            DoStuff(something);
         }
     }
 }

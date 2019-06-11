@@ -22,7 +22,7 @@ namespace UIEffects {
         private Button b;                           /// <value> Button to have its state managed </value>
         private Image i;                            /// <value> Image is used to get a button's default sprite </value>
         private ColorBlock normalBlock;             /// <value> Default colour block </value>
-        private ColorBlock normalAlternateBlock;    /// <value> Alternate normal colour block for buttons that have two sets of colours (e.g.false enabled and disabled) </value>
+        private ColorBlock normalAlternateBlock;    /// <value> Alternate normal colour block for buttons that have two sets of colours (e.g. "false enabled" and disabled) </value>
         private ColorBlock highlightedBlock;        /// <value> Hovered colour block </value>
         private ColorBlock pressedBlock;            /// <value> Clicked colour block </value>
         private ColorBlock disabledBlock;           /// <value> Disabled colour block </value>

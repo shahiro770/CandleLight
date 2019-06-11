@@ -136,7 +136,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.49019608}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: HP_label
   meshText: {fileID: 5229176035906548644}
+  keyText: 
 --- !u!114 &5229176035906548644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,8 +440,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2387337824692045382}
-  - component: {fileID: 9202039021361903901}
   - component: {fileID: 1642090490017775807}
+  - component: {fileID: 9202039021361903901}
   m_Layer: 0
   m_Name: Effects
   m_TagString: Untagged
@@ -462,25 +463,6 @@ Transform:
   m_Father: {fileID: 4441724746801271242}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &9202039021361903901
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2787557318452027557}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6f2ef1bca41b84787a4637470df58dc6, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &1642090490017775807
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -529,6 +511,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &9202039021361903901
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787557318452027557}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6f2ef1bca41b84787a4637470df58dc6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4423495334366531527
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +675,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04061142d17d403d9e6804ed63eb520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 0
+  <LVL>k__BackingField: 0
+  <HP>k__BackingField: 0
+  <CHP>k__BackingField: 0
+  <MP>k__BackingField: 0
+  <CMP>k__BackingField: 0
+  <STR>k__BackingField: 0
+  <DEX>k__BackingField: 0
+  <INT>k__BackingField: 0
+  <LUK>k__BackingField: 0
+  <attacks>k__BackingField: []
   monsterCanvas: {fileID: 8893029803877665006}
   monsterSprite: {fileID: 5909135346569761772}
   monsterSpriteHolder: {fileID: 586621550330952640}
@@ -681,6 +693,15 @@ MonoBehaviour:
   monsterAnimator: {fileID: 1229901191180621477}
   b: {fileID: 8848571942937455294}
   HPBar: {fileID: 5904602688543524742}
+  <monsterSize>k__BackingField: 
+  <monsterNameID>k__BackingField: 
+  <monsterDisplayName>k__BackingField: 
+  <monsterAI>k__BackingField: 
+  <isReady>k__BackingField: 0
+  vectorSize: {x: 0, y: 0}
+  bts: {fileID: 0}
+  attackNum: 0
+  selectedAttackIndex: 0
 --- !u!1 &6146961968871764919
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +793,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontFill: {fileID: 4901275332658909795}
   text: {fileID: 7193633947493986426}
+  <maxAmount>k__BackingField: 0
+  <currentAmount>k__BackingField: 0
 --- !u!1 &9038734451768696218
 GameObject:
   m_ObjectHideFlags: 0

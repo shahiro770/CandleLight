@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: February 11, 2019
 * 
-* The StatusManager class is used to manage all status bars of a partyMember.
+* The StatusPanel class is used to display all status bars of a partyMember.
 * This includes the player's HPBar, MPBar, and EffectBar.
 *
 */
@@ -15,11 +15,11 @@ using UnityEngine;
 
 namespace PlayerUI {
 
-    public class StatusManager : MonoBehaviour {
+    public class StatusPanel : MonoBehaviour {
 
-        public EffectBar effectBar; 
         public Bar HPBar;
         public Bar MPBar;
+        public EffectBar effectBar; 
 
         /// <summary>
         /// Initialize all the bars of the active partyMember
@@ -28,8 +28,8 @@ namespace PlayerUI {
         public void Init(PartyMember pm) {
             pm.HPBar = HPBar;
             pm.MPBar = MPBar;
-            HPBar.Init(pm.HP, pm.CHP);
-            MPBar.Init(pm.MP, pm.CMP);
+            HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+            MPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
         }
     }
 }

@@ -50,28 +50,6 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Lose health points
-        /// </summary>
-        /// <param name="amount"> Amount lost </param>
-        /// <returns> Yields so that function may be called synchronously </returns>
-        public virtual IEnumerator LoseHP(int amount) {
-            CHP -= amount;
-
-            yield break;
-        }
-
-        /// <summary>
-        /// Lose mana points
-        /// </summary>
-        /// <param name="amount"> Amount lost </param>
-        /// <returns> Yields so that function may be called synchronously </returns>
-        public virtual IEnumerator LoseMP(int amount) {
-            CMP -= amount;
-
-            yield break;
-        }
-
-        /// <summary>
         /// Logs stats to console for debugging
         /// </summary>
         public virtual void LogStats() {

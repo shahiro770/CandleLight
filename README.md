@@ -1,2 +1,2 @@
 # CandleLight
-2D Roguelike built with unity about candles and stuff.
+2D Roguelike built with Unity about candles and stuff.
