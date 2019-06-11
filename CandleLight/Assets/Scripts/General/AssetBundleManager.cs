@@ -63,23 +63,35 @@ namespace AssetManagers {
 		/// Load all asset bundles on start up
 		/// </summary>
 		IEnumerator Start() {
-			if (string.IsNullOrEmpty(storageAccount) || string.IsNullOrEmpty(accessKey)) {
-				Debug.Log("Storage account and access key are required");
-			}
 
-			client = StorageServiceClient.Create(storageAccount, accessKey);
-			blobService = client.GetBlobService();
+			/* WHEN WORKING WITH WIFI AND/OR WANT TO USE ASSETBUNDLES */
+
+			// if (string.IsNullOrEmpty(storageAccount) || string.IsNullOrEmpty(accessKey)) {
+			// 	Debug.Log("Storage account and access key are required");
+			// }
+
+			// client = StorageServiceClient.Create(storageAccount, accessKey);
+			// blobService = client.GetBlobService();
 			
 			// should only load one asset bundle at a time when needed, get its resources, then unload it
-			yield return StartCoroutine(LoadAssetBundle(monsterBundleName));
-			yield return StartCoroutine(LoadAssetBundle(mAnimationBundleName));
-			yield return StartCoroutine(LoadAssetBundle(pmAnimationBundleName));
+			// yield return StartCoroutine(LoadAssetBundle(monsterBundleName));
+			// yield return StartCoroutine(LoadAssetBundle(mAnimationBundleName));
+			// yield return StartCoroutine(LoadAssetBundle(pmAnimationBundleName));
 
-			assetBundles.Add(monsterBundle);
-			assetBundles.Add(mAnimationBundle);
-			assetBundles.Add(pmAnimationBundle);
+			// if (monsterBundle) {
+			// 	assetBundles.Add(monsterBundle);
+			// }
+			// if (mAnimationBundle) {
+			// 	assetBundles.Add(mAnimationBundle);
+			// }
+			// if (pmAnimationBundle) {
+			// 	assetBundles.Add(pmAnimationBundle);
+			// }
+			
+			/**********************************************************/
 
 			isReady = true;
+			yield break;
 		}
 
 		/// <summary>

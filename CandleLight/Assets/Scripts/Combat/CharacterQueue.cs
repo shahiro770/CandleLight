@@ -29,7 +29,7 @@ namespace Combat {
         private int monsterNumber;              /// <value> Number of monsters in queue </value>
         private int partyMemberNumber;          /// <value> Number of party members in queue </value>
         private int queueLength = 0;            /// <value> Length of the queue </value>
-        private int queuePos = 0;               /// <value> Position in the queue </value>
+        private int queuePos = -1;               /// <value> Position in the queue </value>
         //private int dexConst = 0;               /// <value> Speed constant to beat in order to get a second turn in one queue </value>
         private QueueNodeComparer characterOrder = new QueueNodeComparer();     /// <value> Character comparer to determine queue position </value>
         private List<QueueNode> combatQueue;    /// <value> List of characters, ordererd by the characterOrder </value>
@@ -102,7 +102,7 @@ namespace Combat {
         /// Finalizes the queue order by making any special adjustments and then sorting
         /// </summary>
         public void FinalizeQueue() {
-            //AddSecondEntries();
+            // AddSecondEntries();
             combatQueue.Sort(characterOrder);
         }
 
@@ -111,7 +111,11 @@ namespace Combat {
         /// </summary>
         /// <returns></returns>
         public Character GetNextCharacter() {
-            return combatQueue[queuePos++ % queueLength].c;
+            queuePos++;
+            if (queuePos == queueLength) { // wrap around circular queue if end is reached
+                queuePos = 0;
+            }
+            return combatQueue[queuePos].c;
         }
 
         /// <summary>
@@ -120,7 +124,6 @@ namespace Combat {
         /// <param name="ID"> Unique ID of the character to be removed </param>
         public void RemoveCharacter(int ID) {
             List<QueueNode> finalCombatQueue = combatQueue.ConvertAll(q => new QueueNode(q));
-
             foreach (QueueNode q in combatQueue) {
                 if (q.c.ID == ID) {
                     if (q.c is Monster) {
@@ -129,10 +132,14 @@ namespace Combat {
                     else {
                         partyMemberNumber--;
                     }
+                    int removedIndex = finalCombatQueue.IndexOf(q);
                     finalCombatQueue.Remove(q);
+                    queueLength--;  
+                    if (queuePos > removedIndex) { // shift queue back by 1 if removed node was before current position
+                        queuePos--;
+                    }
                 }
             }
-
             combatQueue = finalCombatQueue;
         }
 
@@ -170,14 +177,15 @@ namespace Combat {
         /// Logs the contents of the combat queue
         /// </summary>
         public void LogQueue() {
+            Debug.Log("Logging Queue");
             foreach (QueueNode q in combatQueue) {
                 if (q.c is Monster) {
                     Monster m = (Monster)q.c;
-                    Debug.Log("Priority: " + q.priority + " MonsterName: " + m.monsterDisplayName);
+                    Debug.Log("ID: " + m.ID + " Priority: " + q.priority + " MonsterName: " + m.monsterDisplayName);
                 }
                 else {
                     PartyMember pm = (PartyMember)q.c;
-                    Debug.Log("Priority: " + q.priority + " ClassName " + pm.className);
+                    Debug.Log("ID: " + pm.ID + " Priority: " + q.priority + " ClassName " + pm.className);
                 }
             }
         }

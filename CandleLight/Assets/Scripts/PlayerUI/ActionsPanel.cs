@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: February 11, 2019
 * 
-* The ActionManager class is used to organize and initialize Action buttons.
+* The ActionPanel class is used to organize and initialize Action buttons.
 * An action can be an attack, dialog option, a direction to travel in, or more, depending on the event.
 *
 */
@@ -19,7 +19,7 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class ActionsManager : MonoBehaviour {
+    public class ActionsPanel : MonoBehaviour {
 
         public CombatManager cm { get; set; }       /// <value> Combat manager to reference other scripts in the combat scene </value>
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
@@ -99,7 +99,6 @@ namespace PlayerUI {
                 }
             }
             actions[actions.Length - 1].SetAction("undo");
-
             cm.PreparePMAttack(a);
         }
 

@@ -62,9 +62,7 @@ namespace General {
         /// <param name="monsterNames"> Array containing strings of all monsters to be loaded </param>
         /// <returns> IEnumerator to wait for each monster to be loaded before moving to the next </returns>
         private IEnumerator LoadMonsters(string[] monsterNames) {
-            Debug.Log("we loading monsters");
             foreach (string monsterName in monsterNames) {
-                Debug.Log(monsterName);
                 GameObject newMonster = Instantiate(monster);
                 Monster monsterComponent = newMonster.GetComponent<Monster>() ;
                 Monster newMonsterComponent = monsterComponent;

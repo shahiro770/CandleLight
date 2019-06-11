@@ -19,12 +19,14 @@ namespace Characters {
 
     public class PartyMember : Character {
         
+        public Bar HPBar { get; set; }              /// <value> Visual for health points in status panel </value>
+        public Bar MPBar { get; set; }              /// <value> Visual for mana points in status panel </value>
+        public Bar PartyPanelHPBar { get; set; }    /// <value> Visual for health points in party panel </value>
+        public Bar PartyPanelMPBar { get; set; }    /// <value> Visual for mana points in party panel </value>
         public string className { get; set; }       /// <value> Warrior, Mage, Archer, or Thief </value>
         public string subClassName { get; set; }    /// <value> Class specializations </value>
         public string memberName { get; set; }      /// <value> Name of the party member </value>
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
-        public Bar HPBar { get; set; }              /// <value> Visual for health points </value>
-        public Bar MPBar { get; set; }              /// <value> Visual for mana points </value>
 
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
@@ -47,13 +49,18 @@ namespace Characters {
         /// IEnumerator is used to make calling function wait for its completion
         /// </summary> 
         /// <param name="amount"> Amount of health points lost </param>
-        public override IEnumerator LoseHP(int amount) {
+        /// <param name="isActive"> Active party member is the one who's information 
+        /// is displayed in the status panel, true if active, false otherwise </param>
+        public IEnumerator LoseHP(int amount, bool isActive) {
             CHP -= amount;
             if (CHP < 0) {
                 CHP = 0;
             }
             
-            HPBar.SetCurrent(CHP);  // update visually
+            if (isActive) {
+                HPBar.SetCurrent(CHP);  // update visually
+            }
+            PartyPanelHPBar.SetCurrent(CHP);
 
             yield break;
         }

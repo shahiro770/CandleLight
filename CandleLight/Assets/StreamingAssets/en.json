@@ -25,6 +25,11 @@
 		{ "key": "undo_action", "value": "Undo" },
 		{ "key": "none_action", "value": "" },
 
+		{ "key": "party_tab", "value": "Party" },
+		{ "key": "info_tab", "value": "Info" },
+		
+		{ "key": "fireball_attack", "value": "Fireball" },
+		{ "key": "wack_attack", "value": "Wack" },
 		{ "key": "slash_attack", "value": "Slash" },
 		{ "key": "bash_attack", "value": "Bash" },
 		{ "key": "none_attack", "value": ""}

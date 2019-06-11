@@ -24,15 +24,16 @@ namespace Combat {
     public delegate void SelectMonsterDelegate(Monster m);
 
     public class CombatManager : MonoBehaviour {
-
+        
         private readonly bool PMTURN = true;        /// <value> Flag for party member turn </value>
         private readonly bool MTURN = false;        /// <value> Flag for monster turn </value>
 
         public static CombatManager instance;       /// <value> Combat scene instance </value>
-        
+
         public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
-        public StatusManager statusManager;         /// <value> Manager for active party member's status </value>
-        public ActionsManager am;                   /// <value> Manager for active party member's actions </value>
+        public StatusPanel statusPanel;             /// <value> Display for active party member's status </value>
+        public ActionsPanel actionsPanel;           /// <value> Display for active party member's actions </value>
+        public PartyPanel partyPanel;               /// <value> Display for all party member's status </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
         public bool isReady { get; private set; } = false;              /// <value> Localization happens at the start, program loads while waiting </value>
         
@@ -45,6 +46,8 @@ namespace Combat {
         private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
         private Attack selectedAttack = null;       /// <value> Attack selected by party member </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
+        private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
+        private int maxEnemies = 5;                 /// <value> Max number of enemies that can appear on screen </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
         private bool isFleePossible = true;         /// <value> Flag for if player can flee battle, will need to make this changeable in the future </value>
 
@@ -67,13 +70,17 @@ namespace Combat {
         /// Start to initialize all monsters, characters, and combat queue before beginning combat
         /// </summary>
         IEnumerator Start() {
-            am.cm = this;
-            am.Init(isFleePossible);
+            actionsPanel.cm = this;
+            actionsPanel.Init(isFleePossible);
 
             foreach (string monsterName in GameManager.instance.monsterNames) {
                 yield return StartCoroutine(AddMonster(monsterName));
             }
+            ArrangeMonsters();
+            SetMonsterNavigation();
+            
             partyMembers = PartyManager.instance.GetPartyMembers(ref countID);
+            partyPanel.Init(partyMembers);
 
             foreach (Monster m in monsters) {
                 cq.AddCharacter(m);
@@ -91,7 +98,8 @@ namespace Combat {
         /// and determining which character moves next
         /// </summary>
         private void StartCombat() {
-            DisplayFirstPartyMember(); // active party member is not set
+            DisplayFirstPartyMember();          // active party member is not set
+            actionsPanel.DisableAllActions();   // actions are all disabled until game determines who moves first
             GetNextTurn();
         }
 
@@ -101,23 +109,36 @@ namespace Combat {
         /// </summary>
         public void GetNextTurn() {
             Character c = cq.GetNextCharacter();
+            bool prevTurn = turn;  // prevent redundant things that don't change between back to back turns of monsters/partymembers
 
             if (c is PartyMember) {
                 activePartyMember = (PartyMember)c;
                 turn = PMTURN;
             } else {
                 activeMonster = (Monster)c;
-                turn = MTURN;
+                turn = MTURN; 
             }  
-
+            
             if (turn) {
-                DisplayActivePartyMember();
-                EnableAllMonsterSelection();
-                am.EnableAllActions();
+                if (prevTurn == MTURN) {
+                    // stuff
+                }
+                PlayerTurn();
             } else {
-                am.DisableAllActions();
+                if (prevTurn == PMTURN) {
+                    actionsPanel.DisableAllActions();
+                }
                 StartCoroutine(MonsterTurn());
             }
+        }
+
+        /// <summary>
+        /// Prepare all monsters and relevant panels (Actions, Status) for the player's turn
+        /// </summary>
+        private void PlayerTurn() {
+            DisplayActivePartyMember();
+            EnableAllMonsterSelection();
+            actionsPanel.EnableAllActions();
         }
 
         /// <summary>
@@ -135,14 +156,17 @@ namespace Combat {
         /// Selects a monster to be attacked
         /// </summary>
         /// <param name="monsterToSelect"> Monster to select </param>
+        /// <remark> Will probably make a UI info popup when clicking on monsters with no attack in the future </remark>
         public void SelectMonster(Monster monsterToSelect) {
             foreach (Monster m in selectedMonsters) {
                 m.DeselectMonsterButton();
             }
-            selectedMonsters.Clear();
 
+            selectedMonsters.Clear();
             selectedMonsters.Add(monsterToSelect);
 
+            // Player can freely click on monsters without having an attack selected
+            // Will probably make a UI popup when clicking on monsters with no attack in the future
             if (selectedAttack != null) {
                 monsterToSelect.SelectMonsterButton();
                 StartCoroutine(ExecutePMAttack(selectedAttack, monsterToSelect));
@@ -174,23 +198,104 @@ namespace Combat {
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonster(monsterName));
             newMonster.SetActive(true);
             Monster monsterComponent = newMonster.GetComponent<Monster>();
-            //monsterComponent = DataManager.instance.GetLoadedMonster(monsterName);
-            //GameManager.instance.DB.GetMonsterByNameID(monsterName, monsterComponent);
+            
             monsterComponent.ID = countID++;
+             monsterComponent.SetHealthBar();
+            
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
-            monsterComponent.ReInit();
             monsterComponent.AddSMDListener(smd);
-            monsterComponent.SetNavigation(am.GetActionButton(0));
+
+            // assumes there will always be an action at button 0
+            monsterComponent.SetNavigation("down", actionsPanel.GetActionButton(0));
             newMonster.transform.SetParent(enemyCanvas.transform, false);
             
             monsters.Add(monsterComponent);
 
-            if (monsters.Count == 1) {
-                am.SetButtonNavigation(0, "up", monsters[0].b);
-                am.SetButtonNavigation(1, "up", monsters[0].b);
+            yield break;
+        }
+
+        /// <summary>
+        /// Arranges monsters on screen to look nice depending on the number.
+        /// Only a max of 5 monsters for now, although 3 large monsters, 4 normal 
+        /// </summary>
+        /// <remark> Will add custom arrangements for wackier monster layouts in the future </remark>
+        private void ArrangeMonsters() {
+            string arrangementType = "normal";
+
+            if (arrangementType == "normal") {
+                if (monsters.Count == 1) {
+                    float spacing0 = 0;
+                    monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
+                }
+                else if (monsters.Count == 2) {
+                    float spacing0 = ((monsters[0].spriteWidth / 2) + 10) * -1;
+                    float spacing1 = ((monsters[0].spriteWidth / 2) + 10);  
+
+                    monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
+                    monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
+                }
+                else if (monsters.Count == 3) {
+                    float spacing0 = ((monsters[1].spriteWidth / 2 + monsters[0].spriteWidth / 2) + 10) * -1;  
+                    float spacing1 = 0;
+                    float spacing2 = ((monsters[1].spriteWidth / 2 + monsters[2].spriteWidth / 2) + 10);
+                    
+                    monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
+                    monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
+                    monsters[2].gameObject.transform.localPosition = new Vector3(spacing2, monsters[2].gameObject.transform.position.y, 0.0f);  
+                }
+                else if (monsters.Count == 4) {
+                    float spacing0 = ((monsters[1].spriteWidth / 2) + monsters[0].spriteWidth + 30) * -1;  
+                    float spacing1 = ((monsters[1].spriteWidth / 2) + 10) * -1; 
+                    float spacing2 = (monsters[2].spriteWidth / 2) + 10;
+                    float spacing3 = (monsters[2].spriteWidth / 2) + monsters[3].spriteWidth + 30;  
+
+                    monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
+                    monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
+                    monsters[2].gameObject.transform.localPosition = new Vector3(spacing2, monsters[2].gameObject.transform.position.y, 0.0f); 
+                    monsters[3].gameObject.transform.localPosition = new Vector3(spacing3, monsters[3].gameObject.transform.position.y, 0.0f);   
+                }
+                else if (monsters.Count == 5) {
+                    float spacing0 = ((monsters[2].spriteWidth / 2) + monsters[1].spriteWidth + monsters[0].spriteWidth / 2 + 30) * -1;  
+                    float spacing1 = ((monsters[2].spriteWidth / 2) + monsters[1].spriteWidth / 2 + 10) * -1; 
+                    float spacing2 = 0;
+                    float spacing3 = (monsters[2].spriteWidth / 2) + monsters[3].spriteWidth / 2 + 10; 
+                    float spacing4 = ((monsters[2].spriteWidth / 2) + monsters[3].spriteWidth + monsters[4].spriteWidth / 2 + 30);  
+
+                    monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
+                    monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
+                    monsters[2].gameObject.transform.localPosition = new Vector3(spacing2, monsters[2].gameObject.transform.position.y, 0.0f); 
+                    monsters[3].gameObject.transform.localPosition = new Vector3(spacing3, monsters[3].gameObject.transform.position.y, 0.0f);
+                    monsters[4].gameObject.transform.localPosition = new Vector3(spacing4, monsters[4].gameObject.transform.position.y, 0.0f);      
+                } 
+            }
+        }
+
+        private void SetMonsterNavigation() {
+            foreach (Monster m in monsters) {
+                m.ResetNavigation();
+            }
+            foreach(Monster m in monsters) {
+                m.SetNavigation("down", actionsPanel.GetActionButton(0));
             }
 
-            yield break;
+            if (monsters.Count > 1) {
+                for (int i = 0; i < monsters.Count; i++) {
+                    if (i == 0) {
+                        monsters[i].SetNavigation("right", monsters[i + 1].b);
+                    }
+                    else if (i == monsters.Count - 1) {
+                        monsters[i].SetNavigation("left", monsters[i - 1].b);
+                    }
+                    else {
+                        monsters[i].SetNavigation("left", monsters[i - 1].b);
+                        monsters[i].SetNavigation("right", monsters[i + 1].b);
+                    }
+                }
+            }
+            
+            middleMonster = (int)(Mathf.Floor(monsters.Count / 2f));
+            actionsPanel.SetButtonNavigation(0, "up", monsters[middleMonster].b);
+            actionsPanel.SetButtonNavigation(1, "up", monsters[middleMonster].b);
         }
 
         /// <summary>
@@ -205,10 +310,12 @@ namespace Combat {
         /// </remark>
         public void PreparePMAttack(Attack a) {
             selectedAttack = a;
-            monsters[0].SetNavigation(am.GetActionButton(4));
-            am.SetButtonNavigation(4, "up", monsters[0].b);
+            foreach(Monster m in monsters) {
+                m.SetNavigation("down", actionsPanel.GetActionButton(4));
+            }
+            actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].b);
 
-            es.SetSelectedGameObject(monsters[0].b.gameObject);
+            es.SetSelectedGameObject(monsters[middleMonster].b.gameObject);
         }
 
         /// <summary>
@@ -222,21 +329,28 @@ namespace Combat {
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// </returns>
         public IEnumerator ExecutePMAttack(Attack a, Monster m) {
-            am.DisableAllActions();
+            actionsPanel.DisableAllActions();
             DisableAllMonsterSelection();
-            yield return StartCoroutine(m.LoseHP(a.damage));
-            if (m.CheckDeath()) {
+
+            yield return StartCoroutine(m.LoseHP(a.damage, a.animationClipName));
+            if (m.CheckDeath()) {           // need to clean this up
                 cq.RemoveCharacter(m.ID);
+                monsters.Remove(m);
+                selectedMonsters.Clear();
+                m.DeselectMonsterButton();
                 yield return StartCoroutine(m.Die());
+            } else {
+                m.DeselectMonsterButton();      // monster doesn't exist if its dead
+                selectedMonsters.Clear();       // don't want to double clear when a monster dies, need to fix this
             }
+
             if (CheckBattleOver()) {
                 EndCombat();
             }
             else {
                 selectedAttack = null;
-                m.DeselectMonsterButton();
-                am.ResetFifthButtonNavigation();
-                monsters[0].SetNavigation(am.GetActionButton(0));
+                actionsPanel.ResetFifthButtonNavigation();
+                SetMonsterNavigation();
 
                 GetNextTurn();
             } 
@@ -259,11 +373,16 @@ namespace Combat {
         /// </summary>
         /// <returns> Yields to allow monster attack animation to play </returns>
         private IEnumerator MonsterTurn() {
+            List<PartyMember> partyMembersToRemove = new List<PartyMember>();
             yield return StartCoroutine(ExecuteMonsterAttack());
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath()) {
                     cq.RemoveCharacter(pm.ID);
+                    partyMembersToRemove.Add(pm);
                 }
+            }
+            foreach (PartyMember pm in partyMembersToRemove) {
+                partyMembers.Remove(pm);
             }
             if (CheckBattleOver()) {
                 EndCombat();
@@ -283,7 +402,6 @@ namespace Combat {
             Attack attackChoice = activeMonster.SelectAttack();
             if (activeMonster.monsterAI == "random") {
                 targetChoice = Random.Range(0, partyMembers.Count);
-                
             }
             else if (activeMonster.monsterAI == "weakHunter") {
                 int weakest = 0;
@@ -294,17 +412,20 @@ namespace Combat {
                 }
                 targetChoice = weakest;
             }
-            yield return (StartCoroutine(activeMonster.Attack()));
-            yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage)));
+
+            yield return (StartCoroutine(activeMonster.PlayAttackAnimation()));
+            if (attackChoice.damage > 0) {
+                yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage, partyMembers[targetChoice] == activePartyMember)));
+            }
         }
 
         /// <summary>
         /// Changes the UI to reflect the first party member in the queue's information
         /// </summary>s
         public void DisplayFirstPartyMember() {
-            activePartyMember = cq.GetFirstPM();        // ActivePartyMember will be redundantly set a second
-            am.SetAttackActions(activePartyMember.attacks);
-            statusManager.Init(activePartyMember);
+            activePartyMember = cq.GetFirstPM();        // ActivePartyMember will be redundantly set a second time
+            actionsPanel.SetAttackActions(activePartyMember.attacks);
+            statusPanel.Init(activePartyMember);
         }
 
         /// <summary>
@@ -312,8 +433,8 @@ namespace Combat {
         /// </summary>s
         public void DisplayActivePartyMember() {
             if (activePartyMember != null) {
-                am.SetAttackActions(activePartyMember.attacks);
-                statusManager.Init(activePartyMember);
+                actionsPanel.SetAttackActions(activePartyMember.attacks);
+                statusPanel.Init(activePartyMember);
             }
         }
 
@@ -322,8 +443,10 @@ namespace Combat {
         /// </summary>
         public void UndoPMAction() {
             selectedAttack = null;
-            monsters[0].SetNavigation(am.GetActionButton(0));
-            am.ResetFifthButtonNavigation();
+            foreach(Monster m in monsters) {
+                m.SetNavigation("down", actionsPanel.GetActionButton(4));
+            }
+            actionsPanel.ResetFifthButtonNavigation();
         }
 
         /// <summary>

@@ -23,7 +23,8 @@ namespace Party {
         public static PartyManager instance;    /// <value> global instance </value>
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
         
-        private List<PartyMember> partyMembers = new List<PartyMember>();
+        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
+        private int maxPartyMembers = 4;                                    /// <value> Max number of partyMembers </value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -40,7 +41,7 @@ namespace Party {
 
         /// <summary>
         /// Adds a party member to the list of party members
-        /// </summary> 
+        /// </summary>   
         /// <param name="className"> Class of the party member to be added </param>
         public void AddPartyMember(string className) {
             GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
