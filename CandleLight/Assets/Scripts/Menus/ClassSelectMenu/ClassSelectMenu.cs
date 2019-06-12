@@ -141,7 +141,8 @@ namespace Menus.ClassSelectMenu {
                 //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1"} ); 
                 //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1"} ); 
                 //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide Alpha LVL3"} ); 
-                GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide Alpha LVL3", "Greyhide LVL1"} ); 
+                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide Alpha LVL3", "Greyhide LVL1"} );
+                GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide Alpha LVL3", "Goblin LVL1"} );  
                 //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide LVL1", "Goblin LVL1"} ); 
                 //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide Alpha LVL3", "Goblin LVL1"} ); 
                 //GameManager.instance.LoadCombatScene(new string[] { "Goblin LVL1", "Greyhide Alpha LVL3", "Greyhide LVL1" });

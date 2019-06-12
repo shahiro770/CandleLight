@@ -141,7 +141,9 @@ namespace Database {
                             newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(4));
                         }
                     }
-
+                    if (newAttack == null) {
+                        Debug.LogError("The name of the searched attack doesn't exist");
+                    }
                     return newAttack;
                 }
             }

@@ -43,7 +43,6 @@ namespace Characters {
         public int attackNum = 0;          /// <value> Number of attacks monster has (max 4) </value>
         public int selectedAttackIndex;    /// <value> Index of attack selected </value>
         
-        
         /// <summary>
         /// Initializes the monster's properties and display
         /// </summary>
@@ -90,6 +89,7 @@ namespace Characters {
             }
 
             SetCamera(); 
+            SetMonsterAnimatorClips();
             
             this.isReady = true;
 
@@ -139,49 +139,56 @@ namespace Characters {
 
             spriteWidth = monsterRect.rect.width;
         }
-
-        /* private void SetAttackAnimations() {
+        
+        /// <summary>
+        /// Sets all monster attack clips in monster animator controller.
+        /// </summary>
+        /// <remark> 
+        /// In Unity, the only way to load in different animations is to create an AnimatorOverrideController, 
+        /// set the animations of the AOC, and then set it to be the runtimeAnimatorController of the given animator 
+        /// Overriding a clip in unity overrides all instances of a clip in an animator controller's
+        /// state machine. If you don't want to take a fat L, make sure to use individual 
+        /// placeholders for each clip you want overridden.
+        /// </remark>
+        public void SetMonsterAnimatorClips() {
             AnimatorOverrideController aoc = new AnimatorOverrideController(monsterAnimator.runtimeAnimatorController);
-            List<KeyValuePair<AnimationClip, AnimationClip>> anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+            List<KeyValuePair<AnimationClip, AnimationClip>> anims = new List<KeyValuePair<AnimationClip, AnimationClip>>(); // first clip is old clip to override, second is new clip
+
             for (int i = 0; i < attackNum; i++) {
-                AnimationClip a = aoc.animationClips[i];
-                //if (a.name == "MonsterAttack1" && need) {
-                    //AnimationClip attackClip = // t = Resources.Load("Assets//texture.jpg", typeof(Texture2D));
-                    //anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(a, anim));
-                //}
+                AnimationClip oldClip = aoc.animationClips[i];
+                string animationClipPath = "AnimationsAndControllers/Animations/" + attacks[i].animationClipName;
+                AnimationClip newClip = Resources.Load<AnimationClip>(animationClipPath);
+                anims.Add(new KeyValuePair<AnimationClip, AnimationClip> (oldClip, newClip));
             }
+            
             aoc.ApplyOverrides(anims);
             monsterAnimator.runtimeAnimatorController = aoc;   
-        } */
+        }
 
         /// <summary>
         /// Sets the animation clip (.anim files cause animation and animationClip are two ****ing different things) 
-        /// for the effects animator for the "attacked" state.
+        /// for the effects animator for the "attackedEffect" state. Used to show the animation of a partyMember's attack.
         /// </summary>
         /// <param name="animationClipName"> Name of animation clip to load </param>
         /// <remark> 
         /// In the future, will need to know which state is being 
         /// changed as a parameter when effects has more than 1 state 
         /// </remark>
-        public void SetEffectsAnimator(string animationClipName) {
-            int attackedAnimationStateIndex = 0;    // constant index of the state in the animator that holds the "attacked" animation
+        public void SetEffectsAnimatorClip(string animationClipName) {
+            int attackedAnimationStateIndex = 0;    // constant index of the state in the animator that is triggered by the "attacked" trigger
 
-            /*
-                In Unity, the only way to load in different animations is to create an AnimatorOverrideController, 
-                set the animations of the AOC, and then set it to be the runtimeAnimatorController of the given animator
-            */
             AnimatorOverrideController aoc = new AnimatorOverrideController(effectsAnimator.runtimeAnimatorController);
             List<KeyValuePair<AnimationClip, AnimationClip>> anims = new List<KeyValuePair<AnimationClip, AnimationClip>>(); // first clip is old clip to override, second is new clip
 
-            AnimationClip attackedClip = Resources.Load<AnimationClip>("AnimationsAndControllers/Animations/" + animationClipName);
+            AnimationClip newClip = Resources.Load<AnimationClip>("AnimationsAndControllers/Animations/" + animationClipName);
 
             for (int i = 0; i < aoc.animationClips.Length; i++) {
-                AnimationClip a = aoc.animationClips[i];
+                AnimationClip oldClip = aoc.animationClips[i];
 
                 if (i == attackedAnimationStateIndex) {
-                    anims.Add(new KeyValuePair<AnimationClip, AnimationClip> (a, attackedClip)); 
+                    anims.Add(new KeyValuePair<AnimationClip, AnimationClip> (oldClip, newClip)); 
                 } else {
-                    anims.Add(new KeyValuePair<AnimationClip, AnimationClip> (a, a));
+                    anims.Add(new KeyValuePair<AnimationClip, AnimationClip> (oldClip, oldClip));
                 }   
             }
             
@@ -235,7 +242,7 @@ namespace Characters {
         public void SetNavigation(string direction, Button b2) {
             Navigation n = b.navigation;
             
-             if (direction == "up") {
+            if (direction == "up") {
                 n.selectOnUp = b2;
                 b.navigation = n;
             }
@@ -275,10 +282,9 @@ namespace Characters {
                 selectedAttackIndex = Random.Range(0, attackNum);
             }
 
-            return attacks[selectedAttackIndex];
+            return attacks[selectedAttackIndex];  
         }
 
-        // need to put yielding logic higher up, combat manager should select attack targets maybe
         public IEnumerator PlayAttackAnimation() {
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "attack" + selectedAttackIndex)));
         }
@@ -295,7 +301,7 @@ namespace Characters {
                 CHP = 0;
             }
             
-            SetEffectsAnimator(animationClipName);
+            SetEffectsAnimatorClip(animationClipName);
             yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
             HPBar.SetCurrent(CHP);
         }
