@@ -690,13 +690,14 @@ MonoBehaviour:
   monsterSprite: {fileID: 5909135346569761772}
   monsterSpriteHolder: {fileID: 586621550330952640}
   effectsAnimator: {fileID: 9202039021361903901}
-  monsterAnimator: {fileID: 1229901191180621477}
+  monsterAnimator: {fileID: 3724190269095448903}
   b: {fileID: 8848571942937455294}
   HPBar: {fileID: 5904602688543524742}
   <monsterSize>k__BackingField: 
   <monsterNameID>k__BackingField: 
   <monsterDisplayName>k__BackingField: 
   <monsterAI>k__BackingField: 
+  <spriteWidth>k__BackingField: 0
   <isReady>k__BackingField: 0
   vectorSize: {x: 0, y: 0}
   bts: {fileID: 0}
@@ -806,7 +807,7 @@ GameObject:
   - component: {fileID: 8078056807557890366}
   - component: {fileID: 4707869331749790050}
   - component: {fileID: 5909135346569761772}
-  - component: {fileID: 1229901191180621477}
+  - component: {fileID: 3724190269095448903}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -870,7 +871,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!95 &1229901191180621477
+--- !u!95 &3724190269095448903
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
