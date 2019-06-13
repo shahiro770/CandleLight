@@ -139,9 +139,12 @@ namespace Combat {
             DisplayActivePartyMember();
             EnableAllMonsterSelection();
             actionsPanel.EnableAllActions();
+<<<<<<< HEAD
             actionsPanel.SetHorizontalNavigation(partyPanel);
             partyPanel.EnableButtons();
             partyPanel.SetHorizontalNavigation(actionsPanel);
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
         }
 
         /// <summary>
@@ -317,7 +320,10 @@ namespace Combat {
                 m.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
             actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].b);
+<<<<<<< HEAD
             partyPanel.SetHorizontalNavigation(actionsPanel);
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
 
             es.SetSelectedGameObject(monsters[middleMonster].b.gameObject);
         }
@@ -331,11 +337,17 @@ namespace Combat {
         /// <param name="m"> Monster to be attacked </param>
         /// <returns> 
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
+<<<<<<< HEAD
         /// Need to split this up into a cleanup phase function
         /// </returns>
         public IEnumerator ExecutePMAttack(Attack a, Monster m) {
             actionsPanel.DisableAllActions();
             partyPanel.DisableButtons();
+=======
+        /// </returns>
+        public IEnumerator ExecutePMAttack(Attack a, Monster m) {
+            actionsPanel.DisableAllActions();
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
             DisableAllMonsterSelection();
 
             yield return StartCoroutine(m.LoseHP(a.damage, a.animationClipName));
@@ -356,7 +368,10 @@ namespace Combat {
             else {
                 selectedAttack = null;
                 actionsPanel.ResetFifthButtonNavigation();
+<<<<<<< HEAD
 
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
                 SetMonsterNavigation();
 
                 GetNextTurn();
@@ -454,7 +469,10 @@ namespace Combat {
                 m.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
             actionsPanel.ResetFifthButtonNavigation();
+<<<<<<< HEAD
             partyPanel.SetHorizontalNavigation(actionsPanel);
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
         }
 
         /// <summary>

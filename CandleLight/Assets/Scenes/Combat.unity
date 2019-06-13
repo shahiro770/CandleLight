@@ -748,17 +748,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
+<<<<<<< HEAD
     m_Mode: 4
+=======
+    m_Mode: 0
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
+<<<<<<< HEAD
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 0.5019608}
+=======
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2744,17 +2755,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
+<<<<<<< HEAD
     m_Mode: 4
+=======
+    m_Mode: 0
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
+<<<<<<< HEAD
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 0.5019608}
+=======
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3894,7 +3916,10 @@ MonoBehaviour:
   classIcon: {fileID: 1849394752}
   HPBar: {fileID: 1289275756}
   MPBar: {fileID: 307540985}
+<<<<<<< HEAD
   b: {fileID: 788725896}
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
 --- !u!1 &528712303
 GameObject:
   m_ObjectHideFlags: 0
@@ -4445,7 +4470,10 @@ MonoBehaviour:
   classIcon: {fileID: 1767743277}
   HPBar: {fileID: 637264721}
   MPBar: {fileID: 747382076}
+<<<<<<< HEAD
   b: {fileID: 259178155}
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
 --- !u!1 &712928266
 GameObject:
   m_ObjectHideFlags: 0
@@ -5205,17 +5233,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
+<<<<<<< HEAD
     m_Mode: 4
+=======
+    m_Mode: 0
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
+<<<<<<< HEAD
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 0.5019608}
+=======
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -5792,7 +5831,10 @@ MonoBehaviour:
   classIcon: {fileID: 198495400}
   HPBar: {fileID: 1658987484}
   MPBar: {fileID: 1108839291}
+<<<<<<< HEAD
   b: {fileID: 2058210390}
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
 --- !u!1 &918379353
 GameObject:
   m_ObjectHideFlags: 0
@@ -8419,7 +8461,11 @@ GameObject:
   - component: {fileID: 1216048675}
   - component: {fileID: 1216048674}
   m_Layer: 5
+<<<<<<< HEAD
   m_Name: StatusPanel
+=======
+  m_Name: StatusCanvas
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11030,7 +11076,10 @@ MonoBehaviour:
   classIcon: {fileID: 1969698472}
   HPBar: {fileID: 836720511}
   MPBar: {fileID: 96405676}
+<<<<<<< HEAD
   b: {fileID: 93603782}
+=======
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
 --- !u!1 &1596688149
 GameObject:
   m_ObjectHideFlags: 0
@@ -14276,17 +14325,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
+<<<<<<< HEAD
     m_Mode: 4
+=======
+    m_Mode: 0
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
+<<<<<<< HEAD
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 0.5019608}
+=======
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+>>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
