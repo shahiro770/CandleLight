@@ -66,5 +66,9 @@ namespace Party {
 
             return partyMembers;
         }
+
+        public int GetNumPartyMembers() {
+            return partyMembers.Count;
+        }
     }
 }

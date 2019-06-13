@@ -190,6 +190,26 @@ namespace PlayerUI {
             }
         }
 
+        public void SetHorizontalNavigation(Panel p) {
+            if (p.GetPanelName() == "party") {
+                if (actions[3].isEnabled) {
+                    SetButtonNavigation(3, "right", p.GetNavigatableButton());
+                }
+                else if (actions[2].isEnabled ) {
+                    SetButtonNavigation(2, "right", p.GetNavigatableButton());
+                }
+                if (actions[1].isEnabled) {
+                    SetButtonNavigation(1, "right", p.GetNavigatableButton());
+                }
+                else if (actions[0].isEnabled ) {
+                    SetButtonNavigation(0, "right", p.GetNavigatableButton());
+                }
+                if (actions[4].isEnabled) {
+                    SetButtonNavigation(4, "right", p.GetNavigatableButton());
+                }
+            }
+        }
+
         /// <summary>
         /// Resets the navigation of the fifth button (flee, undo)
         /// </summary>

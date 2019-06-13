@@ -139,6 +139,9 @@ namespace Combat {
             DisplayActivePartyMember();
             EnableAllMonsterSelection();
             actionsPanel.EnableAllActions();
+            actionsPanel.SetHorizontalNavigation(partyPanel);
+            partyPanel.EnableButtons();
+            partyPanel.SetHorizontalNavigation(actionsPanel);
         }
 
         /// <summary>
@@ -314,6 +317,7 @@ namespace Combat {
                 m.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
             actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].b);
+            partyPanel.SetHorizontalNavigation(actionsPanel);
 
             es.SetSelectedGameObject(monsters[middleMonster].b.gameObject);
         }
@@ -327,9 +331,11 @@ namespace Combat {
         /// <param name="m"> Monster to be attacked </param>
         /// <returns> 
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
+        /// Need to split this up into a cleanup phase function
         /// </returns>
         public IEnumerator ExecutePMAttack(Attack a, Monster m) {
             actionsPanel.DisableAllActions();
+            partyPanel.DisableButtons();
             DisableAllMonsterSelection();
 
             yield return StartCoroutine(m.LoseHP(a.damage, a.animationClipName));
@@ -350,6 +356,7 @@ namespace Combat {
             else {
                 selectedAttack = null;
                 actionsPanel.ResetFifthButtonNavigation();
+
                 SetMonsterNavigation();
 
                 GetNextTurn();
@@ -447,6 +454,7 @@ namespace Combat {
                 m.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
             actionsPanel.ResetFifthButtonNavigation();
+            partyPanel.SetHorizontalNavigation(actionsPanel);
         }
 
         /// <summary>
