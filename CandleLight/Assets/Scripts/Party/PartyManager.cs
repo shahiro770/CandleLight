@@ -66,12 +66,9 @@ namespace Party {
 
             return partyMembers;
         }
-<<<<<<< HEAD
 
         public int GetNumPartyMembers() {
             return partyMembers.Count;
         }
-=======
->>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     }
 }

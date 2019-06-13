@@ -190,7 +190,6 @@ namespace PlayerUI {
             }
         }
 
-<<<<<<< HEAD
         public void SetHorizontalNavigation(Panel p) {
             if (p.GetPanelName() == "party") {
                 if (actions[3].isEnabled) {
@@ -211,8 +210,6 @@ namespace PlayerUI {
             }
         }
 
-=======
->>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
         /// <summary>
         /// Resets the navigation of the fifth button (flee, undo)
         /// </summary>

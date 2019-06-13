@@ -21,10 +21,7 @@ namespace PlayerUI {
         public Image classIcon;     /// <value> Icon of class </value>
         public Bar HPBar;           /// <value> Visual for health points </value>
         public Bar MPBar;           /// <value> Visual for mana points </value>
-<<<<<<< HEAD
         public Button b;            /// <value> Button to make display clickable for more info </value>
-=======
->>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
 
         private PartyMember pm;     /// <value> PartyMember the display is referring to <value>
 
@@ -47,7 +44,6 @@ namespace PlayerUI {
         public void UpdateDisplay() {
             HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
         }
-<<<<<<< HEAD
         
         public void SetNavigation(string direction, Button b2) {
             Navigation n = b.navigation;
@@ -81,7 +77,5 @@ namespace PlayerUI {
             b.interactable = false;
             classIcon.raycastTarget = false;
         }
-=======
->>>>>>> c9f502a07ca3538ce1c2a527cdb251c2bb101438
     }
 }
