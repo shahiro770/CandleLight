@@ -30,9 +30,11 @@ namespace Combat {
         /// </summary>
         /// <param name="name"> Name of attack </param>
         /// <param name="damage"> Amount of damage attack deals </param>
-        public Attack(string name, int damage, string animationClipName) {
+        public Attack(string name, int damage, int cost, string costType, string animationClipName) {
             this.name = name;
             this.damage = damage;
+            this.cost = cost;
+            this.costType = costType;
             this.animationClipName = animationClipName; 
             nameKey = name.ToLower() + "_attack";
         }

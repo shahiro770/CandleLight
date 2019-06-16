@@ -102,7 +102,8 @@ namespace UIEffects {
             }
             else if (blockType == "normalAlternate") {
                 normalAlternateBlock = cb;
-            } else {
+            }
+            else {
                 Debug.Log("invalid type");
             }
         }

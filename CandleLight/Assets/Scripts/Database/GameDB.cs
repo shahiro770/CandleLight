@@ -135,10 +135,10 @@ namespace Database {
 
                     if (reader.Read()) {
                         if (isMonster) {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3));
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5));
                         }
                         else {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(4));
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(6));
                         }
                     }
                     if (newAttack == null) {

@@ -888,6 +888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: back_button
   meshText: {fileID: 181506014}
+  keyText: 
 --- !u!1 &233022015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,6 +1453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: continue_button
   meshText: {fileID: 355129992}
+  keyText: 
 --- !u!1 &408745648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,6 +1632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: select_button
   meshText: {fileID: 408745650}
+  keyText: 
 --- !u!1 &521401050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,7 +2713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a43bc639dc34e529703dc877533e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  i: {fileID: 0}
   firstToSelect: {fileID: 354710306}
 --- !u!222 &1096479831
 CanvasRenderer:
@@ -3932,6 +3934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: select_class_title
   meshText: {fileID: 1358434001}
+  keyText: 
 --- !u!1 &1421687523
 GameObject:
   m_ObjectHideFlags: 0
@@ -4161,6 +4164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1509283230}
+  keyText: 
 --- !u!114 &1509283230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4461,6 +4465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1644324721}
+  keyText: 
 --- !u!1 &1780937547
 GameObject:
   m_ObjectHideFlags: 0
@@ -4817,6 +4822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: quit_button
   meshText: {fileID: 1796011159}
+  keyText: 
 --- !u!1 &1826392976
 GameObject:
   m_ObjectHideFlags: 0
@@ -5154,6 +5160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: new_game_button
   meshText: {fileID: 1851971285}
+  keyText: 
 --- !u!1 &1896891082
 GameObject:
   m_ObjectHideFlags: 0
@@ -5470,6 +5477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: options_button
   meshText: {fileID: 1927327835}
+  keyText: 
 --- !u!1 &1937829172
 GameObject:
   m_ObjectHideFlags: 0
@@ -5699,3 +5707,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: candleLight_title
   meshText: {fileID: 2039919659}
+  keyText: 

@@ -139,6 +139,7 @@ namespace Combat {
             DisplayActivePartyMember();
             EnableAllMonsterSelection();
             actionsPanel.EnableAllActions();
+            actionsPanel.CheckAndSetActionsToUnusable(activePartyMember.CMP, activePartyMember.CHP);
             actionsPanel.SetHorizontalNavigation(partyPanel);
             partyPanel.EnableButtons();
             partyPanel.SetHorizontalNavigation(actionsPanel);
@@ -161,18 +162,15 @@ namespace Combat {
         /// <param name="monsterToSelect"> Monster to select </param>
         /// <remark> Will probably make a UI info popup when clicking on monsters with no attack in the future </remark>
         public void SelectMonster(Monster monsterToSelect) {
-            foreach (Monster m in selectedMonsters) {
-                m.DeselectMonsterButton();
-            }
-
-            selectedMonsters.Clear();
+            DeselectMonsters();
+            
             selectedMonsters.Add(monsterToSelect);
 
             // Player can freely click on monsters without having an attack selected
             // Will probably make a UI popup when clicking on monsters with no attack in the future
             if (selectedAttack != null) {
                 monsterToSelect.SelectMonsterButton();
-                StartCoroutine(ExecutePMAttack(selectedAttack, monsterToSelect));
+                StartCoroutine(ExecutePMAttack(selectedAttack, monsterToSelect));     
             }
         }
 
@@ -181,16 +179,20 @@ namespace Combat {
         /// </summary>
         /// <param name="monstersToSelect"> Monsters to select </param>
         /// <remark> Needs to be worked on for the future </remark>
-        public void SelectMonster(List<Monster> monstersToSelect) {
-            foreach (Monster m in selectedMonsters) {
-                m.DeselectMonsterButton();
-            }
-            selectedMonsters.Clear();
+        /* public void SelectMonster(List<Monster> monstersToSelect) {
+            DeselectMonsters();
 
             foreach (Monster m in monstersToSelect) {
                 m.SelectMonsterButton();
                 selectedMonsters.Add(m);
             }
+        }*/
+
+        public void DeselectMonsters() {
+            foreach (Monster m in selectedMonsters) {
+                m.DeselectMonsterButton();
+            }
+            selectedMonsters.Clear();
         }
 
         /// <summary>
@@ -338,23 +340,26 @@ namespace Combat {
             partyPanel.DisableButtons();
             DisableAllMonsterSelection();
 
+            yield return StartCoroutine(activePartyMember.PayAttackCost(a.costType, a.cost));
             yield return StartCoroutine(m.LoseHP(a.damage, a.animationClipName));
+            
             if (m.CheckDeath()) {           // need to clean this up
                 cq.RemoveCharacter(m.ID);
                 monsters.Remove(m);
-                selectedMonsters.Clear();
-                m.DeselectMonsterButton();
+                DeselectMonsters();
                 yield return StartCoroutine(m.Die());
-            } else {
-                m.DeselectMonsterButton();      // monster doesn't exist if its dead
-                selectedMonsters.Clear();       // don't want to double clear when a monster dies, need to fix this
             }
 
+            EndTurn();
+        }
+
+        public void EndTurn() {
             if (CheckBattleOver()) {
                 EndCombat();
             }
             else {
                 selectedAttack = null;
+                DeselectMonsters();
                 actionsPanel.ResetFifthButtonNavigation();
                 SetMonsterNavigation();
 
@@ -452,6 +457,7 @@ namespace Combat {
             foreach(Monster m in monsters) {
                 m.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
+            actionsPanel.CheckAndSetActionsToUnusable(activePartyMember.CMP, activePartyMember.CHP);
             actionsPanel.ResetFifthButtonNavigation();
             partyPanel.SetHorizontalNavigation(actionsPanel);
         }

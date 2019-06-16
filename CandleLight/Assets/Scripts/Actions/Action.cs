@@ -25,7 +25,8 @@ namespace Actions {
         public Button b { get; private set; }       /// <value> Button component </value>
         public LocalizedText actionText;            /// <value> Text to be displayed </value>
         public string actionType { get; set; }      /// <value> Action type (Attack, flee, undo) </value>
-        public bool isEnabled { get; private set; } = true;     /// <value> Flag for if action button is disabled </value>
+        public bool isEnabled { get; private set; } = true;  /// <value> Flag for if action button is disabled </value>
+        public bool isUsable { get; private set; } = true;   /// <value> Flag for if action button is usable </value>
 
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
         private Image i;                            /// <value> Button's sprite </value>
@@ -39,6 +40,16 @@ namespace Actions {
             bts = GetComponent<ButtonTransitionState>();
             i = GetComponent<Image>();
             t = GetComponentInChildren<TextMeshProUGUI>();
+
+            ColorBlock normalBlock = b.colors; 
+            ColorBlock unusableBlock = b.colors;
+            
+            unusableBlock.normalColor = new Color32(196, 36, 48, 255);
+            unusableBlock.highlightedColor = new Color32(255, 0, 64, 255);
+            unusableBlock.pressedColor = unusableBlock.normalColor;
+
+            bts.SetColorBlock("normal", normalBlock);
+            bts.SetColorBlock("normalAlternate", unusableBlock);
         }
 
         /// <summary>
@@ -83,7 +94,9 @@ namespace Actions {
         /// Change button display to show it is selected after user navigates away from it after selecting
         /// </summary>
         public void SelectAction() {
-            bts.SetColor("pressed");
+            //if (isUsable) {
+                bts.SetColor("pressed");
+            //}
         }
 
         /// <summary>
@@ -134,6 +147,20 @@ namespace Actions {
             isEnabled = true;
             b.interactable = true;
             i.raycastTarget = true;
+
+            if (isUsable == false) {
+                SetUsable();
+            }
+        }
+
+        public void SetUnusable() {
+            isUsable = false;
+            bts.SetColor("normalAlternate");
+        }
+
+        public void SetUsable() {
+            isUsable = true;
+            bts.SetColor("normal");
         }
     }
 }

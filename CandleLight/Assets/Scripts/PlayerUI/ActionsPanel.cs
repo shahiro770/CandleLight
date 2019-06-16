@@ -71,7 +71,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="a"> Name of action to be taken </param>
         public void SelectAction(Action a) {
-            if (a.actionType == "attack") {
+            if (a.actionType == "attack" && a.isUsable) {
                 a.SelectAction();               // attack actions will show which attack is selected while user decides what to do next
                 selectedAction = a;
                 AttackActionSelected(a.a);
@@ -146,7 +146,7 @@ namespace PlayerUI {
         /// Disables all useable actions
         /// </summary>
         public void DisableAllActions() {
-            for (int i = 0; i < actions.Length;i++) {
+            for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType != "none") {
                     actions[i].Disable();  
                 } 
@@ -160,6 +160,25 @@ namespace PlayerUI {
         /// <returns> The button component of the action </returns>
         public Button GetActionButton(int index) {
             return actions[index].b;
+        }
+
+        public void CheckAndSetActionsToUnusable(int CMP, int CHP) {
+             for (int i = 0; i < actions.Length - 1; i++) {
+                if (actions[i].actionType == "attack") {
+                    Attack a = actions[i].a;
+
+                    if (a.costType == "MP") {
+                        if (a.cost > CMP) {
+                            actions[i].SetUnusable();
+                        }
+                    }
+                    else if (a.costType == "HP") {
+                        if (a.cost > CHP) {
+                            actions[i].SetUnusable();
+                        }
+                    }
+                } 
+            } 
         }
 
         /// <summary>

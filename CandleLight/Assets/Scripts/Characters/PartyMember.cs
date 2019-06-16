@@ -66,6 +66,33 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Reduce the PartyMember's current health points by a specified amount.false
+        /// IEnumerator is used to make calling function wait for its completion
+        /// </summary> 
+        /// <param name="amount"> Amount of health points lost </param>
+        /// <param name="isActive"> Active party member is the one who's information 
+        /// is displayed in the status panel, true if active, false otherwise </param>
+        public IEnumerator LoseMP(int amount, bool isActive) {
+            CMP -= amount;
+            
+            if (isActive) {
+                MPBar.SetCurrent(CMP);  // update visually
+            }
+            PartyPanelMPBar.SetCurrent(CMP);
+
+            yield break;
+        }
+
+        public IEnumerator PayAttackCost(string costType, int cost) {
+            if (costType == "MP") {
+                yield return StartCoroutine(LoseMP(cost , true));
+            } 
+            else if (costType == "HP") {
+                yield return StartCoroutine(LoseHP(cost , true));
+            }
+        }
+
+        /// <summary>
         /// Check if the party member is dead
         /// </summary>
         /// <returns></returns>
