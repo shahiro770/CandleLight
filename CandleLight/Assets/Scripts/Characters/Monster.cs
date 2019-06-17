@@ -24,24 +24,24 @@ namespace Characters {
 
     public class Monster : Character {
         
+        public Animator effectsAnimator;    /// <value> Animator for all effects played over-top of monster </value>
+        public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
+        public Bar HPBar;                   /// <value> Monster's health points display </value>
+        public Button b;                    /// <value> button to make monster selectable </value>
+        public ButtonTransitionState bts;  /// <value> Button's visual state controller </value>
         public Canvas monsterCanvas;        /// <value> Monster's personal canvas to display UI elements and minimize repainting </value>
         public Image monsterSprite;         /// <value> Monster's sprite </value>
         public RectTransform monsterSpriteHolder;       /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
-        public Animator effectsAnimator;    /// <value> Animator for all effects played over-top of monster </value>
-        public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
-        public Button b;                    /// <value> button to make monster selectable </value>
-        public Bar HPBar;                   /// <value> Monster's health points display </value>
+        public Vector2 vectorSize;         /// <value> Size of monster's sprite </value>
+        public int attackNum = 0;          /// <value> Number of attacks monster has (max 4) </value>
+        public int selectedAttackIndex;    /// <value> Index of attack selected </value>
+        
         [field: SerializeField] public string monsterSize { get; private set; }             /// <value> String constant describing size of monster's sprite </value>
         [field: SerializeField] public string monsterNameID { get; private set; }           /// <value> NameID as referenced in database </value>
         [field: SerializeField] public string monsterDisplayName { get; private set; }      /// <value> Monster name <value>
         [field: SerializeField] public string monsterAI { get; private set; }               /// <value> Monster's behaviour </value>
         [field: SerializeField] public float spriteWidth { get; private set; }              /// <value> Width of sprite rect transform </value>
         [field: SerializeField] public bool isReady { get; private set; } = false;          /// <value> Monster finished loading </value>
-
-        public Vector2 vectorSize;         /// <value> Size of monster's sprite </value>
-        public ButtonTransitionState bts;  /// <value> Button's visual state controller </value>
-        public int attackNum = 0;          /// <value> Number of attacks monster has (max 4) </value>
-        public int selectedAttackIndex;    /// <value> Index of attack selected </value>
         
         /// <summary>
         /// Initializes the monster's properties and display

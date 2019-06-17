@@ -135,15 +135,17 @@ namespace Database {
 
                     if (reader.Read()) {
                         if (isMonster) {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(5));
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5));
                         }
                         else {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetInt32(3), reader.GetString(4), reader.GetString(6));
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(6));
                         }
                     }
+                    
                     if (newAttack == null) {
                         Debug.LogError("The name of the searched attack doesn't exist");
                     }
+
                     return newAttack;
                 }
             }

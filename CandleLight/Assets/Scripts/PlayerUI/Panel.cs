@@ -3,8 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: June 9, 2019
 * 
-* The Panel class manages various visuals that show the player the status of all members
-* of their party. 
+* The Panel class is an abstract class 
 *
 */
 
@@ -17,10 +16,18 @@ namespace PlayerUI {
 
     public class Panel : MonoBehaviour {
 
+        /// <summary>
+        /// Returns the name of this panel
+        /// </summary>
+        /// <returns> Name of panel </returns>
         public virtual string GetPanelName() {
             return null;
         }
         
+        /// <summary>
+        /// Returns the Button that adjacent panels will navigate to
+        /// </summary>
+        /// <returns> Button to be navigated to </returns>
         public virtual Button GetNavigatableButton() {
             return null;
         }

@@ -99,7 +99,7 @@ namespace Combat {
         /// </summary>
         private void StartCombat() {
             DisplayFirstPartyMember();          // active party member is not set
-            actionsPanel.DisableAllActions();   // actions are all disabled until game determines who moves first
+            actionsPanel.SetAllActionsUninteractable();   // actions are disabled until its a partyMember's turn (might not be the first)
             GetNextTurn();
         }
 
@@ -126,7 +126,7 @@ namespace Combat {
                 PlayerTurn();
             } else {
                 if (prevTurn == PMTURN) {
-                    actionsPanel.DisableAllActions();
+                    actionsPanel.SetAllActionsUninteractable();
                 }
                 StartCoroutine(MonsterTurn());
             }
@@ -138,9 +138,8 @@ namespace Combat {
         private void PlayerTurn() {
             DisplayActivePartyMember();
             EnableAllMonsterSelection();
-            actionsPanel.EnableAllActions();
-            actionsPanel.CheckAndSetActionsToUnusable(activePartyMember.CMP, activePartyMember.CHP);
-            actionsPanel.SetHorizontalNavigation(partyPanel);
+            SetMonsterNavigation();
+            actionsPanel.SetHorizontalNavigation(partyPanel); // temporary, in the future will need to check adjacent panels first
             partyPanel.EnableButtons();
             partyPanel.SetHorizontalNavigation(actionsPanel);
         }
@@ -336,7 +335,7 @@ namespace Combat {
         /// Need to split this up into a cleanup phase function
         /// </returns>
         public IEnumerator ExecutePMAttack(Attack a, Monster m) {
-            actionsPanel.DisableAllActions();
+            actionsPanel.SetAllActionsUninteractable();
             partyPanel.DisableButtons();
             DisableAllMonsterSelection();
 
@@ -360,8 +359,6 @@ namespace Combat {
             else {
                 selectedAttack = null;
                 DeselectMonsters();
-                actionsPanel.ResetFifthButtonNavigation();
-                SetMonsterNavigation();
 
                 GetNextTurn();
             } 
@@ -435,18 +432,16 @@ namespace Combat {
         /// </summary>s
         public void DisplayFirstPartyMember() {
             activePartyMember = cq.GetFirstPM();        // ActivePartyMember will be redundantly set a second time
-            actionsPanel.SetAttackActions(activePartyMember.attacks);
-            statusPanel.Init(activePartyMember);
+            actionsPanel.DisplayPartyMember(activePartyMember);
+            statusPanel.DisplayPartyMember(activePartyMember);
         }
 
         /// <summary>
         /// Changes the UI to reflect the active party member's information
         /// </summary>s
         public void DisplayActivePartyMember() {
-            if (activePartyMember != null) {
-                actionsPanel.SetAttackActions(activePartyMember.attacks);
-                statusPanel.Init(activePartyMember);
-            }
+            actionsPanel.DisplayPartyMember(activePartyMember);
+            statusPanel.DisplayPartyMember(activePartyMember);
         }
 
         /// <summary>
@@ -455,10 +450,9 @@ namespace Combat {
         public void UndoPMAction() {
             selectedAttack = null;
             foreach(Monster m in monsters) {
-                m.SetNavigation("down", actionsPanel.GetActionButton(4));
+                m.SetNavigation("down", actionsPanel.GetActionButton(0));
             }
-            actionsPanel.CheckAndSetActionsToUnusable(activePartyMember.CMP, activePartyMember.CHP);
-            actionsPanel.ResetFifthButtonNavigation();
+
             partyPanel.SetHorizontalNavigation(actionsPanel);
         }
 
@@ -479,9 +473,5 @@ namespace Combat {
                 m.EnableInteraction();
             }
         }
-
-        /* private void SetStatus() {
-            statusManager.Init(activePartyMember);
-        } */
     }
 }

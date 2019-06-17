@@ -68,7 +68,7 @@ namespace UIEffects {
         }
 
         /// <summary>
-        /// Sets the colour of the button depending on the type
+        /// Sets the colour block of the button depending on the type
         /// </summary>
         /// <param name="type"> String indicating which colour to become the normal colour </param>
         public void SetColor(string type) {
@@ -86,7 +86,8 @@ namespace UIEffects {
             }
             else if (type == "disabled") {
                 b.colors = disabledBlock;
-            } else {
+            } 
+            else {
                 Debug.Log("invalid type");
             }
         }
@@ -127,7 +128,8 @@ namespace UIEffects {
             else if (type == "disabled") {
                 i.sprite = disabledState.disabledSprite;
                 b.spriteState = disabledState;
-            } else {
+            } 
+            else {
                 Debug.Log("invalid type");
             }
         }

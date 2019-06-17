@@ -10239,7 +10239,7 @@ GameObject:
   - component: {fileID: 1446953936}
   - component: {fileID: 1446953937}
   m_Layer: 5
-  m_Name: EffectBar
+  m_Name: EffectsBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13317,7 +13317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HPBar: {fileID: 936229385}
   MPBar: {fileID: 1508976853}
-  effectBar: {fileID: 1446953937}
+  effectsBar: {fileID: 1446953937}
 --- !u!1 &1991115680
 GameObject:
   m_ObjectHideFlags: 0

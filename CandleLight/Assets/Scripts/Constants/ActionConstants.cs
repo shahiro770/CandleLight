@@ -7,7 +7,7 @@
 *
 */
 
-namespace Actions {
+namespace Constants {
 
     public static class ActionConstants {
 

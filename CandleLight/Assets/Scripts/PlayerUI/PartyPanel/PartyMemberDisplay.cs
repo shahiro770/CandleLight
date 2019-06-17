@@ -9,6 +9,7 @@
 */
 
 using Characters;
+using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,19 +33,14 @@ namespace PlayerUI {
         public void Init(PartyMember pm) {
             this.pm = pm;
             classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
-            pm.PartyPanelHPBar = HPBar;
-            pm.PartyPanelMPBar = MPBar;
-            HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
-            MPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
-        }
-
-        /// <summary>
-        /// Updates the display to show the health of a partyMember
-        /// </summary>
-        public void UpdateDisplay() {
-            HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+            pm.SetHPAndMPBar(PanelConstants.PARTYPANEL, HPBar, MPBar);
         }
         
+        /// <summary>
+        /// Sets navigation from PartyMemberDisplay's button to another button
+        /// </summary>
+        /// <param name="direction"> Direction button pressed to navigate </param>
+        /// <param name="b2"> Other button </param>
         public void SetNavigation(string direction, Button b2) {
             Navigation n = b.navigation;
 
@@ -68,11 +64,17 @@ namespace PlayerUI {
             b.navigation = n;
         }
 
+        /// <summary>
+        /// Enables the button, making it clickable
+        /// </summary>
         public void Enable() {
             b.interactable = true;
             classIcon.raycastTarget = true;
         }
 
+        /// <summary>
+        /// Enables the button, making it clickable
+        /// </summary>
         public void Disable() {
             b.interactable = false;
             classIcon.raycastTarget = false;

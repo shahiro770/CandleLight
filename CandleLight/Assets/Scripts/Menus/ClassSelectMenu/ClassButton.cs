@@ -20,7 +20,6 @@ namespace Menus.ClassSelectMenu {
     public class ClassButton : MonoBehaviour {
         
         public Button b;                                    /// <value> Button component of the attached GO </value>
-        
         public string classString;                          /// <value> String of class, can't be a property because unity won't allow inspector access </value>    
         public bool isReady { get; private set; } = false;  /// <value> Flag for when button is ready for other scripts to reference </value>
         

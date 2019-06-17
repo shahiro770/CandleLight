@@ -44,10 +44,12 @@ namespace Party {
         /// </summary>   
         /// <param name="className"> Class of the party member to be added </param>
         public void AddPartyMember(string className) {
-            GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
-            GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
-            newMember.transform.SetParent(gameObject.transform, false);
-            partyMembers.Add(newMember.GetComponent<PartyMember>());
+            if (partyMembers.Count < maxPartyMembers) {
+                GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
+                GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
+                newMember.transform.SetParent(gameObject.transform, false);
+                partyMembers.Add(newMember.GetComponent<PartyMember>());
+            }
         }
         
         /// <summary>

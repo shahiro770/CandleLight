@@ -5,9 +5,11 @@
 * 
 * The Action class is used to take decisions on the UI.
 * The action can be an attack, dialog option, a direction to travel in, or more, depending on the event.
+* All actions are interactable (can be clicked and navigated to) by default.
 *
 */
 
+using ActionConstants = Constants.ActionConstants;
 using Combat;
 using Localization;
 using System.Collections;
@@ -25,7 +27,6 @@ namespace Actions {
         public Button b { get; private set; }       /// <value> Button component </value>
         public LocalizedText actionText;            /// <value> Text to be displayed </value>
         public string actionType { get; set; }      /// <value> Action type (Attack, flee, undo) </value>
-        public bool isEnabled { get; private set; } = true;  /// <value> Flag for if action button is disabled </value>
         public bool isUsable { get; private set; } = true;   /// <value> Flag for if action button is usable </value>
 
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
@@ -46,7 +47,7 @@ namespace Actions {
             
             unusableBlock.normalColor = new Color32(196, 36, 48, 255);
             unusableBlock.highlightedColor = new Color32(255, 0, 64, 255);
-            unusableBlock.pressedColor = unusableBlock.normalColor;
+            unusableBlock.pressedColor = new Color32(120, 36, 48, 255);
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColorBlock("normalAlternate", unusableBlock);
@@ -65,8 +66,7 @@ namespace Actions {
             } 
             else if (actionType == ActionConstants.NONE) {
                 SetKey("none_action");
-                this.actionType = "none";
-                Disable();
+                SetInteractable(false);
             }
 
             this.actionType = actionType;
@@ -81,8 +81,9 @@ namespace Actions {
             if (actionType == ActionConstants.ATTACK) {
                 if (a.nameKey == "none_attack") {   // disable action if it does nothing
                     this.actionType = "none";
-                    Disable();
-                } else {
+                    SetInteractable(false);
+                } 
+                else {
                     this.a = a;
                     this.actionType = actionType;
                 }
@@ -91,76 +92,54 @@ namespace Actions {
         }
 
         /// <summary>
-        /// Change button display to show it is selected after user navigates away from it after selecting
+        /// Change button colour to show it is selected after user navigates away from it after selecting
         /// </summary>
-        public void SelectAction() {
-            //if (isUsable) {
-                bts.SetColor("pressed");
-            //}
+        public void ShowActionSelected() {
+            bts.SetColor("pressed");
         }
 
         /// <summary>
-        /// Change button display back to default
+        /// Change button colour back to default
         /// </summary>
-        public void UnselectAction() {
+        public void ShowActionUnselected() {
             bts.SetColor("normal");
         }
+
+        /// <summary>
+        /// Sets the interactivity of the action's button, and handles consequences
+        /// </summary>
+        /// <param name="value"> Enable interactivity on true and disable on false </param>
+        public void SetInteractable(bool value) {
+            b.interactable = value;
+            i.raycastTarget = value;
+
+            if (value == false && isUsable == true) {
+                Debug.Log(actionText.keyText);
+                ShowActionUnselected();   
+            }            
+        }
         
+        public bool IsInteractable() {
+            return b.interactable;
+        }
+
+        public void SetUsable(bool value) {
+            isUsable = value;
+
+            if (value == true) {
+                bts.SetColor("normal");
+            }
+            else {
+                bts.SetColor("normalAlternate");
+            }
+        }
+
         /// <summary>
         /// Sets the text to be displayed
         /// </summary>
         /// <param name="key"> String key that corresponds to dictionary </param>
         public void SetKey(string key) {
             actionText.SetKey(key);
-        }
-
-        /// <summary>
-        /// Only disable button interaction, regardless of appearance, prevents the button from being spammed
-        /// </summary>
-        public void DisableInteraction() {
-            b.interactable = false;
-        }
-
-        /// <summary>
-        /// Disables the button, both visually and functionally
-        /// </summary>
-        public void Disable() {
-            UnselectAction();
-            isEnabled = false;          
-            b.interactable = false;     // will make normal spriteState show disabled sprite
-            i.raycastTarget = false;
-        }
-
-        /// <summary>
-        /// Disables the button, only functionally
-        /// </summary>
-        public void FunctionallyDisable() {
-            isEnabled = false;          
-            b.interactable = false;
-            i.raycastTarget = false;
-        }
-
-        /// <summary>
-        /// Enables the button, both visually and functionally
-        /// </summary>
-        public void Enable() {
-            isEnabled = true;
-            b.interactable = true;
-            i.raycastTarget = true;
-
-            if (isUsable == false) {
-                SetUsable();
-            }
-        }
-
-        public void SetUnusable() {
-            isUsable = false;
-            bts.SetColor("normalAlternate");
-        }
-
-        public void SetUsable() {
-            isUsable = true;
-            bts.SetColor("normal");
         }
     }
 }

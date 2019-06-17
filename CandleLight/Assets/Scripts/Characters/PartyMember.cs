@@ -9,6 +9,7 @@
 */
 
 using Combat;
+using PanelConstants = Constants.PanelConstants;
 using PlayerUI;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,10 +20,10 @@ namespace Characters {
 
     public class PartyMember : Character {
         
-        public Bar HPBar { get; set; }              /// <value> Visual for health points in status panel </value>
-        public Bar MPBar { get; set; }              /// <value> Visual for mana points in status panel </value>
-        public Bar PartyPanelHPBar { get; set; }    /// <value> Visual for health points in party panel </value>
-        public Bar PartyPanelMPBar { get; set; }    /// <value> Visual for mana points in party panel </value>
+        private Bar statusPanelHPBar { get; set; }  /// <value> Visual for health points in status panel </value>
+        private Bar statusPanelMPBar { get; set; }  /// <value> Visual for mana points in status panel </value>
+        private Bar partyPanelHPBar { get; set; }   /// <value> Visual for health points in party panel </value>
+        private Bar partyPanelMPBar { get; set; }   /// <value> Visual for mana points in party panel </value>
         public string className { get; set; }       /// <value> Warrior, Mage, Archer, or Thief </value>
         public string subClassName { get; set; }    /// <value> Class specializations </value>
         public string memberName { get; set; }      /// <value> Name of the party member </value>
@@ -45,6 +46,26 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Sets the HP and MP bars of a panel to reflect this partyMember's HP and MP
+        /// </summary>
+        /// <param name="panel"> Name of panel </param>
+        /// <param name="HPBar"> HPBar reference </param>
+        /// <param name="MPBar"> MPBar reference </param>
+        public void SetHPAndMPBar(string panelName, Bar HPBar, Bar MPBar) {
+            if (panelName == PanelConstants.STATUSPANEL) {
+                statusPanelHPBar = HPBar;
+                statusPanelMPBar = MPBar;
+            }
+            else if (panelName == PanelConstants.PARTYPANEL) {
+                partyPanelHPBar = HPBar;
+                partyPanelMPBar = MPBar;
+            }
+
+            HPBar.SetMaxAndCurrent(HP, CHP);
+            MPBar.SetMaxAndCurrent(MP, CMP);
+        }
+
+        /// <summary>
         /// Reduce the PartyMember's current health points by a specified amount.false
         /// IEnumerator is used to make calling function wait for its completion
         /// </summary> 
@@ -58,9 +79,9 @@ namespace Characters {
             }
             
             if (isActive) {
-                HPBar.SetCurrent(CHP);  // update visually
+                statusPanelHPBar.SetCurrent(CHP);  // update visually
             }
-            PartyPanelHPBar.SetCurrent(CHP);
+            partyPanelHPBar.SetCurrent(CHP);
 
             yield break;
         }
@@ -76,13 +97,19 @@ namespace Characters {
             CMP -= amount;
             
             if (isActive) {
-                MPBar.SetCurrent(CMP);  // update visually
+                statusPanelMPBar.SetCurrent(CMP);  // update visually
             }
-            PartyPanelMPBar.SetCurrent(CMP);
+            partyPanelMPBar.SetCurrent(CMP);
 
             yield break;
         }
 
+        /// <summary>
+        /// Reduce MP or HP after an attack is used depending on the attack's costs
+        /// </summary>
+        /// <param name="costType"> HP or MP </param>
+        /// <param name="cost"> Amount to be lost </param>
+        /// <returns> IEnumerator to pay cost before attack animations play </returns>
         public IEnumerator PayAttackCost(string costType, int cost) {
             if (costType == "MP") {
                 yield return StartCoroutine(LoseMP(cost , true));

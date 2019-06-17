@@ -9,7 +9,9 @@
 */
 
 using Actions;
+using Characters;
 using Combat;
+using PanelConstants = Constants.PanelConstants;
 using Exploration;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,14 +21,15 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class ActionsPanel : MonoBehaviour {
+    public class ActionsPanel : Panel {
 
         public CombatManager cm { get; set; }       /// <value> Combat manager to reference other scripts in the combat scene </value>
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
         
         private EventSystem es;                     /// <value> eventSystem reference </value>
         private Action selectedAction;              /// <value> Action that was selected </value>
-        private bool isLeavePossible;                /// <value> Flag for if player can leave scenario </value>
+        private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
+       
 
         /// <summary>
         /// Awake to get initialize event system
@@ -34,7 +37,11 @@ namespace PlayerUI {
         void Awake() {
             es = EventSystem.current;
         }
-
+        
+        /// <summary>
+        /// Initializes the actionsPanel, setting fields reflective of the overall event (e.g. if it can be fled)
+        /// </summary>
+        /// <param name="isLeavePossible"> True if the player can leave the event, false otherwise </param>
         public void Init(bool isLeavePossible) {
             this.isLeavePossible = isLeavePossible;
         }
@@ -49,7 +56,17 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Initialize all actions with attack actions for combat
+        /// Display all the actions of a partyMember and their usability
+        /// </summary>
+        /// <param name="pm"></param>
+        public void DisplayPartyMember(PartyMember pm) {
+            SetAllActionsInteractable();
+            CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
+            SetAttackActions(pm.attacks);
+        }
+
+        /// <summary>
+        /// Initialize all actions with the partyMembers' attacks for combat
         /// </summary>
         /// <param name="attacks"> List of all attacks according to the partyMember </param>
         /// /// <param name="isFleePossible"> Flag for if event can be fled </param>
@@ -63,6 +80,7 @@ namespace PlayerUI {
             else {
                 actions[actions.Length - 1].SetAction("none");
             }
+
             SetInitialNavigation();
         }
 
@@ -72,7 +90,7 @@ namespace PlayerUI {
         /// <param name="a"> Name of action to be taken </param>
         public void SelectAction(Action a) {
             if (a.actionType == "attack" && a.isUsable) {
-                a.SelectAction();               // attack actions will show which attack is selected while user decides what to do next
+                a.ShowActionSelected();  // attack actions will show which attack is selected while user decides what to do next
                 selectedAction = a;
                 AttackActionSelected(a.a);
             }
@@ -91,14 +109,15 @@ namespace PlayerUI {
         /// <param name="a"> Name of action to be taken </param>
         public void AttackActionSelected(Attack a) {
             for (int i = 0; i < actions.Length - 1;i++) {
-                if (actions[i].actionType != "none" && actions[i] != selectedAction) {
-                    actions[i].Disable();  
+                if (actions[i].actionType != "none") {
+                    actions[i].SetInteractable(false);  
                 } 
                 if (actions[i] == selectedAction) {
-                    actions[i].FunctionallyDisable();
+                    actions[i].ShowActionSelected();
                 }
             }
             actions[actions.Length - 1].SetAction("undo");
+
             cm.PreparePMAttack(a);
         }
 
@@ -108,34 +127,32 @@ namespace PlayerUI {
         public void UndoAttackActionSelected() {
             for (int i = 0; i < actions.Length ;i++) {
                 if (actions[i].actionType != "none") {
-                    actions[i].Enable();  
+                    actions[i].SetInteractable(true);  
                 }
                 if (actions[i] == selectedAction) {
-                    actions[i].UnselectAction();
+                    actions[i].ShowActionUnselected();
                     selectedAction = null;
                 }
             }
-            
+
             if (isLeavePossible) {
                 actions[actions.Length - 1].SetAction("flee");
             } else {
                 actions[actions.Length - 1].SetAction("none");
             }
-            
+
+            ResetFifthButtonNavigation();
+
             cm.UndoPMAction();  // update combat manager to know party members can't attack yet
         }
 
         /// <summary>
         /// Enable all useable actions
         /// </summary>
-        public void EnableAllActions() {
+        public void SetAllActionsInteractable() {
             for (int i = 0; i < actions.Length ;i++) {
                 if (actions[i].actionType != "none") {
-                    actions[i].Enable();  
-                }
-                if (actions[i] == selectedAction) {
-                    actions[i].UnselectAction();
-                    selectedAction = null;
+                    actions[i].SetInteractable(true);  
                 }
             }
 
@@ -145,10 +162,10 @@ namespace PlayerUI {
         /// <summary>
         /// Disables all useable actions
         /// </summary>
-        public void DisableAllActions() {
+        public void SetAllActionsUninteractable() {
             for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType != "none") {
-                    actions[i].Disable();  
+                    actions[i].SetInteractable(false);  
                 } 
             }
         }
@@ -162,19 +179,25 @@ namespace PlayerUI {
             return actions[index].b;
         }
 
-        public void CheckAndSetActionsToUnusable(int CMP, int CHP) {
+        /// <summary>
+        /// Sets an action to visually be unusable if the partyMember can't use it
+        /// </summary>
+        /// <param name="CMP"> Current HP of partyMember </param>
+        /// <param name="CHP"> Current MP of partyMember </param>
+        /// <remark> Only affects combat for now </remark>
+        private void CheckAndSetActionsToUnusable(int CMP, int CHP) {
              for (int i = 0; i < actions.Length - 1; i++) {
                 if (actions[i].actionType == "attack") {
                     Attack a = actions[i].a;
 
                     if (a.costType == "MP") {
                         if (a.cost > CMP) {
-                            actions[i].SetUnusable();
+                            actions[i].SetUsable(false);
                         }
                     }
                     else if (a.costType == "HP") {
                         if (a.cost > CHP) {
-                            actions[i].SetUnusable();
+                            actions[i].SetUsable(false);
                         }
                     }
                 } 
@@ -209,21 +232,25 @@ namespace PlayerUI {
             }
         }
 
+        /// <summary>
+        /// Sets the horizontal navigation to navigate to buttons that are not in the actionsPanel
+        /// </summary>
+        /// <param name="p"> Other panel </param>
         public void SetHorizontalNavigation(Panel p) {
-            if (p.GetPanelName() == "party") {
-                if (actions[3].isEnabled) {
+            if (p.GetPanelName() == PanelConstants.PARTYPANEL) {
+                if (actions[3].IsInteractable()) {
                     SetButtonNavigation(3, "right", p.GetNavigatableButton());
                 }
-                else if (actions[2].isEnabled ) {
+                else if (actions[2].IsInteractable()) {
                     SetButtonNavigation(2, "right", p.GetNavigatableButton());
                 }
-                if (actions[1].isEnabled) {
+                if (actions[1].IsInteractable()) {
                     SetButtonNavigation(1, "right", p.GetNavigatableButton());
                 }
-                else if (actions[0].isEnabled ) {
+                else if (actions[0].IsInteractable()) {
                     SetButtonNavigation(0, "right", p.GetNavigatableButton());
                 }
-                if (actions[4].isEnabled) {
+                if (actions[4].IsInteractable()) {
                     SetButtonNavigation(4, "right", p.GetNavigatableButton());
                 }
             }
@@ -232,11 +259,11 @@ namespace PlayerUI {
         /// <summary>
         /// Resets the navigation of the fifth button (flee, undo)
         /// </summary>
-        public void ResetFifthButtonNavigation() {
+        private void ResetFifthButtonNavigation() {
             Button b = actions[4].GetComponent<Button>();
             Navigation n = b.navigation;
 
-            n.selectOnUp = actions[2].isEnabled ? n.selectOnUp : actions[0].GetComponent<Button>();
+            n.selectOnUp = actions[2].IsInteractable() ? n.selectOnUp : actions[0].GetComponent<Button>();
             b.navigation = n;
         }
 
@@ -248,27 +275,43 @@ namespace PlayerUI {
         /// <remark> In the future, will have to navigate to other UI panels such as items or information </remark>
         private void SetInitialNavigation() {
             for (int i = 0; i < actions.Length; i++) {
-                if (actions[i].isEnabled) {
+                if (actions[i].IsInteractable()) {
                     Button b = actions[i].GetComponent<Button>();
                     Navigation n = b.navigation;
                     if (i == 0) {
-                        n.selectOnDown = actions[2].isEnabled ? n.selectOnDown : actions[4].GetComponent<Button>();
-                        n.selectOnRight = actions[1].isEnabled ? n.selectOnRight : null;
+                        n.selectOnDown = actions[2].IsInteractable() ? n.selectOnDown : actions[4].GetComponent<Button>();
+                        n.selectOnRight = actions[1].IsInteractable() ? n.selectOnRight : null;
                         b.navigation = n;
                     }    
                     else if (i == 1) {
-                        n.selectOnDown = actions[3].isEnabled ? n.selectOnDown : actions[4].GetComponent<Button>();
+                        n.selectOnDown = actions[3].IsInteractable() ? n.selectOnDown : actions[4].GetComponent<Button>();
                         b.navigation = n;
                     }
                     /* else if (i == 2) {
                         n.selectOnRight = actions[3].isEnabled ? n.selectOnRight : 
                     } */
                     else if (i == 4) {
-                        n.selectOnUp = actions[2].isEnabled ? n.selectOnUp : actions[0].GetComponent<Button>();
+                        n.selectOnUp = actions[2].IsInteractable() ? n.selectOnUp : actions[0].GetComponent<Button>();
                         b.navigation = n;
                     }
                 }
             }             
+        }
+
+        /// <summary>
+        /// Returns the name of this panel
+        /// </summary>
+        /// <returns> Name of panel </returns>
+        public override string GetPanelName() {
+            return PanelConstants.ACTIONSPANEL;
+        }
+
+        /// <summary>
+        /// Returns the Button that adjacent panels will navigate to
+        /// </summary>
+        /// <returns> Button to be navigated to </returns>
+        public override Button GetNavigatableButton() {
+            return null;
         }
     }
 }
