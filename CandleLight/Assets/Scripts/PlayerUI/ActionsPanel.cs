@@ -51,8 +51,8 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="interactions"> List of interactions according to event </param>
         /// <remark> Has yet to be added </remark>
-        public void SetInteractionActions(Interaction[] interactions) {
-
+        public void SetInteractionActions(Interaction[] interactions) { 
+            
         }
 
         /// <summary>
@@ -60,9 +60,10 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pm"></param>
         public void DisplayPartyMember(PartyMember pm) {
+            SetAttackActions(pm.attacks);
             SetAllActionsInteractable();
             CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
-            SetAttackActions(pm.attacks);
+           
         }
 
         /// <summary>
@@ -194,10 +195,16 @@ namespace PlayerUI {
                         if (a.cost > CMP) {
                             actions[i].SetUsable(false);
                         }
+                        else {
+                            actions[i].SetUsable(true);
+                        }
                     }
                     else if (a.costType == "HP") {
                         if (a.cost > CHP) {
                             actions[i].SetUsable(false);
+                        }
+                        else {
+                            actions[i].SetUsable(true);
                         }
                     }
                 } 

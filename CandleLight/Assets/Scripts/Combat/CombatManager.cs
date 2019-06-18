@@ -77,7 +77,6 @@ namespace Combat {
                 yield return StartCoroutine(AddMonster(monsterName));
             }
             ArrangeMonsters();
-            SetMonsterNavigation();
             
             partyMembers = PartyManager.instance.GetPartyMembers(ref countID);
             partyPanel.Init(partyMembers);
@@ -114,7 +113,8 @@ namespace Combat {
             if (c is PartyMember) {
                 activePartyMember = (PartyMember)c;
                 turn = PMTURN;
-            } else {
+            } 
+            else {
                 activeMonster = (Monster)c;
                 turn = MTURN; 
             }  
@@ -124,7 +124,8 @@ namespace Combat {
                     // stuff
                 }
                 PlayerTurn();
-            } else {
+            } 
+            else {
                 if (prevTurn == PMTURN) {
                     actionsPanel.SetAllActionsUninteractable();
                 }
@@ -198,6 +199,7 @@ namespace Combat {
         /// Adds a monster GO to the enemy canvas, initializing its values and setting navigation
         /// </summary>
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
+        /// <remark> Assumes there will always be an action at button 0 </remark>
         private IEnumerator AddMonster(string monsterName) {
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonster(monsterName));
             newMonster.SetActive(true);
@@ -209,7 +211,6 @@ namespace Combat {
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             monsterComponent.AddSMDListener(smd);
 
-            // assumes there will always be an action at button 0
             monsterComponent.SetNavigation("down", actionsPanel.GetActionButton(0));
             newMonster.transform.SetParent(enemyCanvas.transform, false);
             
@@ -220,7 +221,7 @@ namespace Combat {
 
         /// <summary>
         /// Arranges monsters on screen to look nice depending on the number.
-        /// Only a max of 5 monsters for now, although 3 large monsters, 4 normal 
+        /// Only a max of 5 monsters for now, although 3 large monsters, 4 normal, and 5 small fit at a time
         /// </summary>
         /// <remark> Will add custom arrangements for wackier monster layouts in the future </remark>
         private void ArrangeMonsters() {
@@ -274,6 +275,9 @@ namespace Combat {
             }
         }
 
+        /// <summary>
+        /// Sets the navigation between monsters
+        /// </summary>
         private void SetMonsterNavigation() {
             foreach (Monster m in monsters) {
                 m.ResetNavigation();
@@ -349,10 +353,13 @@ namespace Combat {
                 yield return StartCoroutine(m.Die());
             }
 
-            EndTurn();
+            EndPMTurn();
         }
 
-        public void EndTurn() {
+        /// <summary>
+        /// Ends the partyMember's turn, 
+        /// </summary>
+        public void EndPMTurn() {
             if (CheckBattleOver()) {
                 EndCombat();
             }
@@ -362,6 +369,18 @@ namespace Combat {
 
                 GetNextTurn();
             } 
+        }
+
+        /// <summary>
+        /// Ends the monster's turn
+        /// </summary>
+        public void EndMonsterTurn() {
+            if (CheckBattleOver()) {
+                EndCombat();
+            } 
+            else {
+                GetNextTurn();
+            }
         }
 
         /// <summary>
@@ -382,6 +401,7 @@ namespace Combat {
         /// <returns> Yields to allow monster attack animation to play </returns>
         private IEnumerator MonsterTurn() {
             List<PartyMember> partyMembersToRemove = new List<PartyMember>();
+            yield return StartCoroutine(activeMonster.PlayStartTurnAnimation());
             yield return StartCoroutine(ExecuteMonsterAttack());
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath()) {
@@ -392,12 +412,8 @@ namespace Combat {
             foreach (PartyMember pm in partyMembersToRemove) {
                 partyMembers.Remove(pm);
             }
-            if (CheckBattleOver()) {
-                EndCombat();
-            } 
-            else {
-                GetNextTurn();
-            }
+
+            EndMonsterTurn();
         }
         
         /// <summary>

@@ -285,6 +285,19 @@ namespace Characters {
             return attacks[selectedAttackIndex];  
         }
 
+        /// <summary>
+        /// Plays the start turn animation of a monster
+        /// </summary>
+        /// <returns> IEnumerator, waiting for the animation to finish </returns>
+        public IEnumerator PlayStartTurnAnimation() {
+            yield return (StartCoroutine(PlayAnimation(monsterAnimator, "startTurn")));
+        }
+        
+
+        /// <summary>
+        /// Plays the attack animation of a monster
+        /// </summary>
+        /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlayAttackAnimation() {
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "attack" + selectedAttackIndex)));
         }
@@ -331,7 +344,7 @@ namespace Characters {
         /// <summary>
         /// Check if monster is dead
         /// </summary>
-        /// <returns></returns>
+        /// <returns> True if monster is dead, false otherwise</returns>
         public bool CheckDeath() {
             return CHP == 0;
         }

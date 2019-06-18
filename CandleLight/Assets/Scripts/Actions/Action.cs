@@ -48,6 +48,7 @@ namespace Actions {
             unusableBlock.normalColor = new Color32(196, 36, 48, 255);
             unusableBlock.highlightedColor = new Color32(255, 0, 64, 255);
             unusableBlock.pressedColor = new Color32(120, 36, 48, 255);
+            unusableBlock.disabledColor = new Color32(120, 36, 48, 255);
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColorBlock("normalAlternate", unusableBlock);
@@ -114,15 +115,23 @@ namespace Actions {
             i.raycastTarget = value;
 
             if (value == false && isUsable == true) {
-                Debug.Log(actionText.keyText);
                 ShowActionUnselected();   
             }            
         }
         
+        /// <summary>
+        /// Checks if the action is interactable (can be clicked and selected)
+        /// </summary>
+        /// <returns> True if interactable, false otherwise</returns>
         public bool IsInteractable() {
             return b.interactable;
         }
 
+        /// <summary>
+        /// Sets the button to usable (can be used by the player, nothing to do with the button's functionality).
+        /// Colours the button to visually represent if its useable.
+        /// </summary>
+        /// <param name="value"> True if the button is usable, false otherwise </param>
         public void SetUsable(bool value) {
             isUsable = value;
 
