@@ -18,10 +18,10 @@ namespace Localization {
 
     public class LocalizedText : MonoBehaviour {
         
-        public string key;                  /// <value> global instance </value>
-        public TextMeshProUGUI meshText;    /// <value> text mesh pros are not always loaded in time, so store reference to guarantee access </value>
+        public string key;                  /// <value> Global instance </value>
+        public TextMeshProUGUI meshText;    /// <value> Text mesh pros are not always loaded in time, so store reference to guarantee access </value>
 
-        public string keyText;              /// <value> text retrieved from key </value>
+        public string keyText;              /// <value> Text retrieved from key </value>
         
         /// <summary>
         /// Start to intialize display text
@@ -56,6 +56,15 @@ namespace Localization {
         /// <param name="text"> String to append </param>
         public void Append(string text) {
             meshText.text = keyText + " " + text;
+        }
+
+        /// <summary>
+        /// Sets text for a partyMember taking damage
+        /// </summary>
+        /// <param name="text"> name of PartyMember </param>
+        /// <param name="amount"> Amount of damage taken </param>
+        public void SetDamageText(string text, int amount) {
+            meshText.text = text +  " " + LocalizationManager.instance.GetLocalizedValue("lost_event") + " " + amount.ToString() + " HP";
         }
     }
 }

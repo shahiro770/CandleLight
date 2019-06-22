@@ -18,11 +18,23 @@ namespace PlayerUI {
     [System.Serializable]
     public class Bar : MonoBehaviour {
 
+        public Animator barAnimator;
         public Image frontFill;                     /// <value> Image that displays overtop of Bar's background </value>
         public LocalizedText text;                  /// <value> Text to be displayed (if HP or MP can be translated </value>
         [field: SerializeField] public float maxAmount { get; set; }       /// <value> Max points the character has </value>
         [field: SerializeField] public float currentAmount { get; set; }   /// <value> Current points the character has </value>
+        [field: SerializeField] public float lerpSpeed = 2;
+        [field: SerializeField] public float fillAmount = 100;
 
+        /// <summary>
+        /// Update to slowly making bar's fill amount match its changed value
+        /// </summary>
+        public void Update() {
+            if (frontFill.fillAmount != fillAmount) {
+                frontFill.fillAmount = Mathf.Lerp(frontFill.fillAmount, fillAmount, Time.deltaTime * lerpSpeed);
+            }
+        }
+        
         /// <summary>
         /// Initializes the max and current amounts of the bar
         /// </summary>
@@ -31,7 +43,7 @@ namespace PlayerUI {
         public void SetMaxAndCurrent(int maxAmount, int currentAmount) {
             this.maxAmount = maxAmount;
             this.currentAmount = currentAmount;
-            SetDisplay();
+            SetDisplay(true);
         }
 
         /// <summary>
@@ -78,9 +90,12 @@ namespace PlayerUI {
         /// Sets the display value and fill amount of the bar,
         /// For example, a Bar used for HP with 50% HP will have the bar filled halfway with the frontfill image)
         /// </summary>
-        private void SetDisplay() {
+        private void SetDisplay(bool immediate = false) {
             text.Append(currentAmount.ToString());
-            frontFill.fillAmount = currentAmount / maxAmount;
+            fillAmount = currentAmount / maxAmount;
+            if (immediate) {
+                frontFill.fillAmount = currentAmount / maxAmount;
+            }
         }
 
 

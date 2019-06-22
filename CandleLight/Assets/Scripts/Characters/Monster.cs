@@ -27,14 +27,15 @@ namespace Characters {
         public Animator effectsAnimator;    /// <value> Animator for all effects played over-top of monster </value>
         public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
         public Bar HPBar;                   /// <value> Monster's health points display </value>
-        public Button b;                    /// <value> button to make monster selectable </value>
-        public ButtonTransitionState bts;  /// <value> Button's visual state controller </value>
+        public Button b;                    /// <value> Button to make monster selectable </value>
+        public ButtonTransitionState bts;   /// <value> Button's visual state controller </value>
         public Canvas monsterCanvas;        /// <value> Monster's personal canvas to display UI elements and minimize repainting </value>
+        public DamageText dt;               /// <value> Text display to show how much damage taken by an attack </value>
         public Image monsterSprite;         /// <value> Monster's sprite </value>
         public RectTransform monsterSpriteHolder;       /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
-        public Vector2 vectorSize;         /// <value> Size of monster's sprite </value>
-        public int attackNum = 0;          /// <value> Number of attacks monster has (max 4) </value>
-        public int selectedAttackIndex;    /// <value> Index of attack selected </value>
+        public Vector2 vectorSize;          /// <value> Size of monster's sprite </value>
+        public int attackNum = 0;           /// <value> Number of attacks monster has (max 4) </value>
+        public int selectedAttackIndex;     /// <value> Index of attack selected </value>
         
         [field: SerializeField] public string monsterSize { get; private set; }             /// <value> String constant describing size of monster's sprite </value>
         [field: SerializeField] public string monsterNameID { get; private set; }           /// <value> NameID as referenced in database </value>
@@ -302,6 +303,10 @@ namespace Characters {
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "attack" + selectedAttackIndex)));
         }
 
+        public IEnumerator PlayDeathAnimation() {
+            yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, HPBar.barAnimator, "death", "death")));
+        }
+
         /// <summary>
         /// Reduce monster's HP
         /// </summary>
@@ -316,7 +321,10 @@ namespace Characters {
             
             SetEffectsAnimatorClip(animationClipName);
             yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
+            dt.ShowDamage(amount);
             HPBar.SetCurrent(CHP);
+            yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damaged", "showDamage")));
+            dt.HideDamage();
         }
 
         /// <summary>
@@ -324,21 +332,50 @@ namespace Characters {
         /// </summary>
         /// <returns> Starts coroutine for monster death animation to play</returns>
         public IEnumerator Die() {
-            yield return (StartCoroutine(PlayAnimation(monsterAnimator, "death")));
+            yield return (StartCoroutine(PlayDeathAnimation()));
             Destroy(gameObject);
         }
 
         /// <summary>
         /// Plays an animation
         /// </summary>
-        /// <param name="a"> Name of animator (effectsAnimator, monsterAnimator) </param>
+        /// <param name="a"> Name of animator (effectsAnimator, monsterAnimator, etc.) </param>
         /// <param name="trigger"> Animation trigger </param>
         /// <returns> Stops all actions while monster's animation plays </returns>
+        /// <remark> 
+        /// All animators assumed to have Idle as their default state, and
+        /// Base Layer as the name of their base animator layer. 
+        /// </remark>
         public IEnumerator PlayAnimation(Animator a, string trigger) {
             a.SetTrigger(trigger);
-            yield return null;      // wait a frame because animation transition takes a frame
-            float waitTime = a.GetCurrentAnimatorClipInfo(0)[0].clip.length / a.GetCurrentAnimatorStateInfo(0).speed; //clip's length in seconds divided by play speed
-            yield return new WaitForSeconds(waitTime);
+            do {
+                yield return null;    
+            } while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            a.ResetTrigger(trigger);
+        }
+
+        /// <summary>
+        /// Plays two animations at the same time
+        /// </summary>
+        /// <param name="a1"> Name of animator (effectsAnimator, monsterAnimator, etc.) </param>
+        /// <param name="a2"> Name of animator (effectsAnimator, monsterAnimator, etc.) </param>
+        /// <param name="trigger1"> Animation trigger </param>
+        /// <param name="trigger2"> Animation trigger </param>
+        /// <returns> Stops all other actions while animations are playing </returns>
+        /// <remark> 
+        /// All animators assumed to have Idle as their default state, and
+        /// Base Layer as the name of their base animator layer.
+        /// Will change this to accept an array of animators and triggers if its needed in the future.
+        /// </remark>
+        public IEnumerator PlayTwoAnimations(Animator a1, Animator a2, string trigger1, string trigger2) {
+            a1.SetTrigger(trigger1);
+            a2.SetTrigger(trigger2);
+            do {
+                yield return null;    
+            } while (a1.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false ||
+                a2.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            a1.ResetTrigger(trigger1);
+            a2.ResetTrigger(trigger2);
         }
 
         /// <summary>

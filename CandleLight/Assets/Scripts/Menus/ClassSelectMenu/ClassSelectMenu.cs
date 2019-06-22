@@ -126,6 +126,8 @@ namespace Menus.ClassSelectMenu {
                 PartyManager.instance.AddPartyMember("Mage");
                 PartyManager.instance.AddPartyMember("Warrior");
                 //PartyManager.instance.AddPartyMember("Warrior");
+                //PartyManager.instance.AddPartyMember("Warrior");
+                //PartyManager.instance.AddPartyMember("Warrior");
                 //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3"} ); 
                 //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3", "Greyhide Alpha LVL3"} ); 
                 //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Greyhide Alpha LVL3"} ); 

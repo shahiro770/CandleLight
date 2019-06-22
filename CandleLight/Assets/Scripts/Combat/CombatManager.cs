@@ -31,6 +31,7 @@ namespace Combat {
         public static CombatManager instance;       /// <value> Combat scene instance </value>
 
         public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
+        public EventDescription eventDescription;   /// <value> Display for all text and prompts relevant to an action or event</value>
         public StatusPanel statusPanel;             /// <value> Display for active party member's status </value>
         public ActionsPanel actionsPanel;           /// <value> Display for active party member's actions </value>
         public PartyPanel partyPanel;               /// <value> Display for all party member's status </value>
@@ -99,6 +100,9 @@ namespace Combat {
         private void StartCombat() {
             DisplayFirstPartyMember();          // active party member is not set
             actionsPanel.SetAllActionsUninteractable();   // actions are disabled until its a partyMember's turn (might not be the first)
+            partyPanel.DisableButtons();
+            DisableAllMonsterSelection();
+
             GetNextTurn();
         }
 
@@ -123,20 +127,20 @@ namespace Combat {
                 if (prevTurn == MTURN) {
                     // stuff
                 }
-                PlayerTurn();
+                StartPMTurn();
             } 
             else {
                 if (prevTurn == PMTURN) {
                     actionsPanel.SetAllActionsUninteractable();
                 }
-                StartCoroutine(MonsterTurn());
+                StartCoroutine(StartMonsterTurn());
             }
         }
 
         /// <summary>
         /// Prepare all monsters and relevant panels (Actions, Status) for the player's turn
         /// </summary>
-        private void PlayerTurn() {
+        private void StartPMTurn() {
             DisplayActivePartyMember();
             EnableAllMonsterSelection();
             SetMonsterNavigation();
@@ -339,10 +343,12 @@ namespace Combat {
         /// Need to split this up into a cleanup phase function
         /// </returns>
         public IEnumerator ExecutePMAttack(Attack a, Monster m) {
+            eventDescription.SetText(a.nameKey);
             actionsPanel.SetAllActionsUninteractable();
             partyPanel.DisableButtons();
             DisableAllMonsterSelection();
-
+            DeselectMonsters();
+            yield return new WaitForSeconds(0.25f);
             yield return StartCoroutine(activePartyMember.PayAttackCost(a.costType, a.cost));
             yield return StartCoroutine(m.LoseHP(a.damage, a.animationClipName));
             
@@ -353,6 +359,7 @@ namespace Combat {
                 yield return StartCoroutine(m.Die());
             }
 
+            eventDescription.ClearText();
             EndPMTurn();
         }
 
@@ -399,9 +406,8 @@ namespace Combat {
         /// Start the active monster's turn
         /// </summary>
         /// <returns> Yields to allow monster attack animation to play </returns>
-        private IEnumerator MonsterTurn() {
+        private IEnumerator StartMonsterTurn() {
             List<PartyMember> partyMembersToRemove = new List<PartyMember>();
-            yield return StartCoroutine(activeMonster.PlayStartTurnAnimation());
             yield return StartCoroutine(ExecuteMonsterAttack());
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath()) {
@@ -424,6 +430,8 @@ namespace Combat {
         private IEnumerator ExecuteMonsterAttack() {
             int targetChoice = 0;
             Attack attackChoice = activeMonster.SelectAttack();
+            eventDescription.SetText(attackChoice.nameKey);
+            yield return StartCoroutine(activeMonster.PlayStartTurnAnimation());
             if (activeMonster.monsterAI == "random") {
                 targetChoice = Random.Range(0, partyMembers.Count);
             }
@@ -436,11 +444,14 @@ namespace Combat {
                 }
                 targetChoice = weakest;
             }
-
+            
             yield return (StartCoroutine(activeMonster.PlayAttackAnimation()));
+            eventDescription.SetText(partyMembers[targetChoice], attackChoice.damage);
+            
             if (attackChoice.damage > 0) {
                 yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage, partyMembers[targetChoice] == activePartyMember)));
             }
+            eventDescription.ClearText();
         }
 
         /// <summary>

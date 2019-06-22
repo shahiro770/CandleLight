@@ -19,6 +19,7 @@ namespace PlayerUI {
 
     public class PartyMemberDisplay : MonoBehaviour {
 
+        public Animator PMDisplayAnimator;  /// <value> Animator for entire display </value>
         public Image classIcon;     /// <value> Icon of class </value>
         public Bar HPBar;           /// <value> Visual for health points </value>
         public Bar MPBar;           /// <value> Visual for mana points </value>
@@ -32,6 +33,7 @@ namespace PlayerUI {
         /// <param name="pm"></param>
         public void Init(PartyMember pm) {
             this.pm = pm;
+            pm.PMDisplay = this;
             classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
             pm.SetHPAndMPBar(PanelConstants.PARTYPANEL, HPBar, MPBar);
         }
@@ -62,6 +64,14 @@ namespace PlayerUI {
             }
 
             b.navigation = n;
+        }
+
+        public IEnumerator PlayDamagedAnimation() {
+            PMDisplayAnimator.SetTrigger("damaged");
+            do {
+                yield return null;    
+            } while (PMDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            PMDisplayAnimator.ResetTrigger("damaged");
         }
 
         /// <summary>

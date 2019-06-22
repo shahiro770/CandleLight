@@ -18,6 +18,10 @@
 		{ "key": "select_button", "value": "Select" },
 		{ "key": "back_button", "value": "Back" },
 
+		{ "key": "none_event", "value": "" },
+
+		{ "key": "lost_event", "value": "lost" },
+
 		{ "key": "HP_label", "value": "HP " },
 		{ "key": "MP_label", "value": "MP " },
 
@@ -28,6 +32,11 @@
 		{ "key": "party_tab", "value": "Party" },
 		{ "key": "info_tab", "value": "Info" },
 		
+		{ "key": "pound_attack", "value": "Pound" },
+		{ "key": "scratch_attack", "value": "Scratch" },
+		{ "key": "bite_attack", "value": "Bite" },
+		{ "key": "thrash_attack", "value": "Thrash" },
+
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "wack_attack", "value": "Wack" },
 		{ "key": "slash_attack", "value": "Slash" },

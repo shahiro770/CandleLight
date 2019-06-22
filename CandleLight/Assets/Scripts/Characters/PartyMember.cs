@@ -20,6 +20,7 @@ namespace Characters {
 
     public class PartyMember : Character {
         
+        public PartyMemberDisplay PMDisplay;        /// <value> Visual for party member's status in party panel </value>
         private Bar statusPanelHPBar { get; set; }  /// <value> Visual for health points in status panel </value>
         private Bar statusPanelMPBar { get; set; }  /// <value> Visual for mana points in status panel </value>
         private Bar partyPanelHPBar { get; set; }   /// <value> Visual for health points in party panel </value>
@@ -82,6 +83,7 @@ namespace Characters {
                 statusPanelHPBar.SetCurrent(CHP);  // update visually
             }
             partyPanelHPBar.SetCurrent(CHP);
+            yield return (StartCoroutine(PMDisplay.PlayDamagedAnimation()));
 
             yield break;
         }
