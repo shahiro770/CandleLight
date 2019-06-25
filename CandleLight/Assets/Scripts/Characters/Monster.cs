@@ -15,7 +15,6 @@ using PlayerUI;
 using System.Collections;
 using System.Collections.Generic;
 using UIEffects;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -37,6 +36,7 @@ namespace Characters {
         public int attackNum = 0;           /// <value> Number of attacks monster has (max 4) </value>
         public int selectedAttackIndex;     /// <value> Index of attack selected </value>
         
+        [field: SerializeField] public string monsterArea { get; private set; }             /// <value> Area where monster can be found </value>
         [field: SerializeField] public string monsterSize { get; private set; }             /// <value> String constant describing size of monster's sprite </value>
         [field: SerializeField] public string monsterNameID { get; private set; }           /// <value> NameID as referenced in database </value>
         [field: SerializeField] public string monsterDisplayName { get; private set; }      /// <value> Monster name <value>
@@ -62,6 +62,7 @@ namespace Characters {
             bts = b.GetComponent<ButtonTransitionState>();
             this.monsterNameID = monsterNameID;
             this.monsterDisplayName = monsterDisplayName;
+            this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
 
             /* WHEN WORKING WITH WIFI AND/OR WANT TO USE ASSETBUNDLES */

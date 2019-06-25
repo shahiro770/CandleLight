@@ -27,7 +27,7 @@ namespace General {
 
         private string activeScene = "";                /// <value> Current scene being displayed </value>
         private string initialScene = "Loading";        /// <value> Scene to begin game with </value>
-        private string combatScene = "Combat";          /// <value> Name of combat scene </value>
+        private string combatScene = "Dungeon";         /// <value> Name of combat scene </value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -55,6 +55,7 @@ namespace General {
         public void LoadNextScene(string sceneName) {
             SceneManager.UnloadSceneAsync(activeScene);
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            Resources.UnloadUnusedAssets();
             activeScene = sceneName;
         }
 

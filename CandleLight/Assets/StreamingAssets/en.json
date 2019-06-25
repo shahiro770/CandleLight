@@ -19,13 +19,17 @@
 		{ "key": "back_button", "value": "Back" },
 
 		{ "key": "none_event", "value": "" },
+		{ "key": "lost_word_event", "value": "lost" },
+		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
+		{ "key": "the_grey_wastes_event", "value": "One would expect to see more remains, but even fools stay out of the Grey Wastes. Looks like this is the start of the path." },
 
-		{ "key": "lost_event", "value": "lost" },
-
+		{ "key": "none_int", "value": "" },
+		
 		{ "key": "HP_label", "value": "HP " },
 		{ "key": "MP_label", "value": "MP " },
 
 		{ "key": "flee_action", "value": "Flee" },
+		{ "key": "leave_action", "value": "Leave" },
 		{ "key": "undo_action", "value": "Undo" },
 		{ "key": "none_action", "value": "" },
 

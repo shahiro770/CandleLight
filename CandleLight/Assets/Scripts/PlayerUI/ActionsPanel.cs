@@ -8,11 +8,12 @@
 *
 */
 
+using ActionConstants = Constants.ActionConstants;
 using Actions;
 using Characters;
 using Combat;
+using Events;
 using PanelConstants = Constants.PanelConstants;
-using Exploration;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,7 +53,15 @@ namespace PlayerUI {
         /// <param name="interactions"> List of interactions according to event </param>
         /// <remark> Has yet to be added </remark>
         public void SetInteractionActions(Interaction[] interactions) { 
-            
+            for (int i = 0; i < interactions.Length; i++) {
+                actions[i].SetAction(ActionConstants.INTERACTION, interactions[i]);
+            }
+            if (isLeavePossible) {
+                actions[actions.Length - 1].SetAction(ActionConstants.LEAVE);  // last action will always be flee in combat if allowed
+            }
+            else {
+                actions[actions.Length - 1].SetAction(ActionConstants.NONE);
+            }
         }
 
         /// <summary>
@@ -70,16 +79,15 @@ namespace PlayerUI {
         /// Initialize all actions with the partyMembers' attacks for combat
         /// </summary>
         /// <param name="attacks"> List of all attacks according to the partyMember </param>
-        /// /// <param name="isFleePossible"> Flag for if event can be fled </param>
         public void SetAttackActions(Attack[] attacks) {
             for (int i = 0; i < attacks.Length; i++) {
-                actions[i].SetAction("attack", attacks[i]);
+                actions[i].SetAction(ActionConstants.ATTACK, attacks[i]);
             }
             if (isLeavePossible) {
-                actions[actions.Length - 1].SetAction("flee");  // last action will always be flee in combat if allowed
+                actions[actions.Length - 1].SetAction(ActionConstants.FLEE);  // last action will always be flee in combat if allowed
             }
             else {
-                actions[actions.Length - 1].SetAction("none");
+                actions[actions.Length - 1].SetAction(ActionConstants.NONE);
             }
 
             SetInitialNavigation();
@@ -90,15 +98,15 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="a"> Name of action to be taken </param>
         public void SelectAction(Action a) {
-            if (a.actionType == "attack" && a.isUsable) {
+            if (a.actionType == ActionConstants.ATTACK && a.isUsable) {
                 a.ShowActionSelected();  // attack actions will show which attack is selected while user decides what to do next
                 selectedAction = a;
                 AttackActionSelected(a.a);
             }
-            else if (a.actionType == "undo") {
+            else if (a.actionType == ActionConstants.UNDO) {
                 UndoAttackActionSelected();
             }
-            else if (a.actionType == "flee") {
+            else if (a.actionType ==  ActionConstants.FLEE) {
 
             }
         }
@@ -110,14 +118,14 @@ namespace PlayerUI {
         /// <param name="a"> Name of action to be taken </param>
         public void AttackActionSelected(Attack a) {
             for (int i = 0; i < actions.Length - 1;i++) {
-                if (actions[i].actionType != "none") {
+                if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(false);  
                 } 
                 if (actions[i] == selectedAction) {
                     actions[i].ShowActionSelected();
                 }
             }
-            actions[actions.Length - 1].SetAction("undo");
+            actions[actions.Length - 1].SetAction(ActionConstants.UNDO);
 
             cm.PreparePMAttack(a);
         }
@@ -127,7 +135,7 @@ namespace PlayerUI {
         /// </summary>
         public void UndoAttackActionSelected() {
             for (int i = 0; i < actions.Length ;i++) {
-                if (actions[i].actionType != "none") {
+                if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(true);  
                 }
                 if (actions[i] == selectedAction) {
@@ -137,9 +145,9 @@ namespace PlayerUI {
             }
 
             if (isLeavePossible) {
-                actions[actions.Length - 1].SetAction("flee");
+                actions[actions.Length - 1].SetAction(ActionConstants.FLEE);
             } else {
-                actions[actions.Length - 1].SetAction("none");
+                actions[actions.Length - 1].SetAction(ActionConstants.NONE);
             }
 
             ResetFifthButtonNavigation();
@@ -152,7 +160,7 @@ namespace PlayerUI {
         /// </summary>
         public void SetAllActionsInteractable() {
             for (int i = 0; i < actions.Length ;i++) {
-                if (actions[i].actionType != "none") {
+                if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(true);  
                 }
             }
@@ -165,7 +173,7 @@ namespace PlayerUI {
         /// </summary>
         public void SetAllActionsUninteractable() {
             for (int i = 0; i < actions.Length; i++) {
-                if (actions[i].actionType != "none") {
+                if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(false);  
                 } 
             }

@@ -36,7 +36,7 @@ namespace Combat {
         public ActionsPanel actionsPanel;           /// <value> Display for active party member's actions </value>
         public PartyPanel partyPanel;               /// <value> Display for all party member's status </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
-        public bool isReady { get; private set; } = false;              /// <value> Localization happens at the start, program loads while waiting </value>
+        public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
         
         private EventSystem es;                                             /// <value> EventSystem reference </value>
         private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of party members </value>
@@ -67,10 +67,14 @@ namespace Combat {
             es = EventSystem.current;
         }
 
+        void Start() {
+            StartCoroutine(InitializeCombat());   
+        }
+
         /// <summary>
         /// Start to initialize all monsters, characters, and combat queue before beginning combat
         /// </summary>
-        IEnumerator Start() {
+        public IEnumerator InitializeCombat() {
             actionsPanel.cm = this;
             actionsPanel.Init(isFleePossible);
 
@@ -210,7 +214,7 @@ namespace Combat {
             Monster monsterComponent = newMonster.GetComponent<Monster>();
             
             monsterComponent.ID = countID++;
-             monsterComponent.SetHealthBar();
+            monsterComponent.SetHealthBar();
             
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             monsterComponent.AddSMDListener(smd);

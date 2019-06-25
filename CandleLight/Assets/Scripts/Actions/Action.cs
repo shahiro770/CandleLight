@@ -11,6 +11,7 @@
 
 using ActionConstants = Constants.ActionConstants;
 using Combat;
+using Events;
 using Localization;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,12 +26,13 @@ namespace Actions {
 
         public Attack a { get; private set; }       /// <value> Attack stored if attack </value>
         public Button b { get; private set; }       /// <value> Button component </value>
+        public Interaction i;                   
         public LocalizedText actionText;            /// <value> Text to be displayed </value>
         public string actionType { get; set; }      /// <value> Action type (Attack, flee, undo) </value>
         public bool isUsable { get; private set; } = true;   /// <value> Flag for if action button is usable </value>
 
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
-        private Image i;                            /// <value> Button's sprite </value>
+        private Image img;                            /// <value> Button's sprite </value>
         private TextMeshProUGUI t;                  /// <value> Text display </value>
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace Actions {
         void Awake() {
             b = GetComponent<Button>();
             bts = GetComponent<ButtonTransitionState>();
-            i = GetComponent<Image>();
+            img = GetComponent<Image>();
             t = GetComponentInChildren<TextMeshProUGUI>();
 
             ColorBlock normalBlock = b.colors; 
@@ -62,6 +64,9 @@ namespace Actions {
             if (actionType == ActionConstants.FLEE) {
                 SetKey("flee_action");
             }
+            else if (actionType == ActionConstants.LEAVE) {
+                SetKey("leave_action");
+            }
             else if (actionType == ActionConstants.UNDO) {
                 SetKey("undo_action");
             } 
@@ -81,7 +86,7 @@ namespace Actions {
         public void SetAction(string actionType, Attack a) {
             if (actionType == ActionConstants.ATTACK) {
                 if (a.nameKey == "none_attack") {   // disable action if it does nothing
-                    this.actionType = "none";
+                    this.actionType = ActionConstants.NONE;
                     SetInteractable(false);
                 } 
                 else {
@@ -89,6 +94,19 @@ namespace Actions {
                     this.actionType = actionType;
                 }
                 SetKey(a.nameKey);
+            }
+        }
+
+        public void SetAction(string actionType, Interaction i) {
+            if (actionType == ActionConstants.INTERACTION) {
+                if (i.nameKey == "none_int") {
+                    this.actionType = ActionConstants.NONE;
+                }
+                else {
+                    this.i = i;
+                    this.actionType = actionType;
+                }
+                SetKey(i.nameKey);
             }
         }
 
@@ -112,7 +130,7 @@ namespace Actions {
         /// <param name="value"> Enable interactivity on true and disable on false </param>
         public void SetInteractable(bool value) {
             b.interactable = value;
-            i.raycastTarget = value;
+            img.raycastTarget = value;
 
             if (value == false && isUsable == true) {
                 ShowActionUnselected();   

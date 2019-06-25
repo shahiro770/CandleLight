@@ -39,7 +39,7 @@ namespace Combat {
             this.costType = costType;
             this.cost = cost;            
             this.animationClipName = animationClipName; 
-            nameKey = name.ToLower() + "_attack";
+            nameKey = name + "_attack";
         }
     }
 }

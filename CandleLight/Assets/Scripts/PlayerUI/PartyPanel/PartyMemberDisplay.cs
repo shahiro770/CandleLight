@@ -19,7 +19,7 @@ namespace PlayerUI {
 
     public class PartyMemberDisplay : MonoBehaviour {
 
-        public Animator PMDisplayAnimator;  /// <value> Animator for entire display </value>
+        public Animator pmDisplayAnimator;  /// <value> Animator for entire display </value>
         public Image classIcon;     /// <value> Icon of class </value>
         public Bar HPBar;           /// <value> Visual for health points </value>
         public Bar MPBar;           /// <value> Visual for mana points </value>
@@ -33,8 +33,8 @@ namespace PlayerUI {
         /// <param name="pm"></param>
         public void Init(PartyMember pm) {
             this.pm = pm;
-            pm.PMDisplay = this;
             classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
+            pm.PMDisplay = this;
             pm.SetHPAndMPBar(PanelConstants.PARTYPANEL, HPBar, MPBar);
         }
         
@@ -66,12 +66,29 @@ namespace PlayerUI {
             b.navigation = n;
         }
 
+        /* public void SetHPAndMPBar(int HP, int CHP, int MP, int CMP) {
+            HPBar.SetMaxAndCurrent(HP, CHP);
+            MPBar.SetMaxAndCurrent(MP, CMP);
+        }
+
+        public void SetHP(int amount) {
+            HPBar.SetCurrent(amount);
+        }
+
+        public void SetMP(int amount) {
+            MPBar.SetCurrent(amount);
+        }*/
+
+        /// <summary>
+        /// Plays the animation for when the partyMember who's information is being displayed is damaged
+        /// </summary>
+        /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayDamagedAnimation() {
-            PMDisplayAnimator.SetTrigger("damaged");
+            pmDisplayAnimator.SetTrigger("damaged");
             do {
                 yield return null;    
-            } while (PMDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            PMDisplayAnimator.ResetTrigger("damaged");
+            } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmDisplayAnimator.ResetTrigger("damaged");
         }
 
         /// <summary>
