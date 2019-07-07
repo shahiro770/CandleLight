@@ -71,8 +71,10 @@ namespace Characters {
         /// IEnumerator is used to make calling function wait for its completion
         /// </summary> 
         /// <param name="amount"> Amount of health points lost </param>
-        /// <param name="isActive"> Active party member is the one who's information 
-        /// is displayed in the status panel, true if active, false otherwise </param>
+        /// <param name="isActive"> 
+        /// Active party member is the partMember who's information 
+        /// is displayed in the status panel, true if active, false otherwise 
+        /// </param>
         public IEnumerator LoseHP(int amount, bool isActive) {
             CHP -= amount;
             if (CHP < 0) {
@@ -80,7 +82,7 @@ namespace Characters {
             }
             
             if (isActive) {
-                statusPanelHPBar.SetCurrent(CHP);  // update visually
+                statusPanelHPBar.SetCurrent(CHP);  
             }
             partyPanelHPBar.SetCurrent(CHP);
             yield return (StartCoroutine(PMDisplay.PlayDamagedAnimation()));
@@ -93,13 +95,15 @@ namespace Characters {
         /// IEnumerator is used to make calling function wait for its completion
         /// </summary> 
         /// <param name="amount"> Amount of health points lost </param>
-        /// <param name="isActive"> Active party member is the one who's information 
-        /// is displayed in the status panel, true if active, false otherwise </param>
+        /// <param name="isActive"> 
+        /// Active party member is the party member who's information 
+        /// is displayed in the status panel, true if active, false otherwise 
+        /// </param>
         public IEnumerator LoseMP(int amount, bool isActive) {
             CMP -= amount;
             
             if (isActive) {
-                statusPanelMPBar.SetCurrent(CMP);  // update visually
+                statusPanelMPBar.SetCurrent(CMP);  
             }
             partyPanelMPBar.SetCurrent(CMP);
 

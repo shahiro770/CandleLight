@@ -4,15 +4,12 @@
 * Date: June 21, 2019
 * 
 * The DamageText class is used to display text a character has taken in response to damage.
-* For now, it is primarily used for monsters, wit
+* For now, it is only used for monsters.
 *
 */
 
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PlayerUI {
 

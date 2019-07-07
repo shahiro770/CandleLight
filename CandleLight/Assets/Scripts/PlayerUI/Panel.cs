@@ -3,7 +3,8 @@
 * Author: Shahir Chowdhury
 * Date: June 9, 2019
 * 
-* The Panel class is an abstract class 
+* The Panel class is an abstract class for the player's UI. Each segment of the player' UI
+* (their inventory, actions, party, etc.) is put inside a panel.
 *
 */
 

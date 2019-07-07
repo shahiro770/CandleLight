@@ -13,12 +13,9 @@ using ActionConstants = Constants.ActionConstants;
 using Combat;
 using Events;
 using Localization;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UIEffects;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Actions {
@@ -26,13 +23,13 @@ namespace Actions {
 
         public Attack a { get; private set; }       /// <value> Attack stored if attack </value>
         public Button b { get; private set; }       /// <value> Button component </value>
-        public Interaction i;                   
+        public Interaction i { get; private set; }  /// <value> Interaction stored if interraction </value>
         public LocalizedText actionText;            /// <value> Text to be displayed </value>
         public string actionType { get; set; }      /// <value> Action type (Attack, flee, undo) </value>
         public bool isUsable { get; private set; } = true;   /// <value> Flag for if action button is usable </value>
 
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
-        private Image img;                            /// <value> Button's sprite </value>
+        private Image img;                          /// <value> Button's sprite </value>
         private TextMeshProUGUI t;                  /// <value> Text display </value>
 
         /// <summary>
@@ -79,7 +76,7 @@ namespace Actions {
         }
 
         /// <summary>
-        /// Sets the actionType. Overloaded to accept specifically an attack
+        /// Sets the actionType. Overloaded to accept an attack specifically
         /// </summary>
         /// <param name="actionType"> Type of action (attack) </param>
         /// <param name="a"> Attack object to be stored </param>
@@ -97,6 +94,11 @@ namespace Actions {
             }
         }
 
+        /// <summary>
+        /// Sets the actionType.null Overloaded to accept an interaction specifically
+        /// </summary>
+        /// <param name="actionType"></param>
+        /// <param name="i"></param>
         public void SetAction(string actionType, Interaction i) {
             if (actionType == ActionConstants.INTERACTION) {
                 if (i.nameKey == "none_int") {

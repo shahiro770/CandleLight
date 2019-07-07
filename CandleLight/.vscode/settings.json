@@ -56,10 +56,10 @@
 
     "editor.tokenColorCustomizations": {
         "textMateRules": [{
-            "scope": "entity.name.tag.localname",
+            "scope": "entity.name.tag",
             "settings": {
-                "foreground": "#ff0000"
+                "foreground": "#ff0000",
             }
-        }]
+        }]  
     }
 }

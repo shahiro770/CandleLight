@@ -122,7 +122,7 @@ namespace Database {
         }
 
         /// <summary>
-        /// Returns an attack from the attack table
+        /// Returns an attack from the Attacks table
         /// </summary>
         /// <param name="name"> Name of the attack</param>
         /// <param name="dbConnection"> IDbConnectino to get attack with </param>
@@ -152,6 +152,11 @@ namespace Database {
             }
         }
 
+        /// <summary>
+        /// Returns an Area from the Areas table
+        /// </summary>
+        /// <param name="areaName"> Name of the area </param>
+        /// <returns> An Area, passing it the dbconnection for it to fetch all information it needs </returns>
         public Area GetAreaByName(string areaName) {
              using(dbConnection = base.GetConnection()) {
 
@@ -185,6 +190,12 @@ namespace Database {
             }
         }
 
+        /// <summary>
+        /// Returns a SubArea from the SubAreas table
+        /// </summary>
+        /// <param name="subAreaName"> Name of sub area </param>
+        /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
+        /// <returns> A SubArea, passing it the dbconnection for it to fetch all information it needs </returns>
         public SubArea GetSubAreaByAreaName(string subAreaName, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM SubAreas WHERE Name = '" + subAreaName + "'";
@@ -208,6 +219,12 @@ namespace Database {
             }
         }
 
+        /// <summary>
+        /// Returns an Event from the Events table
+        /// </summary>
+        /// <param name="eventName"> Name of event </param>
+        /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
+        /// <returns> An Event, passing it the dbconnection for it to fetch all information it needs </returns>
         public Events.Event GetEventByName(string eventName, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Events WHERE Name = '" + eventName + "'";
@@ -243,6 +260,12 @@ namespace Database {
             }
         }
 
+        /// <summary>
+        /// Returns an Interaction from the Interactions table
+        /// </summary>
+        /// <param name="intName"> Name of interaction </param>
+        /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
+        /// <returns> An Interaction, passing it the dbconnection for it to fetch all information it needs </returns>
         public Interaction GetInteractionByName(string intName, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Interactions WHERE Name = '" + intName + "'";
@@ -271,6 +294,13 @@ namespace Database {
             }
         }
 
+        /// <summary>
+        /// Returns a Result from the Results Table
+        /// </summary>
+        /// <param name="resultName"> Name of the result </param>
+        /// <param name="resultKey"> Key for string to be displayed when result is shown to player </param>
+        /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
+        /// <returns> A result </returns>
         public Result GetResultByName(string resultName, string resultKey, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Results WHERE Name = '" + resultName + "'";

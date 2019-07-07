@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: February 11, 2019
 * 
-* The Monster class is used to store information about the Monster. 
+* The Monster class is used to store and manipulate information about the Monster. 
 * It is always attached to a Monster gameObject.
 *
 */
@@ -16,7 +16,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UIEffects;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Characters {
@@ -147,10 +146,9 @@ namespace Characters {
         /// </summary>
         /// <remark> 
         /// In Unity, the only way to load in different animations is to create an AnimatorOverrideController, 
-        /// set the animations of the AOC, and then set it to be the runtimeAnimatorController of the given animator 
+        /// set the animations of the AOC, and then set it to be the runtimeAnimatorController of the given animator. 
         /// Overriding a clip in unity overrides all instances of a clip in an animator controller's
-        /// state machine. If you don't want to take a fat L, make sure to use individual 
-        /// placeholders for each clip you want overridden.
+        /// state machine. Make sure to use individual placeholders for each clip you want overridden.
         /// </remark>
         public void SetMonsterAnimatorClips() {
             AnimatorOverrideController aoc = new AnimatorOverrideController(monsterAnimator.runtimeAnimatorController);
@@ -331,7 +329,7 @@ namespace Characters {
         /// <summary>
         /// Destroys the monster
         /// </summary>
-        /// <returns> Starts coroutine for monster death animation to play</returns>
+        /// <returns> Starts coroutine for monster death animation to play </returns>
         public IEnumerator Die() {
             yield return (StartCoroutine(PlayDeathAnimation()));
             Destroy(gameObject);
@@ -344,7 +342,7 @@ namespace Characters {
         /// <param name="trigger"> Animation trigger </param>
         /// <returns> Stops all actions while monster's animation plays </returns>
         /// <remark> 
-        /// All animators assumed to have Idle as their default state, and
+        /// All animators assumed to have "Idle" as their default state, and
         /// Base Layer as the name of their base animator layer. 
         /// </remark>
         public IEnumerator PlayAnimation(Animator a, string trigger) {
@@ -352,7 +350,7 @@ namespace Characters {
             do {
                 yield return null;    
             } while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            a.ResetTrigger(trigger);
+            a.ResetTrigger(trigger); // Reset the trigger just in case
         }
 
         /// <summary>

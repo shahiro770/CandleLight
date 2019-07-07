@@ -1,26 +1,23 @@
 /*
 * Project: CandleLight 
 * Author: Shahir Chowdhury
-* Date: February 11, 2019
+* Date: July 4, 2019
 * 
 * The Result class is used to hold the results of an event, for changes to EXP, HP, MP, and wax.
 * For now it doesn't allow for items to be found, or permanent stat changes, or partyMember changes.
 */
 
-using Actions;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Events {
 
     public class Result {
 
-        private int minValue = 5;
-        private int maxValue = 10;
+        private int minValue = 5;   /// <value> Min value for numeric rewards pre-multiplier </value>
+        private int maxValue = 10;  /// <value> Max value for numeric rewards pre-multiplier </value>
 
-        public string resultName;
-        public string resultKey;
+        public string resultName;   /// <value> Name of result </value>
+        public string resultKey;    /// <value> Localization key for displayed string for result </value>
         public float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
         public float multiplier;    /// <value> Multiplier on result depending on area </value>
         public int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
@@ -34,8 +31,14 @@ namespace Events {
         public int waxAmount { get; private set; } 
         
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="resultName"> Name of result </param>
+        /// <param name="resultKey"> String key for result </param>
+        /// <param name="quantity"></param>
+        /// <param name="changeValues"></param>
         public Result(string resultName, string resultKey, string quantity, int[] changeValues) {
-            Debug.Log("Result " + resultName);
             this.resultName = resultName;
             this.resultKey = resultKey;
             this.EXPChange = changeValues[0];
@@ -54,11 +57,11 @@ namespace Events {
             }
 
             SetEventMultiplier();
-            GenerateResults();
-
-            Debug.Log("Done Result");
         }
 
+        /// <summary>
+        /// Generates the values for EXP, HP, MP, and wax that the result will give
+        /// </summary>
         public void GenerateResults() {
             EXPAmount = GenerateAmount(EXPChange);
             HPAmount = GenerateAmount(HPChange);
@@ -66,14 +69,28 @@ namespace Events {
             waxAmount = GenerateAmount(waxChange);
         }
 
+
+        /// <summary>
+        /// Returns the generated results
+        /// </summary>
+        /// <returns></returns>
         public int[] GetResults() {
+            GenerateResults();
             return new int[] { EXPAmount, HPAmount, MPAmount, waxAmount };
         }
 
+        /// <summary>
+        /// Sets the multiplier for the results
+        /// </summary>
         public void SetEventMultiplier() {
             multiplier = EventManager.instance.areaMultiplier;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <returns></returns>
         public int GenerateAmount(int mode) {
             if (mode == 0) {
                 return 0;

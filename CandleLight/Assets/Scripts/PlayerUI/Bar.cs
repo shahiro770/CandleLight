@@ -23,8 +23,8 @@ namespace PlayerUI {
         public LocalizedText text;                  /// <value> Text to be displayed (if HP or MP can be translated </value>
         [field: SerializeField] public float maxAmount { get; set; }       /// <value> Max points the character has </value>
         [field: SerializeField] public float currentAmount { get; set; }   /// <value> Current points the character has </value>
-        [field: SerializeField] public float lerpSpeed = 2;
-        [field: SerializeField] public float fillAmount = 100;
+        [field: SerializeField] public float lerpSpeed = 2;         /// <value> Speed at which bar visually changes to fillAmount </value>
+        [field: SerializeField] public float fillAmount = 100;      /// <value> Percentage that bar should be filled </value>
 
         /// <summary>
         /// Update to slowly making bar's fill amount match its changed value
@@ -96,15 +96,6 @@ namespace PlayerUI {
             if (immediate) {
                 frontFill.fillAmount = currentAmount / maxAmount;
             }
-        }
-
-
-        void DoStuff(Object something) {
-            // Do stuff
-        }
-
-        void DoSameStuffForADifferentReason(Object something) {
-            DoStuff(something);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Characters {
         /// Logs a string to the console for debugging
         /// </summary>
         public virtual void LogName() {
-            Debug.Log("George");
+            Debug.Log("No Name");
         }
 
         /// <summary>

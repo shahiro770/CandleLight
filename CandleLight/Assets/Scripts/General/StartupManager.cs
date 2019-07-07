@@ -20,7 +20,8 @@ namespace Localization {
     public class StartupManager : MonoBehaviour {
 
         /// <summary>
-        /// Start to wait for the loading of all strings from the JSON file into the LocalizationManager
+        /// Start to wait for the loading of all strings from the JSON file into the LocalizationManager,
+        /// AssetBundles from online if being used, and data from the dataManager
         /// </summary>
         /// <returns>
         /// Yields until loading is finished, then has GameManager load the main menu

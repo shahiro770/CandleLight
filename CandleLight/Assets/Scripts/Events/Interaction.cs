@@ -1,7 +1,7 @@
 ﻿/*
 * Project: CandleLight 
 * Author: Shahir Chowdhury
-* Date: February 11, 2019
+* Date: July 4, 2019
 * 
 * The Interaction class is used to store information about an action that can be taken
 * to talk to or interact with things in scenarios.
@@ -18,12 +18,20 @@ namespace Events {
 
     public class Interaction {
 
-        public string name { get; private set; }
-        public string nameKey { get; private set; }
         public Result[] results = new Result[4];         /// <value> Result of the action if its an event action </value>
+        public string name { get; private set; }        /// <value> Name of interaction </value>
+        public string nameKey { get; private set; }     /// <value> Localization of interaction </value>
+        public int resultNum = 0;                       /// <value> Amount of results for an interaction </value>
 
-        public int resultNum = 0;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> String name of interaction </param>
+        /// <param name="resultNames"> String array of result names </param>
+        /// <param name="resultKeys"> Keys for localization </param>
+        /// dbConnection will be passed down to each subArea and other storage classes
+        /// to fetch information to save memory.
+        /// </param>
         public Interaction(string name, string[] resultNames, string[] resultKeys, IDbConnection dbConnection) {
             Debug.Log("Interaction " + name);
             this.name = name;

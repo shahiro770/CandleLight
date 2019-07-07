@@ -16,7 +16,6 @@ using PlayerUI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Combat {
@@ -68,7 +67,7 @@ namespace Combat {
         }
 
         void Start() {
-            StartCoroutine(InitializeCombat());   
+            //StartCoroutine(InitializeCombat());   
         }
 
         /// <summary>
@@ -211,12 +210,12 @@ namespace Combat {
         private IEnumerator AddMonster(string monsterName) {
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonster(monsterName));
             newMonster.SetActive(true);
+            
             Monster monsterComponent = newMonster.GetComponent<Monster>();
+            SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             
             monsterComponent.ID = countID++;
-            monsterComponent.SetHealthBar();
-            
-            SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
+            monsterComponent.SetHealthBar(); 
             monsterComponent.AddSMDListener(smd);
 
             monsterComponent.SetNavigation("down", actionsPanel.GetActionButton(0));
@@ -284,7 +283,7 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Sets the navigation between monsters
+        /// Sets the navigation between monster buttons
         /// </summary>
         private void SetMonsterNavigation() {
             foreach (Monster m in monsters) {
@@ -436,6 +435,7 @@ namespace Combat {
             Attack attackChoice = activeMonster.SelectAttack();
             eventDescription.SetText(attackChoice.nameKey);
             yield return StartCoroutine(activeMonster.PlayStartTurnAnimation());
+
             if (activeMonster.monsterAI == "random") {
                 targetChoice = Random.Range(0, partyMembers.Count);
             }
@@ -450,7 +450,7 @@ namespace Combat {
             }
             
             yield return (StartCoroutine(activeMonster.PlayAttackAnimation()));
-            eventDescription.SetText(partyMembers[targetChoice], attackChoice.damage);
+            eventDescription.SetPMDamageText(partyMembers[targetChoice], attackChoice.damage);
             
             if (attackChoice.damage > 0) {
                 yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage, partyMembers[targetChoice] == activePartyMember)));
@@ -462,7 +462,7 @@ namespace Combat {
         /// Changes the UI to reflect the first party member in the queue's information
         /// </summary>s
         public void DisplayFirstPartyMember() {
-            activePartyMember = cq.GetFirstPM();        // ActivePartyMember will be redundantly set a second time
+            activePartyMember = cq.GetFirstPM();    // activePartyMember will be redundantly set a second time
             actionsPanel.DisplayPartyMember(activePartyMember);
             statusPanel.DisplayPartyMember(activePartyMember);
         }

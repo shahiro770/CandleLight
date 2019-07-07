@@ -23,25 +23,25 @@ namespace PlayerUI {
         public Image textBackground;        /// <value> Image behind text </value>
         
         /// <summary>
-        /// 
+        /// Changes the displayed text
         /// </summary>
-        /// <param name="textKey"></param>
+        /// <param name="textKey"> Localized key for text to display </param>
         public void SetText(string textKey) {
             textBackground.gameObject.SetActive(true);
             eventText.SetKey(textKey);
         }
 
         /// <summary>
-        /// 
+        /// Changes the displayed text to show how much damage a partyMember took
         /// </summary>
         /// <param name="pm"></param>
         /// <param name="amount"></param>
-        public void SetText(PartyMember pm, int amount) {
+        public void SetPMDamageText(PartyMember pm, int amount) {
             eventText.SetDamageText(pm.memberName, amount);
         }
 
         /// <summary>
-        /// 
+        /// Stop displaying and remove all text
         /// </summary>
         public void ClearText() {
             textBackground.gameObject.SetActive(false);
