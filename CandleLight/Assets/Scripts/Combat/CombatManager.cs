@@ -83,7 +83,6 @@ namespace Combat {
             ArrangeMonsters();
             
             partyMembers = PartyManager.instance.GetPartyMembers(ref countID);
-            partyPanel.Init(partyMembers);
 
             foreach (Monster m in monsters) {
                 cq.AddCharacter(m);
@@ -149,7 +148,7 @@ namespace Combat {
             SetMonsterNavigation();
             actionsPanel.SetHorizontalNavigation(partyPanel); // temporary, in the future will need to check adjacent panels first
             partyPanel.EnableButtons();
-            partyPanel.SetHorizontalNavigation(actionsPanel);
+            partyPanel.SetHorizontalNavigation();
         }
 
         /// <summary>
@@ -329,7 +328,7 @@ namespace Combat {
                 m.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
             actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].b);
-            partyPanel.SetHorizontalNavigation(actionsPanel);
+            partyPanel.SetHorizontalNavigation();
 
             es.SetSelectedGameObject(monsters[middleMonster].b.gameObject);
         }
@@ -453,7 +452,7 @@ namespace Combat {
             eventDescription.SetPMDamageText(partyMembers[targetChoice], attackChoice.damage);
             
             if (attackChoice.damage > 0) {
-                yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage, partyMembers[targetChoice] == activePartyMember)));
+                yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage)));
             }
             eventDescription.ClearText();
         }
@@ -484,7 +483,7 @@ namespace Combat {
                 m.SetNavigation("down", actionsPanel.GetActionButton(0));
             }
 
-            partyPanel.SetHorizontalNavigation(actionsPanel);
+            partyPanel.SetHorizontalNavigation();
         }
 
         /// <summary>

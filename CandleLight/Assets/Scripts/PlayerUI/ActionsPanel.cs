@@ -56,23 +56,17 @@ namespace PlayerUI {
             for (int i = 0; i < interactions.Length; i++) {
                 actions[i].SetAction(ActionConstants.INTERACTION, interactions[i]);
             }
+            
             if (isLeavePossible) {
-                actions[actions.Length - 1].SetAction(ActionConstants.LEAVE);  // last action will always be flee in combat if allowed
+                actions[actions.Length - 1].SetActionType(ActionConstants.LEAVE);
+                actions[actions.Length - 1].SetInteractable(true); // last action will always be leave-related if allowed
             }
             else {
-                actions[actions.Length - 1].SetAction(ActionConstants.NONE);
+                actions[actions.Length - 1].SetInteractable(false);
             }
-        }
 
-        /// <summary>
-        /// Display all the actions of a partyMember and their usability
-        /// </summary>
-        /// <param name="pm"></param>
-        public void DisplayPartyMember(PartyMember pm) {
-            SetAttackActions(pm.attacks);
+
             SetAllActionsInteractable();
-            CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
-           
         }
 
         /// <summary>
@@ -94,6 +88,17 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Display all the actions of a partyMember and their usability
+        /// </summary>
+        /// <param name="pm"></param>
+        public void DisplayPartyMember(PartyMember pm) {
+            SetAttackActions(pm.attacks);
+            SetAllActionsInteractable();
+            CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
+           
+        }
+
+        /// <summary>
         /// Calls the releveant method depending on the type of action selected
         /// </summary>
         /// <param name="a"> Name of action to be taken </param>
@@ -106,8 +111,8 @@ namespace PlayerUI {
             else if (a.actionType == ActionConstants.UNDO) {
                 UndoAttackActionSelected();
             }
-            else if (a.actionType ==  ActionConstants.FLEE) {
-
+            else if (a.actionType ==  ActionConstants.FLEE || (a.actionType == ActionConstants.LEAVE)) {
+                EventManager.instance.GetNextEvent(a.i);
             }
         }
 
@@ -159,13 +164,16 @@ namespace PlayerUI {
         /// Enable all useable actions
         /// </summary>
         public void SetAllActionsInteractable() {
+            int firstInteractableIndex = 0;
+
             for (int i = 0; i < actions.Length ;i++) {
                 if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(true);  
+                    firstInteractableIndex = i;
                 }
             }
 
-            es.SetSelectedGameObject(actions[0].b.gameObject);  // make event system select first action
+            es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first action
         }
 
         /// <summary>

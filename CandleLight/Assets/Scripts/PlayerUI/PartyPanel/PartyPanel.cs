@@ -20,7 +20,12 @@ namespace PlayerUI {
 
     public class PartyPanel : Panel {
 
+        public ActionsPanel actionsPanel;
         public PartyMemberDisplay[] pmDisplays = new PartyMemberDisplay[4];     /// <value> List of partymembers to display </value>
+
+        void Start() {
+            Init(PartyManager.instance.GetPartyMembers());
+        }
 
         /// <summary>
         /// Displays each partymember's information
@@ -33,6 +38,7 @@ namespace PlayerUI {
             }
 
             SetVerticalNavigation();
+            SetHorizontalNavigation();
         }
 
         /// <summary>
@@ -48,8 +54,8 @@ namespace PlayerUI {
         /// <summary>
         /// Sets the horizontal navigation for PartyMemberDisplay to other panels
         /// </summary>
-        /// <param name="ap"> ActionsPanel reference </param>
-        public void SetHorizontalNavigation(ActionsPanel actionsPanel) {
+        /// <param name="actionsPanel"> ActionsPanel reference </param>
+        public void SetHorizontalNavigation() {
             if (actionsPanel.actions[1].IsInteractable()) {
                 foreach(PartyMemberDisplay pmd in pmDisplays) {
                     pmd.SetNavigation("left", actionsPanel.actions[1].b);

@@ -21,9 +21,12 @@
 		{ "key": "none_event", "value": "" },
 		{ "key": "lost_word_event", "value": "lost" },
 		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
-		{ "key": "the_grey_wastes_event", "value": "One would expect to see more remains, but even fools stay out of the Grey Wastes. Looks like this is the start of the path." },
+		{ "key": "the_grey_wastes_event", "value": "The Grey Wastes were aptly named. Only fools travel these lands. Looks like this is the start of the path." },
 
 		{ "key": "none_int", "value": "" },
+		{ "key": "open_int", "value": "Open" },
+		{ "key": "travel_int", "value": "Travel" },
+		{ "key": "beginGreyWastes_int", "value": "Begin" },
 		
 		{ "key": "HP_label", "value": "HP " },
 		{ "key": "MP_label", "value": "MP " },

@@ -144,7 +144,7 @@ namespace Database {
                     }
                     
                     if (newAttack == null) {
-                        Debug.LogError("The name of the searched attack doesn't exist");
+                        Debug.LogError("Attack " + name + " does not exist in the DB");
                     }
 
                     return newAttack;
@@ -158,7 +158,7 @@ namespace Database {
         /// <param name="areaName"> Name of the area </param>
         /// <returns> An Area, passing it the dbconnection for it to fetch all information it needs </returns>
         public Area GetAreaByName(string areaName) {
-             using(dbConnection = base.GetConnection()) {
+            using(dbConnection = base.GetConnection()) {
 
                 dbConnection.Open();
 
@@ -202,7 +202,7 @@ namespace Database {
 
                 using (IDataReader reader = dbcmd.ExecuteReader()) {
                     SubArea newSubArea = null;
-                    string[] subAreaEvents = new string[5];
+                    string[] subAreaEvents = new string[10];
 
                     if (reader.Read()) {
                         subAreaEvents[0] = reader.GetString(2);
@@ -210,6 +210,11 @@ namespace Database {
                         subAreaEvents[2] = reader.GetString(4);
                         subAreaEvents[3] = reader.GetString(5);
                         subAreaEvents[4] = reader.GetString(6);
+                        subAreaEvents[5] = reader.GetString(7);
+                        subAreaEvents[6] = reader.GetString(8);
+                        subAreaEvents[7] = reader.GetString(9);
+                        subAreaEvents[8] = reader.GetString(10);
+                        subAreaEvents[9] = reader.GetString(11);
 
                         newSubArea = new SubArea(reader.GetString(1), subAreaEvents, dbConnection);
                     }
@@ -236,23 +241,18 @@ namespace Database {
                     int[] possibleBackgrounds = new int[4];
 
                     if (reader.Read()) {
-                        eventInteractions[0] = reader.GetString(4);
-                        eventInteractions[1] = reader.GetString(5);
-                        eventInteractions[2] = reader.GetString(6);
-                        eventInteractions[3] = reader.GetString(7);
-                        eventInteractions[4] = reader.GetString(8);
-
-                        possibleBackgrounds[0] = reader.GetInt32(10);
-                        possibleBackgrounds[1] = reader.GetInt32(11);
-                        possibleBackgrounds[2] = reader.GetInt32(12);
-                        possibleBackgrounds[3] = reader.GetInt32(13);
+                        eventInteractions[0] = reader.GetString(6);
+                        eventInteractions[1] = reader.GetString(7);
+                        eventInteractions[2] = reader.GetString(8);
+                        eventInteractions[3] = reader.GetString(9);
+                        eventInteractions[4] = reader.GetString(10);
 
                         eventSprites[0] = reader.GetString(14);
                         eventSprites[1] = reader.GetString(15);
                         eventSprites[2] = reader.GetString(16);
 
-                        newEvent = new Events.Event(reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                        eventInteractions, reader.GetBoolean(9), possibleBackgrounds, eventSprites, dbConnection);
+                        newEvent = new Events.Event(reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetString(5),
+                        eventInteractions, reader.GetBoolean(11), reader.GetString(12), reader.GetInt32(13), eventSprites, dbConnection);
                     }
 
                     return newEvent;
@@ -266,7 +266,7 @@ namespace Database {
         /// <param name="intName"> Name of interaction </param>
         /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
         /// <returns> An Interaction, passing it the dbconnection for it to fetch all information it needs </returns>
-        public Interaction GetInteractionByName(string intName, IDbConnection dbConnection) {
+        public Interaction GetInteractionByName(string intName,  IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Interactions WHERE Name = '" + intName + "'";
 
@@ -288,7 +288,7 @@ namespace Database {
 
                         newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, dbConnection);
                     }
-
+                
                     return newInt;
                 }
             }
@@ -310,15 +310,81 @@ namespace Database {
                     int[] resultChanges = new int[4];
 
                     if (reader.Read()) {
-                        resultChanges[0] = reader.GetInt32(3);
-                        resultChanges[1] = reader.GetInt32(4);
-                        resultChanges[2] = reader.GetInt32(5);
-                        resultChanges[3] = reader.GetInt32(6);
+                        resultChanges[0] = reader.GetInt32(4);
+                        resultChanges[1] = reader.GetInt32(5);
+                        resultChanges[2] = reader.GetInt32(6);
+                        resultChanges[3] = reader.GetInt32(7);
 
-                        newResult = new Result(reader.GetString(1), resultKey, reader.GetString(2), resultChanges);
+                        newResult = new Result(reader.GetString(1), reader.GetBoolean(2), resultKey, reader.GetString(3), resultChanges, 
+                        reader.GetString(8), reader.GetString(9));
                     }
 
                     return newResult;
+                }
+            }
+        }
+
+        public string[] GetBGPackNames(string areaName) {
+            using(dbConnection = base.GetConnection()) {
+
+                dbConnection.Open();
+
+                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+
+                    dbcmd.CommandText = "SELECT * FROM BackgroundPackNames WHERE Name = '" + areaName + "'";
+
+                    using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        string[] bgPackNames = new string[10];
+
+                        if (reader.Read()) {
+                            bgPackNames[0] = reader.GetString(2);
+                            bgPackNames[1] = reader.GetString(3);
+                            bgPackNames[2] = reader.GetString(4);
+                            bgPackNames[3] = reader.GetString(5);
+                            bgPackNames[4] = reader.GetString(6);
+                            bgPackNames[5] = reader.GetString(7);
+                            bgPackNames[6] = reader.GetString(8);
+                            bgPackNames[7] = reader.GetString(9);
+                            bgPackNames[8] = reader.GetString(10);
+                            bgPackNames[9] = reader.GetString(11);
+                        }
+
+                        return bgPackNames;
+                    }
+                }
+            }
+        }
+
+        public BackgroundPack GetBGPack(string areaName, string bgPackName) {
+            using(dbConnection = base.GetConnection()) {
+
+                dbConnection.Open();
+
+                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+
+                    dbcmd.CommandText = "SELECT * FROM BackgroundPacks WHERE Area = '" + areaName + "' AND Name = '" + bgPackName + "'";
+
+                    using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        BackgroundPack newPack = null;
+                        int[] spriteIndicies = new int[10];
+
+                        if (reader.Read()) {
+                            spriteIndicies[0] = reader.GetInt32(3);
+                            spriteIndicies[1] = reader.GetInt32(4);
+                            spriteIndicies[2] = reader.GetInt32(5);
+                            spriteIndicies[3] = reader.GetInt32(6);
+                            spriteIndicies[4] = reader.GetInt32(7);
+                            spriteIndicies[5] = reader.GetInt32(8);
+                            spriteIndicies[6] = reader.GetInt32(9);
+                            spriteIndicies[7] = reader.GetInt32(10);
+                            spriteIndicies[8] = reader.GetInt32(11);
+                            spriteIndicies[9] = reader.GetInt32(12);
+
+                            newPack = new BackgroundPack(reader.GetString(2), areaName, spriteIndicies);
+                        }
+
+                        return newPack;
+                    }
                 }
             }
         }

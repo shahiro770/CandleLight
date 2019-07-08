@@ -19,22 +19,56 @@ namespace Events {
 
     public class SubArea {
 
-        public Event[] events = new Event[5];   /// <value> 5 Events max per subArea</value>
+        public Event[] events = new Event[10];      /// <value> 10 Events max per subArea </value>
+        public Event[] subEvents = new Event[10];   /// <value> 10 SubEvents max per subArea </value>
         public string subAreaName;              
         public int eventNum = 0;              /// <value> Number of events in a subArea</value>
+        public int subEventNum = 0;
        
         public SubArea(string subAreaName, string[] eventNames, IDbConnection dbConnection) {
-            Debug.Log("SubArea " + subAreaName);
             this.subAreaName = subAreaName;
 
             for (int i = 0; i < events.Length; i++) {
                 string eventName = eventNames[i];
                 
                 if (eventName != "none") {
-                    events[i] = GameManager.instance.DB.GetEventByName(eventName, dbConnection);
-                    eventNum++;
+                    Event newEvent = GameManager.instance.DB.GetEventByName(eventName, dbConnection);
+                    
+                    if (newEvent.chance != 0) {
+                        events[eventNum] = newEvent;
+                        eventNum++;
+                    }
+                    else {
+                        subEvents[subEventNum] = newEvent;
+                        subEventNum++;
+                    }   
                 }
             }
+        }
+
+        public Event GetEvent() {
+            int eventChance = Random.Range(0, 100);
+
+            for (int i = 0; i < eventNum; i++) {
+                eventChance -= events[i].chance;
+
+                if (eventChance < 0) {
+                    return events[i];
+                }
+            }
+
+            return null;
+        }
+
+        public Event GetEvent(string name) {
+            for (int i = 0; i < eventNum; i++) {
+                if (events[i].eventName == name) {
+                    return events[i];
+                }
+            }
+
+            Debug.LogError("Event " + name + " does not exist");
+            return null;
         }
 
         /// <summary>
@@ -45,5 +79,6 @@ namespace Events {
         public Event GetEvent(int index) {
             return events[index];
         }
+
     }
 }

@@ -32,19 +32,15 @@ namespace Events {
         /// to fetch information to save memory.
         /// </param>
         public Area(string areaName, string[] subAreaNames, IDbConnection dbConnection) {
-            Debug.Log("Area " + areaName);
             this.areaName = areaName;
 
             for (int i = 0; i < subAreas.Length; i++) {
                 string subAreaName = subAreaNames[i];
                 if (subAreaName != "none") {
-                    Debug.Log(subAreaName);
                     subAreas[i] = GameManager.instance.DB.GetSubAreaByAreaName(subAreaName, dbConnection);
                     subAreasNum++;
                 }
             }
-
-            
         }
 
         /// <summary>
@@ -53,8 +49,15 @@ namespace Events {
         /// subAreas[subAreaNum - 2] will be the boss
         /// </summary>
         /// <returns> A SubArea </returns>
-        public SubArea GetSubArea(int index) {
-            return subAreas[index];
+        public SubArea GetSubArea(string name) {
+            foreach (SubArea sa in subAreas) {
+                if (sa.subAreaName == name) {
+                    return sa;
+                }
+            }
+
+           Debug.LogError("SubArea " + name + " does not exist");
+           return null;
         }
     }
 }

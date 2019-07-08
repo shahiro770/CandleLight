@@ -22,13 +22,19 @@ namespace PlayerUI {
         public Bar HPBar;               /// <value> HPBar of active partyMember </value>
         public Bar MPBar;               /// <value> MPBar of active partyMember </value>
         public EffectsBar effectsBar;   /// <value> EffectBar of active partyMember </value>
+        public PartyMember pm = null;
 
         /// <summary>
         /// Initialize all the bars of the active partyMember
         /// </summary>
         /// <param name="pm"></param>
         public void DisplayPartyMember(PartyMember pm) {
-            pm.SetHPAndMPBar(PanelConstants.STATUSPANEL, HPBar, MPBar);
+            if (this.pm != null) {
+                this.pm.UnsetHPAndMPBar(GetPanelName());
+            }
+
+            pm.SetHPAndMPBar(GetPanelName(), HPBar, MPBar);
+            this.pm = pm;
         }
 
         /// <summary>

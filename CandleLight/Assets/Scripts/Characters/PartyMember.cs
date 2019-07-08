@@ -29,7 +29,7 @@ namespace Characters {
         public string subClassName { get; set; }    /// <value> Class specializations </value>
         public string memberName { get; set; }      /// <value> Name of the party member </value>
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
-
+        
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
         /// </summary> 
@@ -66,6 +66,17 @@ namespace Characters {
             MPBar.SetMaxAndCurrent(MP, CMP);
         }
 
+        public void UnsetHPAndMPBar(string panelName) {
+            if (panelName == PanelConstants.STATUSPANEL) {
+                statusPanelHPBar = null;
+                statusPanelMPBar = null;
+            }
+            else if (panelName == PanelConstants.PARTYPANEL) {
+                partyPanelHPBar = null;
+                partyPanelMPBar = null;
+            }
+        }
+
         /// <summary>
         /// Reduce the PartyMember's current health points by a specified amount.false
         /// IEnumerator is used to make calling function wait for its completion
@@ -75,13 +86,13 @@ namespace Characters {
         /// Active party member is the partMember who's information 
         /// is displayed in the status panel, true if active, false otherwise 
         /// </param>
-        public IEnumerator LoseHP(int amount, bool isActive) {
+        public IEnumerator LoseHP(int amount) {
             CHP -= amount;
             if (CHP < 0) {
                 CHP = 0;
             }
             
-            if (isActive) {
+            if (statusPanelHPBar != null) {
                 statusPanelHPBar.SetCurrent(CHP);  
             }
             partyPanelHPBar.SetCurrent(CHP);
@@ -89,6 +100,8 @@ namespace Characters {
 
             yield break;
         }
+
+
 
         /// <summary>
         /// Reduce the PartyMember's current health points by a specified amount.false
@@ -99,10 +112,10 @@ namespace Characters {
         /// Active party member is the party member who's information 
         /// is displayed in the status panel, true if active, false otherwise 
         /// </param>
-        public IEnumerator LoseMP(int amount, bool isActive) {
+        public IEnumerator LoseMP(int amount) {
             CMP -= amount;
             
-            if (isActive) {
+            if (statusPanelMPBar != null) {
                 statusPanelMPBar.SetCurrent(CMP);  
             }
             partyPanelMPBar.SetCurrent(CMP);
@@ -118,10 +131,10 @@ namespace Characters {
         /// <returns> IEnumerator to pay cost before attack animations play </returns>
         public IEnumerator PayAttackCost(string costType, int cost) {
             if (costType == "MP") {
-                yield return StartCoroutine(LoseMP(cost , true));
+                yield return StartCoroutine(LoseMP(cost));
             } 
             else if (costType == "HP") {
-                yield return StartCoroutine(LoseHP(cost , true));
+                yield return StartCoroutine(LoseHP(cost));
             }
         }
 

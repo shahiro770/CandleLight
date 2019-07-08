@@ -25,7 +25,7 @@ namespace Actions {
         public Button b { get; private set; }       /// <value> Button component </value>
         public Interaction i { get; private set; }  /// <value> Interaction stored if interraction </value>
         public LocalizedText actionText;            /// <value> Text to be displayed </value>
-        public string actionType { get; set; }      /// <value> Action type (Attack, flee, undo) </value>
+        public string actionType { get; private set; }       /// <value> Action type (Attack, flee, undo) </value>
         public bool isUsable { get; private set; } = true;   /// <value> Flag for if action button is usable </value>
 
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
@@ -103,6 +103,7 @@ namespace Actions {
             if (actionType == ActionConstants.INTERACTION) {
                 if (i.nameKey == "none_int") {
                     this.actionType = ActionConstants.NONE;
+                    SetInteractable(false);
                 }
                 else {
                     this.i = i;
@@ -110,6 +111,10 @@ namespace Actions {
                 }
                 SetKey(i.nameKey);
             }
+        }
+
+        public void SetActionType(string actionType) {
+            this.actionType = actionType;
         }
 
         /// <summary>

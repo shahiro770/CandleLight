@@ -33,17 +33,19 @@ namespace Events {
         /// to fetch information to save memory.
         /// </param>
         public Interaction(string name, string[] resultNames, string[] resultKeys, IDbConnection dbConnection) {
-            Debug.Log("Interaction " + name);
             this.name = name;
             this.nameKey = name + "_int";
 
             for (int i = 0; i < resultNames.Length; i++) {
-                Debug.Log(i);
                 if (resultNames[i] != "none") {
                     results[i] = GameManager.instance.DB.GetResultByName(resultNames[i], resultKeys[i], dbConnection);
                     resultNum++;
                 }
             }
+        }
+
+        public Result GetResult() {
+            return results[Random.Range(0, resultNum)];
         }
     }
 }

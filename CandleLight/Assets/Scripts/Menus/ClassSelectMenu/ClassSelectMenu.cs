@@ -120,7 +120,7 @@ namespace Menus.ClassSelectMenu {
         /// <summary>
         /// Starts the game by loading the next world map scene
         /// </summary> 
-        /// <remark> TO DO: For now this just loads into combat as a warrior. World map scene still has to be made </remark>
+        /// <remark> TO DO: World map scene still has to be made </remark>
         public void BeginGame() {
             if (selectButtonEnabled) {
                 PartyManager.instance.AddPartyMember("Mage");
@@ -148,7 +148,8 @@ namespace Menus.ClassSelectMenu {
                 //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Goblin LVL1"} );  
                 //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide LVL1", "Goblin LVL1"} ); 
                 //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide Alpha LVL3", "Goblin LVL1"} ); 
-                GameManager.instance.LoadCombatScene(new string[] { "Goblin LVL1", "Greyhide Alpha LVL3", "Greyhide LVL1" });
+                //GameManager.instance.LoadCombatScene(new string[] { "Goblin LVL1", "Greyhide Alpha LVL3", "Greyhide LVL1" });
+                GameManager.instance.LoadAreaScene("GreyWastes");
             }
         }
     }

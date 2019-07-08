@@ -8,11 +8,13 @@
 *
 */
 
+using Party;
 using General;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using PlayerUI;
+using System.Collections.Generic;
 
 namespace Events {
 
@@ -23,6 +25,7 @@ namespace Events {
         private Area currentArea;           
         private SubArea currentSubArea;
         private Event currentEvent;
+        private BackgroundPack[] bgPacks = new BackgroundPack[10];
 
         private Vector3 pos1d1 = new Vector3(0, 0, 0);
         private Vector3 pos2d1 = new Vector3(-150, 0, 0);
@@ -31,6 +34,9 @@ namespace Events {
         private Vector3 pos3d2 = new Vector3(0, 0, 0);
         private Vector3 pos3d3 = new Vector3(275, 0, 0);
         private string currentAreaName;
+        private int packNum = 0;
+        private int areaProgress = 0;       /// <value> Area progress increments by 1 for each main event the player completes </value>
+        private int subAreaProgress = 0;    /// <value> When subareaProgress = 100, player is given the next event from the area </value>
         private bool isReady = false;       /// <value> Wait until EventManager is ready before starting </value>
 
         public float areaMultiplier { get; private set; } /// <value> Multiplier to results for events in the area </value>
@@ -39,7 +45,8 @@ namespace Events {
         public EventDescription eventDescription;   /// <value> Display that describes the event in text </value>
         public Image eventBackground;               /// <value> Image background to event </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
-
+        public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
+        public StatusPanel statusPanel;
 
 
         /// <summary>
@@ -59,9 +66,7 @@ namespace Events {
         /// Starts the player in the GreyWastes area for now
         /// </summary>
         void Start() {
-            LoadArea("GreyWastes");
-        
-            StartCoroutine(StartArea("GreyWastes"));
+            StartCoroutine(StartArea(GameManager.instance.areaName));
         }
 
         /// <summary>
@@ -72,9 +77,22 @@ namespace Events {
         public void LoadArea(string areaName) {
             this.currentAreaName = areaName;
             currentArea = GameManager.instance.DB.GetAreaByName(areaName);
+
+            LoadBackgroundPacks(areaName);
             SetAreaMultiplier();
 
             isReady = true;
+        }
+
+        public void LoadBackgroundPacks(string areaName) {
+            string[] bgPackNames = GameManager.instance.DB.GetBGPackNames(areaName);
+
+            for (int i = 0; i < bgPackNames.Length; i++) {
+                if (bgPackNames[i] != "none") {
+                    bgPacks[i] = GameManager.instance.DB.GetBGPack(areaName, bgPackNames[i]);
+                    packNum++;
+                }
+            }
         }
 
         /// <summary>
@@ -92,22 +110,75 @@ namespace Events {
         }
 
         /// <summary>
-        /// Displays the first event in an area (always the first subArea in the area)
+        /// Displays the first event in an area (first event of the main subArea)
         /// </summary>
         public void GetStartEvent() {
-            currentSubArea = currentArea.GetSubArea(0);
-            currentEvent = currentSubArea.GetEvent(0);
+            currentSubArea = currentArea.GetSubArea("main");
+            currentEvent = currentSubArea.GetEvent(areaProgress);
 
-            DisplayCurrentEvent();
+            DisplayEvent();
+        }
+
+        public void GetNextEvent(Interaction i) {
+            Result r = i.GetResult();
+
+            if (r.resultName != "none" && r.subAreaName != "none") {
+                subAreaProgress = 0;
+                currentSubArea = currentArea.GetSubArea(r.subAreaName);
+                currentEvent = currentSubArea.GetEvent();     
+            }
+            else {
+                subAreaProgress+= currentEvent.progressAmount;
+                if (subAreaProgress >= 100) {
+                    GetNextMainEvent();
+                }
+                else {
+                    GetNextSubAreaEvent();
+                }
+            }
+
+            DisplayEvent();
+        }
+
+        public void GetNextMainEvent() {
+            subAreaProgress = 0;
+            areaProgress++;
+
+            currentSubArea = currentArea.GetSubArea("main");
+            currentEvent = currentSubArea.GetEvent(areaProgress);
+        }
+
+        public void GetNextSubAreaEvent() {
+            currentEvent = currentSubArea.GetEvent();
         }
 
         /// <summary>
         /// Displays the current event to the player
         /// </summary>
-        public void DisplayCurrentEvent() {
-            eventBackground.sprite = currentEvent.GetBackground();
+        public void DisplayEvent() {
+            eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
             eventDescription.SetText(currentEvent.promptKey);
             DisplayEventSprites(currentEvent);
+
+            statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0]);
+            actionsPanel.Init(currentEvent.isLeavePossible);
+            actionsPanel.SetInteractionActions(currentEvent.interactions);
+            partyPanel.SetHorizontalNavigation();
+        }
+
+        public Sprite GetBGSprite(string packName) {
+            for (int i = 0; i < packNum; i++) {
+                if (bgPacks[i].packName == packName) {
+                    if (currentEvent.specificBGSprite != -1) {
+                        return bgPacks[i].GetBackground(currentEvent.specificBGSprite);
+                    }
+
+                    return bgPacks[i].GetBackground();
+                }
+            }
+
+            Debug.LogError("BackgroundPack of name" + packName +  "does not exist");
+            return null;
         }
 
         /// <summary>

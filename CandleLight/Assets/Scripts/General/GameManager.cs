@@ -24,10 +24,11 @@ namespace General {
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public string[] monsterNames { get; set; }      /// <value> List of monsters to be instantiated </value>
+        public string areaName { get; set; }
 
         private string activeScene = "";                /// <value> Current scene being displayed </value>
         private string initialScene = "Loading";        /// <value> Scene to begin game with </value>
-        private string combatScene = "Dungeon";         /// <value> Name of combat scene </value>
+        private string areaScene = "Area";              /// <value> Name of area scene </value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -64,10 +65,14 @@ namespace General {
         /// </summary> 
         /// <param name="monsterNames"> Names of the monsters to be instantiated </param>
         /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
-        public void LoadCombatScene(string[] monsterNames) {
+        public void LoadAreaScene(string areaName) {
             SceneManager.UnloadSceneAsync(activeScene);
-            SceneManager.LoadScene(combatScene, LoadSceneMode.Additive);
-            activeScene = combatScene;
+            SceneManager.LoadScene(areaScene, LoadSceneMode.Additive);
+            activeScene = areaScene;
+            this.areaName = areaName;
+        }
+
+        public void PrepareCombat(string[] monsterNames) {
             this.monsterNames = monsterNames;
         }
     }
