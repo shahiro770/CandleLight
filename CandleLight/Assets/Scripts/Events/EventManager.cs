@@ -8,6 +8,7 @@
 *
 */
 
+using CombatManager = Combat.CombatManager;
 using Party;
 using General;
 using System.Collections;
@@ -22,32 +23,37 @@ namespace Events {
 
         public static EventManager instance; /// <value> Singleton </value>
 
-        private Area currentArea;           
-        private SubArea currentSubArea;
-        private Event currentEvent;
-        private BackgroundPack[] bgPacks = new BackgroundPack[10];
+        /* external component references */
+        public CombatManager combatManager;  /// <value> CombatManager reference </value>
+        public EventDisplay[] eventDisplays = new EventDisplay[3]; /// <value> Displays for informational sprites that events might have </value>
+        public EventDescription eventDescription;   /// <value> Display that describes the event in text </value>
+        public Image eventBackground;               /// <value> Image background to event </value>
+        public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
+        public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
+        public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
 
+        public float areaMultiplier { get; private set; } /// <value> Multiplier to results for events in the area </value>
+
+        private Area currentArea;            /// <value> Area to select subAreas from </value>
+        private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
+        private Event currentEvent;          /// <value> Event being displayed </value>
+        private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
+
+        /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, 0, 0);
         private Vector3 pos2d1 = new Vector3(-150, 0, 0);
         private Vector3 pos2d2 = new Vector3(150, 0, 0);
         private Vector3 pos3d1 = new Vector3(-275, 0, 0);
         private Vector3 pos3d2 = new Vector3(0, 0, 0);
         private Vector3 pos3d3 = new Vector3(275, 0, 0);
-        private string currentAreaName;
-        private int packNum = 0;
+
+        private string currentAreaName;     /// <value> Name of current area </value>
+        private int bgPackNum = 0;          /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;       /// <value> Area progress increments by 1 for each main event the player completes </value>
         private int subAreaProgress = 0;    /// <value> When subareaProgress = 100, player is given the next event from the area </value>
         private bool isReady = false;       /// <value> Wait until EventManager is ready before starting </value>
 
-        public float areaMultiplier { get; private set; } /// <value> Multiplier to results for events in the area </value>
-
-        public EventDisplay[] eventDisplays = new EventDisplay[3]; /// <value> Displays for informational sprites that events might have </value>
-        public EventDescription eventDescription;   /// <value> Display that describes the event in text </value>
-        public Image eventBackground;               /// <value> Image background to event </value>
-        public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
-        public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
-        public StatusPanel statusPanel;
-
+        #region Initialization
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -83,15 +89,31 @@ namespace Events {
 
             isReady = true;
         }
-
+        
+        /// <summary>
+        /// Load backgroundPacks for an area
+        /// </summary>
+        /// <param name="areaName"> Name of area that will have its bgPacks loaded </param>
         public void LoadBackgroundPacks(string areaName) {
             string[] bgPackNames = GameManager.instance.DB.GetBGPackNames(areaName);
 
             for (int i = 0; i < bgPackNames.Length; i++) {
                 if (bgPackNames[i] != "none") {
                     bgPacks[i] = GameManager.instance.DB.GetBGPack(areaName, bgPackNames[i]);
-                    packNum++;
+                    bgPackNum++;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sets a multiplier for results from events in the area
+        /// (i.e. gold results get increased in later areas)
+        /// </summary>
+        private void SetAreaMultiplier() {
+            switch(currentAreaName) {
+                case "GreyWastes":
+                    areaMultiplier = 1.0f;
+                    break;
             }
         }
 
@@ -109,6 +131,10 @@ namespace Events {
             GetStartEvent();
         }
 
+        #endregion
+
+        #region EventManagement
+
         /// <summary>
         /// Displays the first event in an area (first event of the main subArea)
         /// </summary>
@@ -119,10 +145,14 @@ namespace Events {
             DisplayEvent();
         }
 
+        /// <summary>
+        /// Gets the next event triggered by an interaction
+        /// </summary>
+        /// <param name="i"></param>
         public void GetNextEvent(Interaction i) {
             Result r = i.GetResult();
 
-            if (r.resultName != "none" && r.subAreaName != "none") {
+            if (r.name != "none" && r.subAreaName != "none") {
                 subAreaProgress = 0;
                 currentSubArea = currentArea.GetSubArea(r.subAreaName);
                 currentEvent = currentSubArea.GetEvent();     
@@ -140,6 +170,9 @@ namespace Events {
             DisplayEvent();
         }
 
+        /// <summary>
+        /// Gets the next event in the subArea "main" of an area
+        /// </summary>
         public void GetNextMainEvent() {
             subAreaProgress = 0;
             areaProgress++;
@@ -148,8 +181,19 @@ namespace Events {
             currentEvent = currentSubArea.GetEvent(areaProgress);
         }
 
+        /// <summary>
+        /// Gets the next random event in the current subArea
+        /// </summary>
         public void GetNextSubAreaEvent() {
             currentEvent = currentSubArea.GetEvent();
+        }
+
+        /// <summary>
+        /// Switches gameplay from exploring into turn-based combat with random monsters
+        /// </summary>
+        public void GetCombatEvent() {
+            string[] monstersToFight = new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide Alpha LVL3", "Goblin LVL1"};
+            StartCoroutine(combatManager.InitializeCombat(monstersToFight));
         }
 
         /// <summary>
@@ -158,7 +202,7 @@ namespace Events {
         public void DisplayEvent() {
             eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
             eventDescription.SetText(currentEvent.promptKey);
-            DisplayEventSprites(currentEvent);
+            ShowEventDisplays(currentEvent);
 
             statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0]);
             actionsPanel.Init(currentEvent.isLeavePossible);
@@ -166,9 +210,14 @@ namespace Events {
             partyPanel.SetHorizontalNavigation();
         }
 
-        public Sprite GetBGSprite(string packName) {
-            for (int i = 0; i < packNum; i++) {
-                if (bgPacks[i].packName == packName) {
+        /// <summary>
+        /// Returns a random sprite from a backgroundPack
+        /// </summary>
+        /// <param name="bgPackName"> Name of backgroundPack to load from </param>
+        /// <returns></returns>
+        public Sprite GetBGSprite(string bgPackName) {
+            for (int i = 0; i < bgPackNum; i++) {
+                if (bgPacks[i].name == bgPackName) {
                     if (currentEvent.specificBGSprite != -1) {
                         return bgPacks[i].GetBackground(currentEvent.specificBGSprite);
                     }
@@ -177,27 +226,19 @@ namespace Events {
                 }
             }
 
-            Debug.LogError("BackgroundPack of name" + packName +  "does not exist");
+            Debug.LogError("BackgroundPack of name" + bgPackName +  "does not exist");
             return null;
         }
 
-        /// <summary>
-        /// Sets a multiplier for results from events in the area
-        /// (e.g. gold results get increased in later areas)
-        /// </summary>
-        private void SetAreaMultiplier() {
-            switch(currentAreaName) {
-                case "GreyWastes":
-                    areaMultiplier = 1.0f;
-                    break;
-            }
-        }
+        #endregion
+
+        #region EventDisplays
 
         /// <summary>
         /// Displays the event sprites in the eventDisplays
         /// </summary>
         /// <param name="e"> Event containing sprites </param>
-        public void DisplayEventSprites(Event e) {
+        public void ShowEventDisplays(Event e) {
             if (e.spriteNum != 0) {
                 if (e.spriteNum == 1) {
                     eventDisplays[0].SetImage(e.eventSprites[0]);
@@ -235,10 +276,12 @@ namespace Events {
         /// <summary>
         /// Hides the eventDisplays
         /// </summary>
-        public void HideEventSprites() {
+        public void HideEventDisplays() {
             foreach (EventDisplay ed in eventDisplays) {
                 ed.SetVisible(false);
             }
         }
+
+        #endregion
     }
 }

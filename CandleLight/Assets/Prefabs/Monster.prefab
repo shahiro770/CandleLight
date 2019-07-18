@@ -925,7 +925,7 @@ MonoBehaviour:
   monsterAnimator: {fileID: 3724190269095448903}
   HPBar: {fileID: 5904602688543524742}
   b: {fileID: 8848571942937455294}
-  bts: {fileID: 0}
+  bts: {fileID: 5047602295156611218}
   monsterCanvas: {fileID: 8893029803877665006}
   dt: {fileID: 7751574751049048637}
   monsterSprite: {fileID: 5909135346569761772}
@@ -933,6 +933,7 @@ MonoBehaviour:
   vectorSize: {x: 0, y: 0}
   attackNum: 0
   selectedAttackIndex: 0
+  <monsterArea>k__BackingField: 
   <monsterSize>k__BackingField: 
   <monsterNameID>k__BackingField: 
   <monsterDisplayName>k__BackingField: 

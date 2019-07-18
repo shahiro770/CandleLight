@@ -34,8 +34,7 @@ namespace PlayerUI {
         public void Init(PartyMember pm) {
             this.pm = pm;
             classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
-            pm.PMDisplay = this;
-            pm.SetHPAndMPBar(PanelConstants.PARTYPANEL, HPBar, MPBar);
+            pm.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
         }
         
         /// <summary>
@@ -65,19 +64,6 @@ namespace PlayerUI {
 
             b.navigation = n;
         }
-
-        /* public void SetHPAndMPBar(int HP, int CHP, int MP, int CMP) {
-            HPBar.SetMaxAndCurrent(HP, CHP);
-            MPBar.SetMaxAndCurrent(MP, CMP);
-        }
-
-        public void SetHP(int amount) {
-            HPBar.SetCurrent(amount);
-        }
-
-        public void SetMP(int amount) {
-            MPBar.SetCurrent(amount);
-        }*/
 
         /// <summary>
         /// Plays the animation for when the partyMember who's information is being displayed is damaged

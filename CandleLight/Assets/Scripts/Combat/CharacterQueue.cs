@@ -119,6 +119,20 @@ namespace Combat {
         }
 
         /// <summary>
+        /// Returns the first party member in the queue
+        /// </summary>
+        /// <returns></returns>
+        public PartyMember GetFirstPM() {
+            foreach (QueueNode q in combatQueue) {
+                if (q.c is PartyMember) {
+                    return (PartyMember)q.c;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Removes a character from the queue, including all of their entries
         /// </summary>
         /// <param name="ID"> Unique ID of the character to be removed </param>
@@ -157,20 +171,6 @@ namespace Combat {
         /// <returns> Returns true if no monsters left in the queue </returns>
         public bool CheckMonstersDefeated() {
             return monsterNumber == 0;
-        }
-
-        /// <summary>
-        /// Returns the first party member in the queue
-        /// </summary>
-        /// <returns></returns>
-        public PartyMember GetFirstPM() {
-            foreach (QueueNode q in combatQueue) {
-                if (q.c is PartyMember) {
-                    return (PartyMember)q.c;
-                }
-            }
-
-            return null;
         }
 
         /// <summary>

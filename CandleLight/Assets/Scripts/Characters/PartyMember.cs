@@ -20,11 +20,13 @@ namespace Characters {
 
     public class PartyMember : Character {
         
-        public PartyMemberDisplay PMDisplay;        /// <value> Visual for party member's status in party panel </value>
-        private Bar statusPanelHPBar { get; set; }  /// <value> Visual for health points in status panel </value>
-        private Bar statusPanelMPBar { get; set; }  /// <value> Visual for mana points in status panel </value>
-        private Bar partyPanelHPBar { get; set; }   /// <value> Visual for health points in party panel </value>
-        private Bar partyPanelMPBar { get; set; }   /// <value> Visual for mana points in party panel </value>
+        /* external component references */
+        public PartyMemberDisplay pmd { get; private set; }     /// <value> Visual for party member's status in party panel </value>
+        public Bar statusPanelHPBar { get; private set; }  /// <value> Visual for health points in status panel </value>
+        public Bar statusPanelMPBar { get; private set; }  /// <value> Visual for mana points in status panel </value>
+        public Bar partyPanelHPBar { get; private set; }   /// <value> Visual for health points in party panel </value>
+        public Bar partyPanelMPBar { get; private set; }   /// <value> Visual for mana points in party panel </value>
+       
         public string className { get; set; }       /// <value> Warrior, Mage, Archer, or Thief </value>
         public string subClassName { get; set; }    /// <value> Class specializations </value>
         public string memberName { get; set; }      /// <value> Name of the party member </value>
@@ -44,6 +46,18 @@ namespace Characters {
             this.subClassName = personalInfo[1];
             this.memberName = personalInfo[2];
             this.race = personalInfo[3];
+        }
+        
+        /// <summary>
+        /// Sets the partyMemberDisplay of this partyMember 
+        /// </summary>
+        /// <param name="pmd"> PartyMemberDisplay to show this partyMember's information </param>
+        /// <param name="panelName"> Name of panel </param>
+        /// <param name="HPBar"> HPBar reference </param>
+        /// <param name="MPBar"> MPBar reference </param>
+        public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, Bar HPBar, Bar MPBar) {
+            this.pmd = pmd;
+            SetHPAndMPBar(panelName, HPBar, MPBar);
         }
 
         /// <summary>
@@ -66,6 +80,10 @@ namespace Characters {
             MPBar.SetMaxAndCurrent(MP, CMP);
         }
 
+        /// <summary>
+        /// Removes the HPBar and MPBar references depending on the panel
+        /// </summary>
+        /// <param name="panelName"> Name of panel </param>
         public void UnsetHPAndMPBar(string panelName) {
             if (panelName == PanelConstants.STATUSPANEL) {
                 statusPanelHPBar = null;
@@ -96,12 +114,10 @@ namespace Characters {
                 statusPanelHPBar.SetCurrent(CHP);  
             }
             partyPanelHPBar.SetCurrent(CHP);
-            yield return (StartCoroutine(PMDisplay.PlayDamagedAnimation()));
+            yield return (StartCoroutine(pmd.PlayDamagedAnimation()));
 
             yield break;
         }
-
-
 
         /// <summary>
         /// Reduce the PartyMember's current health points by a specified amount.false
@@ -124,6 +140,14 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Check if the party member is dead
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckDeath() {
+            return CHP == 0;
+        }
+
+        /// <summary>
         /// Reduce MP or HP after an attack is used depending on the attack's costs
         /// </summary>
         /// <param name="costType"> HP or MP </param>
@@ -136,14 +160,6 @@ namespace Characters {
             else if (costType == "HP") {
                 yield return StartCoroutine(LoseHP(cost));
             }
-        }
-
-        /// <summary>
-        /// Check if the party member is dead
-        /// </summary>
-        /// <returns></returns>
-        public bool CheckDeath() {
-            return CHP == 0;
         }
 
         /// <summary>

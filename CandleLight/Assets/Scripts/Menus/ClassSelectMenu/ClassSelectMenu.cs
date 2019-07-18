@@ -125,30 +125,6 @@ namespace Menus.ClassSelectMenu {
             if (selectButtonEnabled) {
                 PartyManager.instance.AddPartyMember("Mage");
                 PartyManager.instance.AddPartyMember("Warrior");
-                //PartyManager.instance.AddPartyMember("Warrior");
-                //PartyManager.instance.AddPartyMember("Warrior");
-                //PartyManager.instance.AddPartyMember("Warrior");
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3", "Greyhide Alpha LVL3"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Greyhide Alpha LVL3"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Greyhide Alpha LVL3"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide LVL1", "Greyhide LVL1", "Greyhide LVL1", "Greyhide LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide LVL1", "Greyhide LVL1", "Greyhide LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide LVL1", "Greyhide LVL1" });
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide LVL1" });
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1" });
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Goblin LVL1", "Goblin LVL1", "Goblin LVL1", "Goblin LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Goblin LVL1", "Goblin LVL1", "Goblin LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Goblin LVL1", "Goblin LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Goblin LVL1" } ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide Alpha LVL3"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide LVL1", "Greyhide Alpha LVL3", "Greyhide LVL1"} );
-                //GameManager.instance.LoadCombatScene(new string[] {"Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Greyhide Alpha LVL3", "Goblin LVL1"} );  
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide LVL1", "Goblin LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide Alpha LVL3", "Goblin LVL1"} ); 
-                //GameManager.instance.LoadCombatScene(new string[] { "Goblin LVL1", "Greyhide Alpha LVL3", "Greyhide LVL1" });
                 GameManager.instance.LoadAreaScene("GreyWastes");
             }
         }

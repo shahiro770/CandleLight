@@ -2203,6 +2203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd8bd07d9aa74902b8e353d25a3bf88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatManager: {fileID: 1365388869}
   eventDisplays:
   - {fileID: 504940591}
   - {fileID: 1044388437}
@@ -10443,7 +10444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCanvas: {fileID: 1731593852}
   eventDescription: {fileID: 95653651}
-  statusPanel: {fileID: 0}
+  statusPanel: {fileID: 1216048677}
   actionsPanel: {fileID: 1991115682}
   partyPanel: {fileID: 1782737873}
   monster: {fileID: 4945471360017046569, guid: 7f4d4ee6c3ea946108f1deb439360092, type: 3}

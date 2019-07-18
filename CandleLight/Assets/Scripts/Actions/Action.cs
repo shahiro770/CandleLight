@@ -21,13 +21,16 @@ using UnityEngine.UI;
 namespace Actions {
     public class Action : MonoBehaviour {
 
+        /* external component references */
+        public LocalizedText actionText;            /// <value> Component reference to text to be displayed </value>
+        
         public Attack a { get; private set; }       /// <value> Attack stored if attack </value>
         public Button b { get; private set; }       /// <value> Button component </value>
         public Interaction i { get; private set; }  /// <value> Interaction stored if interraction </value>
-        public LocalizedText actionText;            /// <value> Text to be displayed </value>
         public string actionType { get; private set; }       /// <value> Action type (Attack, flee, undo) </value>
         public bool isUsable { get; private set; } = true;   /// <value> Flag for if action button is usable </value>
 
+        /* internal component references */
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
         private Image img;                          /// <value> Button's sprite </value>
         private TextMeshProUGUI t;                  /// <value> Text display </value>
@@ -95,7 +98,7 @@ namespace Actions {
         }
 
         /// <summary>
-        /// Sets the actionType.null Overloaded to accept an interaction specifically
+        /// Sets the actionType. Overloaded to accept an interaction specifically
         /// </summary>
         /// <param name="actionType"></param>
         /// <param name="i"></param>
@@ -113,22 +116,14 @@ namespace Actions {
             }
         }
 
-        public void SetActionType(string actionType) {
+        /// <summary>
+        /// Sets the actionType. Overloaded to show a custom string
+        /// </summary>
+        /// <param name="actionType"></param>
+        /// <param name="textKey"></param>
+        public void SetAction(string actionType, string textKey) {
+            SetKey(textKey);
             this.actionType = actionType;
-        }
-
-        /// <summary>
-        /// Change button colour to show it is selected after user navigates away from it after selecting
-        /// </summary>
-        public void ShowActionSelected() {
-            bts.SetColor("pressed");
-        }
-
-        /// <summary>
-        /// Change button colour back to default
-        /// </summary>
-        public void ShowActionUnselected() {
-            bts.SetColor("normal");
         }
 
         /// <summary>
@@ -153,8 +148,22 @@ namespace Actions {
         }
 
         /// <summary>
+        /// Change button colour to show it is selected after user navigates away from it after selecting
+        /// </summary>
+        public void ShowActionSelected() {
+            bts.SetColor("pressed");
+        }
+
+        /// <summary>
+        /// Change button colour back to default
+        /// </summary>
+        public void ShowActionUnselected() {
+            bts.SetColor("normal");
+        }
+
+        /// <summary>
         /// Sets the button to usable (can be used by the player, nothing to do with the button's functionality).
-        /// Colours the button to visually represent if its useable.
+        /// Colours the button to visually represent if its usable.
         /// </summary>
         /// <param name="value"> True if the button is usable, false otherwise </param>
         public void SetUsable(bool value) {

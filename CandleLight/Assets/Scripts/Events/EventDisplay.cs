@@ -15,6 +15,7 @@ namespace Events {
 
     public class EventDisplay : MonoBehaviour {
 
+        /* external component references */
         public Image img;   /// <value> Image to be displayed </value>
 
         /// <summary>

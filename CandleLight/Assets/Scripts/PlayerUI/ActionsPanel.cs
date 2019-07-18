@@ -30,7 +30,6 @@ namespace PlayerUI {
         private EventSystem es;                     /// <value> eventSystem reference </value>
         private Action selectedAction;              /// <value> Action that was selected </value>
         private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
-       
 
         /// <summary>
         /// Awake to get initialize event system
@@ -58,13 +57,12 @@ namespace PlayerUI {
             }
             
             if (isLeavePossible) {
-                actions[actions.Length - 1].SetActionType(ActionConstants.LEAVE);
+                actions[actions.Length - 1].SetAction(ActionConstants.LEAVE, interactions[actions.Length - 1].nameKey);
                 actions[actions.Length - 1].SetInteractable(true); // last action will always be leave-related if allowed
             }
             else {
                 actions[actions.Length - 1].SetInteractable(false);
             }
-
 
             SetAllActionsInteractable();
         }

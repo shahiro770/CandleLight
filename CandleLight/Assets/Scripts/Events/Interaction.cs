@@ -18,10 +18,11 @@ namespace Events {
 
     public class Interaction {
 
-        public Result[] results = new Result[4];         /// <value> Result of the action if its an event action </value>
+        public Result[] results = new Result[4];        /// <value> Result of the action if its an event action </value>
         public string name { get; private set; }        /// <value> Name of interaction </value>
         public string nameKey { get; private set; }     /// <value> Localization of interaction </value>
-        public int resultNum = 0;                       /// <value> Amount of results for an interaction </value>
+        
+        private int resultNum = 0;                       /// <value> Amount of results for an interaction </value>
 
         /// <summary>
         /// Constructor
@@ -44,6 +45,10 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Returns a random result
+        /// </summary>
+        /// <returns> A random result </returns>
         public Result GetResult() {
             return results[Random.Range(0, resultNum)];
         }

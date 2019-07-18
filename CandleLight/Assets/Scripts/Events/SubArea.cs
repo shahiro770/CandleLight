@@ -21,12 +21,21 @@ namespace Events {
 
         public Event[] events = new Event[10];      /// <value> 10 Events max per subArea </value>
         public Event[] subEvents = new Event[10];   /// <value> 10 SubEvents max per subArea </value>
-        public string subAreaName;              
-        public int eventNum = 0;              /// <value> Number of events in a subArea</value>
-        public int subEventNum = 0;
+        public string name;                     /// <value> Name of event </value>
+        public int eventNum = 0;                /// <value> Number of events in a subArea </value>
+        public int subEventNum = 0;             /// <value> Number of sub events in the subArea </value>
        
-        public SubArea(string subAreaName, string[] eventNames, IDbConnection dbConnection) {
-            this.subAreaName = subAreaName;
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Name of subArea </param>
+        /// <param name="eventNames"> String array of the names of each event in the subArea </param>
+        /// <param name="dbConnection">
+        /// dbConnection will be passed down to each subArea and other storage classes
+        /// to fetch information to save memory.
+        /// </param>
+        public SubArea(string name, string[] eventNames, IDbConnection dbConnection) {
+            this.name = name;
 
             for (int i = 0; i < events.Length; i++) {
                 string eventName = eventNames[i];
@@ -46,6 +55,15 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Returns a random event from the subArea
+        /// </summary>
+        /// <returns> A random event </returns>
+        /// <remark>
+        /// Each event has a chance of occurence in an area.
+        /// This chance number must be managed from within the database, 
+        /// and the chance of all events combined must equal 100.
+        /// </remark>
         public Event GetEvent() {
             int eventChance = Random.Range(0, 100);
 
@@ -60,9 +78,14 @@ namespace Events {
             return null;
         }
 
+        /// <summary>
+        /// Returns a specific event by name
+        /// </summary>
+        /// <param name="name"> Name of the event </param>
+        /// <returns> An event from the events array </returns>
         public Event GetEvent(string name) {
             for (int i = 0; i < eventNum; i++) {
-                if (events[i].eventName == name) {
+                if (events[i].name == name) {
                     return events[i];
                 }
             }
@@ -74,8 +97,8 @@ namespace Events {
         /// <summary>
         /// Returns an event by index
         /// </summary>
-        /// <param name="index"> Indice </param>
-        /// <returns> An Event </returns>
+        /// <param name="index"> Indice in the events array </param>
+        /// <returns> An event </returns>
         public Event GetEvent(int index) {
             return events[index];
         }

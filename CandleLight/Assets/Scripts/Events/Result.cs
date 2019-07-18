@@ -16,17 +16,18 @@ namespace Events {
         private int minValue = 5;   /// <value> Min value for numeric rewards pre-multiplier </value>
         private int maxValue = 10;  /// <value> Max value for numeric rewards pre-multiplier </value>
 
-        public string resultName;   /// <value> Name of result </value>
-        public string resultKey;    /// <value> Localization key for displayed string for result </value>
-        public string subAreaName;
-        public string subEventName;
-        public float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
-        public float multiplier;    /// <value> Multiplier on result depending on area </value>
-        public int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
-        public int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
-        public int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
-        public int waxChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
-        public bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
+        public string name { get; private set; }        /// <value> Name of result </value>
+        public string subAreaName { get; private set; }     /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
+        public string subEventName{ get; private set; }    /// <value> Name of event result leads to if possible, "none" otherwise </value>
+
+        private string resultKey;    /// <value> Localization key for displayed string for result </value>
+        private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
+        private float multiplier;    /// <value> Multiplier on result depending on area </value>
+        private int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
+        private int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
+        private int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
+        private int waxChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
+        private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
 
 
         public int EXPAmount { get; private set; } 
@@ -42,9 +43,9 @@ namespace Events {
         /// <param name="resultKey"> String key for result </param>
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
-        public Result(string resultName, bool isUnique, string resultKey, string quantity, int[] changeValues,
+        public Result(string name, bool isUnique, string resultKey, string quantity, int[] changeValues,
         string subAreaName, string subEventName) {
-            this.resultName = resultName;
+            this.name = name;
             this.isUnique = isUnique;
             this.resultKey = resultKey;
             this.EXPChange = changeValues[0];

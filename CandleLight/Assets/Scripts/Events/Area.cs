@@ -18,9 +18,10 @@ namespace Events {
 
     public class Area {
 
-        public SubArea[] subAreas = new SubArea[10];    /// <value> Max SubArea amount is 10 </value>
-        public string areaName;                         /// <value> Name of the area </value>      
-        public int subAreasNum = 0;                     /// <value> Amount of subAreas </value>
+        public string name { get; private set; }        /// <value> Name of the area </value>  
+
+        private SubArea[] subAreas = new SubArea[10];   /// <value> Max SubArea amount is 10 </value>    
+        private int subAreasNum = 0;                    /// <value> Amount of subAreas </value>
 
         /// <summary>
         /// Constructor
@@ -31,8 +32,8 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public Area(string areaName, string[] subAreaNames, IDbConnection dbConnection) {
-            this.areaName = areaName;
+        public Area(string name, string[] subAreaNames, IDbConnection dbConnection) {
+            this.name = name;
 
             for (int i = 0; i < subAreas.Length; i++) {
                 string subAreaName = subAreaNames[i];
@@ -44,14 +45,12 @@ namespace Events {
         }
 
         /// <summary>
-        /// subAreas[0] will always be the start area
-        /// subAreas[subAreaNum - 1] will be the exit
-        /// subAreas[subAreaNum - 2] will be the boss
+        /// subAreas[0] will always be main
         /// </summary>
         /// <returns> A SubArea </returns>
         public SubArea GetSubArea(string name) {
             foreach (SubArea sa in subAreas) {
-                if (sa.subAreaName == name) {
+                if (sa.name == name) {
                     return sa;
                 }
             }
