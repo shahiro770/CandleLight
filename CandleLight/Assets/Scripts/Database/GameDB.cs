@@ -203,7 +203,8 @@ namespace Database {
                 using (IDataReader reader = dbcmd.ExecuteReader()) {
                     SubArea newSubArea = null;
                     string[] subAreaEvents = new string[10];
-
+                    string[] monsterPool;
+                    
                     if (reader.Read()) {
                         subAreaEvents[0] = reader.GetString(2);
                         subAreaEvents[1] = reader.GetString(3);
@@ -216,10 +217,43 @@ namespace Database {
                         subAreaEvents[8] = reader.GetString(10);
                         subAreaEvents[9] = reader.GetString(11);
 
-                        newSubArea = new SubArea(reader.GetString(1), subAreaEvents, dbConnection);
+                        monsterPool = GetMonsterPool(reader.GetString(12), dbConnection);
+                        
+                        newSubArea = new SubArea(reader.GetString(1), subAreaEvents, monsterPool, dbConnection);
                     }
 
                     return newSubArea;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the name of a monster from the MonsterPools table
+        /// </summary>
+        /// <param name="name"> Name of the attack</param>
+        /// <param name="dbConnection"> IDbConnectino to get attack with </param>
+        /// <returns> Returns an Attack with the information initialized </returns>
+        public string[] GetMonsterPool(string name, IDbConnection dbConnection) {
+            using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+                dbcmd.CommandText = "SELECT * FROM MonsterPools WHERE Name = '" + name + "'";
+
+                using (IDataReader reader = dbcmd.ExecuteReader()) {
+                    string[] monsterPool = new string[10];
+
+                    if (reader.Read()) {
+                        monsterPool[0] = reader.GetString(2);
+                        monsterPool[1] = reader.GetString(3);
+                        monsterPool[2] = reader.GetString(4);
+                        monsterPool[3] = reader.GetString(5);
+                        monsterPool[4] = reader.GetString(6);
+                        monsterPool[5] = reader.GetString(7);
+                        monsterPool[6] = reader.GetString(8);
+                        monsterPool[7] = reader.GetString(9);
+                        monsterPool[8] = reader.GetString(10);
+                        monsterPool[9] = reader.GetString(11);
+                    }
+
+                    return monsterPool;
                 }
             }
         }

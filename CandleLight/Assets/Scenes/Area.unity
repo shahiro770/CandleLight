@@ -597,8 +597,8 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 738896042}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 1950631656}
-    m_SelectOnRight: {fileID: 763050405}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 788725896}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
@@ -5585,7 +5585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &763050404
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13896,7 +13896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1950631655
 RectTransform:
   m_ObjectHideFlags: 0

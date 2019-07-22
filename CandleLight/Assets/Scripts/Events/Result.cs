@@ -13,28 +13,24 @@ namespace Events {
 
     public class Result {
 
-        private int minValue = 5;   /// <value> Min value for numeric rewards pre-multiplier </value>
-        private int maxValue = 10;  /// <value> Max value for numeric rewards pre-multiplier </value>
-
         public string name { get; private set; }        /// <value> Name of result </value>
-        public string subAreaName { get; private set; }     /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
-        public string subEventName{ get; private set; }    /// <value> Name of event result leads to if possible, "none" otherwise </value>
-
+        public string subAreaName { get; private set; } /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
+        public string subEventName{ get; private set; } /// <value> Name of event result leads to if possible, "none" otherwise </value>
+        public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
+        public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
+        public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
+        public int waxAmount { get; private set; }      /// <value> Amount of wax result gives </value>
+        
         private string resultKey;    /// <value> Localization key for displayed string for result </value>
         private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
         private float multiplier;    /// <value> Multiplier on result depending on area </value>
+        private int minValue = 5;    /// <value> Min value for numeric rewards pre-multiplier </value>
+        private int maxValue = 10;   /// <value> Max value for numeric rewards pre-multiplier </value>
         private int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
         private int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
         private int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
         private int waxChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
         private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
-
-
-        public int EXPAmount { get; private set; } 
-        public int HPAmount { get; private set; } 
-        public int MPAmount { get; private set; } 
-        public int waxAmount { get; private set; } 
-        
 
         /// <summary>
         /// Constructor

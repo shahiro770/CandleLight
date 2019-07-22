@@ -23,6 +23,16 @@
 		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
 		{ "key": "the_grey_wastes_event", "value": "The Grey Wastes were aptly named. Only fools travel these lands. Looks like this is the start of the path." },
 
+		{ "key": "pathNormal_event_0", "value": "There's something oddly charming about a vast expanse full of nothing. Somewhat like a blank canvas." },
+		{ "key": "pathNormal_event_1", "value": "A few cracks here and there, but you doubt this stone path has ever needed maintenance." },
+		{ "key": "pathNormal_event_2", "value": "The air feels so empty. If it weren't for the cold breeze's every now and then, you'd forget it even existed." },
+		{ "key": "pathNormal_event_3", "value": "You gaze up at the black sky. It would be enjoyable if there was more of a stark contrast between it and the ground." },
+		
+		{ "key": "pathNormal_combat_event_0", "value": "You've been ambushed. They look hungry." },
+		{ "key": "pathNormal_combat_event_1", "value": "You've taken a wrong turn. This is unfair." },
+		{ "key": "pathNormal_combat_event_2", "value": "The Unkindled need to eat too." },
+		{ "key": "pathNormal_combat_event_3", "value": "There was something hiding in the grey. It attacks." },
+
 		{ "key": "none_int", "value": "" },
 		{ "key": "open_int", "value": "Open" },
 		{ "key": "travel_int", "value": "Travel" },

@@ -23,7 +23,7 @@ using UnityEngine.UI;
 namespace PlayerUI {
 
     public class ActionsPanel : Panel {
-
+        
         public CombatManager cm { get; set; }       /// <value> Combat manager to reference other scripts in the combat scene </value>
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
         
@@ -57,14 +57,16 @@ namespace PlayerUI {
             }
             
             if (isLeavePossible) {
-                actions[actions.Length - 1].SetAction(ActionConstants.LEAVE, interactions[actions.Length - 1].nameKey);
-                actions[actions.Length - 1].SetInteractable(true); // last action will always be leave-related if allowed
+                // last action will always be leave-related if allowed
+                actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL, interactions[actions.Length - 1].nameKey);
+                actions[actions.Length - 1].SetInteractable(true); 
             }
             else {
                 actions[actions.Length - 1].SetInteractable(false);
             }
 
             SetAllActionsInteractable();
+            SetInitialNavigation();
         }
 
         /// <summary>
@@ -93,7 +95,6 @@ namespace PlayerUI {
             SetAttackActions(pm.attacks);
             SetAllActionsInteractable();
             CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
-           
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace PlayerUI {
             else if (a.actionType == ActionConstants.UNDO) {
                 UndoAttackActionSelected();
             }
-            else if (a.actionType ==  ActionConstants.FLEE || (a.actionType == ActionConstants.LEAVE)) {
+            else if (a.actionType ==  ActionConstants.FLEE || (a.actionType == ActionConstants.TRAVEL)) {
                 EventManager.instance.GetNextEvent(a.i);
             }
         }
@@ -159,7 +160,7 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Enable all useable actions
+        /// Enable all non-none actions to be interacted with using mouse or keys
         /// </summary>
         public void SetAllActionsInteractable() {
             int firstInteractableIndex = 0;
@@ -171,11 +172,11 @@ namespace PlayerUI {
                 }
             }
 
-            es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first action
+            es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first selectable action
         }
 
         /// <summary>
-        /// Disables all useable actions
+        /// Prevents all non-none actions from being interacted with
         /// </summary>
         public void SetAllActionsUninteractable() {
             for (int i = 0; i < actions.Length; i++) {

@@ -18,10 +18,10 @@ namespace Events {
 
     public class Interaction {
 
-        public Result[] results = new Result[4];        /// <value> Result of the action if its an event action </value>
         public string name { get; private set; }        /// <value> Name of interaction </value>
         public string nameKey { get; private set; }     /// <value> Localization of interaction </value>
         
+        private Result[] results = new Result[4];        /// <value> Result of the action if its an event action </value>
         private int resultNum = 0;                       /// <value> Amount of results for an interaction </value>
 
         /// <summary>

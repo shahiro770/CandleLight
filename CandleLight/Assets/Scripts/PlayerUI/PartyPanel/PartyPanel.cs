@@ -39,6 +39,7 @@ namespace PlayerUI {
 
             SetVerticalNavigation();
             SetHorizontalNavigation();
+            actionsPanel.SetHorizontalNavigation(this);
         }
 
         /// <summary>

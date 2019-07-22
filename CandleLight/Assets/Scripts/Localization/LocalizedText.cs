@@ -21,7 +21,7 @@ namespace Localization {
         public string key;                  /// <value> Global instance </value>
         public TextMeshProUGUI meshText;    /// <value> Text mesh pros are not always loaded in time, so store reference to guarantee access </value>
 
-        public string keyText;              /// <value> Text retrieved from key </value>
+        private string keyText;              /// <value> Text retrieved from key </value>
         
         /// <summary>
         /// Start to intialize display text

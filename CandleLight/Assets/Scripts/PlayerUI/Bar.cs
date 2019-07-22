@@ -18,9 +18,11 @@ namespace PlayerUI {
     [System.Serializable]
     public class Bar : MonoBehaviour {
 
+        /* external component references */
         public Animator barAnimator;
         public Image frontFill;                     /// <value> Image that displays overtop of Bar's background </value>
         public LocalizedText text;                  /// <value> Text to be displayed (if HP or MP can be translated </value>
+        
         [field: SerializeField] public float maxAmount { get; set; }       /// <value> Max points the character has </value>
         [field: SerializeField] public float currentAmount { get; set; }   /// <value> Current points the character has </value>
         [field: SerializeField] public float lerpSpeed = 2;         /// <value> Speed at which bar visually changes to fillAmount </value>

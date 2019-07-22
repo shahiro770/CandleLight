@@ -64,7 +64,7 @@ namespace Actions {
             if (actionType == ActionConstants.FLEE) {
                 SetKey("flee_action");
             }
-            else if (actionType == ActionConstants.LEAVE) {
+            else if (actionType == ActionConstants.TRAVEL) {
                 SetKey("leave_action");
             }
             else if (actionType == ActionConstants.UNDO) {

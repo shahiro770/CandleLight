@@ -16,18 +16,18 @@ namespace Events {
 
     public class Event {
         
-        public Interaction[] interactions = new Interaction[5]; /// <value> Max 4 interactions </value>
-        public Sprite[] eventSprites = new Sprite[3];           /// <value> Event's sprite </value>
+        public Interaction[] interactions  { get; private set; } = new Interaction[5]; /// <value> All events will have 5 interactions </value>
+        public Sprite[] eventSprites { get; private set; } = new Sprite[3];            /// <value> Event's sprite </value>
         
-        public string name;             /// <value> Name of event </value>
-        public string areaName;         /// <value> Name of area event occurs in for sprite purposes </value>
-        public string bgPackName;       /// <value> Name of sprite array that this event uses to pick potential sprites </value>
-        public string promptKey;        /// <value> Key for string describing event to player </value>
-        public int chance;              /// <value> Chance of event occuring </value>
-        public int progressAmount;      /// <value> Amount of points event contributes towards reaching the next main event </value>
-        public int specificBGSprite;    /// <value> Index of specific background sprite in bgPack </value>
-        public int spriteNum = 0;       /// <value> Number of sprites </value>
-        public bool isLeavePossible;    /// <value> True if leaving the event is possible, false otherwise </value>
+        public string name { get; private set; }            /// <value> Name of event </value>
+        public string areaName { get; private set; }        /// <value> Name of area event occurs in for sprite purposes </value>
+        public string bgPackName { get; private set; }      /// <value> Name of sprite array that this event uses to pick potential sprites </value>
+        public string promptKey { get; private set; }       /// <value> Key for string describing event to player </value>
+        public int chance { get; private set; }             /// <value> Chance of event occuring </value>
+        public int progressAmount { get; private set; }     /// <value> Amount of points event contributes towards reaching the next main event </value>
+        public int specificBGSprite { get; private set; }   /// <value> Index of specific background sprite in bgPack </value>
+        public int spriteNum { get; private set; } = 0;     /// <value> Number of sprites </value>
+        public bool isLeavePossible { get; private set; }   /// <value> True if leaving the event is possible, false otherwise </value>
 
         /// <summary>
         /// Constructor

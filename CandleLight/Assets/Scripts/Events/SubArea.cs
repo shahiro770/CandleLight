@@ -21,10 +21,12 @@ namespace Events {
 
         public Event[] events = new Event[10];      /// <value> 10 Events max per subArea </value>
         public Event[] subEvents = new Event[10];   /// <value> 10 SubEvents max per subArea </value>
-        public string name;                     /// <value> Name of event </value>
-        public int eventNum = 0;                /// <value> Number of events in a subArea </value>
-        public int subEventNum = 0;             /// <value> Number of sub events in the subArea </value>
-       
+        public string[] monsterPool;
+        public string name;                         /// <value> Name of event </value>
+        public int eventNum = 0;                    /// <value> Number of events in a subArea </value>
+        public int subEventNum = 0;                 /// <value> Number of sub events in the subArea </value>
+        private int monsterNum = 0;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -34,8 +36,9 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public SubArea(string name, string[] eventNames, IDbConnection dbConnection) {
+        public SubArea(string name, string[] eventNames, string[] monsterPool, IDbConnection dbConnection) {
             this.name = name;
+            this.monsterPool = monsterPool;
 
             for (int i = 0; i < events.Length; i++) {
                 string eventName = eventNames[i];
@@ -51,6 +54,12 @@ namespace Events {
                         subEvents[subEventNum] = newEvent;
                         subEventNum++;
                     }   
+                }
+            }
+
+            for (int i = 0; i < monsterPool.Length; i++) {
+                if (monsterPool[i] != "none") {
+                    monsterNum++;
                 }
             }
         }
@@ -103,5 +112,28 @@ namespace Events {
             return events[index];
         }
 
+        /// <summary>
+        /// Returns a random event prompt string based on the sub area's name for nothing events
+        /// </summary>
+        /// <returns> String that is a key text for a prompt in en.json </returns>
+        /// <remark>
+        /// There will always be exactly 4 random prompts per subArea
+        /// </remark>
+        public string GetNothingPrompt() {
+            int index = Random.Range(0, 4);
+            return  name + "_event_" + index.ToString();
+        }
+
+        /// <summary>
+        /// Returns a random event prompt string based on the sub area's name for combat events
+        /// </summary>
+        /// <returns> String that is a key text for a prompt in en.json </returns>
+        /// <remark>
+        /// There will always be exactly 4 random prompts per subArea
+        /// </remark>
+        public string GetCombatPrompt() {
+            int index = Random.Range(0, 4);
+            return  name + "_combat_event_" + index.ToString();
+        }
     }
 }

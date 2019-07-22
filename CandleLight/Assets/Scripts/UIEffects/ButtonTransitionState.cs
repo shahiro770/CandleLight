@@ -88,7 +88,7 @@ namespace UIEffects {
                 b.colors = disabledBlock;
             } 
             else {
-                Debug.Log("invalid type");
+                Debug.LogError("Invalid button colour type");
             }
         }
 
@@ -105,7 +105,7 @@ namespace UIEffects {
                 normalAlternateBlock = cb;
             }
             else {
-                Debug.Log("invalid type");
+                Debug.LogError("Invalid button block type");
             }
         }
 
@@ -130,7 +130,7 @@ namespace UIEffects {
                 b.spriteState = disabledState;
             } 
             else {
-                Debug.Log("invalid type");
+                Debug.LogError("Invalid button sprite type");
             }
         }
     }

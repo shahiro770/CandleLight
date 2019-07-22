@@ -16,6 +16,6 @@ namespace Constants {
         public static readonly string NONE = "none";        /// <value> Does nothing </value>
         public static readonly string ATTACK = "attack";    /// <value> Interacts with monsters </value>
         public static readonly string INTERACTION = "interaction";   /// <value> Interacts with events with no monsters </value>
-        public static readonly string LEAVE = "leave";      /// <value> Leave non-combat event </value>
+        public static readonly string TRAVEL = "travel";    /// <value> Travel from non-combat event </value>
     }
 }

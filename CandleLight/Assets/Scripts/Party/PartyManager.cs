@@ -19,13 +19,17 @@ using UnityEngine;
 namespace Party {
 
     public class PartyManager : MonoBehaviour {
-
+        
         public static PartyManager instance;    /// <value> global instance </value>
+        
+        /* external component references */
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
+        
+        public int wax { get; private set; }    /// <value> Currency party has stored up </value>
         
         private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private int maxPartyMembers = 4;                                    /// <value> Max number of partyMembers </value>
-
+        
         /// <summary>
         /// Awake to instantiate singleton
         /// </summary> 
@@ -83,6 +87,19 @@ namespace Party {
         /// <returns> int amount of partyMember </returns>
         public int GetNumPartyMembers() {
             return partyMembers.Count;
+        }
+
+        public void AddWax(int amount) {
+            wax += amount;
+        }
+
+        public void LoseWax(int amount) {
+            if (amount > wax) {
+                wax = 0;
+            }
+            else {
+                wax -= amount;
+            }
         }
     }
 }

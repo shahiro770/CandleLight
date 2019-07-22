@@ -24,7 +24,7 @@ namespace Events {
         public static EventManager instance; /// <value> Singleton </value>
 
         /* external component references */
-        public CombatManager combatManager;  /// <value> CombatManager reference </value>
+        public CombatManager combatManager;         /// <value> CombatManager reference </value>
         public EventDisplay[] eventDisplays = new EventDisplay[3]; /// <value> Displays for informational sprites that events might have </value>
         public EventDescription eventDescription;   /// <value> Display that describes the event in text </value>
         public Image eventBackground;               /// <value> Image background to event </value>
@@ -38,6 +38,7 @@ namespace Events {
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
         private Event currentEvent;          /// <value> Event being displayed </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
+        private BackgroundPack bgPackPrev = null;
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, 0, 0);
@@ -53,7 +54,7 @@ namespace Events {
         private int subAreaProgress = 0;    /// <value> When subareaProgress = 100, player is given the next event from the area </value>
         private bool isReady = false;       /// <value> Wait until EventManager is ready before starting </value>
 
-        #region Initialization
+        #region [Initialization] Initialization 
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -152,13 +153,14 @@ namespace Events {
         public void GetNextEvent(Interaction i) {
             Result r = i.GetResult();
 
-            if (r.name != "none" && r.subAreaName != "none") {
-                subAreaProgress = 0;
+            if (r != null && r.name != "none" && r.subAreaName != "none") {
                 currentSubArea = currentArea.GetSubArea(r.subAreaName);
-                currentEvent = currentSubArea.GetEvent();     
+                GetNextSubAreaEvent();
+                subAreaProgress = 0;
+                subAreaProgress += currentEvent.progressAmount;
             }
             else {
-                subAreaProgress+= currentEvent.progressAmount;
+                subAreaProgress += currentEvent.progressAmount;
                 if (subAreaProgress >= 100) {
                     GetNextMainEvent();
                 }
@@ -167,6 +169,7 @@ namespace Events {
                 }
             }
 
+            HideEventDisplays();
             DisplayEvent();
         }
 
@@ -185,7 +188,9 @@ namespace Events {
         /// Gets the next random event in the current subArea
         /// </summary>
         public void GetNextSubAreaEvent() {
+            Debug.Log("Getting next event!");
             currentEvent = currentSubArea.GetEvent();
+            Debug.Log("Next event is " + currentEvent);
         }
 
         /// <summary>
@@ -200,14 +205,33 @@ namespace Events {
         /// Displays the current event to the player
         /// </summary>
         public void DisplayEvent() {
+            Debug.Log(eventBackground);
+            Debug.Log(currentEvent);
             eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
-            eventDescription.SetText(currentEvent.promptKey);
-            ShowEventDisplays(currentEvent);
+            if (currentEvent.promptKey == "combat_event") {
+                eventDescription.SetText(currentSubArea.GetCombatPrompt());
+                GetCombatEvent();
+            }
+            else {
+                if (currentEvent.promptKey == "nothing_event") {
+                    eventDescription.SetText(currentSubArea.GetNothingPrompt());
+                }
+                else {
+                    eventDescription.SetText(currentEvent.promptKey);
+                }
 
-            statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0]);
-            actionsPanel.Init(currentEvent.isLeavePossible);
-            actionsPanel.SetInteractionActions(currentEvent.interactions);
-            partyPanel.SetHorizontalNavigation();
+                if (currentEvent.spriteNum > 0){
+                    ShowEventDisplays();
+                }
+                else {
+                    HideEventDisplays();
+                }
+
+                statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0]);
+                actionsPanel.Init(currentEvent.isLeavePossible);
+                actionsPanel.SetInteractionActions(currentEvent.interactions);
+                actionsPanel.SetHorizontalNavigation(partyPanel);
+            }
         }
 
         /// <summary>
@@ -216,6 +240,14 @@ namespace Events {
         /// <param name="bgPackName"> Name of backgroundPack to load from </param>
         /// <returns></returns>
         public Sprite GetBGSprite(string bgPackName) {
+            if (bgPackName == "previous") { // for events such as combat and nothing, use the last used bgPack
+                if (bgPackPrev != null) {
+                    return bgPackPrev.GetBackground();
+                }
+                else {  // if just entered a new subArea, default to the first event's bgPack in the subArea
+                    bgPackName = currentSubArea.events[0].bgPackName;
+                }
+            }
             for (int i = 0; i < bgPackNum; i++) {
                 if (bgPacks[i].name == bgPackName) {
                     if (currentEvent.specificBGSprite != -1) {
@@ -238,18 +270,18 @@ namespace Events {
         /// Displays the event sprites in the eventDisplays
         /// </summary>
         /// <param name="e"> Event containing sprites </param>
-        public void ShowEventDisplays(Event e) {
-            if (e.spriteNum != 0) {
-                if (e.spriteNum == 1) {
-                    eventDisplays[0].SetImage(e.eventSprites[0]);
+        public void ShowEventDisplays() {
+            if (currentEvent.spriteNum != 0) {
+                if (currentEvent.spriteNum == 1) {
+                    eventDisplays[0].SetImage(currentEvent.eventSprites[0]);
 
                     eventDisplays[0].SetPosition(pos1d1);
 
                     eventDisplays[0].SetVisible(true);
                 }
-                else if (e.spriteNum == 2) {
-                    eventDisplays[0].SetImage(e.eventSprites[0]);
-                    eventDisplays[1].SetImage(e.eventSprites[1]);
+                else if (currentEvent.spriteNum == 2) {
+                    eventDisplays[0].SetImage(currentEvent.eventSprites[0]);
+                    eventDisplays[1].SetImage(currentEvent.eventSprites[1]);
 
                     eventDisplays[0].SetPosition(pos2d1);
                     eventDisplays[1].SetPosition(pos2d2);
@@ -258,9 +290,9 @@ namespace Events {
                     eventDisplays[1].SetVisible(true);
                 }
                 else {
-                    eventDisplays[0].SetImage(e.eventSprites[0]);
-                    eventDisplays[1].SetImage(e.eventSprites[1]);
-                    eventDisplays[2].SetImage(e.eventSprites[2]);
+                    eventDisplays[0].SetImage(currentEvent.eventSprites[0]);
+                    eventDisplays[1].SetImage(currentEvent.eventSprites[1]);
+                    eventDisplays[2].SetImage(currentEvent.eventSprites[2]);
 
                     eventDisplays[0].SetPosition(pos3d1);
                     eventDisplays[1].SetPosition(pos3d2);

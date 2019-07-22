@@ -53,7 +53,7 @@ namespace Combat {
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
         private bool isFleePossible = true;         /// <value> Flag for if player can flee battle, will need to make this changeable in the future </value>
 
-        #region Initialization
+        #region [ Initialization ] Initialization
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -92,6 +92,10 @@ namespace Combat {
             }
 
             cq.FinalizeQueue();
+            
+            yield return new WaitForSeconds(2); // wait 2 seconds to play monster intro for now
+            eventDescription.ClearText();
+            
             StartCombat();
         }
 
@@ -117,6 +121,11 @@ namespace Combat {
             monsters.Add(monsterComponent);
 
             yield break;
+        }
+
+        private IEnumerator DisplayCombatIntro() {
+            yield return new WaitForSeconds(10);
+            
         }
 
         /// <summary>

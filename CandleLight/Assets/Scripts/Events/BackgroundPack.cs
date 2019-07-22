@@ -16,10 +16,10 @@ namespace Events {
 
     public class BackgroundPack {
 
-        private Sprite[] backgrounds = new Sprite[10];  /// <value> 10 sprites max </value>
-
         public string name { get; private set; }        /// <value> Name of pack </value>
-        public int backgroundNum = 0;                   /// <value> Number of sprites in pack </value>
+       
+        private Sprite[] backgrounds = new Sprite[10];  /// <value> 10 sprites max </value>
+        private int backgroundNum = 0;                  /// <value> Number of sprites in pack </value>
         
         /// <summary>
         /// Constructor
