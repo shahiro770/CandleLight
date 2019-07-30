@@ -23,7 +23,7 @@ namespace Menus.MainMenu {
         private EventSystem es;         /// <value> eventSystem reference </value>
 
         /// <summary>
-        /// Enable the main menu, making it visible and interactable
+        /// Enable the main menu to be viewed and used by the player
         /// </summary> 
         void OnEnable() {
             StartCoroutine(InitEs());

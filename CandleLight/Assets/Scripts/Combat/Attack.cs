@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: February 11, 2019
 * 
-* The Attack class is used to store information about an action enemies and players can take
+* The Attack class is used to store information about an action monsters and players can take
 * to hurt another's feelings.
 *
 */
@@ -24,7 +24,8 @@ namespace Combat {
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of attack </value>
         [field: SerializeField] public int cost { get; private set; }           /// <value> Cost to use attack </value>
         [field: SerializeField] public int damage { get; private set; }         /// <value> Damage dealt by attack </value>
-       
+        [field: SerializeField] public string scope { get; private set; }       /// <value> String describing the number of targets the attack affects </value>
+
         /// <summary>
         /// Constructor to initialize attack's properties
         /// </summary>
@@ -33,11 +34,12 @@ namespace Combat {
         /// <param name="costType"> Type of cost (MP or HP) </param>
         /// <param name="cost"> Cost of attack (in MP or HP) </param>
         /// <param name="animationClipName"> Animation clip to play when attack is used </param>
-        public Attack(string name, int damage, string costType, int cost, string animationClipName) {
+        public Attack(string name, int damage, string costType, int cost, string scope, string animationClipName) {
             this.name = name;
             this.damage = damage;
             this.costType = costType;
             this.cost = cost;            
+            this.scope = scope;
             this.animationClipName = animationClipName; 
             nameKey = name + "_attack";
         }

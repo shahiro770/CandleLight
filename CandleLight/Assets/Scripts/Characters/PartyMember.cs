@@ -21,17 +21,22 @@ namespace Characters {
     public class PartyMember : Character {
         
         /* external component references */
-        public PartyMemberDisplay pmd { get; private set; }     /// <value> Visual for party member's status in party panel </value>
-        public Bar statusPanelHPBar { get; private set; }  /// <value> Visual for health points in status panel </value>
-        public Bar statusPanelMPBar { get; private set; }  /// <value> Visual for mana points in status panel </value>
-        public Bar partyPanelHPBar { get; private set; }   /// <value> Visual for health points in party panel </value>
-        public Bar partyPanelMPBar { get; private set; }   /// <value> Visual for mana points in party panel </value>
-       
+        public Bar statusPanelHPBar { get; private set; }   /// <value> Visual for health points in status panel </value>
+        public Bar statusPanelMPBar { get; private set; }   /// <value> Visual for mana points in status panel </value>
+        public Bar partyPanelHPBar { get; private set; }    /// <value> Visual for health points in party panel </value>
+        public Bar partyPanelMPBar { get; private set; }    /// <value> Visual for mana points in party panel </value>
+        public Bar partyPanelEXPBar { get; private set; }   /// <value> Visual for experience points in party panel </value>
+        public Bar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
+        public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for party member's status in party panel </value>
+        public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for party member's status in party panel </value>  
+
         public string className { get; set; }       /// <value> Warrior, Mage, Archer, or Thief </value>
         public string subClassName { get; set; }    /// <value> Class specializations </value>
         public string memberName { get; set; }      /// <value> Name of the party member </value>
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
-        
+        public int EXP { get; set; }                /// <value> Current amount of experience points </value>
+        public int EXPToNextLevel { get; set; }     /// <value> Total experience points to reach next level </value>
+
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
         /// </summary> 
@@ -40,8 +45,10 @@ namespace Characters {
         /// <param name="HP"> Health points </param>
         /// <param name="MP"> Mana Points </param>
         /// <param name="attacks"> List of known attacks (length 4)</param>
-        public void Init(string[] personalInfo, int LVL, int HP, int MP, int[] stats, Attack[] attacks) {
+        public void Init(string[] personalInfo, int LVL, int EXP, int HP, int MP, int[] stats, Attack[] attacks) {
             base.Init(LVL, HP, MP, stats, attacks);
+            this.EXP = EXP;
+            SetEXPToNextLevel();
             this.className = personalInfo[0];
             this.subClassName = personalInfo[1];
             this.memberName = personalInfo[2];
@@ -56,8 +63,13 @@ namespace Characters {
         /// <param name="HPBar"> HPBar reference </param>
         /// <param name="MPBar"> MPBar reference </param>
         public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, Bar HPBar, Bar MPBar) {
-            this.pmd = pmd;
+            this.pmdPartyPanel = pmd;
             SetHPAndMPBar(panelName, HPBar, MPBar);
+        }
+
+        public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, Bar EXPBar) {
+            this.pmdRewardsPanel = pmd;
+            SetEXPBar(panelName, EXPBar);
         }
 
         /// <summary>
@@ -80,6 +92,14 @@ namespace Characters {
             MPBar.SetMaxAndCurrent(MP, CMP);
         }
 
+        public void SetEXPBar(string panelName, Bar EXPBar) {
+            if (panelName == PanelConstants.REWARDSPANEL) {
+                rewardsPanelEXPBar = EXPBar;
+            }
+
+            EXPBar.SetMaxAndCurrentEXP(EXPToNextLevel, EXP);
+        }
+
         /// <summary>
         /// Removes the HPBar and MPBar references depending on the panel
         /// </summary>
@@ -92,6 +112,25 @@ namespace Characters {
             else if (panelName == PanelConstants.PARTYPANEL) {
                 partyPanelHPBar = null;
                 partyPanelMPBar = null;
+            }
+        }
+
+        /// <summary>
+        /// Sets EXPToNextLevel based off of a math
+        /// </summary>
+        public void SetEXPToNextLevel() {
+            this.EXPToNextLevel = (10 * (LVL * LVL)) / 2; 
+        }
+
+        /// <summary>
+        /// Increases EXP and updates visuals that care
+        /// </summary>
+        /// <param name="amount"> Amount of EXP gained </param>
+        public void GainEXP(int amount) {
+            EXP += amount;
+
+            if (rewardsPanelEXPBar) {
+                rewardsPanelEXPBar.SetCurrent(amount);
             }
         }
 
@@ -114,7 +153,7 @@ namespace Characters {
                 statusPanelHPBar.SetCurrent(CHP);  
             }
             partyPanelHPBar.SetCurrent(CHP);
-            yield return (StartCoroutine(pmd.PlayDamagedAnimation()));
+            yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
 
             yield break;
         }

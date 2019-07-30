@@ -43,11 +43,11 @@ namespace Localization {
         }
 
         /// <summary>
-        /// Sets the text and display text to null
+        /// Sets the text to the inputted value
         /// </summary>
-        public void Clear() {
-            key = null;
-            meshText.text = null;
+        /// <param name="text"> String to display </param>
+        public void SetText(string text) {
+            meshText.text = text;
         }
 
         /// <summary>
@@ -56,6 +56,14 @@ namespace Localization {
         /// <param name="text"> String to append </param>
         public void Append(string text) {
             meshText.text = keyText + " " + text;
+        }
+
+        /// <summary>
+        /// Sets the text and display text to null
+        /// </summary>
+        public void Clear() {
+            key = null;
+            meshText.text = null;
         }
 
         /// <summary>

@@ -5,7 +5,6 @@
 * 
 * The Action class is used to take decisions on the UI.
 * The action can be an attack, dialog option, a direction to travel in, or more, depending on the event.
-* All actions are interactable (can be clicked and navigated to) by default.
 *
 */
 
@@ -13,6 +12,7 @@ using ActionConstants = Constants.ActionConstants;
 using Combat;
 using Events;
 using Localization;
+using System.Collections;
 using TMPro;
 using UIEffects;
 using UnityEngine;
@@ -23,6 +23,7 @@ namespace Actions {
 
         /* external component references */
         public LocalizedText actionText;            /// <value> Component reference to text to be displayed </value>
+        public CanvasGroup textCanvas;
         
         public Attack a { get; private set; }       /// <value> Attack stored if attack </value>
         public Button b { get; private set; }       /// <value> Button component </value>
@@ -34,6 +35,8 @@ namespace Actions {
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
         private Image img;                          /// <value> Button's sprite </value>
         private TextMeshProUGUI t;                  /// <value> Text display </value>
+        
+        private float lerpSpeed = 3f;               /// <value> Speed at which aciton text fades in </value>
 
         /// <summary>
         /// Awake to get all components attached to the Action button
@@ -65,14 +68,13 @@ namespace Actions {
                 SetKey("flee_action");
             }
             else if (actionType == ActionConstants.TRAVEL) {
-                SetKey("leave_action");
+                SetKey("travel_action");
             }
             else if (actionType == ActionConstants.UNDO) {
                 SetKey("undo_action");
             } 
             else if (actionType == ActionConstants.NONE) {
                 SetKey("none_action");
-                SetInteractable(false);
             }
 
             this.actionType = actionType;
@@ -87,7 +89,6 @@ namespace Actions {
             if (actionType == ActionConstants.ATTACK) {
                 if (a.nameKey == "none_attack") {   // disable action if it does nothing
                     this.actionType = ActionConstants.NONE;
-                    SetInteractable(false);
                 } 
                 else {
                     this.a = a;
@@ -106,7 +107,6 @@ namespace Actions {
             if (actionType == ActionConstants.INTERACTION) {
                 if (i.nameKey == "none_int") {
                     this.actionType = ActionConstants.NONE;
-                    SetInteractable(false);
                 }
                 else {
                     this.i = i;
@@ -174,6 +174,27 @@ namespace Actions {
             }
             else {
                 bts.SetColor("normalAlternate");
+            }
+        }
+
+        /// <summary>
+        /// Fades the action text to the target alpha
+        /// </summary>
+        /// <param name="targetAlpha"> Int alpha must be 0 or 1 </param>
+        /// <returns> IEnumerator to fade smoothly through frames </returns>
+        public IEnumerator Fade(int targetAlpha) {
+            float timeStartedLerping = Time.time;
+            float timeSinceStarted = Time.time - timeStartedLerping;
+            float percentageComplete = timeSinceStarted * lerpSpeed;
+            float prevAlpha = textCanvas.alpha;
+
+            while (textCanvas.alpha != targetAlpha) {
+                timeSinceStarted = Time.time - timeStartedLerping;
+                percentageComplete = timeSinceStarted * lerpSpeed;
+
+                textCanvas.alpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+
+                yield return new WaitForEndOfFrame();
             }
         }
 

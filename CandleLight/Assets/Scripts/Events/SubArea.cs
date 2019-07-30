@@ -21,12 +21,15 @@ namespace Events {
 
         public Event[] events = new Event[10];      /// <value> 10 Events max per subArea </value>
         public Event[] subEvents = new Event[10];   /// <value> 10 SubEvents max per subArea </value>
-        public string[] monsterPool;
+        public string[] monsterPool;                /// <value> Pool of monsters subArea uses for random combat events </value>
         public string name;                         /// <value> Name of event </value>
+        public string defaultBGPackName;            /// <value> Name of default backgroundPack for subArea</value>
         public int eventNum = 0;                    /// <value> Number of events in a subArea </value>
         public int subEventNum = 0;                 /// <value> Number of sub events in the subArea </value>
-        private int monsterNum = 0;
-
+        private int minMonsterNum;                  /// <value> Minimum number of monsters per random encounter </value>
+        private int maxMonsterNum;                  /// <value> Maximum number of monsters per random encounter </value>
+        private int monsterNum = 0;                 /// <value> Number of monsters in monster pool</value>
+        
         /// <summary>
         /// Constructor
         /// </summary>
@@ -36,9 +39,13 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public SubArea(string name, string[] eventNames, string[] monsterPool, IDbConnection dbConnection) {
+        public SubArea(string name, string[] eventNames, string[] monsterPool, int minMonsterNum, int maxMonsterNum, 
+        string defaultBGPackName, IDbConnection dbConnection) {
             this.name = name;
             this.monsterPool = monsterPool;
+            this.minMonsterNum = minMonsterNum;
+            this.maxMonsterNum = maxMonsterNum;
+            this.defaultBGPackName = defaultBGPackName;
 
             for (int i = 0; i < events.Length; i++) {
                 string eventName = eventNames[i];
@@ -134,6 +141,21 @@ namespace Events {
         public string GetCombatPrompt() {
             int index = Random.Range(0, 4);
             return  name + "_combat_event_" + index.ToString();
+        }
+
+        /// <summary>
+        /// Returns a list of the names of each monster being spawned
+        /// </summary>
+        /// <returns> String array </returns>
+        public string[] GetMonstersToSpawn() {
+            int numToSpawn = Random.Range(minMonsterNum, maxMonsterNum + 1);
+            string[] monsterNames = new string[numToSpawn];
+
+            for (int i = 0; i < numToSpawn; i++) {
+                monsterNames[i] = this.monsterPool[Random.Range(0, monsterNum)];
+            }
+
+            return monsterNames;
         }
     }
 }

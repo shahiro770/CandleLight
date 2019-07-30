@@ -27,7 +27,11 @@ namespace Events {
         public CombatManager combatManager;         /// <value> CombatManager reference </value>
         public EventDisplay[] eventDisplays = new EventDisplay[3]; /// <value> Displays for informational sprites that events might have </value>
         public EventDescription eventDescription;   /// <value> Display that describes the event in text </value>
-        public Image eventBackground;               /// <value> Image background to event </value>
+        public CanvasGroup eventBGCanvas;           /// <value> Current event's background sprite alpha controller </value>
+        public CanvasGroup nextEventBGCanvas;       /// <value> Next event's background sprite alpha controller </value>
+        public Image eventBackground;               /// <value> Image background for current event </value>
+        public Image nextEventBackground;           /// <value> Image background for next event </value>
+        public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
@@ -52,7 +56,10 @@ namespace Events {
         private int bgPackNum = 0;          /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;       /// <value> Area progress increments by 1 for each main event the player completes </value>
         private int subAreaProgress = 0;    /// <value> When subareaProgress = 100, player is given the next event from the area </value>
+        private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
+        private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;       /// <value> Wait until EventManager is ready before starting </value>
+        private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>
 
         #region [Initialization] Initialization 
 
@@ -75,6 +82,8 @@ namespace Events {
         void Start() {
             StartCoroutine(StartArea(GameManager.instance.areaName));
         }
+
+        
 
         /// <summary>
         /// Loads an Area from the database, waiting until all of subAreas, events,
@@ -143,7 +152,7 @@ namespace Events {
             currentSubArea = currentArea.GetSubArea("main");
             currentEvent = currentSubArea.GetEvent(areaProgress);
 
-            DisplayEvent();
+            StartCoroutine(DisplayEvent());
         }
 
         /// <summary>
@@ -160,7 +169,7 @@ namespace Events {
                 subAreaProgress += currentEvent.progressAmount;
             }
             else {
-                subAreaProgress += currentEvent.progressAmount;
+                //subAreaProgress += currentEvent.progressAmount;
                 if (subAreaProgress >= 100) {
                     GetNextMainEvent();
                 }
@@ -169,8 +178,7 @@ namespace Events {
                 }
             }
 
-            HideEventDisplays();
-            DisplayEvent();
+            StartCoroutine(DisplayEvent());
         }
 
         /// <summary>
@@ -188,36 +196,51 @@ namespace Events {
         /// Gets the next random event in the current subArea
         /// </summary>
         public void GetNextSubAreaEvent() {
-            Debug.Log("Getting next event!");
             currentEvent = currentSubArea.GetEvent();
-            Debug.Log("Next event is " + currentEvent);
         }
 
         /// <summary>
         /// Switches gameplay from exploring into turn-based combat with random monsters
         /// </summary>
         public void GetCombatEvent() {
-            string[] monstersToFight = new string[] {"Goblin LVL1", "Greyhide LVL1", "Greyhide Alpha LVL3", "Goblin LVL1"};
+            string[] monstersToFight = currentSubArea.GetMonstersToSpawn();
             StartCoroutine(combatManager.InitializeCombat(monstersToFight));
+        }
+        
+        /// <summary>
+        /// Displays post combat information such as the RewardsPanel, and prepares player to continue exploring
+        /// </summary>
+        public void DisplayPostCombat() {
+            StartCoroutine(AlterBackgroundColor(1f));
+            actionsPanel.SetPostCombatActions();
+            rewardsPanel.SetVisible(true);
+            rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled);
         }
 
         /// <summary>
         /// Displays the current event to the player
         /// </summary>
-        public void DisplayEvent() {
-            Debug.Log(eventBackground);
-            Debug.Log(currentEvent);
-            eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
+        public IEnumerator DisplayEvent() {
+            if (!displayStartEvent) {
+                nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
+                yield return StartCoroutine(TransitionToNextEvent());
+            } 
+            else {
+                eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
+                displayStartEvent = false;
+            }
+
             if (currentEvent.promptKey == "combat_event") {
-                eventDescription.SetText(currentSubArea.GetCombatPrompt());
+                StartCoroutine(AlterBackgroundColor(0.5f));
+                eventDescription.SetTextAndFadeIn(currentSubArea.GetCombatPrompt());
                 GetCombatEvent();
             }
             else {
                 if (currentEvent.promptKey == "nothing_event") {
-                    eventDescription.SetText(currentSubArea.GetNothingPrompt());
+                    eventDescription.SetTextAndFadeIn(currentSubArea.GetNothingPrompt());
                 }
                 else {
-                    eventDescription.SetText(currentEvent.promptKey);
+                    eventDescription.SetTextAndFadeIn(currentEvent.promptKey);
                 }
 
                 if (currentEvent.spriteNum > 0){
@@ -230,7 +253,82 @@ namespace Events {
                 statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0]);
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
+                actionsPanel.SetAllActionsInteractable();
                 actionsPanel.SetHorizontalNavigation(partyPanel);
+            }
+        }
+
+        /// <summary>
+        /// Performs visual effects when moving to next event
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator TransitionToNextEvent() {
+            eventDescription.FadeOut();
+            HideEventDisplays();
+            rewardsPanel.SetVisible(false);
+            actionsPanel.SetAllActionsUninteractableAndFadeOut();
+            yield return StartCoroutine(FadeBackgrounds());
+        }
+
+        /// <summary>
+        /// Fades the current event's background out and the next event's background in
+        /// </summary>
+        /// <returns> IEnumerator for smooth animation </returns>
+        public IEnumerator FadeBackgrounds() {
+            float timeStartedLerping = Time.time;
+            float timeSinceStarted = Time.time - timeStartedLerping;
+            float percentageComplete = timeSinceStarted * alphaLerpSpeed;
+
+            float alphaValue;
+            float eventBGWidthValue;
+            float eventBGHeightValue;
+
+            while (nextEventBGCanvas.alpha < 1) {
+                timeSinceStarted = Time.time - timeStartedLerping;
+                percentageComplete = timeSinceStarted * alphaLerpSpeed;
+
+                alphaValue = Mathf.Lerp(0, 1, percentageComplete);
+                eventBGWidthValue = Mathf.Lerp(960, 1920, percentageComplete);
+                eventBGHeightValue = Mathf.Lerp(300, 600, percentageComplete);
+
+                eventBGCanvas.alpha = 1 - alphaValue;
+                nextEventBGCanvas.alpha = alphaValue;
+                eventBackground.rectTransform.sizeDelta = new Vector2(eventBGWidthValue, eventBGHeightValue);
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            eventBackground.sprite = nextEventBackground.sprite;
+            eventBackground.rectTransform.sizeDelta = new Vector2(960, 300);
+            eventBGCanvas.alpha = 1;
+            nextEventBGCanvas.alpha = 0;          
+        }
+
+        /// <summary>
+        /// Alters all of the background's colour values (r, g, b) to the specified value 
+        /// </summary>
+        /// <param name="targetColourValue"> Float between 0f and 1f </param>
+        /// <returns> IEnumerator for smooth animation </returns>
+        public IEnumerator AlterBackgroundColor(float targetColourValue) {
+            float timeStartedLerping = Time.time;
+            float timeSinceStarted = Time.time - timeStartedLerping;
+            float percentageComplete = timeSinceStarted * colourLerpSpeed;
+
+            float prevColorValue = eventBackground.color.r;
+            float newColorValue;
+            while (eventBackground.color.r != targetColourValue) {
+                timeSinceStarted = Time.time - timeStartedLerping;
+                percentageComplete = timeSinceStarted * colourLerpSpeed;
+
+                newColorValue = Mathf.Lerp(prevColorValue, targetColourValue, percentageComplete);
+                Color newColor = eventBackground.color;
+                newColor.r = newColorValue;
+                newColor.g = newColorValue;
+                newColor.b = newColorValue;
+
+                eventBackground.color = newColor;
+
+                yield return new WaitForEndOfFrame();
             }
         }
 
@@ -240,16 +338,14 @@ namespace Events {
         /// <param name="bgPackName"> Name of backgroundPack to load from </param>
         /// <returns></returns>
         public Sprite GetBGSprite(string bgPackName) {
-            if (bgPackName == "previous") { // for events such as combat and nothing, use the last used bgPack
-                if (bgPackPrev != null) {
-                    return bgPackPrev.GetBackground();
-                }
-                else {  // if just entered a new subArea, default to the first event's bgPack in the subArea
-                    bgPackName = currentSubArea.events[0].bgPackName;
-                }
+            string confirmedBGPackName = bgPackName;
+
+            if (confirmedBGPackName == "default") { // for events such as combat and nothing, use the last used bgPack
+                confirmedBGPackName = currentSubArea.defaultBGPackName;
             }
+
             for (int i = 0; i < bgPackNum; i++) {
-                if (bgPacks[i].name == bgPackName) {
+                if (bgPacks[i].name == confirmedBGPackName) {
                     if (currentEvent.specificBGSprite != -1) {
                         return bgPacks[i].GetBackground(currentEvent.specificBGSprite);
                     }
@@ -258,7 +354,7 @@ namespace Events {
                 }
             }
 
-            Debug.LogError("BackgroundPack of name" + bgPackName +  "does not exist");
+            Debug.LogError("BackgroundPack of name " + bgPackName +  "does not exist");
             return null;
         }
 

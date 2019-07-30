@@ -20,6 +20,7 @@
 
 		{ "key": "none_event", "value": "" },
 		{ "key": "lost_word_event", "value": "lost" },
+		
 		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
 		{ "key": "the_grey_wastes_event", "value": "The Grey Wastes were aptly named. Only fools travel these lands. Looks like this is the start of the path." },
 
@@ -29,7 +30,7 @@
 		{ "key": "pathNormal_event_3", "value": "You gaze up at the black sky. It would be enjoyable if there was more of a stark contrast between it and the ground." },
 		
 		{ "key": "pathNormal_combat_event_0", "value": "You've been ambushed. They look hungry." },
-		{ "key": "pathNormal_combat_event_1", "value": "You've taken a wrong turn. This is unfair." },
+		{ "key": "pathNormal_combat_event_1", "value": "You've taken a wrong turn." },
 		{ "key": "pathNormal_combat_event_2", "value": "The Unkindled need to eat too." },
 		{ "key": "pathNormal_combat_event_3", "value": "There was something hiding in the grey. It attacks." },
 
@@ -40,9 +41,12 @@
 		
 		{ "key": "HP_label", "value": "HP " },
 		{ "key": "MP_label", "value": "MP " },
+		{ "key": "LVL_label", "value": "LVL " },
+		{ "key": "EXP_label", "value": "EXP " },
+		{ "key": "WAX_label", "value": "WAX " },
 
 		{ "key": "flee_action", "value": "Flee" },
-		{ "key": "leave_action", "value": "Leave" },
+		{ "key": "travel_action", "value": "Travel" },
 		{ "key": "undo_action", "value": "Undo" },
 		{ "key": "none_action", "value": "" },
 

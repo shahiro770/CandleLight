@@ -6,9 +6,12 @@
 * The CombatManager class is used to manage all classes during the combat scene.
 * Party members, monsters, actions, and turn ordering are all managed in the combat manager.
 *
+* TO DO:
+* Need to work with attacks that target multiple monsters, and multiple partyMembers
 */
 
 using Characters;
+using EventManager = Events.EventManager;
 using General;
 using Party;
 using PlayerUI;
@@ -32,25 +35,29 @@ namespace Combat {
         /* external component references */
         public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
         public EventDescription eventDescription;   /// <value> Display for all text and prompts relevant to an action or event</value>
+        public EventManager eventManager;           /// <value> Need to tell eventManager when combat is done </value>
         public StatusPanel statusPanel;             /// <value> Display for active party member's status </value>
         public ActionsPanel actionsPanel;           /// <value> Display for active party member's actions </value>
         public PartyPanel partyPanel;               /// <value> Display for all party member's status </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
-        
+    
         public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
+        public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
         private EventSystem es;                                             /// <value> EventSystem reference </value>
         private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of party members </value>
         private PartyMember activePartyMember;                              /// <value> Current party member preparing to act </value>
         private List<Monster> monsters =  new List<Monster>();              /// <value> List of monsters </value>
+        private List<Monster> selectedMonsterAdjacents = new List<Monster>();   /// <value> List of monsters adjacent to the monster selected that will be affected </value>
+        private Monster selectedMonster = null;                             /// <value> Selected monster </value>
         private Monster activeMonster;                                      /// <value> Current monster preparing to act </value>
-        private List<Monster> selectedMonsters = new List<Monster>();       /// <value> List of monsters selected </value>
         private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
         private Attack selectedAttack = null;       /// <value> Attack selected by party member </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
-        private int maxEnemies = 5;                 /// <value> Max number of enemies that can appear on screen </value>
+        private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
+        private bool pmAttackFinalized = false;     /// <value> Flag for if player has selected an attack and a monster </value>
         private bool isFleePossible = true;         /// <value> Flag for if player can flee battle, will need to make this changeable in the future </value>
 
         #region [ Initialization ] Initialization
@@ -74,27 +81,27 @@ namespace Combat {
         /// Start to initialize all monsters, characters, and combat queue before beginning combat
         /// </summary>
         public IEnumerator InitializeCombat(string[] monsterNames) {
-            actionsPanel.cm = this;
             actionsPanel.Init(isFleePossible);
+            cq.Reset();
+            countID = 0;
+            monsters = new List<Monster>();
+            monstersKilled = new List<Monster>();
+            partyMembers = PartyManager.instance.GetPartyMembers(ref countID);
 
             foreach (string monsterName in monsterNames) {
                 yield return StartCoroutine(AddMonster(monsterName));
             }
             ArrangeMonsters();
             
-            partyMembers = PartyManager.instance.GetPartyMembers(ref countID);
-
             foreach (Monster m in monsters) {
                 cq.AddCharacter(m);
             }
             foreach (PartyMember pm in partyMembers) {
                 cq.AddCharacter(pm);
             }
-
             cq.FinalizeQueue();
-            
-            yield return new WaitForSeconds(2); // wait 2 seconds to play monster intro for now
-            eventDescription.ClearText();
+
+            yield return (StartCoroutine(DisplayCombatIntro()));
             
             StartCombat();
         }
@@ -106,7 +113,7 @@ namespace Combat {
         /// <remark> Assumes there will always be an action at button 0 </remark>
         private IEnumerator AddMonster(string monsterName) {
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonster(monsterName));
-            newMonster.SetActive(true);
+            newMonster.SetActive(true); // monster game object must be active to manipulate its components
             
             Monster monsterComponent = newMonster.GetComponent<Monster>();
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
@@ -114,18 +121,26 @@ namespace Combat {
             monsterComponent.ID = countID++;
             monsterComponent.SetHealthBar(); 
             monsterComponent.AddSMDListener(smd);
+            monsterComponent.SetInteractable(false);
 
-            monsterComponent.SetNavigation("down", actionsPanel.GetActionButton(0));
             newMonster.transform.SetParent(enemyCanvas.transform, false);
             
             monsters.Add(monsterComponent);
-
+            
+            newMonster.SetActive(false); // hide after manipulating components so player doesn't see monster until ArrangeMonsters()
             yield break;
         }
 
+        /// <summary>
+        /// Perform all animations at the start of combat (spawning, dramatic pausing, etc.)
+        /// </summary>
+        /// <returns> IEnumerator cause animations </returns>
         private IEnumerator DisplayCombatIntro() {
-            yield return new WaitForSeconds(10);
-            
+            foreach (Monster m in monsters) {
+                StartCoroutine(m.PlaySpawnAnimation());
+            }
+            yield return new WaitForSeconds(1.5f);   
+            eventDescription.ClearText();
         }
 
         /// <summary>
@@ -134,8 +149,6 @@ namespace Combat {
         /// </summary>
         private void StartCombat() {
             DisplayFirstPartyMember();          // active party member is not set
-            actionsPanel.SetAllActionsUninteractable();   // actions are disabled until its a partyMember's turn (might not be the first)
-            partyPanel.DisableButtons();
             DisableAllMonsterSelection();
 
             GetNextTurn();
@@ -143,15 +156,12 @@ namespace Combat {
 
         #endregion
 
-        #region Combat Phases
-
         /// <summary>
         /// Determine's who's turn it is in the queue and then prepares the attacking character
         /// to either see their options if its a party member, or attack if its a monster.
         /// </summary>
         public void GetNextTurn() {
             Character c = cq.GetNextCharacter();
-            bool prevTurn = turn;  // prevent redundant things that don't change between back to back turns of monsters/partymembers
 
             if (c is PartyMember) {
                 activePartyMember = (PartyMember)c;
@@ -163,16 +173,32 @@ namespace Combat {
             }  
             
             if (turn) {
-                if (prevTurn == MTURN) {
-                    // stuff
-                }
-                StartPMTurn();
+                StartCoroutine(PMTurn());
             } 
             else {
-                if (prevTurn == PMTURN) {
-                    actionsPanel.SetAllActionsUninteractable();
-                }
-                StartCoroutine(StartMonsterTurn());
+                StartCoroutine(MonsterTurn());
+            }
+        }
+
+        #region [ Section0 ] PartyMember Turn
+
+        /// <summary>
+        /// Perform all of the phases in the party member's turn
+        /// </summary>
+        /// <returns> IEnumerator so actions are all taken in order </returns>
+        private IEnumerator PMTurn() {
+            StartPMTurn();
+            while (!pmAttackFinalized) {    // PreparePMAttack and SelectMonster
+                yield return null;
+            }
+            yield return StartCoroutine(ExecutePMAttack());  
+            yield return StartCoroutine(CleanUpPMTurn());
+            if (CheckBattleOver()) {
+                EndCombat();
+            }
+            else {
+                EndPMTurn();
+                GetNextTurn();
             }
         }
 
@@ -181,10 +207,10 @@ namespace Combat {
         /// </summary>
         private void StartPMTurn() {
             DisplayActivePartyMember();
-            EnableAllMonsterSelection();
+            EnableAllButtons();
             SetMonsterNavigation();
-            actionsPanel.SetHorizontalNavigation(partyPanel); // temporary, in the future will need to check adjacent panels first
-            partyPanel.EnableButtons();
+
+            actionsPanel.SetHorizontalNavigation(partyPanel);
             partyPanel.SetHorizontalNavigation();
         }
 
@@ -232,63 +258,83 @@ namespace Combat {
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// Need to split this up into a cleanup phase function
         /// </returns>
-        public IEnumerator ExecutePMAttack(Attack a, Monster m) {
-            eventDescription.SetText(a.nameKey);
-            actionsPanel.SetAllActionsUninteractable();
-            partyPanel.DisableButtons();
-            DisableAllMonsterSelection();
-            DeselectMonsters();
-            yield return new WaitForSeconds(0.25f);
-            yield return StartCoroutine(activePartyMember.PayAttackCost(a.costType, a.cost));
-            yield return StartCoroutine(m.LoseHP(a.damage, a.animationClipName));
+        public IEnumerator ExecutePMAttack() {
+            DisableAllButtons();
             
-            if (m.CheckDeath()) {           // need to clean this up
-                cq.RemoveCharacter(m.ID);
-                monsters.Remove(m);
-                DeselectMonsters();
-                yield return StartCoroutine(m.Die());
-            }
+            eventDescription.SetText(selectedAttack.nameKey); 
+            yield return new WaitForSeconds(0.25f);
 
+            yield return StartCoroutine(activePartyMember.PayAttackCost(selectedAttack.costType, selectedAttack.cost));
+            if (selectedAttack.scope == "single") {
+                yield return StartCoroutine(selectedMonster.LoseHP(selectedAttack.damage, selectedAttack.animationClipName));
+            }
+        }
+
+        /// <summary>
+        /// Resolve end of turn effects (monster's being dead, end of turn debuffs, etc.)
+        /// </summary>
+        /// <returns> IEnumerator for animations </returns>
+        public IEnumerator CleanUpPMTurn() {
+            List<Monster> monstersToRemove = new List<Monster>();
+            
+            foreach (Monster m in monsters) {
+                if (m.CheckDeath()) {
+                    cq.RemoveCharacter(m.ID);
+                    monstersToRemove.Add(m);
+                    monstersKilled.Add(m);
+
+                    yield return StartCoroutine(m.PlayDeathAnimation());
+                }
+            }
+            DestroyMonsters(monstersToRemove);
+
+            DeselectMonsters();
+            pmAttackFinalized = false;
             eventDescription.ClearText();
-            EndPMTurn();
         }
 
         /// <summary>
         /// Ends the partyMember's turn, 
         /// </summary>
         public void EndPMTurn() {
+            selectedAttack = null;
+
+            foreach (Monster m in monsters) {
+                m.DeselectMonsterButton();
+            }
+        }
+
+        #endregion
+
+        #region [ Section1 ] Monster Turn
+
+        /// <summary>
+        /// Perform all of the phases in the monster's turn
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator MonsterTurn() {
+            StartMonsterTurn();
+            yield return StartCoroutine(ExecuteMonsterAttack());
+            CleanUpMonsterTurn();
             if (CheckBattleOver()) {
                 EndCombat();
             }
             else {
-                selectedAttack = null;
-                DeselectMonsters();
-
+                EndMonsterTurn();
                 GetNextTurn();
-            } 
+            }
         }
 
         /// <summary>
         /// Start the active monster's turn
         /// </summary>
         /// <returns> Yields to allow monster attack animation to play </returns>
-        private IEnumerator StartMonsterTurn() {
-            List<PartyMember> partyMembersToRemove = new List<PartyMember>();
-            yield return StartCoroutine(ExecuteMonsterAttack());
-            foreach (PartyMember pm in partyMembers) {
-                if (pm.CheckDeath()) {
-                    cq.RemoveCharacter(pm.ID);
-                    partyMembersToRemove.Add(pm);
-                }
-            }
-            foreach (PartyMember pm in partyMembersToRemove) {
-                partyMembers.Remove(pm);
-            }
-
-            EndMonsterTurn();
+        private void StartMonsterTurn() {
+            actionsPanel.SetAllActionsUninteractable();
+            partyPanel.DisableButtons();
         }
 
-                /// <summary>
+        /// <summary>
         /// Executes a monster's attack, by first getting the attack it wants to use, and then selecting
         /// its target based on its AI
         /// </summary>
@@ -318,6 +364,25 @@ namespace Combat {
             if (attackChoice.damage > 0) {
                 yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage)));
             }
+        }
+
+        /// <summary>
+        /// Resolve end of turn effects (partyMembers's being dead, end of turn debuffs, etc.)
+        /// </summary>
+        /// <returns> IEnumerator for animations </returns>
+        public void CleanUpMonsterTurn() {
+            List<PartyMember> partyMembersToRemove = new List<PartyMember>();
+            
+            foreach (PartyMember pm in partyMembers) {
+                if (pm.CheckDeath()) {
+                    cq.RemoveCharacter(pm.ID);
+                    partyMembersToRemove.Add(pm);
+                }
+            }
+            foreach (PartyMember pm in partyMembersToRemove) {
+                partyMembers.Remove(pm);
+            }
+
             eventDescription.ClearText();
         }
 
@@ -325,12 +390,7 @@ namespace Combat {
         /// Ends the monster's turn
         /// </summary>
         public void EndMonsterTurn() {
-            if (CheckBattleOver()) {
-                EndCombat();
-            } 
-            else {
-                GetNextTurn();
-            }
+            // nothing for now
         }
 
         /// <summary>
@@ -353,12 +413,13 @@ namespace Combat {
         /// either a defeat screen or a rewards screen
         /// </remark>
         private void EndCombat() {
-            GameManager.instance.LoadNextScene("MainMenu");
+            EnableAllButtons();
+            EventManager.instance.DisplayPostCombat();
         }
 
         #endregion
 
-        #region Monster Selection
+        #region [ Section2 ] Monster Selection
        
         /// <summary>
         /// Selects a monster to be attacked
@@ -368,35 +429,86 @@ namespace Combat {
         public void SelectMonster(Monster monsterToSelect) {
             DeselectMonsters();
             
-            selectedMonsters.Add(monsterToSelect);
+            selectedMonster = monsterToSelect;
 
             // Player can freely click on monsters without having an attack selected
             // Will probably make a UI popup when clicking on monsters with no attack in the future
             if (selectedAttack != null) {
-                monsterToSelect.SelectMonsterButton();
-                StartCoroutine(ExecutePMAttack(selectedAttack, monsterToSelect));     
+                if (selectedAttack.scope != "single") {
+                    int monsterIndex = 0;
+                    for (int i = 0; i < monsters.Count; i++) {
+                        if (monsters[i].ID == monsterToSelect.ID) {
+                            monsterIndex = i;
+                            break;
+                        }
+                    }
+                    if (selectedAttack.scope == "adjacent") {
+                        if (monsterIndex - 1 > 0) {
+                            selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
+                        }
+                        if (monsterIndex + 1 < monsters.Count) {
+                            selectedMonsterAdjacents.Add(monsters[monsterIndex + 1]);
+                        }
+                    }
+
+                    monsterToSelect.SelectMonsterButton();
+                    foreach (Monster m in selectedMonsterAdjacents) {
+                        m.SelectMonsterButtonAdjacent();
+                    }
+                }
+                
+                pmAttackFinalized = true;
+            }
+        }
+        /// <summary>
+        /// Deselect monster's visually in the UI but don't remove references to them
+        /// </summary>
+        /// <remark>
+        /// This is to deselect monsters after an attack has been selected to remove
+        /// selection UI during animations
+        /// </remark>
+        public void DeselectMonstersVisually() {
+            if (selectedMonster != null) {
+                selectedMonster.DeselectMonsterButton();
+            }
+            foreach (Monster m in selectedMonsterAdjacents) {
+                m.DeselectMonsterButton();
             }
         }
 
         /// <summary>
-        /// Selects multiple monster to be attacked
+        /// Deselects monsters, visually and while removing references to the selected ones and 
         /// </summary>
-        /// <param name="monstersToSelect"> Monsters to select </param>
-        /// <remark> Needs to be worked on for the future </remark>
-        /* public void SelectMonster(List<Monster> monstersToSelect) {
-            DeselectMonsters();
-
-            foreach (Monster m in monstersToSelect) {
-                m.SelectMonsterButton();
-                selectedMonsters.Add(m);
-            }
-        }*/
-
         public void DeselectMonsters() {
-            foreach (Monster m in selectedMonsters) {
+            if (selectedMonster != null) {
+                selectedMonster.DeselectMonsterButton(); 
+                selectedMonster = null;
+            }
+            
+            foreach (Monster m in selectedMonsterAdjacents) {
                 m.DeselectMonsterButton();
             }
-            selectedMonsters.Clear();
+            selectedMonsterAdjacents.Clear();
+        }
+
+        /// <summary>
+        /// Destroy monster gameObjects
+        /// </summary>
+        /// <param name="monstersToRemove"> List of monsters to remove </param>
+        public void DestroyMonsters(List<Monster> monstersToRemove) {
+            foreach (Monster m in monstersToRemove) {
+                monsters.Remove(m);
+                Destroy(m.gameObject);
+            }
+        }
+
+        /// <summary>
+        /// Enables selection of all monsters
+        /// </summary>
+        public void EnableAllMonsterSelection() {
+            foreach (Monster m in monsters) {
+                m.SetInteractable(true);
+            }
         }
 
         /// <summary>
@@ -404,18 +516,9 @@ namespace Combat {
         /// </summary>
         public void DisableAllMonsterSelection() {
             foreach (Monster m in monsters) {
-                m.DisableInteraction();
+                m.SetInteractable(false);
             }
         }  
-
-        /// <summary>
-        /// Enables selection of all monsters
-        /// </summary>
-        public void EnableAllMonsterSelection() {
-            foreach (Monster m in monsters) {
-                m.EnableInteraction();
-            }
-        }
 
         /// <summary>
         /// Arranges monsters on screen to look nice depending on the number.
@@ -471,6 +574,11 @@ namespace Combat {
                     monsters[4].gameObject.transform.localPosition = new Vector3(spacing4, monsters[4].gameObject.transform.position.y, 0.0f);      
                 } 
             }
+
+            // show monster now that all of its properties are set up
+            foreach (Monster m in monsters) {
+                m.gameObject.SetActive(true);
+            }
         }
 
         /// <summary>
@@ -506,14 +614,33 @@ namespace Combat {
 
         #endregion
 
-        #region PartyMember UI Management
+        #region [ Section3 ] PartyMember UI Management
+
+        /// <summary>
+        /// Disables interactions with all buttons player can select
+        /// </summary>
+        public void DisableAllButtons() {
+            actionsPanel.SetAllActionsUninteractable();
+            partyPanel.DisableButtons();
+            DeselectMonstersVisually();
+            DisableAllMonsterSelection();
+        }
+
+        /// <summary>
+        /// Enables all buttons to be selectable
+        /// </summary>
+        public void EnableAllButtons() {
+            EnableAllMonsterSelection();
+            actionsPanel.SetAllActionsInteractable();
+            partyPanel.EnableButtons();
+        }
         
         /// <summary>
         /// Changes the UI to reflect the first party member in the queue's information
         /// </summary>s
         public void DisplayFirstPartyMember() {
             activePartyMember = cq.GetFirstPM();    // activePartyMember will be redundantly set a second time
-            actionsPanel.DisplayPartyMember(activePartyMember);
+            actionsPanel.DisplayFirstPartyMember(activePartyMember);
             statusPanel.DisplayPartyMember(activePartyMember);
         }
 

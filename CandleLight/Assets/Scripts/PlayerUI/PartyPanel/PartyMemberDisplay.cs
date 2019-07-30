@@ -9,6 +9,7 @@
 */
 
 using Characters;
+using Localization;
 using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,12 +19,16 @@ using UnityEngine.UI;
 namespace PlayerUI {
 
     public class PartyMemberDisplay : MonoBehaviour {
-
+        
+        /* external component references */
         public Animator pmDisplayAnimator;  /// <value> Animator for entire display </value>
         public Image classIcon;     /// <value> Icon of class </value>
+        public Image LVLBackground; /// <value> Background to where level text is displayed </value>
         public Bar HPBar;           /// <value> Visual for health points </value>
         public Bar MPBar;           /// <value> Visual for mana points </value>
+        public Bar EXPBar;          /// <value> Visual for experience points </value>
         public Button b;            /// <value> Button to make display clickable for more info </value>
+         public LocalizedText LVLtext;      /// <value> Text displaying current level </value>
 
         private PartyMember pm;     /// <value> PartyMember the display is referring to <value>
 
@@ -35,6 +40,30 @@ namespace PlayerUI {
             this.pm = pm;
             classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
             pm.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
+        }
+
+        /// <summary>
+        /// Displays the class, level, and EXP of a party member
+        /// </summary>
+        /// <param name="pm"></param>
+        public void InitRewardsDisplay(PartyMember pm) {
+            this.pm = pm;
+            classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
+            pm.SetPartyMemberDisplay(this, PanelConstants.REWARDSPANEL, EXPBar);
+
+            if (pm.className == "Warrior") {
+                LVLBackground.color = new Color32(189, 29, 0, 255);
+            }
+            else if (pm.className == "Mage") {
+                LVLBackground.color = new Color32(0, 152, 220, 255);
+            }
+            else if (pm.className == "Archer") {
+                LVLBackground.color = new Color32(90, 197, 79, 255);
+            }
+            else if (pm.className == "Thief") {
+                LVLBackground.color = new Color32(255, 235, 87, 255);
+            }
+            SetInteractable(false);
         }
         
         /// <summary>
@@ -78,19 +107,12 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Enables the button, making it clickable
+        /// Sets the interactivity of the action's button, and handles consequences
         /// </summary>
-        public void Enable() {
-            b.interactable = true;
-            classIcon.raycastTarget = true;
-        }
-
-        /// <summary>
-        /// Enables the button, making it clickable
-        /// </summary>
-        public void Disable() {
-            b.interactable = false;
-            classIcon.raycastTarget = false;
+        /// <param name="value"> Enable interactivity on true and disable on false </param>
+         public void SetInteractable(bool value) {
+            b.interactable = value;
+            classIcon.raycastTarget = value;
         }
     }
 }

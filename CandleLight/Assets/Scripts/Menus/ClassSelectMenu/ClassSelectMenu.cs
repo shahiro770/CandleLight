@@ -123,8 +123,8 @@ namespace Menus.ClassSelectMenu {
         /// <remark> TO DO: World map scene still has to be made </remark>
         public void BeginGame() {
             if (selectButtonEnabled) {
-                PartyManager.instance.AddPartyMember("Mage");
                 PartyManager.instance.AddPartyMember("Warrior");
+                PartyManager.instance.AddPartyMember("Mage");
                 GameManager.instance.LoadAreaScene("GreyWastes");
             }
         }

@@ -21,14 +21,33 @@ namespace PlayerUI {
         
         public LocalizedText eventText;     /// <value> Text for event </value>
         public Image textBackground;        /// <value> Image behind text </value>
+        public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         
+        private float lerpSpeed = 4;        /// Speed at which canvas fades in and out
+
         /// <summary>
         /// Changes the displayed text
         /// </summary>
         /// <param name="textKey"> Localized key for text to display </param>
         public void SetText(string textKey) {
-            textBackground.gameObject.SetActive(true);
+            textBackgroundCanvas.alpha = 1;
             eventText.SetKey(textKey);
+        }
+
+        /// <summary>
+        /// Changes the displayed text and fades in
+        /// </summary>
+        /// <param name="textKey"> Text to display </param>
+        public void SetTextAndFadeIn(string textKey) {
+            eventText.SetKey(textKey);
+            StartCoroutine(Fade(1));
+        }
+        
+        /// <summary>
+        /// Fades the display out
+        /// </summary>
+        public void FadeOut() {
+            StartCoroutine(Fade(0));
         }
 
         /// <summary>
@@ -44,8 +63,29 @@ namespace PlayerUI {
         /// Stop displaying and remove all text
         /// </summary>
         public void ClearText() {
-            textBackground.gameObject.SetActive(false);
+            textBackgroundCanvas.alpha = 0;
             eventText.Clear();
+        }
+
+        /// <summary>
+        /// Changes the alpha of the display to the target value
+        /// </summary>
+        /// <param name="targetAlpha"> Int 0 or 1 </param>
+        /// <returns> IEnumerator for smooth animation </returns>
+        private IEnumerator Fade(int targetAlpha) {
+            float timeStartedLerping = Time.time;
+            float timeSinceStarted = Time.time - timeStartedLerping;
+            float percentageComplete = timeSinceStarted * lerpSpeed;
+            float prevAlpha = textBackgroundCanvas.alpha;
+
+            while (textBackgroundCanvas.alpha != targetAlpha) {
+                timeSinceStarted = Time.time - timeStartedLerping;
+                percentageComplete = timeSinceStarted * lerpSpeed;
+
+                textBackgroundCanvas.alpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }

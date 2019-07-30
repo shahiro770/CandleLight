@@ -37,37 +37,53 @@ namespace Characters {
         [field: SerializeField] public string monsterArea { get; private set; }         /// <value> Area where monster can be found </value>
         [field: SerializeField] public string monsterSize { get; private set; }         /// <value> String constant describing size of monster's sprite </value>
         [field: SerializeField] public string monsterNameID { get; private set; }       /// <value> NameID as referenced in database </value>
+        [field: SerializeField] public string monsterSpriteName { get; private set; }   /// <value> Name of monster's sprite as referenced in resources </value>
         [field: SerializeField] public string monsterDisplayName { get; private set; }  /// <value> Monster name <value>
         [field: SerializeField] public string monsterAI { get; private set; }           /// <value> Monster's behaviour in combat </value>
         [field: SerializeField] public float spriteWidth { get; private set; }          /// <value> Width of sprite rect transform </value>
+        [field: SerializeField] public int multiplier { get; private set; }             /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
+        [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
+        [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int attackNum { get; private set; } = 0;         /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public int selectedAttackIndex { get; private set; }    /// <value> Index of attack selected </value>
         [field: SerializeField] public bool isReady { get; private set; } = false;      /// <value> Monster finished loading </value>
         
-        #region Initialization
+        #region [ Initialization ] Initialization
 
         /// <summary>
         /// Initializes the monster's properties and display
         /// </summary>
         /// <param name="monsterNameID"> Name of monster as referenced by the database </param>
         /// <param name="monsterSpriteName"> Name of monster's sprite, castle case </param>
-        /// <param name="monsterDisplayName"> Name of monster in game </param>
+        /// <param name="monsterDisplayName"> Name of monster in game, separated by spaces </param>
         /// <param name="monsterArea"> Area of monster to get file path to sprite, castle case </param>
         /// <param name="monsterSize"> Size of monster (small, medium, large) </param>
         /// <param name="monsterAI"> Pattern for how monster attacks </param>
         /// <param name="LVL"> Power level </param>
+        /// <param name="multiplier"> Multiplier on rewards monster gives such as WAX and EXP </param>
         /// <param name="HP"> Max health points </param>
         /// <param name="MP"> Max mana points </param>
         /// <param name="stats"> STR, DEX, INT, LUK </param>
         /// <param name="attacks"> List of known attacks (length 4) </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
-        string monsterSize, string monsterAI, int LVL, int HP, int MP, int[] stats, Attack[] attacks) {
+        string monsterSize, string monsterAI, int LVL, int multiplier, int HP, int MP, int[] stats, Attack[] attacks) {
             base.Init(LVL, HP, MP, stats, attacks);            
             bts = b.GetComponent<ButtonTransitionState>();
             this.monsterNameID = monsterNameID;
+            this.monsterSpriteName = monsterSpriteName;
             this.monsterDisplayName = monsterDisplayName;
             this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
+            this.multiplier = multiplier;
+            this.EXP = (LVL * LVL) * this.multiplier;
+            this.WAX = LVL * this.multiplier;
+
+            // when monster is an adjacent selected by a multi-scoping attack, give it a different button colour
+            ColorBlock monsterAltSelectColorBlock = b.colors;  
+            monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 64);
+            monsterAltSelectColorBlock.highlightedColor = monsterAltSelectColorBlock.normalColor;
+            monsterAltSelectColorBlock.pressedColor = monsterAltSelectColorBlock.normalColor;
+            bts.SetColorBlock("normalAlternate", monsterAltSelectColorBlock);
 
             /* WHEN WORKING WITH WIFI AND/OR WANT TO USE ASSETBUNDLES */
 
@@ -79,11 +95,11 @@ namespace Characters {
 
             /* WHEN NO WIFI */
 
-            string spritePath = "Sprites/Enemies/" + monsterArea + "/" +  monsterSpriteName; 
+            string spritePath = "Sprites/Monsters/" + monsterArea + "/" +  monsterSpriteName; 
 
             /****************/
-
-            monsterSprite.sprite = Resources.Load<Sprite>(spritePath);  // sprite path will always be inside resources folder
+            
+            monsterSprite.sprite = Resources.Load<Sprite>(spritePath);
             this.monsterSize = monsterSize;
             SetSize(monsterSize);  
             SetHealthBar();
@@ -93,10 +109,9 @@ namespace Characters {
                     attackNum++;
                 }
             }
-
-            SetCamera(); 
             SetMonsterAnimatorClips();
             
+            SetCamera(); 
             this.isReady = true;
 
             yield break;
@@ -108,10 +123,10 @@ namespace Characters {
         /// </summary>
         public void SetHealthBar() {
             if (monsterSize == "small") {
-                HPBar.SetMaxAndCurrent(HP, CHP, new Vector2(100, 100));
+                HPBar.SetMaxAndCurrent(HP, CHP, new Vector2(125, 18));
             } 
             else if (monsterSize == "medium") {
-                HPBar.SetMaxAndCurrent(HP, CHP, new Vector2(150, 150));
+                HPBar.SetMaxAndCurrent(HP, CHP, new Vector2(150, 18));
             }
              else if (monsterSize == "large") {
                 HPBar.SetMaxAndCurrent(HP, CHP, vectorSize);
@@ -123,7 +138,7 @@ namespace Characters {
         /// Sets the sprite and canvas size of the monster, and UI elements 
         /// such as the health point bar.
         /// The Monster's sprite is repositioned depending on its size.
-        /// Need to make this account for if the monster is floating and etc.
+        /// TO DO: make this account for if the monster is floating and etc.
         /// </summary>
         /// <param name="monsterSize"> Size of the monster (small, medium, large) </param>
         /// <remark> Monster's image is repositioned depending on its sprite size </remark>
@@ -171,6 +186,13 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Visually select monster with the "adjacent hovered" (registered as normalAlternate) colour
+        /// </summary>
+        public void SelectMonsterButtonAdjacent() {
+            bts.SetColor("normalAlternate");
+        }
+
+        /// <summary>
         /// Visually deselect monster
         /// </summary>
         public void DeselectMonsterButton() {
@@ -178,19 +200,19 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Enable the monster button
+        /// Sets the interactivity of the action's button, and handles consequences
         /// </summary>
-        public void EnableInteraction() {
-            b.interactable = true;
-            monsterSprite.raycastTarget = true;
-        }
+        /// <param name="value"> Enable interactivity on true and disable on false </param>
+        public void SetInteractable(bool value) {
+            b.interactable = value;
+            monsterSprite.raycastTarget = value;
 
-        /// <summary>
-        /// Disable the monster button
-        /// </summary>
-        public void DisableInteraction() {
-            b.interactable = false;
-            monsterSprite.raycastTarget = false;
+            if (value == false) {
+                bts.SetColor("disabled");
+            }
+            else {
+                bts.SetColor("normal");
+            }
         }
 
         #endregion
@@ -353,8 +375,20 @@ namespace Characters {
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "attack" + selectedAttackIndex)));
         }
 
+         /// <summary>
+        /// Plays the death animation of a monster
+        /// </summary>
+        /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlayDeathAnimation() {
             yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, HPBar.barAnimator, "death", "death")));
+        }
+
+        /// <summary>
+        /// Plays the spawn animation of a monster
+        /// </summary>
+        /// <returns> IEnumerator, waiting for the animation to finish </returns>
+        public IEnumerator PlaySpawnAnimation() {
+            yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, HPBar.barAnimator, "spawn", "spawn")));
         }
 
         #endregion
@@ -401,15 +435,6 @@ namespace Characters {
             return CHP == 0;
         }
 
-        /// <summary>
-        /// Destroys the monster
-        /// </summary>
-        /// <returns> Starts coroutine for monster death animation to play </returns>
-        public IEnumerator Die() {
-            yield return (StartCoroutine(PlayDeathAnimation()));
-            Destroy(gameObject);
-        }
-
         #endregion
 
         /// <summary>
@@ -429,7 +454,7 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Logs name for debugging
+        /// Logs monster's display name for debugging
         /// </summary>
         public override void LogName() {
             Debug.Log("Name " + monsterDisplayName);

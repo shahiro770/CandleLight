@@ -60,49 +60,10 @@ namespace Combat {
             queueLength++;
         }
 
-        /* 
-        /// <summary>
-        /// Adds a character's second entry to the queue under certain conditions
-        /// </summary>
-        private void AddSecondEntries() {
-            int avgMonsterDEX = 0;
-            int avgPartyMemberDEX = 0;
-            foreach (QueueNode q in combatQueue) {
-                if (q.c is Monster) {
-                    avgMonsterDEX += q.c.DEX;
-                }
-                else {
-                    avgPartyMemberDEX += q.c.DEX;
-                }
-            }
-
-            avgMonsterDEX /= monsterNumber;
-            avgPartyMemberDEX  /= partyMemberNumber;
-
-            List<QueueNode> finalCombatQueue = combatQueue.ConvertAll(q => new QueueNode(q));
-
-            foreach (QueueNode q in combatQueue) {
-                if (q.c is Monster) {
-                    if (q.c.DEX > avgPartyMemberDEX) {
-                        finalCombatQueue.Add(new QueueNode(q.c, true));
-                    }
-                }
-                else {
-                    if (q.c.DEX > avgMonsterDEX) {
-                        finalCombatQueue.Add(new QueueNode(q.c, true));
-                    }
-                }
-            }
-
-            combatQueue = finalCombatQueue;
-        }
-        */
-
         /// <summary>
         /// Finalizes the queue order by making any special adjustments and then sorting
         /// </summary>
         public void FinalizeQueue() {
-            // AddSecondEntries();
             combatQueue.Sort(characterOrder);
         }
 
@@ -155,6 +116,15 @@ namespace Combat {
                 }
             }
             combatQueue = finalCombatQueue;
+        }
+
+        /// <summary>
+        /// Resets the some properties in preparation for a new combat instance
+        /// </summary>
+        public void Reset() {
+            queueLength = 0;
+            queuePos = -1;   
+            combatQueue = new List<QueueNode>();
         }
 
         /// <summary>

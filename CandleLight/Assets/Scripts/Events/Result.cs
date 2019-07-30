@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: July 4, 2019
 * 
-* The Result class is used to hold the results of an event, for changes to EXP, HP, MP, and wax.
+* The Result class is used to hold the results of an event, for changes to EXP, HP, MP, and WAX.
 * For now it doesn't allow for items to be found, or permanent stat changes, or partyMember changes.
 */
 
@@ -19,7 +19,7 @@ namespace Events {
         public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
-        public int waxAmount { get; private set; }      /// <value> Amount of wax result gives </value>
+        public int WAXAmount { get; private set; }      /// <value> Amount of wax result gives </value>
         
         private string resultKey;    /// <value> Localization key for displayed string for result </value>
         private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
@@ -29,7 +29,7 @@ namespace Events {
         private int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
         private int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
         private int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
-        private int waxChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
+        private int WAXChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
         private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Events {
             this.EXPChange = changeValues[0];
             this.HPChange = changeValues[1];
             this.MPChange = changeValues[2];
-            this.waxChange = changeValues[3];
+            this.WAXChange = changeValues[3];
             this.subAreaName = subAreaName;
             this.subEventName = subEventName;
             
@@ -73,7 +73,7 @@ namespace Events {
         /// <returns></returns>
         public int[] GetResults() {
             GenerateResults();
-            return new int[] { EXPAmount, HPAmount, MPAmount, waxAmount };
+            return new int[] { EXPAmount, HPAmount, MPAmount, WAXAmount };
         }
 
         /// <summary>
@@ -90,14 +90,14 @@ namespace Events {
             EXPAmount = GenerateAmount(EXPChange);
             HPAmount = GenerateAmount(HPChange);
             MPAmount = GenerateAmount(MPChange);
-            waxAmount = GenerateAmount(waxChange);
+            WAXAmount = GenerateAmount(WAXChange);
         }
 
         /// <summary>
-        /// 
+        /// Generates an integer number between the minValue and maxValue
         /// </summary>
-        /// <param name="mode"></param>
-        /// <returns></returns>
+        /// <param name="mode"> 0, 1 or -1 indicating if the amount should be 0, positive, or negative respectively </param>
+        /// <returns> Int </returns>
         public int GenerateAmount(int mode) {
             if (mode == 0) {
                 return 0;

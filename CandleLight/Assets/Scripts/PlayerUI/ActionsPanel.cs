@@ -24,7 +24,8 @@ namespace PlayerUI {
 
     public class ActionsPanel : Panel {
         
-        public CombatManager cm { get; set; }       /// <value> Combat manager to reference other scripts in the combat scene </value>
+        /* external component references */
+        public CombatManager cm;                    /// <value> Combat manager to reference other scripts in the combat scene </value>
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
         
         private EventSystem es;                     /// <value> eventSystem reference </value>
@@ -66,6 +67,21 @@ namespace PlayerUI {
             }
 
             SetAllActionsInteractable();
+            FadeActions(1);
+            SetInitialNavigation();
+        }
+
+        /// <summary>
+        /// Displays actions for after combat
+        /// </summary>
+        public void SetPostCombatActions() { 
+            for (int i = 0; i < actions.Length - 1; i++) {
+                actions[i].SetAction(ActionConstants.NONE);
+            }
+
+            actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
+
+            SetAllActionsInteractable();
             SetInitialNavigation();
         }
 
@@ -83,8 +99,16 @@ namespace PlayerUI {
             else {
                 actions[actions.Length - 1].SetAction(ActionConstants.NONE);
             }
+        }
 
-            SetInitialNavigation();
+        /// <summary>
+        /// Displays the first partyMember with special fade effects
+        /// </summary>
+        /// <param name="pm"></param>
+        public void DisplayFirstPartyMember(PartyMember pm) {
+            SetAttackActions(pm.attacks);
+            FadeActions(1);
+            CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
         }
 
         /// <summary>
@@ -94,6 +118,7 @@ namespace PlayerUI {
         public void DisplayPartyMember(PartyMember pm) {
             SetAttackActions(pm.attacks);
             SetAllActionsInteractable();
+            SetInitialNavigation();
             CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
         }
 
@@ -165,10 +190,12 @@ namespace PlayerUI {
         public void SetAllActionsInteractable() {
             int firstInteractableIndex = 0;
 
-            for (int i = 0; i < actions.Length ;i++) {
+            for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(true);  
                     firstInteractableIndex = i;
+                } else {
+                    actions[i].SetInteractable(false);  
                 }
             }
 
@@ -184,6 +211,18 @@ namespace PlayerUI {
                     actions[i].SetInteractable(false);  
                 } 
             }
+        }
+
+        /// <summary>
+        /// Sets all actions uninteractable and fades each action's text out
+        /// </summary>
+        public void SetAllActionsUninteractableAndFadeOut() {
+            for (int i = 0; i < actions.Length; i++) {
+                if (actions[i].actionType != ActionConstants.NONE) {
+                    actions[i].SetInteractable(false);  
+                } 
+            }
+            FadeActions(0);
         }
 
         /// <summary>
@@ -302,7 +341,7 @@ namespace PlayerUI {
                     Navigation n = b.navigation;
                     if (i == 0) {
                         n.selectOnDown = actions[2].IsInteractable() ? n.selectOnDown : actions[4].GetComponent<Button>();
-                        n.selectOnRight = actions[1].IsInteractable() ? n.selectOnRight : null;
+                        n.selectOnRight = actions[1].IsInteractable() ? actions[1].GetComponent<Button>() : null;
                         b.navigation = n;
                     }    
                     else if (i == 1) {
@@ -313,11 +352,30 @@ namespace PlayerUI {
                         n.selectOnRight = actions[3].isEnabled ? n.selectOnRight : 
                     } */
                     else if (i == 4) {
-                        n.selectOnUp = actions[2].IsInteractable() ? n.selectOnUp : actions[0].GetComponent<Button>();
+                        if (actions[2].IsInteractable()) {
+                            n.selectOnUp = actions[2].GetComponent<Button>();
+                        }
+                        else if (actions[0].IsInteractable()) {
+                            n.selectOnUp = actions[0].GetComponent<Button>();
+                        }
+                        else {
+                            n.selectOnUp = null;
+                        }
+
                         b.navigation = n;
                     }
                 }
             }             
+        }
+        
+        /// <summary>
+        /// Fades actions to the target alpha value
+        /// </summary>
+        /// <param name="targetAlpha"> Int 0 or 1 </param>
+        private void FadeActions(int targetAlpha) {
+            foreach (Action a in actions) {
+                StartCoroutine(a.Fade(targetAlpha));
+            }
         }
 
         /// <summary>

@@ -99,7 +99,7 @@ namespace PlayerUI {
         /// </summary>
         public void EnableButtons() {
             foreach(PartyMemberDisplay pmd in pmDisplays) {
-                pmd.Enable();
+                pmd.SetInteractable(true);
             }
         }
 
@@ -108,7 +108,7 @@ namespace PlayerUI {
         /// </summary>
         public void DisableButtons() {
             foreach(PartyMemberDisplay pmd in pmDisplays) {
-                pmd.Disable();
+                pmd.SetInteractable(false);
             }
         }
 

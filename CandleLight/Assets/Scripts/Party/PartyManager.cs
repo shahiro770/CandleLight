@@ -25,7 +25,7 @@ namespace Party {
         /* external component references */
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
         
-        public int wax { get; private set; }    /// <value> Currency party has stored up </value>
+        public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         
         private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private int maxPartyMembers = 4;                                    /// <value> Max number of partyMembers </value>
@@ -89,16 +89,24 @@ namespace Party {
             return partyMembers.Count;
         }
 
+        /// <summary>
+        /// Increases the amount of WAX the party has
+        /// </summary>
+        /// <param name="amount"> Positive int to increase by </param>
         public void AddWax(int amount) {
-            wax += amount;
+            WAX += amount;
         }
 
+        /// <summary>
+        /// Decreases the amount of WAX the party has
+        /// </summary>
+        /// <param name="amount"> Positive int to decrease by </param>
         public void LoseWax(int amount) {
-            if (amount > wax) {
-                wax = 0;
+            if (amount > WAX) {
+                WAX = 0;
             }
             else {
-                wax -= amount;
+                WAX -= amount;
             }
         }
     }

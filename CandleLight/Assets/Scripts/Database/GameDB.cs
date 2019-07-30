@@ -48,6 +48,7 @@ namespace Database {
                         string monsterSize = "";
                         string monsterAI = "";
                         int LVL = 0;
+                        int multiplier = 0;
                         int HP = 0;
                         int MP = 0;
                         int[] stats = {};
@@ -61,17 +62,19 @@ namespace Database {
                             monsterSize = reader.GetString(5);
                             monsterAI = reader.GetString(6);
                             LVL = reader.GetInt32(7);
-                            HP = reader.GetInt32(8); 
-                            MP = reader.GetInt32(9);
-                            stats = new int[] { reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12), reader.GetInt32(13) };
+                            multiplier = reader.GetInt32(8);
+                            HP = reader.GetInt32(9); 
+                            MP = reader.GetInt32(10);
+                            stats = new int[] { reader.GetInt32(11), reader.GetInt32(12), reader.GetInt32(13), reader.GetInt32(14) };
 
                             for (int i = 0; i < maxAttacks; i++) {
-                                string attackName = reader.GetString(14 + i);
+                                string attackName = reader.GetString(15 + i);
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
 
                         }
-                        monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, monsterSize, monsterAI, LVL, HP, MP, stats, attacks)); 
+                        monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
+                        monsterSize, monsterAI, LVL, multiplier, HP, MP, stats, attacks)); 
                     }
                 }
             }          
@@ -93,6 +96,7 @@ namespace Database {
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
                         string[] personalInfo = new string[4];
                         int LVL = 0;
+                        int EXP = 0;
                         int HP = 0;
                         int MP = 0;
                         int[] stats = {};
@@ -105,17 +109,18 @@ namespace Database {
                             personalInfo[3] = reader.GetString(4);
                             
                             LVL = reader.GetInt32(5);
-                            HP = reader.GetInt32(6); 
-                            MP = reader.GetInt32(7);
-                            stats = new int[] { reader.GetInt32(8), reader.GetInt32(9), reader.GetInt32(10), reader.GetInt32(11) };
+                            EXP = reader.GetInt32(6);
+                            HP = reader.GetInt32(7); 
+                            MP = reader.GetInt32(8);
+                            stats = new int[] { reader.GetInt32(9), reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12) };
 
                             for (int i = 0; i < maxAttacks; i++) {
-                                string attackName = reader.GetString(12 + i);
+                                string attackName = reader.GetString(13 + i);
                                 attacks[i] = GetAttack(attackName, false, dbConnection);
                             }
                         }
                         // need to figure out how to attach this information to a monster gameObject, can't use new
-                        pm.Init(personalInfo, LVL, HP, MP, stats, attacks); 
+                        pm.Init(personalInfo, LVL, EXP, HP, MP, stats, attacks); 
                     }
                 }
             }          
@@ -136,10 +141,10 @@ namespace Database {
 
                     if (reader.Read()) {
                         if (isMonster) {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5));
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6));
                         }
                         else {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(6));
+                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(7));
                         }
                     }
                     
@@ -202,6 +207,10 @@ namespace Database {
 
                 using (IDataReader reader = dbcmd.ExecuteReader()) {
                     SubArea newSubArea = null;
+                    string name = "";
+                    int minMonsterNum = 0;
+                    int maxMonsterNum = 0;
+                    string defaultBGPackName = "";
                     string[] subAreaEvents = new string[10];
                     string[] monsterPool;
                     
@@ -217,9 +226,14 @@ namespace Database {
                         subAreaEvents[8] = reader.GetString(10);
                         subAreaEvents[9] = reader.GetString(11);
 
+                        name = reader.GetString(1);
                         monsterPool = GetMonsterPool(reader.GetString(12), dbConnection);
-                        
-                        newSubArea = new SubArea(reader.GetString(1), subAreaEvents, monsterPool, dbConnection);
+                        minMonsterNum = reader.GetInt32(13);
+                        maxMonsterNum = reader.GetInt32(14);
+                        defaultBGPackName = reader.GetString(15);
+
+                        newSubArea = new SubArea(name, subAreaEvents, monsterPool, minMonsterNum, maxMonsterNum, 
+                        defaultBGPackName, dbConnection);
                     }
 
                     return newSubArea;
