@@ -25,8 +25,8 @@ namespace Characters {
         public Bar statusPanelMPBar { get; private set; }   /// <value> Visual for mana points in status panel </value>
         public Bar partyPanelHPBar { get; private set; }    /// <value> Visual for health points in party panel </value>
         public Bar partyPanelMPBar { get; private set; }    /// <value> Visual for mana points in party panel </value>
-        public Bar partyPanelEXPBar { get; private set; }   /// <value> Visual for experience points in party panel </value>
-        public Bar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
+        public EXPBar partyPanelEXPBar { get; private set; }   /// <value> Visual for experience points in party panel </value>
+        public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
         public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for party member's status in party panel </value>
         public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for party member's status in party panel </value>  
 
@@ -67,9 +67,9 @@ namespace Characters {
             SetHPAndMPBar(panelName, HPBar, MPBar);
         }
 
-        public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, Bar EXPBar) {
+        public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, EXPBar EXPBarRef) {
             this.pmdRewardsPanel = pmd;
-            SetEXPBar(panelName, EXPBar);
+            SetEXPBar(panelName, EXPBarRef);
         }
 
         /// <summary>
@@ -92,12 +92,12 @@ namespace Characters {
             MPBar.SetMaxAndCurrent(MP, CMP);
         }
 
-        public void SetEXPBar(string panelName, Bar EXPBar) {
+        public void SetEXPBar(string panelName, EXPBar EXPBar) {
             if (panelName == PanelConstants.REWARDSPANEL) {
                 rewardsPanelEXPBar = EXPBar;
             }
 
-            EXPBar.SetMaxAndCurrentEXP(EXPToNextLevel, EXP);
+            EXPBar.SetEXPBar(LVL, EXPToNextLevel, EXP);
         }
 
         /// <summary>

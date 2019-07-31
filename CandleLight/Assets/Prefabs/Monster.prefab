@@ -283,7 +283,6 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 4128
-  m_isAlignmentEnumConverted: 1
   m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -310,6 +309,7 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
@@ -324,12 +324,9 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
-  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -480,7 +477,6 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 4128
-  m_isAlignmentEnumConverted: 1
   m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -507,6 +503,7 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
@@ -521,12 +518,9 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
-  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -933,11 +927,13 @@ MonoBehaviour:
   <monsterArea>k__BackingField: 
   <monsterSize>k__BackingField: 
   <monsterNameID>k__BackingField: 
+  <monsterSpriteName>k__BackingField: 
   <monsterDisplayName>k__BackingField: 
   <monsterAI>k__BackingField: 
   <spriteWidth>k__BackingField: 0
-  <EXPMultiplier>k__BackingField: 0
-  <rewardEXP>k__BackingField: 0
+  <multiplier>k__BackingField: 0
+  <EXP>k__BackingField: 0
+  <WAX>k__BackingField: 0
   <attackNum>k__BackingField: 0
   <selectedAttackIndex>k__BackingField: 0
   <isReady>k__BackingField: 0
@@ -1058,7 +1054,6 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 4100
-  m_isAlignmentEnumConverted: 1
   m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -1085,6 +1080,7 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
@@ -1099,12 +1095,9 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
-  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -1213,7 +1206,7 @@ MonoBehaviour:
   text: {fileID: 8882959954073654089}
   <maxAmount>k__BackingField: 0
   <currentAmount>k__BackingField: 0
-  lerpSpeed: 2
+  lerpSpeed: 2.5
   fillAmount: 100
 --- !u!95 &4654143301358664508
 Animator:

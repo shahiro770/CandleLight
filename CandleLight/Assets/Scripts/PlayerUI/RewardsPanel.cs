@@ -102,7 +102,7 @@ namespace PlayerUI {
         /// <param name="pms"></param>
         private void UpdateEXPBars(List<PartyMember> pms) {
             for (int i = 0; i < pms.Count; i++) {
-                pmDisplays[i].EXPBar.SetCurrentEXP(amountEXP);
+                pmDisplays[i].EXPBar.SetCurrent(amountEXP);
             }
         }
 

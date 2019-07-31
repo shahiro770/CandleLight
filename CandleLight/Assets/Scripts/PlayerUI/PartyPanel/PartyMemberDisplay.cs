@@ -26,9 +26,9 @@ namespace PlayerUI {
         public Image LVLBackground; /// <value> Background to where level text is displayed </value>
         public Bar HPBar;           /// <value> Visual for health points </value>
         public Bar MPBar;           /// <value> Visual for mana points </value>
-        public Bar EXPBar;          /// <value> Visual for experience points </value>
+        public EXPBar EXPBar;       /// <value> Visual for experience points </value>
         public Button b;            /// <value> Button to make display clickable for more info </value>
-         public LocalizedText LVLtext;      /// <value> Text displaying current level </value>
+         public LocalizedText LVLText;      /// <value> Text displaying current level </value>
 
         private PartyMember pm;     /// <value> PartyMember the display is referring to <value>
 
@@ -63,6 +63,8 @@ namespace PlayerUI {
             else if (pm.className == "Thief") {
                 LVLBackground.color = new Color32(255, 235, 87, 255);
             }
+            LVLText.SetText("LVL " + pm.LVL);
+
             SetInteractable(false);
         }
         
