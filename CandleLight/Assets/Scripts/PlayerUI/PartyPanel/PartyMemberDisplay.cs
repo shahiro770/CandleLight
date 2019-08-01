@@ -22,13 +22,13 @@ namespace PlayerUI {
         
         /* external component references */
         public Animator pmDisplayAnimator;  /// <value> Animator for entire display </value>
-        public Image classIcon;     /// <value> Icon of class </value>
-        public Image LVLBackground; /// <value> Background to where level text is displayed </value>
-        public Bar HPBar;           /// <value> Visual for health points </value>
-        public Bar MPBar;           /// <value> Visual for mana points </value>
-        public EXPBar EXPBar;       /// <value> Visual for experience points </value>
-        public Button b;            /// <value> Button to make display clickable for more info </value>
-         public LocalizedText LVLText;      /// <value> Text displaying current level </value>
+        public Image classIcon;         /// <value> Icon of class </value>
+        public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
+        public Bar HPBar;               /// <value> Visual for health points </value>
+        public Bar MPBar;               /// <value> Visual for mana points </value>
+        public EXPBar EXPBar;           /// <value> Visual for experience points </value>
+        public Button b;                /// <value> Button to make display clickable for more info </value>
+        public LocalizedText LVLText;      /// <value> Text displaying current level </value>
 
         private PartyMember pm;     /// <value> PartyMember the display is referring to <value>
 
@@ -49,7 +49,7 @@ namespace PlayerUI {
         public void InitRewardsDisplay(PartyMember pm) {
             this.pm = pm;
             classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
-            pm.SetPartyMemberDisplay(this, PanelConstants.REWARDSPANEL, EXPBar);
+            pm.SetPartyMemberDisplayRewardsPanel(this, PanelConstants.REWARDSPANEL, EXPBar, LVLText);
 
             if (pm.className == "Warrior") {
                 LVLBackground.color = new Color32(189, 29, 0, 255);
@@ -63,7 +63,6 @@ namespace PlayerUI {
             else if (pm.className == "Thief") {
                 LVLBackground.color = new Color32(255, 235, 87, 255);
             }
-            LVLText.SetText("LVL " + pm.LVL);
 
             SetInteractable(false);
         }

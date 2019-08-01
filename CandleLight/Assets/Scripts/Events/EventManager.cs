@@ -210,11 +210,13 @@ namespace Events {
         /// <summary>
         /// Displays post combat information such as the RewardsPanel, and prepares player to continue exploring
         /// </summary>
-        public void DisplayPostCombat() {
+        public IEnumerator DisplayPostCombat() {
             StartCoroutine(AlterBackgroundColor(1f));
             actionsPanel.SetPostCombatActions();
+            actionsPanel.SetAllActionsUninteractable();
             rewardsPanel.SetVisible(true);
-            rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled);
+            yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
+            actionsPanel.SetAllActionsInteractable();
         }
 
         /// <summary>

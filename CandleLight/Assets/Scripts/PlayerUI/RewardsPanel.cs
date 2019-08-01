@@ -39,7 +39,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pms"> PartyMembers list (max count of 4) </param>
         /// <param name="monstersKilled"> Monsters list (max unique monsters of 5) </param>
-        public void Init(List<PartyMember> pms, List<Monster> monstersKilled) {
+        public IEnumerator Init(List<PartyMember> pms, List<Monster> monstersKilled) {
             for (int i = 0; i < pmDisplays.Length; i++) {
                 pmDisplays[i].gameObject.SetActive(false);
             }
@@ -58,7 +58,8 @@ namespace PlayerUI {
             amountWAX = 0;
             amountTextEXP.SetText("");
             amountTextWAX.SetText("");
-            StartCoroutine(DisplayMonstersDisplays(pms, monstersKilled));
+            yield return (StartCoroutine(DisplayMonstersDisplays(pms, monstersKilled)));
+            yield return (StartCoroutine(UpdateEXPBars(pms)));
         }
 
         /// <summary>
@@ -93,16 +94,19 @@ namespace PlayerUI {
 
             amountTextEXP.SetText(amountEXP.ToString());
             amountTextWAX.SetText(amountWAX.ToString());
-            UpdateEXPBars(pms);
         }
 
         /// <summary>
         /// Updates the EXP bars of each partyMemberDisplay
         /// </summary>
         /// <param name="pms"></param>
-        private void UpdateEXPBars(List<PartyMember> pms) {
+        private IEnumerator UpdateEXPBars(List<PartyMember> pms) {
             for (int i = 0; i < pms.Count; i++) {
-                pmDisplays[i].EXPBar.SetCurrent(amountEXP);
+                StartCoroutine(pms[i].GainEXP(amountEXP));
+            }
+
+            while (!pms[0].doneEXPGaining) {   // wait for bars to finish filling 
+                yield return null;
             }
         }
 
@@ -112,10 +116,13 @@ namespace PlayerUI {
         /// <param name="value"></param>
         public void SetVisible(bool value) {
             if (value == true) {
+                gameObject.SetActive(true);
                 StartCoroutine(Fade(1));
             }
             else {
-                StartCoroutine(Fade(0));
+                if (gameObject.activeSelf) {
+                    StartCoroutine(Fade(0));
+                }
             }
         }
 
@@ -137,6 +144,10 @@ namespace PlayerUI {
                 imgCanvas.alpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
 
                 yield return new WaitForEndOfFrame();
+            }
+
+            if (targetAlpha == 0) {
+                gameObject.SetActive(false);
             }
         }
 

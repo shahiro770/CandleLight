@@ -62,15 +62,6 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets the max amount of points, and calls to update visually
-        /// </summary>
-        /// <param name="maxAmount"> Max amount </param>
-        public void SetMax(int maxAmount) {
-            this.maxAmount = maxAmount;
-            SetDisplay();
-        }
-
-        /// <summary>
         /// Sets the current amount of points, and calls to update visually
         /// </summary>
         /// <param name="currentAmount"> Current amount </param>

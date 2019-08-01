@@ -11,6 +11,7 @@
 using Combat;
 using PanelConstants = Constants.PanelConstants;
 using PlayerUI;
+using Localization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace Characters {
         public Bar partyPanelMPBar { get; private set; }    /// <value> Visual for mana points in party panel </value>
         public EXPBar partyPanelEXPBar { get; private set; }   /// <value> Visual for experience points in party panel </value>
         public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
+        public LocalizedText rewardsPanelLVLText { get; private set; }      /// <value> Visual for LVL in rewards panel</value>
         public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for party member's status in party panel </value>
         public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for party member's status in party panel </value>  
 
@@ -36,6 +38,7 @@ namespace Characters {
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLevel { get; set; }     /// <value> Total experience points to reach next level </value>
+        public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
 
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
@@ -48,7 +51,7 @@ namespace Characters {
         public void Init(string[] personalInfo, int LVL, int EXP, int HP, int MP, int[] stats, Attack[] attacks) {
             base.Init(LVL, HP, MP, stats, attacks);
             this.EXP = EXP;
-            SetEXPToNextLevel();
+            this.EXPToNextLevel = CalcEXPToNextLevel(LVL);
             this.className = personalInfo[0];
             this.subClassName = personalInfo[1];
             this.memberName = personalInfo[2];
@@ -67,9 +70,10 @@ namespace Characters {
             SetHPAndMPBar(panelName, HPBar, MPBar);
         }
 
-        public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, EXPBar EXPBarRef) {
+        public void SetPartyMemberDisplayRewardsPanel(PartyMemberDisplay pmd, string panelName, EXPBar EXPBarRef, LocalizedText LVLTextRef) {
             this.pmdRewardsPanel = pmd;
             SetEXPBar(panelName, EXPBarRef);
+            SetLVLText(panelName, LVLTextRef);
         }
 
         /// <summary>
@@ -97,7 +101,15 @@ namespace Characters {
                 rewardsPanelEXPBar = EXPBar;
             }
 
-            EXPBar.SetEXPBar(LVL, EXPToNextLevel, EXP);
+            rewardsPanelEXPBar.SetEXPBar(this, EXPToNextLevel, EXP);
+        }
+
+        private void SetLVLText(string panelName, LocalizedText LVLText) {
+            if (panelName == PanelConstants.REWARDSPANEL) {
+                rewardsPanelLVLText = LVLText;
+            }
+
+            rewardsPanelLVLText.SetText("LVL " + LVL);
         }
 
         /// <summary>
@@ -118,20 +130,44 @@ namespace Characters {
         /// <summary>
         /// Sets EXPToNextLevel based off of a math
         /// </summary>
-        public void SetEXPToNextLevel() {
-            this.EXPToNextLevel = (10 * (LVL * LVL)) / 2; 
+        public int CalcEXPToNextLevel(int LVL) {
+            return (10 * (LVL + LVL - 1)) / 2; 
         }
 
         /// <summary>
         /// Increases EXP and updates visuals that care
         /// </summary>
         /// <param name="amount"> Amount of EXP gained </param>
-        public void GainEXP(int amount) {
+        public IEnumerator GainEXP(int amount) {
+            doneEXPGaining = false;
             EXP += amount;
 
-            if (rewardsPanelEXPBar) {
-                rewardsPanelEXPBar.SetCurrent(amount);
+            if (EXP >= EXPToNextLevel) {
+                int overflow = EXP;       
+
+                while (overflow >= EXPToNextLevel) { // small chance player might level up more than once
+                    LVL += 1;
+                    overflow -= EXPToNextLevel;
+                    if (rewardsPanelEXPBar) { 
+                        yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(EXPToNextLevel)));
+                        yield return new WaitForSeconds(0.5f);
+                        EXPToNextLevel = CalcEXPToNextLevel(LVL);
+                        rewardsPanelEXPBar.SetMaxAndCurrentImmediate(EXPToNextLevel, 0);
+                        rewardsPanelLVLText.SetText("LVL " + LVL);
+                    }
+                    else {
+                        EXPToNextLevel = CalcEXPToNextLevel(LVL);
+                    }
+                }
+                EXP = overflow;
+                yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(EXP)));
             }
+            else {
+                Debug.Log(EXP);
+                yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(EXP)));
+            }
+
+            doneEXPGaining = true;         
         }
 
         /// <summary>

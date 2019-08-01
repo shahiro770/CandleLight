@@ -414,7 +414,7 @@ namespace Combat {
         /// </remark>
         private void EndCombat() {
             EnableAllButtons();
-            EventManager.instance.DisplayPostCombat();
+            StartCoroutine(EventManager.instance.DisplayPostCombat());
         }
 
         #endregion

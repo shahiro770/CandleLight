@@ -7,6 +7,7 @@
 *
 */
 
+using Characters;
 using Localization;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,31 +23,34 @@ namespace PlayerUI {
         public LocalizedText EXPText;               /// <value> Text to be displayed (if HP or MP can be translated </value>
         public LocalizedText LVLText;
 
-        private int LVL;
-        private float maxAmount { get; set; }       /// <value> Max points the character has </value>
-        private float currentAmount { get; set; }   /// <value> Current points the character has </value>
-        private float lerpSpeed = 0.5f;               /// <value> Speed at which bar visually changes to fillAmount </value>
-        private float fillAmount;                   /// <value> Percentage that bar should be filled </value>
-
+        private PartyMember pm;
+        private float maxAmount;        /// <value> Max points the character has </value>
+        private float currentAmount;    /// <value> Current points the character has </value>
+        private float lerpSpeed = 1f;   /// <value> Speed at which bar visually changes to fillAmount </value>
+        private float fillAmount;       /// <value> Percentage that bar should be filled </value>
+        
         /// <summary>
         /// Initializes the max and current amounts of the bar
         /// </summary>
         /// <param name="maxAmount"> Max amount, must be greater than 0 </param>
         /// <param name="currentAmount"> Current amount </param>
-        public void SetEXPBar(int LVL, int maxAmount, int currentAmount) {
-            this.maxAmount = maxAmount;
-            this.currentAmount = currentAmount;
-            this.LVL = LVL;
-            SetDisplay(true);
+        public void SetEXPBar(PartyMember pm, int maxAmount, int currentAmount) {
+            this.pm = pm;
+            SetMaxAndCurrentImmediate(maxAmount, currentAmount);
         }
 
-        /// <summary>
-        /// Sets the max amount of points, and calls to update visually
-        /// </summary>
-        /// <param name="maxAmount"> Max amount </param>
-        public void SetMax(int maxAmount) {
+        public void SetMaxAndCurrent(int maxAmount, int currentAmount) {
             this.maxAmount = maxAmount;
+            this.currentAmount = currentAmount;
+
             SetDisplay();
+        }
+
+        public void SetMaxAndCurrentImmediate(int maxAmount, int currentAmount) {
+            this.maxAmount = maxAmount;
+            this.currentAmount = currentAmount;
+
+            SetDisplay(true);
         }
 
         /// <summary>
@@ -55,14 +59,25 @@ namespace PlayerUI {
         /// than the max amount
         /// </summary>
         /// <param name="currentAmount"></param>
-        public void SetCurrent(int currentAmount) {
+        public IEnumerator SetCurrent(int currentAmount) {
             this.currentAmount = currentAmount;
-            if (currentAmount > maxAmount) {
-                StartCoroutine(SetDisplayEXPWithOverflow((int)(currentAmount - maxAmount)));
+            SetDisplay();
+            while (!DoneFilling()) {
+                yield return new WaitForEndOfFrame();
             }
-            else {
-                SetDisplay();
-            }
+        }
+
+        public void SetCurrentImmediate(int currentAmount) {
+            this.currentAmount = currentAmount;
+            SetDisplay(true);
+        }
+
+        /// <summary>
+        /// Returns if the EXPBar's display is filled to the correct amount
+        /// </summary>
+        /// <returns> True if done, false otherwise </returns>
+        public bool DoneFilling() {
+            return fillAmount == frontFill.fillAmount;
         }
 
         /// <summary>
@@ -70,30 +85,16 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="immediate"> Flag for if display should fill slowly or immediately jump </param>
         private void SetDisplay(bool immediate = false) {
+            Debug.Log(currentAmount);
+            Debug.Log(maxAmount);
             fillAmount = currentAmount / maxAmount;
             if (immediate) {
-                EXPText.SetText(currentAmount.ToString() + "%");
                 frontFill.fillAmount = fillAmount;
+                EXPText.SetText(((int)(frontFill.fillAmount * 100)).ToString() + "%");
             }
             else {
                 StartCoroutine(Fill());
             }
-        }
-
-        /// <summary>
-        /// Displays the EXP bar as being full, then empty, and then reevaluating
-        /// with the excess EXP amount
-        /// </summary>
-        /// <param name="overflowAmount"> Amount left over after reaching max amount </param>
-        /// <returns></returns>
-        private IEnumerator SetDisplayEXPWithOverflow(int overflowAmount) {
-            fillAmount = 1;
-            yield return StartCoroutine(Fill());
-            currentAmount = 0;
-            LVL += 1;
-            LVLText.SetText("LVL " + LVL.ToString());
-            SetDisplay(true);
-            SetCurrent(overflowAmount);
         }
 
         /// <summary>
@@ -110,9 +111,8 @@ namespace PlayerUI {
                 timeSinceStarted = Time.time - timeStartedLerping;
                 percentageComplete = timeSinceStarted * lerpSpeed;
                 
-                frontFill.fillAmount = Mathf.Lerp(frontFill.fillAmount, fillAmount, percentageComplete);
+                frontFill.fillAmount = Mathf.Lerp(prevFill, fillAmount, percentageComplete);
                 EXPText.SetText(((int)(frontFill.fillAmount * 100)).ToString() + "%");
-
                 yield return new WaitForEndOfFrame();
             }
         }
