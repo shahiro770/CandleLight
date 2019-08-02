@@ -188,9 +188,11 @@ namespace Characters {
             if (statusPanelHPBar != null) {
                 statusPanelHPBar.SetCurrent(CHP);  
             }
-            partyPanelHPBar.SetCurrent(CHP);
-            yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
-
+            if (partyPanelHPBar.gameObject.activeSelf) {
+                partyPanelHPBar.SetCurrent(CHP);
+                yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
+            }
+            
             yield break;
         }
 
@@ -209,7 +211,9 @@ namespace Characters {
             if (statusPanelMPBar != null) {
                 statusPanelMPBar.SetCurrent(CMP);  
             }
-            partyPanelMPBar.SetCurrent(CMP);
+            if (partyPanelMPBar.gameObject.activeSelf) {
+                partyPanelMPBar.SetCurrent(CMP);
+            }
 
             yield break;
         }

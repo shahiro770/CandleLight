@@ -51,7 +51,8 @@
 		{ "key": "none_action", "value": "" },
 
 		{ "key": "party_tab", "value": "Party" },
-		{ "key": "info_tab", "value": "Info" },
+		{ "key": "skills_tab", "value": "Skills" },
+		{ "key": "status_tab", "value": "Status" },
 		
 		{ "key": "pound_attack", "value": "Pound" },
 		{ "key": "scratch_attack", "value": "Scratch" },

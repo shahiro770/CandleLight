@@ -39,7 +39,6 @@ namespace PlayerUI {
 
             SetVerticalNavigation();
             SetHorizontalNavigation();
-            actionsPanel.SetHorizontalNavigation(this);
         }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace PlayerUI {
         public void SetVerticalNavigation() {
             if (pmDisplays.Length > 1) {
                 for (int i = 0; i < pmDisplays.Length; i++) {
-                    if (i == 0) {
+                    if (i == 0) {  
                         pmDisplays[i].SetNavigation("down", pmDisplays[i + 1].b);
                     }
                     else if (i == pmDisplays.Length - 1) {
