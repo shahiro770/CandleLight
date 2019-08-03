@@ -20,11 +20,23 @@ namespace PlayerUI {
 
     public class PartyPanel : Panel {
 
-        public ActionsPanel actionsPanel;
+        public ActionsPanel actionsPanel;       /// <value> ActionsPanel reference </value>
         public PartyMemberDisplay[] pmDisplays = new PartyMemberDisplay[4];     /// <value> List of partymembers to display </value>
+        public bool isOpen = false;                                             /// <value> Flag for if panel is being displayed </value>
 
-        void Start() {
+        /// <summary>
+        /// Update the partyPanel with relevant information and visuals when opened
+        /// </summary>
+        void OnEnable() {
+            isOpen = true;
             Init(PartyManager.instance.GetPartyMembers());
+        }
+
+        /// <summary>
+        /// Set isOpen to false on disabling so relevant interactions don't happen
+        /// </summary>
+        void OnDisable() {
+            isOpen = false;
         }
 
         /// <summary>

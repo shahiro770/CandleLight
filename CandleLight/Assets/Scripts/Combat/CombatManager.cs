@@ -6,7 +6,7 @@
 * The CombatManager class is used to manage all classes during the combat scene.
 * Party members, monsters, actions, and turn ordering are all managed in the combat manager.
 *
-* TO DO:
+* TODO:
 * Need to work with attacks that target multiple monsters, and multiple partyMembers
 */
 
@@ -35,7 +35,6 @@ namespace Combat {
         /* external component references */
         public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
         public EventDescription eventDescription;   /// <value> Display for all text and prompts relevant to an action or event</value>
-        public EventManager eventManager;           /// <value> Need to tell eventManager when combat is done </value>
         public StatusPanel statusPanel;             /// <value> Display for active party member's status </value>
         public ActionsPanel actionsPanel;           /// <value> Display for active party member's actions </value>
         public PartyPanel partyPanel;               /// <value> Display for all party member's status </value>

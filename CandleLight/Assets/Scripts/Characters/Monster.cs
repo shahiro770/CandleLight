@@ -80,7 +80,7 @@ namespace Characters {
 
             // when monster is an adjacent selected by a multi-scoping attack, give it a different button colour
             ColorBlock monsterAltSelectColorBlock = b.colors;  
-            monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 64);
+            monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 200);
             monsterAltSelectColorBlock.highlightedColor = monsterAltSelectColorBlock.normalColor;
             monsterAltSelectColorBlock.pressedColor = monsterAltSelectColorBlock.normalColor;
             bts.SetColorBlock("normalAlternate", monsterAltSelectColorBlock);
@@ -138,7 +138,7 @@ namespace Characters {
         /// Sets the sprite and canvas size of the monster, and UI elements 
         /// such as the health point bar.
         /// The Monster's sprite is repositioned depending on its size.
-        /// TO DO: make this account for if the monster is floating and etc.
+        /// TODO: make this account for if the monster is floating and etc.
         /// </summary>
         /// <param name="monsterSize"> Size of the monster (small, medium, large) </param>
         /// <remark> Monster's image is repositioned depending on its sprite size </remark>

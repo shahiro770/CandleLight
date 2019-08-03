@@ -85,8 +85,6 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="immediate"> Flag for if display should fill slowly or immediately jump </param>
         private void SetDisplay(bool immediate = false) {
-            Debug.Log(currentAmount);
-            Debug.Log(maxAmount);
             fillAmount = currentAmount / maxAmount;
             if (immediate) {
                 frontFill.fillAmount = fillAmount;

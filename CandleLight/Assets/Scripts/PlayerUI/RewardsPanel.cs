@@ -94,6 +94,7 @@ namespace PlayerUI {
 
             amountTextEXP.SetText(amountEXP.ToString());
             amountTextWAX.SetText(amountWAX.ToString());
+            PartyManager.instance.AddWax(amountWAX);
         }
 
         /// <summary>

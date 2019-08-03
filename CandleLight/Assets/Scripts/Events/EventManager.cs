@@ -35,8 +35,10 @@ namespace Events {
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
+        public InfoPanel infoPanel;                 /// <value> InfoPanel reference </value>
 
-        public float areaMultiplier { get; private set; } /// <value> Multiplier to results for events in the area </value>
+        public float areaMultiplier { get; private set; }       /// <value> Multiplier to results for events in the area </value>
+        public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
 
         private Area currentArea;            /// <value> Area to select subAreas from </value>
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
@@ -55,7 +57,6 @@ namespace Events {
         private string currentAreaName;     /// <value> Name of current area </value>
         private int bgPackNum = 0;          /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;       /// <value> Area progress increments by 1 for each main event the player completes </value>
-        private int subAreaProgress = 0;    /// <value> When subareaProgress = 100, player is given the next event from the area </value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;       /// <value> Wait until EventManager is ready before starting </value>
@@ -88,6 +89,8 @@ namespace Events {
         /// <summary>
         /// Loads an Area from the database, waiting until all of subAreas, events,
         /// interactions, and results have been loaded before saying the area is ready.
+        /// TODO: Need to move this up to the GameManager, so that area scene doesn't start
+        /// until after this area is loaded.
         /// </summary>
         /// <param name="areaName"> Name of area to load </param>
         public void LoadArea(string areaName) {
@@ -143,7 +146,7 @@ namespace Events {
 
         #endregion
 
-        #region EventManagement
+        #region [Section 0] EventManagement
 
         /// <summary>
         /// Displays the first event in an area (first event of the main subArea)
@@ -169,8 +172,15 @@ namespace Events {
                 subAreaProgress += currentEvent.progressAmount;
             }
             else {
-                //subAreaProgress += currentEvent.progressAmount;
+                subAreaProgress += currentEvent.progressAmount;
                 if (subAreaProgress >= 100) {
+                    subAreaProgress = 100;
+                }
+                if (infoPanel.isOpen) {
+                    infoPanel.UpdateAmounts();
+                }
+
+                if (subAreaProgress == 100) {
                     GetNextMainEvent();
                 }
                 else {
@@ -216,6 +226,9 @@ namespace Events {
             actionsPanel.SetAllActionsUninteractable();
             rewardsPanel.SetVisible(true);
             yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
+            if (infoPanel.isOpen) {
+                infoPanel.UpdateAmounts();
+            }
             actionsPanel.SetAllActionsInteractable();
         }
 
@@ -362,7 +375,7 @@ namespace Events {
 
         #endregion
 
-        #region EventDisplays
+        #region [Section 1] EventDisplays
 
         /// <summary>
         /// Displays the event sprites in the eventDisplays
@@ -413,5 +426,22 @@ namespace Events {
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a Color32 based on the theme colour of the current area
+        /// </summary>
+        /// <returns> Color32 </returns>
+        public Color32 GetThemeColour() {
+            return currentArea.GetThemeColour();
+        }
+
+        /// <summary>
+        /// Returns a Color32 based on the theme colour of the current area,
+        /// brighter than the normal theme colour
+        /// </summary>
+        /// <returns> Color32 </returns>
+        public Color32 GetSecondaryThemeColour() {
+            return currentArea.GetSecondaryThemeColour();
+        } 
     }
 }

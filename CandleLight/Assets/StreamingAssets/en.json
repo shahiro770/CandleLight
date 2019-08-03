@@ -44,6 +44,7 @@
 		{ "key": "LVL_label", "value": "LVL " },
 		{ "key": "EXP_label", "value": "EXP " },
 		{ "key": "WAX_label", "value": "WAX " },
+		{ "key": "PROG_label", "value": "PROG " },
 
 		{ "key": "flee_action", "value": "Flee" },
 		{ "key": "travel_action", "value": "Travel" },
@@ -52,7 +53,7 @@
 
 		{ "key": "party_tab", "value": "Party" },
 		{ "key": "skills_tab", "value": "Skills" },
-		{ "key": "status_tab", "value": "Status" },
+		{ "key": "info_tab", "value": "Info" },
 		
 		{ "key": "pound_attack", "value": "Pound" },
 		{ "key": "scratch_attack", "value": "Scratch" },

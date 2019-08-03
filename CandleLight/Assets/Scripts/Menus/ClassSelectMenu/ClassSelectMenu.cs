@@ -120,7 +120,7 @@ namespace Menus.ClassSelectMenu {
         /// <summary>
         /// Starts the game by loading the next world map scene
         /// </summary> 
-        /// <remark> TO DO: World map scene still has to be made </remark>
+        /// <remark> TODO: World map scene still has to be made </remark>
         public void BeginGame() {
             if (selectButtonEnabled) {
                 PartyManager.instance.AddPartyMember("Warrior");

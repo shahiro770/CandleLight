@@ -9,13 +9,12 @@
 */
 
 using Combat;
+using Localization;
+using Events;
 using PanelConstants = Constants.PanelConstants;
 using PlayerUI;
-using Localization;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Characters {
 
@@ -163,7 +162,6 @@ namespace Characters {
                 yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(EXP)));
             }
             else {
-                Debug.Log(EXP);
                 yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(EXP)));
             }
 
@@ -188,9 +186,12 @@ namespace Characters {
             if (statusPanelHPBar != null) {
                 statusPanelHPBar.SetCurrent(CHP);  
             }
-            if (partyPanelHPBar.gameObject.activeSelf) {
+            if (EventManager.instance.partyPanel.isOpen == true) {
                 partyPanelHPBar.SetCurrent(CHP);
                 yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
+            }
+            else {
+                yield return new WaitForSeconds(1.3f);
             }
             
             yield break;
@@ -211,7 +212,7 @@ namespace Characters {
             if (statusPanelMPBar != null) {
                 statusPanelMPBar.SetCurrent(CMP);  
             }
-            if (partyPanelMPBar.gameObject.activeSelf) {
+            if (EventManager.instance.partyPanel.isOpen == true) {
                 partyPanelMPBar.SetCurrent(CMP);
             }
 

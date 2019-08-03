@@ -21,6 +21,7 @@ namespace Events {
         public string name { get; private set; }        /// <value> Name of the area </value>  
 
         private SubArea[] subAreas = new SubArea[10];   /// <value> Max SubArea amount is 10 </value>    
+        private string themeColour;                     /// <value> Name of the colour used to accent UIs while in area </value>
         private int subAreasNum = 0;                    /// <value> Amount of subAreas </value>
 
         /// <summary>
@@ -28,12 +29,14 @@ namespace Events {
         /// </summary>
         /// <param name="areaName"> Name of the area </param>
         /// <param name="subAreaNames"> Names of each subArea in the area </param>
+        /// <param name="themeColour"> Colour to theme the UI with while this area is being explored </param>
         /// <param name="dbConnection"> 
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public Area(string name, string[] subAreaNames, IDbConnection dbConnection) {
+        public Area(string name, string[] subAreaNames, string themeColour, IDbConnection dbConnection) {
             this.name = name;
+            this.themeColour = themeColour;
 
             for (int i = 0; i < subAreas.Length; i++) {
                 string subAreaName = subAreaNames[i];
@@ -57,6 +60,33 @@ namespace Events {
 
            Debug.LogError("SubArea " + name + " does not exist");
            return null;
+        }
+
+        /// <summary>
+        /// Returns a Color32 based on the theme colour
+        /// </summary>
+        /// <returns> Color32 </returns>
+        public Color GetThemeColour() {
+            switch (themeColour) {
+                case "grey":
+                    return new Color32(133, 133, 133, 255);
+                default:
+                    return new Color32(133, 133, 133, 255);
+            }
+        }
+
+        /// <summary>
+        /// Returns a Color32 based on the theme colour
+        /// brighter than the primary theme colour
+        /// </summary>
+        /// <returns> Color32 </returns>
+        public Color GetSecondaryThemeColour() {
+            switch (themeColour) {
+                case "grey":
+                    return new Color32(180, 180, 180, 255);
+                default:
+                    return new Color32(133, 133, 133, 255);
+            }
         }
     }
 }

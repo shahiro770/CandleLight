@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
-    TO DO
+    TODO
     - Determine the best way to handle fast and slow characters
     - If we give fast guys a second entry
         - When adding a character, redo everyone's second entries, checking after speed stat changes

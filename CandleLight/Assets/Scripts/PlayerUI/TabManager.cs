@@ -10,6 +10,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Events;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,13 +20,20 @@ namespace PlayerUI {
 
     public class TabManager : MonoBehaviour {
 
-        /* external component references */
-        public ActionsPanel actionsPanel;
-        public Button[] tabs = new Button[3];   // three tabs per panel
-        public Panel[] panels = new Panel[3];
-        public ButtonTransitionState[] btss = new ButtonTransitionState[3];
+        /* external component references */ 
+        public ActionsPanel actionsPanel;       /// <value> Trigger navigation settting whenever tabs switch </value>
+        public Button[] tabs = new Button[3];   /// <value> Three tabs per tabManager </value>
+        public Panel[] panels = new Panel[3];   /// <value> Panel references </value>
+        public ButtonTransitionState[] btss = new ButtonTransitionState[3]; /// <value> Indicate which tabs are selected </value>
 
         private int currentIndex = 0;
+
+        /// <summary>
+        /// Open the partyPanel to begin
+        /// </summary>
+        void Start() {
+            OpenPanel(0);
+        }
 
         /// <summary>
         /// Opens a panel based on the inputted index, while hiding the previous tab

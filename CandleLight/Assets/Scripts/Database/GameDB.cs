@@ -173,6 +173,7 @@ namespace Database {
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
                         Area newArea = null;
                         string[] subAreaNames = new string[10];
+                        string themeColour = "";
 
                         if (reader.Read()) {
                             subAreaNames[0] = reader.GetString(2);
@@ -185,8 +186,10 @@ namespace Database {
                             subAreaNames[7] = reader.GetString(9);
                             subAreaNames[8] = reader.GetString(10);
                             subAreaNames[9] = reader.GetString(11);
+                            
+                            themeColour = reader.GetString(12);
 
-                            newArea = new Area(areaName, subAreaNames, dbConnection);
+                            newArea = new Area(areaName, subAreaNames, themeColour, dbConnection);
                         }
 
                         return newArea;
