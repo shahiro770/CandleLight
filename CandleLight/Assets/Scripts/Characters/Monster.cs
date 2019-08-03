@@ -47,7 +47,7 @@ namespace Characters {
         [field: SerializeField] public int attackNum { get; private set; } = 0;         /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public int selectedAttackIndex { get; private set; }    /// <value> Index of attack selected </value>
         [field: SerializeField] public bool isReady { get; private set; } = false;      /// <value> Monster finished loading </value>
-        
+
         #region [ Initialization ] Initialization
 
         /// <summary>

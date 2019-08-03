@@ -163,13 +163,19 @@ namespace Events {
         /// </summary>
         /// <param name="i"></param>
         public void GetNextEvent(Interaction i) {
-            Result r = i.GetResult();
+            Result r = null;
+            if (i != null) {   
+                r = i.GetResult();
+            }
 
-            if (r != null && r.name != "none" && r.subAreaName != "none") {
+            /* Check interaction to see if its sending player to a new subArea */
+            if (r != null && r.name != "none" && r.subAreaName != "none") { 
                 currentSubArea = currentArea.GetSubArea(r.subAreaName);
+                subAreaProgress = 0;  
+                if (infoPanel.isOpen) {
+                    infoPanel.UpdateAmounts();
+                }
                 GetNextSubAreaEvent();
-                subAreaProgress = 0;
-                subAreaProgress += currentEvent.progressAmount;
             }
             else {
                 subAreaProgress += currentEvent.progressAmount;
@@ -216,21 +222,6 @@ namespace Events {
             string[] monstersToFight = currentSubArea.GetMonstersToSpawn();
             StartCoroutine(combatManager.InitializeCombat(monstersToFight));
         }
-        
-        /// <summary>
-        /// Displays post combat information such as the RewardsPanel, and prepares player to continue exploring
-        /// </summary>
-        public IEnumerator DisplayPostCombat() {
-            StartCoroutine(AlterBackgroundColor(1f));
-            actionsPanel.SetPostCombatActions();
-            actionsPanel.SetAllActionsUninteractable();
-            rewardsPanel.SetVisible(true);
-            yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
-            if (infoPanel.isOpen) {
-                infoPanel.UpdateAmounts();
-            }
-            actionsPanel.SetAllActionsInteractable();
-        }
 
         /// <summary>
         /// Displays the current event to the player
@@ -247,15 +238,15 @@ namespace Events {
 
             if (currentEvent.promptKey == "combat_event") {
                 StartCoroutine(AlterBackgroundColor(0.5f));
-                eventDescription.SetTextAndFadeIn(currentSubArea.GetCombatPrompt());
+                eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
                 GetCombatEvent();
             }
             else {
                 if (currentEvent.promptKey == "nothing_event") {
-                    eventDescription.SetTextAndFadeIn(currentSubArea.GetNothingPrompt());
+                    eventDescription.SetKeyAndFadeIn(currentSubArea.GetNothingPrompt());
                 }
                 else {
-                    eventDescription.SetTextAndFadeIn(currentEvent.promptKey);
+                    eventDescription.SetKeyAndFadeIn(currentEvent.promptKey);
                 }
 
                 if (currentEvent.spriteNum > 0){
@@ -272,6 +263,39 @@ namespace Events {
                 actionsPanel.SetHorizontalNavigation(partyPanel);
             }
         }
+
+        /// <summary>
+        /// Displays post combat information such as the RewardsPanel, and prepares player to continue exploring
+        /// TODO Make the postCombat event have interactions in each action somehow
+        /// </summary>
+        /// <param> Flag for if combat ended due to fleeing </param>
+        public IEnumerator DisplayPostCombat(bool isFleeSuccessful) {
+            StartCoroutine(AlterBackgroundColor(1f));
+            actionsPanel.SetPostCombatActions();
+            actionsPanel.SetAllActionsUninteractable();
+            rewardsPanel.SetVisible(true);
+            if (isFleeSuccessful) {
+                eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatFleePrompt());
+            }
+            else {
+                eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatPrompt());
+            }
+            yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
+            if (infoPanel.isOpen) {
+                infoPanel.UpdateAmounts();
+            }
+            actionsPanel.SetAllActionsInteractable();
+        }
+
+        // public void DisplayInteraction(Interaction i) {
+        //     Result r = i.GetResult();
+
+        //     if (i.GetSprite() != null) {
+        //         ShowInteractionSprite(i);
+        //     }
+
+        //     //if ()
+        // }
 
         /// <summary>
         /// Performs visual effects when moving to next event
@@ -416,6 +440,14 @@ namespace Events {
             }
         }
 
+        // public void ShowInteractionSprite(Interaction i) {
+        //     HideEventDisplays();
+
+        //     eventDisplays[0].SetImage(i.GetSprite());
+        //     eventDisplays[0].SetPosition(pos1d1);
+        //     eventDisplays[0].SetVisible(true);
+        // }
+
         /// <summary>
         /// Hides the eventDisplays
         /// </summary>
@@ -437,7 +469,7 @@ namespace Events {
 
         /// <summary>
         /// Returns a Color32 based on the theme colour of the current area,
-        /// brighter than the normal theme colour
+        /// brighter than the primary theme colour
         /// </summary>
         /// <returns> Color32 </returns>
         public Color32 GetSecondaryThemeColour() {

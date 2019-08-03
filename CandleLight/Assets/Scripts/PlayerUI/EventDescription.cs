@@ -29,7 +29,7 @@ namespace PlayerUI {
         /// Changes the displayed text
         /// </summary>
         /// <param name="textKey"> Localized key for text to display </param>
-        public void SetText(string textKey) {
+        public void SetKey(string textKey) {
             textBackgroundCanvas.alpha = 1;
             eventText.SetKey(textKey);
         }
@@ -38,7 +38,7 @@ namespace PlayerUI {
         /// Changes the displayed text and fades in
         /// </summary>
         /// <param name="textKey"> Text to display </param>
-        public void SetTextAndFadeIn(string textKey) {
+        public void SetKeyAndFadeIn(string textKey) {
             eventText.SetKey(textKey);
             StartCoroutine(Fade(1));
         }

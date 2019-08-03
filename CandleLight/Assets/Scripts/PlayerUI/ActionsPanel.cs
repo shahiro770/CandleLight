@@ -25,7 +25,6 @@ namespace PlayerUI {
     public class ActionsPanel : Panel {
         
         /* external component references */
-        public CombatManager cm;                    /// <value> Combat manager to reference other scripts in the combat scene </value>
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
         
         private EventSystem es;                     /// <value> eventSystem reference </value>
@@ -50,8 +49,7 @@ namespace PlayerUI {
         /// <summary>
         /// Initialize all actions with interaction actions for exploration
         /// </summary>
-        /// <param name="interactions"> List of interactions according to event </param>
-        /// <remark> Has yet to be added </remark>
+        /// <param name="interactions"> List of interactions according to event, length 5 </param>
         public void SetInteractionActions(Interaction[] interactions) { 
             for (int i = 0; i < interactions.Length; i++) {
                 actions[i].SetAction(ActionConstants.INTERACTION, interactions[i]);
@@ -59,7 +57,7 @@ namespace PlayerUI {
             
             if (isLeavePossible) {
                 // last action will always be leave-related if allowed
-                actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL, interactions[actions.Length - 1].nameKey);
+                actions[actions.Length - 1].SetActionType(ActionConstants.TRAVEL);
                 actions[actions.Length - 1].SetInteractable(true); 
             }
             else {
@@ -94,7 +92,7 @@ namespace PlayerUI {
                 actions[i].SetAction(ActionConstants.ATTACK, attacks[i]);
             }
             if (isLeavePossible) {
-                actions[actions.Length - 1].SetAction(ActionConstants.FLEE);  // last action will always be flee in combat if allowed
+                actions[actions.Length - 1].SetAction(ActionConstants.FLEE);
             }
             else {
                 actions[actions.Length - 1].SetAction(ActionConstants.NONE);
@@ -135,7 +133,14 @@ namespace PlayerUI {
             else if (a.actionType == ActionConstants.UNDO) {
                 UndoAttackActionSelected();
             }
-            else if (a.actionType ==  ActionConstants.FLEE || (a.actionType == ActionConstants.TRAVEL)) {
+            else if (a.actionType == ActionConstants.INTERACTION) {
+                //EventManager.instance.DisplayInteraction(a.i);
+            }
+            else if (a.actionType ==  ActionConstants.FLEE) {
+                StartCoroutine(CombatManager.instance.AttemptFlee());
+            }
+            else if (a.actionType == ActionConstants.TRAVEL) {
+                Debug.Log(a.i);
                 EventManager.instance.GetNextEvent(a.i);
             }
         }
@@ -156,7 +161,7 @@ namespace PlayerUI {
             }
             actions[actions.Length - 1].SetAction(ActionConstants.UNDO);
 
-            cm.PreparePMAttack(a);
+            CombatManager.instance.PreparePMAttack(a);
         }
 
         /// <summary>
@@ -181,7 +186,7 @@ namespace PlayerUI {
 
             ResetFifthButtonNavigation();
 
-            cm.UndoPMAction();  // update combat manager to know party members can't attack yet
+            CombatManager.instance.UndoPMAction();  // update combat manager to know party members can't attack yet
         }
 
         /// <summary>

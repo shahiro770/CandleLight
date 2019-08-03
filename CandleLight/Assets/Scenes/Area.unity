@@ -4534,8 +4534,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 21
-  m_fontSizeBase: 21
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10014,7 +10014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4caa9e207885475c82eae08e084bddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
 --- !u!1 &958834743
 GameObject:
   m_ObjectHideFlags: 0
@@ -11751,7 +11750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63e84dbda2234ed3b59c1be8037ded3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventManager: {fileID: 154656195}
   actionsPanel: {fileID: 1991115682}
   tabs:
   - {fileID: 82578201}
@@ -12927,7 +12925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7e5e92ac1784f6298eb5399746c651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
   HPBar: {fileID: 936229385}
   MPBar: {fileID: 1508976853}
   effectsBar: {fileID: 1446953937}
@@ -15805,12 +15802,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776bd0e72c71d4e2e878a3679b66d59b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
   eventManager: {fileID: 154656195}
   WAXImage: {fileID: 724877469}
   progressImage: {fileID: 657703712}
   amountTextWAX: {fileID: 1785729048}
   amountTextPROG: {fileID: 1957942204}
+  isOpen: 0
 --- !u!1 &1657554401
 GameObject:
   m_ObjectHideFlags: 0
@@ -16437,7 +16434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b321eeabb6fb4e1dbf764223dbe6fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
   imgCanvas: {fileID: 1694017501}
   pmDisplays:
   - {fileID: 1563652961}
@@ -17236,13 +17232,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577b0a03c7a641e58efec73cecf5432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
   actionsPanel: {fileID: 1991115682}
   pmDisplays:
   - {fileID: 497510300}
   - {fileID: 842483146}
   - {fileID: 1596359950}
   - {fileID: 684722148}
+  isOpen: 0
 --- !u!1 &1784319295
 GameObject:
   m_ObjectHideFlags: 0
@@ -19059,8 +19055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33679143941841d18f7378f224f0391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
-  cm: {fileID: 1365388869}
   actions:
   - {fileID: 991703035}
   - {fileID: 1626114943}

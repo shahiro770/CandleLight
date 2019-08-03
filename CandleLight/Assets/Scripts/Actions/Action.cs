@@ -77,6 +77,8 @@ namespace Actions {
                 SetKey("none_action");
             }
 
+            this.a = null;
+            this.i = null;
             this.actionType = actionType;
         }
 
@@ -89,9 +91,12 @@ namespace Actions {
             if (actionType == ActionConstants.ATTACK) {
                 if (a.nameKey == "none_attack") {   // disable action if it does nothing
                     this.actionType = ActionConstants.NONE;
+                    this.a = null;
+                    this.i = null;
                 } 
                 else {
                     this.a = a;
+                    this.i = null;
                     this.actionType = actionType;
                 }
                 SetKey(a.nameKey);
@@ -107,22 +112,19 @@ namespace Actions {
             if (actionType == ActionConstants.INTERACTION) {
                 if (i.nameKey == "none_int") {
                     this.actionType = ActionConstants.NONE;
+                    this.a = null;
+                    this.i = null;
                 }
                 else {
                     this.i = i;
+                    this.a = null;
                     this.actionType = actionType;
                 }
                 SetKey(i.nameKey);
             }
         }
 
-        /// <summary>
-        /// Sets the actionType. Overloaded to show a custom string
-        /// </summary>
-        /// <param name="actionType"></param>
-        /// <param name="textKey"></param>
-        public void SetAction(string actionType, string textKey) {
-            SetKey(textKey);
+        public void SetActionType(string actionType) {
             this.actionType = actionType;
         }
 

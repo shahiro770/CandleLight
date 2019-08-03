@@ -325,19 +325,25 @@ namespace Database {
                     Interaction newInt = null;
                     string[] intResults = new string[4];
                     string[] intResultKeys = new string[4];
+                    string[] intSprites = new String[4];
 
                     if (reader.Read()) {
                         intResults[0] = reader.GetString(2);
-                        intResults[1] = reader.GetString(4);
-                        intResults[2] = reader.GetString(6);
-                        intResults[3] = reader.GetString(8);
+                        intResults[1] = reader.GetString(5);
+                        intResults[2] = reader.GetString(8);
+                        intResults[3] = reader.GetString(11);
 
                         intResultKeys[0] = reader.GetString(3);
-                        intResultKeys[1] = reader.GetString(5);
-                        intResultKeys[2] = reader.GetString(7);
-                        intResultKeys[3] = reader.GetString(9);
+                        intResultKeys[1] = reader.GetString(6);
+                        intResultKeys[2] = reader.GetString(9);
+                        intResultKeys[3] = reader.GetString(12);
 
-                        newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, dbConnection);
+                        intSprites[0] = reader.GetString(4);
+                        intSprites[1] = reader.GetString(7);
+                        intSprites[2] = reader.GetString(10);
+                        intSprites[3] = reader.GetString(13);
+
+                        newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, intSprites, dbConnection);
                     }
                 
                     return newInt;

@@ -144,6 +144,32 @@ namespace Events {
         }
 
         /// <summary>
+        /// Returns a random event prompt string based on the sub area's name for combat events
+        /// that ended by killing all monsters
+        /// </summary>
+        /// <returns> String that is a key text for a prompt in en.json </returns>
+        /// <remark>
+        /// There will always be exactly 4 random prompts per subArea
+        /// </remark>
+        public string GetPostCombatPrompt() {
+            int index = Random.Range(0, 4);
+            return  name + "_post_combat_event_" + index.ToString();
+        }
+
+        /// <summary>
+        /// Returns a random event prompt string based on the sub area's name for post combat events
+        /// that were ended via fleeing
+        /// </summary>
+        /// <returns> String that is a key text for a prompt in en.json </returns>
+        /// <remark>
+        /// There will always be exactly 4 random prompts per subArea
+        /// </remark>
+        public string GetPostCombatFleePrompt() {
+            int index = Random.Range(0, 4);
+            return  name + "_flee_success_" + index.ToString();
+        }
+
+        /// <summary>
         /// Returns a list of the names of each monster being spawned
         /// </summary>
         /// <returns> String array </returns>

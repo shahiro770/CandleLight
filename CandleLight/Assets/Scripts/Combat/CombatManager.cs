@@ -56,8 +56,9 @@ namespace Combat {
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
         private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
-        private bool pmAttackFinalized = false;     /// <value> Flag for if player has selected an attack and a monster </value>
+        private bool pmSelectionFinalized = false;  /// <value> Flag for if player has selected an action and a monster if its an attack </value>
         private bool isFleePossible = true;         /// <value> Flag for if player can flee battle, will need to make this changeable in the future </value>
+        private bool isFleeSuccessful = false;      /// <value> Flag for if player successfully fled from battle </value>
 
         #region [ Initialization ] Initialization
 
@@ -81,6 +82,7 @@ namespace Combat {
         /// </summary>
         public IEnumerator InitializeCombat(string[] monsterNames) {
             actionsPanel.Init(isFleePossible);
+            isFleeSuccessful = false;
             cq.Reset();
             countID = 0;
             monsters = new List<Monster>();
@@ -187,12 +189,15 @@ namespace Combat {
         /// <returns> IEnumerator so actions are all taken in order </returns>
         private IEnumerator PMTurn() {
             StartPMTurn();
-            while (!pmAttackFinalized) {    // PreparePMAttack and SelectMonster
+            while (!pmSelectionFinalized) {    // (PreparePMAttack and SelectMonster) or AttemptFlee
                 yield return null;
             }
-            yield return StartCoroutine(ExecutePMAttack());  
+            DisableAllButtons();
+            if (selectedAttack != null) {
+                yield return StartCoroutine(ExecutePMAttack());  
+            }
             yield return StartCoroutine(CleanUpPMTurn());
-            if (CheckBattleOver()) {
+            if (CheckBattleOver() || isFleeSuccessful) {
                 EndCombat();
             }
             else {
@@ -235,6 +240,42 @@ namespace Combat {
         }
 
         /// <summary>
+        /// Randomly determine if the player is able to end combat before killing all monsters
+        /// </summary>
+        /// <returns> IEnumerator to play through death animations </returns>
+        /// <remark> Death animation for each monster is played as a de-spawning animation</remark>
+        public IEnumerator AttemptFlee() {
+            int chance = Random.Range(activePartyMember.LVL, 100) - monsters[0].LVL;
+            List<Monster> monstersToRemove = new List<Monster>();
+
+            // wait for all monsters to despawn
+            for (int i = 0; i < monsters.Count - 1; i++) {  
+                StartCoroutine(monsters[i].PlayDeathAnimation());
+                monstersToRemove.Add(monsters[i]);
+            }
+            yield return (StartCoroutine(monsters[monsters.Count - 1].PlayDeathAnimation())); // yield to last monster so we wait for all monsters to die
+            monstersToRemove.Add(monsters[monsters.Count - 1]);
+            yield return new WaitForSeconds(0.75f);
+
+            if (chance > 50) {
+                DestroyMonsters(monstersToRemove);
+                isFleeSuccessful = true;
+            }
+            else {
+                eventDescription.SetKey(GetFleeFailedKey());
+                for (int i = 0; i < monsters.Count - 1; i++) {  // wait for all monsters to respawn
+                    StartCoroutine(monsters[i].PlaySpawnAnimation());
+                    monstersToRemove.Add(monsters[i]);
+                }
+                yield return (StartCoroutine(monsters[monsters.Count - 1].PlaySpawnAnimation())); 
+                monstersToRemove.Add(monsters[monsters.Count - 1]);
+                yield return new WaitForSeconds(0.25f);
+            }
+
+            pmSelectionFinalized = true;
+        }
+
+        /// <summary>
         /// Revert target selection UI to action selection phase
         /// </summary>
         public void UndoPMAction() {
@@ -255,12 +296,9 @@ namespace Combat {
         /// <param name="m"> Monster to be attacked </param>
         /// <returns> 
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
-        /// Need to split this up into a cleanup phase function
         /// </returns>
-        public IEnumerator ExecutePMAttack() {
-            DisableAllButtons();
-            
-            eventDescription.SetText(selectedAttack.nameKey); 
+        public IEnumerator ExecutePMAttack() {    
+            eventDescription.SetKey(selectedAttack.nameKey); 
             yield return new WaitForSeconds(0.25f);
 
             yield return StartCoroutine(activePartyMember.PayAttackCost(selectedAttack.costType, selectedAttack.cost));
@@ -288,7 +326,7 @@ namespace Combat {
             DestroyMonsters(monstersToRemove);
 
             DeselectMonsters();
-            pmAttackFinalized = false;
+            pmSelectionFinalized = false;
             eventDescription.ClearText();
         }
 
@@ -329,8 +367,7 @@ namespace Combat {
         /// </summary>
         /// <returns> Yields to allow monster attack animation to play </returns>
         private void StartMonsterTurn() {
-            actionsPanel.SetAllActionsUninteractable();
-            partyPanel.DisableButtons();
+            DisableAllButtons();
         }
 
         /// <summary>
@@ -341,7 +378,7 @@ namespace Combat {
         private IEnumerator ExecuteMonsterAttack() {
             int targetChoice = 0;
             Attack attackChoice = activeMonster.SelectAttack();
-            eventDescription.SetText(attackChoice.nameKey);
+            eventDescription.SetKey(attackChoice.nameKey);
             yield return StartCoroutine(activeMonster.PlayStartTurnAnimation());
 
             if (activeMonster.monsterAI == "random") {
@@ -413,7 +450,7 @@ namespace Combat {
         /// </remark>
         private void EndCombat() {
             EnableAllButtons();
-            StartCoroutine(EventManager.instance.DisplayPostCombat());
+            StartCoroutine(EventManager.instance.DisplayPostCombat(isFleeSuccessful));
         }
 
         #endregion
@@ -456,7 +493,7 @@ namespace Combat {
                     }
                 }
                 
-                pmAttackFinalized = true;
+                pmSelectionFinalized = true;
             }
         }
         /// <summary>
@@ -652,5 +689,13 @@ namespace Combat {
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a key string for when the player fails to flee
+        /// </summary>
+        /// <returns> String </returns>
+        public string GetFleeFailedKey() {
+            return "flee_failed_" + Random.Range(0, 4);
+        }
     }
 }
