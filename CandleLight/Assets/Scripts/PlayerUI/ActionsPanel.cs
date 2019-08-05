@@ -140,7 +140,6 @@ namespace PlayerUI {
                 StartCoroutine(CombatManager.instance.AttemptFlee());
             }
             else if (a.actionType == ActionConstants.TRAVEL) {
-                Debug.Log(a.i);
                 EventManager.instance.GetNextEvent(a.i);
             }
         }

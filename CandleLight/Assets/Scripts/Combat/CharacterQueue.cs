@@ -123,6 +123,8 @@ namespace Combat {
         /// </summary>
         public void Reset() {
             queueLength = 0;
+            monsterNumber = 0;
+            partyMemberNumber = 0;
             queuePos = -1;   
             combatQueue = new List<QueueNode>();
         }
