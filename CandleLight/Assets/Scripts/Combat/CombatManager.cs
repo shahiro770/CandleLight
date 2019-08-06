@@ -332,8 +332,8 @@ namespace Combat {
             DestroyMonsters(monstersToRemove);
 
             DeselectMonsters();
+            selectedAttack = null;
             pmSelectionFinalized = false;
-            Debug.Log("pmSelectionFinalized " + pmSelectionFinalized);
             eventDescription.ClearText();
         }
 
@@ -341,11 +341,7 @@ namespace Combat {
         /// Ends the partyMember's turn, 
         /// </summary>
         public void EndPMTurn() {
-            selectedAttack = null;
 
-            foreach (Monster m in monsters) {
-                m.DeselectMonsterButton();
-            }
         }
 
         #endregion

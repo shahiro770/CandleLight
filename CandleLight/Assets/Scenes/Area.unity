@@ -1800,6 +1800,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3346768662948992318, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: actionsPanel
+      value: 
+      objectReference: {fileID: 1991115682}
     - target: {fileID: 3346768662948992291, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_Alpha
@@ -17771,6 +17776,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3346768662948992318, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: actionsPanel
+      value: 
+      objectReference: {fileID: 1991115682}
     - target: {fileID: 3346768662948992291, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_Alpha
@@ -21910,6 +21920,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3346768662948992318, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: actionsPanel
+      value: 
+      objectReference: {fileID: 1991115682}
     - target: {fileID: 3346768662948992291, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_Alpha

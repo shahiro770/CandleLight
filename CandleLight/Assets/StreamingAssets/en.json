@@ -53,6 +53,9 @@
 		{ "key": "open_int", "value": "Open" },
 		{ "key": "travel_int", "value": "Travel" },
 		{ "key": "beginGreyWastes_int", "value": "Begin" },
+
+		{ "key": "lostPouch_wax_res", "value": "You found some wax coins." },
+		{ "key": "lostPouch_bandages_res", "value": "You found bandages." },
 		
 		{ "key": "HP_label", "value": "HP " },
 		{ "key": "MP_label", "value": "MP " },
@@ -64,6 +67,7 @@
 		{ "key": "flee_action", "value": "Flee" },
 		{ "key": "travel_action", "value": "Travel" },
 		{ "key": "undo_action", "value": "Undo" },
+		{ "key": "take_all_action", "value": "Take All" },
 		{ "key": "none_action", "value": "" },
 
 		{ "key": "party_tab", "value": "Party" },

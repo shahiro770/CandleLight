@@ -124,11 +124,11 @@ namespace Events {
         }
 
         public void LoadGeneralSprites() {
-            HPSprite = Resources.Load<Sprite>("Sprites/Interactions/WAXItem");
+            WAXSprite = Resources.Load<Sprite>("Sprites/Interactions/WAXItem");
             
             switch(currentAreaName) {
                 case "GreyWastes":
-                    WAXSprite = Resources.Load<Sprite>("Sprites/Interactions/HealingEffect");
+                    HPSprite = Resources.Load<Sprite>("Sprites/Interactions/HealingEffect");
                     break;
             }
         }
@@ -287,7 +287,7 @@ namespace Events {
         /// <param> Flag for if combat ended due to fleeing </param>
         public IEnumerator DisplayPostCombat(bool isFleeSuccessful) {
             StartCoroutine(AlterBackgroundColor(1f));
-            actionsPanel.SetPostCombatActions();
+            actionsPanel.TravelActions();
             actionsPanel.SetAllActionsUninteractable();
             rewardsPanel.SetVisible(true);
             if (isFleeSuccessful) {
@@ -303,16 +303,10 @@ namespace Events {
             actionsPanel.SetAllActionsInteractable();
         }
 
-        public void DisplayInteraction(Interaction i) {
-            Result r = i.GetResult();
+        public List<Item> GetInteractionResults(Result r) {
             r.GenerateResults();
 
             List<Item> items = new List<Item>();
-
-            if (i.GetSprite() != null) {
-                eventDisplays[0].SetImage(i.GetSprite());
-                eventDisplays[0].SetPosition(pos1d1);
-            }
 
             if (r.EXPAmount > 0) {
                 //items.Add(new Item("EXP", r.EXPAmount, EXPSprite));
@@ -327,8 +321,25 @@ namespace Events {
                 items.Add(new Item("WAX", r.WAXAmount, WAXSprite));
             }
 
+            return items;
+        }
+
+        public void DisplayInteraction(Interaction i) {
+            Result r = i.GetResult();
+            List<Item> items = GetInteractionResults(r);
+
+            if (i.GetSprite() != null) {
+                eventDisplays[0].SetImage(i.GetSprite());
+                eventDisplays[0].SetPosition(pos1d1);
+            }
+
+            eventDescription.SetKey(r.resultKey);
             if (items.Count > 0) {
-                eventDisplays[0].SetItemDisplays(items);
+                actionsPanel.SetItemActions();
+                eventDisplays[0].SetItemDisplays(items);    // will overwrite some action navigation
+            }
+            else {
+                actionsPanel.TravelActions();
             }
         }
 
@@ -492,6 +503,10 @@ namespace Events {
             foreach (int index in indices) {
                 eventDisplays[index].SetVisible(false);
             }
+        }
+
+        public void TakeAllItems() {
+            eventDisplays[0].TakeAllItems();
         }
 
         #endregion

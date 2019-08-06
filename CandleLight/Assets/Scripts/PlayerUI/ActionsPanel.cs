@@ -72,7 +72,7 @@ namespace PlayerUI {
         /// <summary>
         /// Displays actions for after combat
         /// </summary>
-        public void SetPostCombatActions() { 
+        public void TravelActions() { 
             for (int i = 0; i < actions.Length - 1; i++) {
                 actions[i].SetAction(ActionConstants.NONE);
             }
@@ -80,6 +80,18 @@ namespace PlayerUI {
             actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
 
             SetAllActionsInteractable();
+            SetInitialNavigation();
+        }
+
+        public void SetItemActions() {
+            actions[0].SetAction(ActionConstants.TAKEALL);
+            for (int i = 1; i < actions.Length - 1; i++) {
+                actions[i].SetAction(ActionConstants.NONE);
+            }
+
+            actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
+
+            SetAllActionsInteractable(true);
             SetInitialNavigation();
         }
 
@@ -136,6 +148,9 @@ namespace PlayerUI {
             else if (a.actionType == ActionConstants.INTERACTION) {
                 EventManager.instance.DisplayInteraction(a.i);
             }
+            else if (a.actionType == ActionConstants.TAKEALL) {
+                EventManager.instance.TakeAllItems();
+            }
             else if (a.actionType ==  ActionConstants.FLEE) {
                 StartCoroutine(CombatManager.instance.AttemptFlee());
             }
@@ -191,7 +206,7 @@ namespace PlayerUI {
         /// <summary>
         /// Enable all non-none actions to be interacted with using mouse or keys
         /// </summary>
-        public void SetAllActionsInteractable() {
+        public void SetAllActionsInteractable(bool initialSelection = false) {
             int firstInteractableIndex = 0;
 
             for (int i = 0; i < actions.Length; i++) {
@@ -203,7 +218,9 @@ namespace PlayerUI {
                 }
             }
 
-            es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first selectable action
+            if (initialSelection != true) {
+                es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first selectable action
+            }
         }
 
         /// <summary>
@@ -321,6 +338,10 @@ namespace PlayerUI {
             }
         }
 
+        public void SetVerticalNavigation() {
+
+        }
+
         /// <summary>
         /// Resets the navigation of the fifth button (flee, undo)
         /// </summary>
@@ -346,6 +367,7 @@ namespace PlayerUI {
                     if (i == 0) {
                         n.selectOnDown = actions[2].IsInteractable() ? n.selectOnDown : actions[4].GetComponent<Button>();
                         n.selectOnRight = actions[1].IsInteractable() ? actions[1].GetComponent<Button>() : null;
+                        n.selectOnUp = null;
                         b.navigation = n;
                     }    
                     else if (i == 1) {

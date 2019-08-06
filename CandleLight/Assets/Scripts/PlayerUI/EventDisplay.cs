@@ -19,11 +19,13 @@ namespace PlayerUI {
     public class EventDisplay : MonoBehaviour {
 
         /* external component references */
+        public ActionsPanel actionsPanel;
         public Image img;   /// <value> Image to be displayed </value>
         public CanvasGroup imgCanvas;
         public ItemDisplay[] itemDisplays = new ItemDisplay[4];
         
         private float lerpSpeed = 4;
+        private int itemNum = 0;
 
         /// <summary>
         /// Sets image to display a given sprite
@@ -34,12 +36,46 @@ namespace PlayerUI {
         }
 
         public void SetItemDisplays(List<Item> items) {
-            int numItems = items.Count > itemDisplays.Length ? itemDisplays.Length : items.Count;
+            this.itemNum = items.Count > itemDisplays.Length ? itemDisplays.Length : items.Count;
 
-            for (int i = 0; i < items.Count; i++) {
-                Debug.Log(items[i]);
+            for (int i = 0; i < itemNum; i++) {
                 itemDisplays[i].Init(items[i]);
             }
+            SetInitialNavigation();
+        }
+
+        public void TakeAllItems() {
+            for (int i = 0; i < itemNum; i++) {
+                itemDisplays[i].TakeItem();
+            }
+        }
+
+        /// <summary>
+        /// Sets up the initial navigation of the action buttons.
+        /// Player may have less than 4 action options available, but the fifth button will almost always
+        /// have an option, so navigation between above buttons and the fifth button must be adjusted.
+        /// </summary>
+        /// <remark> In the future, will have to navigate to other UI panels such as items or information </remark>
+        private void SetInitialNavigation() {
+            for (int i = 0; i < itemNum; i++) {
+                Button b = itemDisplays[i].GetComponent<Button>();
+                Navigation n = b.navigation;
+                
+                if (i > 0) {
+                    n.selectOnUp = itemDisplays[i - 1].b;
+                }
+                if (i  != itemNum - 1) {
+                    n.selectOnDown = itemDisplays[i + 1].b;
+                }
+                else {
+                    n.selectOnDown = actionsPanel.GetActionButton(0);   // actionsPanel's first button will always be active during item taking
+                }
+
+                b.navigation = n;
+            }
+
+            actionsPanel.SetButtonNavigation(0, "up", itemDisplays[itemNum - 1].b);      
+            actionsPanel.SetButtonNavigation(1, "up", itemDisplays[itemNum - 1].b);             
         }
 
         /// <summary>
@@ -48,9 +84,14 @@ namespace PlayerUI {
         /// <param name="value"></param>
         public void SetVisible(bool value) {
             if (value == true) {
+                imgCanvas.blocksRaycasts = true;
                 StartCoroutine(Fade(1));
             }
             else {
+                imgCanvas.blocksRaycasts = false;
+                for (int i = 0; i < itemNum; i++) {
+                    itemDisplays[i].SetVisible(false);
+                }
                 StartCoroutine(Fade(0));
             }
         }

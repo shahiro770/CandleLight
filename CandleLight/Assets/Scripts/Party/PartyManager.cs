@@ -9,9 +9,9 @@
 */
 
 using Characters;
-using Combat;
-using Database;
+using Events;
 using General;
+using PlayerUI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +24,7 @@ namespace Party {
         
         /* external component references */
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
-        
+
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         
         private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
@@ -89,12 +89,25 @@ namespace Party {
             return partyMembers.Count;
         }
 
+        public void GainEXP(int amount) {
+            foreach (PartyMember pm in partyMembers) {
+                StartCoroutine(pm.GainEXP(amount));
+            }
+        }
+
+        public void AddHP(int amount) {
+            foreach (PartyMember pm in partyMembers) {
+                pm.AddHP(amount);
+            }
+        }
+
         /// <summary>
         /// Increases the amount of WAX the party has
         /// </summary>
         /// <param name="amount"> Positive int to increase by </param>
         public void AddWax(int amount) {
             WAX += amount;
+            EventManager.instance.infoPanel.UpdateAmounts(); //with singletons you can reference across scenes!
         }
 
         /// <summary>

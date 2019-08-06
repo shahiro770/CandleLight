@@ -70,6 +70,9 @@ namespace Actions {
             else if (actionType == ActionConstants.TRAVEL) {
                 SetKey("travel_action");
             }
+            else if (actionType == ActionConstants.TAKEALL) {
+                SetKey("take_all_action");
+            }
             else if (actionType == ActionConstants.UNDO) {
                 SetKey("undo_action");
             } 

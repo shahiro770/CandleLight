@@ -16,12 +16,12 @@ namespace Events {
         public string name { get; private set; }        /// <value> Name of result </value>
         public string subAreaName { get; private set; } /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
         public string subEventName{ get; private set; } /// <value> Name of event result leads to if possible, "none" otherwise </value>
+        public string resultKey;    /// <value> Localization key for displayed string for result </value>
         public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
         public int WAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
         
-        private string resultKey;    /// <value> Localization key for displayed string for result </value>
         private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
         private float multiplier;    /// <value> Multiplier on result depending on area </value>
         private int minValue = 5;    /// <value> Min value for numeric rewards pre-multiplier </value>
@@ -65,15 +65,6 @@ namespace Events {
             }
 
             SetEventMultiplier();
-        }
-
-        /// <summary>
-        /// Returns the generated results
-        /// </summary>
-        /// <returns></returns>
-        public int[] GetResults() {
-            GenerateResults();
-            return new int[] { EXPAmount, HPAmount, MPAmount, WAXAmount };
         }
 
         /// <summary>

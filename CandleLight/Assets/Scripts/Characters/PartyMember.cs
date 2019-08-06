@@ -135,6 +135,7 @@ namespace Characters {
 
         /// <summary>
         /// Increases EXP and updates visuals that care
+        /// Maybe change this to AddEXP
         /// </summary>
         /// <param name="amount"> Amount of EXP gained </param>
         public IEnumerator GainEXP(int amount) {
@@ -166,6 +167,29 @@ namespace Characters {
             }
 
             doneEXPGaining = true;         
+        }
+
+        /// <summary>
+        /// Reduce the PartyMember's current health points by a specified amount.false
+        /// IEnumerator is used to make calling function wait for its completion
+        /// </summary> 
+        /// <param name="amount"> Amount of health points lost </param>
+        /// <param name="isActive"> 
+        /// Active party member is the partMember who's information 
+        /// is displayed in the status panel, true if active, false otherwise 
+        /// </param>
+        public void AddHP(int amount) {
+            CHP += amount;
+            if (CHP > HP) {
+                CHP = HP;
+            }
+            
+            if (statusPanelHPBar != null) {
+                statusPanelHPBar.SetCurrent(CHP);  
+            }
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                partyPanelHPBar.SetCurrent(CHP);
+            }
         }
 
         /// <summary>

@@ -9,6 +9,7 @@
 */
 
 using Items;
+using Party;
 using System.Collections;
 using UIEffects;
 using UnityEngine;
@@ -32,6 +33,7 @@ namespace PlayerUI {
         /// </summary>
         public void Init(Item displayedItem) {
             this.displayedItem = displayedItem;
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 255);
 
             if (displayedItem != null) {
                 if (displayedItem.type == "EXP") {
@@ -52,23 +54,43 @@ namespace PlayerUI {
             SetVisible(true);
         }
 
-        /// <summary>
-        /// Sets image to display a given sprite
-        /// </summary>
-        /// <param name="spr"> Sprite to be displayed </param>
-        public void SetImage(Sprite spr) {
-            img.sprite = spr;
+        public void TakeItem() {
+            if (displayedItem != null) {
+                if (displayedItem.type == "EXP") {
+                    PartyManager.instance.GainEXP(displayedItem.EXPAmount);
+                }
+                if (displayedItem.type == "HP") {
+                    PartyManager.instance.AddHP(displayedItem.HPAmount);
+                }
+                if (displayedItem.type == "MP") {
+                    //MPAmount = amount;
+                }
+                if (displayedItem.type == "WAX") {
+                    PartyManager.instance.AddWax(displayedItem.WAXAmount);
+                }
+
+                displayedItem = null;
+                img.sprite = null;
+                img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
+            }
+        }
+
+        public void SetNavigation() {
+
         }
 
         /// <summary>
-        /// Makes the eventDisplay visible
+        /// Makes the eventDisplay visible and interactable
         /// </summary>
         /// <param name="value"></param>
         public void SetVisible(bool value) {
             if (value == true) {
+                b.interactable = true;
                 StartCoroutine(Fade(1));
+                
             }
             else {
+                b.interactable = false;
                 StartCoroutine(Fade(0));
             }
         }
