@@ -1,0 +1,88 @@
+{
+	"texts": [
+		{ "key": "candleLight_title", "value": "CandleLight" },
+		{ "key": "new_game_button", "value": "New Game" },
+		{ "key": "continue_button", "value": "Continue" },
+		{ "key": "options_button", "value": "Options" },
+		{ "key": "quit_button", "value": "Quit" },
+
+		{ "key": "select_class_title", "value": "Select Your Class" },
+		{ "key": "warrior_title", "value": "Warrior" },
+		{ "key": "mage_title", "value": "Mage" },
+		{ "key": "archer_title", "value": "Archer" },
+		{ "key": "thief_title", "value": "Thief" },
+		{ "key": "warrior_description", "value": "Strength has solved all of your problems. There's nothing you can't tough out. Any pain you endure rewards you twice over." },
+		{ "key": "mage_description", "value": "The mystical nature of this world unravels at the snap of your fingers. Some call this intelligence. You call it imagination." },
+		{ "key": "archer_description", "value": "Your dexterity knows no bounds. Playing the piano, starting a fire, and killing a man with a bow and arrow. It's all the same." },
+		{ "key": "thief_description", "value": "Quick, silent, and lucky. The only people who remember your face are the ones who see it before entering the gates of heaven." },
+		{ "key": "select_button", "value": "Select" },
+		{ "key": "back_button", "value": "Back" },
+
+		{ "key": "none_event", "value": "" },
+		{ "key": "lost_word_event", "value": "lost" },
+		
+		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
+		{ "key": "the_grey_wastes_event", "value": "The Grey Wastes were aptly named. Only fools dare travel these lands. Looks like this is the start of the path." },
+
+		{ "key": "pathNormal_event_0", "value": "There's something oddly charming about a vast expanse full of nothing. Somewhat like a blank canvas." },
+		{ "key": "pathNormal_event_1", "value": "A few cracks here and there, but you doubt this stone path has ever needed maintenance." },
+		{ "key": "pathNormal_event_2", "value": "The air feels so empty. If it weren't for the cold breeze's every now and then, you'd forget it even existed." },
+		{ "key": "pathNormal_event_3", "value": "You gaze up at the black sky. It would be enjoyable if there was more of a stark contrast between it and the ground." },
+		
+		{ "key": "pathNormal_combat_event_0", "value": "You've been ambushed. They look hungry." },
+		{ "key": "pathNormal_combat_event_1", "value": "You've taken a wrong turn." },
+		{ "key": "pathNormal_combat_event_2", "value": "The Unkindled need to eat too." },
+		{ "key": "pathNormal_combat_event_3", "value": "There was something hiding in the dirt. It attacks." },
+
+		{ "key": "pathNormal_post_combat_event_0", "value": "And that's another reason why you need to get home." },
+		{ "key": "pathNormal_post_combat_event_1", "value": "You scavenge through their remains for anything useful." },
+		{ "key": "pathNormal_post_combat_event_2", "value": "The Unkindled are no match for you." },
+		{ "key": "pathNormal_post_combat_event_3", "value": "A bit roughed up, but you can keep going." },
+
+		{ "key": "pathNormal_flee_success_0", "value": "You got away." },
+		{ "key": "pathNormal_flee_success_1", "value": "You fled." },
+		{ "key": "pathNormal_flee_success_2", "value": "They're no longer following you." },
+		{ "key": "pathNormal_flee_success_3", "value": "You shout loudly and scare them off." },
+
+		{ "key": "flee_failed_0", "value": "You failed to get away." },
+		{ "key": "flee_failed_1", "value": "You couldn't." },
+		{ "key": "flee_failed_2", "value": "They're still chasing you." },
+		{ "key": "flee_failed_3", "value": "There was no where to hide." },
+
+		{ "key": "none_int", "value": "" },
+		{ "key": "open_int", "value": "Open" },
+		{ "key": "travel_int", "value": "Travel" },
+		{ "key": "beginGreyWastes_int", "value": "Begin" },
+
+		{ "key": "lostPouch_wax_res", "value": "You found some wax coins." },
+		{ "key": "lostPouch_bandages_res", "value": "You found bandages." },
+		
+		{ "key": "HP_label", "value": "HP " },
+		{ "key": "MP_label", "value": "MP " },
+		{ "key": "LVL_label", "value": "LVL " },
+		{ "key": "EXP_label", "value": "EXP " },
+		{ "key": "WAX_label", "value": "WAX " },
+		{ "key": "PROG_label", "value": "PROG " },
+
+		{ "key": "flee_action", "value": "Flee" },
+		{ "key": "travel_action", "value": "Travel" },
+		{ "key": "undo_action", "value": "Undo" },
+		{ "key": "take_all_action", "value": "Take All" },
+		{ "key": "none_action", "value": "" },
+
+		{ "key": "party_tab", "value": "Party" },
+		{ "key": "skills_tab", "value": "Skills" },
+		{ "key": "info_tab", "value": "Info" },
+		
+		{ "key": "pound_attack", "value": "Pound" },
+		{ "key": "scratch_attack", "value": "Scratch" },
+		{ "key": "bite_attack", "value": "Bite" },
+		{ "key": "thrash_attack", "value": "Thrash" },
+
+		{ "key": "fireball_attack", "value": "Fireball" },
+		{ "key": "wack_attack", "value": "Wack" },
+		{ "key": "slash_attack", "value": "Slash" },
+		{ "key": "bash_attack", "value": "Bash" },
+		{ "key": "none_attack", "value": ""}
+	]
+}
