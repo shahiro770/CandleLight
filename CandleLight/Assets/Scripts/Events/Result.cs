@@ -19,7 +19,7 @@ namespace Events {
         public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
-        public int WAXAmount { get; private set; }      /// <value> Amount of wax result gives </value>
+        public int WAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
         
         private string resultKey;    /// <value> Localization key for displayed string for result </value>
         private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
@@ -103,10 +103,10 @@ namespace Events {
                 return 0;
             }
             else if (mode == 1) {
-                return (int)(Random.Range(minValue, maxValue) * multiplier * quantity);
+                return (int)((float)Random.Range(minValue, maxValue) * multiplier * quantity);
             }
             else {  // mode == -1
-                return (int)(Random.Range(minValue, maxValue) * multiplier * quantity * -1);
+                return (int)((float)Random.Range(minValue, maxValue) * multiplier * quantity * -1);
             }
         }
     }

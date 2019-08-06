@@ -48,5 +48,17 @@ namespace PlayerUI {
             btss[currentIndex].SetColor("pressed");
             actionsPanel.SetHorizontalNavigation(panels[index]);
         }
+
+        public void SetAllButtonsInteractable() {
+            foreach (Button b in tabs) {
+                b.interactable = true;
+            }
+        }
+
+        public void SetAllButtonsUninteractable() {
+            foreach (Button b in tabs) {
+                b.interactable = false;
+            }
+        }
     }
 }

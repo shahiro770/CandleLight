@@ -9,13 +9,14 @@
 */
 
 using CombatManager = Combat.CombatManager;
-using Party;
 using General;
+using Items;
+using Party;
+using PlayerUI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using PlayerUI;
-using System.Collections.Generic;
 
 namespace Events {
 
@@ -36,6 +37,7 @@ namespace Events {
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
         public InfoPanel infoPanel;                 /// <value> InfoPanel reference </value>
+        public TabManager utilityTabManager;           /// <value> Click on to display other panels </value>
 
         public float areaMultiplier { get; private set; }       /// <value> Multiplier to results for events in the area </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
@@ -45,6 +47,8 @@ namespace Events {
         private Event currentEvent;          /// <value> Event being displayed </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
         private BackgroundPack bgPackPrev = null;
+        private Sprite WAXSprite;
+        private Sprite HPSprite;
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, 0, 0);
@@ -95,10 +99,11 @@ namespace Events {
         /// <param name="areaName"> Name of area to load </param>
         public void LoadArea(string areaName) {
             this.currentAreaName = areaName;
+            SetAreaMultiplier();
             currentArea = GameManager.instance.DB.GetAreaByName(areaName);
 
-            LoadBackgroundPacks(areaName);
-            SetAreaMultiplier();
+            LoadBackgroundPacks();
+            LoadGeneralSprites();
 
             isReady = true;
         }
@@ -107,14 +112,24 @@ namespace Events {
         /// Load backgroundPacks for an area
         /// </summary>
         /// <param name="areaName"> Name of area that will have its bgPacks loaded </param>
-        public void LoadBackgroundPacks(string areaName) {
-            string[] bgPackNames = GameManager.instance.DB.GetBGPackNames(areaName);
+        public void LoadBackgroundPacks() {
+            string[] bgPackNames = GameManager.instance.DB.GetBGPackNames(currentAreaName);
 
             for (int i = 0; i < bgPackNames.Length; i++) {
                 if (bgPackNames[i] != "none") {
-                    bgPacks[i] = GameManager.instance.DB.GetBGPack(areaName, bgPackNames[i]);
+                    bgPacks[i] = GameManager.instance.DB.GetBGPack(currentAreaName, bgPackNames[i]);
                     bgPackNum++;
                 }
+            }
+        }
+
+        public void LoadGeneralSprites() {
+            HPSprite = Resources.Load<Sprite>("Sprites/Interactions/WAXItem");
+            
+            switch(currentAreaName) {
+                case "GreyWastes":
+                    WAXSprite = Resources.Load<Sprite>("Sprites/Interactions/HealingEffect");
+                    break;
             }
         }
 
@@ -260,6 +275,7 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 actionsPanel.SetAllActionsInteractable();
+                utilityTabManager.SetAllButtonsInteractable();
                 actionsPanel.SetHorizontalNavigation(partyPanel);
             }
         }
@@ -287,15 +303,34 @@ namespace Events {
             actionsPanel.SetAllActionsInteractable();
         }
 
-        // public void DisplayInteraction(Interaction i) {
-        //     Result r = i.GetResult();
+        public void DisplayInteraction(Interaction i) {
+            Result r = i.GetResult();
+            r.GenerateResults();
 
-        //     if (i.GetSprite() != null) {
-        //         ShowInteractionSprite(i);
-        //     }
+            List<Item> items = new List<Item>();
 
-        //     //if ()
-        // }
+            if (i.GetSprite() != null) {
+                eventDisplays[0].SetImage(i.GetSprite());
+                eventDisplays[0].SetPosition(pos1d1);
+            }
+
+            if (r.EXPAmount > 0) {
+                //items.Add(new Item("EXP", r.EXPAmount, EXPSprite));
+            }
+            if (r.HPAmount > 0) {
+                items.Add(new Item("HP", r.HPAmount, HPSprite));
+            }
+            if (r.MPAmount > 0) {
+                //items.Add(new Item("MP", r.MPAmount, MPSprite));
+            }
+            if (r.WAXAmount > 0) {
+                items.Add(new Item("WAX", r.WAXAmount, WAXSprite));
+            }
+
+            if (items.Count > 0) {
+                eventDisplays[0].SetItemDisplays(items);
+            }
+        }
 
         /// <summary>
         /// Performs visual effects when moving to next event
@@ -306,6 +341,7 @@ namespace Events {
             HideEventDisplays();
             rewardsPanel.SetVisible(false);
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
+            utilityTabManager.SetAllButtonsUninteractable();
             yield return StartCoroutine(FadeBackgrounds());
         }
 
@@ -440,20 +476,21 @@ namespace Events {
             }
         }
 
-        // public void ShowInteractionSprite(Interaction i) {
-        //     HideEventDisplays();
-
-        //     eventDisplays[0].SetImage(i.GetSprite());
-        //     eventDisplays[0].SetPosition(pos1d1);
-        //     eventDisplays[0].SetVisible(true);
-        // }
-
         /// <summary>
         /// Hides the eventDisplays
         /// </summary>
         public void HideEventDisplays() {
             foreach (EventDisplay ed in eventDisplays) {
                 ed.SetVisible(false);
+            }
+        }
+
+        /// <summary>
+        /// Hides specific eventDisplays
+        /// </summary>
+        public void HideEventDisplays(int[] indices) {
+            foreach (int index in indices) {
+                eventDisplays[index].SetVisible(false);
             }
         }
 

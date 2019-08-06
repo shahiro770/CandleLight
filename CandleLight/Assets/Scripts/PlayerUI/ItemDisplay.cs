@@ -10,20 +10,47 @@
 
 using Items;
 using System.Collections;
-using System.Collections.Generic;
+using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class EventDisplay : MonoBehaviour {
+    public class ItemDisplay : MonoBehaviour {
 
         /* external component references */
         public Image img;   /// <value> Image to be displayed </value>
         public CanvasGroup imgCanvas;
-        public ItemDisplay[] itemDisplays = new ItemDisplay[4];
+        public Button b;
+        public ButtonTransitionState bts;
         
-        private float lerpSpeed = 4;
+        private float lerpSpeed = 4; 
+        private Item displayedItem;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Init(Item displayedItem) {
+            this.displayedItem = displayedItem;
+
+            if (displayedItem != null) {
+                if (displayedItem.type == "EXP") {
+
+                }
+                if (displayedItem.type == "HP") {
+                    //HPAmount = amount;
+                }
+                if (displayedItem.type == "MP") {
+                    //MPAmount = amount;
+                }
+                if (displayedItem.type == "WAX") {
+
+                }
+
+                img.sprite = displayedItem.itemSprite;
+            }
+            SetVisible(true);
+        }
 
         /// <summary>
         /// Sets image to display a given sprite
@@ -31,15 +58,6 @@ namespace PlayerUI {
         /// <param name="spr"> Sprite to be displayed </param>
         public void SetImage(Sprite spr) {
             img.sprite = spr;
-        }
-
-        public void SetItemDisplays(List<Item> items) {
-            int numItems = items.Count > itemDisplays.Length ? itemDisplays.Length : items.Count;
-
-            for (int i = 0; i < items.Count; i++) {
-                Debug.Log(items[i]);
-                itemDisplays[i].Init(items[i]);
-            }
         }
 
         /// <summary>
@@ -53,14 +71,6 @@ namespace PlayerUI {
             else {
                 StartCoroutine(Fade(0));
             }
-        }
-
-        /// <summary>
-        /// Sets the eventDisplay's position on screen
-        /// </summary>
-        /// <param name="pos"></param>
-        public void SetPosition(Vector3 pos) {
-            gameObject.transform.localPosition = pos;
         }
 
         private IEnumerator Fade(int targetAlpha) {

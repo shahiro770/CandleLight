@@ -8,6 +8,8 @@
 *
 * TODO:
 * Need to work with attacks that target multiple monsters, and multiple partyMembers
+* Unify naming (make interactable functions 1 function with true or false, make all button related stuff use
+* the word interactable)
 */
 
 using Characters;
@@ -38,8 +40,10 @@ namespace Combat {
         public StatusPanel statusPanel;             /// <value> Display for active party member's status </value>
         public ActionsPanel actionsPanel;           /// <value> Display for active party member's actions </value>
         public PartyPanel partyPanel;               /// <value> Display for all party member's status </value>
+        public TabManager utilityTabManager;           /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
-    
+
+        
         public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
         public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
@@ -137,6 +141,7 @@ namespace Combat {
         /// </summary>
         /// <returns> IEnumerator cause animations </returns>
         private IEnumerator DisplayCombatIntro() {
+            DisableAllButtons();
             foreach (Monster m in monsters) {
                 StartCoroutine(m.PlaySpawnAnimation());
             }
@@ -249,6 +254,7 @@ namespace Combat {
             List<Monster> monstersToRemove = new List<Monster>();
 
             // wait for all monsters to despawn
+            DisableAllButtons();
             for (int i = 0; i < monsters.Count - 1; i++) {  
                 StartCoroutine(monsters[i].PlayDeathAnimation());
                 monstersToRemove.Add(monsters[i]);
@@ -327,6 +333,7 @@ namespace Combat {
 
             DeselectMonsters();
             pmSelectionFinalized = false;
+            Debug.Log("pmSelectionFinalized " + pmSelectionFinalized);
             eventDescription.ClearText();
         }
 
@@ -658,6 +665,7 @@ namespace Combat {
         public void DisableAllButtons() {
             actionsPanel.SetAllActionsUninteractable();
             partyPanel.DisableButtons();
+            utilityTabManager.SetAllButtonsUninteractable();
             DeselectMonstersVisually();
             DisableAllMonsterSelection();
         }
@@ -668,6 +676,7 @@ namespace Combat {
         public void EnableAllButtons() {
             EnableAllMonsterSelection();
             actionsPanel.SetAllActionsInteractable();
+            utilityTabManager.SetAllButtonsInteractable();
             partyPanel.EnableButtons();
         }
         

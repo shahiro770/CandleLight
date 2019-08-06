@@ -32,13 +32,13 @@ namespace Database {
         /// </summary>
         /// <param name="nameID"> Name of the monster along with the monster's level </param>
         /// <param name="monster"> Monster game object to be be initialized with fetched values</param>
-        public void GetMonsterByNameID(string nameID, Monster monster) {
+        public void GetMonsterByNameID(string monsterName, Monster monster) {
             using(dbConnection = base.GetConnection()) {
 
                 dbConnection.Open();
 
                 using (IDbCommand dbcmd = dbConnection.CreateCommand()) { // using will call dispose when done, which calls close
-                    dbcmd.CommandText = "SELECT * FROM Monsters WHERE NameID = '" + nameID + "'";
+                    dbcmd.CommandText = "SELECT * FROM Monsters WHERE NameID = '" + monsterName + "'";
                     
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
                         string monsterNameID = "";
@@ -71,7 +71,9 @@ namespace Database {
                                 string attackName = reader.GetString(15 + i);
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
-
+                        }
+                        else {
+                            Debug.LogError("Monster " + monsterName + " does not exist in the DB");
                         }
                         monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
                         monsterSize, monsterAI, LVL, multiplier, HP, MP, stats, attacks)); 
@@ -118,6 +120,9 @@ namespace Database {
                                 string attackName = reader.GetString(13 + i);
                                 attacks[i] = GetAttack(attackName, false, dbConnection);
                             }
+                        }
+                        else {
+                            Debug.LogError("PartyMember with className " + className + " does not exist in the DB");
                         }
                         // need to figure out how to attach this information to a monster gameObject, can't use new
                         pm.Init(personalInfo, LVL, EXP, HP, MP, stats, attacks); 
@@ -191,6 +196,9 @@ namespace Database {
 
                             newArea = new Area(areaName, subAreaNames, themeColour, dbConnection);
                         }
+                        else {
+                            Debug.LogError("SubArea " + areaName + " does not exist in the DB");
+                        }
 
                         return newArea;
                     }
@@ -238,6 +246,9 @@ namespace Database {
                         newSubArea = new SubArea(name, subAreaEvents, monsterPool, minMonsterNum, maxMonsterNum, 
                         defaultBGPackName, dbConnection);
                     }
+                    else {
+                        Debug.LogError("SubArea " + subAreaName + " does not exist in the DB");
+                    }
 
                     return newSubArea;
                 }
@@ -268,6 +279,9 @@ namespace Database {
                         monsterPool[7] = reader.GetString(9);
                         monsterPool[8] = reader.GetString(10);
                         monsterPool[9] = reader.GetString(11);
+                    }
+                    else {
+                        Debug.LogError("MonsterPool " + name + " does not exist in the DB");
                     }
 
                     return monsterPool;
@@ -305,9 +319,12 @@ namespace Database {
                         newEvent = new Events.Event(reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetString(5),
                         eventInteractions, reader.GetBoolean(11), reader.GetString(12), reader.GetInt32(13), eventSprites, dbConnection);
                     }
+                    else {
+                         Debug.LogError("Event " + eventName + " does not exist in the DB");
+                    }
 
                     return newEvent;
-                }
+                } 
             }
         }
 
@@ -345,6 +362,9 @@ namespace Database {
 
                         newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, intSprites, dbConnection);
                     }
+                    else {
+                         Debug.LogError("Interaction " + intName + " does not exist in the DB");
+                    }
                 
                     return newInt;
                 }
@@ -375,6 +395,9 @@ namespace Database {
                         newResult = new Result(reader.GetString(1), reader.GetBoolean(2), resultKey, reader.GetString(3), resultChanges, 
                         reader.GetString(8), reader.GetString(9));
                     }
+                    else {
+                         Debug.LogError("Result " + resultName + " does not exist in the DB");
+                    }
 
                     return newResult;
                 }
@@ -404,6 +427,9 @@ namespace Database {
                             bgPackNames[7] = reader.GetString(9);
                             bgPackNames[8] = reader.GetString(10);
                             bgPackNames[9] = reader.GetString(11);
+                        }
+                        else {
+                            Debug.LogError("BackgroundPackNames " + areaName + " does not exist in the DB");
                         }
 
                         return bgPackNames;
@@ -438,6 +464,9 @@ namespace Database {
                             spriteIndicies[9] = reader.GetInt32(12);
 
                             newPack = new BackgroundPack(reader.GetString(2), areaName, spriteIndicies);
+                        }
+                        else {
+                            Debug.LogError("BackgroundPack " + bgPackName + " with " + areaName + " does not exist in the DB");
                         }
 
                         return newPack;

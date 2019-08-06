@@ -48,6 +48,9 @@ namespace Events {
                     }
                     resultNum++;
                 }
+                else {
+                    break;
+                }
             }
         }
 

@@ -134,7 +134,7 @@ namespace PlayerUI {
                 UndoAttackActionSelected();
             }
             else if (a.actionType == ActionConstants.INTERACTION) {
-                //EventManager.instance.DisplayInteraction(a.i);
+                EventManager.instance.DisplayInteraction(a.i);
             }
             else if (a.actionType ==  ActionConstants.FLEE) {
                 StartCoroutine(CombatManager.instance.AttemptFlee());
