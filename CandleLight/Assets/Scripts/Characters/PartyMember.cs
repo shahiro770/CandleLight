@@ -217,6 +217,10 @@ namespace Characters {
             else {
                 yield return new WaitForSeconds(1.3f);
             }
+
+            if (CHP == 0) { // make death more dramatic
+                yield return new WaitForSeconds(0.75f);
+            }
             
             yield break;
         }

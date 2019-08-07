@@ -400,9 +400,7 @@ namespace Combat {
             yield return (StartCoroutine(activeMonster.PlayAttackAnimation()));
             eventDescription.SetPMDamageText(partyMembers[targetChoice], attackChoice.damage);
             
-            if (attackChoice.damage > 0) {
-                yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage)));
-            }
+            yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage)));
         }
 
         /// <summary>
@@ -452,8 +450,19 @@ namespace Combat {
         /// either a defeat screen or a rewards screen
         /// </remark>
         private void EndCombat() {
-            EnableAllButtons();
-            StartCoroutine(EventManager.instance.DisplayPostCombat(isFleeSuccessful));
+            string endString = "";
+
+            if (isFleeSuccessful) {
+                endString = "FLEE";
+            }
+            else if (cq.CheckMonstersDefeated()) {
+                endString = "VICTORY";
+            }
+            else if (cq.CheckPartyDefeated()) {
+                endString = "DEFEAT";
+            }
+
+            StartCoroutine(EventManager.instance.DisplayPostCombat(endString));
         }
 
         #endregion

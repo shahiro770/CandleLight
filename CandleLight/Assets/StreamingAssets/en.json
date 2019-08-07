@@ -80,7 +80,7 @@
 		{ "key": "thrash_attack", "value": "Thrash" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
-		{ "key": "wack_attack", "value": "Wack" },
+		{ "key": "whack_attack", "value": "Whack" },
 		{ "key": "slash_attack", "value": "Slash" },
 		{ "key": "bash_attack", "value": "Bash" },
 		{ "key": "none_attack", "value": ""}

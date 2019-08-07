@@ -72,6 +72,7 @@ namespace Events {
         /// Awake to instantiate singleton
         /// </summary>
         void Awake() {
+            Application.targetFrameRate = 60;
             if (instance == null) {
                 instance = this;
             }
@@ -201,12 +202,12 @@ namespace Events {
                     infoPanel.UpdateAmounts();
                 }
 
-                if (subAreaProgress == 100) {
-                    GetNextMainEvent();
-                }
-                else {
+                // if (subAreaProgress == 100) {
+                //     GetNextMainEvent();
+                // }
+                //else {
                     GetNextSubAreaEvent();
-                }
+                //}
             }
 
             StartCoroutine(DisplayEvent());
@@ -275,6 +276,7 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 actionsPanel.SetAllActionsInteractable();
+                partyPanel.EnableButtons();
                 utilityTabManager.SetAllButtonsInteractable();
                 actionsPanel.SetHorizontalNavigation(partyPanel);
             }
@@ -284,23 +286,32 @@ namespace Events {
         /// Displays post combat information such as the RewardsPanel, and prepares player to continue exploring
         /// TODO Make the postCombat event have interactions in each action somehow
         /// </summary>
-        /// <param> Flag for if combat ended due to fleeing </param>
-        public IEnumerator DisplayPostCombat(bool isFleeSuccessful) {
+        /// <param name="endString"> String constant explaining how combat ended </param>
+        public IEnumerator DisplayPostCombat(string endString) {
             StartCoroutine(AlterBackgroundColor(1f));
-            actionsPanel.TravelActions();
-            actionsPanel.SetAllActionsUninteractable();
+            actionsPanel.PostCombatActions();
             rewardsPanel.SetVisible(true);
-            if (isFleeSuccessful) {
-                eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatFleePrompt());
+
+            if (endString == "DEFEAT") {
+                GameManager.instance.LoadNextScene("MainMenu");
             }
             else {
-                eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatPrompt());
+                if (endString == "FLEE") {
+                    eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatFleePrompt());
+                }
+                else if (endString == "VICTORY") {
+                    eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatPrompt());
+                }
+
+                yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
+                if (infoPanel.isOpen) {
+                    infoPanel.UpdateAmounts();
+                }
+
+                actionsPanel.SetAllActionsInteractable();
+                utilityTabManager.SetAllButtonsInteractable();
+                partyPanel.EnableButtons();
             }
-            yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
-            if (infoPanel.isOpen) {
-                infoPanel.UpdateAmounts();
-            }
-            actionsPanel.SetAllActionsInteractable();
         }
 
         public List<Item> GetInteractionResults(Result r) {
@@ -352,6 +363,7 @@ namespace Events {
             HideEventDisplays();
             rewardsPanel.SetVisible(false);
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
+            partyPanel.DisableButtons();
             utilityTabManager.SetAllButtonsUninteractable();
             yield return StartCoroutine(FadeBackgrounds());
         }

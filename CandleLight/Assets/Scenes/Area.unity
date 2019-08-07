@@ -15523,7 +15523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776bd0e72c71d4e2e878a3679b66d59b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventManager: {fileID: 154656195}
+  eventManager: {fileID: 0}
   WAXImage: {fileID: 724877469}
   progressImage: {fileID: 657703712}
   amountTextWAX: {fileID: 1785729048}

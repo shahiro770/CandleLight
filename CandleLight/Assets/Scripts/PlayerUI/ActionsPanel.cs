@@ -79,7 +79,23 @@ namespace PlayerUI {
 
             actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
 
+            SetActionsUsable(true);
             SetAllActionsInteractable();
+            SetInitialNavigation();
+        }
+
+                /// <summary>
+        /// Displays actions for after combat
+        /// </summary>
+        public void PostCombatActions() { 
+            for (int i = 0; i < actions.Length - 1; i++) {
+                actions[i].SetAction(ActionConstants.NONE);
+            }
+
+            actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
+
+            SetActionsUsable(true);
+            SetAllActionsUninteractable();
             SetInitialNavigation();
         }
 
@@ -284,6 +300,17 @@ namespace PlayerUI {
                     }
                 } 
             } 
+        }
+
+        /// <summary>
+        /// Sets all actions to visually be usable or unusable if the partyMember can't use it
+        /// due to mana or health constraints.  
+        /// </summary>
+        /// <param name="value"> True to show useable, false to show unusable</param>
+        public void SetActionsUsable(bool value) {
+            for (int i = 0; i < actions.Length - 1; i++) {
+                actions[i].SetUsable(value);
+            }
         }
 
         /// <summary>

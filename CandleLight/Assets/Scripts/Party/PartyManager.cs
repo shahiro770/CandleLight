@@ -55,6 +55,13 @@ namespace Party {
                 partyMembers.Add(newMember.GetComponent<PartyMember>());
             }
         }
+
+        /// <summary>
+        /// Removes all partyMembers from PartyMembers list
+        /// </summary>
+        public void ClearPartyMembers() {
+            partyMembers.Clear();
+        }
         
         /// <summary>
         /// Returns a list containing all party members

@@ -41,7 +41,6 @@ namespace General {
                 instance = this;
             }
             
-            Screen.SetResolution(1920, 1080, false);    // have to figure out resizing, for now game's resolution is fixed
             mainCamera = Camera.main;                   // store reference to camera for other game objects to obtain
             activeScene = initialScene;
             SceneManager.LoadScene(activeScene, LoadSceneMode.Additive);
