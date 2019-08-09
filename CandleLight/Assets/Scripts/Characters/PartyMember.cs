@@ -192,6 +192,25 @@ namespace Characters {
             }
         }
 
+        public void AddMP(int amount) {
+            CMP += amount;
+            if (CMP > MP) {
+                CMP = MP;
+            }
+            
+            if (statusPanelMPBar != null) {
+                statusPanelMPBar.SetCurrent(CMP);  
+            }
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                partyPanelMPBar.SetCurrent(CMP);
+            }
+        }
+
+        public void Regen() {
+            AddHP((int)(Mathf.Ceil((float)HP * 0.05f)));
+            AddMP((int)(Mathf.Ceil((float)MP * 0.05f)));
+        }
+
         /// <summary>
         /// Reduce the PartyMember's current health points by a specified amount.false
         /// IEnumerator is used to make calling function wait for its completion

@@ -19,8 +19,8 @@ namespace PlayerUI {
 
     public class EventDescription : MonoBehaviour {
         
+        /* external component references */
         public LocalizedText eventText;     /// <value> Text for event </value>
-        public Image textBackground;        /// <value> Image behind text </value>
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         
         private float lerpSpeed = 4;        /// Speed at which canvas fades in and out

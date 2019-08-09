@@ -108,6 +108,12 @@ namespace Party {
             }
         }
 
+        public void RegenParty() {
+            foreach (PartyMember pm in partyMembers) {
+                pm.Regen();
+            }
+        }
+
         /// <summary>
         /// Increases the amount of WAX the party has
         /// </summary>

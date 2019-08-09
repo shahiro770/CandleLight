@@ -252,6 +252,8 @@ namespace Events {
                 displayStartEvent = false;
             }
 
+            PartyManager.instance.RegenParty();
+
             if (currentEvent.promptKey == "combat_event") {
                 StartCoroutine(AlterBackgroundColor(0.5f));
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());

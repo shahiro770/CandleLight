@@ -13,17 +13,19 @@ using Party;
 using System.Collections;
 using UIEffects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class ItemDisplay : MonoBehaviour {
+    public class ItemDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
         /* external component references */
         public Image img;   /// <value> Image to be displayed </value>
         public CanvasGroup imgCanvas;
         public Button b;
         public ButtonTransitionState bts;
+        public Tooltip t;
         
         private float lerpSpeed = 4; 
         private Item displayedItem;
@@ -109,6 +111,15 @@ namespace PlayerUI {
 
                 yield return new WaitForEndOfFrame();
             }
+        }
+
+        public void OnPointerEnter(PointerEventData pointerEventData) {
+            t.SetTooltipVisible(true);
+        }
+
+        //Detect when Cursor leaves the GameObject
+        public void OnPointerExit(PointerEventData pointerEventData) {
+            t.SetTooltipVisible(false);
         }
     }
 }

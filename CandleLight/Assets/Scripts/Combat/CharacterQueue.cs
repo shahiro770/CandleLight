@@ -16,7 +16,7 @@ using UnityEngine;
 /*
     TODO
     - Determine the best way to handle fast and slow characters
-    - If we give fast guys a second entry
+    - If we give fast guys a second entry (immediately after their first entry)
         - When adding a character, redo everyone's second entries, checking after speed stat changes
         - When speed bosts occur, resort the queue, remembering whos' current turn it is
             - Figure out where in the queue the current person's turn resumes from
