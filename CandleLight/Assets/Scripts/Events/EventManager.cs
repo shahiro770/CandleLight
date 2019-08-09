@@ -349,6 +349,10 @@ namespace Events {
             eventDescription.SetKey(r.resultKey);
             if (items.Count > 0) {
                 actionsPanel.SetItemActions();
+                if (partyPanel.isOpen) {
+                    actionsPanel.SetHorizontalNavigation(partyPanel);
+                    partyPanel.SetHorizontalNavigation();
+                }
                 eventDisplays[0].SetItemDisplays(items);    // will overwrite some action navigation
             }
             else {

@@ -18,18 +18,19 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class ItemDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+    public class ItemDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
 
         /* external component references */
         public Image img;   /// <value> Image to be displayed </value>
+        public Image imgBackground;
         public CanvasGroup imgCanvas;
         public Button b;
         public ButtonTransitionState bts;
         public Tooltip t;
         
-        private float lerpSpeed = 4; 
         private Item displayedItem;
-
+        private float lerpSpeed = 4; 
+       
         /// <summary>
         /// 
         /// </summary>
@@ -53,6 +54,8 @@ namespace PlayerUI {
 
                 img.sprite = displayedItem.itemSprite;
             }
+            t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
+            SetText();
             SetVisible(true);
         }
 
@@ -74,11 +77,18 @@ namespace PlayerUI {
                 displayedItem = null;
                 img.sprite = null;
                 img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
+                t.SetTooltipVisible(false);
             }
         }
 
-        public void SetNavigation() {
-
+        public void SetText() {
+            if (displayedItem != null) {
+                if (displayedItem.isConsumable) {
+                    t.SetKey(displayedItem.type + "_item", "title");
+                    t.SetKey("consumable_item_sub", "subtitle");
+                    t.SetAmountText(displayedItem.type + "_label", "description", displayedItem.GetAmount(displayedItem.type));
+                }
+            }
         }
 
         /// <summary>
@@ -88,6 +98,7 @@ namespace PlayerUI {
         public void SetVisible(bool value) {
             if (value == true) {
                 b.interactable = true;
+                gameObject.SetActive(true);
                 StartCoroutine(Fade(1));
                 
             }
@@ -111,15 +122,35 @@ namespace PlayerUI {
 
                 yield return new WaitForEndOfFrame();
             }
+            if (targetAlpha == 0) {
+                gameObject.SetActive(false);
+            }
         }
 
         public void OnPointerEnter(PointerEventData pointerEventData) {
-            t.SetTooltipVisible(true);
+            if (displayedItem != null) {
+                t.SetTooltipVisible(true);
+            }
         }
 
         //Detect when Cursor leaves the GameObject
         public void OnPointerExit(PointerEventData pointerEventData) {
-            t.SetTooltipVisible(false);
+            if (displayedItem != null) {
+                t.SetTooltipVisible(false);
+            }
+        }
+
+        public void OnSelect(BaseEventData baseEventData) {
+            if (displayedItem != null) {
+                t.SetTooltipVisible(true);
+            }
+        }
+
+        //Detect when Cursor leaves the GameObject
+        public void OnDeselect(BaseEventData baseEventData) {
+            if (displayedItem != null) {
+                t.SetTooltipVisible(false);
+            }
         }
     }
 }

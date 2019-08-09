@@ -17,16 +17,16 @@ namespace Localization {
         
         public string key;                  /// <value> Global instance </value>
         public TextMeshProUGUI meshText;    /// <value> Text mesh pros are not always loaded in time, so store reference to guarantee access </value>
+ 
+        private bool textPreset = false;    /// <value> Flag for if text was set before the localizedText awoke </value>
 
-        private string keyText;              /// <value> Text retrieved from key </value>
-        
         /// <summary>
         /// Start to intialize display text
         /// </summary>
         void Awake() {
-            if (key != null) {
+            // do not set key if there is no key or if text was already set
+            if (key != null && !textPreset) { 
                 meshText.text = LocalizationManager.instance.GetLocalizedValue(key);
-                keyText = meshText.text;   
             }
         }
 
@@ -45,14 +45,17 @@ namespace Localization {
         /// <param name="text"> String to display </param>
         public void SetText(string text) {
             meshText.text = text;
+            textPreset = true;
         }
 
         /// <summary>
         /// Appends text to the end of the display text
         /// </summary>
         /// <param name="text"> String to append </param>
-        public void Append(string text) {
-            meshText.text = keyText + " " + text;
+        public void SetKeyAndAppend(string newKey, string text) {
+            key = newKey;
+            meshText.text = LocalizationManager.instance.GetLocalizedValue(key) + " " + text;
+            textPreset = true;
         }
 
         /// <summary>

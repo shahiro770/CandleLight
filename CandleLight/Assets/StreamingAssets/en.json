@@ -64,6 +64,11 @@
 		{ "key": "WAX_label", "value": "WAX " },
 		{ "key": "PROG_label", "value": "PROG " },
 
+		{ "key": "WAX_item", "value": "Wax Coins" },
+		{ "key": "HP_item", "value": "Health Recovery" },
+
+		{ "key": "consumable_item_sub", "value": "Consumable" },
+
 		{ "key": "flee_action", "value": "Flee" },
 		{ "key": "travel_action", "value": "Travel" },
 		{ "key": "undo_action", "value": "Undo" },

@@ -22,6 +22,7 @@ namespace Items {
         public int HPAmount { get; private set; }       /// <value> Amount of HP item gives </value>
         public int MPAmount { get; private set; }       /// <value> Amount of MP item gives </value>
         public int WAXAmount { get; private set; }      /// <value> Amount of WAX item gives </value>
+        public bool isConsumable { get; private set; }
 
         /// <summary>
         /// Sets image to display a given sprite
@@ -33,15 +34,37 @@ namespace Items {
 
             if (type == "EXP") {
                 EXPAmount = amount;
+                isConsumable = true;
             }
             if (type == "HP") {
                 HPAmount = amount;
+                isConsumable = true;
             }
             if (type == "MP") {
                 MPAmount = amount;
+                isConsumable = true;
             }
             if (type == "WAX") {
                 WAXAmount = amount;
+                isConsumable = true;
+            }
+        }
+
+        public int GetAmount(string type) {
+            if (type == "EXP") {
+                return EXPAmount;
+            }
+            else if (type == "HP") {
+                return HPAmount;
+            }
+            else if (type == "MP") {
+                return MPAmount;
+            }
+            else if (type == "WAX") {
+                return WAXAmount;
+            }
+            else {
+                return -1;
             }
         }
     }

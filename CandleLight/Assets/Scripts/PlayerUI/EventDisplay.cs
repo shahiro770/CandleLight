@@ -90,7 +90,9 @@ namespace PlayerUI {
             else {
                 imgCanvas.blocksRaycasts = false;
                 for (int i = 0; i < itemNum; i++) {
-                    itemDisplays[i].SetVisible(false);
+                    if (itemDisplays[i].gameObject.activeSelf){
+                        itemDisplays[i].SetVisible(false);
+                    }
                 }
                 StartCoroutine(Fade(0));
             }
