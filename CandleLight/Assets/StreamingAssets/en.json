@@ -77,7 +77,7 @@
 		{ "key": "info_tab", "value": "Info" },
 
 		{ "key": "goblin_monster", "value": "Goblin" },
-		{ "key": "goblin_monster_description", "value": "Curious and rely heavily on their hearing. Who knows where it found its clothes." },
+		{ "key": "goblin_monster_description", "value": "Curious wanderers of the wastes. Who knows where it found its clothes." },
 		{ "key": "greyhide_monster", "value": "Greyhide" },
 		{ "key": "greyhide_monster_description", "value": "They like to hunt in packs, preying on the weakest." },
 		{ "key": "stinger_monster", "value": "Stinger" },

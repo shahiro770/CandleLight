@@ -882,6 +882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: back_button
   meshText: {fileID: 181506014}
+  textPreset: 0
 --- !u!1 &233022015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,6 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: continue_button
   meshText: {fileID: 355129992}
+  textPreset: 0
 --- !u!1 &408745648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,6 +1620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: select_button
   meshText: {fileID: 408745650}
+  textPreset: 0
 --- !u!1 &521401050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,7 +1670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 1
+  m_ReferencePixelsPerUnit: 108
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 960, y: 540}
   m_ScreenMatchMode: 0
@@ -3886,6 +3889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: select_class_title
   meshText: {fileID: 1358434001}
+  textPreset: 0
 --- !u!1 &1421687523
 GameObject:
   m_ObjectHideFlags: 0
@@ -4115,6 +4119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1509283230}
+  textPreset: 0
 --- !u!114 &1509283230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4409,6 +4414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1644324721}
+  textPreset: 0
 --- !u!1 &1780937547
 GameObject:
   m_ObjectHideFlags: 0
@@ -4762,6 +4768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: quit_button
   meshText: {fileID: 1796011159}
+  textPreset: 0
 --- !u!1 &1826392976
 GameObject:
   m_ObjectHideFlags: 0
@@ -5093,6 +5100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: new_game_button
   meshText: {fileID: 1851971285}
+  textPreset: 0
 --- !u!1 &1896891082
 GameObject:
   m_ObjectHideFlags: 0
@@ -5406,6 +5414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: options_button
   meshText: {fileID: 1927327835}
+  textPreset: 0
 --- !u!1 &1937829172
 GameObject:
   m_ObjectHideFlags: 0
@@ -5632,3 +5641,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: candleLight_title
   meshText: {fileID: 2039919659}
+  textPreset: 0

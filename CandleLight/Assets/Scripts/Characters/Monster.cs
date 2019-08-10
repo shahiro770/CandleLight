@@ -124,8 +124,8 @@ namespace Characters {
         /// Currently used due to monster's health bar being inaccurate upon cloning
         /// </summary>
         public void SetHealthBar() {
-            if (monsterSize == "small") {
-                HPBar.SetMaxAndCurrent(HP, CHP, new Vector2(125, 18));
+            if (monsterSize == "small" || monsterSize == "extraSmall") {
+                HPBar.SetMaxAndCurrent(HP, CHP, new Vector2(115, 18));
             } 
             else if (monsterSize == "medium") {
                 HPBar.SetMaxAndCurrent(HP, CHP, new Vector2(150, 18));
@@ -146,6 +146,11 @@ namespace Characters {
         /// <remark> Monster's image is repositioned depending on its sprite size </remark>
         private void SetSize(string monsterSize) {
             RectTransform monsterRect = monsterSpriteHolder.GetComponent<RectTransform>();
+            if (monsterSize == "extraSmall") {
+                vectorSize = new Vector2(160, 160);
+                monsterRect.sizeDelta = vectorSize;
+                monsterRect.anchoredPosition = new Vector3(0, -20); // (160 - 200) / 2
+            }
             if (monsterSize == "small") {
                 vectorSize = new Vector2(170, 170);
                 monsterRect.sizeDelta = vectorSize;
@@ -198,7 +203,6 @@ namespace Characters {
         /// Visually deselect monster
         /// </summary>
         public void DeselectMonsterButton() {
-            Debug.Log("deselecting");
             t.SetVisible(false);
             bts.SetColor("normal");
         }
