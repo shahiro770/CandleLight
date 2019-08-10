@@ -41,13 +41,6 @@ namespace General {
         }
 
         /// <summary>
-        /// Load monsters from Grey Wastes, will change this later to load from a given area
-        /// </summary>
-        public void Init() {
-            StartCoroutine(LoadMonsters(greywastes1Monsters));
-        }
-
-        /// <summary>
         /// Returns a loaded monster game object
         /// </summary>
         /// <param name="monsterName"> Name of monster to load </param>
@@ -62,8 +55,11 @@ namespace General {
         /// </summary>
         /// <param name="monsterNames"> Array containing strings of all monsters to be loaded </param>
         /// <returns> IEnumerator to wait for each monster to be loaded before moving to the next </returns>
-        private IEnumerator LoadMonsters(string[] monsterNames) {
+        public IEnumerator LoadMonsters(string[] monsterNames) {
             foreach (string monsterName in monsterNames) {
+                if (monsterName == "none") {
+                    break;
+                };
                 GameObject newMonster = Instantiate(monster);
                 Monster monsterComponent = newMonster.GetComponent<Monster>() ;
                 Monster newMonsterComponent = monsterComponent;

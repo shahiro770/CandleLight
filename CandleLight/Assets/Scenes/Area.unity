@@ -1447,7 +1447,7 @@ GameObject:
   - component: {fileID: 109473393}
   - component: {fileID: 109473391}
   m_Layer: 5
-  m_Name: CanvasRoot
+  m_Name: RootCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2009,6 +2009,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7951684889028718377, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
     - target: {fileID: 3774639721097611986, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -2174,6 +2179,21 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 703727838730408665, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
+    - target: {fileID: 6268711655384709920, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
+    - target: {fileID: 8505154237216508147, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c, type: 3}
 --- !u!114 &140073233 stripped
@@ -2506,6 +2526,7 @@ MonoBehaviour:
   - {fileID: 140073233}
   - {fileID: 1894187566}
   eventDescription: {fileID: 95653651}
+  eventCanvas: {fileID: 1731593852}
   eventBGCanvas: {fileID: 330696043}
   nextEventBGCanvas: {fileID: 817928944}
   eventBackground: {fileID: 330696041}
@@ -18350,6 +18371,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7951684889028718377, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
     - target: {fileID: 3774639721097611986, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -18515,6 +18541,21 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 703727838730408665, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
+    - target: {fileID: 6268711655384709920, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
+    - target: {fileID: 8505154237216508147, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c, type: 3}
 --- !u!114 &1894187566 stripped
@@ -23044,6 +23085,21 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 703727838730408665, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
+    - target: {fileID: 6268711655384709920, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
+    - target: {fileID: 8505154237216508147, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: rootCanvas
+      value: 
+      objectReference: {fileID: 109473394}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c, type: 3}
 --- !u!1001 &6740048579702783228

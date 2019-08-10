@@ -31,10 +31,6 @@ namespace Localization {
             while (!LocalizationManager.instance.isReady || !AssetBundleManager.instance.isReady) {
                 yield return null;
             }
-            DataManager.instance.Init();
-            while (!DataManager.instance.isReady) {
-                yield return null;
-            }
             
             GameManager.instance.LoadNextScene("MainMenu");
         }

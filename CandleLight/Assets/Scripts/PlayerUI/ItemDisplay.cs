@@ -55,7 +55,7 @@ namespace PlayerUI {
                 img.sprite = displayedItem.itemSprite;
             }
             t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
-            SetText();
+            SetTooltipText();
             SetVisible(true);
         }
 
@@ -77,16 +77,16 @@ namespace PlayerUI {
                 displayedItem = null;
                 img.sprite = null;
                 img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
-                t.SetTooltipVisible(false);
+                t.SetVisible(false);
             }
         }
 
-        public void SetText() {
+        public void SetTooltipText() {
             if (displayedItem != null) {
                 if (displayedItem.isConsumable) {
-                    t.SetKey(displayedItem.type + "_item", "title");
-                    t.SetKey("consumable_item_sub", "subtitle");
-                    t.SetAmountText(displayedItem.type + "_label", "description", displayedItem.GetAmount(displayedItem.type));
+                    t.SetKey("title", displayedItem.type + "_item");
+                    t.SetKey( "subtitle", "consumable_item_sub");
+                    t.SetAmountText( "description", displayedItem.type + "_label", displayedItem.GetAmount(displayedItem.type));
                 }
             }
         }
@@ -129,27 +129,27 @@ namespace PlayerUI {
 
         public void OnPointerEnter(PointerEventData pointerEventData) {
             if (displayedItem != null) {
-                t.SetTooltipVisible(true);
+                t.SetVisible(true);
             }
         }
 
         //Detect when Cursor leaves the GameObject
         public void OnPointerExit(PointerEventData pointerEventData) {
             if (displayedItem != null) {
-                t.SetTooltipVisible(false);
+                t.SetVisible(false);
             }
         }
 
         public void OnSelect(BaseEventData baseEventData) {
             if (displayedItem != null) {
-                t.SetTooltipVisible(true);
+                t.SetVisible(true);
             }
         }
 
         //Detect when Cursor leaves the GameObject
         public void OnDeselect(BaseEventData baseEventData) {
             if (displayedItem != null) {
-                t.SetTooltipVisible(false);
+                t.SetVisible(false);
             }
         }
     }

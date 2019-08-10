@@ -28,6 +28,7 @@ namespace Events {
         public CombatManager combatManager;         /// <value> CombatManager reference </value>
         public EventDisplay[] eventDisplays = new EventDisplay[3]; /// <value> Displays for informational sprites that events might have </value>
         public EventDescription eventDescription;   /// <value> Display that describes the event in text </value>
+        public Canvas eventCanvas;                  /// <value> Canvas holding all other canvases </value>
         public CanvasGroup eventBGCanvas;           /// <value> Current event's background sprite alpha controller </value>
         public CanvasGroup nextEventBGCanvas;       /// <value> Next event's background sprite alpha controller </value>
         public Image eventBackground;               /// <value> Image background for current event </value>
@@ -39,6 +40,11 @@ namespace Events {
         public InfoPanel infoPanel;                 /// <value> InfoPanel reference </value>
         public TabManager utilityTabManager;           /// <value> Click on to display other panels </value>
 
+        public float canvasWidth = 960;
+        /// <value> 
+        /// gameObject positions on the screen are scaled via the canvas, change this number if scaling changes
+        /// </value>
+        public float canvasScaleFactor = 1 / 0.01851852f;
         public float areaMultiplier { get; private set; }       /// <value> Multiplier to results for events in the area </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
 
@@ -73,6 +79,7 @@ namespace Events {
         /// </summary>
         void Awake() {
             Application.targetFrameRate = 60;
+
             if (instance == null) {
                 instance = this;
             }
@@ -187,6 +194,7 @@ namespace Events {
             /* Check interaction to see if its sending player to a new subArea */
             if (r != null && r.name != "none" && r.subAreaName != "none") { 
                 currentSubArea = currentArea.GetSubArea(r.subAreaName);
+                StartCoroutine(DataManager.instance.LoadMonsters(currentSubArea.monsterPool));
                 subAreaProgress = 0;  
                 if (infoPanel.isOpen) {
                     infoPanel.UpdateAmounts();

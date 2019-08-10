@@ -32,7 +32,8 @@ namespace Characters {
         public DamageText dt;               /// <value> Text display to show how much damage taken by an attack </value>
         public Image monsterSprite;         /// <value> Monster's sprite </value>
         public RectTransform monsterSpriteHolder;       /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
-        
+        public Tooltip t;
+
         [field: SerializeField] public Vector2 vectorSize { get; private set; }         /// <value> Size of monster's sprite </value>
         [field: SerializeField] public string monsterArea { get; private set; }         /// <value> Area where monster can be found </value>
         [field: SerializeField] public string monsterSize { get; private set; }         /// <value> String constant describing size of monster's sprite </value>
@@ -103,6 +104,7 @@ namespace Characters {
             this.monsterSize = monsterSize;
             SetSize(monsterSize);  
             SetHealthBar();
+            SetTooltip();
 
             foreach (Attack a in attacks) {
                 if (a.name != "none") {
@@ -163,7 +165,7 @@ namespace Characters {
 
         #endregion
 
-        #region Button Interaction
+        #region [ Section 0 ] Button Interaction
 
         /// <summary>
         /// Set button's onClick function to the passed in function
@@ -196,6 +198,8 @@ namespace Characters {
         /// Visually deselect monster
         /// </summary>
         public void DeselectMonsterButton() {
+            Debug.Log("deselecting");
+            t.SetVisible(false);
             bts.SetColor("normal");
         }
 
@@ -204,8 +208,8 @@ namespace Characters {
         /// </summary>
         /// <param name="value"> Enable interactivity on true and disable on false </param>
         public void SetInteractable(bool value) {
-            b.interactable = value;
-            monsterSprite.raycastTarget = value;
+            b.gameObject.SetActive(value);
+            t.SetVisible(false);
 
             if (value == false) {
                 bts.SetColor("disabled");
@@ -215,9 +219,18 @@ namespace Characters {
             }
         }
 
+
+        public void SetTooltip() {
+            t.SetImageDisplayBackgroundWidth(spriteWidth);
+
+            t.SetKey("title", monsterDisplayName + "_monster");
+            t.SetAmountText("subtitle", "LVL_label", LVL);
+            t.SetKey("description", monsterDisplayName + "_monster_description");   
+        }
+
         #endregion
 
-        #region Button Navigation
+        #region [ Section 1 ] Button Navigation
 
         /// <summary>
         /// Allow navigation to the monster button

@@ -8,10 +8,8 @@
 *
 */
 
-using Characters;
+using EventManager = Events.EventManager;
 using Localization;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,25 +22,22 @@ namespace PlayerUI {
         public LocalizedText descriptionText;
         public Image textBackground;        /// <value> Image behind text </value>
         public Image imageDisplayBackground; /// <value> Largest image around the image that when hovered, will display the tooltip </value>
-        public Canvas rootCanvas;
 
-        /// <value> 
-        /// gameObject positions on the screen are scaled via the canvas, change this number if scaling changes
-        /// </value>
-        private float canvasScaleConstant =  1 / 0.01851852f;    
-        private float imageDisplayBackgroundWidthHalved;    /// <value> Half the width of whatever image is being displayed </value>
-        private float rootCanvasWidthHalved;
+        [field: SerializeField] private float rootCanvasWidthHalved;
+        [field: SerializeField] private float canvasScaleFactor;    
+        [field: SerializeField] private float imageDisplayBackgroundWidthHalved;    /// <value> Half the width of whatever image is being displayed </value>
 
         public void SetImageDisplayBackgroundWidth(float width) {
+            rootCanvasWidthHalved = EventManager.instance.canvasWidth * 0.5f;
+            canvasScaleFactor = EventManager.instance.canvasScaleFactor;
             imageDisplayBackgroundWidthHalved = width * 0.5f;
-            rootCanvasWidthHalved = rootCanvas.pixelRect.size.x * 0.5f;
         }
 
         /// <summary>
         /// Changes the displayed text
         /// </summary>
         /// <param name="textKey"> Localized key for text to display </param>
-        public void SetKey(string textKey, string textName) {
+        public void SetKey(string textName, string textKey) {
             if (textName == "title") {
                 titleText.SetKey(textKey);
             }
@@ -61,7 +56,7 @@ namespace PlayerUI {
         /// Changes the displayed text
         /// </summary>
         /// <param name="textKey"> Localized key for text to display </param>
-        public void SetAmountText(string textKey, string textName, int amount) {
+        public void SetAmountText(string textName, string textKey, int amount) {
             if (textName == "title") {
                 titleText.SetKeyAndAppend(textKey, amount.ToString());
             }
@@ -94,7 +89,7 @@ namespace PlayerUI {
              * if the position of the textBackground + its width > 480 (960 / 2), it will be out of the screen.
              * +3 magic number is for spacing.
              */
-            if ((textBackground.gameObject.transform.position.x * canvasScaleConstant) + textBackgroundWidth >= rootCanvasWidthHalved) {
+            if ((imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth) >= rootCanvasWidthHalved) {
                 gameObject.transform.localPosition = new Vector3((textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3) * -1, gameObject.transform.localPosition.y);
             }
             else {
@@ -102,7 +97,7 @@ namespace PlayerUI {
             }
         }
 
-        public void SetTooltipVisible(bool value) {
+        public void SetVisible(bool value) {
             if (value == true) {
                 SetPosition();
             }

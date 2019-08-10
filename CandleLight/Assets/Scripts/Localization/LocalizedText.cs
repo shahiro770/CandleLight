@@ -18,7 +18,7 @@ namespace Localization {
         public string key;                  /// <value> Global instance </value>
         public TextMeshProUGUI meshText;    /// <value> Text mesh pros are not always loaded in time, so store reference to guarantee access </value>
  
-        private bool textPreset = false;    /// <value> Flag for if text was set before the localizedText awoke </value>
+        [field: SerializeField] private bool textPreset = false;    /// <value> Flag for if text was set before the localizedText awoke </value>
 
         /// <summary>
         /// Start to intialize display text

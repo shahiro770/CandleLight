@@ -24,21 +24,18 @@
 		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
 		{ "key": "the_grey_wastes_event", "value": "The Grey Wastes were aptly named. Only fools dare travel these lands. Looks like this is the start of the path." },
 
-		{ "key": "pathNormal_event_0", "value": "There's something oddly charming about a vast expanse full of nothing. Somewhat like a blank canvas." },
-		{ "key": "pathNormal_event_1", "value": "A few cracks here and there, but you doubt this stone path has ever needed maintenance." },
-		{ "key": "pathNormal_event_2", "value": "The air feels so empty. If it weren't for the cold breeze's every now and then, you'd forget it even existed." },
-		{ "key": "pathNormal_event_3", "value": "You gaze up at the black sky. It would be enjoyable if there was more of a stark contrast between it and the ground." },
-		
+		{ "key": "pathNormal_nothing_event_0", "value": "There's something oddly charming about a vast expanse full of nothing. Somewhat like a blank canvas." },
+		{ "key": "pathNormal_nothing_event_1", "value": "A few cracks here and there, but you doubt this stone path has ever needed maintenance." },
+		{ "key": "pathNormal_nothing_event_2", "value": "The air feels so empty. If it weren't for the cold breeze's every now and then, you'd forget it even existed." },
+		{ "key": "pathNormal_nothing_event_3", "value": "You gaze up at the black sky. It would be enjoyable if there was more of a stark contrast between it and the ground." },
 		{ "key": "pathNormal_combat_event_0", "value": "You've been ambushed. They look hungry." },
 		{ "key": "pathNormal_combat_event_1", "value": "You've taken a wrong turn." },
 		{ "key": "pathNormal_combat_event_2", "value": "The Unkindled need to eat too." },
 		{ "key": "pathNormal_combat_event_3", "value": "There was something hiding in the dirt. It attacks." },
-
 		{ "key": "pathNormal_post_combat_event_0", "value": "And that's another reason why you need to get home." },
 		{ "key": "pathNormal_post_combat_event_1", "value": "You scavenge through their remains for anything useful." },
 		{ "key": "pathNormal_post_combat_event_2", "value": "The Unkindled are no match for you." },
 		{ "key": "pathNormal_post_combat_event_3", "value": "A bit roughed up, but you can keep going." },
-
 		{ "key": "pathNormal_flee_success_0", "value": "You got away." },
 		{ "key": "pathNormal_flee_success_1", "value": "You fled." },
 		{ "key": "pathNormal_flee_success_2", "value": "They're no longer following you." },
@@ -78,16 +75,29 @@
 		{ "key": "party_tab", "value": "Party" },
 		{ "key": "skills_tab", "value": "Skills" },
 		{ "key": "info_tab", "value": "Info" },
+
+		{ "key": "goblin_monster", "value": "Goblin" },
+		{ "key": "goblin_monster_description", "value": "Curious and rely heavily on their hearing. Who knows where it found its clothes." },
+		{ "key": "greyhide_monster", "value": "Greyhide" },
+		{ "key": "greyhide_monster_description", "value": "They like to hunt in packs, preying on the weakest." },
+		{ "key": "stinger_monster", "value": "Stinger" },
+		{ "key": "stinger_monster_description", "value": "Its eyes reflect what little light there is to lure in prey." },
+		{ "key": "greyhideAlpha_monster", "value": "Greyhide Alpha" },
+		{ "key": "greyhideAlpha_monster_description", "value": "Brute strength and a bit more brain. That's all it takes to become their alpha." },
 		
 		{ "key": "pound_attack", "value": "Pound" },
 		{ "key": "scratch_attack", "value": "Scratch" },
 		{ "key": "bite_attack", "value": "Bite" },
 		{ "key": "thrash_attack", "value": "Thrash" },
+		{ "key": "kick_attack", "value": "Kick" },
+		{ "key": "sting_attack", "value": "Sting" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "whack_attack", "value": "Whack" },
 		{ "key": "slash_attack", "value": "Slash" },
 		{ "key": "bash_attack", "value": "Bash" },
 		{ "key": "none_attack", "value": ""}
+
+
 	]
 }

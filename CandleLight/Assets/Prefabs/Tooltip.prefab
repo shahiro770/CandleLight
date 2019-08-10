@@ -223,7 +223,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 513
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 7
@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: none_event
   meshText: {fileID: 3960168972768849427}
+  textPreset: 0
 --- !u!1 &4319339140027017241
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,7 +430,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: SubTitle
+  m_text: 'Subtitle
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
@@ -465,7 +468,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 513
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 7
@@ -499,9 +502,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 5219446022169754282}
-    characterCount: 8
+    characterCount: 9
     spriteCount: 0
-    spaceCount: 0
+    spaceCount: 1
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -536,6 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: none_event
   meshText: {fileID: 5219446022169754282}
+  textPreset: 0
 --- !u!1 &6499869117954220141
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +596,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 2
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -663,7 +667,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Health Recovery
+  m_text: Title
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
@@ -733,10 +737,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 3102538280507425400}
-    characterCount: 15
+    characterCount: 5
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -770,6 +774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: none_event
   meshText: {fileID: 3102538280507425400}
+  textPreset: 0
 --- !u!1 &9063453814906002102
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +786,7 @@ GameObject:
   - component: {fileID: 1362144272845895268}
   - component: {fileID: 2560515055815530552}
   - component: {fileID: 7377990676677052708}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,12 +827,12 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &7377990676677052708
 MonoBehaviour:
@@ -846,4 +851,6 @@ MonoBehaviour:
   descriptionText: {fileID: 7983780409380701926}
   textBackground: {fileID: 7427942040763711905}
   imageDisplayBackground: {fileID: 0}
-  rootCanvas: {fileID: 0}
+  rootCanvasWidthHalved: 0
+  canvasScaleFactor: 0
+  imageDisplayBackgroundWidthHalved: 0

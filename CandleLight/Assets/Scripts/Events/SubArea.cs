@@ -128,7 +128,7 @@ namespace Events {
         /// </remark>
         public string GetNothingPrompt() {
             int index = Random.Range(0, 4);
-            return  name + "_event_" + index.ToString();
+            return  name + "_nothing_event_" + index.ToString();
         }
 
         /// <summary>
