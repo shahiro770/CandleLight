@@ -277,6 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 12071811}
+  textPreset: 0
 --- !u!222 &12071813
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -337,6 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 52798961}
+  textPreset: 0
 --- !u!114 &52798961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,6 +512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 59244752}
+  textPreset: 0
 --- !u!114 &59244752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1313,6 +1316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 107120718}
+  textPreset: 0
 --- !u!114 &107120718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,6 +2374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 146863886}
+  textPreset: 0
 --- !u!114 &146863886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2537,6 +2542,8 @@ MonoBehaviour:
   statusPanel: {fileID: 1216048677}
   infoPanel: {fileID: 1637168824}
   utilityTabManager: {fileID: 1102624610}
+  canvasWidth: 960
+  canvasScaleFactor: 53.999992
 --- !u!4 &154656196
 Transform:
   m_ObjectHideFlags: 0
@@ -2860,6 +2867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 172385568}
+  textPreset: 0
 --- !u!222 &172385570
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3343,6 +3351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: info_tab
   meshText: {fileID: 292147658}
+  textPreset: 0
 --- !u!114 &292147658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3726,6 +3735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: MP_label
   meshText: {fileID: 321783161}
+  textPreset: 0
 --- !u!222 &321783163
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3899,6 +3909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: MP_label
   meshText: {fileID: 330276543}
+  textPreset: 0
 --- !u!222 &330276545
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4120,6 +4131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: WAX_label
   meshText: {fileID: 354373263}
+  textPreset: 0
 --- !u!114 &354373263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4550,6 +4562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: MP_label
   meshText: {fileID: 388535448}
+  textPreset: 0
 --- !u!222 &388535450
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4838,6 +4851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: HP_label
   meshText: {fileID: 397349443}
+  textPreset: 0
 --- !u!222 &397349445
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4898,6 +4912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: none_event
   meshText: {fileID: 398869704}
+  textPreset: 0
 --- !u!114 &398869704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5192,6 +5207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: WAX_label
   meshText: {fileID: 400910401}
+  textPreset: 0
 --- !u!1 &405331762
 GameObject:
   m_ObjectHideFlags: 0
@@ -5374,6 +5390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: PROG_label
   meshText: {fileID: 411783158}
+  textPreset: 0
 --- !u!114 &411783158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5670,6 +5687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: HP_label
   meshText: {fileID: 481492097}
+  textPreset: 0
 --- !u!1 &497510297
 GameObject:
   m_ObjectHideFlags: 0
@@ -6093,6 +6111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: party_tab
   meshText: {fileID: 542413806}
+  textPreset: 0
 --- !u!1001 &546389822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6262,7 +6281,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49625de09c5654142bc8d1b8a94e469f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d9625e46acaa45b29aa65be8867f806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &546389825 stripped
@@ -6659,6 +6678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: none
   meshText: {fileID: 598447379}
+  textPreset: 0
 --- !u!1 &599045355
 GameObject:
   m_ObjectHideFlags: 0
@@ -6824,6 +6844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 599045357}
+  textPreset: 0
 --- !u!222 &599045359
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6997,6 +7018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 600812501}
+  textPreset: 0
 --- !u!222 &600812503
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7230,6 +7252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: skills_tab
   meshText: {fileID: 662891786}
+  textPreset: 0
 --- !u!114 &662891786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7516,6 +7539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: HP_label
   meshText: {fileID: 674233625}
+  textPreset: 0
 --- !u!222 &674233627
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7777,6 +7801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 689005471}
+  textPreset: 0
 --- !u!222 &689005473
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8119,6 +8144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 723320191}
+  textPreset: 0
 --- !u!225 &723320194
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8905,6 +8931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 789034432}
+  textPreset: 0
 --- !u!114 &789034432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9578,6 +9605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 918146507}
+  textPreset: 0
 --- !u!222 &918146509
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9755,7 +9783,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49625de09c5654142bc8d1b8a94e469f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d9625e46acaa45b29aa65be8867f806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &923137288 stripped
@@ -9822,6 +9850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 934716308}
+  textPreset: 0
 --- !u!114 &934716308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10609,6 +10638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: MP_label
   meshText: {fileID: 974587284}
+  textPreset: 0
 --- !u!222 &974587286
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10939,6 +10969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1009981389}
+  textPreset: 0
 --- !u!222 &1009981391
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11427,6 +11458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1043789108}
+  textPreset: 0
 --- !u!114 &1043789108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11713,6 +11745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1056270082}
+  textPreset: 0
 --- !u!222 &1056270084
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12439,6 +12472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1155516658}
+  textPreset: 0
 --- !u!114 &1155516658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12869,6 +12903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1202062394}
+  textPreset: 0
 --- !u!114 &1202062394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13282,6 +13317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1252734831}
+  textPreset: 0
 --- !u!225 &1252734834
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -13661,6 +13697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1324431031}
+  textPreset: 0
 --- !u!114 &1324431031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13834,6 +13871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1336968073}
+  textPreset: 0
 --- !u!114 &1336968073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14861,6 +14899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1454180920}
+  textPreset: 0
 --- !u!114 &1454180920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15417,6 +15456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1572908071}
+  textPreset: 0
 --- !u!225 &1572908074
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -15598,7 +15638,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49625de09c5654142bc8d1b8a94e469f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d9625e46acaa45b29aa65be8867f806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1593925452 stripped
@@ -16250,6 +16290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: HP_label
   meshText: {fileID: 1659897780}
+  textPreset: 0
 --- !u!222 &1659897782
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16434,6 +16475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 1667380053}
+  textPreset: 0
 --- !u!225 &1667380056
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -16465,7 +16507,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1694017497
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16546,7 +16588,7 @@ MonoBehaviour:
   - {fileID: 1175152306}
   - {fileID: 2026072021}
   - {fileID: 1938638858}
-  monsterDisplays:
+  monsterResultDisplays:
   - {fileID: 2297247120330376172}
   - {fileID: 2088351736}
   - {fileID: 546389824}
@@ -16563,7 +16605,7 @@ CanvasGroup:
   m_GameObject: {fileID: 1694017496}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 0
+  m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &1722322656
@@ -16739,6 +16781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: EXP_label
   meshText: {fileID: 1722322658}
+  textPreset: 0
 --- !u!1 &1731593847
 GameObject:
   m_ObjectHideFlags: 0
@@ -17351,6 +17394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: none
   meshText: {fileID: 1785729049}
+  textPreset: 0
 --- !u!114 &1785729049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17641,6 +17685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1804033339}
+  textPreset: 0
 --- !u!222 &1804033341
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18749,6 +18794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1916235088}
+  textPreset: 0
 --- !u!1001 &1938638856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19136,6 +19182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: PROG_label
   meshText: {fileID: 1957942205}
+  textPreset: 0
 --- !u!114 &1957942205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19602,6 +19649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 2023590366}
+  textPreset: 0
 --- !u!114 &2023590366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19896,6 +19944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: MP_label
   meshText: {fileID: 2024571001}
+  textPreset: 0
 --- !u!1001 &2026072019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20165,6 +20214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 2034994091}
+  textPreset: 0
 --- !u!114 &2034994091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21011,6 +21061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 2072464300}
+  textPreset: 0
 --- !u!225 &2072464303
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -21192,7 +21243,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49625de09c5654142bc8d1b8a94e469f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d9625e46acaa45b29aa65be8867f806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2088351737 stripped
@@ -21529,6 +21580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 2103340279}
+  textPreset: 0
 --- !u!222 &2103340281
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21846,6 +21898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: HP_label
   meshText: {fileID: 2116430672}
+  textPreset: 0
 --- !u!222 &2116430674
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21980,6 +22033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 2132192184}
+  textPreset: 0
 --- !u!114 &2132192184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22311,6 +22365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: None
   meshText: {fileID: 2141409306}
+  textPreset: 0
 --- !u!114 &2141409306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22570,7 +22625,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49625de09c5654142bc8d1b8a94e469f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d9625e46acaa45b29aa65be8867f806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3346768662779600145
@@ -22695,6 +22750,21 @@ PrefabInstance:
       propertyPath: actionsPanel
       value: 
       objectReference: {fileID: 1991115682}
+    - target: {fileID: 3346768662948992318, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: itemDisplays.Array.data[1]
+      value: 
+      objectReference: {fileID: 3346768662779600148}
+    - target: {fileID: 3346768662948992318, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: itemDisplays.Array.data[2]
+      value: 
+      objectReference: {fileID: 3346768662779600147}
+    - target: {fileID: 3346768662948992318, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: itemDisplays.Array.data[3]
+      value: 
+      objectReference: {fileID: 3346768662779600146}
     - target: {fileID: 3346768662948992291, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_Alpha
@@ -23102,6 +23172,42 @@ PrefabInstance:
       objectReference: {fileID: 109473394}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c, type: 3}
+--- !u!114 &3346768662779600146 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5652139461931850447, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3346768662779600145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23fd0728f5594968ba46d1c8cf650cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3346768662779600147 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7964332653666560284, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3346768662779600145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23fd0728f5594968ba46d1c8cf650cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3346768662779600148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3583786606148763877, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3346768662779600145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23fd0728f5594968ba46d1c8cf650cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6740048579702783228
 PrefabInstance:
   m_ObjectHideFlags: 0

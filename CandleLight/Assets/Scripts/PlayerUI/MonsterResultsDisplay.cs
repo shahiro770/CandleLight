@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: July 29, 2019
 * 
-* The MonsterDisplay class is used to display a killed monster's icon and the number of its type
+* The MonsterResultsDisplay class is used to display a killed monster's icon and the number of its type
 * that were killed.
 *
 */
@@ -18,7 +18,7 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class MonsterDisplay : MonoBehaviour {
+    public class MonsterResultsDisplay : MonoBehaviour {
         
         /* external component references */
         public Button b;                /// <value> Button to make display clickable for more info </value>

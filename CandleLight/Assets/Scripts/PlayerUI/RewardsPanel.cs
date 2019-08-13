@@ -24,18 +24,18 @@ namespace PlayerUI {
         /* external component references */
         public CanvasGroup imgCanvas;   /// <value> Alpha controller for display </value>
         public PartyMemberDisplay[] pmDisplays = new PartyMemberDisplay[4]; /// <value> Array of partyMemberDisplays </value>
-        public MonsterDisplay[] monsterDisplays = new MonsterDisplay[5];    /// <value> Array of monsterDisplays</value>
+        public MonsterResultsDisplay[] monsterResultDisplays = new MonsterResultsDisplay[5];    /// <value> Array of monsterResultDisplays</value>
         public LocalizedText amountTextEXP; /// <value> Display of total EXP earned in combat instance </value>
         public LocalizedText amountTextWAX; /// <value> Display of total WAX earned in combat instance </value>
         
-        private Monster[] monstersToDisplay;    /// <value> Monsters to display in monsterDisplays </value>
+        private Monster[] monstersToDisplay;    /// <value> Monsters to display in monsterResultDisplays </value>
         private float lerpSpeed = 4;    /// <value> Speed at which rewardsPanel fades in and out </value>
-        private int[] monsterCounts;    /// <value> Number of each monster in each monsterDisplay killed</value>
+        private int[] monsterCounts;    /// <value> Number of each monster in each monsterResultDisplays killed</value>
         private int amountEXP;      /// <value> Total EXP earned in combat </value>
         private int amountWAX;      /// <value> Total WAX earned in combat </value>
 
         /// <summary>
-        /// Initializes partyMemberDisplays and monsterDisplays, and sets text values to empty
+        /// Initializes partyMemberDisplays and monsterResultDisplays, and sets text values to empty
         /// </summary>
         /// <param name="pms"> PartyMembers list (max count of 4) </param>
         /// <param name="monstersKilled"> Monsters list (max unique monsters of 5) </param>
@@ -43,8 +43,8 @@ namespace PlayerUI {
             for (int i = 0; i < pmDisplays.Length; i++) {
                 pmDisplays[i].gameObject.SetActive(false);
             }
-            for (int i = 0; i < monsterDisplays.Length;i++) {
-                monsterDisplays[i].gameObject.SetActive(false);
+            for (int i = 0; i < monsterResultDisplays.Length;i++) {
+                monsterResultDisplays[i].gameObject.SetActive(false);
             }
 
             for (int i = 0; i < pms.Count; i++) {
@@ -63,7 +63,7 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Displays the monsterDisplays, initializing them
+        /// Displays the monsterResultDisplays, initializing them
         /// </summary>
         /// <param name="pms"> List of partyMembers </param>
         /// <param name="monstersKilled"> List of monsters killed </param>
@@ -85,8 +85,8 @@ namespace PlayerUI {
 
             for (int i = 0; i < monstersToDisplay.Length; i++) {
                 if (monsterCounts[i] > 0) {
-                    monsterDisplays[i].gameObject.SetActive(true);
-                    yield return (StartCoroutine(monsterDisplays[i].Init(monstersToDisplay[i], monsterCounts[i])));
+                    monsterResultDisplays[i].gameObject.SetActive(true);
+                    yield return (StartCoroutine(monsterResultDisplays[i].Init(monstersToDisplay[i], monsterCounts[i])));
                     amountEXP += monstersToDisplay[i].EXP * monsterCounts[i];
                     amountWAX += monstersToDisplay[i].WAX * monsterCounts[i];
                 }

@@ -146,6 +146,9 @@ namespace Characters {
         /// <remark> Monster's image is repositioned depending on its sprite size </remark>
         private void SetSize(string monsterSize) {
             RectTransform monsterRect = monsterSpriteHolder.GetComponent<RectTransform>();
+            //Sprite overrideSprite = monsterSprite.overrideSprite;
+            //monsterRect.sizeDelta = new Vector2(overrideSprite.rect.width, overrideSprite.rect.height);
+
             if (monsterSize == "extraSmall") {
                 vectorSize = new Vector2(160, 160);
                 monsterRect.sizeDelta = vectorSize;

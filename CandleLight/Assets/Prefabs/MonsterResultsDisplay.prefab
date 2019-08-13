@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2297247119919838524}
   - component: {fileID: 2297247119919838515}
   m_Layer: 5
-  m_Name: MonsterDisplay
+  m_Name: MonsterResultsDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2297247119919838525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49625de09c5654142bc8d1b8a94e469f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d9625e46acaa45b29aa65be8867f806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   b: {fileID: 2297247121367354937}
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 2297247120401351573}
+  textPreset: 0
 --- !u!222 &2297247120401351572
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -171,7 +172,6 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 4128
-  m_isAlignmentEnumConverted: 1
   m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -198,6 +198,7 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
@@ -212,12 +213,9 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
-  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
