@@ -141,7 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7deb53a91974eed814a3d8da4f9d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster: {fileID: 4945471360017046569, guid: 7f4d4ee6c3ea946108f1deb439360092, type: 3}
+  monsterDisplay: {fileID: 4945471360017046569, guid: 7f4d4ee6c3ea946108f1deb439360092,
+    type: 3}
 --- !u!4 &131425414
 Transform:
   m_ObjectHideFlags: 0
@@ -228,7 +229,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1147721805
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7372f831d6e644e41a93d8484ac21e98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

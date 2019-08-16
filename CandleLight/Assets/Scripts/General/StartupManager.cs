@@ -21,7 +21,7 @@ namespace Localization {
 
         /// <summary>
         /// Start to wait for the loading of all strings from the JSON file into the LocalizationManager,
-        /// AssetBundles from online if being used, and data from the dataManager
+        /// AssetBundles from online if being used
         /// </summary>
         /// <returns>
         /// Yields until loading is finished, then has GameManager load the main menu

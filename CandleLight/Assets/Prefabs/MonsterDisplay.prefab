@@ -970,9 +970,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 149230361843528176}
-  - component: {fileID: 948505794941537492}
+  - component: {fileID: 8085412351755015521}
+  - component: {fileID: 1488682590168830683}
   m_Layer: 0
-  m_Name: Monster
+  m_Name: MonsterDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -993,7 +994,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &948505794941537492
+--- !u!114 &8085412351755015521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4945471360017046569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49625de09c5654142bc8d1b8a94e469f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectsAnimator: {fileID: 9202039021361903901}
+  monsterAnimator: {fileID: 3724190269095448903}
+  HPBar: {fileID: 5904602688543524742}
+  b: {fileID: 8848571942937455294}
+  bts: {fileID: 5047602295156611218}
+  monsterCanvas: {fileID: 8893029803877665006}
+  dt: {fileID: 7751574751049048637}
+  monsterImage: {fileID: 5909135346569761772}
+  monsterSpriteHolder: {fileID: 586621550330952640}
+  t: {fileID: 6508537844259145927}
+  displayedMonster: {fileID: 1488682590168830683}
+  <vectorSize>k__BackingField: {x: 0, y: 0}
+  <spriteWidth>k__BackingField: 0
+--- !u!114 &1488682590168830683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1016,24 +1042,13 @@ MonoBehaviour:
   <INT>k__BackingField: 0
   <LUK>k__BackingField: 0
   <attacks>k__BackingField: []
-  effectsAnimator: {fileID: 9202039021361903901}
-  monsterAnimator: {fileID: 3724190269095448903}
-  HPBar: {fileID: 5904602688543524742}
-  b: {fileID: 8848571942937455294}
-  bts: {fileID: 5047602295156611218}
-  monsterCanvas: {fileID: 8893029803877665006}
-  dt: {fileID: 7751574751049048637}
-  monsterSprite: {fileID: 5909135346569761772}
-  monsterSpriteHolder: {fileID: 586621550330952640}
-  t: {fileID: 6508537844259145927}
-  <vectorSize>k__BackingField: {x: 0, y: 0}
+  md: {fileID: 8085412351755015521}
   <monsterArea>k__BackingField: 
   <monsterSize>k__BackingField: 
   <monsterNameID>k__BackingField: 
   <monsterSpriteName>k__BackingField: 
   <monsterDisplayName>k__BackingField: 
   <monsterAI>k__BackingField: 
-  <spriteWidth>k__BackingField: 0
   <multiplier>k__BackingField: 0
   <EXP>k__BackingField: 0
   <WAX>k__BackingField: 0

@@ -117,16 +117,16 @@ namespace Combat {
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
         /// <remark> Assumes there will always be an action at button 0 </remark>
         private IEnumerator AddMonster(string monsterName) {
-            GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonster(monsterName));
+            GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonsterDisplay(monsterName));
             newMonster.SetActive(true); // monster game object must be active to manipulate its components
             
             Monster monsterComponent = newMonster.GetComponent<Monster>();
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             
             monsterComponent.ID = countID++;
-            monsterComponent.SetHealthBar(); 
-            monsterComponent.AddSMDListener(smd);
-            monsterComponent.SetInteractable(false);
+            monsterComponent.md.SetHealthBar(); 
+            monsterComponent.md.AddSMDListener(smd);
+            monsterComponent.md.SetInteractable(false);
 
             newMonster.transform.SetParent(enemyCanvas.transform, false);
             
@@ -143,7 +143,7 @@ namespace Combat {
         private IEnumerator DisplayCombatIntro() {
             DisableAllButtons();
             foreach (Monster m in monsters) {
-                StartCoroutine(m.PlaySpawnAnimation());
+                StartCoroutine(m.md.PlaySpawnAnimation());
             }
             yield return new WaitForSeconds(1.5f);   
             eventDescription.ClearText();
@@ -236,12 +236,12 @@ namespace Combat {
         public void PreparePMAttack(Attack a) {
             selectedAttack = a;
             foreach(Monster m in monsters) {
-                m.SetNavigation("down", actionsPanel.GetActionButton(4));
+                m.md.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
-            actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].b);
+            actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].md.b);
             partyPanel.SetHorizontalNavigation();
 
-            es.SetSelectedGameObject(monsters[middleMonster].b.gameObject);
+            es.SetSelectedGameObject(monsters[middleMonster].md.b.gameObject);
         }
 
         /// <summary>
@@ -256,10 +256,10 @@ namespace Combat {
             // wait for all monsters to despawn
             DisableAllButtons();
             for (int i = 0; i < monsters.Count - 1; i++) {  
-                StartCoroutine(monsters[i].PlayDeathAnimation());
+                StartCoroutine(monsters[i].md.PlayDeathAnimation());
                 monstersToRemove.Add(monsters[i]);
             }
-            yield return (StartCoroutine(monsters[monsters.Count - 1].PlayDeathAnimation())); // yield to last monster so we wait for all monsters to die
+            yield return (StartCoroutine(monsters[monsters.Count - 1].md.PlayDeathAnimation())); // yield to last monster so we wait for all monsters to die
             monstersToRemove.Add(monsters[monsters.Count - 1]);
             yield return new WaitForSeconds(0.75f);
 
@@ -270,10 +270,10 @@ namespace Combat {
             else {
                 eventDescription.SetKey(GetFleeFailedKey());
                 for (int i = 0; i < monsters.Count - 1; i++) {  // wait for all monsters to respawn
-                    StartCoroutine(monsters[i].PlaySpawnAnimation());
+                    StartCoroutine(monsters[i].md.PlaySpawnAnimation());
                     monstersToRemove.Add(monsters[i]);
                 }
-                yield return (StartCoroutine(monsters[monsters.Count - 1].PlaySpawnAnimation())); 
+                yield return (StartCoroutine(monsters[monsters.Count - 1].md.PlaySpawnAnimation())); 
                 monstersToRemove.Add(monsters[monsters.Count - 1]);
                 yield return new WaitForSeconds(0.25f);
             }
@@ -287,7 +287,7 @@ namespace Combat {
         public void UndoPMAction() {
             selectedAttack = null;
             foreach(Monster m in monsters) {
-                m.SetNavigation("down", actionsPanel.GetActionButton(0));
+                m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
             }
 
             partyPanel.SetHorizontalNavigation();
@@ -326,7 +326,7 @@ namespace Combat {
                     monstersToRemove.Add(m);
                     monstersKilled.Add(m);
 
-                    yield return StartCoroutine(m.PlayDeathAnimation());
+                    yield return StartCoroutine(m.md.PlayDeathAnimation());
                 }
             }
             DestroyMonsters(monstersToRemove);
@@ -382,7 +382,7 @@ namespace Combat {
             int targetChoice = 0;
             Attack attackChoice = activeMonster.SelectAttack();
             eventDescription.SetKey(attackChoice.nameKey);
-            yield return StartCoroutine(activeMonster.PlayStartTurnAnimation());
+            yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
 
             if (activeMonster.monsterAI == "random") {
                 targetChoice = Random.Range(0, partyMembers.Count);
@@ -397,7 +397,7 @@ namespace Combat {
                 targetChoice = weakest;
             }
             
-            yield return (StartCoroutine(activeMonster.PlayAttackAnimation()));
+            yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation()));
             eventDescription.SetPMDamageText(partyMembers[targetChoice], attackChoice.damage);
             
             yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage)));
@@ -499,9 +499,9 @@ namespace Combat {
                         }
                     }
 
-                    monsterToSelect.SelectMonsterButton();
+                    monsterToSelect.md.SelectMonsterButton();
                     foreach (Monster m in selectedMonsterAdjacents) {
-                        m.SelectMonsterButtonAdjacent();
+                        m.md.SelectMonsterButtonAdjacent();
                     }
                 }
                 
@@ -517,10 +517,10 @@ namespace Combat {
         /// </remark>
         public void DeselectMonstersVisually() {
             if (selectedMonster != null) {
-                selectedMonster.DeselectMonsterButton();
+                selectedMonster.md.DeselectMonsterButton();
             }
             foreach (Monster m in selectedMonsterAdjacents) {
-                m.DeselectMonsterButton();
+                m.md.DeselectMonsterButton();
             }
         }
 
@@ -529,12 +529,12 @@ namespace Combat {
         /// </summary>
         public void DeselectMonsters() {
             if (selectedMonster != null) {
-                selectedMonster.DeselectMonsterButton(); 
+                selectedMonster.md.DeselectMonsterButton(); 
                 selectedMonster = null;
             }
             
             foreach (Monster m in selectedMonsterAdjacents) {
-                m.DeselectMonsterButton();
+                m.md.DeselectMonsterButton();
             }
             selectedMonsterAdjacents.Clear();
         }
@@ -555,7 +555,7 @@ namespace Combat {
         /// </summary>
         public void EnableAllMonsterSelection() {
             foreach (Monster m in monsters) {
-                m.SetInteractable(true);
+                m.md.SetInteractable(true);
             }
         }
 
@@ -564,7 +564,7 @@ namespace Combat {
         /// </summary>
         public void DisableAllMonsterSelection() {
             foreach (Monster m in monsters) {
-                m.SetInteractable(false);
+                m.md.SetInteractable(false);
             }
         }  
 
@@ -582,26 +582,27 @@ namespace Combat {
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                 }
                 else if (monsters.Count == 2) {
-                    float spacing0 = ((monsters[0].spriteWidth / 2) + 10) * -1;
-                    float spacing1 = ((monsters[0].spriteWidth / 2) + 10);  
-
+                    float spacing0 = ((monsters[0].md.spriteWidth / 2) + 10) * -1;
+                    float spacing1 = ((monsters[0].md.spriteWidth / 2) + 10);  
+                    print(spacing0);
+                    print(spacing1);
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
                 }
                 else if (monsters.Count == 3) {
-                    float spacing0 = ((monsters[1].spriteWidth / 2 + monsters[0].spriteWidth / 2) + 10) * -1;  
+                    float spacing0 = ((monsters[1].md.spriteWidth / 2 + monsters[0].md.spriteWidth / 2) + 10) * -1;  
                     float spacing1 = 0;
-                    float spacing2 = ((monsters[1].spriteWidth / 2 + monsters[2].spriteWidth / 2) + 10);
+                    float spacing2 = ((monsters[1].md.spriteWidth / 2 + monsters[2].md.spriteWidth / 2) + 10);
                     
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
                     monsters[2].gameObject.transform.localPosition = new Vector3(spacing2, monsters[2].gameObject.transform.position.y, 0.0f);  
                 }
                 else if (monsters.Count == 4) {
-                    float spacing0 = ((monsters[1].spriteWidth / 2) + monsters[0].spriteWidth + 30) * -1;  
-                    float spacing1 = ((monsters[1].spriteWidth / 2) + 10) * -1; 
-                    float spacing2 = (monsters[2].spriteWidth / 2) + 10;
-                    float spacing3 = (monsters[2].spriteWidth / 2) + monsters[3].spriteWidth + 30;  
+                    float spacing0 = ((monsters[1].md.spriteWidth / 2) + monsters[0].md.spriteWidth + 30) * -1;  
+                    float spacing1 = ((monsters[1].md.spriteWidth / 2) + 10) * -1; 
+                    float spacing2 = (monsters[2].md.spriteWidth / 2) + 10;
+                    float spacing3 = (monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth + 30;  
 
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
@@ -609,11 +610,11 @@ namespace Combat {
                     monsters[3].gameObject.transform.localPosition = new Vector3(spacing3, monsters[3].gameObject.transform.position.y, 0.0f);   
                 }
                 else if (monsters.Count == 5) {
-                    float spacing0 = ((monsters[2].spriteWidth / 2) + monsters[1].spriteWidth + monsters[0].spriteWidth / 2 + 30) * -1;  
-                    float spacing1 = ((monsters[2].spriteWidth / 2) + monsters[1].spriteWidth / 2 + 10) * -1; 
+                    float spacing0 = ((monsters[2].md.spriteWidth / 2) + monsters[1].md.spriteWidth + monsters[0].md.spriteWidth / 2 + 30) * -1;  
+                    float spacing1 = ((monsters[2].md.spriteWidth / 2) + monsters[1].md.spriteWidth / 2 + 10) * -1; 
                     float spacing2 = 0;
-                    float spacing3 = (monsters[2].spriteWidth / 2) + monsters[3].spriteWidth / 2 + 10; 
-                    float spacing4 = ((monsters[2].spriteWidth / 2) + monsters[3].spriteWidth + monsters[4].spriteWidth / 2 + 30);  
+                    float spacing3 = (monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth / 2 + 10; 
+                    float spacing4 = ((monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth + monsters[4].md.spriteWidth / 2 + 30);  
 
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
@@ -634,30 +635,30 @@ namespace Combat {
         /// </summary>
         private void SetMonsterNavigation() {
             foreach (Monster m in monsters) {
-                m.ResetNavigation();
+                m.md.ResetNavigation();
             }
             foreach(Monster m in monsters) {
-                m.SetNavigation("down", actionsPanel.GetActionButton(0));
+                m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
             }
 
             if (monsters.Count > 1) {
                 for (int i = 0; i < monsters.Count; i++) {
                     if (i == 0) {
-                        monsters[i].SetNavigation("right", monsters[i + 1].b);
+                        monsters[i].md.SetNavigation("right", monsters[i + 1].md.b);
                     }
                     else if (i == monsters.Count - 1) {
-                        monsters[i].SetNavigation("left", monsters[i - 1].b);
+                        monsters[i].md.SetNavigation("left", monsters[i - 1].md.b);
                     }
                     else {
-                        monsters[i].SetNavigation("left", monsters[i - 1].b);
-                        monsters[i].SetNavigation("right", monsters[i + 1].b);
+                        monsters[i].md.SetNavigation("left", monsters[i - 1].md.b);
+                        monsters[i].md.SetNavigation("right", monsters[i + 1].md.b);
                     }
                 }
             }
             
             middleMonster = (int)(Mathf.Floor(monsters.Count / 2f));
-            actionsPanel.SetButtonNavigation(0, "up", monsters[middleMonster].b);
-            actionsPanel.SetButtonNavigation(1, "up", monsters[middleMonster].b);
+            actionsPanel.SetButtonNavigation(0, "up", monsters[middleMonster].md.b);
+            actionsPanel.SetButtonNavigation(1, "up", monsters[middleMonster].md.b);
         }
 
         #endregion

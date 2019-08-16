@@ -194,7 +194,7 @@ namespace Events {
             /* Check interaction to see if its sending player to a new subArea */
             if (r != null && r.name != "none" && r.subAreaName != "none") { 
                 currentSubArea = currentArea.GetSubArea(r.subAreaName);
-                StartCoroutine(DataManager.instance.LoadMonsters(currentSubArea.monsterPool));
+                StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                 subAreaProgress = 0;  
                 if (infoPanel.isOpen) {
                     infoPanel.UpdateAmounts();
