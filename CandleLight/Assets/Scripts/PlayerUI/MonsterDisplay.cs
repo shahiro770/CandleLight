@@ -28,14 +28,18 @@ namespace Characters {
         public Button b;                    /// <value> Button to make monster selectable </value>
         public ButtonTransitionState bts;   /// <value> Button's visual state controller </value>
         public Canvas monsterCanvas;        /// <value> Monster's personal canvas to display UI elements and minimize repainting </value>
-        public DamageText dt;               /// <value> Text display to show how much damage taken by an attack </value>
-        public Image monsterImage;          /// <value> Monster's sprite </value>
+        public DamageText dt;               /// <value> Text display to show how much damage taken by an attack </value>we
         public RectTransform monsterSpriteHolder;       /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
+        public SpriteRenderer monsterSprite;
         public Tooltip t;
 
-        [field: SerializeField] private Monster displayedMonster;
         [field: SerializeField] public Vector2 vectorSize { get; private set; }         /// <value> Size of monster's sprite </value>
         [field: SerializeField] public float spriteWidth { get; private set; }          /// <value> Width of sprite rect transform </value>
+        
+        [field: SerializeField] private Monster displayedMonster;
+        [field: SerializeField] private Vector2 buttonVectorSize;                       /// <value> Size of monster's sprite </value>
+        [field: SerializeField] private float healthBarWidth = 18;
+
 
         #region [ Initialization ] Initialization
 
@@ -61,11 +65,9 @@ namespace Characters {
 
             /****************/
             
-            monsterImage.sprite = Resources.Load<Sprite>(spritePath);
+            monsterSprite.sprite = Resources.Load<Sprite>(spritePath);
 
-            RectTransform monsterRect = monsterSpriteHolder.GetComponent<RectTransform>();
-            spriteWidth = monsterRect.rect.width;
-
+            SetSize();
             SetHealthBar();
             SetTooltip();
             SetMonsterAnimatorClips();
@@ -82,14 +84,39 @@ namespace Characters {
             string monsterSize = displayedMonster.monsterSize;
 
             if (monsterSize == "small" || monsterSize == "extraSmall") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(115, 18));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(vectorSize.x, healthBarWidth));
             } 
             else if (monsterSize == "medium") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(150, 18));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(vectorSize.x, healthBarWidth));
             }
              else if (monsterSize == "large") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(230, 18));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(vectorSize.x, healthBarWidth));
             }
+        }
+
+        private void SetSize() {
+            RectTransform monsterRect = monsterSpriteHolder.GetComponent<RectTransform>();
+            RectTransform buttonRect = b.GetComponent<RectTransform>();
+            string monsterSize = displayedMonster.monsterSize;
+            
+            if (monsterSize == "small") {
+                vectorSize = new Vector2(128, 128);
+                buttonVectorSize = new Vector2(160, 160);
+            } 
+            else if (monsterSize == "medium") {
+                vectorSize = new Vector2(192, 192);
+                buttonVectorSize = new Vector2(192, 192);
+            }
+             else if (monsterSize == "large") {
+                vectorSize = new Vector2(256, 256);
+                buttonVectorSize = new Vector2(280, 280);
+            }
+
+            monsterRect.sizeDelta = vectorSize;
+            buttonRect.sizeDelta = buttonVectorSize;
+            monsterRect.anchoredPosition = new Vector3(0, (vectorSize.y - 192) / 2 + 16);
+            buttonRect.anchoredPosition = new Vector3(0, buttonVectorSize.y / 2);
+            spriteWidth = vectorSize.x;
         }
 
         #endregion
@@ -149,7 +176,8 @@ namespace Characters {
 
 
         public void SetTooltip() {
-            t.SetImageDisplayBackgroundWidth(spriteWidth);
+            RectTransform buttonRect = b.GetComponent<RectTransform>();
+            t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
 
             t.SetKey("title", displayedMonster.monsterDisplayName + "_monster");
             t.SetAmountText("subtitle", "LVL_label", displayedMonster.LVL);

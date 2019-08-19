@@ -582,27 +582,25 @@ namespace Combat {
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                 }
                 else if (monsters.Count == 2) {
-                    float spacing0 = ((monsters[0].md.spriteWidth / 2) + 10) * -1;
-                    float spacing1 = ((monsters[0].md.spriteWidth / 2) + 10);  
-                    print(spacing0);
-                    print(spacing1);
+                    float spacing0 = ((monsters[0].md.spriteWidth / 2) + 20) * -1;
+                    float spacing1 = ((monsters[1].md.spriteWidth / 2) + 20);  
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
                 }
                 else if (monsters.Count == 3) {
-                    float spacing0 = ((monsters[1].md.spriteWidth / 2 + monsters[0].md.spriteWidth / 2) + 10) * -1;  
+                    float spacing0 = ((monsters[1].md.spriteWidth / 2 + monsters[0].md.spriteWidth / 2) + 40) * -1;  
                     float spacing1 = 0;
-                    float spacing2 = ((monsters[1].md.spriteWidth / 2 + monsters[2].md.spriteWidth / 2) + 10);
+                    float spacing2 = ((monsters[1].md.spriteWidth / 2 + monsters[2].md.spriteWidth / 2) + 40);
                     
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
                     monsters[2].gameObject.transform.localPosition = new Vector3(spacing2, monsters[2].gameObject.transform.position.y, 0.0f);  
                 }
                 else if (monsters.Count == 4) {
-                    float spacing0 = ((monsters[1].md.spriteWidth / 2) + monsters[0].md.spriteWidth + 30) * -1;  
-                    float spacing1 = ((monsters[1].md.spriteWidth / 2) + 10) * -1; 
-                    float spacing2 = (monsters[2].md.spriteWidth / 2) + 10;
-                    float spacing3 = (monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth + 30;  
+                    float spacing0 = (monsters[1].md.spriteWidth + (monsters[0].md.spriteWidth / 2) + 60) * -1;  
+                    float spacing1 = ((monsters[1].md.spriteWidth / 2) + 20) * -1; 
+                    float spacing2 = (monsters[2].md.spriteWidth / 2) + 20;
+                    float spacing3 = monsters[2].md.spriteWidth + (monsters[3].md.spriteWidth / 2) + 60;  
 
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  
@@ -610,11 +608,11 @@ namespace Combat {
                     monsters[3].gameObject.transform.localPosition = new Vector3(spacing3, monsters[3].gameObject.transform.position.y, 0.0f);   
                 }
                 else if (monsters.Count == 5) {
-                    float spacing0 = ((monsters[2].md.spriteWidth / 2) + monsters[1].md.spriteWidth + monsters[0].md.spriteWidth / 2 + 30) * -1;  
-                    float spacing1 = ((monsters[2].md.spriteWidth / 2) + monsters[1].md.spriteWidth / 2 + 10) * -1; 
+                    float spacing0 = ((monsters[2].md.spriteWidth / 2) + monsters[1].md.spriteWidth + monsters[0].md.spriteWidth / 2 + 80) * -1;  
+                    float spacing1 = ((monsters[2].md.spriteWidth / 2) + monsters[1].md.spriteWidth / 2 + 40) * -1; 
                     float spacing2 = 0;
-                    float spacing3 = (monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth / 2 + 10; 
-                    float spacing4 = ((monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth + monsters[4].md.spriteWidth / 2 + 30);  
+                    float spacing3 = (monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth / 2 + 40; 
+                    float spacing4 = ((monsters[2].md.spriteWidth / 2) + monsters[3].md.spriteWidth + monsters[4].md.spriteWidth / 2 + 80);  
 
                     monsters[0].gameObject.transform.localPosition = new Vector3(spacing0, monsters[0].gameObject.transform.position.y, 0.0f);
                     monsters[1].gameObject.transform.localPosition = new Vector3(spacing1, monsters[1].gameObject.transform.position.y, 0.0f);  

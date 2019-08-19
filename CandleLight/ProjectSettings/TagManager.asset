@@ -44,11 +44,11 @@ TagManager:
   - name: Background
     uniqueID: 432015609
     locked: 0
-  - name: UI
-    uniqueID: 1519063691
-    locked: 0
   - name: Characters
     uniqueID: 3147245491
+    locked: 0
+  - name: UI
+    uniqueID: 1519063691
     locked: 0
   - name: Effects
     uniqueID: 2061592957
