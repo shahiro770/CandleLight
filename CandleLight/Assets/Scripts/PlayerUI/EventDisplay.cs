@@ -20,7 +20,7 @@ namespace PlayerUI {
 
         /* external component references */
         public ActionsPanel actionsPanel;
-        public Image img;   /// <value> Image to be displayed </value>
+        public SpriteRenderer eventSprite;   /// <value> Image to be displayed </value>
         public CanvasGroup imgCanvas;
         public ItemDisplay[] itemDisplays = new ItemDisplay[4];
         
@@ -31,8 +31,8 @@ namespace PlayerUI {
         /// Sets image to display a given sprite
         /// </summary>
         /// <param name="spr"> Sprite to be displayed </param>
-        public void SetImage(Sprite spr) {
-            img.sprite = spr;
+        public void SetSprite(Sprite spr) {
+            eventSprite.sprite = spr;
         }
 
         public void SetItemDisplays(List<Item> items) {
@@ -111,12 +111,16 @@ namespace PlayerUI {
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = timeSinceStarted * lerpSpeed;
             float prevAlpha = imgCanvas.alpha;
+            float newAlpha;
 
             while (imgCanvas.alpha != targetAlpha) {
                 timeSinceStarted = Time.time - timeStartedLerping;
                 percentageComplete = timeSinceStarted * lerpSpeed;
 
-                imgCanvas.alpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+                newAlpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+
+                imgCanvas.alpha = newAlpha;
+                eventSprite.color = new Color(255, 255, 255, newAlpha);
 
                 yield return new WaitForEndOfFrame();
             }

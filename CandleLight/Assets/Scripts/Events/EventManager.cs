@@ -350,7 +350,7 @@ namespace Events {
             List<Item> items = GetInteractionResults(r);
 
             if (i.GetSprite() != null) {
-                eventDisplays[0].SetImage(i.GetSprite());
+                eventDisplays[0].SetSprite(i.GetSprite());
                 eventDisplays[0].SetPosition(pos1d1);
             }
 
@@ -481,15 +481,15 @@ namespace Events {
         public void ShowEventDisplays() {
             if (currentEvent.spriteNum != 0) {
                 if (currentEvent.spriteNum == 1) {
-                    eventDisplays[0].SetImage(currentEvent.eventSprites[0]);
+                    eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
 
                     eventDisplays[0].SetPosition(pos1d1);
 
                     eventDisplays[0].SetVisible(true);
                 }
                 else if (currentEvent.spriteNum == 2) {
-                    eventDisplays[0].SetImage(currentEvent.eventSprites[0]);
-                    eventDisplays[1].SetImage(currentEvent.eventSprites[1]);
+                    eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
+                    eventDisplays[1].SetSprite(currentEvent.eventSprites[1]);
 
                     eventDisplays[0].SetPosition(pos2d1);
                     eventDisplays[1].SetPosition(pos2d2);
@@ -498,9 +498,9 @@ namespace Events {
                     eventDisplays[1].SetVisible(true);
                 }
                 else {
-                    eventDisplays[0].SetImage(currentEvent.eventSprites[0]);
-                    eventDisplays[1].SetImage(currentEvent.eventSprites[1]);
-                    eventDisplays[2].SetImage(currentEvent.eventSprites[2]);
+                    eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
+                    eventDisplays[1].SetSprite(currentEvent.eventSprites[1]);
+                    eventDisplays[2].SetSprite(currentEvent.eventSprites[2]);
 
                     eventDisplays[0].SetPosition(pos3d1);
                     eventDisplays[1].SetPosition(pos3d2);

@@ -114,7 +114,7 @@ namespace Characters {
 
             monsterRect.sizeDelta = vectorSize;
             buttonRect.sizeDelta = buttonVectorSize;
-            monsterRect.anchoredPosition = new Vector3(0, (vectorSize.y - 192) / 2 + 16);
+            monsterRect.anchoredPosition = new Vector3(0, (vectorSize.y - 192) / 2 + 8);
             buttonRect.anchoredPosition = new Vector3(0, buttonVectorSize.y / 2);
             spriteWidth = vectorSize.x;
         }
