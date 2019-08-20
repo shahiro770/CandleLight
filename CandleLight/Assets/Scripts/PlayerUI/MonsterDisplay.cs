@@ -84,13 +84,13 @@ namespace Characters {
             string monsterSize = displayedMonster.monsterSize;
 
             if (monsterSize == "small" || monsterSize == "extraSmall") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(vectorSize.x, healthBarWidth));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(115, healthBarWidth));
             } 
             else if (monsterSize == "medium") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(vectorSize.x, healthBarWidth));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(150, healthBarWidth));
             }
              else if (monsterSize == "large") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(vectorSize.x, healthBarWidth));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(230, healthBarWidth));
             }
         }
 

@@ -44,6 +44,9 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pms"></param>
         public void Init(List<PartyMember> pms) {
+            for (int i = 0; i < pmDisplays.Length;i++) {
+                pmDisplays[i].gameObject.SetActive(false);
+            }
             for (int i = 0; i < pms.Count; i++) {
                 pmDisplays[i].gameObject.SetActive(true);
                 pmDisplays[i].Init(pms[i]);

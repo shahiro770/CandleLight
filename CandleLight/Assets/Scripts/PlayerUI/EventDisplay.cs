@@ -22,7 +22,7 @@ namespace PlayerUI {
         public ActionsPanel actionsPanel;
         public SpriteRenderer eventSprite;   /// <value> Image to be displayed </value>
         public CanvasGroup imgCanvas;
-        public ItemDisplay[] itemDisplays = new ItemDisplay[4];
+        public ItemDisplay[] itemDisplays = new ItemDisplay[3];
         
         private float lerpSpeed = 4;
         private int itemNum = 0;
@@ -41,6 +41,7 @@ namespace PlayerUI {
             for (int i = 0; i < itemNum; i++) {
                 itemDisplays[i].Init(items[i]);
             }
+
             SetInitialNavigation();
         }
 

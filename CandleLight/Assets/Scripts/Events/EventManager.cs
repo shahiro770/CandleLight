@@ -53,8 +53,8 @@ namespace Events {
         private Event currentEvent;          /// <value> Event being displayed </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
         private BackgroundPack bgPackPrev = null;
-        private Sprite WAXSprite;
-        private Sprite HPSprite;
+        private Sprite WAXItemSprite;
+        private Sprite HPItemSprite;
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, 0, 0);
@@ -132,11 +132,11 @@ namespace Events {
         }
 
         public void LoadGeneralSprites() {
-            WAXSprite = Resources.Load<Sprite>("Sprites/Interactions/WAXItem");
+            WAXItemSprite = Resources.Load<Sprite>("Sprites/Items/WAXItem");
             
             switch(currentAreaName) {
                 case "GreyWastes":
-                    HPSprite = Resources.Load<Sprite>("Sprites/Interactions/HealingEffect");
+                    HPItemSprite = Resources.Load<Sprite>("Sprites/Items/HealingEffectItem");
                     break;
             }
         }
@@ -333,13 +333,13 @@ namespace Events {
                 //items.Add(new Item("EXP", r.EXPAmount, EXPSprite));
             }
             if (r.HPAmount > 0) {
-                items.Add(new Item("HP", r.HPAmount, HPSprite));
+                items.Add(new Item("HP", r.HPAmount, HPItemSprite));
             }
             if (r.MPAmount > 0) {
                 //items.Add(new Item("MP", r.MPAmount, MPSprite));
             }
             if (r.WAXAmount > 0) {
-                items.Add(new Item("WAX", r.WAXAmount, WAXSprite));
+                items.Add(new Item("WAX", r.WAXAmount, WAXItemSprite));
             }
 
             return items;

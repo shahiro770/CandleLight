@@ -21,11 +21,11 @@ namespace PlayerUI {
     public class ItemDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
 
         /* external component references */
-        public Image img;   /// <value> Image to be displayed </value>
-        public Image imgBackground;
         public CanvasGroup imgCanvas;
         public Button b;
         public ButtonTransitionState bts;
+        public Image imgBackground;
+        public SpriteRenderer itemSprite;   /// <value> Sprite to be displayed </value>
         public Tooltip t;
         
         private Item displayedItem;
@@ -36,7 +36,7 @@ namespace PlayerUI {
         /// </summary>
         public void Init(Item displayedItem) {
             this.displayedItem = displayedItem;
-            img.color = new Color(img.color.r, img.color.g, img.color.b, 255);
+            itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
 
             if (displayedItem != null) {
                 if (displayedItem.type == "EXP") {
@@ -52,7 +52,7 @@ namespace PlayerUI {
 
                 }
 
-                img.sprite = displayedItem.itemSprite;
+                itemSprite.sprite = displayedItem.itemSprite;
             }
             t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
             SetTooltipText();
@@ -75,8 +75,8 @@ namespace PlayerUI {
                 }
 
                 displayedItem = null;
-                img.sprite = null;
-                img.color = new Color(img.color.r, img.color.g, img.color.b, 0);
+                itemSprite.sprite = null;
+                itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 0);
                 t.SetVisible(false);
             }
         }
@@ -92,7 +92,7 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Makes the eventDisplay visible and interactable
+        /// Makes the itemDisplay visible and interactable
         /// </summary>
         /// <param name="value"></param>
         public void SetVisible(bool value) {
@@ -113,12 +113,16 @@ namespace PlayerUI {
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = timeSinceStarted * lerpSpeed;
             float prevAlpha = imgCanvas.alpha;
+            float newAlpha;
 
             while (imgCanvas.alpha != targetAlpha) {
                 timeSinceStarted = Time.time - timeStartedLerping;
                 percentageComplete = timeSinceStarted * lerpSpeed;
 
-                imgCanvas.alpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+                newAlpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+
+                imgCanvas.alpha = newAlpha;
+                itemSprite.color = new Color(255, 255, 255, newAlpha);
 
                 yield return new WaitForEndOfFrame();
             }
