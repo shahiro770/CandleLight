@@ -343,6 +343,7 @@ namespace Database {
                     string[] intResults = new string[4];
                     string[] intResultKeys = new string[4];
                     string[] intSprites = new String[4];
+                    bool isSingleUse = false;
 
                     if (reader.Read()) {
                         intResults[0] = reader.GetString(2);
@@ -360,13 +361,66 @@ namespace Database {
                         intSprites[2] = reader.GetString(10);
                         intSprites[3] = reader.GetString(13);
 
-                        newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, intSprites, dbConnection);
+                        isSingleUse = reader.GetBoolean(14);
+
+                        newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, intSprites, isSingleUse, dbConnection);
                     }
                     else {
                          Debug.LogError("Interaction " + intName + " does not exist in the DB");
                     }
                 
                     return newInt;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns an Interaction from the Interactions table. Overloaded to use its own dbconnection.
+        /// </summary>
+        /// <param name="intName"> Name of interaction </param>
+        /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
+        /// <returns> An Interaction, passing it the dbconnection for it to fetch all information it needs </returns>
+        public Interaction GetInteractionByName(string intName) {
+            using(dbConnection = base.GetConnection()) {
+
+                dbConnection.Open();
+
+                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+                    dbcmd.CommandText = "SELECT * FROM Interactions WHERE Name = '" + intName + "'";
+
+                    using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        Interaction newInt = null;
+                        string[] intResults = new string[4];
+                        string[] intResultKeys = new string[4];
+                        string[] intSprites = new String[4];
+                        bool isSingleUse = false;
+
+                        if (reader.Read()) {
+                            intResults[0] = reader.GetString(2);
+                            intResults[1] = reader.GetString(5);
+                            intResults[2] = reader.GetString(8);
+                            intResults[3] = reader.GetString(11);
+
+                            intResultKeys[0] = reader.GetString(3);
+                            intResultKeys[1] = reader.GetString(6);
+                            intResultKeys[2] = reader.GetString(9);
+                            intResultKeys[3] = reader.GetString(12);
+
+                            intSprites[0] = reader.GetString(4);
+                            intSprites[1] = reader.GetString(7);
+                            intSprites[2] = reader.GetString(10);
+                            intSprites[3] = reader.GetString(13);
+                            
+                            isSingleUse = reader.GetBoolean(14);
+
+                            newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, intSprites, isSingleUse, dbConnection);
+                        }
+                        else {
+                            Debug.LogError("Interaction " + intName + " does not exist in the DB");
+                        }
+                    
+                        return newInt;
+                    }
                 }
             }
         }
@@ -384,16 +438,27 @@ namespace Database {
 
                 using (IDataReader reader = dbcmd.ExecuteReader()) {
                     Result newResult = null;
+                    string name = "";
+                    string type = "";
+                    string quantity = "";
+                    string subAreaName = "";
+                    string subEventName = "";
                     int[] resultChanges = new int[4];
+                    bool isUnique = false;
 
                     if (reader.Read()) {
-                        resultChanges[0] = reader.GetInt32(4);
-                        resultChanges[1] = reader.GetInt32(5);
-                        resultChanges[2] = reader.GetInt32(6);
-                        resultChanges[3] = reader.GetInt32(7);
+                        name = reader.GetString(1);
+                        type = reader.GetString(2);
+                        isUnique = reader.GetBoolean(3);
+                        quantity = reader.GetString(4);
+                        resultChanges[0] = reader.GetInt32(5);
+                        resultChanges[1] = reader.GetInt32(6);
+                        resultChanges[2] = reader.GetInt32(7);
+                        resultChanges[3] = reader.GetInt32(8);
+                        subAreaName = reader.GetString(9);
+                        subEventName = reader.GetString(10);
 
-                        newResult = new Result(reader.GetString(1), reader.GetBoolean(2), resultKey, reader.GetString(3), resultChanges, 
-                        reader.GetString(8), reader.GetString(9));
+                        newResult = new Result(name, type, isUnique, resultKey, quantity, resultChanges, subAreaName, subEventName);
                     }
                     else {
                          Debug.LogError("Result " + resultName + " does not exist in the DB");

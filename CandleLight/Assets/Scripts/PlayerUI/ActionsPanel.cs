@@ -29,6 +29,7 @@ namespace PlayerUI {
         
         private EventSystem es;                     /// <value> eventSystem reference </value>
         private Action selectedAction;              /// <value> Action that was selected </value>
+        private Interaction travelInt;
         private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
 
         /// <summary>
@@ -36,6 +37,10 @@ namespace PlayerUI {
         /// </summary>
         void Awake() {
             es = EventSystem.current;
+        }
+
+        public void SetGeneralInteractions(Interaction travelInt) {
+            this.travelInt = travelInt;
         }
         
         /// <summary>
@@ -51,13 +56,13 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="interactions"> List of interactions according to event, length 5 </param>
         public void SetInteractionActions(Interaction[] interactions) { 
+            SetActionsUsable(true);
             for (int i = 0; i < interactions.Length; i++) {
                 actions[i].SetAction(ActionConstants.INTERACTION, interactions[i]);
             }
             
             if (isLeavePossible) {
-                // last action will always be leave-related if allowed
-                actions[actions.Length - 1].SetActionType(ActionConstants.TRAVEL);
+                // last action will always be travel-related if allowed
                 actions[actions.Length - 1].SetInteractable(true); 
             }
             else {
@@ -77,7 +82,7 @@ namespace PlayerUI {
                 actions[i].SetAction(ActionConstants.NONE);
             }
 
-            actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
+            actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, travelInt);
 
             SetActionsUsable(true);
             SetAllActionsInteractable();
@@ -92,7 +97,7 @@ namespace PlayerUI {
                 actions[i].SetAction(ActionConstants.NONE);
             }
 
-            actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
+            actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, travelInt);
 
             SetActionsUsable(true);
             SetAllActionsUninteractable();
@@ -105,7 +110,7 @@ namespace PlayerUI {
                 actions[i].SetAction(ActionConstants.NONE);
             }
 
-            actions[actions.Length - 1].SetAction(ActionConstants.TRAVEL);
+            actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, travelInt);
 
             SetAllActionsInteractable(true);
             SetInitialNavigation();
@@ -153,25 +158,27 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="a"> Name of action to be taken </param>
         public void SelectAction(Action a) {
-            if (a.actionType == ActionConstants.ATTACK && a.isUsable) {
-                a.ShowActionSelected();  // attack actions will show which attack is selected while user decides what to do next
-                selectedAction = a;
-                AttackActionSelected(a.a);
-            }
-            else if (a.actionType == ActionConstants.UNDO) {
-                UndoAttackActionSelected();
-            }
-            else if (a.actionType == ActionConstants.INTERACTION) {
-                EventManager.instance.DisplayInteraction(a.i);
-            }
-            else if (a.actionType == ActionConstants.TAKEALL) {
-                EventManager.instance.TakeAllItems();
-            }
-            else if (a.actionType ==  ActionConstants.FLEE) {
-                StartCoroutine(CombatManager.instance.AttemptFlee());
-            }
-            else if (a.actionType == ActionConstants.TRAVEL) {
-                EventManager.instance.GetNextEvent(a.i);
+            if (a.isUsable) {
+                if (a.actionType == ActionConstants.ATTACK) {
+                    a.ShowActionSelected();  // attack actions will show which attack is selected while user decides what to do next
+                    selectedAction = a;
+                    AttackActionSelected(a.a);
+                }
+                else if (a.actionType == ActionConstants.UNDO) {
+                    UndoAttackActionSelected();
+                }
+                else if (a.actionType == ActionConstants.INTERACTION) {
+                    if (a.i.isSingleUse) {
+                        a.SetUsable(false);
+                    }
+                    EventManager.instance.Interact(a.i);
+                }
+                else if (a.actionType == ActionConstants.TAKEALL) {
+                    EventManager.instance.TakeAllItems();
+                }
+                else if (a.actionType ==  ActionConstants.FLEE) {
+                    StartCoroutine(CombatManager.instance.AttemptFlee());
+                }
             }
         }
 

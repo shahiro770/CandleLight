@@ -120,6 +120,22 @@ namespace Events {
         }
 
         /// <summary>
+        /// Returns a specific subEvent by name
+        /// </summary>
+        /// <param name="name"> Name of the event </param>
+        /// <returns> An event from the events array </returns>
+        public Event GetSubEvent(string name) {
+            for (int i = 0; i < subEventNum; i++) {
+                if (subEvents[i].name == name) {
+                    return subEvents[i];
+                }
+            }
+
+            Debug.LogError("SubEvent " + name + " does not exist");
+            return null;
+        }
+
+        /// <summary>
         /// Returns a random event prompt string based on the sub area's name for nothing events
         /// </summary>
         /// <returns> String that is a key text for a prompt in en.json </returns>

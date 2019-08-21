@@ -9,6 +9,7 @@
 */
 
 using CombatManager = Combat.CombatManager;
+using ResultConstants = Constants.ResultConstants;
 using General;
 using Items;
 using Party;
@@ -57,12 +58,12 @@ namespace Events {
         private Sprite HPItemSprite;
 
         /* eventDisplay coordinates */
-        private Vector3 pos1d1 = new Vector3(0, 0, 0);
-        private Vector3 pos2d1 = new Vector3(-150, 0, 0);
-        private Vector3 pos2d2 = new Vector3(150, 0, 0);
-        private Vector3 pos3d1 = new Vector3(-275, 0, 0);
-        private Vector3 pos3d2 = new Vector3(0, 0, 0);
-        private Vector3 pos3d3 = new Vector3(275, 0, 0);
+        private Vector3 pos1d1 = new Vector3(0, -20, 0);
+        private Vector3 pos2d1 = new Vector3(-150, -20, 0);
+        private Vector3 pos2d2 = new Vector3(150, -20, 0);
+        private Vector3 pos3d1 = new Vector3(-275, -20, 0);
+        private Vector3 pos3d2 = new Vector3(0, -20, 0);
+        private Vector3 pos3d3 = new Vector3(275, -20, 0);
 
         private string currentAreaName;     /// <value> Name of current area </value>
         private int bgPackNum = 0;          /// <value> Number of backgroundPacks </value>
@@ -112,6 +113,7 @@ namespace Events {
 
             LoadBackgroundPacks();
             LoadGeneralSprites();
+            LoadGeneralInteractions();
 
             isReady = true;
         }
@@ -139,6 +141,11 @@ namespace Events {
                     HPItemSprite = Resources.Load<Sprite>("Sprites/Items/HealingEffectItem");
                     break;
             }
+        }
+
+        public void LoadGeneralInteractions() {
+            Interaction travelInt = GameManager.instance.DB.GetInteractionByName("travel");
+            actionsPanel.SetGeneralInteractions(travelInt);
         }
 
         /// <summary>
@@ -185,38 +192,23 @@ namespace Events {
         /// Gets the next event triggered by an interaction
         /// </summary>
         /// <param name="i"></param>
-        public void GetNextEvent(Interaction i) {
-            Result r = null;
-            if (i != null) {   
-                r = i.GetResult();
+        public void GetNextEvent() {      
+            actionsPanel.SetActionsUsable(true);
+            subAreaProgress += currentEvent.progressAmount;
+            if (subAreaProgress >= 100) {
+                subAreaProgress = 100;
+            }
+            if (infoPanel.isOpen) {
+                infoPanel.UpdateAmounts();
             }
 
-            /* Check interaction to see if its sending player to a new subArea */
-            if (r != null && r.name != "none" && r.subAreaName != "none") { 
-                currentSubArea = currentArea.GetSubArea(r.subAreaName);
-                StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
-                subAreaProgress = 0;  
-                if (infoPanel.isOpen) {
-                    infoPanel.UpdateAmounts();
-                }
-                GetNextSubAreaEvent();
-            }
-            else {
-                subAreaProgress += currentEvent.progressAmount;
-                if (subAreaProgress >= 100) {
-                    subAreaProgress = 100;
-                }
-                if (infoPanel.isOpen) {
-                    infoPanel.UpdateAmounts();
-                }
-
-                // if (subAreaProgress == 100) {
-                //     GetNextMainEvent();
-                // }
-                //else {
-                    GetNextSubAreaEvent();
-                //}
-            }
+            // if (subAreaProgress == 100) {
+            //     GetNextMainEvent();
+            // }
+            //else {
+            GetNextSubAreaEvent();
+            //}
+            
 
             StartCoroutine(DisplayEvent());
         }
@@ -345,14 +337,71 @@ namespace Events {
             return items;
         }
 
-        public void DisplayInteraction(Interaction i) {
+        public void Interact(Interaction i) {
             Result r = i.GetResult();
-            List<Item> items = GetInteractionResults(r);
 
             if (i.GetSprite() != null) {
                 eventDisplays[0].SetSprite(i.GetSprite());
                 eventDisplays[0].SetPosition(pos1d1);
             }
+
+            if (r.type == ResultConstants.ITEM) {
+                DisplayResultItems(r);
+            }
+            else if (r.type == ResultConstants.EVENT) {
+                if (r.subEventName != "none") {         // send to a specific event if it is named
+                    currentEvent = currentSubArea.GetSubEvent(r.subEventName);
+                }   
+                else {  // otherwise get the next event in the subArea
+                    GetNextEvent();
+                }
+            }
+            else if (r.type == ResultConstants.SUBAREA) {
+                if (r.subAreaName != "none") { 
+                    currentSubArea = currentArea.GetSubArea(r.subAreaName);
+                    StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
+                    subAreaProgress = 0; 
+                    if (infoPanel.isOpen) {
+                        infoPanel.UpdateAmounts();
+                    }
+                }
+
+                GetNextEvent();
+            }
+            else if (r.type == ResultConstants.STATSINGLE) {
+                ApplyResultStatChangesSingle(r);
+            }
+            else if (r.type == ResultConstants.STATMULTIPLE) {
+                ApplyResultStatChangesMultiple(r);
+            }
+        }
+
+        public void ApplyResultStatChangesSingle(Result r) {
+            r.GenerateResults();
+            eventDescription.SetKey(r.resultKey);
+
+            if (r.HPAmount != 0) {
+                PartyManager.instance.AddHPSingle(r.HPAmount);
+            }
+            if (r.MPAmount != 0) {
+                PartyManager.instance.AddMPSingle(r.MPAmount);
+            }
+        }
+
+        public void ApplyResultStatChangesMultiple(Result r) {
+            r.GenerateResults();
+            eventDescription.SetKey(r.resultKey);
+
+            if (r.HPAmount != 0) {
+                PartyManager.instance.AddHPMultiple(r.HPAmount);
+            }
+            if (r.MPAmount != 0) {
+                PartyManager.instance.AddMPMultiple(r.MPAmount);
+            }
+        }
+
+        public void DisplayResultItems(Result r) {
+            List<Item> items = GetInteractionResults(r);
 
             eventDescription.SetKey(r.resultKey);
             if (items.Count > 0) {

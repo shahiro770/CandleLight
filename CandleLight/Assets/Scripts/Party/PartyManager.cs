@@ -102,9 +102,31 @@ namespace Party {
             }
         }
 
-        public void AddHP(int amount) {
+        public void AddHPSingle(int amount) {
+            partyMembers[Random.Range(0, partyMembers.Count)].AddHP(amount);
+        }
+
+        public void AddHPSingle(PartyMember pm, int amount) {
+            pm.AddHP(amount);
+        }
+
+        public void AddHPMultiple(int amount) {
             foreach (PartyMember pm in partyMembers) {
                 pm.AddHP(amount);
+            }
+        }
+
+        public void AddMPSingle(int amount) {
+            partyMembers[Random.Range(0, partyMembers.Count)].AddMP(amount);
+        }
+
+        public void AddMPSingle(PartyMember pm, int amount) {
+            pm.AddMP(amount);
+        }
+
+        public void AddMPMultiple(int amount) {
+            foreach (PartyMember pm in partyMembers) {
+                pm.AddMP(amount);
             }
         }
 

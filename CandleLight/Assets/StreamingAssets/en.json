@@ -22,6 +22,7 @@
 		{ "key": "lost_word_event", "value": "lost" },
 		
 		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
+		{ "key": "outpost_candle_event", "value": "A lonely outpost is standing in the distance." },
 		{ "key": "the_grey_wastes_event", "value": "The Grey Wastes were aptly named. Only fools dare travel these lands. Looks like this is the start of the path." },
 
 		{ "key": "pathNormal_nothing_event_0", "value": "There's something oddly charming about a vast expanse full of nothing. Somewhat like a blank canvas." },
@@ -48,11 +49,13 @@
 
 		{ "key": "none_int", "value": "" },
 		{ "key": "open_int", "value": "Open" },
+		{ "key": "rest_int", "value": "Rest" },
 		{ "key": "travel_int", "value": "Travel" },
 		{ "key": "beginGreyWastes_int", "value": "Begin" },
 
 		{ "key": "lostPouch_wax_res", "value": "You found some wax coins." },
 		{ "key": "lostPouch_bandages_res", "value": "You found bandages." },
+		{ "key": "youth_flames_res", "value": "The warmth is rejuvenating. Its as if your youth has returned to you." },
 		
 		{ "key": "HP_label", "value": "HP " },
 		{ "key": "MP_label", "value": "MP " },

@@ -670,7 +670,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 797477990}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 144312172}
   m_Transition: 1
@@ -1292,7 +1292,7 @@ PrefabInstance:
     - target: {fileID: 3346768662948992319, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 3346768662948992319, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
@@ -6688,6 +6688,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8247081328046863006, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 82578201}
     - target: {fileID: 8247081326662861777, guid: eac1c7aed263a437896d760671851422,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -6786,6 +6791,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae7dafce20ea44c1a9ed5613feb90e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &797477990 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8247081328046863006, guid: eac1c7aed263a437896d760671851422,
+    type: 3}
+  m_PrefabInstance: {fileID: 797477987}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &817928940
@@ -14192,7 +14209,7 @@ PrefabInstance:
     - target: {fileID: 3346768662948992319, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 3346768662948992319, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
@@ -18136,7 +18153,7 @@ PrefabInstance:
     - target: {fileID: 3346768662948992319, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 3346768662948992319, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}

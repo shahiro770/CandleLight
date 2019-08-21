@@ -21,10 +21,12 @@ namespace Events {
         public string name { get; private set; }        /// <value> Name of interaction </value>
         public string nameKey { get; private set; }     /// <value> Localization of interaction </value>
         public int resultIndex { get; private set; }    /// <value> Index of the result chosen </value>
+        public bool isSingleUse { get; private set; }
 
         private Result[] results = new Result[4];       /// <value> Result of the action if its an event action </value>
         private Sprite[] intSprites = new Sprite[4];    /// <value> List of sprites corresponding to each event action </value>
         private int resultNum = 0;                      /// <value> Amount of results for an interaction </value>
+        
 
         /// <summary>
         /// Constructor, each array is of length 4
@@ -36,9 +38,11 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public Interaction(string name, string[] resultNames, string[] resultKeys, string[] spriteNames, IDbConnection dbConnection) {
+        public Interaction(string name, string[] resultNames, string[] resultKeys, 
+        string[] spriteNames, bool isSingleUse, IDbConnection dbConnection) {
             this.name = name;
             this.nameKey = name + "_int";
+            this.isSingleUse = isSingleUse;
 
             for (int i = 0; i < resultNames.Length; i++) {
                 if (resultNames[i] != "none") {

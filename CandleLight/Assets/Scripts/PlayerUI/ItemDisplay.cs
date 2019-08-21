@@ -65,7 +65,7 @@ namespace PlayerUI {
                     PartyManager.instance.GainEXP(displayedItem.EXPAmount);
                 }
                 if (displayedItem.type == "HP") {
-                    PartyManager.instance.AddHP(displayedItem.HPAmount);
+                    PartyManager.instance.AddHPMultiple(displayedItem.HPAmount);
                 }
                 if (displayedItem.type == "MP") {
                     //MPAmount = amount;
