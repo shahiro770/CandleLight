@@ -102,9 +102,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pms"></param>
         private IEnumerator UpdateEXPBars(List<PartyMember> pms) {
-            for (int i = 0; i < pms.Count; i++) {
-                StartCoroutine(pms[i].GainEXP(amountEXP));
-            }
+            PartyManager.instance.GainEXP(amountEXP);
 
             while (!pms[0].doneEXPGaining) {   // wait for bars to finish filling 
                 yield return null;

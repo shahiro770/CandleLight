@@ -12,6 +12,7 @@ using Combat;
 using Localization;
 using Events;
 using PanelConstants = Constants.PanelConstants;
+using Party;
 using PlayerUI;
 using System.Collections;
 using UnityEngine;
@@ -172,6 +173,8 @@ namespace Characters {
         /// <summary>
         /// Reduce the PartyMember's current health points by a specified amount.false
         /// IEnumerator is used to make calling function wait for its completion
+        /// TODO: Cleanup logic so that AddHP manages whether or not the player recieve HP under
+        /// various circumstances (e.g. only revival skills can bring a partyMember back from 0 CHP)
         /// </summary> 
         /// <param name="amount"> Amount of health points lost </param>
         /// <param name="isActive"> 
@@ -179,30 +182,38 @@ namespace Characters {
         /// is displayed in the status panel, true if active, false otherwise 
         /// </param>
         public void AddHP(int amount) {
-            CHP += amount;
-            if (CHP > HP) {
-                CHP = HP;
-            }
-            
-            if (statusPanelHPBar != null) {
-                statusPanelHPBar.SetCurrent(CHP);  
-            }
-            if (EventManager.instance.partyPanel.isOpen == true) {
-                partyPanelHPBar.SetCurrent(CHP);
+            if (CHP != HP) {
+                if (CHP == 0) { // Reviving a dead partyMember if CHP was originally 0 and addHp is allowed
+                    PartyManager.instance.RegisterPartyMemberAlive(this);
+                }
+                CHP += amount;
+
+                if (CHP > HP) {
+                    CHP = HP;
+                }
+                
+                if (statusPanelHPBar != null) {
+                    statusPanelHPBar.SetCurrent(CHP);  
+                }
+                if (EventManager.instance.partyPanel.isOpen == true) {
+                    partyPanelHPBar.SetCurrent(CHP);
+                }
             }
         }
 
         public void AddMP(int amount) {
-            CMP += amount;
-            if (CMP > MP) {
-                CMP = MP;
-            }
-            
-            if (statusPanelMPBar != null) {
-                statusPanelMPBar.SetCurrent(CMP);  
-            }
-            if (EventManager.instance.partyPanel.isOpen == true) {
-                partyPanelMPBar.SetCurrent(CMP);
+            if (CMP != MP) {
+                CMP += amount;
+                if (CMP > MP) {
+                    CMP = MP;
+                }
+                
+                if (statusPanelMPBar != null) {
+                    statusPanelMPBar.SetCurrent(CMP);  
+                }
+                if (EventManager.instance.partyPanel.isOpen == true) {
+                    partyPanelMPBar.SetCurrent(CMP);
+                }
             }
         }
 
@@ -238,6 +249,7 @@ namespace Characters {
             }
 
             if (CHP == 0) { // make death more dramatic
+                PartyManager.instance.RegisterPartyMemberDead(this);
                 yield return new WaitForSeconds(0.75f);
             }
             

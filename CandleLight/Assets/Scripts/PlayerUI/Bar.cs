@@ -25,7 +25,9 @@ namespace PlayerUI {
         
         [field: SerializeField] private float maxAmount { get; set; }       /// <value> Max points the character has </value>
         [field: SerializeField] private float currentAmount { get; set; }   /// <value> Current points the character has </value>
-        [field: SerializeField] private float lerpSpeed = 2.2f;             /// <value> Speed at which bar visually changes to fillAmount </value>
+        [field: SerializeField] private float lerpSpeed;                    /// <value> Speed at which bar visually changes to fillAmount </value>
+        [field: SerializeField] private float lerpSpeedFast = 3.5f;           /// <value> Fast speed to lerp with </value>
+        [field: SerializeField] private float lerpSpeedSlow = 2.2f;         /// <value> Slow speed to lerp with </value>
         [field: SerializeField] private float fillAmount;                   /// <value> Percentage that bar should be filled </value>
 
         /// <summary>
@@ -49,7 +51,7 @@ namespace PlayerUI {
             this.maxAmount = maxAmount;
             this.currentAmount = currentAmount;
             SetWidth(vectorSize.x);
-            SetDisplay();
+            SetDisplay(true);
         }
 
         /// <summary>
@@ -90,6 +92,13 @@ namespace PlayerUI {
         /// </summary>
         /// <returns></returns>
         private IEnumerator Fill() {
+            if (Mathf.Abs(fillAmount - frontFill.fillAmount) * 100 > 75) {
+                lerpSpeed = lerpSpeedFast;
+            }
+            else {
+                lerpSpeed = lerpSpeedSlow;
+            }
+            print(lerpSpeed);
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = Time.deltaTime * lerpSpeed;

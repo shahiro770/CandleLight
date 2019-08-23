@@ -61,6 +61,31 @@ namespace Combat {
         }
 
         /// <summary>
+        /// Adds a character to the queue
+        /// </summary>
+        /// <param name="c"> Character to be added, either a monster or a partyMember </param>
+        public void AddCharacterAndResort(Character c) {
+            if (c is Monster) {
+                Monster m = (Monster)c;
+                combatQueue.Add(new QueueNode(m));//, false));
+                monsterNumber++;
+            }
+            else if (c is PartyMember) {
+                PartyMember pm = (PartyMember)c;
+                combatQueue.Add(new QueueNode(pm));//, false));
+                partyMemberNumber++;
+            }
+
+            queueLength++;
+            
+            combatQueue.Sort(characterOrder);
+            int newNodePos = combatQueue.FindIndex(q => q.c.ID == c.ID);
+            if (queuePos > newNodePos) { // shift queue ahead by 1 if added node was before current position
+                queuePos++;
+            }
+        }
+
+        /// <summary>
         /// Finalizes the queue order by making any special adjustments and then sorting
         /// </summary>
         public void FinalizeQueue() {

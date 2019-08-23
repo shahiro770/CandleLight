@@ -27,7 +27,8 @@ namespace Party {
 
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         
-        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
+        private List<PartyMember> partyMembersAlive = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
+        private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private int maxPartyMembers = 4;                                    /// <value> Max number of partyMembers </value>
         
         /// <summary>
@@ -48,11 +49,11 @@ namespace Party {
         /// </summary>   
         /// <param name="className"> Class of the party member to be added </param>
         public void AddPartyMember(string className) {
-            if (partyMembers.Count < maxPartyMembers) {
+            if (partyMembersAlive.Count + partyMembersDead.Count < maxPartyMembers) {
                 GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
                 GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
                 newMember.transform.SetParent(gameObject.transform, false);
-                partyMembers.Add(newMember.GetComponent<PartyMember>());
+                partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
             }
         }
 
@@ -60,7 +61,8 @@ namespace Party {
         /// Removes all partyMembers from PartyMembers list
         /// </summary>
         public void ClearPartyMembers() {
-            partyMembers.Clear();
+            partyMembersAlive.Clear();
+            partyMembersDead.Clear();
         }
         
         /// <summary>
@@ -73,8 +75,14 @@ namespace Party {
         /// </returns>
         /// <param name="countID"> ID that is incremented and assigned to each party member for queuing </param>
         public List<PartyMember> GetPartyMembers(ref int countID) {
-            foreach (PartyMember pm in partyMembers) {
+            List<PartyMember> partyMembers = new List<PartyMember>();
+            foreach (PartyMember pm in partyMembersAlive) {
                 pm.ID = countID++;
+                partyMembers.Add(pm);
+            }
+            foreach (PartyMember pm in partyMembersDead) {
+                pm.ID = countID++;
+                partyMembers.Add(pm);
             }
 
             return partyMembers;
@@ -85,6 +93,14 @@ namespace Party {
         /// </summary>
         /// <returns> List of partyMembers </returns>
         public List<PartyMember> GetPartyMembers() {
+            List<PartyMember> partyMembers = new List<PartyMember>();
+            foreach (PartyMember pm in partyMembersAlive) {
+                partyMembers.Add(pm);
+            }
+            foreach (PartyMember pm in partyMembersDead) {
+                partyMembers.Add(pm);
+            }
+
             return partyMembers;
         }
 
@@ -93,17 +109,27 @@ namespace Party {
         /// </summary>
         /// <returns> int amount of partyMember </returns>
         public int GetNumPartyMembers() {
-            return partyMembers.Count;
+            return partyMembersAlive.Count + partyMembersDead.Count;
+        }
+
+        public void RegisterPartyMemberAlive(PartyMember pm) {
+            partyMembersAlive.Add(pm);
+            partyMembersDead.Remove(pm);
+        }
+
+        public void RegisterPartyMemberDead(PartyMember pm) {
+            partyMembersAlive.Remove(pm);
+            partyMembersDead.Add(pm);
         }
 
         public void GainEXP(int amount) {
-            foreach (PartyMember pm in partyMembers) {
+            foreach (PartyMember pm in partyMembersAlive) {
                 StartCoroutine(pm.GainEXP(amount));
             }
         }
 
         public void AddHPSingle(int amount) {
-            partyMembers[Random.Range(0, partyMembers.Count)].AddHP(amount);
+            partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddHP(amount);
         }
 
         public void AddHPSingle(PartyMember pm, int amount) {
@@ -111,13 +137,13 @@ namespace Party {
         }
 
         public void AddHPMultiple(int amount) {
-            foreach (PartyMember pm in partyMembers) {
+            foreach (PartyMember pm in partyMembersAlive) {
                 pm.AddHP(amount);
             }
         }
 
         public void AddMPSingle(int amount) {
-            partyMembers[Random.Range(0, partyMembers.Count)].AddMP(amount);
+            partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddMP(amount);
         }
 
         public void AddMPSingle(PartyMember pm, int amount) {
@@ -125,13 +151,13 @@ namespace Party {
         }
 
         public void AddMPMultiple(int amount) {
-            foreach (PartyMember pm in partyMembers) {
+            foreach (PartyMember pm in partyMembersAlive) {
                 pm.AddMP(amount);
             }
         }
 
         public void RegenParty() {
-            foreach (PartyMember pm in partyMembers) {
+            foreach (PartyMember pm in partyMembersAlive) {
                 pm.Regen();
             }
         }
@@ -157,5 +183,7 @@ namespace Party {
                 WAX -= amount;
             }
         }
+
+
     }
 }

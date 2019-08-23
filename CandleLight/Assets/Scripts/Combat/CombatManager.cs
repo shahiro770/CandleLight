@@ -102,7 +102,9 @@ namespace Combat {
                 cq.AddCharacter(m);
             }
             foreach (PartyMember pm in partyMembers) {
-                cq.AddCharacter(pm);
+                if (pm.CheckDeath() == false) {
+                    cq.AddCharacter(pm);
+                }
             }
             cq.FinalizeQueue();
 
@@ -117,7 +119,6 @@ namespace Combat {
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
         /// <remark> Assumes there will always be an action at button 0 </remark>
         private IEnumerator AddMonster(string monsterName) {
-            print(monsterName);
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonsterDisplay(monsterName));
             newMonster.SetActive(true); // monster game object must be active to manipulate its components
             
