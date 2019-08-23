@@ -234,8 +234,8 @@ namespace Events {
         /// <summary>
         /// Switches gameplay from exploring into turn-based combat with random monsters
         /// </summary>
-        public void GetCombatEvent() {
-            string[] monstersToFight = currentSubArea.GetMonstersToSpawn();
+        public void GetCombatEvent(string[] monstersToFight) {
+            StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToFight));
         }
 
@@ -255,9 +255,8 @@ namespace Events {
             PartyManager.instance.RegenParty();
 
             if (currentEvent.promptKey == "combat_event") {
-                StartCoroutine(AlterBackgroundColor(0.5f));
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
-                GetCombatEvent();
+                GetCombatEvent(currentSubArea.GetMonstersToSpawn());
             }
             else {
                 if (currentEvent.promptKey == "nothing_event") {
@@ -373,6 +372,22 @@ namespace Events {
             }
             else if (r.type == ResultConstants.STATMULTIPLE) {
                 ApplyResultStatChangesMultiple(r);
+            }
+            else if (r.type == ResultConstants.COMBAT) {
+                string[] monstersToSpawn = r.GetMonstersToSpawn();
+                string[] finalizedMonstersToSpawn = new string[monstersToSpawn.Length];
+
+                for (int j = 0; j < monstersToSpawn.Length; j++) {
+                    if (monstersToSpawn[j] != "none") {
+                        finalizedMonstersToSpawn[j] = monstersToSpawn[j];
+                    }
+                    else {
+                        finalizedMonstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    }
+                }
+                eventDescription.SetKey(r.resultKey);
+                HideEventDisplays();     
+                GetCombatEvent(finalizedMonstersToSpawn);
             }
         }
 

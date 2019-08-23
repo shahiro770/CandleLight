@@ -186,7 +186,8 @@ namespace Events {
         }
 
         /// <summary>
-        /// Returns a list of the names of each monster being spawned
+        /// Returns a list of the names of each monster being spawned.
+        /// List length is assumed to be at most 5.
         /// </summary>
         /// <returns> String array </returns>
         public string[] GetMonstersToSpawn() {
@@ -198,6 +199,10 @@ namespace Events {
             }
 
             return monsterNames;
+        }
+
+        public string GetMonsterToSpawn() {
+            return this.monsterPool[Random.Range(0, monsterNum)];
         }
     }
 }

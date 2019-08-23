@@ -16,5 +16,6 @@ namespace Constants {
         public static readonly string EVENT = "event";      /// <value> Player is thrown into a specific event </value>
         public static readonly string STATSINGLE = "statSingle";        /// <value> partyMembers all recieve an instant stat change </value>
         public static readonly string STATMULTIPLE = "statMultiple";    /// <value> partyMembers all recieve an instant stat change </value>
+        public static readonly string COMBAT = "combat";
     }
 }

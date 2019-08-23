@@ -18,6 +18,7 @@ namespace Events {
         public string subAreaName { get; private set; } /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
         public string subEventName{ get; private set; } /// <value> Name of event result leads to if possible, "none" otherwise </value>
         public string resultKey;    /// <value> Localization key for displayed string for result </value>
+        public string[] specificMonsterNames;
         public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
@@ -31,6 +32,7 @@ namespace Events {
         private int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
         private int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
         private int WAXChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
+        private int monsterCount;
         private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace Events {
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
         public Result(string name, string type, bool isUnique, string resultKey, string quantity, int[] changeValues,
-        string subAreaName, string subEventName) {
+        string subAreaName, string subEventName, int monsterCount, string[] specificMonsterNames) {
             this.name = name;
             this.type = type;
             this.isUnique = isUnique;
@@ -52,6 +54,8 @@ namespace Events {
             this.WAXChange = changeValues[3];
             this.subAreaName = subAreaName;
             this.subEventName = subEventName;
+            this.monsterCount = monsterCount;
+            this.specificMonsterNames = specificMonsterNames;
             
             if (quantity == "none") {
                 this.quantity = 0;
@@ -101,6 +105,16 @@ namespace Events {
             else {  // mode == -1
                 return (int)((float)Random.Range(minValue, maxValue) * multiplier * quantity * -1);
             }
+        }
+        
+        public string[] GetMonstersToSpawn() {
+            string[] monsterNames = new string[monsterCount];
+
+            for (int i = 0; i < monsterNames.Length; i++) {
+                monsterNames[i] = specificMonsterNames[i];
+            }
+
+            return monsterNames;
         }
     }
 }

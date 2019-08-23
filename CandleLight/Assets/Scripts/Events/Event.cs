@@ -46,7 +46,7 @@ namespace Events {
         public Event(string name, string areaName, int chance, int progressAmount, string promptKey, string[] interactionNames, 
         bool isLeavePossible, string bgPackName, int specificBGSprite, string[] eventSpriteNames, IDbConnection dbConnection) {
             this.name = name;
-            this.areaName = areaName;
+            //this.areaName = areaName;
             this.chance = chance;
             this.progressAmount = progressAmount;
             this.promptKey = promptKey;
