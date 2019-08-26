@@ -67,6 +67,10 @@ namespace PlayerUI {
             eventText.Clear();
         }
 
+        public bool HasText() {
+            return eventText.HasText();
+        }
+
         /// <summary>
         /// Changes the alpha of the display to the target value
         /// </summary>

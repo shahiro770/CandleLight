@@ -65,6 +65,7 @@ namespace Events {
         private Vector3 pos3d2 = new Vector3(0, -20, 0);
         private Vector3 pos3d3 = new Vector3(275, -20, 0);
 
+        private string[] monstersToSpawn;
         private string currentAreaName;     /// <value> Name of current area </value>
         private int bgPackNum = 0;          /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;       /// <value> Area progress increments by 1 for each main event the player completes </value>
@@ -145,7 +146,8 @@ namespace Events {
 
         public void LoadGeneralInteractions() {
             Interaction travelInt = GameManager.instance.DB.GetInteractionByName("travel");
-            actionsPanel.SetGeneralInteractions(travelInt);
+            Interaction fightInt = GameManager.instance.DB.GetInteractionByName("fight");
+            actionsPanel.SetGeneralInteractions(travelInt, fightInt);
         }
 
         /// <summary>
@@ -234,9 +236,9 @@ namespace Events {
         /// <summary>
         /// Switches gameplay from exploring into turn-based combat with random monsters
         /// </summary>
-        public void GetCombatEvent(string[] monstersToFight) {
+        public void GetCombatEvent() {
             StartCoroutine(AlterBackgroundColor(0.5f));
-            StartCoroutine(combatManager.InitializeCombat(monstersToFight));
+            StartCoroutine(combatManager.InitializeCombat(monstersToSpawn));
         }
 
         /// <summary>
@@ -256,7 +258,9 @@ namespace Events {
 
             if (currentEvent.promptKey == "combat_event") {
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
-                GetCombatEvent(currentSubArea.GetMonstersToSpawn());
+                monstersToSpawn = currentSubArea.GetMonstersToSpawn();
+
+                GetCombatEvent();
             }
             else {
                 if (currentEvent.promptKey == "nothing_event") {
@@ -276,11 +280,20 @@ namespace Events {
                 statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0]);
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
-                actionsPanel.SetAllActionsInteractable();
                 partyPanel.EnableButtons();
+                actionsPanel.SetAllActionsInteractable();
                 utilityTabManager.SetAllButtonsInteractable();
-                actionsPanel.SetHorizontalNavigation(partyPanel);
+                SetNavigation();
             }
+        }
+
+        public void SetNavigation() {
+            actionsPanel.SetHorizontalNavigation(partyPanel);
+            partyPanel.SetHorizontalNavigation();
+        }
+
+        public void DisplayPreCombat(Result r) {
+            actionsPanel.PreCombatActions();
         }
 
         /// <summary>
@@ -315,7 +328,7 @@ namespace Events {
             }
         }
 
-        public List<Item> GetInteractionResults(Result r) {
+        public List<Item> GetInteractionItems(Result r) {
             r.GenerateResults();
 
             List<Item> items = new List<Item>();
@@ -344,8 +357,14 @@ namespace Events {
                 eventDisplays[0].SetPosition(pos1d1);
             }
 
+            if (r.type == ResultConstants.NORESULT) {
+                eventDescription.SetKey(r.resultKey);
+                actionsPanel.TravelActions();
+                SetNavigation();
+            }
             if (r.type == ResultConstants.ITEM) {
                 DisplayResultItems(r);
+                SetNavigation();
             }
             else if (r.type == ResultConstants.EVENT) {
                 if (r.subEventName != "none") {         // send to a specific event if it is named
@@ -369,25 +388,62 @@ namespace Events {
             }
             else if (r.type == ResultConstants.STATSINGLE) {
                 ApplyResultStatChangesSingle(r);
+                SetNavigation();
             }
-            else if (r.type == ResultConstants.STATMULTIPLE) {
+            else if (r.type == ResultConstants.STATALL) {
                 ApplyResultStatChangesMultiple(r);
+                SetNavigation();
+            }
+            else if (r.type == ResultConstants.PRECOMBAT) {
+                eventDescription.FadeOut();
+                HideEventDisplays();
+                
+                actionsPanel.SetAllActionsUninteractable(); // hack
+                GetCombatEvent();
             }
             else if (r.type == ResultConstants.COMBAT) {
-                string[] monstersToSpawn = r.GetMonstersToSpawn();
-                string[] finalizedMonstersToSpawn = new string[monstersToSpawn.Length];
+                monstersToSpawn = r.GetMonstersToSpawn();
 
                 for (int j = 0; j < monstersToSpawn.Length; j++) {
-                    if (monstersToSpawn[j] != "none") {
-                        finalizedMonstersToSpawn[j] = monstersToSpawn[j];
-                    }
-                    else {
-                        finalizedMonstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    if (monstersToSpawn[j] == "none") {
+                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
                     }
                 }
                 eventDescription.SetKey(r.resultKey);
                 HideEventDisplays();     
-                GetCombatEvent(finalizedMonstersToSpawn);
+                GetCombatEvent();
+            }
+            else if (r.type == ResultConstants.COMBATWITHSIDEEFFECTS) {
+                monstersToSpawn = r.GetMonstersToSpawn();
+
+                for (int j = 0; j < monstersToSpawn.Length; j++) {
+                    if (monstersToSpawn[j] == "none") {
+                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    }
+                }
+
+                r.GenerateResults();
+
+                if (r.HPAmount < 0) {
+                    if (r.scope == "all") {
+                        PartyManager.instance.LoseHPAll(r.HPAmount);
+                    }
+                    else if (r.scope == "single") {
+                        PartyManager.instance.LoseHPSingle(r.HPAmount);
+                    }
+                }
+                if (r.MPAmount < 0) {
+                    if (r.scope == "all") {
+                        PartyManager.instance.LoseMPAll(r.MPAmount);
+                    }
+                    else if (r.scope == "single") {
+                        PartyManager.instance.LoseMPSingle(r.MPAmount);
+                    }
+                }
+
+                eventDescription.SetKey(r.resultKey);
+                actionsPanel.PreCombatActions();
+                SetNavigation();
             }
         }
 
@@ -408,23 +464,19 @@ namespace Events {
             eventDescription.SetKey(r.resultKey);
 
             if (r.HPAmount != 0) {
-                PartyManager.instance.AddHPMultiple(r.HPAmount);
+                PartyManager.instance.AddHPAll(r.HPAmount);
             }
             if (r.MPAmount != 0) {
-                PartyManager.instance.AddMPMultiple(r.MPAmount);
+                PartyManager.instance.AddMPAll(r.MPAmount);
             }
         }
 
         public void DisplayResultItems(Result r) {
-            List<Item> items = GetInteractionResults(r);
+            List<Item> items = GetInteractionItems(r);
 
             eventDescription.SetKey(r.resultKey);
             if (items.Count > 0) {
                 actionsPanel.SetItemActions();
-                if (partyPanel.isOpen) {
-                    actionsPanel.SetHorizontalNavigation(partyPanel);
-                    partyPanel.SetHorizontalNavigation();
-                }
                 eventDisplays[0].SetItemDisplays(items);    // will overwrite some action navigation
             }
             else {

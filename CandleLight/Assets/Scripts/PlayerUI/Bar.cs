@@ -9,7 +9,6 @@
 
 using Localization;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,8 +25,8 @@ namespace PlayerUI {
         [field: SerializeField] private float maxAmount { get; set; }       /// <value> Max points the character has </value>
         [field: SerializeField] private float currentAmount { get; set; }   /// <value> Current points the character has </value>
         [field: SerializeField] private float lerpSpeed;                    /// <value> Speed at which bar visually changes to fillAmount </value>
-        [field: SerializeField] private float lerpSpeedFast = 3.5f;           /// <value> Fast speed to lerp with </value>
-        [field: SerializeField] private float lerpSpeedSlow = 2.2f;         /// <value> Slow speed to lerp with </value>
+        [field: SerializeField] private float lerpSpeedFast = 7f;           /// <value> Fast speed to lerp with </value>
+        [field: SerializeField] private float lerpSpeedSlow = 3.5f;         /// <value> Slow speed to lerp with </value>
         [field: SerializeField] private float fillAmount;                   /// <value> Percentage that bar should be filled </value>
 
         /// <summary>
@@ -98,19 +97,22 @@ namespace PlayerUI {
             else {
                 lerpSpeed = lerpSpeedSlow;
             }
-            print(lerpSpeed);
+
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = Time.deltaTime * lerpSpeed;
-            float prevFill = frontFill.fillAmount;
+            
+            bool lerpDirection = fillAmount >= frontFill.fillAmount;
 
-            while (frontFill.fillAmount != fillAmount) {
-                timeSinceStarted = Time.time - timeStartedLerping;
-                percentageComplete = Time.deltaTime * lerpSpeed;
+            if (frontFill.fillAmount != fillAmount) {
+                while (timeSinceStarted < 3) {  // lerping is approaching infinity so stop after 2 seconds
+                    timeSinceStarted = Time.time - timeStartedLerping;
+                    percentageComplete = Time.deltaTime * lerpSpeed;
 
-                frontFill.fillAmount = Mathf.Lerp(frontFill.fillAmount, fillAmount, percentageComplete);
+                    frontFill.fillAmount = Mathf.Lerp(frontFill.fillAmount, fillAmount, percentageComplete);
 
-                yield return new WaitForEndOfFrame();
+                    yield return new WaitForEndOfFrame();
+                }
             }
         }
     }

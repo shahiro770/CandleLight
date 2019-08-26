@@ -15,6 +15,7 @@ namespace Events {
 
         public string name { get; private set; }        /// <value> Name of result </value>
         public string type { get; private set; }
+        public string scope { get; private set; }
         public string subAreaName { get; private set; } /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
         public string subEventName{ get; private set; } /// <value> Name of event result leads to if possible, "none" otherwise </value>
         public string resultKey;    /// <value> Localization key for displayed string for result </value>
@@ -42,12 +43,13 @@ namespace Events {
         /// <param name="resultKey"> String key for result </param>
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
-        public Result(string name, string type, bool isUnique, string resultKey, string quantity, int[] changeValues,
+        public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] changeValues,
         string subAreaName, string subEventName, int monsterCount, string[] specificMonsterNames) {
             this.name = name;
+            this.resultKey = resultKey;
             this.type = type;
             this.isUnique = isUnique;
-            this.resultKey = resultKey;
+            this.scope = scope;
             this.EXPChange = changeValues[0];
             this.HPChange = changeValues[1];
             this.MPChange = changeValues[2];

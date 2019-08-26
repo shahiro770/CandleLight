@@ -441,6 +441,7 @@ namespace Database {
                     string name = "";
                     string type = "";
                     string quantity = "";
+                    string scope = "";
                     string subAreaName = "";
                     string subEventName = "";
                     string[] specificMonsterNames = new string[5];
@@ -453,20 +454,21 @@ namespace Database {
                         type = reader.GetString(2);
                         isUnique = reader.GetBoolean(3);
                         quantity = reader.GetString(4);
-                        resultChanges[0] = reader.GetInt32(5);
-                        resultChanges[1] = reader.GetInt32(6);
-                        resultChanges[2] = reader.GetInt32(7);
-                        resultChanges[3] = reader.GetInt32(8);
-                        subAreaName = reader.GetString(9);
-                        subEventName = reader.GetString(10);
-                        monsterCount = reader.GetInt32(11);
-                        specificMonsterNames[0] = reader.GetString(12);
-                        specificMonsterNames[1] = reader.GetString(13);
-                        specificMonsterNames[2] = reader.GetString(14);
-                        specificMonsterNames[3] = reader.GetString(15);
-                        specificMonsterNames[4] = reader.GetString(15);
+                        scope = reader.GetString(5);
+                        resultChanges[0] = reader.GetInt32(6);
+                        resultChanges[1] = reader.GetInt32(7);
+                        resultChanges[2] = reader.GetInt32(8);
+                        resultChanges[3] = reader.GetInt32(9);
+                        subAreaName = reader.GetString(10);
+                        subEventName = reader.GetString(11);
+                        monsterCount = reader.GetInt32(12);
+                        specificMonsterNames[0] = reader.GetString(13);
+                        specificMonsterNames[1] = reader.GetString(14);
+                        specificMonsterNames[2] = reader.GetString(15);
+                        specificMonsterNames[3] = reader.GetString(16);
+                        specificMonsterNames[4] = reader.GetString(17);
 
-                        newResult = new Result(name, type, isUnique, resultKey, quantity, resultChanges, subAreaName, subEventName,
+                        newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultChanges, subAreaName, subEventName,
                         monsterCount, specificMonsterNames);
                     }
                     else {

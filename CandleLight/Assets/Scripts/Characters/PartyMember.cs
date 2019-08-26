@@ -181,39 +181,37 @@ namespace Characters {
         /// Active party member is the partMember who's information 
         /// is displayed in the status panel, true if active, false otherwise 
         /// </param>
-        public void AddHP(int amount) {
-            if (CHP != HP) {
-                if (CHP == 0) { // Reviving a dead partyMember if CHP was originally 0 and addHp is allowed
-                    PartyManager.instance.RegisterPartyMemberAlive(this);
-                }
-                CHP += amount;
-
-                if (CHP > HP) {
-                    CHP = HP;
-                }
-                
-                if (statusPanelHPBar != null) {
-                    statusPanelHPBar.SetCurrent(CHP);  
-                }
-                if (EventManager.instance.partyPanel.isOpen == true) {
-                    partyPanelHPBar.SetCurrent(CHP);
-                }
+        public void AddHP(int amount) {    
+            if (CHP == 0) { // Reviving a dead partyMember if CHP was originally 0 and addHp is allowed
+                PartyManager.instance.RegisterPartyMemberAlive(this);
             }
+
+            CHP += amount;
+
+            if (CHP > HP) {
+                CHP = HP;
+            }
+
+            if (statusPanelHPBar != null) {
+                statusPanelHPBar.SetCurrent(CHP);  
+            }
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                partyPanelHPBar.SetCurrent(CHP);
+            } 
         }
 
         public void AddMP(int amount) {
-            if (CMP != MP) {
-                CMP += amount;
-                if (CMP > MP) {
-                    CMP = MP;
-                }
-                
-                if (statusPanelMPBar != null) {
-                    statusPanelMPBar.SetCurrent(CMP);  
-                }
-                if (EventManager.instance.partyPanel.isOpen == true) {
-                    partyPanelMPBar.SetCurrent(CMP);
-                }
+            CMP += amount;
+
+            if (CMP > MP) {
+                CMP = MP;
+            }
+            
+            if (statusPanelMPBar != null) {
+                statusPanelMPBar.SetCurrent(CMP);  
+            }
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                partyPanelMPBar.SetCurrent(CMP);
             }
         }
 
@@ -232,7 +230,11 @@ namespace Characters {
         /// is displayed in the status panel, true if active, false otherwise 
         /// </param>
         public IEnumerator LoseHP(int amount) {
+            // some sources such as results will use negative numbers to indicate loss
+            amount = Mathf.Abs(amount);
+            
             CHP -= amount;
+
             if (CHP < 0) {
                 CHP = 0;
             }

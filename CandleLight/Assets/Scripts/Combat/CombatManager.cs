@@ -147,8 +147,14 @@ namespace Combat {
             foreach (Monster m in monsters) {
                 StartCoroutine(m.md.PlaySpawnAnimation());
             }
-            yield return new WaitForSeconds(1.5f);   
-            eventDescription.ClearText();
+
+            if (eventDescription.HasText()) {
+                yield return new WaitForSeconds(1.5f);   
+                eventDescription.ClearText();    
+            }
+            else {
+                yield return new WaitForSeconds(0.7f);   
+            }
         }
 
         /// <summary>
@@ -265,7 +271,7 @@ namespace Combat {
             monstersToRemove.Add(monsters[monsters.Count - 1]);
             yield return new WaitForSeconds(0.75f);
 
-            if (chance > 50) {
+            if (chance >= 50) {
                 DestroyMonsters(monstersToRemove);
                 isFleeSuccessful = true;
             }
@@ -391,12 +397,19 @@ namespace Combat {
             }
             else if (activeMonster.monsterAI == "weakHunter") {
                 int weakest = 0;
-                for (int i = 1; i < partyMembers.Count; i++) {
-                    if (partyMembers[i].CHP < partyMembers[weakest].CHP && !partyMembers[i].CheckDeath()) {
-                        weakest = i;
+                int weakestHitChance = Random.Range(0, 100);
+
+                if (weakestHitChance < 50) {    // higher chance of attacking weakest partyMember
+                    for (int i = 1; i < partyMembers.Count; i++) {
+                        if (partyMembers[i].CHP < partyMembers[weakest].CHP && !partyMembers[i].CheckDeath()) {
+                            weakest = i;
+                        }
                     }
+                    targetChoice = weakest;
                 }
-                targetChoice = weakest;
+                else {
+                    targetChoice = Random.Range(0, partyMembers.Count);
+                }
             }
             
             yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation()));

@@ -43,22 +43,31 @@
 		{ "key": "flee_failed_2", "value": "They're still chasing you." },
 		{ "key": "flee_failed_3", "value": "There was no where to hide." },
 
+		{ "key": "hide_from_the_pack_event", "value": "An undetected pack of greyhides wandered close to you. You dive behind the nearest mound. Did they hear you?" },
 		{ "key": "lost_pouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
 		{ "key": "outpost_candle_event", "value": "A lonely outpost is standing in the distance." },
 		{ "key": "the_grey_wastes_event", "value": "The Grey Wastes were aptly named. Only fools dare travel these lands. Looks like this is the start of the path." },
 		{ "key": "used_outpost_candle_event", "value": "There's a recently used outpost nearby. Unkindled might be close." },
 		
 		{ "key": "beginGreyWastes_int", "value": "Begin" },
+		
+		{ "key": "fight_int", "value": "Fight" },
+		{ "key": "hide_int", "value": "Hide" },
 		{ "key": "none_int", "value": "" },
 		{ "key": "open_int", "value": "Open" },
 		{ "key": "rest_int", "value": "Rest" },
 		{ "key": "restUnsafe_int", "value": "Rest" },
+		{ "key": "reveal_int", "value": "Reveal" },
 		{ "key": "travel_int", "value": "Travel" },
 
 		{ "key": "attacked_rest_res", "value": "There's no rest for the wicked." },
 		{ "key": "lostPouch_bandages_res", "value": "You found bandages." },
 		{ "key": "lostPouch_wax_res", "value": "You found some wax coins." },
+		{ "key": "hide_from_the_pack_ambush_res", "value": "You try to hide but they hear your movements. One runs up and bites." },
+		{ "key": "hide_from_the_pack_reveal_res", "value": "Sometimes you just can't take risks." },
+		{ "key": "hide_from_the_pack_hidden_res", "value": "You lie quietly against the dirt and pray. After a moment you look back. The pack is walking away." },
 		{ "key": "youth_flames_res", "value": "The warmth is rejuvenating. Its as if your youth has returned to you." },
+		{ "key": "watched_flames_res", "value": "The fire is nice. But you can't help but feel watched." },
 		
 		{ "key": "HP_label", "value": "HP " },
 		{ "key": "MP_label", "value": "MP " },
@@ -91,7 +100,7 @@
 		{ "key": "greyhideAlpha_monster", "value": "Greyhide Alpha" },
 		{ "key": "greyhideAlpha_monster_description", "value": "Brute strength and a bit more brain. That's all it takes to become their alpha." },
 		
-		{ "key": "pound_attack", "value": "Pound" },
+		{ "key": "pounce_attack", "value": "Pounce" },
 		{ "key": "scratch_attack", "value": "Scratch" },
 		{ "key": "bite_attack", "value": "Bite" },
 		{ "key": "thrash_attack", "value": "Thrash" },

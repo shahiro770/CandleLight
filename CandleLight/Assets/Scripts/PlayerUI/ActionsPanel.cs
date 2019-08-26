@@ -30,6 +30,7 @@ namespace PlayerUI {
         private EventSystem es;                     /// <value> eventSystem reference </value>
         private Action selectedAction;              /// <value> Action that was selected </value>
         private Interaction travelInt;
+        private Interaction fightInt;
         private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
 
         /// <summary>
@@ -39,8 +40,9 @@ namespace PlayerUI {
             es = EventSystem.current;
         }
 
-        public void SetGeneralInteractions(Interaction travelInt) {
+        public void SetGeneralInteractions(Interaction travelInt, Interaction fightInt) {
             this.travelInt = travelInt;
+            this.fightInt = fightInt;
         }
         
         /// <summary>
@@ -56,19 +58,11 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="interactions"> List of interactions according to event, length 5 </param>
         public void SetInteractionActions(Interaction[] interactions) { 
-            SetActionsUsable(true);
             for (int i = 0; i < interactions.Length; i++) {
                 actions[i].SetAction(ActionConstants.INTERACTION, interactions[i]);
             }
-            
-            if (isLeavePossible) {
-                // last action will always be travel-related if allowed
-                actions[actions.Length - 1].SetInteractable(true); 
-            }
-            else {
-                actions[actions.Length - 1].SetInteractable(false);
-            }
 
+            SetActionsUsable(true);
             SetAllActionsInteractable();
             FadeActions(1);
             SetInitialNavigation();
@@ -89,7 +83,7 @@ namespace PlayerUI {
             SetInitialNavigation();
         }
 
-                /// <summary>
+        /// <summary>
         /// Displays actions for after combat
         /// </summary>
         public void PostCombatActions() { 
@@ -101,6 +95,20 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsUninteractable();
+            SetInitialNavigation();
+        }
+
+        /// <summary>
+        /// Displays actions for after combat
+        /// </summary>
+        public void PreCombatActions() { 
+            actions[0].SetAction(ActionConstants.INTERACTION, fightInt);
+            for (int i = 1; i < actions.Length; i++) {
+                actions[i].SetAction(ActionConstants.NONE);
+            }
+
+            SetActionsUsable(true);
+            SetAllActionsInteractable();
             SetInitialNavigation();
         }
 
@@ -231,16 +239,20 @@ namespace PlayerUI {
         /// </summary>
         public void SetAllActionsInteractable(bool initialSelection = false) {
             int firstInteractableIndex = 0;
+            bool firstInteractableIndexSet = false;
 
             for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType != ActionConstants.NONE) {
-                    actions[i].SetInteractable(true);  
-                    firstInteractableIndex = i;
+                    actions[i].SetInteractable(true); 
+                    if (firstInteractableIndexSet == false) {
+                        firstInteractableIndex = i;
+                        firstInteractableIndexSet = true;
+                    } 
                 } else {
                     actions[i].SetInteractable(false);  
                 }
             }
-
+            
             if (initialSelection != true) {
                 es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first selectable action
             }
@@ -438,6 +450,12 @@ namespace PlayerUI {
             }
         }
 
+        public void LogActions() {
+            foreach (Action a in actions) {
+                Debug.Log("action name: " + a.name + " interactable: " + a.IsInteractable());
+            }
+        }
+
         /// <summary>
         /// Returns the name of this panel
         /// </summary>
@@ -447,7 +465,9 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Returns the Button that adjacent panels will navigate to
+        /// Returns the Button that adjacent panels will navigate to.
+        /// For the actionsPanel, it may have panels navigating to it from either side,
+        /// so they will have to check manually in an order that suits the panel
         /// </summary>
         /// <returns> Button to be navigated to </returns>
         public override Button GetNavigatableButton() {

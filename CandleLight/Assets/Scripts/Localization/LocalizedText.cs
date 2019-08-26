@@ -66,6 +66,10 @@ namespace Localization {
             meshText.text = null;
         }
 
+        public bool HasText() {
+            return key != null;
+        }
+
         /// <summary>
         /// Sets text for a partyMember taking damage
         /// </summary>

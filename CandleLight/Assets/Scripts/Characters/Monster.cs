@@ -103,6 +103,9 @@ namespace Characters {
         /// <param name="animationClipName"> Name of clip to play when monster is attacked </param>
         /// <returns> Starts coroutine of monster being attacked, before yielding control </returns>
         public IEnumerator LoseHP(int amount, string animationClipName) {
+            // some sources such as results will use negative numbers to indicate loss
+            amount = Mathf.Abs(amount);
+
             CHP -= amount;
             if (CHP < 0) {
                 CHP = 0;

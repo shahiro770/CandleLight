@@ -136,9 +136,23 @@ namespace Party {
             pm.AddHP(amount);
         }
 
-        public void AddHPMultiple(int amount) {
+        public void AddHPAll(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.AddHP(amount);
+            }
+        }
+
+        public void LoseHPSingle(int amount) {
+            StartCoroutine(partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseHP(amount));
+        }
+
+        public void LoseHPSingle(PartyMember pm, int amount) {
+            StartCoroutine(pm.LoseHP(amount));
+        }
+
+        public void LoseHPAll(int amount) {
+            foreach (PartyMember pm in partyMembersAlive) {
+                StartCoroutine(pm.LoseHP(amount));
             }
         }
 
@@ -150,9 +164,23 @@ namespace Party {
             pm.AddMP(amount);
         }
 
-        public void AddMPMultiple(int amount) {
+        public void AddMPAll(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.AddMP(amount);
+            }
+        }
+
+        public void LoseMPSingle(int amount) {
+            StartCoroutine(partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseMP(amount));
+        }
+
+        public void LoseMPSingle(PartyMember pm, int amount) {
+            StartCoroutine(pm.LoseMP(amount));
+        }
+
+        public void LoseMPAll(int amount) {
+            foreach (PartyMember pm in partyMembersAlive) {
+                StartCoroutine(pm.LoseMP(amount));
             }
         }
 
