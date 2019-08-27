@@ -76,7 +76,11 @@ namespace Localization {
         /// <param name="text"> name of PartyMember </param>
         /// <param name="amount"> Amount of damage taken </param>
         public void SetDamageText(string text, int amount) {
-            meshText.text = text +  " " + LocalizationManager.instance.GetLocalizedValue("lost_word_event") + " " + amount.ToString() + " HP";
+            meshText.text = text +  " " + LocalizationManager.instance.GetLocalizedValue("lost_text") + " " + amount.ToString() + " HP";
+        }
+
+        public void SetColour(Color32 newColor) {
+            meshText.color = newColor;
         }
     }
 }

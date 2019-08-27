@@ -43,7 +43,6 @@ namespace Combat {
         public TabManager utilityTabManager;           /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
 
-        
         public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
         public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
@@ -298,6 +297,7 @@ namespace Combat {
                 m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
             }
 
+            eventDescription.ClearText();
             partyPanel.SetHorizontalNavigation();
         }
 

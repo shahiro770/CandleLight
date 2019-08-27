@@ -25,6 +25,7 @@ namespace PlayerUI {
     public class ActionsPanel : Panel {
         
         /* external component references */
+        public EventDescription actionDescription;
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
         
         private EventSystem es;                     /// <value> eventSystem reference </value>

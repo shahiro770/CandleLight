@@ -12,18 +12,21 @@ using ActionConstants = Constants.ActionConstants;
 using Combat;
 using Events;
 using Localization;
+using EventDescription = PlayerUI.EventDescription;
 using System.Collections;
 using TMPro;
 using UIEffects;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Actions {
-    public class Action : MonoBehaviour {
+    public class Action : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
 
         /* external component references */
         public LocalizedText actionText;            /// <value> Component reference to text to be displayed </value>
         public CanvasGroup textCanvas;
+        public EventDescription eventDescription;
         
         public Attack a { get; private set; }       /// <value> Attack stored if attack </value>
         public Button b { get; private set; }       /// <value> Button component </value>
@@ -136,8 +139,11 @@ namespace Actions {
             b.interactable = value;
             img.raycastTarget = value;
 
-            if (value == false && isUsable == true) {
-                ShowActionUnselected();   
+            if (value == false) {
+
+                if (isUsable == true) {
+                    ShowActionUnselected();
+                }  
             }            
         }
         
@@ -206,6 +212,32 @@ namespace Actions {
         /// <param name="key"> String key that corresponds to dictionary </param>
         public void SetKey(string key) {
             actionText.SetKey(key);
+        }
+
+        public void OnPointerEnter(PointerEventData pointerEventData) {
+            if (b.interactable && a != null) {
+                eventDescription.SetAttackText(a, isUsable);
+            }
+        }
+
+        //Detect when Cursor leaves the GameObject
+        public void OnPointerExit(PointerEventData pointerEventData) {
+            if (b.interactable && a != null && actionType != ActionConstants.UNDO) {
+                eventDescription.ClearText();
+            }
+        }
+
+        public void OnSelect(BaseEventData baseEventData) {
+            if (b.interactable && a != null) {
+                eventDescription.SetAttackText(a, isUsable);
+            }
+        }
+
+        //Detect when Cursor leaves the GameObject
+        public void OnDeselect(BaseEventData baseEventData) {
+            if (b.interactable && a != null && actionType != ActionConstants.UNDO) {
+               eventDescription.ClearText();
+            }
         }
     }
 }

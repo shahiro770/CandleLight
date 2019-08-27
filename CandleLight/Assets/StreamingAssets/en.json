@@ -18,8 +18,9 @@
 		{ "key": "select_button", "value": "Select" },
 		{ "key": "back_button", "value": "Back" },
 
+		{ "key": "damage_text", "value": "Damage" },
+		{ "key": "lost_text", "value": "lost" },
 		{ "key": "none_event", "value": "" },
-		{ "key": "lost_word_event", "value": "lost" },
 
 		{ "key": "pathNormal_nothing_event_0", "value": "There's something oddly charming about a vast expanse full of nothing. Somewhat like a blank canvas." },
 		{ "key": "pathNormal_nothing_event_1", "value": "A few cracks here and there, but you doubt this stone path has ever needed maintenance." },
