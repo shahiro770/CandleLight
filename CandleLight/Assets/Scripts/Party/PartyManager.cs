@@ -112,6 +112,10 @@ namespace Party {
             return partyMembersAlive.Count + partyMembersDead.Count;
         }
 
+        public int GetNumPartyMembersAlive() {
+            return partyMembersAlive.Count;
+        }
+
         public void RegisterPartyMemberAlive(PartyMember pm) {
             partyMembersAlive.Add(pm);
             partyMembersDead.Remove(pm);

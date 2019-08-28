@@ -48,6 +48,7 @@ namespace Combat {
         
         private EventSystem es;                                             /// <value> EventSystem reference </value>
         private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of party members </value>
+        private List<PartyMember> partyMembersAlive = new List<PartyMember>();
         private PartyMember activePartyMember;                              /// <value> Current party member preparing to act </value>
         private List<Monster> monsters =  new List<Monster>();              /// <value> List of monsters </value>
         private List<Monster> selectedMonsterAdjacents = new List<Monster>();   /// <value> List of monsters adjacent to the monster selected that will be affected </value>
@@ -90,7 +91,13 @@ namespace Combat {
             countID = 0;
             monsters = new List<Monster>();
             monstersKilled = new List<Monster>();
+            partyMembersAlive = new List<PartyMember>();
             partyMembers = PartyManager.instance.GetPartyMembers(ref countID);
+            foreach (PartyMember pm in partyMembers) {
+                if (pm.CheckDeath() == false) {
+                    partyMembersAlive.Add(pm);
+                }
+            }
 
             foreach (string monsterName in monsterNames) {
                 yield return StartCoroutine(AddMonster(monsterName));
@@ -100,10 +107,8 @@ namespace Combat {
             foreach (Monster m in monsters) {
                 cq.AddCharacter(m);
             }
-            foreach (PartyMember pm in partyMembers) {
-                if (pm.CheckDeath() == false) {
-                    cq.AddCharacter(pm);
-                }
+            foreach (PartyMember pm in partyMembersAlive) {
+                cq.AddCharacter(pm);
             }
             cq.FinalizeQueue();
 
@@ -393,15 +398,15 @@ namespace Combat {
             yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
 
             if (activeMonster.monsterAI == "random") {
-                targetChoice = Random.Range(0, partyMembers.Count);
+                targetChoice = Random.Range(0, partyMembersAlive.Count);
             }
             else if (activeMonster.monsterAI == "weakHunter") {
                 int weakest = 0;
                 int weakestHitChance = Random.Range(0, 100);
 
                 if (weakestHitChance < 50) {    // higher chance of attacking weakest partyMember
-                    for (int i = 1; i < partyMembers.Count; i++) {
-                        if (partyMembers[i].CHP < partyMembers[weakest].CHP && !partyMembers[i].CheckDeath()) {
+                    for (int i = 1; i < partyMembersAlive.Count; i++) {
+                        if (partyMembersAlive[i].CHP < partyMembersAlive[weakest].CHP && !partyMembersAlive[i].CheckDeath()) {
                             weakest = i;
                         }
                     }
@@ -413,9 +418,9 @@ namespace Combat {
             }
             
             yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation()));
-            eventDescription.SetPMDamageText(partyMembers[targetChoice], attackChoice.damage);
+            eventDescription.SetPMDamageText(partyMembersAlive[targetChoice], attackChoice.damage);
             
-            yield return (StartCoroutine(partyMembers[targetChoice].LoseHP(attackChoice.damage)));
+            yield return (StartCoroutine(partyMembersAlive[targetChoice].LoseHP(attackChoice.damage)));
         }
 
         /// <summary>
@@ -433,6 +438,7 @@ namespace Combat {
             }
             foreach (PartyMember pm in partyMembersToRemove) {
                 partyMembers.Remove(pm);
+                partyMembersAlive.Remove(pm);
             }
 
             eventDescription.ClearText();
