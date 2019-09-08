@@ -157,7 +157,7 @@ namespace Combat {
                 eventDescription.ClearText();    
             }
             else {
-                yield return new WaitForSeconds(0.7f);   
+                yield return new WaitForSeconds(0.6f);   
             }
         }
 

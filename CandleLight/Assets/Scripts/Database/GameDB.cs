@@ -210,9 +210,10 @@ namespace Database {
         /// Returns a SubArea from the SubAreas table
         /// </summary>
         /// <param name="subAreaName"> Name of sub area </param>
+        /// <param name="areaName"> Name of area subArea occurs in </param>
         /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
         /// <returns> A SubArea, passing it the dbconnection for it to fetch all information it needs </returns>
-        public SubArea GetSubAreaByAreaName(string subAreaName, IDbConnection dbConnection) {
+        public SubArea GetSubAreaByAreaName(string subAreaName, string areaName, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM SubAreas WHERE Name = '" + subAreaName + "'";
 
@@ -243,7 +244,7 @@ namespace Database {
                         maxMonsterNum = reader.GetInt32(14);
                         defaultBGPackName = reader.GetString(15);
 
-                        newSubArea = new SubArea(name, subAreaEvents, monsterPool, minMonsterNum, maxMonsterNum, 
+                        newSubArea = new SubArea(name, areaName, subAreaEvents, monsterPool, minMonsterNum, maxMonsterNum, 
                         defaultBGPackName, dbConnection);
                     }
                     else {
@@ -293,9 +294,10 @@ namespace Database {
         /// Returns an Event from the Events table
         /// </summary>
         /// <param name="eventName"> Name of event </param>
+        /// <param name="areaName"> Name of area event occurs in </param>
         /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
         /// <returns> An Event, passing it the dbconnection for it to fetch all information it needs </returns>
-        public Events.Event GetEventByName(string eventName, IDbConnection dbConnection) {
+        public Events.Event GetEventByName(string eventName, string areaName, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Events WHERE Name = '" + eventName + "'";
 
@@ -316,7 +318,7 @@ namespace Database {
                         eventSprites[1] = reader.GetString(15);
                         eventSprites[2] = reader.GetString(16);
 
-                        newEvent = new Events.Event(reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetString(5),
+                        newEvent = new Events.Event(reader.GetString(1), areaName, reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetString(5),
                         eventInteractions, reader.GetBoolean(11), reader.GetString(12), reader.GetInt32(13), eventSprites, dbConnection);
                     }
                     else {

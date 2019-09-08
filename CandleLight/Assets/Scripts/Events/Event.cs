@@ -11,6 +11,7 @@
 using General;
 using System.Data;
 using UnityEngine;
+using Eventconstants = Constants.EventConstants;
 
 namespace Events {
 
@@ -20,6 +21,7 @@ namespace Events {
         public Sprite[] eventSprites { get; private set; } = new Sprite[3];            /// <value> Event's sprite </value>
         
         public string name { get; private set; }            /// <value> Name of event </value>
+        public string type { get; private set; }            /// <value> Type of event </value>
         public string areaName { get; private set; }        /// <value> Name of area event occurs in for sprite purposes </value>
         public string bgPackName { get; private set; }      /// <value> Name of sprite array that this event uses to pick potential sprites </value>
         public string promptKey { get; private set; }       /// <value> Key for string describing event to player </value>
@@ -33,7 +35,8 @@ namespace Events {
         /// Constructor
         /// </summary>
         /// <param name="eventName"> Name of event </param>
-        /// <param name="areaName"> Name of area event occurs in </param>
+        /// <param name="areaName"> Name of area the event occurs in </param>
+        /// <param name="type"> Type of event </param>
         /// <param name="promptKey"> Key for string describing event to player </param>
         /// <param name="interactionNames"> Names of interactions </param>
         /// <param name="isLeavePossible"> True if leaving the event is possible, false otherwise </param>
@@ -43,10 +46,11 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public Event(string name, string areaName, int chance, int progressAmount, string promptKey, string[] interactionNames, 
+        public Event(string name, string areaName, string type, int chance, int progressAmount, string promptKey, string[] interactionNames, 
         bool isLeavePossible, string bgPackName, int specificBGSprite, string[] eventSpriteNames, IDbConnection dbConnection) {
             this.name = name;
-            //this.areaName = areaName;
+            this.areaName = areaName;
+            this.type = type;
             this.chance = chance;
             this.progressAmount = progressAmount;
             this.promptKey = promptKey;
@@ -65,6 +69,10 @@ namespace Events {
                 string intName = interactionNames[i];
                 interactions[i] = GameManager.instance.DB.GetInteractionByName(intName, dbConnection);
             }
+        }
+
+        public void LogEvent() {
+            Debug.Log("Event: " + name + " type: " + type + " areaName: " + areaName);
         }
     }
 }

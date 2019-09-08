@@ -41,7 +41,7 @@ namespace Events {
             for (int i = 0; i < subAreas.Length; i++) {
                 string subAreaName = subAreaNames[i];
                 if (subAreaName != "none") {
-                    subAreas[i] = GameManager.instance.DB.GetSubAreaByAreaName(subAreaName, dbConnection);
+                    subAreas[i] = GameManager.instance.DB.GetSubAreaByAreaName(subAreaName, name, dbConnection);
                     subAreasNum++;
                 }
             }

@@ -9,7 +9,7 @@
 */
 
 using CombatManager = Combat.CombatManager;
-using ResultConstants = Constants.ResultConstants;
+using Constants;
 using General;
 using Items;
 using Party;
@@ -232,6 +232,7 @@ namespace Events {
         /// </summary>
         public void GetNextSubAreaEvent() {
             currentEvent = currentSubArea.GetEvent();
+            currentEvent.LogEvent();
         }
 
         /// <summary>
@@ -257,14 +258,14 @@ namespace Events {
 
             PartyManager.instance.RegenParty();
 
-            if (currentEvent.promptKey == "combat_event") {
+            if (currentEvent.type == EventConstants.COMBAT) {
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
                 monstersToSpawn = currentSubArea.GetMonstersToSpawn();
 
                 GetCombatEvent();
             }
             else {
-                if (currentEvent.promptKey == "nothing_event") {
+                if (currentEvent.type == EventConstants.NOTHING) {
                     eventDescription.SetKeyAndFadeIn(currentSubArea.GetNothingPrompt());
                 }
                 else {

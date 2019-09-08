@@ -39,7 +39,7 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public SubArea(string name, string[] eventNames, string[] monsterPool, int minMonsterNum, int maxMonsterNum, 
+        public SubArea(string name, string areaName, string[] eventNames, string[] monsterPool, int minMonsterNum, int maxMonsterNum, 
         string defaultBGPackName, IDbConnection dbConnection) {
             this.name = name;
             this.monsterPool = monsterPool;
@@ -51,7 +51,7 @@ namespace Events {
                 string eventName = eventNames[i];
                 
                 if (eventName != "none") {
-                    Event newEvent = GameManager.instance.DB.GetEventByName(eventName, dbConnection);
+                    Event newEvent = GameManager.instance.DB.GetEventByName(eventName, areaName, dbConnection);
                     
                     if (newEvent.chance != 0) {
                         events[eventNum] = newEvent;
