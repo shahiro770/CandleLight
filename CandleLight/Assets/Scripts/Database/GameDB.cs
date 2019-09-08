@@ -305,21 +305,32 @@ namespace Database {
                     Events.Event newEvent = null;
                     string[] eventInteractions = new string[5];
                     string[] eventSprites = new string[3];
+                    string type = "";
+                    string bgPackName = "";
                     int[] possibleBackgrounds = new int[4];
+                    int chance = 0;
+                    int progressAmount = 0;
+                    int specificBGSprite = -1;
+                    bool isLeavePossible = false;
 
                     if (reader.Read()) {
+                        type = reader.GetString(3);
+                        chance = reader.GetInt32(4);
+                        progressAmount = reader.GetInt32(5);
                         eventInteractions[0] = reader.GetString(6);
                         eventInteractions[1] = reader.GetString(7);
                         eventInteractions[2] = reader.GetString(8);
                         eventInteractions[3] = reader.GetString(9);
                         eventInteractions[4] = reader.GetString(10);
-
+                        isLeavePossible = reader.GetBoolean(11);
+                        bgPackName = reader.GetString(12);
+                        specificBGSprite = reader.GetInt32(13);
                         eventSprites[0] = reader.GetString(14);
                         eventSprites[1] = reader.GetString(15);
                         eventSprites[2] = reader.GetString(16);
 
-                        newEvent = new Events.Event(reader.GetString(1), areaName, reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetString(5),
-                        eventInteractions, reader.GetBoolean(11), reader.GetString(12), reader.GetInt32(13), eventSprites, dbConnection);
+                        newEvent = new Events.Event(eventName, areaName, type, chance, progressAmount,
+                        eventInteractions, isLeavePossible, bgPackName, specificBGSprite, eventSprites, dbConnection);
                     }
                     else {
                          Debug.LogError("Event " + eventName + " does not exist in the DB");

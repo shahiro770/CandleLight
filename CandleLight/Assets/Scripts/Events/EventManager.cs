@@ -232,7 +232,6 @@ namespace Events {
         /// </summary>
         public void GetNextSubAreaEvent() {
             currentEvent = currentSubArea.GetEvent();
-            currentEvent.LogEvent();
         }
 
         /// <summary>

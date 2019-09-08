@@ -46,14 +46,14 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public Event(string name, string areaName, string type, int chance, int progressAmount, string promptKey, string[] interactionNames, 
+        public Event(string name, string areaName, string type, int chance, int progressAmount, string[] interactionNames, 
         bool isLeavePossible, string bgPackName, int specificBGSprite, string[] eventSpriteNames, IDbConnection dbConnection) {
             this.name = name;
             this.areaName = areaName;
             this.type = type;
             this.chance = chance;
             this.progressAmount = progressAmount;
-            this.promptKey = promptKey;
+            this.promptKey = name + "_event";
             this.isLeavePossible = isLeavePossible;
             this.bgPackName = bgPackName;
             this.specificBGSprite = specificBGSprite;
@@ -71,6 +71,9 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Logs event details, such its name, type, and the area it should take place in
+        /// </summary>
         public void LogEvent() {
             Debug.Log("Event: " + name + " type: " + type + " areaName: " + areaName);
         }
