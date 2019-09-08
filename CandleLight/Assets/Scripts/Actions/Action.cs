@@ -4,7 +4,7 @@
 * Date: February 11, 2019
 * 
 * The Action class is used to take decisions on the UI.
-* The action can be an attack, dialog option, a direction to travel in, or more, depending on the event.
+* The action can be an attack, interaction, choose a direction to travel in, or more, depending on the event.
 *
 */
 
@@ -24,15 +24,15 @@ namespace Actions {
     public class Action : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
 
         /* external component references */
-        public LocalizedText actionText;            /// <value> Component reference to text to be displayed </value>
-        public CanvasGroup textCanvas;
-        public EventDescription eventDescription;
+        public LocalizedText actionText;            /// <value> Text to be displayed </value>
+        public CanvasGroup textCanvas;              /// <value> Canvas group for fading </value>
+        public EventDescription eventDescription;   /// <value> Some actions will display what they do in the eventDescription</value>
         
-        public Attack a { get; private set; }       /// <value> Attack stored if attack </value>
-        public Button b { get; private set; }       /// <value> Button component </value>
-        public Interaction i { get; private set; }  /// <value> Interaction stored if interraction </value>
-        public string actionType { get; private set; }       /// <value> Action type (Attack, flee, undo) </value>
-        public bool isUsable { get; private set; } = true;   /// <value> Flag for if action button is usable </value>
+        public Attack a { get; private set; }               /// <value> Attack stored if attack </value>
+        public Button b { get; private set; }               /// <value> Button component </value>
+        public Interaction i { get; private set; }          /// <value> Interaction stored if interraction </value>
+        public string actionType { get; private set; }      /// <value> Action type (see ActionConstants) </value>
+        public bool isUsable { get; private set; } = true;  /// <value> Flag for if action button is usable </value>
 
         /* internal component references */
         private ButtonTransitionState bts;          /// <value> Button's visual state controller </value>
@@ -65,7 +65,7 @@ namespace Actions {
         /// <summary>
         /// Sets the actionType
         /// </summary>
-        /// <param name="actionType"> Type of action (flee, undo) </param>
+        /// <param name="actionType"> Type of action (must be ActionConstants type) </param>
         public void SetAction(string actionType) {
             if (actionType == ActionConstants.FLEE) {
                 SetKey("flee_action");
@@ -91,44 +91,36 @@ namespace Actions {
         /// <param name="actionType"> Type of action (attack) </param>
         /// <param name="a"> Attack object to be stored </param>
         public void SetAction(string actionType, Attack a) {
-            if (actionType == ActionConstants.ATTACK) {
-                if (a.nameKey == "none_attack") {   // disable action if it does nothing
-                    this.actionType = ActionConstants.NONE;
-                    this.a = null;
-                    this.i = null;
-                } 
-                else {
-                    this.a = a;
-                    this.i = null;
-                    this.actionType = actionType;
-                }
-                SetKey(a.nameKey);
+            if (a.nameKey == "none_attack") {   // disable action if it does nothing
+                this.actionType = ActionConstants.NONE;
+                this.a = null;
+                this.i = null;
+            } 
+            else {
+                this.a = a;
+                this.i = null;
+                this.actionType = actionType;   // ActionConstants.ATTACK
             }
+            SetKey(a.nameKey);
         }
 
         /// <summary>
         /// Sets the actionType. Overloaded to accept an interaction specifically
         /// </summary>
-        /// <param name="actionType"></param>
-        /// <param name="i"></param>
+        /// <param name="actionType"> Type of action (interaction) </param>
+        /// <param name="i"> Interaction object to be stored </param>
         public void SetAction(string actionType, Interaction i) {
-            if (actionType == ActionConstants.INTERACTION) {
-                if (i.nameKey == "none_int") {
-                    this.actionType = ActionConstants.NONE;
-                    this.a = null;
-                    this.i = null;
-                }
-                else {
-                    this.i = i;
-                    this.a = null;
-                    this.actionType = actionType;
-                }
-                SetKey(i.nameKey);
+            if (i.nameKey == "none_int") {
+                this.actionType = ActionConstants.NONE;
+                this.a = null;
+                this.i = null;
             }
-        }
-
-        public void SetActionType(string actionType) {
-            this.actionType = actionType;
+            else {
+                this.i = i;
+                this.a = null;
+                this.actionType = actionType;   // ActionConstants.INTERACTION
+            }
+            SetKey(i.nameKey);    
         }
 
         /// <summary>
@@ -139,11 +131,8 @@ namespace Actions {
             b.interactable = value;
             img.raycastTarget = value;
 
-            if (value == false) {
-
-                if (isUsable == true) {
-                    ShowActionUnselected();
-                }  
+            if (value == false && isUsable == true) {
+                ShowActionUnselected();
             }            
         }
         
@@ -186,6 +175,14 @@ namespace Actions {
         }
 
         /// <summary>
+        /// Sets the text to be displayed
+        /// </summary>
+        /// <param name="key"> String key that corresponds to dictionary </param>
+        public void SetKey(string key) {
+            actionText.SetKey(key);
+        }
+
+        /// <summary>
         /// Fades the action text to the target alpha
         /// </summary>
         /// <param name="targetAlpha"> Int alpha must be 0 or 1 </param>
@@ -204,14 +201,6 @@ namespace Actions {
 
                 yield return new WaitForEndOfFrame();
             }
-        }
-
-        /// <summary>
-        /// Sets the text to be displayed
-        /// </summary>
-        /// <param name="key"> String key that corresponds to dictionary </param>
-        public void SetKey(string key) {
-            actionText.SetKey(key);
         }
 
         public void OnPointerEnter(PointerEventData pointerEventData) {

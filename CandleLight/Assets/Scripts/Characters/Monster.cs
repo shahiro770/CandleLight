@@ -36,7 +36,7 @@ namespace Characters {
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int attackNum { get; private set; } = 0;         /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public int selectedAttackIndex { get; private set; }    /// <value> Index of attack selected </value>
-        [field: SerializeField] public bool isReady { get; private set; }       /// <value> Flag for when monsterDisplay is done setting properties </value>
+        [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
         #region [ Initialization ] Initialization
 
@@ -117,7 +117,7 @@ namespace Characters {
         /// <summary>
         /// Check if monster is dead
         /// </summary>
-        /// <returns> True if monster is dead, false otherwise</returns>
+        /// <returns> True if monster is dead, false otherwise </returns>
         public bool CheckDeath() {
             return CHP == 0;
         }

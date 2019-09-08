@@ -28,42 +28,30 @@ namespace PlayerUI {
         public Bar MPBar;               /// <value> Visual for mana points </value>
         public EXPBar EXPBar;           /// <value> Visual for experience points </value>
         public Button b;                /// <value> Button to make display clickable for more info </value>
-        public LocalizedText LVLText;      /// <value> Text displaying current level </value>
+        public LocalizedText LVLText;   /// <value> Text displaying current level </value>
 
-        private PartyMember pm;     /// <value> PartyMember the display is referring to <value>
+        private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
 
         /// <summary>
-        /// Displays the class, health, and mana of a party member
+        /// Displays the class, health, and mana of a partyMember
         /// </summary>
         /// <param name="pm"></param>
-        public void Init(PartyMember pm) {
-            this.pm = pm;
-            classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
-            pm.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
+        public void Init(PartyMemberVisualController pmvc) {
+            this.pmvc = pmvc;
+            classIcon.sprite = pmvc.partyMemberSprite;
+            pmvc.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
         }
 
         /// <summary>
-        /// Displays the class, level, and EXP of a party member
+        /// Displays the class, level, and EXP of a partyMember
         /// </summary>
         /// <param name="pm"></param>
-        public void InitRewardsDisplay(PartyMember pm) {
-            this.pm = pm;
-            classIcon.sprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
-            pm.SetPartyMemberDisplayRewardsPanel(this, PanelConstants.REWARDSPANEL, EXPBar, LVLText);
-
-            if (pm.className == "Warrior") {
-                LVLBackground.color = new Color32(189, 29, 0, 255);
-            }
-            else if (pm.className == "Mage") {
-                LVLBackground.color = new Color32(0, 152, 220, 255);
-            }
-            else if (pm.className == "Archer") {
-                LVLBackground.color = new Color32(90, 197, 79, 255);
-            }
-            else if (pm.className == "Thief") {
-                LVLBackground.color = new Color32(255, 235, 87, 255);
-            }
-
+        public void InitRewardsDisplay(PartyMemberVisualController pmvc) {
+            this.pmvc = pmvc;
+            classIcon.sprite = pmvc.partyMemberSprite;
+            LVLBackground.color = pmvc.partyMemberColour;
+            
+            pmvc.SetPartyMemberDisplayRewardsPanel(this, PanelConstants.REWARDSPANEL, EXPBar, LVLText);
             SetInteractable(false);
         }
         

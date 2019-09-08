@@ -19,11 +19,11 @@ namespace PlayerUI {
     public class EXPBar : MonoBehaviour {
 
         /* external component references */
-        public Image frontFill;                     /// <value> Image that displays overtop of Bar's background </value>
-        public LocalizedText EXPText;               /// <value> Text to be displayed (if HP or MP can be translated </value>
-        public LocalizedText LVLText;
+        public Image frontFill;             /// <value> Image that displays overtop of Bar's background </value>
+        public LocalizedText EXPText;       /// <value> Text to be displayed for EXP </value>
+        public LocalizedText LVLText;       /// <value> Text to be displayed for LVL </value>
 
-        private PartyMember pm;
+        private PartyMember pm;         /// <value> PartyMember this EXPBar is for </value>
         private float maxAmount;        /// <value> Max points the character has </value>
         private float currentAmount;    /// <value> Current points the character has </value>
         private float lerpSpeed = 1f;   /// <value> Speed at which bar visually changes to fillAmount </value>
@@ -34,11 +34,15 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="maxAmount"> Max amount, must be greater than 0 </param>
         /// <param name="currentAmount"> Current amount </param>
-        public void SetEXPBar(PartyMember pm, int maxAmount, int currentAmount) {
-            this.pm = pm;
+        public void SetEXPBar(int maxAmount, int currentAmount) {
             SetMaxAndCurrentImmediate(maxAmount, currentAmount);
         }
 
+        /// <summary>
+        /// Sets the max and current amounts for the EXPBar
+        /// </summary>
+        /// <param name="maxAmount"> Positive int </param>
+        /// <param name="currentAmount"> Positve int less than or equal to the maxAmount </param>
         public void SetMaxAndCurrent(int maxAmount, int currentAmount) {
             this.maxAmount = maxAmount;
             this.currentAmount = currentAmount;
@@ -46,6 +50,11 @@ namespace PlayerUI {
             SetDisplay();
         }
 
+        /// <summary>
+        /// Sets the max and current amount, displaying the bar fill immediately with no animation
+        /// </summary>
+        /// <param name="maxAmount"> Positive int </param>
+        /// <param name="currentAmount"> Positive int less than or equal to maxAmount </param>
         public void SetMaxAndCurrentImmediate(int maxAmount, int currentAmount) {
             this.maxAmount = maxAmount;
             this.currentAmount = currentAmount;
@@ -58,7 +67,7 @@ namespace PlayerUI {
         /// with the bar with the amount or wrapping back to 0 if the amount is greater
         /// than the max amount
         /// </summary>
-        /// <param name="currentAmount"></param>
+        /// <param name="currentAmount"> Positive int less than or equal to max amount </param>
         public IEnumerator SetCurrent(int currentAmount) {
             this.currentAmount = currentAmount;
             SetDisplay();
@@ -67,6 +76,10 @@ namespace PlayerUI {
             }
         }
 
+        /// <summary>
+        /// Sets the current amount, displaying the bar fill immediately with no animation
+        /// </summary>
+        /// <param name="currentAmount"> Positive int less than or equal to maxAmount </param>
         public void SetCurrentImmediate(int currentAmount) {
             this.currentAmount = currentAmount;
             SetDisplay(true);

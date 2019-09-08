@@ -8,8 +8,6 @@
 *
 */
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Combat {
@@ -33,6 +31,7 @@ namespace Combat {
         /// <param name="damage"> Amount of damage attack deals </param>
         /// <param name="costType"> Type of cost (MP or HP) </param>
         /// <param name="cost"> Cost of attack (in MP or HP) </param>
+        /// <param name="scope"> String describing the targets this attack hits </param>
         /// <param name="animationClipName"> Animation clip to play when attack is used </param>
         public Attack(string name, int damage, string costType, int cost, string scope, string animationClipName) {
             this.name = name;

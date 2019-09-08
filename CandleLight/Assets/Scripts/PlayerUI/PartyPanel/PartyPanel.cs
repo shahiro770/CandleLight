@@ -49,7 +49,7 @@ namespace PlayerUI {
             }
             for (int i = 0; i < pms.Count; i++) {
                 pmDisplays[i].gameObject.SetActive(true);
-                pmDisplays[i].Init(pms[i]);
+                pmDisplays[i].Init(pms[i].pmvc);
             }
 
             SetVerticalNavigation();
@@ -63,13 +63,12 @@ namespace PlayerUI {
         public void AddPartyMemberDisplay(PartyMember pm) {
             int newIndex = PartyManager.instance.GetNumPartyMembers();
             pmDisplays[newIndex - 1].gameObject.SetActive(true);
-            pmDisplays[newIndex - 1].Init(pm);
+            pmDisplays[newIndex - 1].Init(pm.pmvc);
         }
 
         /// <summary>
         /// Sets the horizontal navigation for PartyMemberDisplay to other panels
         /// </summary>
-        /// <param name="actionsPanel"> ActionsPanel reference </param>
         public void SetHorizontalNavigation() {
             if (actionsPanel.actions[1].IsInteractable()) {
                 foreach(PartyMemberDisplay pmd in pmDisplays) {

@@ -4,12 +4,10 @@
 * Date: February 11, 2019
 * 
 * The CombatManager class is used to manage all classes during the combat scene.
-* Party members, monsters, actions, and turn ordering are all managed in the combat manager.
+* PartyMembers, monsters, actions, and turn ordering are all managed in the combat manager.
 *
 * TODO:
 * Need to work with attacks that target multiple monsters, and multiple partyMembers
-* Unify naming (make interactable functions 1 function with true or false, make all button related stuff use
-* the word interactable)
 */
 
 using Characters;
@@ -29,7 +27,7 @@ namespace Combat {
     public class CombatManager : MonoBehaviour {
         
         /* constants */
-        private readonly bool PMTURN = true;        /// <value> Flag for party member turn </value>
+        private readonly bool PMTURN = true;        /// <value> Flag for partyMember turn </value>
         private readonly bool MTURN = false;        /// <value> Flag for monster turn </value>
 
         public static CombatManager instance;       /// <value> Combat scene instance </value>
@@ -37,25 +35,25 @@ namespace Combat {
         /* external component references */
         public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
         public EventDescription eventDescription;   /// <value> Display for all text and prompts relevant to an action or event</value>
-        public StatusPanel statusPanel;             /// <value> Display for active party member's status </value>
-        public ActionsPanel actionsPanel;           /// <value> Display for active party member's actions </value>
-        public PartyPanel partyPanel;               /// <value> Display for all party member's status </value>
-        public TabManager utilityTabManager;           /// <value> Click on to display other panels </value>
+        public StatusPanel statusPanel;             /// <value> Display for active partyMember's status </value>
+        public ActionsPanel actionsPanel;           /// <value> Display for active partyMember's actions </value>
+        public PartyPanel partyPanel;               /// <value> Display for all partyMember's status </value>
+        public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
 
         public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
         public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
         private EventSystem es;                                             /// <value> EventSystem reference </value>
-        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of party members </value>
-        private List<PartyMember> partyMembersAlive = new List<PartyMember>();
-        private PartyMember activePartyMember;                              /// <value> Current party member preparing to act </value>
+        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers </value>
+        private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers that are alive </value>
+        private PartyMember activePartyMember;                              /// <value> Current partyMember preparing to act </value>
         private List<Monster> monsters =  new List<Monster>();              /// <value> List of monsters </value>
         private List<Monster> selectedMonsterAdjacents = new List<Monster>();   /// <value> List of monsters adjacent to the monster selected that will be affected </value>
         private Monster selectedMonster = null;                             /// <value> Selected monster </value>
         private Monster activeMonster;                                      /// <value> Current monster preparing to act </value>
         private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
-        private Attack selectedAttack = null;       /// <value> Attack selected by party member </value>
+        private Attack selectedAttack = null;       /// <value> Attack selected by partyMember </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
         private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
@@ -84,6 +82,7 @@ namespace Combat {
         /// <summary>
         /// Start to initialize all monsters, characters, and combat queue before beginning combat
         /// </summary>
+        /// <param name="monsterNames"> Names of monsters to spawn in for combat </param>
         public IEnumerator InitializeCombat(string[] monsterNames) {
             actionsPanel.Init(isFleePossible);
             isFleeSuccessful = false;
@@ -121,6 +120,7 @@ namespace Combat {
         /// Adds a monster GO to the enemy canvas, initializing its values and setting navigation
         /// </summary>
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
+        /// <returns> IEnumerator cause animations </returns>
         /// <remark> Assumes there will always be an action at button 0 </remark>
         private IEnumerator AddMonster(string monsterName) {
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonsterDisplay(monsterName));
@@ -162,11 +162,11 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Starts combat by displaying the next party member's active turn
+        /// Starts combat by displaying the next partyMember's active turn
         /// and determining which character moves next
         /// </summary>
         private void StartCombat() {
-            DisplayFirstPartyMember();          // active party member is not set
+            DisplayFirstPartyMember();          // active partyMember is not set
             DisableAllMonsterSelection();
 
             GetNextTurn();
@@ -176,7 +176,7 @@ namespace Combat {
 
         /// <summary>
         /// Determine's who's turn it is in the queue and then prepares the attacking character
-        /// to either see their options if its a party member, or attack if its a monster.
+        /// to either see their options if its a partyMember, or attack if its a monster.
         /// </summary>
         public void GetNextTurn() {
             Character c = cq.GetNextCharacter();
@@ -201,7 +201,7 @@ namespace Combat {
         #region [ Section0 ] PartyMember Turn
 
         /// <summary>
-        /// Perform all of the phases in the party member's turn
+        /// Perform all of the phases in the partyMember's turn
         /// </summary>
         /// <returns> IEnumerator so actions are all taken in order </returns>
         private IEnumerator PMTurn() {
@@ -259,7 +259,7 @@ namespace Combat {
         /// <summary>
         /// Randomly determine if the player is able to end combat before killing all monsters
         /// </summary>
-        /// <returns> IEnumerator to play through death animations </returns>
+        /// <returns> IEnumerator for dramatic timing and animations </returns>
         /// <remark> Death animation for each monster is played as a de-spawning animation</remark>
         public IEnumerator AttemptFlee() {
             int chance = Random.Range(activePartyMember.LVL, 100) - monsters[0].LVL;
@@ -311,8 +311,6 @@ namespace Combat {
         /// If the monster were to die, see if combat is finished, otherwise reset most of the UI
         /// to as if it were the start of the player's turn, and then determine the next turn.
         /// </summary>
-        /// <param name="a"> Attack to be executed </param>
-        /// <param name="m"> Monster to be attacked </param>
         /// <returns> 
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// </returns>
@@ -396,7 +394,6 @@ namespace Combat {
             Attack attackChoice = activeMonster.SelectAttack();
             eventDescription.SetKey(attackChoice.nameKey);
             yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
-
             if (activeMonster.monsterAI == "random") {
                 targetChoice = Random.Range(0, partyMembersAlive.Count);
             }
@@ -404,8 +401,8 @@ namespace Combat {
                 int weakest = 0;
                 int weakestHitChance = Random.Range(0, 100);
 
-                if (weakestHitChance < 50) {    // higher chance of attacking weakest partyMember
-                    for (int i = 1; i < partyMembersAlive.Count; i++) {
+                if (weakestHitChance < 50) {    // 50% chance of attacking weakest partyMember
+                    for (int i = 1; i < partyMembersAlive.Count; i++) {          
                         if (partyMembersAlive[i].CHP < partyMembersAlive[weakest].CHP && !partyMembersAlive[i].CheckDeath()) {
                             weakest = i;
                         }
@@ -452,7 +449,7 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Checks if all party members or all monsters are defeated
+        /// Checks if all partyMembers or all monsters are defeated
         /// </summary>
         /// <returns></returns>
         public bool CheckBattleOver() {
@@ -594,9 +591,7 @@ namespace Combat {
         /// Only a max of 5 monsters for now, although 3 large monsters, 4 normal, and 5 small fit at a time
         /// </summary>
         /// <remark> Will add custom arrangements for wackier monster layouts in the future </remark>
-        private void ArrangeMonsters() {
-            string arrangementType = "normal";
-
+        private void ArrangeMonsters(string arrangementType = "normal") {
             if (arrangementType == "normal") {
                 if (monsters.Count == 1) {
                     float spacing0 = 0;
@@ -706,20 +701,20 @@ namespace Combat {
         }
         
         /// <summary>
-        /// Changes the UI to reflect the first party member in the queue's information
+        /// Changes the UI to reflect the first partyMember in the queue's information
         /// </summary>s
         public void DisplayFirstPartyMember() {
             activePartyMember = cq.GetFirstPM();    // activePartyMember will be redundantly set a second time
             actionsPanel.DisplayFirstPartyMember(activePartyMember);
-            statusPanel.DisplayPartyMember(activePartyMember);
+            statusPanel.DisplayPartyMember(activePartyMember.pmvc);
         }
 
         /// <summary>
-        /// Changes the UI to reflect the active party member's information
+        /// Changes the UI to reflect the active partyMember's information
         /// </summary>s
         public void DisplayActivePartyMember() {
             actionsPanel.DisplayPartyMember(activePartyMember);
-            statusPanel.DisplayPartyMember(activePartyMember);
+            statusPanel.DisplayPartyMember(activePartyMember.pmvc);
         }
 
         #endregion

@@ -10,9 +10,6 @@
 
 using Characters;
 using PanelConstants = Constants.PanelConstants;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace PlayerUI {
@@ -22,19 +19,19 @@ namespace PlayerUI {
         public Bar HPBar;               /// <value> HPBar of active partyMember </value>
         public Bar MPBar;               /// <value> MPBar of active partyMember </value>
         public EffectsBar effectsBar;   /// <value> EffectBar of active partyMember </value>
-        public PartyMember pm = null;
+        public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember</value>
 
         /// <summary>
         /// Initialize all the bars of the active partyMember
         /// </summary>
         /// <param name="pm"></param>
-        public void DisplayPartyMember(PartyMember pm) {
-            if (this.pm != null) {
-                this.pm.UnsetHPAndMPBar(GetPanelName());
+        public void DisplayPartyMember(PartyMemberVisualController pmvc) {
+            if (this.pmvc != null) {
+                this.pmvc.UnsetHPAndMPBar(GetPanelName());
             }
 
-            pm.SetHPAndMPBar(GetPanelName(), HPBar, MPBar);
-            this.pm = pm;
+            pmvc.SetHPAndMPBar(GetPanelName(), HPBar, MPBar);
+            this.pmvc = pmvc;
         }
 
         /// <summary>

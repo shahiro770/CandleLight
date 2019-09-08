@@ -23,11 +23,11 @@ namespace Events {
 
     public class EventManager : MonoBehaviour {
 
-        public static EventManager instance; /// <value> Singleton </value>
+        public static EventManager instance;        /// <value> Singleton </value>
 
         /* external component references */
         public CombatManager combatManager;         /// <value> CombatManager reference </value>
-        public EventDisplay[] eventDisplays = new EventDisplay[3]; /// <value> Displays for informational sprites that events might have </value>
+        public EventDisplay[] eventDisplays = new EventDisplay[3];  /// <value> Displays for informational sprites that events might have </value>
         public EventDescription eventDescription;   /// <value> Display that describes the event in text </value>
         public Canvas eventCanvas;                  /// <value> Canvas holding all other canvases </value>
         public CanvasGroup eventBGCanvas;           /// <value> Current event's background sprite alpha controller </value>
@@ -39,13 +39,10 @@ namespace Events {
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
         public InfoPanel infoPanel;                 /// <value> InfoPanel reference </value>
-        public TabManager utilityTabManager;           /// <value> Click on to display other panels </value>
+        public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
 
-        public float canvasWidth = 960;
-        /// <value> 
-        /// gameObject positions on the screen are scaled via the canvas, change this number if scaling changes
-        /// </value>
-        public float canvasScaleFactor = 1 / 0.01851852f;
+        public float canvasWidth = 960;     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
+        public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code</value>
         public float areaMultiplier { get; private set; }       /// <value> Multiplier to results for events in the area </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
 
@@ -53,9 +50,9 @@ namespace Events {
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
         private Event currentEvent;          /// <value> Event being displayed </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
-        private BackgroundPack bgPackPrev = null;
-        private Sprite WAXItemSprite;
-        private Sprite HPItemSprite;
+        private BackgroundPack bgPackPrev = null;       /// <value> Previous background pack </value>
+        private Sprite WAXItemSprite;                   /// <value> Sprite for WAX currency </value>
+        private Sprite HPItemSprite;                    /// <value> Sprite for HP recovery </value>
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, -20, 0);
@@ -65,13 +62,13 @@ namespace Events {
         private Vector3 pos3d2 = new Vector3(0, -20, 0);
         private Vector3 pos3d3 = new Vector3(275, -20, 0);
 
-        private string[] monstersToSpawn;
-        private string currentAreaName;     /// <value> Name of current area </value>
-        private int bgPackNum = 0;          /// <value> Number of backgroundPacks </value>
-        private int areaProgress = 0;       /// <value> Area progress increments by 1 for each main event the player completes </value>
+        private string[] monstersToSpawn;       /// <value> List of monsters to spawn </value>
+        private string currentAreaName;         /// <value> Name of current area </value>
+        private int bgPackNum = 0;              /// <value> Number of backgroundPacks </value>
+        private int areaProgress = 0;           /// <value> Area progress increments by 1 for each main event the player completes </value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
-        private bool isReady = false;       /// <value> Wait until EventManager is ready before starting </value>
+        private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
         private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>
 
         #region [Initialization] Initialization 
@@ -98,8 +95,6 @@ namespace Events {
             StartCoroutine(StartArea(GameManager.instance.areaName));
         }
 
-        
-
         /// <summary>
         /// Loads an Area from the database, waiting until all of subAreas, events,
         /// interactions, and results have been loaded before saying the area is ready.
@@ -120,9 +115,8 @@ namespace Events {
         }
         
         /// <summary>
-        /// Load backgroundPacks for an area
+        /// Load backgroundPacks for the current area
         /// </summary>
-        /// <param name="areaName"> Name of area that will have its bgPacks loaded </param>
         public void LoadBackgroundPacks() {
             string[] bgPackNames = GameManager.instance.DB.GetBGPackNames(currentAreaName);
 
@@ -134,6 +128,10 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Loads general sprites that many events might use
+        /// TODO: Find a better place to put this 
+        /// </summary>
         public void LoadGeneralSprites() {
             WAXItemSprite = Resources.Load<Sprite>("Sprites/Items/WAXItem");
             
@@ -144,6 +142,10 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Load general interactions that many events might use
+        /// TODO: find a better place to put this
+        /// </summary>
         public void LoadGeneralInteractions() {
             Interaction travelInt = GameManager.instance.DB.GetInteractionByName("travel");
             Interaction fightInt = GameManager.instance.DB.GetInteractionByName("fight");
@@ -191,9 +193,8 @@ namespace Events {
         }
 
         /// <summary>
-        /// Gets the next event triggered by an interaction
+        /// Gets the next event
         /// </summary>
-        /// <param name="i"></param>
         public void GetNextEvent() {      
             actionsPanel.SetActionsUsable(true);
             subAreaProgress += currentEvent.progressAmount;
@@ -277,7 +278,7 @@ namespace Events {
                     HideEventDisplays();
                 }
 
-                statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0]);
+                statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0].pmvc);
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 partyPanel.EnableButtons();
@@ -298,7 +299,7 @@ namespace Events {
 
         /// <summary>
         /// Displays post combat information such as the RewardsPanel, and prepares player to continue exploring
-        /// TODO Make the postCombat event have interactions in each action somehow
+        /// TODO: Make the postCombat event have interactions in each action somehow
         /// </summary>
         /// <param name="endString"> String constant explaining how combat ended </param>
         public IEnumerator DisplayPostCombat(string endString) {
@@ -328,6 +329,11 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Returns items found as a result of an interaction
+        /// </summary>
+        /// <param name="r"> Result containing items </param>
+        /// <returns> List of items </returns>
         public List<Item> GetInteractionItems(Result r) {
             r.GenerateResults();
 
@@ -349,6 +355,10 @@ namespace Events {
             return items;
         }
 
+        /// <summary>
+        /// Does something depending on the interaction selected by the player
+        /// </summary>
+        /// <param name="i"> Interaction object </param>
         public void Interact(Interaction i) {
             Result r = i.GetResult();
 
@@ -447,6 +457,10 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Applies stat changes (HP, MP, STR, INT, DEX, LUK) to a single partyMember at random
+        /// </summary>
+        /// <param name="r"> Result containing the stats to be changed </param>
         public void ApplyResultStatChangesSingle(Result r) {
             r.GenerateResults();
             eventDescription.SetKey(r.resultKey);
@@ -459,6 +473,10 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        ///  Applies stat changes (HP, MP, STR, INT, DEX, LUK) to all partyMembers
+        /// </summary>
+        /// <param name="r"> Result containing the stats to be changed </param>
         public void ApplyResultStatChangesMultiple(Result r) {
             r.GenerateResults();
             eventDescription.SetKey(r.resultKey);
@@ -471,6 +489,10 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Dispays the items found in the item displays of a single event display
+        /// </summary>
+        /// <param name="r"> Result to have its items displayed </param>
         public void DisplayResultItems(Result r) {
             List<Item> items = GetInteractionItems(r);
 
@@ -487,7 +509,7 @@ namespace Events {
         /// <summary>
         /// Performs visual effects when moving to next event
         /// </summary>
-        /// <returns></returns>
+        /// <returns> IEnumerator to time things properly </returns>
         public IEnumerator TransitionToNextEvent() {
             eventDescription.FadeOut();
             HideEventDisplays();
@@ -564,7 +586,7 @@ namespace Events {
         /// Returns a random sprite from a backgroundPack
         /// </summary>
         /// <param name="bgPackName"> Name of backgroundPack to load from </param>
-        /// <returns></returns>
+        /// <returns> Sprite </returns>
         public Sprite GetBGSprite(string bgPackName) {
             string confirmedBGPackName = bgPackName;
 
@@ -593,7 +615,6 @@ namespace Events {
         /// <summary>
         /// Displays the event sprites in the eventDisplays
         /// </summary>
-        /// <param name="e"> Event containing sprites </param>
         public void ShowEventDisplays() {
             if (currentEvent.spriteNum != 0) {
                 if (currentEvent.spriteNum == 1) {
@@ -647,6 +668,9 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Take all items from an event display
+        /// </summary>
         public void TakeAllItems() {
             eventDisplays[0].TakeAllItems();
         }

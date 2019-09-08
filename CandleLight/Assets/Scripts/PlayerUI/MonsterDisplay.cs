@@ -3,7 +3,8 @@
 * Author: Shahir Chowdhury
 * Date: February 11, 2019
 * 
-* The Monster class is used to store and manipulate information about the Monster. 
+* The MonsterDisplay class is used to display information held inside
+* a Monster class and handle visual interactions.
 * It is always attached to a Monster gameObject.
 *
 */
@@ -29,21 +30,29 @@ namespace Characters {
         public ButtonTransitionState bts;   /// <value> Button's visual state controller </value>
         public Canvas monsterCanvas;        /// <value> Monster's personal canvas to display UI elements and minimize repainting </value>
         public DamageText dt;               /// <value> Text display to show how much damage taken by an attack </value>we
-        public RectTransform monsterSpriteHolder;       /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
-        public SpriteRenderer monsterSprite;
-        public Tooltip t;
+        public RectTransform monsterSpriteHolder;   /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
+        public SpriteRenderer monsterSprite;        /// <value> Sprite of monster </value>
+        public Tooltip t;                   /// <value> Tooltip holding monster information </value>
 
         [field: SerializeField] public Vector2 vectorSize { get; private set; }         /// <value> Size of monster's sprite </value>
         [field: SerializeField] public float spriteWidth { get; private set; }          /// <value> Width of sprite rect transform </value>
         
-        [field: SerializeField] private Monster displayedMonster;
-        [field: SerializeField] private Vector2 buttonVectorSize;                       /// <value> Size of monster's sprite </value>
-        [field: SerializeField] private float healthBarWidth = 18;
-
+        [field: SerializeField] private Vector2 buttonVectorSize;       /// <value> Size of monster's sprite </value>
+        [field: SerializeField] private Monster displayedMonster;       /// <value> </value>
+        [field: SerializeField] private float healthBarHeight = 18;     /// <value> Default width of a monster's health bar </value>
+        [field: SerializeField] private float healthBarWidthSmall = 115;/// <value> Default width of a monster's health bar </value>
+        [field: SerializeField] private float healthBarWidthMed = 150;  /// <value> Default width of a monster's health bar </value>
+        [field: SerializeField] private float healthBarWidthLarge = 230;/// <value> Default width of a monster's health bar </value>
 
         #region [ Initialization ] Initialization
 
-        public IEnumerator Init(Monster m) {          
+        /// <summary>
+        /// Initializes monster display with the monster's information
+        /// </summary>
+        /// <param name="displayedMonster"> Monster object </param>
+        /// <returns> Ienumerator so combat doesn't start until all monsters have spawned </returns>
+        public IEnumerator Init(Monster displayedMonster) {          
+            this.displayedMonster = displayedMonster;
             // when monster is an adjacent selected by a multi-scoping attack, give it a different button colour
             ColorBlock monsterAltSelectColorBlock = b.colors;  
             monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 200);
@@ -84,16 +93,19 @@ namespace Characters {
             string monsterSize = displayedMonster.monsterSize;
 
             if (monsterSize == "small" || monsterSize == "extraSmall") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(115, healthBarWidth));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(healthBarWidthSmall, healthBarHeight));
             } 
             else if (monsterSize == "medium") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(150, healthBarWidth));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(healthBarWidthMed, healthBarHeight));
             }
              else if (monsterSize == "large") {
-                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(230, healthBarWidth));
+                HPBar.SetMaxAndCurrent(displayedMonster.HP, displayedMonster.CHP, new Vector2(healthBarWidthLarge, healthBarHeight));
             }
         }
 
+        /// <summary>
+        /// Sets the size of monster's rect 
+        /// </summary>
         private void SetSize() {
             RectTransform monsterRect = monsterSpriteHolder.GetComponent<RectTransform>();
             RectTransform buttonRect = b.GetComponent<RectTransform>();
@@ -174,7 +186,9 @@ namespace Characters {
             }
         }
 
-
+        /// <summary>
+        /// Sets the tooltip to display the monster's information
+        /// </summary>
         public void SetTooltip() {
             RectTransform buttonRect = b.GetComponent<RectTransform>();
             t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
@@ -229,7 +243,7 @@ namespace Characters {
 
         #endregion
 
-        #region Animation
+        #region [ Section 2 ] Animation
 
         /// <summary>
         /// Sets all monster attack clips in monster animator controller.
@@ -286,7 +300,7 @@ namespace Characters {
             effectsAnimator.runtimeAnimatorController = aoc;   
         }
 
-                /// <summary>
+        /// <summary>
         /// Plays an animation
         /// </summary>
         /// <param name="a"> Name of animator (effectsAnimator, monsterAnimator, etc.) </param>
@@ -362,7 +376,7 @@ namespace Characters {
 
         #endregion
 
-        #region Combat Information
+        #region [ Section 3] Combat Information
 
         public IEnumerator DisplayLostHP(int amount, string animationClipName) {
             SetEffectsAnimatorClip(animationClipName);

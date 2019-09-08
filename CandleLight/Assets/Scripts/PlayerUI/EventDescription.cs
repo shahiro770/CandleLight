@@ -12,7 +12,6 @@ using Attack = Combat.Attack;
 using Characters;
 using Localization;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,17 +21,17 @@ namespace PlayerUI {
         
         /* external component references */
         public LocalizedText eventText;     /// <value> Text for event </value>
-        public Image textBackground;
+        public Image textBackground;        /// <value> Image background for text component </value>
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         
-        private Color32 normalColour = new Color32(255, 255, 255, 255);
-        private Color32 normalColourHalfAlpha = new Color32(255, 255, 255, 128);
-        private Color32 unusableColour = new Color32(196, 36, 48, 255);
-        private Color32 unusableColourHalfAlpha = new Color32(196, 36, 48, 128);
-        private float lerpSpeed = 4;        /// Speed at which canvas fades in and out
-        private string costText = LocalizationManager.instance.GetLocalizedValue("cost_text");
-        private string damageText = LocalizationManager.instance.GetLocalizedValue("damage_text");
-        private string colour = "normal";
+        private Color32 normalColour = new Color32(255, 255, 255, 255);             /// <value> White </value>
+        private Color32 normalColourHalfAlpha = new Color32(255, 255, 255, 128);    /// <value> White half alpha to appear darker </value>
+        private Color32 unusableColour = new Color32(196, 36, 48, 255);             /// <value> Red colour to indicate unusable attack </value>
+        private Color32 unusableColourHalfAlpha = new Color32(196, 36, 48, 128);    /// <value> Red colour half alpha to indicate unusable attack </value>
+        private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
+        private string costText = LocalizationManager.instance.GetLocalizedValue("cost_text");  /// <value> Localized text for the word "cost" </value>
+        private string damageText = LocalizationManager.instance.GetLocalizedValue("damage_text");  /// <value> Localized text for the word "damage" </value>
+        private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
         /// Changes the displayed text
@@ -68,20 +67,20 @@ namespace PlayerUI {
         /// <summary>
         /// Changes the displayed text to show how much damage a partyMember took
         /// </summary>
-        /// <param name="pm"></param>
-        /// <param name="amount"></param>
+        /// <param name="pm"> partyMember object </param>
+        /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageText(PartyMember pm, int amount) {
             if (this.colour != "normal") {
                 SetColour("normal");
             }
-            eventText.SetDamageText(pm.memberName, amount);
+            eventText.SetDamageText(pm.pmName, amount);
         }
 
         /// <summary>
         /// Changes the displayed text to show the cost and effects of an attack action
         /// </summary>
-        /// <param name="pm"></param>
-        /// <param name="amount"></param>
+        /// <param name="pm"> partyMember object </param>
+        /// <param name="amount"> Positive int amount </param>
         public void SetAttackText(Attack a, bool isUsable) {
             string attackString = a.cost + " " + a.costType + " " + a.damage + " " + damageText;
             eventText.SetText(attackString);
@@ -103,21 +102,30 @@ namespace PlayerUI {
             eventText.Clear();
         }
 
+        /// <summary>
+        /// Returns true if eventText has text, false otherwise
+        /// </summary>
+        /// <returns> Boolean </returns>
         public bool HasText() {
             return eventText.HasText();
         }
 
+        /// <summary>
+        /// Sets the current colour of the text
+        /// </summary>
+        /// <param name="colour"> String, "normal" or "unusable" </param>
         public void SetColour(string colour) {
             this.colour = colour;
 
-            if (colour == "unusable") {
-                textBackground.color = unusableColourHalfAlpha;
-                eventText.SetColour(unusableColour);
-            }
-            else if (colour == "normal") {
+            if (colour == "normal") {
                 textBackground.color = normalColourHalfAlpha;
                 eventText.SetColour(normalColour);
             }
+            else if (colour == "unusable") {
+                textBackground.color = unusableColourHalfAlpha;
+                eventText.SetColour(unusableColour);
+            }
+            
         }
 
         /// <summary>

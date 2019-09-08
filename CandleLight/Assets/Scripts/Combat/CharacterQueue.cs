@@ -105,7 +105,7 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Returns the first party member in the queue
+        /// Returns the first partyMember in the queue
         /// </summary>
         /// <returns></returns>
         public PartyMember GetFirstPM() {

@@ -49,7 +49,7 @@ namespace PlayerUI {
 
             for (int i = 0; i < pms.Count; i++) {
                 pmDisplays[i].gameObject.SetActive(true);
-                pmDisplays[i].InitRewardsDisplay(pms[i]);
+                pmDisplays[i].InitRewardsDisplay(pms[i].pmvc);
             }
 
             monsterCounts = new int[5];
@@ -94,7 +94,7 @@ namespace PlayerUI {
 
             amountTextEXP.SetText(amountEXP.ToString());
             amountTextWAX.SetText(amountWAX.ToString());
-            PartyManager.instance.AddWax(amountWAX);
+            PartyManager.instance.AddWAX(amountWAX);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pms"></param>
         private IEnumerator UpdateEXPBars(List<PartyMember> pms) {
-            PartyManager.instance.GainEXP(amountEXP);
+            PartyManager.instance.AddEXP(amountEXP);
 
             while (!pms[0].doneEXPGaining) {   // wait for bars to finish filling 
                 yield return null;

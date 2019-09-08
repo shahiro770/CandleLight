@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: February 23, 2019
 * 
-* The PartyManager class is used to manage the party members and their information.
+* The PartyManager class is used to manage the partyMembers and their information.
 * It is held within the Game scene where it can always be accessed globally.
 *
 */
@@ -27,9 +27,9 @@ namespace Party {
 
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         
-        private List<PartyMember> partyMembersAlive = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
+        private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
-        private int maxPartyMembers = 4;                                    /// <value> Max number of partyMembers </value>
+        private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>
         
         /// <summary>
         /// Awake to instantiate singleton
@@ -45,9 +45,9 @@ namespace Party {
         }
 
         /// <summary>
-        /// Adds a party member to the list of party members
+        /// Adds a partyMember to the list of partyMembers
         /// </summary>   
-        /// <param name="className"> Class of the party member to be added </param>
+        /// <param name="className"> Class of the partyMember to be added </param>
         public void AddPartyMember(string className) {
             if (partyMembersAlive.Count + partyMembersDead.Count < maxPartyMembers) {
                 GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
@@ -66,14 +66,14 @@ namespace Party {
         }
         
         /// <summary>
-        /// Returns a list containing all party members
+        /// Returns a list containing all partyMembers
         /// </summary> 
         /// <returns>
-        /// A list of party members. 
-        /// Each party member is assigned a unique ID in preparation for queueing in combat. 
-        /// ID is incremented for each party member.
+        /// A list of partyMembers. 
+        /// Each partyMember is assigned a unique ID in preparation for queueing in combat. 
+        /// ID is incremented for each partyMember.
         /// </returns>
-        /// <param name="countID"> ID that is incremented and assigned to each party member for queuing </param>
+        /// <param name="countID"> ID that is incremented and assigned to each partyMember for queuing </param>
         public List<PartyMember> GetPartyMembers(ref int countID) {
             List<PartyMember> partyMembers = new List<PartyMember>();
             foreach (PartyMember pm in partyMembersAlive) {
@@ -105,89 +105,160 @@ namespace Party {
         }
 
         /// <summary>
-        /// Returns the number of partyMembers in the partyMembers list
+        /// Returns the number of partyMembers 
         /// </summary>
         /// <returns> int amount of partyMember </returns>
         public int GetNumPartyMembers() {
             return partyMembersAlive.Count + partyMembersDead.Count;
         }
 
+        /// <summary>
+        /// Returns the number of partyMembers alive
+        /// </summary>
+        /// <returns></returns>
         public int GetNumPartyMembersAlive() {
             return partyMembersAlive.Count;
         }
 
+        /// <summary>
+        /// Adds a partyMember to the alive list and removes them from the dead list
+        /// </summary>
+        /// <param name="pm"> partyMember object </param>
         public void RegisterPartyMemberAlive(PartyMember pm) {
             partyMembersAlive.Add(pm);
             partyMembersDead.Remove(pm);
         }
 
+        /// <summary>
+        /// Adds a partyMember to the dead list and removes them from the alive list
+        /// </summary>
+        /// <param name="pm"> partyMember object </param>
         public void RegisterPartyMemberDead(PartyMember pm) {
             partyMembersAlive.Remove(pm);
             partyMembersDead.Add(pm);
         }
 
-        public void GainEXP(int amount) {
+        /// <summary>
+        /// Adds EXP to each partyMember
+        /// </summary>
+        /// <param name="amount"> Positive int amount to be added </param>
+        public void AddEXP(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
-                StartCoroutine(pm.GainEXP(amount));
+                StartCoroutine(pm.AddEXP(amount));
             }
         }
 
+        /// <summary>
+        /// Adds HP to a random partyMember
+        /// </summary>
+        /// <param name="amount"> Positive int amount to be added </param>
         public void AddHPSingle(int amount) {
             partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddHP(amount);
         }
 
+        /// <summary>
+        /// Adds HP to a specific partyMember
+        /// </summary>
+        /// <param name="pm"> partyMember object </param>
+        /// <param name="amount"> Positive int amount to be added </param>
         public void AddHPSingle(PartyMember pm, int amount) {
             pm.AddHP(amount);
         }
 
+        /// <summary>
+        /// Adds HP to all partyMembers
+        /// </summary>
+        /// <param name="amount"> Positive int amount to be added </param>
         public void AddHPAll(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.AddHP(amount);
             }
         }
 
+        /// <summary>
+        /// Lose HP from a random partyMember
+        /// </summary>
+        /// <param name="amount"> Positive int amount to be lost </param>
         public void LoseHPSingle(int amount) {
             StartCoroutine(partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseHP(amount));
         }
 
+        /// <summary>
+        /// Lose HP from a specific partyMember
+        /// </summary>
+        /// <param name="pm"> partyMember object </param>
+        /// <param name="amount"> Positive int amount to be lost </param>
         public void LoseHPSingle(PartyMember pm, int amount) {
             StartCoroutine(pm.LoseHP(amount));
         }
 
+        /// <summary>
+        /// Lose HP from all partyMembers
+        /// </summary>
+        /// <param name="amount"> Positive int to be lost </param>
         public void LoseHPAll(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
                 StartCoroutine(pm.LoseHP(amount));
             }
         }
 
+        /// <summary>
+        /// Add MP to a random partyMember
+        /// </summary>
+        /// <param name="amount"> Positive int to be added </param>
         public void AddMPSingle(int amount) {
             partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddMP(amount);
         }
 
+        /// <summary>
+        /// Add MP to a specific partyMember
+        /// </summary>
+        /// <param name="pm"> partyMember object </param>
+        /// <param name="amount"> Positive int to be added </param>
         public void AddMPSingle(PartyMember pm, int amount) {
             pm.AddMP(amount);
         }
 
+        /// <summary>
+        /// Add MP to all partyMembers
+        /// </summary>
+        /// <param name="amount"> Positive int to be added </param>
         public void AddMPAll(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.AddMP(amount);
             }
         }
 
+        /// <summary>
+        /// Lose MP from a random partyMember
+        /// </summary>
+        /// <param name="amount"> Positive int to be lost </param>
         public void LoseMPSingle(int amount) {
             StartCoroutine(partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseMP(amount));
         }
 
+        /// <summary>
+        /// Lose MP from a specific partyMember
+        /// </summary>
+        /// <param name="pm"> partyMember object </param>
+        /// <param name="amount"> Positive int to be lost </param>
         public void LoseMPSingle(PartyMember pm, int amount) {
             StartCoroutine(pm.LoseMP(amount));
         }
 
+        /// <summary>
+        /// Lose MP from all partyMembers
+        /// </summary>
+        /// <param name="amount"> Positive int to be lost </param>
         public void LoseMPAll(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
                 StartCoroutine(pm.LoseMP(amount));
             }
         }
 
+        /// <summary>
+        /// Regenerates MP and HP for all partyMembers
+        /// </summary>
         public void RegenParty() {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.Regen();
@@ -198,7 +269,7 @@ namespace Party {
         /// Increases the amount of WAX the party has
         /// </summary>
         /// <param name="amount"> Positive int to increase by </param>
-        public void AddWax(int amount) {
+        public void AddWAX(int amount) {
             WAX += amount;
             EventManager.instance.infoPanel.UpdateAmounts(); //with singletons you can reference across scenes!
         }
@@ -207,7 +278,7 @@ namespace Party {
         /// Decreases the amount of WAX the party has
         /// </summary>
         /// <param name="amount"> Positive int to decrease by </param>
-        public void LoseWax(int amount) {
+        public void LoseWAX(int amount) {
             if (amount > WAX) {
                 WAX = 0;
             }
@@ -215,7 +286,5 @@ namespace Party {
                 WAX -= amount;
             }
         }
-
-
     }
 }

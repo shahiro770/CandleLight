@@ -3,8 +3,8 @@
 * Author: Shahir Chowdhury
 * Date: July 4, 2019
 * 
-* The EventDisplay class is used to display an image in the UI for the player to see
-* in a specific event.
+* The ItemDisplay class is used to display items. They can be interacted with just like buttons,
+* allowing for dragging and dropping of the item inside, or clicking instantly to take the item
 *
 */
 
@@ -21,57 +21,46 @@ namespace PlayerUI {
     public class ItemDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
 
         /* external component references */
-        public CanvasGroup imgCanvas;
-        public Button b;
-        public ButtonTransitionState bts;
-        public Image imgBackground;
+        public CanvasGroup imgCanvas;       /// <value> Image alpha </value>
+        public Button b;                    /// <value> Button component </value>
+        public ButtonTransitionState bts;   /// <value> Button transisition state </value>
+        public Image imgBackground;         /// <value> Background for image </value> 
         public SpriteRenderer itemSprite;   /// <value> Sprite to be displayed </value>
-        public Tooltip t;
+        public Tooltip t;                   /// <value> Tooltip component to display item info </value>
         
-        private Item displayedItem;
-        private float lerpSpeed = 4; 
+        private Item displayedItem;         /// <value> Item display </item>
+        private float lerpSpeed = 4;        /// <value> Speed at which item display fades in and out </value>
        
         /// <summary>
-        /// 
+        /// Initializes the itemDisplay with a given item
         /// </summary>
+        /// <param name="displayedItem"> Item object </param>
         public void Init(Item displayedItem) {
             this.displayedItem = displayedItem;
             itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
+            itemSprite.sprite = displayedItem.itemSprite;
 
-            if (displayedItem != null) {
-                if (displayedItem.type == "EXP") {
-
-                }
-                if (displayedItem.type == "HP") {
-                    //HPAmount = amount;
-                }
-                if (displayedItem.type == "MP") {
-                    //MPAmount = amount;
-                }
-                if (displayedItem.type == "WAX") {
-
-                }
-
-                itemSprite.sprite = displayedItem.itemSprite;
-            }
             t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
             SetTooltipText();
             SetVisible(true);
         }
 
+        /// <summary>
+        /// Takes the item from the item display
+        /// </summary>
         public void TakeItem() {
             if (displayedItem != null) {
                 if (displayedItem.type == "EXP") {
-                    PartyManager.instance.GainEXP(displayedItem.EXPAmount);
+                    PartyManager.instance.AddEXP(displayedItem.EXPAmount);
                 }
                 if (displayedItem.type == "HP") {
                     PartyManager.instance.AddHPAll(displayedItem.HPAmount);
                 }
                 if (displayedItem.type == "MP") {
-                    //MPAmount = amount;
+                    PartyManager.instance.AddMPAll(displayedItem.MPAmount);
                 }
                 if (displayedItem.type == "WAX") {
-                    PartyManager.instance.AddWax(displayedItem.WAXAmount);
+                    PartyManager.instance.AddWAX(displayedItem.WAXAmount);
                 }
 
                 displayedItem = null;
@@ -81,6 +70,9 @@ namespace PlayerUI {
             }
         }
 
+        /// <summary>
+        /// Sets the text displayed in the tooltip
+        /// </summary>
         public void SetTooltipText() {
             if (displayedItem != null) {
                 if (displayedItem.isConsumable) {
@@ -94,7 +86,7 @@ namespace PlayerUI {
         /// <summary>
         /// Makes the itemDisplay visible and interactable
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> true to make visible, false to hide </param>
         public void SetVisible(bool value) {
             if (value == true) {
                 b.interactable = true;
@@ -108,6 +100,11 @@ namespace PlayerUI {
             }
         }
 
+        /// <summary>
+        /// Changes the alpha of the display to the target value
+        /// </summary>
+        /// <param name="targetAlpha"> Int 0 or 1 </param>
+        /// <returns> IEnumerator for smooth animation </returns>
         private IEnumerator Fade(int targetAlpha) {
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
@@ -126,6 +123,7 @@ namespace PlayerUI {
 
                 yield return new WaitForEndOfFrame();
             }
+            
             if (targetAlpha == 0) {
                 gameObject.SetActive(false);
             }

@@ -83,9 +83,9 @@ namespace Database {
         }
 
         /// <summary>
-        /// Initializes a party member game object
+        /// Initializes a partyMember game object
         /// </summary>
-        /// <param name="className"> Class of the party member </param>
+        /// <param name="className"> Class of the partyMember </param>
         /// <param name="pm"> PartyMember game object to be initialized with fetched values</param>
         public void GetPartyMemberByClass(string className, PartyMember pm) {
             using(dbConnection = base.GetConnection()) {
