@@ -38,15 +38,18 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public Interaction(string name, string[] resultNames, string[] resultKeys, 
+        public Interaction(string name, string[] resultNames, 
         string[] spriteNames, bool isSingleUse, IDbConnection dbConnection) {
             this.name = name;
             this.nameKey = name + "_int";
             this.isSingleUse = isSingleUse;
 
+            string resultKey;
+
             for (int i = 0; i < resultNames.Length; i++) {
                 if (resultNames[i] != "none") {
-                    results[i] = GameManager.instance.DB.GetResultByName(resultNames[i], resultKeys[i], dbConnection);
+                    resultKey = name + "_" + i + "_res";
+                    results[i] = GameManager.instance.DB.GetResultByName(resultNames[i], resultKey, dbConnection);
                     if (spriteNames[i] != "none") {
                         intSprites[i] = Resources.Load<Sprite>("Sprites/Interactions/" + spriteNames[i]);
                     }

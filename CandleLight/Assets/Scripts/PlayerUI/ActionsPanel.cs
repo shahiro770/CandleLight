@@ -65,8 +65,8 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsInteractable();
+            SetInPanelNavigation();
             FadeActions(1);
-            SetInitialNavigation();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsInteractable();
-            SetInitialNavigation();
+            SetInPanelNavigation();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsUninteractable();
-            SetInitialNavigation();
+            SetInPanelNavigation();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsInteractable();
-            SetInitialNavigation();
+            SetInPanelNavigation();
         }
 
         public void SetItemActions() {
@@ -122,7 +122,7 @@ namespace PlayerUI {
             actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, travelInt);
 
             SetAllActionsInteractable(true);
-            SetInitialNavigation();
+            SetInPanelNavigation();
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace PlayerUI {
         public void DisplayPartyMember(PartyMember pm) {
             SetAttackActions(pm.attacks);
             SetAllActionsInteractable();
-            SetInitialNavigation();
+            SetInPanelNavigation();
             CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
         }
 
@@ -401,35 +401,69 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets up the initial navigation of the action buttons.
-        /// Player may have less than 4 action options available, but the fifth button will almost always
-        /// have an option, so navigation between above buttons and the fifth button must be adjusted.
+        /// Sets up the initial navigation of the action buttons to navigate between each other, assuming other panels do not exist.
+        /// If the second, third, or fourth buttons are enabled, they assume buttons above them are enabled.
         /// </summary>
-        /// <remark> In the future, will have to navigate to other UI panels such as items or information </remark>
-        private void SetInitialNavigation() {
+        private void SetInPanelNavigation() {
             for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].IsInteractable()) {
-                    Button b = actions[i].GetComponent<Button>();
+                    Button b = actions[i].b;
                     Navigation n = b.navigation;
                     if (i == 0) {
-                        n.selectOnDown = actions[2].IsInteractable() ? n.selectOnDown : actions[4].GetComponent<Button>();
-                        n.selectOnRight = actions[1].IsInteractable() ? actions[1].GetComponent<Button>() : null;
+                        if (actions[2].IsInteractable()) {
+                            n.selectOnDown = actions[2].b;
+                        }
+                        else if (actions[4].IsInteractable()) {
+                            n.selectOnDown = actions[4].b;
+                        }
+                        else {
+                            n.selectOnDown = null;
+                        }
+
+                        n.selectOnRight = actions[1].IsInteractable() ? actions[1].b : null;
                         n.selectOnUp = null;
                         b.navigation = n;
                     }    
                     else if (i == 1) {
-                        n.selectOnDown = actions[3].IsInteractable() ? n.selectOnDown : actions[4].GetComponent<Button>();
+                        if (actions[2].IsInteractable()) {
+                            n.selectOnDown = actions[2].b;
+                        } 
+                        if (actions[3].IsInteractable()) {
+                            n.selectOnDown = actions[3].b;
+                        }
+                        else if (actions[4].IsInteractable()) {
+                            n.selectOnDown = actions[4].b;
+                        }
+                        else {
+                            n.selectOnDown = null;
+                        }
                         b.navigation = n;
                     }
-                    /* else if (i == 2) {
-                        n.selectOnRight = actions[3].isEnabled ? n.selectOnRight : 
-                    } */
+                    else if (i == 2) {
+                        if (actions[4].IsInteractable()) {
+                            n.selectOnDown = actions[4].b;
+                        }
+                        else {
+                            n.selectOnDown = null;
+                        }
+                        n.selectOnRight = actions[3].IsInteractable() ? actions[3].b : null;
+                        b.navigation = n;
+                    }
+                    else if (i == 3) {
+                        if (actions[4].IsInteractable()) {
+                            n.selectOnDown = actions[4].b;
+                        }
+                        else {
+                            n.selectOnDown = null;
+                        }
+                        b.navigation = n;
+                    }
                     else if (i == 4) {
                         if (actions[2].IsInteractable()) {
-                            n.selectOnUp = actions[2].GetComponent<Button>();
+                            n.selectOnUp = actions[2].b;
                         }
                         else if (actions[0].IsInteractable()) {
-                            n.selectOnUp = actions[0].GetComponent<Button>();
+                            n.selectOnUp = actions[0].b;
                         }
                         else {
                             n.selectOnUp = null;

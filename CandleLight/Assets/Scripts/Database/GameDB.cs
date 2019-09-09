@@ -356,27 +356,24 @@ namespace Database {
                     string[] intResults = new string[4];
                     string[] intResultKeys = new string[4];
                     string[] intSprites = new String[4];
+                    string resultName = "";
                     bool isSingleUse = false;
 
                     if (reader.Read()) {
+                        resultName = reader.GetString(1);
                         intResults[0] = reader.GetString(2);
-                        intResults[1] = reader.GetString(5);
-                        intResults[2] = reader.GetString(8);
-                        intResults[3] = reader.GetString(11);
+                        intResults[1] = reader.GetString(4);
+                        intResults[2] = reader.GetString(6);
+                        intResults[3] = reader.GetString(8);
 
-                        intResultKeys[0] = reader.GetString(3);
-                        intResultKeys[1] = reader.GetString(6);
-                        intResultKeys[2] = reader.GetString(9);
-                        intResultKeys[3] = reader.GetString(12);
+                        intSprites[0] = reader.GetString(3);
+                        intSprites[1] = reader.GetString(5);
+                        intSprites[2] = reader.GetString(7);
+                        intSprites[3] = reader.GetString(9);
 
-                        intSprites[0] = reader.GetString(4);
-                        intSprites[1] = reader.GetString(7);
-                        intSprites[2] = reader.GetString(10);
-                        intSprites[3] = reader.GetString(13);
+                        isSingleUse = reader.GetBoolean(10);
 
-                        isSingleUse = reader.GetBoolean(14);
-
-                        newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, intSprites, isSingleUse, dbConnection);
+                        newInt = new Interaction(resultName, intResults, intSprites, isSingleUse, dbConnection);
                     }
                     else {
                          Debug.LogError("Interaction " + intName + " does not exist in the DB");
@@ -391,50 +388,11 @@ namespace Database {
         /// Returns an Interaction from the Interactions table. Overloaded to use its own dbconnection.
         /// </summary>
         /// <param name="intName"> Name of interaction </param>
-        /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
         /// <returns> An Interaction, passing it the dbconnection for it to fetch all information it needs </returns>
         public Interaction GetInteractionByName(string intName) {
             using(dbConnection = base.GetConnection()) {
-
                 dbConnection.Open();
-
-                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
-                    dbcmd.CommandText = "SELECT * FROM Interactions WHERE Name = '" + intName + "'";
-
-                    using (IDataReader reader = dbcmd.ExecuteReader()) {
-                        Interaction newInt = null;
-                        string[] intResults = new string[4];
-                        string[] intResultKeys = new string[4];
-                        string[] intSprites = new String[4];
-                        bool isSingleUse = false;
-
-                        if (reader.Read()) {
-                            intResults[0] = reader.GetString(2);
-                            intResults[1] = reader.GetString(5);
-                            intResults[2] = reader.GetString(8);
-                            intResults[3] = reader.GetString(11);
-
-                            intResultKeys[0] = reader.GetString(3);
-                            intResultKeys[1] = reader.GetString(6);
-                            intResultKeys[2] = reader.GetString(9);
-                            intResultKeys[3] = reader.GetString(12);
-
-                            intSprites[0] = reader.GetString(4);
-                            intSprites[1] = reader.GetString(7);
-                            intSprites[2] = reader.GetString(10);
-                            intSprites[3] = reader.GetString(13);
-                            
-                            isSingleUse = reader.GetBoolean(14);
-
-                            newInt = new Interaction(reader.GetString(1), intResults, intResultKeys, intSprites, isSingleUse, dbConnection);
-                        }
-                        else {
-                            Debug.LogError("Interaction " + intName + " does not exist in the DB");
-                        }
-                    
-                        return newInt;
-                    }
-                }
+                return GetInteractionByName(intName, dbConnection);
             }
         }
 

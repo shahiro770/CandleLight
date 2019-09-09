@@ -46,9 +46,9 @@
 
 		{ "key": "hideFromThePack_event", "value": "An undetected pack of greyhides wandered close to you. You dive behind the nearest mound. Did they hear you?" },
 		{ "key": "lostPouch_event", "value": "You see a bag dropped by someone wandering the wastes." },
-		{ "key": "outpostCandle_Event", "value": "A lonely outpost is standing in the distance." },
+		{ "key": "outpostCandle_event", "value": "A lonely outpost is standing in the distance." },
 		{ "key": "theGreyWastes_event", "value": "The Grey Wastes were aptly named. Only fools dare travel these lands. Looks like this is the start of the path." },
-		{ "key": "usedOutpostCandle_event", "value": "There's a recently used outpost nearby. Unkindled might be close." },
+		{ "key": "outpostCandleUsed_event", "value": "There's a recently used outpost nearby. Unkindled might be close." },
 		
 		{ "key": "theGreyWastes0_int", "value": "Begin" },
 		{ "key": "fight_int", "value": "Fight" },
@@ -62,8 +62,8 @@
 		
 		{ "key": "lostPouch0_0_res", "value": "You found some wax coins." },
 		{ "key": "lostPouch0_1_res", "value": "You found bandages." },
-		{ "key": "hideFromThePack0_0_res", "value": "You lie quietly against the dirt and pray. After a moment you look back. The pack is walking away." },
-		{ "key": "hideFromThePack0_1_res", "value": "You try to hide but they hear your movements. One runs up and bites." },
+		{ "key": "hideFromThePack0_0_res", "value": "You try to hide but they hear your movements. One runs up and bites." },
+		{ "key": "hideFromThePack0_1_res", "value": "You lie quietly against the dirt and pray. After a moment you look back. The pack is walking away." },
 		{ "key": "hideFromThePack1_0_res", "value": "Sometimes you just can't take risks." },
 		{ "key": "outpostCandle0_0_res", "value": "The warmth is rejuvenating. Its as if your youth has returned to you." },
 		{ "key": "outpostCandleUsed0_0_res", "value": "The fire is nice. But you can't help but feel watched." },
