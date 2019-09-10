@@ -59,7 +59,43 @@ namespace Characters {
         /// </summary>
         /// <param name="level"> Level to calculate EXP to next level for </param>
         public int CalcEXPToNextLVL(int LVL) {
-            return (10 * (LVL + LVL - 1)) / 2; 
+            return (10 * (LVL * 2 - 1)) / 2; 
+        }
+
+        /// <summary>
+        /// Levels up a partyMember character; overriding base for different scaling for classes
+        /// </summary>
+        /// <param name="multiplier"> Multiplier because base needed it, won't be used here </param>
+        public override void LVLUp(int multiplier = 1) {
+            LVL += 1;
+
+            if (className == "Warrior") {
+                STR += LVL * 2;
+                DEX += (int)(LVL * 1.5);
+                INT += (int)(LVL * 1.25);
+                LUK += LVL;
+            }
+            else if (className == "Mage") {
+                STR += LVL;
+                DEX += (int)(LVL * 1.25);
+                INT += LVL * 2;
+                LUK += (int)(LVL * 1.5);
+            }
+            else if (className == "Archer") {
+                STR += (int)(LVL * 1.5);
+                DEX += LVL * 2;
+                INT += (int)(LVL * 1.25);
+                LUK += (int)(LVL * 1.25);
+            }
+            else if (className == "Thief") {
+                STR += (int)(LVL * 1.25);
+                DEX += (int)(LVL * 1.5);
+                INT += (int)(LVL * 1.25);
+                LUK += LVL * 2;
+            }
+            
+            HP += (int)((STR * 0.5) + (DEX * 0.5));
+            MP += (int)((INT * 0.5) + (LUK * 0.5));
         }
 
         /// <summary>
@@ -75,7 +111,7 @@ namespace Characters {
                 int prevEXPToNextLVL = EXPToNextLVL;     
 
                 while (overflow >= EXPToNextLVL) { // small chance player might level up more than once
-                    LVL += 1;
+                    LVLUp();
                     overflow -= EXPToNextLVL;
                     prevEXPToNextLVL = EXPToNextLVL;
                     EXPToNextLVL = CalcEXPToNextLVL(LVL);

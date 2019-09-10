@@ -20,9 +20,11 @@ namespace Combat {
         [field: SerializeField] public string effect { get; private set; }      /// <value> Side effect of attack </value>
         [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of attack </value>
-        [field: SerializeField] public int cost { get; private set; }           /// <value> Cost to use attack </value>
-        [field: SerializeField] public int damage { get; private set; }         /// <value> Damage dealt by attack </value>
+        [field: SerializeField] public int cost { get; private set; }           /// <value> Cost to use attack </value>      
+        [field: SerializeField] public string formula { get; private set; }     /// <value> Damage dealt by attack </value>
         [field: SerializeField] public string scope { get; private set; }       /// <value> String describing the number of targets the attack affects </value>
+
+        public int attackValue;  /// <value> Amount related to attack </value>
 
         /// <summary>
         /// Constructor to initialize attack's properties
@@ -33,9 +35,9 @@ namespace Combat {
         /// <param name="cost"> Cost of attack (in MP or HP) </param>
         /// <param name="scope"> String describing the targets this attack hits </param>
         /// <param name="animationClipName"> Animation clip to play when attack is used </param>
-        public Attack(string name, int damage, string costType, int cost, string scope, string animationClipName) {
+        public Attack(string name, string formula, string costType, int cost, string scope, string animationClipName) {
             this.name = name;
-            this.damage = damage;
+            this.formula = formula;
             this.costType = costType;
             this.cost = cost;            
             this.scope = scope;

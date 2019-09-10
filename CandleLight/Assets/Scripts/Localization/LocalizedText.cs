@@ -66,19 +66,18 @@ namespace Localization {
             meshText.text = null;
         }
 
+        /// <summary>
+        /// Checks if the text has a key 
+        /// </summary>
+        /// <returns> True if key, false if keyless </returns>
         public bool HasText() {
             return key != null;
         }
 
         /// <summary>
-        /// Sets text for a partyMember taking damage
+        /// Sets the colour of the meshText
         /// </summary>
-        /// <param name="text"> name of PartyMember </param>
-        /// <param name="amount"> Amount of damage taken </param>
-        public void SetDamageText(string text, int amount) {
-            meshText.text = text +  " " + LocalizationManager.instance.GetLocalizedValue("lost_text") + " " + amount.ToString() + " HP";
-        }
-
+        /// <param name="newColor"> Color32 object (0 to 255 for each param in rgb) </param>
         public void SetColour(Color32 newColor) {
             meshText.color = newColor;
         }

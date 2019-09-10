@@ -31,6 +31,7 @@ namespace PlayerUI {
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
         private string costText = LocalizationManager.instance.GetLocalizedValue("cost_text");  /// <value> Localized text for the word "cost" </value>
         private string damageText = LocalizationManager.instance.GetLocalizedValue("damage_text");  /// <value> Localized text for the word "damage" </value>
+        private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");  /// <value> Localized text for the word "lost" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
@@ -70,10 +71,12 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageText(PartyMember pm, int amount) {
+            string damagedText = pm.pmName + " " + lostText + " " + amount.ToString() + " HP";
+            eventText.SetText(damagedText);
+
             if (this.colour != "normal") {
                 SetColour("normal");
             }
-            eventText.SetDamageText(pm.pmName, amount);
         }
 
         /// <summary>
@@ -82,7 +85,7 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetAttackText(Attack a, bool isUsable) {
-            string attackString = a.cost + " " + a.costType + " " + a.damage + " " + damageText;
+            string attackString = a.cost + " " + a.costType + " " + a.attackValue + " " + damageText;
             eventText.SetText(attackString);
 
             if (!isUsable) {

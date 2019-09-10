@@ -130,7 +130,7 @@ namespace Combat {
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             
             monsterComponent.ID = countID++;
-            monsterComponent.md.SetHealthBar(); 
+            monsterComponent.MultipleLVLUp();
             monsterComponent.md.AddSMDListener(smd);
             monsterComponent.md.SetInteractable(false);
 
@@ -198,7 +198,7 @@ namespace Combat {
             }
         }
 
-        #region [ Section0 ] PartyMember Turn
+        #region [ Section 1 ] PartyMember Turn
 
         /// <summary>
         /// Perform all of the phases in the partyMember's turn
@@ -227,10 +227,12 @@ namespace Combat {
         /// Prepare all monsters and relevant panels (Actions, Status) for the player's turn
         /// </summary>
         private void StartPMTurn() {
+            activePartyMember.SetAttackValues();
+
             DisplayActivePartyMember();
             EnableAllButtons();
             SetMonsterNavigation();
-
+            
             actionsPanel.SetHorizontalNavigation(partyPanel);
             partyPanel.SetHorizontalNavigation();
         }
@@ -320,7 +322,7 @@ namespace Combat {
 
             yield return StartCoroutine(activePartyMember.PayAttackCost(selectedAttack.costType, selectedAttack.cost));
             if (selectedAttack.scope == "single") {
-                yield return StartCoroutine(selectedMonster.LoseHP(selectedAttack.damage, selectedAttack.animationClipName));
+                yield return StartCoroutine(selectedMonster.LoseHP(selectedAttack.attackValue, selectedAttack.animationClipName));
             }
         }
 
@@ -357,7 +359,7 @@ namespace Combat {
 
         #endregion
 
-        #region [ Section1 ] Monster Turn
+        #region [ Section 2 ] Monster Turn
 
         /// <summary>
         /// Perform all of the phases in the monster's turn
@@ -382,6 +384,7 @@ namespace Combat {
         /// <returns> Yields to allow monster attack animation to play </returns>
         private void StartMonsterTurn() {
             DisableAllButtons();
+            activeMonster.SetAttackValues();
         }
 
         /// <summary>
@@ -391,8 +394,8 @@ namespace Combat {
         /// <returns> IEnumerator to play animations after each action </returns>
         private IEnumerator ExecuteMonsterAttack() {
             int targetChoice = 0;
-            Attack attackChoice = activeMonster.SelectAttack();
-            eventDescription.SetKey(attackChoice.nameKey);
+            Attack selectedAttackMonster = activeMonster.SelectAttack();
+            eventDescription.SetKey(selectedAttackMonster.nameKey);
             yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
             if (activeMonster.monsterAI == "random") {
                 targetChoice = Random.Range(0, partyMembersAlive.Count);
@@ -415,9 +418,9 @@ namespace Combat {
             }
             
             yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation()));
-            eventDescription.SetPMDamageText(partyMembersAlive[targetChoice], attackChoice.damage);
+            eventDescription.SetPMDamageText(partyMembersAlive[targetChoice], selectedAttackMonster.attackValue);
             
-            yield return (StartCoroutine(partyMembersAlive[targetChoice].LoseHP(attackChoice.damage)));
+            yield return (StartCoroutine(partyMembersAlive[targetChoice].LoseHP(selectedAttackMonster.attackValue)));
         }
 
         /// <summary>
@@ -485,7 +488,7 @@ namespace Combat {
 
         #endregion
 
-        #region [ Section2 ] Monster Selection
+        #region [ Section 3 ] Monster Selection
        
         /// <summary>
         /// Selects a monster to be attacked
@@ -677,7 +680,7 @@ namespace Combat {
 
         #endregion
 
-        #region [ Section3 ] PartyMember UI Management
+        #region [ Section 4 ] PartyMember UI Management
 
         /// <summary>
         /// Disables interactions with all buttons player can select

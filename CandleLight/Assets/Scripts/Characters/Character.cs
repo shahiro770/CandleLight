@@ -48,6 +48,67 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Levels up a character a somewhat random number of times
+        /// </summary>
+        /// <param name="minLVL"> Minimum level the character can be (assumed to be current level of the character) </param>
+        /// <param name="maxLVL"> Maximum level the character can be </param>
+        /// <param name="multiplier"> Bonus multiplier on stats (monsters might have modifiers) </param>
+        public void MultipleLVLUp(int minLVL, int maxLVL, int multiplier) {            
+            int gainedLVLs = Random.Range(minLVL, maxLVL + 1) - LVL;
+
+            for (int i = 0; i < gainedLVLs; i++) {
+                LVLUp(multiplier);
+            }            
+        }
+
+        /// <summary>
+        /// Levels up the character, raising its stats
+        /// </summary>
+        /// <param name="multiplier"> Bonus multiplier on stats </param>
+        public virtual void LVLUp(int multiplier = 1) {
+            LVL += 1;
+            STR += LVL * 2 * multiplier;
+            DEX += LVL * 2 * multiplier;
+            INT += LVL * 2 * multiplier;
+            LUK += LVL * 2 * multiplier;
+            HP += (int)((STR * 0.5) + (DEX * 0.5) * multiplier);
+            MP += (int)((INT * 0.5) + (LUK * 0.5) * multiplier);
+            CHP = HP;
+            CMP = MP;
+        }
+
+        /// <summary>
+        /// Returns the value from an attack, based on the attack's formula
+        /// </summary>
+        /// <param name="attack"> Attack of object </param>
+        /// <returns> Integer amount </returns>
+        public int GetAttackValue(Attack attack) {
+            Mathos.Parser.MathParser parser = new Mathos.Parser.MathParser();
+            parser.LocalVariables.Add("LVL", LVL);
+            parser.LocalVariables.Add("HP", HP);
+            parser.LocalVariables.Add("CHP", CHP);
+            parser.LocalVariables.Add("MP", MP);
+            parser.LocalVariables.Add("CMP", CMP);
+            parser.LocalVariables.Add("STR", STR);
+            parser.LocalVariables.Add("DEX", DEX);
+            parser.LocalVariables.Add("INT", INT);
+            parser.LocalVariables.Add("LUK", LUK);
+
+            return (int)parser.Parse(attack.formula);
+        }
+
+        /// <summary>
+        /// Set each attack's attack value
+        /// </summary>
+        public void SetAttackValues() {
+            foreach(Attack a in attacks) {
+                if (a.nameKey != "none_attack") {
+                    a.attackValue = GetAttackValue(a);
+                }
+            }
+        }
+
+        /// <summary>
         /// Logs stats to console for debugging
         /// </summary>
         public virtual void LogStats() {

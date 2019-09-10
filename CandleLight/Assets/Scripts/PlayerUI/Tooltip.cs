@@ -89,6 +89,8 @@ namespace PlayerUI {
              * if the position of the textBackground + its width > 480 (960 / 2), it will be out of the screen.
              * +3 magic number is for spacing.
              */
+             //print(imageDisplayBackground.transform.position.x * canvasScaleFactor + " " + imageDisplayBackgroundWidthHalved + " " + textBackgroundWidth);
+             //print(imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth);
             if ((imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth) >= rootCanvasWidthHalved) {
                 gameObject.transform.localPosition = new Vector3((textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3) * -1, gameObject.transform.localPosition.y);
             }
@@ -99,9 +101,9 @@ namespace PlayerUI {
 
         public void SetVisible(bool value) {
             if (value == true) {
-                SetPosition();
+                Invoke("SetPosition", 0.01f); // temporary fix, bug with textBackgroundWidth not updating in time
             }
-             gameObject.SetActive(value);
+            gameObject.SetActive(value);
         }
     }
 }

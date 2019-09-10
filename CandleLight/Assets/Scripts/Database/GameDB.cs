@@ -47,7 +47,8 @@ namespace Database {
                         string monsterArea = "";
                         string monsterSize = "";
                         string monsterAI = "";
-                        int LVL = 0;
+                        int minLVL = 0;
+                        int maxLVL = 0;
                         int multiplier = 0;
                         int HP = 0;
                         int MP = 0;
@@ -61,22 +62,24 @@ namespace Database {
                             monsterArea = reader.GetString(4);
                             monsterSize = reader.GetString(5);
                             monsterAI = reader.GetString(6);
-                            LVL = reader.GetInt32(7);
-                            multiplier = reader.GetInt32(8);
-                            HP = reader.GetInt32(9); 
-                            MP = reader.GetInt32(10);
-                            stats = new int[] { reader.GetInt32(11), reader.GetInt32(12), reader.GetInt32(13), reader.GetInt32(14) };
+                            minLVL = reader.GetInt32(7);
+                            maxLVL = reader.GetInt32(8);
+                            multiplier = reader.GetInt32(9);
+                            HP = reader.GetInt32(10); 
+                            MP = reader.GetInt32(11);
+                            stats = new int[] { reader.GetInt32(12), reader.GetInt32(13), reader.GetInt32(14), reader.GetInt32(15) };
 
                             for (int i = 0; i < maxAttacks; i++) {
-                                string attackName = reader.GetString(15 + i);
+                                string attackName = reader.GetString(16 + i);
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
                         }
                         else {
                             Debug.LogError("Monster " + monsterName + " does not exist in the DB");
                         }
+
                         monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
-                        monsterSize, monsterAI, LVL, multiplier, HP, MP, stats, attacks)); 
+                        monsterSize, monsterAI, minLVL, maxLVL, multiplier, HP, MP, stats, attacks)); 
                     }
                 }
             }          
@@ -146,10 +149,10 @@ namespace Database {
 
                     if (reader.Read()) {
                         if (isMonster) {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6));
+                            newAttack = new Attack(name, reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6));
                         }
                         else {
-                            newAttack = new Attack(name, reader.GetInt32(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(7));
+                            newAttack = new Attack(name, reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(7));
                         }
                     }
                     

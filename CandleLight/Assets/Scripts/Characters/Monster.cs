@@ -32,6 +32,8 @@ namespace Characters {
         [field: SerializeField] public string monsterDisplayName { get; private set; }  /// <value> Monster name <value>
         [field: SerializeField] public string monsterAI { get; private set; }           /// <value> Monster's behaviour in combat </value>
         [field: SerializeField] public int multiplier { get; private set; }             /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
+        [field: SerializeField] public int minLVL { get; private set; }                 /// <value> Minimum power level monster can spawn at </param>
+        [field: SerializeField] public int maxLVL { get; private set; }                 /// <value> Maximum power level monster can spawn at </param>
         [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int attackNum { get; private set; } = 0;         /// <value> Number of attacks monster has (max 4) </value>
@@ -49,23 +51,24 @@ namespace Characters {
         /// <param name="monsterArea"> Area of monster to get file path to sprite, castle case </param>
         /// <param name="monsterSize"> Size of monster (small, medium, large) </param>
         /// <param name="monsterAI"> Pattern for how monster attacks </param>
-        /// <param name="LVL"> Power level </param>
+        /// <param name="minLVL"> Minimum power level monster can spawn at </param>
+        /// <param name="maxLVL"> Maximum power level monster can spawn at </param>
         /// <param name="multiplier"> Multiplier on rewards monster gives such as WAX and EXP </param>
         /// <param name="HP"> Max health points </param>
         /// <param name="MP"> Max mana points </param>
         /// <param name="stats"> STR, DEX, INT, LUK </param>
         /// <param name="attacks"> List of known attacks (length 4) </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
-        string monsterSize, string monsterAI, int LVL, int multiplier, int HP, int MP, int[] stats, Attack[] attacks) {
-            base.Init(LVL, HP, MP, stats, attacks);            
+        string monsterSize, string monsterAI, int minLVL, int maxLVL, int multiplier, int HP, int MP, int[] stats, Attack[] attacks) {
+            base.Init(minLVL, HP, MP, stats, attacks);  // use minLVL for initialization, will use for scaling up on spawning
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterDisplayName = monsterDisplayName;
             this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
+            this.minLVL = minLVL;
+            this.maxLVL = maxLVL;
             this.multiplier = multiplier;
-            this.EXP = (LVL * LVL) * this.multiplier;
-            this.WAX = LVL * this.multiplier;
             this.monsterSize = monsterSize;
 
             foreach (Attack a in attacks) {
@@ -78,6 +81,18 @@ namespace Characters {
 
             this.isReady = true;
             yield break;
+        }
+
+        /// <summary>
+        /// Sets the monster's level between its minimum level and maximum level
+        /// </summary>
+        public void MultipleLVLUp() {
+            base.MultipleLVLUp(minLVL, maxLVL, this.multiplier);  
+            this.EXP = (LVL * LVL) * this.multiplier;
+            this.WAX = LVL * this.multiplier;   
+
+            md.SetTooltip();
+            md.SetHealthBar();
         }
 
         #endregion
