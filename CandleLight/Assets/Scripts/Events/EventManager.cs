@@ -50,7 +50,6 @@ namespace Events {
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
         private Event currentEvent;          /// <value> Event being displayed </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
-        private BackgroundPack bgPackPrev = null;       /// <value> Previous background pack </value>
         private Sprite WAXItemSprite;                   /// <value> Sprite for WAX currency </value>
         private Sprite HPItemSprite;                    /// <value> Sprite for HP recovery </value>
 

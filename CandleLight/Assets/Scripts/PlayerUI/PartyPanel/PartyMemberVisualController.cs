@@ -22,7 +22,7 @@ namespace Characters {
     public class PartyMemberVisualController : MonoBehaviour {
         
         /* external component references */
-         public Bar statusPanelHPBar { get; private set; }   /// <value> Visual for health points in status panel </value>
+        public Bar statusPanelHPBar { get; private set; }   /// <value> Visual for health points in status panel </value>
         public Bar statusPanelMPBar { get; private set; }   /// <value> Visual for mana points in status panel </value>
         public Bar partyPanelHPBar { get; private set; }    /// <value> Visual for health points in party panel </value>
         public Bar partyPanelMPBar { get; private set; }    /// <value> Visual for mana points in party panel </value>
@@ -144,6 +144,24 @@ namespace Characters {
             }
 
             rewardsPanelLVLText.SetText("LVL " + pm.LVL);
+        }
+
+        /// <summary>
+        /// Updates the HP and MP bars to have the correct max amounts
+        /// </summary>
+        /// <remark>
+        /// Primary use is to correct fill amounts upon leveling up
+        /// </remark>
+        public void UpdateHPAndMPBars() {
+            if (statusPanelHPBar != null) {
+                statusPanelHPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+                statusPanelMPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
+            }
+            if (partyPanelHPBar != null) {
+                partyPanelHPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+                partyPanelMPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
+            }
+
         }
 
         /// <summary>

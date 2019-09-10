@@ -849,6 +849,7 @@ MonoBehaviour:
   titleText: {fileID: 5561499636045633932}
   subtitleText: {fileID: 7256502909479084946}
   descriptionText: {fileID: 7983780409380701926}
+  verticalLayoutGroup: {fileID: 8553709170581646492}
   textBackground: {fileID: 7427942040763711905}
   imageDisplayBackground: {fileID: 0}
   rootCanvasWidthHalved: 0

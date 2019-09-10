@@ -10,6 +10,7 @@
 
 using EventManager = Events.EventManager;
 using Localization;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -80,7 +81,19 @@ namespace PlayerUI {
              descriptionText.Clear();
         }
 
-        private void SetPosition() {
+        /// <summary>
+        /// Sets the position of the tooltip
+        /// </summary>
+        /// <returns> 
+        /// IEnumerator so tooltip doesn't show until after its layout updates to dynamically
+        /// resize based on its content.
+        /// </returns>
+        private IEnumerator SetPosition() {
+            textBackground.color = new Color32(0, 0, 0, 0); // hide the tooltip while position adjustments are being made
+            titleText.SetColour(new Color32(0, 0, 0 ,0));
+            subtitleText.SetColour(new Color32(0, 0, 0 ,0));
+            descriptionText.SetColour(new Color32(0, 0, 0 ,0));
+            yield return new WaitForEndOfFrame();
             float textBackgroundWidth = textBackground.rectTransform.sizeDelta.x;
 
             /* 
@@ -89,21 +102,27 @@ namespace PlayerUI {
              * if the position of the textBackground + its width > 480 (960 / 2), it will be out of the screen.
              * +3 magic number is for spacing.
              */
-             //print(imageDisplayBackground.transform.position.x * canvasScaleFactor + " " + imageDisplayBackgroundWidthHalved + " " + textBackgroundWidth);
+             //print(imageDisplayBackground.transform.position.x * canvasScaleFactor + " " + imageDisplayBackgroundWidthHalved + 3 + " " + textBackgroundWidth);
              //print(imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth);
-            if ((imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth) >= rootCanvasWidthHalved) {
+            if ((imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth + 3) >= rootCanvasWidthHalved) {
                 gameObject.transform.localPosition = new Vector3((textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3) * -1, gameObject.transform.localPosition.y);
             }
             else {
                 gameObject.transform.localPosition = new Vector3(imageDisplayBackgroundWidthHalved + 3, gameObject.transform.localPosition.y);
             }
+
+            textBackground.color = new Color32(255, 255, 255, 255);
+            titleText.SetColour(new Color32(255, 255, 255 , 255));
+            subtitleText.SetColour(new Color32(178, 178, 178 ,255));
+            descriptionText.SetColour(new Color32(255, 255, 255 ,255));
         }
 
         public void SetVisible(bool value) {
-            if (value == true) {
-                Invoke("SetPosition", 0.01f); // temporary fix, bug with textBackgroundWidth not updating in time
-            }
             gameObject.SetActive(value);
+
+            if (value == true) {
+                StartCoroutine(SetPosition());
+            }
         }
     }
 }

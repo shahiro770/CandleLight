@@ -96,6 +96,8 @@ namespace Characters {
             
             HP += (int)((STR * 0.5) + (DEX * 0.5));
             MP += (int)((INT * 0.5) + (LUK * 0.5));
+
+            pmvc.UpdateHPAndMPBars();
         }
 
         /// <summary>
