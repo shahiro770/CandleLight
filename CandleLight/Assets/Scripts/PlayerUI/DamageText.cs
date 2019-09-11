@@ -8,6 +8,7 @@
 *
 */
 
+using Localization;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +18,15 @@ namespace PlayerUI {
         
         public TextMeshProUGUI meshText;    /// <value> Text mesh pros are not always loaded in time, so store reference to guarantee access </value>
         public Animator textAnimator;       /// <value> Animator for damaged text </value>
+        
+        [field: SerializeField] private string missText; /// <value> Localized text for the word "lost" </value>
+
+        /// <summary>
+        /// Start to initialize missText, so it doesn't need to be localized multiple times
+        /// </summary>
+        void Start() {
+            missText = LocalizationManager.instance.GetLocalizedValue("miss_text");
+        }
 
         /// <summary>
         /// Unhides the text and sets the amount
@@ -24,6 +34,14 @@ namespace PlayerUI {
         /// <param name="amount"> Amount to display </param>
         public void ShowDamage(int amount) {
             SetText(amount);
+            gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Unhides the text and writes that the attack missed
+        /// </summary>
+        public void ShowDodged() {
+            meshText.text = missText;
             gameObject.SetActive(true);
         }
 

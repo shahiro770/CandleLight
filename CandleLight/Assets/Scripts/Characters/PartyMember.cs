@@ -38,12 +38,12 @@ namespace Characters {
         /// <param name="personalInfo"> className, subClassName, memberName, and race in an array </param>
         /// <param name="LVL"> Power level </param>
         /// <param name="EXP"> Experience points </param>
-        /// <param name="HP"> Health points </param>
-        /// <param name="MP"> Mana Points </param>
+        /// <param name="CHP"> Current health points, for now irrelevant, but will be used for saving </param>
+        /// <param name="CMP"> Current mana Points, for now irrelevant, but will be used for saving </param>
         /// <param name="stats"> STR, INT, DEX, LUK </param>
         /// <param name="attacks"> List of known attacks (length 4)</param>
-        public void Init(string[] personalInfo, int LVL, int EXP, int HP, int MP, int[] stats, Attack[] attacks) {
-            base.Init(LVL, HP, MP, stats, attacks);
+        public void Init(string[] personalInfo, int LVL, int EXP, int CHP, int CMP, int[] stats, Attack[] attacks) {
+            base.Init(LVL, CHP, CMP, stats, attacks);
             this.EXP = EXP;
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
             this.className = personalInfo[0];
@@ -181,7 +181,7 @@ namespace Characters {
             
             CHP -= amount;
 
-            if (CHP <= 0) {
+            if (CHP < 0) {
                 CHP = 0;
                 PartyManager.instance.RegisterPartyMemberDead(this);
             }
@@ -224,10 +224,36 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Handles all logic and visuals for when this partyMember is attacked
+        /// </summary>
+        /// <param name="a"> Attack used </param>
+        /// <returns></returns>
+        public IEnumerator GetAttacked(Attack a, Character c, EventDescription eventDescription) {
+            int damageTaken = CalculateAttackDamage(a);
+            bool attackHit = CalculateAttackHit(c);
+
+            if (attackHit) {
+                if (damageTaken < 0) {
+                    damageTaken = 0;
+                }
+                eventDescription.SetPMDamageText(this, damageTaken);
+
+                yield return StartCoroutine(LoseHP(damageTaken));
+            }
+            else {
+                 eventDescription.SetPMDodgeText(this);
+            }
+        }
+
+        public IEnumerator DodgeAttack() {
+            yield return StartCoroutine(pmvc.DisplayAttackDodged());
+        }
+
+        /// <summary>
         /// Log stats informaton about the PartyMember for debugging
         /// </summary> 
-        public override void LogStats() {
-            base.LogStats();
+        public override void LogPrimaryStats() {
+            base.LogPrimaryStats();
         }
 
         /// <summary>

@@ -84,7 +84,7 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Plays the animation for when the partyMember who's information is being displayed is damaged
+        /// Plays the animation for when the partyMember is damaged
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayDamagedAnimation() {
@@ -93,6 +93,18 @@ namespace PlayerUI {
                 yield return null;    
             } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
             pmDisplayAnimator.ResetTrigger("damaged");
+        }
+
+        /// <summary>
+        /// Plays the animation for when the partyMember dodges an attack
+        /// </summary>
+        /// <returns> Waits for animation to finish playing </returns>
+        public IEnumerator PlayDodgedAnimation() {
+            pmDisplayAnimator.SetTrigger("dodged");
+            do {
+                yield return null;    
+            } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmDisplayAnimator.ResetTrigger("dodged");
         }
 
         /// <summary>

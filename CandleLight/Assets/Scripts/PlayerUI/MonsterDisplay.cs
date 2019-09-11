@@ -378,12 +378,34 @@ namespace Characters {
 
         #region [ Section 3] Combat Information
 
-        public IEnumerator DisplayLostHP(int amount, string animationClipName) {
+        /// <summary>
+        /// Displays a change in HP
+        /// </summary>
+        /// <param name="amount"> Positive int amount changed </param>
+        /// <param name="isLoss"> True if health is lost, positive if gained </param>
+        /// <param name="animationClipName"> Name of animation to play overtop of monster </param>
+        /// <returns> IEnumerator for animations </returns>
+        public IEnumerator DisplayHPChange(int amount, bool isLoss, string animationClipName) {
+            SetEffectsAnimatorClip(animationClipName);
+            if (isLoss) {
+                yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
+                dt.ShowDamage(amount);
+                HPBar.SetCurrent(displayedMonster.CHP);
+                yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damaged", "showDamage")));
+                dt.HideDamage();
+            }
+        }
+
+        /// <summary>
+        /// Plays animation for when attack is dodged
+        /// </summary>
+        /// <param name="animationClipName"> Name of animation to play overtop of monster </param>
+        /// <returns> IEnumerator for animations</returns>
+        public IEnumerator DisplayAttackDodged(string animationClipName) {
             SetEffectsAnimatorClip(animationClipName);
             yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
-            dt.ShowDamage(amount);
-            HPBar.SetCurrent(displayedMonster.CHP);
-            yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damaged", "showDamage")));
+            dt.ShowDodged();
+            yield return (StartCoroutine(PlayAnimation(dt.textAnimator, "showDamage")));
             dt.HideDamage();
         }
 

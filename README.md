@@ -14,3 +14,14 @@ Fight against an endless number of monsters while searching anything that will h
 <img src="/CandleLight/ReadMe/Images/SampleCombat.png" width="480" height="270">
 
 How long will you survive?
+
+# Idea List
+Feel free to contribute ideas for what should be implemented next! I'll add them if I can figure out how.
+Current list:
+- Monsters have modifiers randomly ("tough" to double health, etc.)
+- Player can run the same area again and loot their corpse
+- Death screen that draws out the player's adventure in an area(e.g. if they passed through a mountain, show the mountain) with candles and and a quill and ink, and maybe a sausage
+- Items that have triggered effects (e.g. applying a slow to an enemy deals 3 damage to them)
+- Items that have unique buffs 
+- Bestiary
+- Attacks that hit multiple times

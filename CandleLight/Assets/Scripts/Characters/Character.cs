@@ -7,6 +7,7 @@
 *
 */
 
+using AttackConstants = Constants.AttackConstants;
 using Combat;
 using UnityEngine;
 
@@ -24,7 +25,16 @@ namespace Characters {
         [field: SerializeField] public int DEX { get; set; }              /// <value> Dexterity </value>
         [field: SerializeField] public int INT { get; set; }              /// <value> Intelligence </value>
         [field: SerializeField] public int LUK { get; set; }              /// <value> Luck </value>
+        [field: SerializeField] public int pAtk { get; set; }             /// <value> Physical attack </value>
+        [field: SerializeField] public int mAtk { get; set; }             /// <value> Magical attack </value>
+        [field: SerializeField] public int pDef { get; set; }             /// <value> Physical defense </value>
+        [field: SerializeField] public int mDef { get; set; }             /// <value> Magical defense </value>
+        [field: SerializeField] public int dodge { get; set; }            /// <value> Dodge rating </value>
+        [field: SerializeField] public int acc { get; set; }              /// <value> Accuracy rating </value>
+        [field: SerializeField] public int tempAcc = 0;
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
+
+        
 
         /// <summary>
         /// Initializes character properties
@@ -36,15 +46,33 @@ namespace Characters {
         /// <param name="attacks"> List of known attacks (length 4) </param>
         public virtual void Init(int LVL, int HP, int MP, int[] stats, Attack[] attacks) {
             this.LVL = LVL;
-            this.HP = HP;
-            this.CHP = HP;
-            this.MP = MP;
-            this.CMP = MP;
             this.STR = stats[0];
             this.DEX = stats[1];
             this.INT = stats[2];
             this.LUK = stats[3];
             this.attacks = attacks; 
+
+            CalculateSecondaryStats(true);
+        }
+        
+        /// <summary>
+        /// Calculates secondary stats based off of the 4 primary stats
+        /// </summary>
+        /// <param name="setCurrent"> Flag for if CHP and CMP should equal new HP and MP values </param>
+        private void CalculateSecondaryStats(bool setCurrent = false) {
+           HP = (int)(STR * 3 + DEX * 1.5);
+           MP = (int)(INT * 2 + LUK * 1.5);
+           pAtk = (int)(STR * 0.5 + DEX * 0.25);
+           mAtk = (int)(INT * 0.5 + LUK * 0.25); 
+           pDef = (int)(STR * 0.1 + DEX * 0.05);
+           mDef = (int)(INT * 0.15 + LUK * 0.05);
+           dodge = (int)(DEX * 0.2 + LUK * 0.1);
+           acc = (int)(DEX * 0.3);
+
+           if (setCurrent) {
+               CHP = HP;
+               CMP = MP;
+           }
         }
 
         /// <summary>
@@ -67,14 +95,11 @@ namespace Characters {
         /// <param name="multiplier"> Bonus multiplier on stats </param>
         public virtual void LVLUp(int multiplier = 1) {
             LVL += 1;
-            STR += LVL * 2 * multiplier;
-            DEX += LVL * 2 * multiplier;
-            INT += LVL * 2 * multiplier;
-            LUK += LVL * 2 * multiplier;
-            HP += (int)((STR * 0.5) + (DEX * 0.5) * multiplier);
-            MP += (int)((INT * 0.5) + (LUK * 0.5) * multiplier);
-            CHP = HP;
-            CMP = MP;
+            STR += (int)(LVL * 1.5 * multiplier);
+            DEX += (int)(LVL * 1.5 * multiplier);
+            INT += (int)(LVL * 1.5 * multiplier);
+            LUK += (int)(LVL * 1.5 * multiplier);
+            CalculateSecondaryStats(true);
         }
 
         /// <summary>
@@ -93,6 +118,10 @@ namespace Characters {
             parser.LocalVariables.Add("DEX", DEX);
             parser.LocalVariables.Add("INT", INT);
             parser.LocalVariables.Add("LUK", LUK);
+            parser.LocalVariables.Add("pAtk", pAtk);
+            parser.LocalVariables.Add("mAtk", mAtk);
+            parser.LocalVariables.Add("pDef", pDef);
+            parser.LocalVariables.Add("mDef", mDef);
 
             return (int)parser.Parse(attack.formula);
         }
@@ -109,10 +138,79 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Determines if an attack aimed at this character hits or misses
+        /// </summary>
+        /// <param name="c"> Other character attacking </param>
+        /// <returns> True if attack hits, false otherwise </returns>
+        /// <remark> 
+        /// Base chance to hit is 90%.
+        /// Every time an attack misses, the attacking character gets increasing bonus accuracy,
+        /// resetting that bonus back to 0 upon hitting.
+        /// </remark>
+        public bool CalculateAttackHit(Character c) {
+            int hitChance = 90 + c.acc + c.tempAcc - dodge; // base chance to hit is 90%
+
+            if (hitChance > 100) {
+                hitChance = 100;
+            }
+            else if (hitChance < 0) {
+                hitChance = 0;
+            }
+
+            bool attackHit = Random.Range(0, 100) < hitChance;
+
+            if (attackHit) {
+                c.tempAcc = 0;
+            }
+            else {
+                c.tempAcc += (int)(4 + c.tempAcc);  
+            }
+
+            return attackHit;            
+        }
+
+        /// <summary>
+        /// Calculates the damage of an attack against this character
+        /// </summary>
+        /// <param name="a"> Attack object </param>
+        /// <returns> The amount of damage taken </returns>
+        public int CalculateAttackDamage(Attack a) {
+            int damage = 0;
+
+            if (a.type == AttackConstants.PHYSICAL) {
+                damage = a.attackValue - pDef;
+
+                if (damage < 0) {
+                    damage = 0;
+                }
+
+                return damage;
+            }
+            else if (a.type == AttackConstants.MAGICAL) {
+                damage = a.attackValue - mDef;
+
+                if (damage < 0) {
+                    damage = 0;
+                }
+
+                return damage;
+            }
+            
+            return -1;
+        }
+
+        /// <summary>
         /// Logs stats to console for debugging
         /// </summary>
-        public virtual void LogStats() {
+        public virtual void LogPrimaryStats() {
             Debug.Log(LVL + " " + HP + " " + MP + " " + STR + " " + DEX + " " + INT + " " + LUK);
+        }
+
+        /// <summary>
+        /// Logs stats to console for debugging
+        /// </summary>
+        public virtual void LogSecondaryStats() {
+            Debug.Log("pDef: " + pDef + " mDef: " + mDef + " acc: " + acc + " tempAcc:" + tempAcc + " dodge: " + dodge);
         }
 
         /// <summary>

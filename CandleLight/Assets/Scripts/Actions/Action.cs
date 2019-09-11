@@ -132,6 +132,9 @@ namespace Actions {
             img.raycastTarget = value;
 
             if (value == false && isUsable == true) {
+                ShowActionDisabled();
+            }
+            else if (value == true) {
                 ShowActionUnselected();
             }            
         }
@@ -156,6 +159,13 @@ namespace Actions {
         /// </summary>
         public void ShowActionUnselected() {
             bts.SetColor("normal");
+        }
+
+        /// <summary>
+        /// Change button colour back to default
+        /// </summary>
+        public void ShowActionDisabled() {
+            bts.SetColor("disabled");
         }
 
         /// <summary>

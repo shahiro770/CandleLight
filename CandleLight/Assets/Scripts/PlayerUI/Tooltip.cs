@@ -102,8 +102,7 @@ namespace PlayerUI {
              * if the position of the textBackground + its width > 480 (960 / 2), it will be out of the screen.
              * +3 magic number is for spacing.
              */
-             //print(imageDisplayBackground.transform.position.x * canvasScaleFactor + " " + imageDisplayBackgroundWidthHalved + 3 + " " + textBackgroundWidth);
-             //print(imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth);
+
             if ((imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth + 3) >= rootCanvasWidthHalved) {
                 gameObject.transform.localPosition = new Vector3((textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3) * -1, gameObject.transform.localPosition.y);
             }

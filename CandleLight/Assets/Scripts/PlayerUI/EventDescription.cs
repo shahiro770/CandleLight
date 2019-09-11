@@ -31,6 +31,7 @@ namespace PlayerUI {
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
         private string costText = LocalizationManager.instance.GetLocalizedValue("cost_text");  /// <value> Localized text for the word "cost" </value>
         private string damageText = LocalizationManager.instance.GetLocalizedValue("damage_text");  /// <value> Localized text for the word "damage" </value>
+        private string dodgedText = LocalizationManager.instance.GetLocalizedValue("dodged_text");  /// <value> Localized text for the word "dodged" </value>
         private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");  /// <value> Localized text for the word "lost" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
 
@@ -77,6 +78,16 @@ namespace PlayerUI {
             if (this.colour != "normal") {
                 SetColour("normal");
             }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show that the partyMember dodged the attack
+        /// </summary>
+        /// <param name="pm"> PartyMember that dodged the attack </param>
+        public void SetPMDodgeText(PartyMember pm) {
+            string dodgedString = pm.pmName + " " + dodgedText;
+            eventText.SetText(dodgedString);
+            textBackgroundCanvas.alpha = 1;
         }
 
         /// <summary>

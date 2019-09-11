@@ -85,6 +85,36 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Displays actions for before combat when prompted
+        /// </summary>
+        public void PreCombatActions() { 
+            actions[0].SetAction(ActionConstants.INTERACTION, fightInt);
+            for (int i = 1; i < actions.Length; i++) {
+                actions[i].SetAction(ActionConstants.NONE);
+            }
+
+            SetActionsUsable(true);
+            SetAllActionsInteractable();
+            SetInPanelNavigation();
+        }
+
+        /// <summary>
+        /// Initialize all actions with the partyMembers' attacks for combat
+        /// </summary>
+        /// <param name="attacks"> List of all attacks according to the partyMember </param>
+        public void SetCombatActions(Attack[] attacks) {
+            for (int i = 0; i < attacks.Length; i++) {
+                actions[i].SetAction(ActionConstants.ATTACK, attacks[i]);
+            }
+            if (isLeavePossible) {
+                actions[actions.Length - 1].SetAction(ActionConstants.FLEE);
+            }
+            else {
+                actions[actions.Length - 1].SetAction(ActionConstants.NONE);
+            }
+        }
+
+        /// <summary>
         /// Displays actions for after combat
         /// </summary>
         public void PostCombatActions() { 
@@ -96,20 +126,6 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsUninteractable();
-            SetInPanelNavigation();
-        }
-
-        /// <summary>
-        /// Displays actions for after combat
-        /// </summary>
-        public void PreCombatActions() { 
-            actions[0].SetAction(ActionConstants.INTERACTION, fightInt);
-            for (int i = 1; i < actions.Length; i++) {
-                actions[i].SetAction(ActionConstants.NONE);
-            }
-
-            SetActionsUsable(true);
-            SetAllActionsInteractable();
             SetInPanelNavigation();
         }
 
@@ -126,27 +142,11 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Initialize all actions with the partyMembers' attacks for combat
-        /// </summary>
-        /// <param name="attacks"> List of all attacks according to the partyMember </param>
-        public void SetAttackActions(Attack[] attacks) {
-            for (int i = 0; i < attacks.Length; i++) {
-                actions[i].SetAction(ActionConstants.ATTACK, attacks[i]);
-            }
-            if (isLeavePossible) {
-                actions[actions.Length - 1].SetAction(ActionConstants.FLEE);
-            }
-            else {
-                actions[actions.Length - 1].SetAction(ActionConstants.NONE);
-            }
-        }
-
-        /// <summary>
         /// Displays the first partyMember with special fade effects
         /// </summary>
         /// <param name="pm"></param>
         public void DisplayFirstPartyMember(PartyMember pm) {
-            SetAttackActions(pm.attacks);
+            SetCombatActions(pm.attacks);
             FadeActions(1);
             CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
         }
@@ -156,7 +156,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pm"></param>
         public void DisplayPartyMember(PartyMember pm) {
-            SetAttackActions(pm.attacks);
+            SetCombatActions(pm.attacks);
             SetAllActionsInteractable();
             SetInPanelNavigation();
             CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);

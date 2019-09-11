@@ -10,6 +10,7 @@
 * Need to work with attacks that target multiple monsters, and multiple partyMembers
 */
 
+using Constants;
 using Characters;
 using EventManager = Events.EventManager;
 using General;
@@ -53,7 +54,8 @@ namespace Combat {
         private Monster selectedMonster = null;                             /// <value> Selected monster </value>
         private Monster activeMonster;                                      /// <value> Current monster preparing to act </value>
         private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
-        private Attack selectedAttack = null;       /// <value> Attack selected by partyMember </value>
+        private Attack selectedAttackMonster = null;/// <value> Attack selected by monster </value>
+        private Attack selectedAttackpm = null;     /// <value> Attack selected by partyMember </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
         private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
@@ -210,7 +212,7 @@ namespace Combat {
                 yield return null;
             }
             DisableAllButtons();
-            if (selectedAttack != null) {
+            if (selectedAttackpm != null) {
                 yield return StartCoroutine(ExecutePMAttack());  
             }
             yield return StartCoroutine(CleanUpPMTurn());
@@ -248,7 +250,7 @@ namespace Combat {
         /// selecting the middle most monster by default)
         /// </remark>
         public void PreparePMAttack(Attack a) {
-            selectedAttack = a;
+            selectedAttackpm = a;
             foreach(Monster m in monsters) {
                 m.md.SetNavigation("down", actionsPanel.GetActionButton(4));
             }
@@ -299,7 +301,7 @@ namespace Combat {
         /// Revert target selection UI to action selection phase
         /// </summary>
         public void UndoPMAction() {
-            selectedAttack = null;
+            selectedAttackpm = null;
             foreach(Monster m in monsters) {
                 m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
             }
@@ -317,12 +319,14 @@ namespace Combat {
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// </returns>
         public IEnumerator ExecutePMAttack() {    
-            eventDescription.SetKey(selectedAttack.nameKey); 
+            eventDescription.SetKey(selectedAttackpm.nameKey); 
             yield return new WaitForSeconds(0.25f);
 
-            yield return StartCoroutine(activePartyMember.PayAttackCost(selectedAttack.costType, selectedAttack.cost));
-            if (selectedAttack.scope == "single") {
-                yield return StartCoroutine(selectedMonster.LoseHP(selectedAttack.attackValue, selectedAttack.animationClipName));
+            yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackpm.costType, selectedAttackpm.cost)));
+            if (selectedAttackpm.scope == "single") {
+                if (selectedAttackpm.type == AttackConstants.PHYSICAL || selectedAttackpm.type == AttackConstants.MAGICAL) {
+                    yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));    
+                }   
             }
         }
 
@@ -345,7 +349,7 @@ namespace Combat {
             DestroyMonsters(monstersToRemove);
 
             DeselectMonsters();
-            selectedAttack = null;
+            selectedAttackpm = null;
             pmSelectionFinalized = false;
             eventDescription.ClearText();
         }
@@ -394,7 +398,8 @@ namespace Combat {
         /// <returns> IEnumerator to play animations after each action </returns>
         private IEnumerator ExecuteMonsterAttack() {
             int targetChoice = 0;
-            Attack selectedAttackMonster = activeMonster.SelectAttack();
+    
+            selectedAttackMonster = activeMonster.SelectAttack();
             eventDescription.SetKey(selectedAttackMonster.nameKey);
             yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
             if (activeMonster.monsterAI == "random") {
@@ -416,11 +421,14 @@ namespace Combat {
                     targetChoice = Random.Range(0, partyMembers.Count);
                 }
             }
-            
+
             yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation()));
-            eventDescription.SetPMDamageText(partyMembersAlive[targetChoice], selectedAttackMonster.attackValue);
-            
-            yield return (StartCoroutine(partyMembersAlive[targetChoice].LoseHP(selectedAttackMonster.attackValue)));
+
+            if (selectedAttackMonster.scope == "single") {
+                if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
+                    yield return (StartCoroutine(partyMembersAlive[targetChoice].GetAttacked(selectedAttackMonster, activeMonster, eventDescription)));
+                }
+            }
         }
 
         /// <summary>
@@ -502,8 +510,8 @@ namespace Combat {
 
             // Player can freely click on monsters without having an attack selected
             // Will probably make a UI popup when clicking on monsters with no attack in the future
-            if (selectedAttack != null) {
-                if (selectedAttack.scope != "single") {
+            if (selectedAttackpm != null) {
+                if (selectedAttackpm.scope != "single") {
                     int monsterIndex = 0;
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID == monsterToSelect.ID) {
@@ -511,7 +519,7 @@ namespace Combat {
                             break;
                         }
                     }
-                    if (selectedAttack.scope == "adjacent") {
+                    if (selectedAttackpm.scope == "adjacent") {
                         if (monsterIndex - 1 > 0) {
                             selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
                         }

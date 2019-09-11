@@ -102,8 +102,8 @@ namespace Database {
                         string[] personalInfo = new string[4];
                         int LVL = 0;
                         int EXP = 0;
-                        int HP = 0;
-                        int MP = 0;
+                        int CHP = 0;    // storing these for the future; the player leaving mid dungeon will need these values saved
+                        int CMP = 0;
                         int[] stats = {};
                         Attack[] attacks = new Attack[4];
 
@@ -115,8 +115,8 @@ namespace Database {
                             
                             LVL = reader.GetInt32(5);
                             EXP = reader.GetInt32(6);
-                            HP = reader.GetInt32(7); 
-                            MP = reader.GetInt32(8);
+                            CHP = reader.GetInt32(7); 
+                            CMP = reader.GetInt32(8);
                             stats = new int[] { reader.GetInt32(9), reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12) };
 
                             for (int i = 0; i < maxAttacks; i++) {
@@ -128,7 +128,7 @@ namespace Database {
                             Debug.LogError("PartyMember with className " + className + " does not exist in the DB");
                         }
                         // need to figure out how to attach this information to a monster gameObject, can't use new
-                        pm.Init(personalInfo, LVL, EXP, HP, MP, stats, attacks); 
+                        pm.Init(personalInfo, LVL, EXP, CHP, CMP, stats, attacks); 
                     }
                 }
             }          
@@ -147,13 +147,27 @@ namespace Database {
                 using (IDataReader reader = dbcmd.ExecuteReader()) {
                     Attack newAttack = null;
 
+                    string type = "";
+                    string formula = "";
+                    string costType = "";
+                    int cost = 0;
+                    string scope = "";
+                    string animationClipName = "";
+
                     if (reader.Read()) {
+                        type = reader.GetString(2);
+                        formula = reader.GetString(3);
+                        costType = reader.GetString(4);
+                        cost = reader.GetInt32(5);
+                        scope = reader.GetString(6);
                         if (isMonster) {
-                            newAttack = new Attack(name, reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6));
+                            animationClipName = reader.GetString(7);
                         }
                         else {
-                            newAttack = new Attack(name, reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(7));
+                            animationClipName = reader.GetString(8);
                         }
+
+                        newAttack = new Attack(name, type, formula, costType, cost, scope, animationClipName);
                     }
                     
                     if (newAttack == null) {

@@ -126,7 +126,38 @@ namespace Characters {
                 CHP = 0;
             }
             
-            yield return StartCoroutine(md.DisplayLostHP(amount, animationClipName));
+            yield return StartCoroutine(md.DisplayHPChange(amount, true, animationClipName));
+        }
+
+        /// <summary>
+        /// Handles the calculations involved when attack hits this monster
+        /// </summary>
+        /// <param name="a"> Attack used on this character </param>
+        /// <param name="c"> Character attacking this </param>
+        /// <param name="animationClipName"> Animation clip to play of the attack used </param>
+        /// <returns></returns>
+        public IEnumerator GetAttacked(Attack a, Character c, string animationClipName) {
+            int damageTaken = CalculateAttackDamage(a);
+            bool attackHit = CalculateAttackHit(c);
+
+            if (attackHit) {
+                if (damageTaken < 0) {
+                    damageTaken = 0;
+                }
+                yield return StartCoroutine(LoseHP(damageTaken, animationClipName));
+            }
+            else {
+                yield return StartCoroutine(DodgeAttack(animationClipName));
+            }
+        }
+
+        /// <summary>
+        /// Handles all logic and visual effects upon dodging an attack
+        /// </summary>
+        /// <param name="animationClipName"></param>
+        /// <returns></returns>
+        public IEnumerator DodgeAttack(string animationClipName) {
+            yield return StartCoroutine(md.DisplayAttackDodged(animationClipName));
         }
 
         /// <summary>
@@ -140,11 +171,11 @@ namespace Characters {
         #endregion
 
         /// <summary>
-        /// Logs information for debugging
+        /// Logs primary stat information for debugging
         /// </summary>
-        public override void LogStats() {
+        public override void LogPrimaryStats() {
             Debug.Log(monsterDisplayName);
-            base.LogStats();
+            base.LogPrimaryStats();
         }
 
         /// <summary>

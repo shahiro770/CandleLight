@@ -161,7 +161,6 @@ namespace Characters {
                 partyPanelHPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
                 partyPanelMPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
             }
-
         }
 
         /// <summary>
@@ -199,13 +198,21 @@ namespace Characters {
                 if (isLoss) {
                     yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
                     if (pm.CHP == 0) {
-                        yield return new WaitForSeconds(0.75f);
+                        yield return new WaitForSeconds(0.5f);
                     }
                 }
-                else {
-                    yield return new WaitForSeconds(1.3f);
-                }
-            } 
+            }
+            else {
+                yield return new WaitForSeconds(1f);
+            }
+        }
+
+        /// <summary>
+        /// Plays animation when an attack is dodged
+        /// </summary>
+        /// <returns> IEnumerator cause animations </returns>
+        public IEnumerator DisplayAttackDodged() {
+            yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
         }
 
         /// <summary>
