@@ -96,6 +96,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Plays the animation for when the partyMember is damaged by a critical hit attack
+        /// </summary>
+        /// <returns> Waits for animation to finish playing </returns>
+        public IEnumerator PlayCritDamagedAnimation() {
+            pmDisplayAnimator.SetTrigger("damagedCrit");
+            do {
+                yield return null;    
+            } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmDisplayAnimator.ResetTrigger("damagedCrit");
+        }
+
+        /// <summary>
         /// Plays the animation for when the partyMember dodges an attack
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>

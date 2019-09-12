@@ -31,10 +31,14 @@ namespace Characters {
         [field: SerializeField] public int mDef { get; set; }             /// <value> Magical defense </value>
         [field: SerializeField] public int dodge { get; set; }            /// <value> Dodge rating </value>
         [field: SerializeField] public int acc { get; set; }              /// <value> Accuracy rating </value>
-        [field: SerializeField] public int tempAcc = 0;
+        [field: SerializeField] public int tempAcc = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
+        [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
+        [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
 
-        
+        private int baseCritChance = 5;                                   /// <value> Base chance of critting </value>
+        private int baseAcc = 90;                                         /// <value> Base accuracy rating </value>
+        private float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
 
         /// <summary>
         /// Initializes character properties
@@ -67,7 +71,13 @@ namespace Characters {
            pDef = (int)(STR * 0.1 + DEX * 0.05);
            mDef = (int)(INT * 0.15 + LUK * 0.05);
            dodge = (int)(DEX * 0.2 + LUK * 0.1);
-           acc = (int)(DEX * 0.3);
+           acc = (int)(DEX * 0.3) + baseAcc;
+           critChance = (int)(LUK * 0.1) + baseCritChance;
+           critMult = baseCritMult;
+
+           if (critChance > 100) {
+               critChance = 100;
+           }
 
            if (setCurrent) {
                CHP = HP;
@@ -147,8 +157,8 @@ namespace Characters {
         /// Every time an attack misses, the attacking character gets increasing bonus accuracy,
         /// resetting that bonus back to 0 upon hitting.
         /// </remark>
-        public bool CalculateAttackHit(Character c) {
-            int hitChance = 90 + c.acc + c.tempAcc - dodge; // base chance to hit is 90%
+        protected bool CalculateAttackHit(Character c) {
+            int hitChance = baseAcc + c.acc + c.tempAcc - dodge;
 
             if (hitChance > 100) {
                 hitChance = 100;
@@ -170,33 +180,56 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Calculates the damage of an attack against this character
+        /// Calculates if an attack from another character is a critical hit, and amplifies the damage
+        /// based on that character's critical hit damage multiplier.
+        /// </summary>
+        /// <param name="amount"> Amount of damage </param>
+        /// <param name="c"> Other character </param>
+        /// <returns> Amount after potential critical multiplier </returns>
+        protected bool CalculateAttackCrit(Character c) {
+            bool attackCrit = Random.Range(0, 100) < c.critChance;
+            
+            return attackCrit;
+        }
+
+        /// <summary>
+        /// Calculates the base damage of an attack against this character
         /// </summary>
         /// <param name="a"> Attack object </param>
         /// <returns> The amount of damage taken </returns>
         public int CalculateAttackDamage(Attack a) {
-            int damage = 0;
+            return a.attackValue;
+        }
 
-            if (a.type == AttackConstants.PHYSICAL) {
-                damage = a.attackValue - pDef;
-
-                if (damage < 0) {
-                    damage = 0;
-                }
-
-                return damage;
+        /// <summary>
+        /// Calculates damage of an attack against this character after all reductions (armor, skills, etc.)
+        /// </summary>
+        /// <param name="damage"> Damage amount</param>
+        /// <param name="a"> Attack </param>
+        /// <returns></returns>
+        public int CalculateAttackReductions(int damage, Attack a) {
+             if (a.type == AttackConstants.PHYSICAL) {
+                damage = damage - pDef;
             }
             else if (a.type == AttackConstants.MAGICAL) {
-                damage = a.attackValue - mDef;
-
-                if (damage < 0) {
-                    damage = 0;
-                }
-
-                return damage;
+                damage = damage - mDef; 
             }
+            if (damage < 0) {
+                damage = 0;
+            }  
             
-            return -1;
+            return damage;
+        }
+
+
+        /// <summary>
+        /// Calculates the damage of a critical attack against this character
+        /// </summary>
+        /// <param name="amount"> Damage value coming in </param>
+        /// <param name="c"> Character who attacked this character </param>
+        /// <returns></returns>
+        protected int CalculateAttackDamageCrit(int amount, Character c) {
+            return (int)(amount * c.critMult);
         }
 
         /// <summary>

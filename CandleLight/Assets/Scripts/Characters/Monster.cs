@@ -137,14 +137,21 @@ namespace Characters {
         /// <param name="animationClipName"> Animation clip to play of the attack used </param>
         /// <returns></returns>
         public IEnumerator GetAttacked(Attack a, Character c, string animationClipName) {
-            int damageTaken = CalculateAttackDamage(a);
             bool attackHit = CalculateAttackHit(c);
-
-            if (attackHit) {
-                if (damageTaken < 0) {
-                    damageTaken = 0;
+           
+             if (attackHit) {
+                int damage = CalculateAttackDamage(a);
+                bool isCrit = CalculateAttackCrit(c);
+                if (isCrit) {
+                    damage = CalculateAttackDamageCrit(damage, c);
+                    damage = CalculateAttackReductions(damage, a);
+                    md.SetCrit();
                 }
-                yield return StartCoroutine(LoseHP(damageTaken, animationClipName));
+                else {
+                     damage = CalculateAttackReductions(damage, a);
+                }
+
+                yield return StartCoroutine(LoseHP(damage, animationClipName));
             }
             else {
                 yield return StartCoroutine(DodgeAttack(animationClipName));

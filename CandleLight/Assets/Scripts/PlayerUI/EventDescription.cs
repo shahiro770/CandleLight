@@ -30,6 +30,7 @@ namespace PlayerUI {
         private Color32 unusableColourHalfAlpha = new Color32(196, 36, 48, 128);    /// <value> Red colour half alpha to indicate unusable attack </value>
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
         private string costText = LocalizationManager.instance.GetLocalizedValue("cost_text");  /// <value> Localized text for the word "cost" </value>
+        private string critText = LocalizationManager.instance.GetLocalizedValue("crit_text");      /// <value> Localized text for the phrase "Critical Hit!" </value>
         private string damageText = LocalizationManager.instance.GetLocalizedValue("damage_text");  /// <value> Localized text for the word "damage" </value>
         private string dodgedText = LocalizationManager.instance.GetLocalizedValue("dodged_text");  /// <value> Localized text for the word "dodged" </value>
         private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");  /// <value> Localized text for the word "lost" </value>
@@ -73,6 +74,20 @@ namespace PlayerUI {
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageText(PartyMember pm, int amount) {
             string damagedText = pm.pmName + " " + lostText + " " + amount.ToString() + " HP";
+            eventText.SetText(damagedText);
+
+            if (this.colour != "normal") {
+                SetColour("normal");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show how much damage a partyMember took from a critical hit
+        /// </summary>
+        /// <param name="pm"> partyMember object </param>
+        /// <param name="amount"> Positive int amount </param>
+        public void SetPMDamageCritText(PartyMember pm, int amount) {
+            string damagedText = critText + " " + pm.pmName + " " + lostText + " " + amount.ToString() + " HP";
             eventText.SetText(damagedText);
 
             if (this.colour != "normal") {

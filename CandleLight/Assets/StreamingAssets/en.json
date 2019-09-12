@@ -19,6 +19,7 @@
 		{ "key": "back_button", "value": "Back" },
 
 		{ "key": "cost_text", "value": "Cost"},
+		{ "key": "crit_text", "value": "Critical hit!"},
 		{ "key": "damage_text", "value": "Damage" },
 		{ "key": "dodged_text", "value": "dodged" },
 		{ "key": "lost_text", "value": "lost" },

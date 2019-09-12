@@ -43,6 +43,7 @@ namespace Characters {
         [field: SerializeField] private float healthBarWidthSmall = 115;/// <value> Default width of a monster's health bar </value>
         [field: SerializeField] private float healthBarWidthMed = 150;  /// <value> Default width of a monster's health bar </value>
         [field: SerializeField] private float healthBarWidthLarge = 230;/// <value> Default width of a monster's health bar </value>
+        [field: SerializeField] private bool isCrit = false;            /// <value> Flag for if damage text should show a critical hit </value>
 
         #region [ Initialization ] Initialization
 
@@ -343,6 +344,13 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Sets the isCrit flag to true
+        /// </summary>
+        public void SetCrit() {
+            isCrit = true;
+        }
+
+        /// <summary>
         /// Plays the start turn animation of a monster
         /// </summary>
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
@@ -391,7 +399,12 @@ namespace Characters {
                 yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
                 dt.ShowDamage(amount);
                 HPBar.SetCurrent(displayedMonster.CHP);
-                yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damaged", "showDamage")));
+                if (isCrit) {
+                    yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damagedCrit", "showCritDamage")));
+                }
+                else {
+                    yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damaged", "showDamage")));
+                }
                 dt.HideDamage();
             }
         }

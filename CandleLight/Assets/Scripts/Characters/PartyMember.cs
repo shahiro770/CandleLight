@@ -228,23 +228,33 @@ namespace Characters {
         /// </summary>
         /// <param name="a"> Attack used </param>
         /// <returns></returns>
-        public IEnumerator GetAttacked(Attack a, Character c, EventDescription eventDescription) {
-            int damageTaken = CalculateAttackDamage(a);
+        public IEnumerator GetAttacked(Attack a, Character c) {
             bool attackHit = CalculateAttackHit(c);
 
             if (attackHit) {
-                if (damageTaken < 0) {
-                    damageTaken = 0;
+                int damage = CalculateAttackDamage(a);;
+                bool isCrit = CalculateAttackCrit(c);
+                if (isCrit) {
+                    damage = CalculateAttackDamageCrit(damage, c);
+                    damage = CalculateAttackReductions(damage, a);
                 }
-                eventDescription.SetPMDamageText(this, damageTaken);
+                else {
+                    damage = CalculateAttackReductions(damage, a);
+                }
+                
+                pmvc.SetDamageTaken(damage, isCrit);
 
-                yield return StartCoroutine(LoseHP(damageTaken));
+                yield return StartCoroutine(LoseHP(damage));
             }
             else {
-                 eventDescription.SetPMDodgeText(this);
+                yield return StartCoroutine(DodgeAttack());
             }
         }
 
+        /// <summary>
+        /// Handles all logic and tells the visual component to update after dodging an attack
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator DodgeAttack() {
             yield return StartCoroutine(pmvc.DisplayAttackDodged());
         }

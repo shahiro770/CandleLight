@@ -426,7 +426,7 @@ namespace Combat {
 
             if (selectedAttackMonster.scope == "single") {
                 if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
-                    yield return (StartCoroutine(partyMembersAlive[targetChoice].GetAttacked(selectedAttackMonster, activeMonster, eventDescription)));
+                    yield return (StartCoroutine(partyMembersAlive[targetChoice].GetAttacked(selectedAttackMonster, activeMonster)));
                 }
             }
         }

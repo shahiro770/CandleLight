@@ -26,16 +26,19 @@ namespace Characters {
         public Bar statusPanelMPBar { get; private set; }   /// <value> Visual for mana points in status panel </value>
         public Bar partyPanelHPBar { get; private set; }    /// <value> Visual for health points in party panel </value>
         public Bar partyPanelMPBar { get; private set; }    /// <value> Visual for mana points in party panel </value>
+        public EventDescription eventDescription;           /// <value> Display that describes the event in text </value>
         public EXPBar partyPanelEXPBar { get; private set; }   /// <value> Visual for experience points in party panel </value>
         public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
         public LocalizedText rewardsPanelLVLText { get; private set; }      /// <value> Visual for LVL in rewards panel</value>
         public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for partyMember's status in party panel </value>
         public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for partyMember's status in party panel </value>  
-        
+
         public Sprite partyMemberSprite { get; private set; }   /// <value> Icon sprite of the partyMember </value>
         public Color32 partyMemberColour { get; private set; }  /// <value> Theme colour of partyMember </value>
-
-        private PartyMember pm;     /// <value> PartyMember object visual controller is referring to </value>
+        
+        private PartyMember pm;      /// <value> PartyMember object visual controller is referring to </value>
+        private int damageTaken = 0; /// <value> Amount of damage taken to display via the eventDescription </value>
+        private bool isCrit = false; /// <value> Flag for if eventDescription will mention the attack dealt a critical hit </value>
 
         /// <summary>
         /// Initializes with basic information using a given partyMember
@@ -57,11 +60,13 @@ namespace Characters {
             else if (pm.className == "Thief") {
                 partyMemberColour = new Color32(255, 235, 87, 255);
             }
-        
         }
         
         /// <summary>
-        /// Sets the partyMemberDisplay of displayed partyMember 
+        /// Sets the partyMemberDisplay of displayed partyMember.
+        /// Also initializes the eventDescription component reference, which is always
+        /// guaranteed to happen as the partyMemberDisplay will always be initialized on moving
+        /// to the Area scene.
         /// </summary>
         /// <param name="pmd"> PartyMemberDisplay to show this partyMember's information </param>
         /// <param name="panelName"> Name of panel </param>
@@ -70,6 +75,7 @@ namespace Characters {
         public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, Bar HPBar, Bar MPBar) {
             this.pmdPartyPanel = pmd;
             SetHPAndMPBar(panelName, HPBar, MPBar);
+            SetEventDescription();
         }
 
         /// <summary>
@@ -147,6 +153,23 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Sets the event description component reference
+        /// </summary>
+        public void SetEventDescription() {
+            eventDescription = EventManager.instance.eventDescription;
+        }
+
+        /// <summary>
+        /// Sets the damage taken and if the attack was a crit
+        /// </summary>
+        /// <param name="damageTaken"> Amount of damage taken </param>
+        /// <param name="isCrit"> Flag for if attack that this character was a crit </param>
+        public void SetDamageTaken(int damageTaken, bool isCrit) {
+            this.damageTaken = damageTaken;
+            this.isCrit = isCrit;
+        }
+
+        /// <summary>
         /// Updates the HP and MP bars to have the correct max amounts
         /// </summary>
         /// <remark>
@@ -196,7 +219,16 @@ namespace Characters {
             if (EventManager.instance.partyPanel.isOpen == true) {
                 partyPanelHPBar.SetCurrent(pm.CHP);
                 if (isLoss) {
-                    yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
+                    if (isCrit) {
+                        eventDescription.SetPMDamageCritText(pm, damageTaken);
+                        yield return (StartCoroutine(pmdPartyPanel.PlayCritDamagedAnimation()));
+                        isCrit = false;
+                        damageTaken = 0;
+                    }
+                    else {
+                        eventDescription.SetPMDamageText(pm, damageTaken);
+                        yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
+                    }
                     if (pm.CHP == 0) {
                         yield return new WaitForSeconds(0.5f);
                     }
@@ -208,10 +240,11 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Plays animation when an attack is dodged
+        /// Plays animation when an attack is dodged and has eventDescription write it out
         /// </summary>
         /// <returns> IEnumerator cause animations </returns>
         public IEnumerator DisplayAttackDodged() {
+            eventDescription.SetPMDodgeText(pm);
             yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
         }
 

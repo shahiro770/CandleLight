@@ -877,6 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshText: {fileID: 5137973562306956055}
   textAnimator: {fileID: 3001670209283228276}
+  missText: 
 --- !u!223 &3866274908295974208
 Canvas:
   m_ObjectHideFlags: 0
@@ -1065,6 +1066,7 @@ MonoBehaviour:
   healthBarWidthSmall: 115
   healthBarWidthMed: 150
   healthBarWidthLarge: 230
+  isCrit: 0
 --- !u!114 &1488682590168830683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1087,6 +1089,15 @@ MonoBehaviour:
   <DEX>k__BackingField: 0
   <INT>k__BackingField: 0
   <LUK>k__BackingField: 0
+  <pAtk>k__BackingField: 0
+  <mAtk>k__BackingField: 0
+  <pDef>k__BackingField: 0
+  <mDef>k__BackingField: 0
+  <dodge>k__BackingField: 0
+  <acc>k__BackingField: 0
+  tempAcc: 0
+  <critChance>k__BackingField: 0
+  <critMult>k__BackingField: 0
   <attacks>k__BackingField: []
   md: {fileID: 8085412351755015521}
   <monsterArea>k__BackingField: 
