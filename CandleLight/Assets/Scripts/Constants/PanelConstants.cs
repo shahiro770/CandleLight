@@ -13,6 +13,7 @@ namespace Constants {
 
         public static readonly string ACTIONSPANEL = "actionsPanel";    /// <value> Actions </value>
         public static readonly string PARTYPANEL = "partyPanel";        /// <value> Party display </value>
+        public static readonly string STATSPANEL = "statsPanel";        /// <value> Stats of active </value>
         public static readonly string STATUSPANEL = "statusPanel";      /// <value> Status of active partyMember </value>
         public static readonly string REWARDSPANEL = "rewardsPanel";    /// <value> Shows everything rewarded after combat </value>
     }

@@ -8,9 +8,7 @@
 *
 */
 
-using System.Collections;
-using System.Collections.Generic;
-using Events;
+using PanelConstants = Constants.PanelConstants;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +30,9 @@ namespace PlayerUI {
         /// Open the partyPanel to begin
         /// </summary>
         void Start() {
-            OpenPanel(0);
+            if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
+                OpenPanel(0);
+            }
         }
 
         /// <summary>
@@ -52,6 +52,11 @@ namespace PlayerUI {
         public void SetAllButtonsInteractable() {
             foreach (Button b in tabs) {
                 b.interactable = true;
+            }
+
+            if (panels[0].name == PanelConstants.PARTYPANEL) {  // right tabManager
+                Navigation n = tabs[0].navigation;
+                n.selectOnLeft = actionsPanel.GetNavigatableButtonRight();
             }
         }
 

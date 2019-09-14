@@ -25,3 +25,4 @@ Current list:
 - Items that have unique buffs 
 - Bestiary
 - Attacks that hit multiple times
+- Calculating the MVP of the fight, based on kills, most damage healed, buffs that resulted in clutch kills or saves, etc.

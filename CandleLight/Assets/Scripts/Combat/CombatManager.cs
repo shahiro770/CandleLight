@@ -232,7 +232,7 @@ namespace Combat {
             activePartyMember.SetAttackValues();
 
             DisplayActivePartyMember();
-            EnableAllButtons();
+            EnableAllButtonsInSidePanels();
             SetMonsterNavigation();
             
             actionsPanel.SetHorizontalNavigation(partyPanel);
@@ -702,11 +702,11 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Enables all buttons to be selectable
+        /// Enables all buttons to be selectable, except in the actionsPanel,
+        /// as DisplayPartyMember() takes care of that, and does other checks
         /// </summary>
-        public void EnableAllButtons() {
+        public void EnableAllButtonsInSidePanels() {
             EnableAllMonsterSelection();
-            actionsPanel.SetAllActionsInteractable();
             utilityTabManager.SetAllButtonsInteractable();
             partyPanel.EnableButtons();
         }

@@ -19,10 +19,11 @@ using UnityEngine.UI;
 namespace PlayerUI {
 
     public class PartyPanel : Panel {
-
+        
         public ActionsPanel actionsPanel;       /// <value> ActionsPanel reference </value>
         public PartyMemberDisplay[] pmDisplays = new PartyMemberDisplay[4];     /// <value> List of partymembers to display </value>
-        public bool isOpen = false;                                             /// <value> Flag for if panel is being displayed </value>
+        public StatsPanel statsPanel;           /// <value> Panel for stats </value>
+        public bool isOpen = false;             /// <value> Flag for if panel is being displayed </value>
 
         /// <summary>
         /// Update the partyPanel with relevant information and visuals when opened
@@ -48,6 +49,7 @@ namespace PlayerUI {
                 pmDisplays[i].gameObject.SetActive(false);
             }
             for (int i = 0; i < pms.Count; i++) {
+                int x = i;          // unity loses track of loop variable, so copying somehow fixes this
                 pmDisplays[i].gameObject.SetActive(true);
                 pmDisplays[i].Init(pms[i].pmvc);
             }
@@ -63,7 +65,7 @@ namespace PlayerUI {
         public void AddPartyMemberDisplay(PartyMember pm) {
             int newIndex = PartyManager.instance.GetNumPartyMembers();
             pmDisplays[newIndex - 1].gameObject.SetActive(true);
-            pmDisplays[newIndex - 1].Init(pm.pmvc);
+            pmDisplays[newIndex - 1].Init(pm.pmvc);   
         }
 
         /// <summary>
@@ -117,12 +119,14 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Disables all of the PartyMemberDisplays to not be clickable or selectable
+        /// Disables all of the PartyMemberDisplays to not be clickable or selectable.
+        /// Also closes the statsPanel
         /// </summary>
         public void DisableButtons() {
             foreach(PartyMemberDisplay pmd in pmDisplays) {
                 pmd.SetInteractable(false);
             }
+            statsPanel.gameObject.SetActive(false);
         }
 
         /// <summary>

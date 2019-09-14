@@ -401,6 +401,7 @@ namespace Characters {
                 HPBar.SetCurrent(displayedMonster.CHP);
                 if (isCrit) {
                     yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damagedCrit", "showCritDamage")));
+                    isCrit = false;
                 }
                 else {
                     yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damaged", "showDamage")));

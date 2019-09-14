@@ -36,15 +36,15 @@ namespace Items {
                 EXPAmount = amount;
                 isConsumable = true;
             }
-            if (type == "HP") {
+            else if (type == "HP") {
                 HPAmount = amount;
                 isConsumable = true;
             }
-            if (type == "MP") {
+            else if (type == "MP") {
                 MPAmount = amount;
                 isConsumable = true;
             }
-            if (type == "WAX") {
+            else if (type == "WAX") {
                 WAXAmount = amount;
                 isConsumable = true;
             }

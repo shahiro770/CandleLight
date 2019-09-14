@@ -59,7 +59,9 @@ namespace Characters {
         /// </summary>
         /// <param name="level"> Level to calculate EXP to next level for </param>
         public int CalcEXPToNextLVL(int LVL) {
-            return (10 * (LVL * 2 - 1)) / 2; 
+            // it takes 5 LVL 1 enemies for a LVL 1 player to reach LVL 2
+            // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
+            return (int)(5 * Mathf.Pow(LVL, 2.15f)); 
         }
 
         /// <summary>
@@ -96,8 +98,10 @@ namespace Characters {
             
             HP += (int)((STR * 0.5) + (DEX * 0.5));
             MP += (int)((INT * 0.5) + (LUK * 0.5));
+            CalculateSecondaryStats();
 
             pmvc.UpdateHPAndMPBars();
+            pmvc.UpdateStats();
         }
 
         /// <summary>
@@ -113,11 +117,11 @@ namespace Characters {
                 int prevEXPToNextLVL = EXPToNextLVL;     
 
                 while (overflow >= EXPToNextLVL) { // small chance player might level up more than once
-                    LVLUp();
                     overflow -= EXPToNextLVL;
                     prevEXPToNextLVL = EXPToNextLVL;
-                    EXPToNextLVL = CalcEXPToNextLVL(LVL);
+                    EXPToNextLVL = CalcEXPToNextLVL(LVL + 1);   // need this value to change the EXP display, but can't LVL up until after bar fills
                     yield return(StartCoroutine(pmvc.DisplayEXPChange(prevEXPToNextLVL, prevEXPToNextLVL)));
+                    LVLUp();
                 }
                 EXP = overflow;
             }

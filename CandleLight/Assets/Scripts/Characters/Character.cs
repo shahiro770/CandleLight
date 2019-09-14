@@ -63,7 +63,7 @@ namespace Characters {
         /// Calculates secondary stats based off of the 4 primary stats
         /// </summary>
         /// <param name="setCurrent"> Flag for if CHP and CMP should equal new HP and MP values </param>
-        private void CalculateSecondaryStats(bool setCurrent = false) {
+        protected void CalculateSecondaryStats(bool setCurrent = false) {
            HP = (int)(STR * 3 + DEX * 1.5);
            MP = (int)(INT * 2 + LUK * 1.5);
            pAtk = (int)(STR * 0.5 + DEX * 0.25);

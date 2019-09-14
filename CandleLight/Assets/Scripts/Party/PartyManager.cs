@@ -121,6 +121,14 @@ namespace Party {
         }
 
         /// <summary>
+        /// Returns the first partyMember in the list of partyMembers alive
+        /// </summary>
+        /// <returns> PartyMember that is alive</returns>
+        public PartyMember GetFirstPartyMemberAlive() {
+            return partyMembersAlive[0];
+        }
+
+        /// <summary>
         /// Adds a partyMember to the alive list and removes them from the dead list
         /// </summary>
         /// <param name="pm"> partyMember object </param>

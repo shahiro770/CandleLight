@@ -105,7 +105,7 @@ namespace PlayerUI {
             bool lerpDirection = fillAmount >= frontFill.fillAmount;
 
             if (frontFill.fillAmount != fillAmount) {
-                while (timeSinceStarted < 3) {  // lerping is approaching infinity so stop after 2 seconds
+                while (timeSinceStarted < 3) {  // lerping is approaching infinity so stop after 3 seconds
                     timeSinceStarted = Time.time - timeStartedLerping;
                     percentageComplete = Time.deltaTime * lerpSpeed;
 

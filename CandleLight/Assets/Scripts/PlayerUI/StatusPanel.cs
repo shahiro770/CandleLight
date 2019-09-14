@@ -26,7 +26,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pm"></param>
         public void DisplayPartyMember(PartyMemberVisualController pmvc) {
-            if (this.pmvc != null) {
+            if (this.pmvc != null) {    // forget what this was for
                 this.pmvc.UnsetHPAndMPBar(GetPanelName());
             }
 

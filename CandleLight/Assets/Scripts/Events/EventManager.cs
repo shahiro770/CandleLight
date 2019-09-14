@@ -245,7 +245,7 @@ namespace Events {
         /// Displays the current event to the player
         /// </summary>
         public IEnumerator DisplayEvent() {
-            if (!displayStartEvent) {
+            if (displayStartEvent == false) {
                 nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
                 yield return StartCoroutine(TransitionToNextEvent());
             } 
@@ -254,12 +254,12 @@ namespace Events {
                 displayStartEvent = false;
             }
 
-            PartyManager.instance.RegenParty();
-
             if (currentEvent.type == EventConstants.COMBAT) {
+                PartyManager.instance.RegenParty();
+
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
                 monstersToSpawn = currentSubArea.GetMonstersToSpawn();
-
+                
                 GetCombatEvent();
             }
             else {
@@ -277,7 +277,8 @@ namespace Events {
                     HideEventDisplays();
                 }
 
-                statusPanel.DisplayPartyMember(PartyManager.instance.GetPartyMembers()[0].pmvc);
+                statusPanel.DisplayPartyMember(PartyManager.instance.GetFirstPartyMemberAlive().pmvc);
+                PartyManager.instance.RegenParty();
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 partyPanel.EnableButtons();

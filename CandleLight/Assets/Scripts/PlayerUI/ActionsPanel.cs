@@ -159,7 +159,7 @@ namespace PlayerUI {
             SetCombatActions(pm.attacks);
             SetAllActionsInteractable();
             SetInPanelNavigation();
-            CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
+            CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
         }
 
         /// <summary>
@@ -292,12 +292,11 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets an action to visually be unusable if the partyMember can't use it
+        /// Sets every attack action to visually be unusable if the partyMember can't use it
         /// </summary>
-        /// <param name="CMP"> Current HP of partyMember </param>
-        /// <param name="CHP"> Current MP of partyMember </param>
-        /// <remark> Only affects combat for now </remark>
-        private void CheckAndSetActionsToUnusable(int CMP, int CHP) {
+        /// <param name="CHP"> Current HP of partyMember </param>
+        /// <param name="CMP"> Current MP of partyMember </param>
+        private void CheckAndSetActionsToUnusable(int CHP, int CMP) {
              for (int i = 0; i < actions.Length - 1; i++) {
                 if (actions[i].actionType == "attack") {
                     Attack a = actions[i].a;
@@ -500,13 +499,28 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Returns the Button that adjacent panels will navigate to.
-        /// For the actionsPanel, it may have panels navigating to it from either side,
-        /// so they will have to check manually in an order that suits the panel
+        /// Returns the Button that a panel on the right would want to navigate to
         /// </summary>
         /// <returns> Button to be navigated to </returns>
-        public override Button GetNavigatableButton() {
-            return null;
+        public  Button GetNavigatableButtonRight() {
+            if (actions[1].IsInteractable()) {
+                return actions[1].b;
+            }
+            else {  // actions[4]
+                return actions[4].b;
+            }
+        }
+
+        /// <summary>
+        /// Returns the Button that a panel on the left would want to navigate to
+        /// </summary>
+         public  Button GetNavigatableButtonLeft() {
+            if (actions[0].IsInteractable()) {
+                return actions[0].b;
+            }
+            else {  // actions[4]
+                return actions[4].b;
+            }
         }
     }
 }

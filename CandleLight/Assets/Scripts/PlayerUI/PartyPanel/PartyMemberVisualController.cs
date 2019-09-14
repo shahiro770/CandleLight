@@ -26,8 +26,10 @@ namespace Characters {
         public Bar statusPanelMPBar { get; private set; }   /// <value> Visual for mana points in status panel </value>
         public Bar partyPanelHPBar { get; private set; }    /// <value> Visual for health points in party panel </value>
         public Bar partyPanelMPBar { get; private set; }    /// <value> Visual for mana points in party panel </value>
+        public Bar statsPanelHPBar { get; private set; }    /// <value> Visual for health points in stats panel </value>
+        public Bar statsPanelMPBar { get; private set; }    /// <value> Visual for mana points in stats panel </value>
         public EventDescription eventDescription;           /// <value> Display that describes the event in text </value>
-        public EXPBar partyPanelEXPBar { get; private set; }   /// <value> Visual for experience points in party panel </value>
+        public EXPBar statsPanelEXPBar { get; private set; }   /// <value> Visual for experience points in stats panel </value>
         public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
         public LocalizedText rewardsPanelLVLText { get; private set; }      /// <value> Visual for LVL in rewards panel</value>
         public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for partyMember's status in party panel </value>
@@ -106,6 +108,10 @@ namespace Characters {
                 partyPanelHPBar = HPBar;
                 partyPanelMPBar = MPBar;
             }
+            else if (panelName == PanelConstants.STATSPANEL) {
+                statsPanelHPBar = HPBar;
+                statsPanelMPBar = MPBar;
+            }
 
             HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
             MPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
@@ -124,6 +130,10 @@ namespace Characters {
                 partyPanelHPBar = null;
                 partyPanelMPBar = null;
             }
+            else if (panelName == PanelConstants.STATSPANEL) {
+                statsPanelHPBar = null;
+                statsPanelMPBar = null;
+            }
         }
 
         /// <summary>
@@ -135,8 +145,24 @@ namespace Characters {
             if (panelName == PanelConstants.REWARDSPANEL) {
                 rewardsPanelEXPBar = EXPBar;
             }
+            else if (panelName == PanelConstants.STATSPANEL) {
+                statsPanelEXPBar = EXPBar;
+            }
 
-            rewardsPanelEXPBar.SetEXPBar(pm.EXPToNextLVL, pm.EXP);
+            EXPBar.SetEXPBar(pm.EXPToNextLVL, pm.EXP);
+        }
+
+        /// <summary>
+        /// Removes the EXPBar reference from a panel
+        /// </summary>
+        /// <param name="panelName"></param>
+        public void UnsetEXPBar(string panelName) {
+            if (panelName == PanelConstants.REWARDSPANEL) {
+                rewardsPanelEXPBar = null;
+            }
+            else if (panelName == PanelConstants.STATSPANEL) {
+                statsPanelEXPBar = null;
+            }
         }
 
         /// <summary>
@@ -170,6 +196,23 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Returns an array of stats
+        /// </summary>
+        /// <returns></returns>
+        public int[] GetStats() {
+            return new int[] { pm.LVL, pm.STR, pm.DEX, pm.INT, pm.LUK, 
+            pm.pAtk, pm.mAtk, pm.pDef, pm.mDef, pm.acc, pm.dodge, pm.critChance, pm.EXPToNextLVL };
+        }
+
+        /// <summary>
+        /// Gets the name of this partyMember
+        /// </summary>
+        /// <returns></returns>
+        public string GetPartyMemberName() {
+            return pm.pmName;
+        }
+
+        /// <summary>
         /// Updates the HP and MP bars to have the correct max amounts
         /// </summary>
         /// <remark>
@@ -183,6 +226,15 @@ namespace Characters {
             if (partyPanelHPBar != null) {
                 partyPanelHPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
                 partyPanelMPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
+            }
+        }
+
+        /// <summary>
+        /// Updates the statsPanel to show the correct stats
+        /// </summary>
+        public void UpdateStats() {
+            if (statsPanelEXPBar != null) {
+                pmdPartyPanel.UpdateStatsPanel();
             }
         }
 
@@ -216,6 +268,9 @@ namespace Characters {
             if (statusPanelHPBar != null) {
                 statusPanelHPBar.SetCurrent(pm.CHP);  
             }
+            if (statsPanelHPBar != null) {
+                statsPanelHPBar.SetCurrent(pm.CHP);
+            }
             if (EventManager.instance.partyPanel.isOpen == true) {
                 partyPanelHPBar.SetCurrent(pm.CHP);
                 if (isLoss) {
@@ -240,15 +295,6 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Plays animation when an attack is dodged and has eventDescription write it out
-        /// </summary>
-        /// <returns> IEnumerator cause animations </returns>
-        public IEnumerator DisplayAttackDodged() {
-            eventDescription.SetPMDodgeText(pm);
-            yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
-        }
-
-        /// <summary>
         /// Updates the current fill amount on all MPBars to show MP being added or lost
         /// </summary>
         /// <param name="isLoss"> Flag for if damaged animation should play (does nothing right now) </param>
@@ -257,11 +303,23 @@ namespace Characters {
             if (statusPanelMPBar != null) {
                 statusPanelMPBar.SetCurrent(pm.CMP);  
             }
+            if (statsPanelMPBar != null) {
+                statsPanelMPBar.SetCurrent(pm.CMP);
+            }
             if (EventManager.instance.partyPanel.isOpen == true) {
                 partyPanelMPBar.SetCurrent(pm.CMP);
             }
 
             yield break;
+        }
+
+        /// <summary>
+        /// Plays animation when an attack is dodged and has eventDescription write it out
+        /// </summary>
+        /// <returns> IEnumerator cause animations </returns>
+        public IEnumerator DisplayAttackDodged() {
+            eventDescription.SetPMDodgeText(pm);
+            yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
         }
     }
 }
