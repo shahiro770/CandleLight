@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 2858664164267924045}
   - component: {fileID: 9083903946712018017}
   - component: {fileID: 6700437132196628627}
+  - component: {fileID: 3340190573911976427}
   m_Layer: 5
   m_Name: PartyMemberDisplay
   m_TagString: Untagged
@@ -556,7 +557,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8247081327216849519}
-  - {fileID: 8247081328046863005}
   - {fileID: 8247081327639305491}
   - {fileID: 8247081328169137586}
   m_Father: {fileID: 0}
@@ -594,9 +594,9 @@ MonoBehaviour:
   MPBar: {fileID: 8247081328169137587}
   EXPBar: {fileID: 0}
   b: {fileID: 6700437132196628627}
+  bts: {fileID: 3340190573911976427}
   LVLText: {fileID: 0}
   statsPanel: {fileID: 0}
-  statsDisplayOpen: 0
 --- !u!95 &8247081326829107971
 Animator:
   serializedVersion: 3
@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -710,6 +710,18 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &3340190573911976427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247081326829107983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8247081326990446577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,7 +1078,7 @@ RectTransform:
   - {fileID: 8247081326662861776}
   - {fileID: 8247081326552025636}
   m_Father: {fileID: 8247081326829107968}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1131,50 +1143,6 @@ MonoBehaviour:
   lerpSpeedFast: 7
   lerpSpeedSlow: 3.5
   fillAmount: 100
---- !u!1 &8247081328046863004
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8247081328046863005}
-  - component: {fileID: 8247081328046862992}
-  m_Layer: 5
-  m_Name: PartyMemberButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &8247081328046863005
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8247081328046863004}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99991995, y: 0.99991995, z: 0.99991995}
-  m_Children: []
-  m_Father: {fileID: 8247081326829107968}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 45, y: 45}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &8247081328046862992
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8247081328046863004}
-  m_CullTransparentMesh: 0
 --- !u!1 &8247081328169137585
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1177,7 @@ RectTransform:
   - {fileID: 8247081327350692784}
   - {fileID: 8247081326770483970}
   m_Father: {fileID: 8247081326829107968}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}

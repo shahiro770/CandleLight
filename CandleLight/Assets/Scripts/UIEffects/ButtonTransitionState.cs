@@ -101,6 +101,9 @@ namespace UIEffects {
             if (blockType == "normal") {
                 normalBlock = cb;
             }
+            else if (blockType == "pressed") {
+                pressedBlock = cb;
+            }
             else if (blockType == "normalAlternate") {
                 normalAlternateBlock = cb;
             }

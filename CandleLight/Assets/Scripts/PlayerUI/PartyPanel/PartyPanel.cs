@@ -69,6 +69,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Displays the active partyMember with the proper visual colouring
+        /// </summary>
+        /// <param name="pmd"></param>
+        public void DisplayActivePartyMember(PartyMemberDisplay pmd) {
+            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
+                pmDisplays[i].ShowNormal();
+            }
+
+            pmd.ShowActive();
+        }
+
+        /// <summary>
         /// Sets the horizontal navigation for PartyMemberDisplay to other panels
         /// </summary>
         public void SetHorizontalNavigation() {
@@ -113,8 +125,8 @@ namespace PlayerUI {
         /// Enables all of the PartyMemberDisplays to be clickable and selectable
         /// </summary>
         public void EnableButtons() {
-            foreach(PartyMemberDisplay pmd in pmDisplays) {
-                pmd.SetInteractable(true);
+            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
+                pmDisplays[i].SetInteractable(true);
             }
         }
 
@@ -123,8 +135,9 @@ namespace PlayerUI {
         /// Also closes the statsPanel
         /// </summary>
         public void DisableButtons() {
-            foreach(PartyMemberDisplay pmd in pmDisplays) {
-                pmd.SetInteractable(false);
+            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
+                pmDisplays[i].SetInteractable(false);
+                pmDisplays[i].ShowNormal();
             }
             statsPanel.gameObject.SetActive(false);
         }

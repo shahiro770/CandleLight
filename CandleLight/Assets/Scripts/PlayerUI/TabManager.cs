@@ -27,6 +27,22 @@ namespace PlayerUI {
         private int currentIndex = 0;
 
         /// <summary>
+        /// Sets the colorBlock to have the correct pressed colorBlocks
+        /// </summary>
+        void Awake() {
+            ColorBlock pressedBlock = tabs[0].colors;
+
+            pressedBlock.normalColor = new Color32(255, 255, 255, 255);
+            pressedBlock.highlightedColor = new Color32(255, 255, 255, 200);
+            pressedBlock.pressedColor = new Color32(255, 255, 255, 255);
+            pressedBlock.disabledColor = new Color32(255, 255, 255, 255);
+
+            foreach(ButtonTransitionState bts in btss) {
+               bts.SetColorBlock("pressed", pressedBlock);
+            }
+        }
+
+        /// <summary>
         /// Open the partyPanel to begin
         /// </summary>
         void Start() {

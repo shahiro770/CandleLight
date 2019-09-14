@@ -13,6 +13,7 @@ using Localization;
 using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
+using UIEffects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -29,8 +30,10 @@ namespace PlayerUI {
         public Bar MPBar;               /// <value> Visual for mana points </value>
         public EXPBar EXPBar;           /// <value> Visual for experience points, should rename this </value>
         public Button b;                /// <value> Button to make display clickable for more info </value>
+        public ButtonTransitionState bts;
         public LocalizedText LVLText;   /// <value> Text displaying current level </value>
         public StatsPanel statsPanel;   /// <value> Panel for stats </value>
+
 
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
 
@@ -42,6 +45,16 @@ namespace PlayerUI {
             this.pmvc = pmvc;
             classIcon.sprite = pmvc.partyMemberSprite;
             pmvc.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
+
+            ColorBlock normalBlock = b.colors; 
+            ColorBlock activeBlock = b.colors;
+            
+            activeBlock.normalColor = new Color32(255, 255, 255, 255);
+            activeBlock.highlightedColor = new Color32(255, 255, 255, 200);
+            activeBlock.pressedColor = new Color32(255, 255, 255, 255);
+            activeBlock.disabledColor = new Color32(255, 255, 255, 255);
+            
+            bts.SetColorBlock("normalAlternate", activeBlock);
         }
 
         /// <summary>
@@ -74,6 +87,20 @@ namespace PlayerUI {
         /// </summary>
         public void UpdateStatsPanel() {
             statsPanel.Init(pmvc);
+        }
+
+        /// <summary>
+        /// Sets the bts to show the normal colour block
+        /// </summary>
+        public void ShowNormal() {
+            bts.SetColor("normal");
+        }
+
+        /// <summary>
+        /// Sets the bts to show the partyMember that is active
+        /// </summary>
+        public void ShowActive() {
+            bts.SetColor("normalAlternate");
         }
         
         /// <summary>

@@ -300,7 +300,7 @@ namespace PlayerUI {
              for (int i = 0; i < actions.Length - 1; i++) {
                 if (actions[i].actionType == "attack") {
                     Attack a = actions[i].a;
-
+                
                     if (a.costType == "MP") {
                         if (a.cost > CMP) {
                             actions[i].SetUsable(false);

@@ -102,7 +102,10 @@
 		{ "key": "undo_action", "value": "Undo" },
 		{ "key": "take_all_action", "value": "Take All" },
 		{ "key": "none_action", "value": "" },
-
+		
+		{ "key": "gear_tab", "value": "Gear" },
+		{ "key": "candles_tab", "value": "Candles" },
+		{ "key": "items_tab", "value": "Items" },
 		{ "key": "party_tab", "value": "Party" },
 		{ "key": "skills_tab", "value": "Skills" },
 		{ "key": "info_tab", "value": "Info" },
