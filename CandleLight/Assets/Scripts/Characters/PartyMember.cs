@@ -9,11 +9,8 @@
 */
 
 using Combat;
-using Localization;
-using Events;
-using PanelConstants = Constants.PanelConstants;
+using Items;
 using Party;
-using PlayerUI;
 using System.Collections;
 using UnityEngine;
 
@@ -31,6 +28,10 @@ namespace Characters {
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
+
+        public Item weapon = new Item();
+        public Item secondary = new Item();
+        public Item armor = new Item();
 
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized

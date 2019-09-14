@@ -49,6 +49,9 @@ namespace PlayerUI {
             if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                 OpenPanel(0);
             }
+            else {  // left tabManager
+                OpenPanel(0);
+            }
         }
 
         /// <summary>

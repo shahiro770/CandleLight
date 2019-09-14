@@ -50,6 +50,11 @@ namespace Items {
             }
         }
 
+        public Item() {
+            this.type = null;
+            this.itemSprite = null;
+        }
+
         public int GetAmount(string type) {
             if (type == "EXP") {
                 return EXPAmount;

@@ -29,6 +29,7 @@ namespace Party {
         
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
+        private PartyMember activePartyMember = null;
         private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>
         
         /// <summary>
@@ -55,6 +56,8 @@ namespace Party {
                 newMember.transform.SetParent(gameObject.transform, false);
                 partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
             }
+
+            activePartyMember = GetFirstPartyMemberAlive();
         }
 
         /// <summary>
@@ -126,6 +129,14 @@ namespace Party {
         /// <returns> PartyMember that is alive</returns>
         public PartyMember GetFirstPartyMemberAlive() {
             return partyMembersAlive[0];
+        }
+
+        public void SetActivePartyMember(PartyMember pm) {
+            activePartyMember = pm;
+        }
+
+        public PartyMember GetActivePartyMember() {
+            return activePartyMember;
         }
 
         /// <summary>

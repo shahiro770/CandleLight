@@ -185,6 +185,7 @@ namespace Combat {
 
             if (c is PartyMember) {
                 activePartyMember = (PartyMember)c;
+                PartyManager.instance.SetActivePartyMember(activePartyMember);
                 turn = PMTURN;
             } 
             else {

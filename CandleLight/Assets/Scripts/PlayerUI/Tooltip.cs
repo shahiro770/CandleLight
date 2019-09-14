@@ -25,11 +25,13 @@ namespace PlayerUI {
         public Image imageDisplayBackground; /// <value> Largest image around the image that when hovered, will display the tooltip </value>
 
         [field: SerializeField] private float rootCanvasWidthHalved;
+        [field: SerializeField] private float rootCanvasHeight;
         [field: SerializeField] private float canvasScaleFactor;    
         [field: SerializeField] private float imageDisplayBackgroundWidthHalved;    /// <value> Half the width of whatever image is being displayed </value>
 
         public void SetImageDisplayBackgroundWidth(float width) {
             rootCanvasWidthHalved = EventManager.instance.canvasWidth * 0.5f;
+            rootCanvasHeight = EventManager.instance.canvasHeight;
             canvasScaleFactor = EventManager.instance.canvasScaleFactor;
             imageDisplayBackgroundWidthHalved = width * 0.5f;
         }
@@ -95,6 +97,9 @@ namespace PlayerUI {
             descriptionText.SetColour(new Color32(0, 0, 0 ,0));
             yield return new WaitForEndOfFrame();
             float textBackgroundWidth = textBackground.rectTransform.sizeDelta.x;
+            float textBackgroundHeight = textBackground.rectTransform.sizeDelta.y;
+            float newXPos = 0f;
+            float newYPos = 0f;
 
             /* 
              * The way the textBackground (UITile behind the tooltip)'s position is calculated 
@@ -104,11 +109,21 @@ namespace PlayerUI {
              */
 
             if ((imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth + 3) >= rootCanvasWidthHalved) {
-                gameObject.transform.localPosition = new Vector3((textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3) * -1, gameObject.transform.localPosition.y);
+                newYPos = textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3 * -1;
             }
             else {
-                gameObject.transform.localPosition = new Vector3(imageDisplayBackgroundWidthHalved + 3, gameObject.transform.localPosition.y);
+                newXPos = imageDisplayBackgroundWidthHalved + 3;
             }
+
+            // if (imageDisplayBackground.transform.position.y * canvasScaleFactor + textBackgroundHeight >= rootCanvasHeight) {
+            //     newYPos = ;
+            // }
+            // else {
+            //     newYPos = gameObject.transform.localPosition.y   // need to account for case where y position changes back to needing to be normal
+            // }
+            newYPos = gameObject.transform.localPosition.y;
+
+            gameObject.transform.localPosition = new Vector3(newXPos, newYPos);
 
             textBackground.color = new Color32(255, 255, 255, 255);
             titleText.SetColour(new Color32(255, 255, 255 , 255));

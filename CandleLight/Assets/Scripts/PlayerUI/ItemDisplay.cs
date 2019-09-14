@@ -26,7 +26,9 @@ namespace PlayerUI {
         public ButtonTransitionState bts;   /// <value> Button transisition state </value>
         public Image imgBackground;         /// <value> Background for image </value> 
         public SpriteRenderer itemSprite;   /// <value> Sprite to be displayed </value>
+        public Sprite defaultSprite = null; /// <value> Item sprite to display when no item is held </value>
         public Tooltip t;                   /// <value> Tooltip component to display item info </value>
+        public string itemDisplayType;
         
         private Item displayedItem;         /// <value> Item display </item>
         private float lerpSpeed = 4;        /// <value> Speed at which item display fades in and out </value>
@@ -36,20 +38,27 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="displayedItem"> Item object </param>
         public void Init(Item displayedItem) {
-            this.displayedItem = displayedItem;
-            itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
-            itemSprite.sprite = displayedItem.itemSprite;
+            if (displayedItem != null && displayedItem.type != null) {
+                this.displayedItem = displayedItem;
+                itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
+                itemSprite.sprite = displayedItem.itemSprite;
 
-            t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
-            SetTooltipText();
-            SetVisible(true);
+                t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
+                SetTooltipText();
+                SetVisible(true);
+            }
+            else {
+                itemSprite.sprite = defaultSprite;
+                SetTooltipText();
+                SetVisible(true);
+            }
         }
 
         /// <summary>
         /// Takes the item from the item display
         /// </summary>
         public void TakeItem() {
-            if (displayedItem != null) {
+            if (displayedItem != null && displayedItem.type != null) {
                 if (displayedItem.type == "EXP") {
                     PartyManager.instance.AddEXP(displayedItem.EXPAmount);
                 }
@@ -64,7 +73,7 @@ namespace PlayerUI {
                 }
 
                 displayedItem = null;
-                itemSprite.sprite = null;
+                itemSprite.sprite = defaultSprite;
                 itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 0);
                 t.SetVisible(false);
             }
@@ -74,12 +83,17 @@ namespace PlayerUI {
         /// Sets the text displayed in the tooltip
         /// </summary>
         public void SetTooltipText() {
-            if (displayedItem != null) {
+            if (displayedItem != null && displayedItem.type != null) {
                 if (displayedItem.isConsumable) {
                     t.SetKey("title", displayedItem.type + "_item");
                     t.SetKey( "subtitle", "consumable_item_sub");
                     t.SetAmountText( "description", displayedItem.type + "_label", displayedItem.GetAmount(displayedItem.type));
                 }
+            }
+            else {
+                t.SetKey("title", itemDisplayType + "_item");
+                t.SetKey( "subtitle", itemDisplayType + "_item_sub");
+                t.SetKey( "description", "none_label");
             }
         }
 
