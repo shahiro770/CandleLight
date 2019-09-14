@@ -1911,6 +1911,7 @@ MonoBehaviour:
   infoPanel: {fileID: 1637168824}
   utilityTabManager: {fileID: 1102624610}
   canvasWidth: 960
+  canvasHeight: 540
   canvasScaleFactor: 53.999992
 --- !u!4 &154656196
 Transform:
@@ -2434,7 +2435,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 37706c52661b74bf4b3475440a0e030e,
+      objectReference: {fileID: 21300000, guid: 5a850002cea864c828e4e35ca5411394,
         type: 3}
     - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
@@ -5623,7 +5624,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 946f99e4f2a384258b8706af80507777,
+      objectReference: {fileID: 21300000, guid: a57bb56e3c9dd47599fe0ce4b10bfc35,
         type: 3}
     - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
@@ -20733,7 +20734,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 06b1422c432a34ffa8ed310d74b1a495,
+      objectReference: {fileID: 21300000, guid: 7e0cf56baaf194abe96cf207b071744b,
         type: 3}
     - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
         type: 3}

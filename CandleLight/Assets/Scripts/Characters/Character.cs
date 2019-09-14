@@ -65,7 +65,7 @@ namespace Characters {
         /// <param name="setCurrent"> Flag for if CHP and CMP should equal new HP and MP values </param>
         protected void CalculateSecondaryStats(bool setCurrent = false) {
            HP = (int)(STR * 3 + DEX * 1.5);
-           MP = (int)(INT * 2 + LUK * 1.5);
+           MP = (int)(INT * 1.75 + LUK * 1.25);
            pAtk = (int)(STR * 0.5 + DEX * 0.25);
            mAtk = (int)(INT * 0.5 + LUK * 0.25); 
            pDef = (int)(STR * 0.1 + DEX * 0.05);

@@ -62,7 +62,7 @@ namespace Characters {
         public int CalcEXPToNextLVL(int LVL) {
             // it takes 5 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
-            return (int)(5 * Mathf.Pow(LVL, 2.15f)); 
+            return (int)(5 * Mathf.Pow(LVL, 2.15f) + 3); 
         }
 
         /// <summary>
@@ -97,8 +97,6 @@ namespace Characters {
                 LUK += LVL * 2;
             }
             
-            HP += (int)((STR * 0.5) + (DEX * 0.5));
-            MP += (int)((INT * 0.5) + (LUK * 0.5));
             CalculateSecondaryStats();
 
             pmvc.UpdateHPAndMPBars();

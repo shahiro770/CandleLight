@@ -25,13 +25,13 @@ namespace PlayerUI {
         public Image imageDisplayBackground; /// <value> Largest image around the image that when hovered, will display the tooltip </value>
 
         [field: SerializeField] private float rootCanvasWidthHalved;
-        [field: SerializeField] private float rootCanvasHeight;
+        [field: SerializeField] private float rootCanvasHeightHalved;
         [field: SerializeField] private float canvasScaleFactor;    
         [field: SerializeField] private float imageDisplayBackgroundWidthHalved;    /// <value> Half the width of whatever image is being displayed </value>
 
         public void SetImageDisplayBackgroundWidth(float width) {
             rootCanvasWidthHalved = EventManager.instance.canvasWidth * 0.5f;
-            rootCanvasHeight = EventManager.instance.canvasHeight;
+            rootCanvasHeightHalved = EventManager.instance.canvasHeight * 0.5f;
             canvasScaleFactor = EventManager.instance.canvasScaleFactor;
             imageDisplayBackgroundWidthHalved = width * 0.5f;
         }
@@ -107,21 +107,27 @@ namespace PlayerUI {
              * if the position of the textBackground + its width > 480 (960 / 2), it will be out of the screen.
              * +3 magic number is for spacing.
              */
-
             if ((imageDisplayBackground.transform.position.x * canvasScaleFactor + imageDisplayBackgroundWidthHalved + textBackgroundWidth + 3) >= rootCanvasWidthHalved) {
-                newYPos = textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3 * -1;
+                newXPos = (textBackgroundWidth + imageDisplayBackgroundWidthHalved + 3) * -1;
             }
             else {
                 newXPos = imageDisplayBackgroundWidthHalved + 3;
             }
 
-            // if (imageDisplayBackground.transform.position.y * canvasScaleFactor + textBackgroundHeight >= rootCanvasHeight) {
-            //     newYPos = ;
-            // }
-            // else {
-            //     newYPos = gameObject.transform.localPosition.y   // need to account for case where y position changes back to needing to be normal
-            // }
-            newYPos = gameObject.transform.localPosition.y;
+            /* 
+             * The way the textBackground (UITile behind the tooltip)'s position is calculated 
+             * is from the center of the canvas. This means with a canvas that 540 pixels tall,
+             * if the position of the textBackground + its height > 270 (540 / 2), it will be below the screen.
+             * Tooltips can never go above the screen unless the image they are on is out of the screen, so that edge case
+             * is no concern. Some numbers are treated as negatives due to being below the origin point (0, 0);
+             * -7 magic number is for spacing.
+             */
+            if (imageDisplayBackground.transform.position.y * canvasScaleFactor - textBackgroundHeight <= rootCanvasHeightHalved * -1) {
+                newYPos = (int)(((imageDisplayBackground.transform.position.y  * canvasScaleFactor) - textBackgroundHeight) + rootCanvasHeightHalved - 7) * -1;
+            }
+            else {
+                newYPos = gameObject.transform.localPosition.y;
+            }
 
             gameObject.transform.localPosition = new Vector3(newXPos, newYPos);
 

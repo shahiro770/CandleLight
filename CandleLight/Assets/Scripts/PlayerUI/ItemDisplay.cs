@@ -38,17 +38,18 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="displayedItem"> Item object </param>
         public void Init(Item displayedItem) {
-            if (displayedItem != null && displayedItem.type != null) {
+            if (displayedItem != null) {
                 this.displayedItem = displayedItem;
+                if (displayedItem.type == null) {
+                     itemSprite.sprite = defaultSprite;
+                }
+                else {
+                    itemSprite.sprite = displayedItem.itemSprite;
+                }
+
                 itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
-                itemSprite.sprite = displayedItem.itemSprite;
 
                 t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
-                SetTooltipText();
-                SetVisible(true);
-            }
-            else {
-                itemSprite.sprite = defaultSprite;
                 SetTooltipText();
                 SetVisible(true);
             }
@@ -106,7 +107,6 @@ namespace PlayerUI {
                 b.interactable = true;
                 gameObject.SetActive(true);
                 StartCoroutine(Fade(1));
-                
             }
             else {
                 b.interactable = false;
