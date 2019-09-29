@@ -27,6 +27,7 @@ namespace Party {
 
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
 
+        private List<PartyMember> partyMembersAll = new List <PartyMember>();
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private PartyMember activePartyMember = null;
@@ -55,6 +56,7 @@ namespace Party {
                 GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
                 newMember.transform.SetParent(gameObject.transform, false);
                 partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
+                partyMembersAll.Add(newMember.GetComponent<PartyMember>());
             }
 
             activePartyMember = GetFirstPartyMemberAlive();
@@ -216,7 +218,7 @@ namespace Party {
         /// </summary>
         /// <param name="amount"> Positive int to be lost </param>
         public void LoseHPAll(int amount) {
-            foreach (PartyMember pm in partyMembersAlive) {
+            foreach (PartyMember pm in partyMembersAll) {
                 StartCoroutine(pm.LoseHP(amount));
             }
         }

@@ -33,17 +33,24 @@ namespace Items {
             this.subType = subType;
             this.itemSprite = itemSprite;
 
-            if (subType == "EXP") {
-                EXPAmount = amount;
+            if (type == "consumable") {
+                if (subType == "EXP") {
+                    EXPAmount = amount;
+                }
+                else if (subType == "HP") {
+                    HPAmount = amount;
+                }
+                else if (subType == "MP") {
+                    MPAmount = amount;
+                }
+                else if (subType == "WAX") {
+                    WAXAmount = amount;
+                }
             }
-            else if (subType == "HP") {
-                HPAmount = amount;
-            }
-            else if (subType == "MP") {
-                MPAmount = amount;
-            }
-            else if (subType == "WAX") {
-                WAXAmount = amount;
+            else if (type == "gear") {
+                if (subType == "secondary") {
+                    
+                }
             }
         }
 

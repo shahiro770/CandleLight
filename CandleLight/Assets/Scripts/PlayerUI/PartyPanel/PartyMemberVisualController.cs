@@ -290,6 +290,9 @@ namespace Characters {
                 }
             }
             else {
+                if (isLoss) {
+                    eventDescription.SetPMDamageText(pm, damageTaken);
+                }
                 yield return new WaitForSeconds(1f);
             }
         }

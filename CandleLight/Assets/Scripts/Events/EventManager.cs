@@ -205,12 +205,12 @@ namespace Events {
                 infoPanel.UpdateAmounts();
             }
 
-            // if (subAreaProgress == 100) {
-            //     GetNextMainEvent();
-            // }
-            //else {
-            GetNextSubAreaEvent();
-            //}
+            if (subAreaProgress == 100) {
+                GetNextMainEvent();
+            }
+            else {
+                GetNextSubAreaEvent();
+            }
             
 
             StartCoroutine(DisplayEvent());
@@ -224,7 +224,12 @@ namespace Events {
             areaProgress++;
 
             currentSubArea = currentArea.GetSubArea("main");
-            currentEvent = currentSubArea.GetEvent(areaProgress);
+            if (areaProgress >= currentSubArea.eventNum) {
+                currentEvent = currentSubArea.GetEvent(currentSubArea.eventNum - 1);
+            }
+            else {
+                currentEvent = currentSubArea.GetEvent(areaProgress);
+            }
         }
 
         /// <summary>

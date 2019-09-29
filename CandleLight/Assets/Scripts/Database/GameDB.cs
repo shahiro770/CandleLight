@@ -47,8 +47,6 @@ namespace Database {
                         string monsterArea = "";
                         string monsterSize = "";
                         string monsterAI = "";
-                        int minLVL = 0;
-                        int maxLVL = 0;
                         int multiplier = 0;
                         int HP = 0;
                         int MP = 0;
@@ -62,15 +60,13 @@ namespace Database {
                             monsterArea = reader.GetString(4);
                             monsterSize = reader.GetString(5);
                             monsterAI = reader.GetString(6);
-                            minLVL = reader.GetInt32(7);
-                            maxLVL = reader.GetInt32(8);
-                            multiplier = reader.GetInt32(9);
-                            HP = reader.GetInt32(10); 
-                            MP = reader.GetInt32(11);
-                            stats = new int[] { reader.GetInt32(12), reader.GetInt32(13), reader.GetInt32(14), reader.GetInt32(15) };
+                            multiplier = reader.GetInt32(7);
+                            HP = reader.GetInt32(8); 
+                            MP = reader.GetInt32(9);
+                            stats = new int[] { reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12), reader.GetInt32(13) };
 
                             for (int i = 0; i < maxAttacks; i++) {
-                                string attackName = reader.GetString(16 + i);
+                                string attackName = reader.GetString(14 + i);
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
                         }
@@ -79,7 +75,7 @@ namespace Database {
                         }
 
                         monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
-                        monsterSize, monsterAI, minLVL, maxLVL, multiplier, HP, MP, stats, attacks)); 
+                        monsterSize, monsterAI, multiplier, HP, MP, stats, attacks)); 
                     }
                 }
             }          
@@ -241,27 +237,39 @@ namespace Database {
                     int maxMonsterNum = 0;
                     string defaultBGPackName = "";
                     string[] subAreaEvents = new string[10];
+                    int[] subAreaEventChances = new int[10];
                     string[] monsterPool;
                     
                     if (reader.Read()) {
                         subAreaEvents[0] = reader.GetString(2);
-                        subAreaEvents[1] = reader.GetString(3);
-                        subAreaEvents[2] = reader.GetString(4);
-                        subAreaEvents[3] = reader.GetString(5);
-                        subAreaEvents[4] = reader.GetString(6);
-                        subAreaEvents[5] = reader.GetString(7);
-                        subAreaEvents[6] = reader.GetString(8);
-                        subAreaEvents[7] = reader.GetString(9);
-                        subAreaEvents[8] = reader.GetString(10);
-                        subAreaEvents[9] = reader.GetString(11);
+                        subAreaEvents[1] = reader.GetString(4);
+                        subAreaEvents[2] = reader.GetString(6);
+                        subAreaEvents[3] = reader.GetString(8);
+                        subAreaEvents[4] = reader.GetString(10);
+                        subAreaEvents[5] = reader.GetString(12);
+                        subAreaEvents[6] = reader.GetString(14);
+                        subAreaEvents[7] = reader.GetString(16);
+                        subAreaEvents[8] = reader.GetString(18);
+                        subAreaEvents[9] = reader.GetString(20);
+
+                        subAreaEventChances[0] = reader.GetInt32(3);
+                        subAreaEventChances[1] = reader.GetInt32(5);
+                        subAreaEventChances[2] = reader.GetInt32(7);
+                        subAreaEventChances[3] = reader.GetInt32(9);
+                        subAreaEventChances[4] = reader.GetInt32(11);
+                        subAreaEventChances[5] = reader.GetInt32(13);
+                        subAreaEventChances[6] = reader.GetInt32(15);
+                        subAreaEventChances[7] = reader.GetInt32(17);
+                        subAreaEventChances[8] = reader.GetInt32(19);
+                        subAreaEventChances[9] = reader.GetInt32(21);
 
                         name = reader.GetString(1);
-                        monsterPool = GetMonsterPool(reader.GetString(12), dbConnection);
-                        minMonsterNum = reader.GetInt32(13);
-                        maxMonsterNum = reader.GetInt32(14);
-                        defaultBGPackName = reader.GetString(15);
+                        monsterPool = GetMonsterPool(reader.GetString(22), dbConnection);
+                        minMonsterNum = reader.GetInt32(23);
+                        maxMonsterNum = reader.GetInt32(24);
+                        defaultBGPackName = reader.GetString(25);
 
-                        newSubArea = new SubArea(name, areaName, subAreaEvents, monsterPool, minMonsterNum, maxMonsterNum, 
+                        newSubArea = new SubArea(name, areaName, subAreaEvents, subAreaEventChances, monsterPool, minMonsterNum, maxMonsterNum, 
                         defaultBGPackName, dbConnection);
                     }
                     else {
@@ -312,9 +320,10 @@ namespace Database {
         /// </summary>
         /// <param name="eventName"> Name of event </param>
         /// <param name="areaName"> Name of area event occurs in </param>
+        /// <param name="eventChance"> Chance of event occuring </param>
         /// <param name="dbConnection"> Reuse dbConnection to save memory </param>
         /// <returns> An Event, passing it the dbconnection for it to fetch all information it needs </returns>
-        public Events.Event GetEventByName(string eventName, string areaName, IDbConnection dbConnection) {
+        public Events.Event GetEventByName(string eventName, string areaName, int eventChance, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM Events WHERE Name = '" + eventName + "'";
 
@@ -325,28 +334,26 @@ namespace Database {
                     string type = "";
                     string bgPackName = "";
                     int[] possibleBackgrounds = new int[4];
-                    int chance = 0;
                     int progressAmount = 0;
                     int specificBGSprite = -1;
                     bool isLeavePossible = false;
 
                     if (reader.Read()) {
                         type = reader.GetString(3);
-                        chance = reader.GetInt32(4);
-                        progressAmount = reader.GetInt32(5);
-                        eventInteractions[0] = reader.GetString(6);
-                        eventInteractions[1] = reader.GetString(7);
-                        eventInteractions[2] = reader.GetString(8);
-                        eventInteractions[3] = reader.GetString(9);
-                        eventInteractions[4] = reader.GetString(10);
-                        isLeavePossible = reader.GetBoolean(11);
-                        bgPackName = reader.GetString(12);
-                        specificBGSprite = reader.GetInt32(13);
-                        eventSprites[0] = reader.GetString(14);
-                        eventSprites[1] = reader.GetString(15);
-                        eventSprites[2] = reader.GetString(16);
+                        progressAmount = reader.GetInt32(4);
+                        eventInteractions[0] = reader.GetString(5);
+                        eventInteractions[1] = reader.GetString(6);
+                        eventInteractions[2] = reader.GetString(7);
+                        eventInteractions[3] = reader.GetString(8);
+                        eventInteractions[4] = reader.GetString(9);
+                        isLeavePossible = reader.GetBoolean(10);
+                        bgPackName = reader.GetString(11);
+                        specificBGSprite = reader.GetInt32(12);
+                        eventSprites[0] = reader.GetString(13);
+                        eventSprites[1] = reader.GetString(14);
+                        eventSprites[2] = reader.GetString(15);
 
-                        newEvent = new Events.Event(eventName, areaName, type, chance, progressAmount,
+                        newEvent = new Events.Event(eventName, areaName, type, eventChance, progressAmount,
                         eventInteractions, isLeavePossible, bgPackName, specificBGSprite, eventSprites, dbConnection);
                     }
                     else {

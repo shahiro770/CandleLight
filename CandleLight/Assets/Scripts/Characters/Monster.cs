@@ -59,15 +59,18 @@ namespace Characters {
         /// <param name="stats"> STR, DEX, INT, LUK </param>
         /// <param name="attacks"> List of known attacks (length 4) </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
-        string monsterSize, string monsterAI, int minLVL, int maxLVL, int multiplier, int HP, int MP, int[] stats, Attack[] attacks) {
-            base.Init(minLVL, HP, MP, stats, attacks);  // use minLVL for initialization, will use for scaling up on spawning
+        string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, Attack[] attacks) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterDisplayName = monsterDisplayName;
             this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
-            this.minLVL = minLVL;
-            this.maxLVL = maxLVL;
+
+            string[] LVLString = monsterNameID.Split(' ');
+            this.minLVL = int.Parse(LVLString[1]);  // efficiency won't matter for numbers less than 1000
+            this.maxLVL = int.Parse(LVLString[2]);
+            base.Init(minLVL, HP, MP, stats, attacks);  // use minLVL for initialization, will use for scaling up on spawning
+
             this.multiplier = multiplier;
             this.monsterSize = monsterSize;
 

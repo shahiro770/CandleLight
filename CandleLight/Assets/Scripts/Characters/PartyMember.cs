@@ -73,7 +73,7 @@ namespace Characters {
             LVL += 1;
 
             if (className == "Warrior") {
-                STR += LVL * 2;
+                STR += (int)(LVL * 1.75);
                 DEX += (int)(LVL * 1.5);
                 INT += (int)(LVL * 1.25);
                 LUK += LVL;
@@ -81,17 +81,17 @@ namespace Characters {
             else if (className == "Mage") {
                 STR += LVL;
                 DEX += (int)(LVL * 1.25);
-                INT += LVL * 2;
+                INT += (int)(LVL * 1.75);
                 LUK += (int)(LVL * 1.5);
             }
             else if (className == "Archer") {
                 STR += (int)(LVL * 1.5);
-                DEX += LVL * 2;
+                DEX += (int)(LVL * 1.75);
                 INT += (int)(LVL * 1.25);
-                LUK += (int)(LVL * 1.25);
+                LUK += LVL;
             }
             else if (className == "Thief") {
-                STR += (int)(LVL * 1.25);
+                STR += LVL;
                 DEX += (int)(LVL * 1.5);
                 INT += (int)(LVL * 1.25);
                 LUK += LVL * 2;
