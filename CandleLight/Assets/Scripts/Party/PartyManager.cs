@@ -26,7 +26,7 @@ namespace Party {
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
 
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
-        
+
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private PartyMember activePartyMember = null;

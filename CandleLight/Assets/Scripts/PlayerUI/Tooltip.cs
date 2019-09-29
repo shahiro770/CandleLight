@@ -138,10 +138,12 @@ namespace PlayerUI {
         }
 
         public void SetVisible(bool value) {
-            gameObject.SetActive(value);
+            if (this.gameObject.activeSelf != value) {  // prevents itemSlot tooltips from blinking because the events seem to trigger statically (not sure why)
+                this.gameObject.SetActive(value);
 
-            if (value == true) {
-                StartCoroutine(SetPosition());
+                if (value == true) {
+                    StartCoroutine(SetPosition());
+                }
             }
         }
     }

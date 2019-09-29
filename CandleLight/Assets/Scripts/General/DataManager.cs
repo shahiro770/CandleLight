@@ -6,7 +6,6 @@
 * The DataManager class is used to preload in data from downloaded asset bundles.
 * For now it only preloads monsters.
 *
-* TODO: Make this preload monsters for an area based on whats passed in from the gameManager
 */
 
 using Characters;

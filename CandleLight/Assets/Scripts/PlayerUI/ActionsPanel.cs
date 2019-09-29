@@ -167,7 +167,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="a"> Name of action to be taken </param>
         public void SelectAction(Action a) {
-            if (a.isUsable) {
+            if (UIManager.instance.panelButtonsEnabled == true && a.isUsable == true) {
                 if (a.actionType == ActionConstants.ATTACK) {
                     a.ShowActionSelected();  // attack actions will show which attack is selected while user decides what to do next
                     selectedAction = a;

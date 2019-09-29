@@ -19,13 +19,13 @@ namespace PlayerUI {
     public class EventDisplay : MonoBehaviour {
 
         /* external component references */
-        public ActionsPanel actionsPanel;
-        public SpriteRenderer eventSprite;   /// <value> Image to be displayed </value>
-        public CanvasGroup imgCanvas;
-        public ItemDisplay[] itemDisplays = new ItemDisplay[3];
+        public ActionsPanel actionsPanel;       /// <value> actionsPanel reference</value>
+        public SpriteRenderer eventSprite;      /// <value> Image to be displayed </value>
+        public CanvasGroup imgCanvas;           /// <value> Background cavnas to control alpha</value> 
+        public ItemSlot[] itemSlots = new ItemSlot[3];  /// <value> Item slots references</value> 
         
-        private float lerpSpeed = 4;
-        private int itemNum = 0;
+        private float lerpSpeed = 4;    /// <value> Speed at which eventDisplay fades in and out </value>
+        private int itemNum = 0;        /// <value> Number of items shown </value>
 
         /// <summary>
         /// Sets image to display a given sprite
@@ -36,10 +36,10 @@ namespace PlayerUI {
         }
 
         public void SetItemDisplays(List<Item> items) {
-            this.itemNum = items.Count > itemDisplays.Length ? itemDisplays.Length : items.Count;
+            this.itemNum = items.Count > itemSlots.Length ? itemSlots.Length : items.Count;
 
             for (int i = 0; i < itemNum; i++) {
-                itemDisplays[i].Init(items[i]);
+                itemSlots[i].PlaceItem(items[i]);
             }
 
             SetInitialNavigation();
@@ -47,7 +47,7 @@ namespace PlayerUI {
 
         public void TakeAllItems() {
             for (int i = 0; i < itemNum; i++) {
-                itemDisplays[i].TakeItem();
+                itemSlots[i].TakeItem(true);
             }
         }
 
@@ -59,14 +59,14 @@ namespace PlayerUI {
         /// <remark> In the future, will have to navigate to other UI panels such as items or information </remark>
         private void SetInitialNavigation() {
             for (int i = 0; i < itemNum; i++) {
-                Button b = itemDisplays[i].GetComponent<Button>();
+                Button b = itemSlots[i].GetComponent<Button>();
                 Navigation n = b.navigation;
                 
                 if (i > 0) {
-                    n.selectOnUp = itemDisplays[i - 1].b;
+                    n.selectOnUp = itemSlots[i - 1].b;
                 }
                 if (i  != itemNum - 1) {
-                    n.selectOnDown = itemDisplays[i + 1].b;
+                    n.selectOnDown = itemSlots[i + 1].b;
                 }
                 else {
                     n.selectOnDown = actionsPanel.GetActionButton(0);   // actionsPanel's first button will always be active during item taking
@@ -75,8 +75,8 @@ namespace PlayerUI {
                 b.navigation = n;
             }
 
-            actionsPanel.SetButtonNavigation(0, "up", itemDisplays[itemNum - 1].b);      
-            actionsPanel.SetButtonNavigation(1, "up", itemDisplays[itemNum - 1].b);             
+            actionsPanel.SetButtonNavigation(0, "up", itemSlots[itemNum - 1].b);      
+            actionsPanel.SetButtonNavigation(1, "up", itemSlots[itemNum - 1].b);             
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace PlayerUI {
             else {
                 imgCanvas.blocksRaycasts = false;
                 for (int i = 0; i < itemNum; i++) {
-                    if (itemDisplays[i].gameObject.activeSelf){
-                        itemDisplays[i].SetVisible(false);
+                    if (itemSlots[i].gameObject.activeSelf){
+                        itemSlots[i].SetVisible(false);
                     }
                 }
                 StartCoroutine(Fade(0));
@@ -107,6 +107,11 @@ namespace PlayerUI {
             gameObject.transform.localPosition = pos;
         }
 
+        /// <summary>
+        /// Changes the alpha of the display to the target value
+        /// </summary>
+        /// <param name="targetAlpha"> Int 0 or 1 </param>
+        /// <returns> IEnumerator for smooth animation </returns>
         private IEnumerator Fade(int targetAlpha) {
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;

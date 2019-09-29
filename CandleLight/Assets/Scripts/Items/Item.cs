@@ -16,61 +16,75 @@ namespace Items {
 
     public class Item {
 
-        public Sprite itemSprite { get; private set; }
-        public string type { get; private set; }
+        public Sprite itemSprite { get; private set; }  /// <value> Item's sprite </value>
+        public string type { get; private set; }        /// <value> Type of item (consumable, weapon, secondary, armor) </value>
+        public string subType { get; private set; }     /// <value> SubType of item (varies depending on type) </value>
         public int EXPAmount { get; private set; }      /// <value> Amount of EXP item gives </value>
         public int HPAmount { get; private set; }       /// <value> Amount of HP item gives </value>
         public int MPAmount { get; private set; }       /// <value> Amount of MP item gives </value>
         public int WAXAmount { get; private set; }      /// <value> Amount of WAX item gives </value>
-        public bool isConsumable { get; private set; }
 
         /// <summary>
         /// Sets image to display a given sprite
         /// </summary>
         /// <param name="spr"> Sprite to be displayed </param>
-        public Item(string type, int amount, Sprite itemSprite) {
+        public Item(string type, string subType, int amount, Sprite itemSprite) {
             this.type = type;
+            this.subType = subType;
             this.itemSprite = itemSprite;
 
-            if (type == "EXP") {
+            if (subType == "EXP") {
                 EXPAmount = amount;
-                isConsumable = true;
             }
-            else if (type == "HP") {
+            else if (subType == "HP") {
                 HPAmount = amount;
-                isConsumable = true;
             }
-            else if (type == "MP") {
+            else if (subType == "MP") {
                 MPAmount = amount;
-                isConsumable = true;
             }
-            else if (type == "WAX") {
+            else if (subType == "WAX") {
                 WAXAmount = amount;
-                isConsumable = true;
             }
         }
 
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
         public Item() {
             this.type = null;
             this.itemSprite = null;
         }
 
-        public int GetAmount(string type) {
-            if (type == "EXP") {
+        /// <summary>
+        /// Return's an item's amount based on a subType
+        /// </summary>
+        /// <param name="subType"> Subtype string </param>
+        /// <returns> Positive int amount </returns>
+        public int GetAmount(string subType) {
+            if (subType == "EXP") {
                 return EXPAmount;
             }
-            else if (type == "HP") {
+            else if (subType == "HP") {
                 return HPAmount;
             }
-            else if (type == "MP") {
+            else if (subType == "MP") {
                 return MPAmount;
             }
-            else if (type == "WAX") {
+            else if (subType == "WAX") {
                 return WAXAmount;
             }
             else {
                 return -1;
             }
+        }
+
+        /// <summary>
+        /// Returns a string array containing texts that a tooltip uses to determine its keys
+        /// TODO: Make this have cases depending on the item sub type
+        /// </summary>
+        /// <returns> String array length 3 </returns>
+        public string[] GetTooltipKeys() {
+            return new string[3]{ type, subType, GetAmount(subType).ToString() };
         }
     }
 }

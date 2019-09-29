@@ -8,6 +8,7 @@
 */
 
 using Characters;
+using Items;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using System.Collections;
@@ -20,11 +21,12 @@ namespace PlayerUI {
     public class GearPanel : Panel {
         
         /* external component references */
-        public ItemDisplay weapon;
-        public ItemDisplay secondary;
-        public ItemDisplay armor;
-        public ItemDisplay[] spare = new ItemDisplay[9];
+        public ItemSlot weapon;     /// <value> Weapon item slot </value>
+        public ItemSlot secondary;  /// <value> Secondary item slot </value>
+        public ItemSlot armour;     /// <value> Armour item slot </value>
+        public ItemSlot[] spare = new ItemSlot[9];  /// <value> Item slots as equipment inventory </value>
 
+        public int numSpareFull = 0;
         public bool isOpen;
 
         /// <summary>
@@ -33,6 +35,10 @@ namespace PlayerUI {
         void OnEnable() {
             isOpen = true;
             Init(PartyManager.instance.GetActivePartyMember());
+
+            foreach (ItemSlot iSpare in spare) {
+                iSpare.PlaceItem(new Item());
+            }
         }
 
         /// <summary>
@@ -42,10 +48,14 @@ namespace PlayerUI {
             isOpen = false;
         }
 
+        /// <summary>
+        /// Sets the displayed weapon, secondary, and armour of a partyMember
+        /// </summary>
+        /// <param name="pm"></param>
         public void Init(PartyMember pm) {
-            weapon.Init(pm.weapon);
-            secondary.Init(pm.secondary);
-            armor.Init(pm.armor);
+            weapon.PlaceItem(pm.weapon);
+            secondary.PlaceItem(pm.secondary);
+            armour.PlaceItem(pm.armour);
         }
 
         /// <summary>

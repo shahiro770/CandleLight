@@ -345,13 +345,13 @@ namespace Events {
                 //items.Add(new Item("EXP", r.EXPAmount, EXPSprite));
             }
             if (r.HPAmount > 0) {
-                items.Add(new Item("HP", r.HPAmount, HPItemSprite));
+                items.Add(new Item("consumable", "HP", r.HPAmount, HPItemSprite));
             }
             if (r.MPAmount > 0) {
                 //items.Add(new Item("MP", r.MPAmount, MPSprite));
             }
             if (r.WAXAmount > 0) {
-                items.Add(new Item("WAX", r.WAXAmount, WAXItemSprite));
+                items.Add(new Item("consumable", "WAX", r.WAXAmount, WAXItemSprite));
             }
 
             return items;

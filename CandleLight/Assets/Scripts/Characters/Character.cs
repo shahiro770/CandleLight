@@ -202,7 +202,7 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Calculates damage of an attack against this character after all reductions (armor, skills, etc.)
+        /// Calculates damage of an attack against this character after all reductions (armour, skills, etc.)
         /// </summary>
         /// <param name="damage"> Damage amount</param>
         /// <param name="a"> Attack </param>

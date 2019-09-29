@@ -97,11 +97,11 @@
 		{ "key": "HP_item", "value": "Health Recovery" },
 		{ "key": "weapon_item", "value": "Weapon" },
 		{ "key": "secondary_item", "value": "Secondary" },
-		{ "key": "armor_item", "value": "Armor" },
+		{ "key": "armour_item", "value": "Armour" },
 
-		{ "key": "weapon_item_sub", "value": "Item used to hurt enemies with" },
+		{ "key": "weapon_item_sub", "value": "Item held to attack enemies" },
 		{ "key": "secondary_item_sub", "value": "Helmets, shields, trinkets, etc." },
-		{ "key": "armor_item_sub", "value": "Item worn to reduce damage taken" },
+		{ "key": "armour_item_sub", "value": "Item worn to reduce damage" },
 
 		{ "key": "consumable_item_sub", "value": "Consumable" },
 
@@ -139,7 +139,5 @@
 		{ "key": "slash_attack", "value": "Slash" },
 		{ "key": "bash_attack", "value": "Bash" },
 		{ "key": "none_attack", "value": ""}
-
-
 	]
 }

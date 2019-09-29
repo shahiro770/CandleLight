@@ -29,9 +29,9 @@ namespace Characters {
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
 
-        public Item weapon = new Item();
-        public Item secondary = new Item();
-        public Item armor = new Item();
+        public Item weapon = new Item();        /// <value> Weapon </value>
+        public Item secondary = new Item();     /// <value> Secondary </value>
+        public Item armour = new Item();        /// <value> Armour </value>
 
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
