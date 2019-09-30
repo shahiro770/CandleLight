@@ -99,7 +99,8 @@ namespace PlayerUI {
             ACCText.SetText(stats[9].ToString());
             DOGText.SetText(stats[10].ToString());
             CRITText.SetText(stats[11] + "%");
-            NextLVLText.SetText(stats[12].ToString());
+            print(stats[13]);
+            NextLVLText.SetText((stats[12] - stats[13]).ToString());
         }
 
         /// <summary>

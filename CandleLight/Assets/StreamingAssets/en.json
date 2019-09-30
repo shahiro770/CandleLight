@@ -44,11 +44,11 @@
 		{ "key": "pathNormal_flee_success_3", "value": "You shout loudly and scare them off." },
 
 		{ "key": "pathNormalHard_nothing_event_0", "value": "Apparently strong winds here created the mounds and has swept up entire roads. Folktales are hard to believe." },
-		{ "key": "pathNormalHard_nothing_event_1", "value": "On rare occasions you hear low pitched snarling. At least you think you do." },
+		{ "key": "pathNormalHard_nothing_event_1", "value": "Sometimes you hear low pitched snarling. At least you think you do." },
 		{ "key": "pathNormalHard_nothing_event_2", "value": "It must've been difficult laying down rocks in the middle of nowhere. Who built these roads?" },
 		{ "key": "pathNormalHard_nothing_event_3", "value": "You stop at the peaks to look for the flames of Umaria. But you see nothing but more wasteland." },
 		{ "key": "pathNormalHard_combat_event_0", "value": "You've been ambushed. They look hungry." },
-		{ "key": "pathNormalHard_combat_event_1", "value": "Living on highlands isn't easy." },
+		{ "key": "pathNormalHard_combat_event_1", "value": "Living in the wastes isn't easy." },
 		{ "key": "pathNormalHard_combat_event_2", "value": "The hills are slowing you down. You've been followed." },
 		{ "key": "pathNormalHard_combat_event_3", "value": "Unkindled are hungry, merciless creatures." },
 		{ "key": "pathNormalHard_post_combat_event_0", "value": "Best not to linger here for too long." },
