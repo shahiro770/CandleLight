@@ -10,13 +10,9 @@
 
 using AssetManagers;
 using Combat;
-using General;
-using PlayerUI;
 using System.Collections;
-using System.Collections.Generic;
-using UIEffects;
+using Result = Events.Result;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Characters {
 
@@ -25,6 +21,7 @@ namespace Characters {
         /* external component references */
         public MonsterDisplay md;
 
+        [field: SerializeField] public Result monsterReward { get; private set; }       /// <value> Result monster gives on death </value>
         [field: SerializeField] public string monsterArea { get; private set; }         /// <value> Area where monster can be found </value>
         [field: SerializeField] public string monsterSize { get; private set; }         /// <value> String constant describing size of monster's sprite </value>
         [field: SerializeField] public string monsterNameID { get; private set; }       /// <value> NameID as referenced in database </value>
@@ -38,6 +35,7 @@ namespace Characters {
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int attackNum { get; private set; } = 0;         /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public int selectedAttackIndex { get; private set; }    /// <value> Index of attack selected </value>
+        [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
         #region [ Initialization ] Initialization
@@ -58,19 +56,24 @@ namespace Characters {
         /// <param name="MP"> Max mana points </param>
         /// <param name="stats"> STR, DEX, INT, LUK </param>
         /// <param name="attacks"> List of known attacks (length 4) </param>
+        /// <param name="dropChance"> Chance of monster dropping something </param>
+        /// <param name="monsterReward"> Result from monster dying </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
-        string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, Attack[] attacks) {
+        string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, Attack[] attacks,
+        int dropChance, Result monsterReward) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterDisplayName = monsterDisplayName;
             this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
+            this.monsterReward = monsterReward;
 
             string[] LVLString = monsterNameID.Split(' ');
             this.minLVL = int.Parse(LVLString[1]);  // efficiency won't matter for numbers less than 1000
             this.maxLVL = int.Parse(LVLString[2]);
             base.Init(minLVL, HP, MP, stats, attacks);  // use minLVL for initialization, will use for scaling up on spawning
 
+            this.dropChance = dropChance;
             this.multiplier = multiplier;
             this.monsterSize = monsterSize;
 
@@ -179,6 +182,18 @@ namespace Characters {
         /// <returns> True if monster is dead, false otherwise </returns>
         public bool CheckDeath() {
             return CHP == 0;
+        }
+
+        /// <summary>
+        /// Returns true if the monster should drop an item
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckItemDrop() {
+            if (Random.Range(0, 100) < dropChance) {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

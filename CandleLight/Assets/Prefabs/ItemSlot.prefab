@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23fd0728f5594968ba46d1c8cf650cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentPanel: {fileID: 0}
   imgCanvas: {fileID: 6586661993514089618}
   b: {fileID: 8448935798598763705}
   bts: {fileID: 3338809024801491861}
@@ -167,6 +168,7 @@ MonoBehaviour:
   imgBackground: {fileID: 4439609894423774707}
   t: {fileID: 6065794865113401404}
   itemSlotType: any
+  itemSlotSubType: any
 --- !u!114 &4439609894423774707
 MonoBehaviour:
   m_ObjectHideFlags: 0

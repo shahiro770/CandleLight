@@ -20,7 +20,7 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class PartyMemberDisplay : MonoBehaviour, IPointerEnterHandler, ISelectHandler {
+    public class PartyMemberDisplay : MonoBehaviour {
         
         /* external component references */
         public Animator pmDisplayAnimator;  /// <value> Animator for entire display </value>
@@ -33,7 +33,6 @@ namespace PlayerUI {
         public ButtonTransitionState bts;
         public LocalizedText LVLText;   /// <value> Text displaying current level </value>
         public StatsPanel statsPanel;   /// <value> Panel for stats </value>
-
 
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
 
@@ -73,10 +72,14 @@ namespace PlayerUI {
 
         /// <summary>
         /// Toggles the stats panel open or close
+        /// Also sets the active partyMember to whoever was clicked/selected
         /// </summary>
         public void ToggleStatsPanel() {
-            statsPanel.gameObject.SetActive(!statsPanel.isOpen);
-
+            if (statsPanel.pmvc == this.pmvc || statsPanel.pmvc == null) {
+                statsPanel.gameObject.SetActive(!statsPanel.isOpen);
+            }
+            pmvc.SetActivePartyMember();
+            
             if (statsPanel.isOpen == true) {
                 UpdateStatsPanel();
             }
@@ -174,26 +177,6 @@ namespace PlayerUI {
          public void SetInteractable(bool value) {
             b.interactable = value;
             classIcon.raycastTarget = value;
-        }
-
-        /// <summary>
-        /// Enter event with mouse
-        /// </summary>
-        /// <param name="eventData"> EventData object </param>
-        public void OnPointerEnter(PointerEventData eventData) {
-            if (statsPanel != null && statsPanel.isOpen) {
-                UpdateStatsPanel();
-            }
-        }  
-
-        /// <summary>
-        /// Select event with keyboard
-        /// </summary>
-        /// <param name="eventData"> EventData object</param>
-        public void OnSelect(BaseEventData eventData) {
-            if (statsPanel != null && statsPanel.isOpen) {
-                UpdateStatsPanel();
-            }
         }
     }
 }

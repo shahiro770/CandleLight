@@ -35,6 +35,7 @@ namespace Events {
         public Image eventBackground;               /// <value> Image background for current event </value>
         public Image nextEventBackground;           /// <value> Image background for next event </value>
         public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
+        public GearPanel gearPanel;                 /// <value> GearPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
@@ -51,8 +52,8 @@ namespace Events {
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
         private Event currentEvent;          /// <value> Event being displayed </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
-        private Sprite WAXItemSprite;                   /// <value> Sprite for WAX currency </value>
-        private Sprite HPItemSprite;                    /// <value> Sprite for HP recovery </value>
+        private Consumable[] subAreaConsumables = new Consumable[10];   /// <value> Consumable items that can be found (max 10) </value>
+        private Gear[] subAreaGear = new Gear[10];  /// <value> Gear items that can be found (max 10) </value>
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, -20, 0);
@@ -66,6 +67,8 @@ namespace Events {
         private string currentAreaName;         /// <value> Name of current area </value>
         private int bgPackNum = 0;              /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;           /// <value> Area progress increments by 1 for each main event the player completes </value>
+        private int consumablesNum = 0;         /// <value> Number of consumables to be found in the subArea </value>
+        private int gearNum = 0;                /// <value> Number of gear to be found in the subArea</value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
@@ -108,7 +111,6 @@ namespace Events {
             currentArea = GameManager.instance.DB.GetAreaByName(areaName);
 
             LoadBackgroundPacks();
-            LoadGeneralSprites();
             LoadGeneralInteractions();
 
             isReady = true;
@@ -129,16 +131,36 @@ namespace Events {
         }
 
         /// <summary>
-        /// Loads general sprites that many events might use
-        /// TODO: Find a better place to put this 
+        /// Loads consumables for the current subArea
         /// </summary>
-        public void LoadGeneralSprites() {
-            WAXItemSprite = Resources.Load<Sprite>("Sprites/Items/WAXItem");
-            
-            switch(currentAreaName) {
-                case "GreyWastes":
-                    HPItemSprite = Resources.Load<Sprite>("Sprites/Items/HealingEffectItem");
+        public void LoadConsumables() {
+            subAreaConsumables = GameManager.instance.DB.GetConsumablesBySubArea(currentSubArea.name);
+            consumablesNum = 0;
+
+            for (int i = 0; i < subAreaConsumables.Length; i++) {
+                if (subAreaConsumables[i].nameID != "none") {
+                    consumablesNum++;
+                }
+                else {
                     break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads gear for the current subArea
+        /// </summary>
+        public void LoadGear() {
+            subAreaGear = GameManager.instance.DB.GetGearBySubArea(currentSubArea.name);
+            gearNum = 0;
+
+            for (int i = 0; i < subAreaGear.Length; i++) {
+                if (subAreaGear[i].nameID != "none") {
+                    gearNum++;
+                }
+                else {
+                    break;
+                }
             }
         }
 
@@ -186,7 +208,7 @@ namespace Events {
         /// Displays the first event in an area (first event of the main subArea)
         /// </summary>
         public void GetStartEvent() {
-            currentSubArea = currentArea.GetSubArea("main");
+            currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             currentEvent = currentSubArea.GetEvent(areaProgress);
 
             StartCoroutine(DisplayEvent());
@@ -223,7 +245,7 @@ namespace Events {
             subAreaProgress = 0;
             areaProgress++;
 
-            currentSubArea = currentArea.GetSubArea("main");
+            currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             if (areaProgress >= currentSubArea.eventNum) {
                 currentEvent = currentSubArea.GetEvent(currentSubArea.eventNum - 1);
             }
@@ -243,6 +265,7 @@ namespace Events {
         /// Switches gameplay from exploring into turn-based combat with random monsters
         /// </summary>
         public void GetCombatEvent() {
+            gearPanel.SetTakeable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToSpawn));
         }
@@ -284,10 +307,11 @@ namespace Events {
                 }
 
                 statusPanel.DisplayPartyMember(PartyManager.instance.GetFirstPartyMemberAlive().pmvc);
-                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());
+                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
                 PartyManager.instance.RegenParty();
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
+                gearPanel.SetInteractable(true);
                 partyPanel.EnableButtons();
                 actionsPanel.SetAllActionsInteractable();
                 utilityTabManager.SetAllButtonsInteractable();
@@ -312,6 +336,8 @@ namespace Events {
         public IEnumerator DisplayPostCombat(string endString) {
             StartCoroutine(AlterBackgroundColor(1f));
             actionsPanel.PostCombatActions();
+            PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
+            gearPanel.SetTakeable(true);
             rewardsPanel.SetVisible(true);
 
             if (endString == "DEFEAT") {
@@ -330,6 +356,7 @@ namespace Events {
                     infoPanel.UpdateAmounts();
                 }
 
+                gearPanel.SetInteractable(true);
                 actionsPanel.SetAllActionsInteractable();
                 utilityTabManager.SetAllButtonsInteractable();
                 partyPanel.EnableButtons();
@@ -341,22 +368,50 @@ namespace Events {
         /// </summary>
         /// <param name="r"> Result containing items </param>
         /// <returns> List of items </returns>
-        public List<Item> GetInteractionItems(Result r) {
+        public List<Item> GetResultItems(Result r) {
             r.GenerateResults();
 
             List<Item> items = new List<Item>();
 
-            if (r.EXPAmount > 0) {
-                //items.Add(new Item("EXP", r.EXPAmount, EXPSprite));
+            if (r.specificItemAmount > 0) {
+                string specificItemName = r.specificItemNames[Random.Range(0, r.specificItemAmount)];
+                 if (r.itemType == "consumable") {
+                    for (int i = 0; i < consumablesNum; i++) {
+                        if (subAreaConsumables[i].nameID == specificItemName) {
+                            items.Add(new Consumable(subAreaConsumables[i]));
+                            ((Consumable)items[0]).RandomizeAmounts(r.itemQuality);
+                            break;
+                        }
+                    }
+                }
+                else if (r.itemType == "gear") {
+                    for (int i = 0; i < gearNum; i++) {
+                        if (subAreaGear[i].nameID == specificItemName) {
+                            items.Add(new Gear(subAreaGear[i]));
+                            ((Gear)items[0]).RandomizeAmounts(r.itemQuality);
+                            break;
+                        }
+                    }
+                }
+                if (items.Count == 0) {
+                    Debug.LogError("Item " + specificItemName + " could not be generated");
+                }
             }
-            if (r.HPAmount > 0) {
-                items.Add(new Item("consumable", "HP", r.HPAmount, HPItemSprite));
+            else {
+                for (int i = 0; i < r.itemAmount; i++) {
+                    if (r.itemType == "consumable") {
+                        items.Add(new Consumable(subAreaConsumables[Random.Range(0, consumablesNum)]));
+                        ((Consumable)items[i]).RandomizeAmounts(r.itemQuality);
+                    }
+                    else if (r.itemType == "gear") {
+                        items.Add(new Gear(subAreaGear[Random.Range(0, gearNum)]));
+                         ((Gear)items[i]).RandomizeAmounts(r.itemQuality);
+                    }
+                }
             }
-            if (r.MPAmount > 0) {
-                //items.Add(new Item("MP", r.MPAmount, MPSprite));
-            }
-            if (r.WAXAmount > 0) {
-                items.Add(new Item("consumable", "WAX", r.WAXAmount, WAXItemSprite));
+
+            if (items.Count == 0) {
+                Debug.LogError("No items were generated");
             }
 
             return items;
@@ -395,6 +450,8 @@ namespace Events {
                 if (r.subAreaName != "none") { 
                     currentSubArea = currentArea.GetSubArea(r.subAreaName);
                     StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
+                    LoadConsumables();
+                    LoadGear();
                     subAreaProgress = 0; 
                     if (infoPanel.isOpen) {
                         infoPanel.UpdateAmounts();
@@ -501,7 +558,7 @@ namespace Events {
         /// </summary>
         /// <param name="r"> Result to have its items displayed </param>
         public void DisplayResultItems(Result r) {
-            List<Item> items = GetInteractionItems(r);
+            List<Item> items = GetResultItems(r);
 
             eventDescription.SetKey(r.resultKey);
             if (items.Count > 0) {
@@ -523,6 +580,7 @@ namespace Events {
             rewardsPanel.SetVisible(false);
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             partyPanel.DisableButtons();
+            gearPanel.SetInteractable(false);
             utilityTabManager.SetAllButtonsUninteractable();
             yield return StartCoroutine(FadeBackgrounds());
         }
@@ -680,6 +738,15 @@ namespace Events {
         /// </summary>
         public void TakeAllItems() {
             eventDisplays[0].TakeAllItems();
+        }
+
+        public Panel GetTargetPanel(string type) {
+            if (type == "gear") {
+                return gearPanel;
+            }   
+
+            Debug.LogError("Panel for an item with type " + type + " does not exist");
+            return null;             
         }
 
         #endregion

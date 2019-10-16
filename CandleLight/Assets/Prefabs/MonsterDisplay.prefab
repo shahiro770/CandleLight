@@ -1089,10 +1089,10 @@ MonoBehaviour:
   <DEX>k__BackingField: 0
   <INT>k__BackingField: 0
   <LUK>k__BackingField: 0
-  <pAtk>k__BackingField: 0
-  <mAtk>k__BackingField: 0
-  <pDef>k__BackingField: 0
-  <mDef>k__BackingField: 0
+  <PATK>k__BackingField: 0
+  <MATK>k__BackingField: 0
+  <PDEF>k__BackingField: 0
+  <MDEF>k__BackingField: 0
   <dodge>k__BackingField: 0
   <acc>k__BackingField: 0
   tempAcc: 0
@@ -1106,6 +1106,7 @@ MonoBehaviour:
   <monsterSpriteName>k__BackingField: 
   <monsterDisplayName>k__BackingField: 
   <monsterAI>k__BackingField: 
+  <itemDropPool>k__BackingField: []
   <multiplier>k__BackingField: 0
   <minLVL>k__BackingField: 0
   <maxLVL>k__BackingField: 0

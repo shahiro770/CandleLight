@@ -56,9 +56,28 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Changes the displayed text
+        /// Changes the displayed text of one of the text's using multiple keys
         /// </summary>
-        /// <param name="textKey"> Localized key for text to display </param>
+
+        public void SetKeyMultiple(string textName, string[] textKeys) {
+            if (textName == "title") {
+                titleText.SetMultipleKeysAndJoin(textKeys);
+            }
+            else if (textName == "subtitle") {
+                subtitleText.SetMultipleKeysAndJoin(textKeys);
+            }
+            else if (textName == "description") {
+                descriptionText.SetMultipleKeysAndJoin(textKeys);
+            }
+            else {
+                Debug.LogError("TextName " + textName + " does not exist");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show text and append it with an integer amount
+        /// </summary>
+
         public void SetAmountText(string textName, string textKey, int amount) {
             if (textName == "title") {
                 titleText.SetKeyAndAppend(textKey, amount.ToString());
@@ -71,6 +90,29 @@ namespace PlayerUI {
             }
             else {
                 Debug.LogError("TextName " + textName + " does not exist");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text
+        /// </summary>
+
+        public void SetAmountTextMultiple(string textName, string[] textKeys, string[] amounts) {
+            if (textName == "title") {
+                titleText.SetMultipleKeysAndAppend(textKeys, amounts);
+            }
+            else if (textName == "subtitle") {
+                subtitleText.SetMultipleKeysAndAppend(textKeys, amounts);
+            }
+            else if (textName == "description") {
+                descriptionText.SetMultipleKeysAndAppend(textKeys, amounts);
+            }
+            else {
+                Debug.LogError("TextName " + textName + " does not exist");
+            }     
+
+            if (this.gameObject.activeSelf == true) {
+                StartCoroutine(SetPosition());
             }
         }
 

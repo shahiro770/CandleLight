@@ -11,30 +11,36 @@ using UnityEngine;
 
 namespace Events {
 
+    [System.Serializable]
     public class Result {
 
-        public string name { get; private set; }        /// <value> Name of result </value>
-        public string type { get; private set; }
-        public string scope { get; private set; }
-        public string subAreaName { get; private set; } /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
-        public string subEventName{ get; private set; } /// <value> Name of event result leads to if possible, "none" otherwise </value>
-        public string resultKey;    /// <value> Localization key for displayed string for result </value>
-        public string[] specificMonsterNames;
-        public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
-        public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
-        public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
-        public int WAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
-        
-        private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
-        private float multiplier;    /// <value> Multiplier on result depending on area </value>
-        private int minValue = 5;    /// <value> Min value for numeric rewards pre-multiplier </value>
-        private int maxValue = 10;   /// <value> Max value for numeric rewards pre-multiplier </value>
-        private int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
-        private int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
-        private int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
-        private int WAXChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
-        private int monsterCount;
-        private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
+        [field: SerializeField] public string name { get; private set; }        /// <value> Name of result </value>
+        [field: SerializeField] public string type { get; private set; }
+        [field: SerializeField] public string scope { get; private set; }
+        [field: SerializeField] public string subAreaName { get; private set; } /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
+        [field: SerializeField] public string subEventName{ get; private set; } /// <value> Name of event result leads to if possible, "none" otherwise </value>
+        [field: SerializeField] public string resultKey;    /// <value> Localization key for displayed string for result </value>
+        [field: SerializeField] public string itemType { get; private set; }                /// <value> Type of item (gear, consumables) </value>
+        [field: SerializeField] public string[] specificItemNames { get; private set; }     /// <value> Names of specific items dropped </value>
+        [field: SerializeField] public string itemQuality { get; private set; }             /// <value> String quality of item (low, med, high) </value>
+        [field: SerializeField] public string[] specificMonsterNames;           /// <value> Names of monsters this event spawns </value>
+        [field: SerializeField] public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
+        [field: SerializeField] public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
+        [field: SerializeField] public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
+        [field: SerializeField] public int WAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
+        [field: SerializeField] public int itemAmount { get; private set; }     /// <value> Amount of items result gives </value>
+        [field: SerializeField] public int specificItemAmount { get; private set; } = 0;    /// <value> Amount of specific items result gives </value>
+
+        [field: SerializeField] private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
+        [field: SerializeField] private float multiplier;    /// <value> Multiplier on result depending on area </value>
+        [field: SerializeField] private int minValue = 5;    /// <value> Min value for numeric rewards pre-multiplier </value>
+        [field: SerializeField] private int maxValue = 10;   /// <value> Max value for numeric rewards pre-multiplier </value>
+        [field: SerializeField] private int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
+        [field: SerializeField] private int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
+        [field: SerializeField] private int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
+        [field: SerializeField] private int WAXChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
+        [field: SerializeField] private int monsterCount;    /// <value> MAx number of monsters this event can spawn </value>
+        [field: SerializeField] private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
 
         /// <summary>
         /// Constructor
@@ -44,7 +50,7 @@ namespace Events {
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
         public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] changeValues,
-        string subAreaName, string subEventName, int monsterCount, string[] specificMonsterNames) {
+        string subAreaName, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality) {
             this.name = name;
             this.resultKey = resultKey;
             this.type = type;
@@ -58,6 +64,15 @@ namespace Events {
             this.subEventName = subEventName;
             this.monsterCount = monsterCount;
             this.specificMonsterNames = specificMonsterNames;
+            this.itemType = itemType;
+            this.specificItemNames = specificItemNames;
+            for (int i = 0; i < specificItemNames.Length; i++) {
+                if (specificItemNames[i] != "none") {
+                    specificItemAmount++;
+                }
+            }
+
+            this.itemQuality = itemQuality;
             
             if (quantity == "none") {
                 this.quantity = 0;
@@ -86,10 +101,15 @@ namespace Events {
         /// Generates the values for EXP, HP, MP, and wax that the result will give
         /// </summary>
         public void GenerateResults() {
-            EXPAmount = GenerateAmount(EXPChange);
-            HPAmount = GenerateAmount(HPChange);
-            MPAmount = GenerateAmount(MPChange);
-            WAXAmount = GenerateAmount(WAXChange);
+            if (type == "item") {
+                itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 1);
+            }
+            else if (type == "combatWithSideEffects" || type == "statAll") {
+                EXPAmount = GenerateAmount(EXPChange);
+                HPAmount = GenerateAmount(HPChange);
+                MPAmount = GenerateAmount(MPChange);
+                WAXAmount = GenerateAmount(WAXChange);
+            }
         }
 
         /// <summary>

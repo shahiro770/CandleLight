@@ -133,10 +133,19 @@ namespace Party {
             return partyMembersAlive[0];
         }
 
+        /// <summary>
+        /// Sets the active partyMember, and displays it
+        /// </summary>
+        /// <param name="pm"></param>
         public void SetActivePartyMember(PartyMember pm) {
             activePartyMember = pm;
+            pm.pmvc.DisplayActivePartyMember();
         }
 
+        /// <summary>
+        /// Returns the active partyMember
+        /// </summary>
+        /// <returns> PartyMember </returns>
         public PartyMember GetActivePartyMember() {
             return activePartyMember;
         }
@@ -306,6 +315,23 @@ namespace Party {
             else {
                 WAX -= amount;
             }
+        }
+
+        /// <summary>
+        /// Equips a gear item to the activePartyMember
+        /// </summary>
+        /// <param name="id"> ItemDisplay </param>
+        /// <param name="subType"> Subtype of gear (weapon, secondary, armour) </param>
+        public void EquipGear(ItemDisplay id, string subType) {
+            activePartyMember.EquipGear(id.GetGear(), id.subType);  // need to figure out if itemDisplay's item should be private
+        }
+
+        /// <summary>
+        /// Unequips a gear item from the activePartyMember
+        /// </summary>
+        /// <param name="subType"> Subtype of gear (weapon, secondary, armour) </param>
+        public void UnequipGear(string subType) {
+            activePartyMember.UnequipGear(subType);  // need to figure out if itemDisplay's item should be private
         }
     }
 }

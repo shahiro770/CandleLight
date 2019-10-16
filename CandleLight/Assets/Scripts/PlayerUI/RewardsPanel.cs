@@ -9,6 +9,7 @@
 */
 
 using Characters;
+using EventManager = Events.EventManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using Party;
@@ -25,14 +26,17 @@ namespace PlayerUI {
         public CanvasGroup imgCanvas;   /// <value> Alpha controller for display </value>
         public PartyMemberDisplay[] pmDisplays = new PartyMemberDisplay[4]; /// <value> Array of partyMemberDisplays </value>
         public MonsterResultsDisplay[] monsterResultDisplays = new MonsterResultsDisplay[5];    /// <value> Array of monsterResultDisplays</value>
+        public ItemSlot[] itemSlots = new ItemSlot[4];  /// <value> Array of item slots (max 4) </value>
         public LocalizedText amountTextEXP; /// <value> Display of total EXP earned in combat instance </value>
         public LocalizedText amountTextWAX; /// <value> Display of total WAX earned in combat instance </value>
         
         private Monster[] monstersToDisplay;    /// <value> Monsters to display in monsterResultDisplays </value>
         private float lerpSpeed = 4;    /// <value> Speed at which rewardsPanel fades in and out </value>
         private int[] monsterCounts;    /// <value> Number of each monster in each monsterResultDisplays killed</value>
+        private int itemNum = 0;    /// <value> Number of items displayed </value>
         private int amountEXP;      /// <value> Total EXP earned in combat </value>
         private int amountWAX;      /// <value> Total WAX earned in combat </value>
+        
 
         /// <summary>
         /// Initializes partyMemberDisplays and monsterResultDisplays, and sets text values to empty
@@ -43,9 +47,14 @@ namespace PlayerUI {
             for (int i = 0; i < pmDisplays.Length; i++) {
                 pmDisplays[i].gameObject.SetActive(false);
             }
-            for (int i = 0; i < monsterResultDisplays.Length;i++) {
+            for (int i = 0; i < monsterResultDisplays.Length; i++) {
                 monsterResultDisplays[i].gameObject.SetActive(false);
             }
+            for (int i = 0; i <  itemSlots.Length; i++) {
+                itemSlots[i].gameObject.SetActive(false);
+            }
+            itemNum = 0;
+
 
             for (int i = 0; i < pms.Count; i++) {
                 pmDisplays[i].gameObject.SetActive(true);
@@ -59,6 +68,7 @@ namespace PlayerUI {
             amountTextEXP.SetText("");
             amountTextWAX.SetText("");
             yield return (StartCoroutine(DisplayMonstersDisplays(pms, monstersKilled)));
+            yield return (StartCoroutine(DisplayItemDrops(monstersKilled)));
             yield return (StartCoroutine(UpdateEXPBars(pms)));
         }
 
@@ -76,7 +86,7 @@ namespace PlayerUI {
                         monstersToDisplay[j] = monstersKilled[i];
                         break;
                     }
-                    else if (monstersToDisplay[j].monsterDisplayName == monstersKilled[i].monsterDisplayName) {
+                    else if (monstersToDisplay[j].monsterNameID == monstersKilled[i].monsterNameID) {
                         monsterCounts[j]++;
                         break;
                     } 
@@ -93,8 +103,25 @@ namespace PlayerUI {
             }
 
             amountTextEXP.SetText(amountEXP.ToString());
+            yield return new WaitForSeconds(0.4f);
             amountTextWAX.SetText(amountWAX.ToString());
             PartyManager.instance.AddWAX(amountWAX);
+        }
+
+        /// <summary>
+        /// Displays the items dropped by each monster
+        /// </summary>
+        /// <param name="monstersKilled"> List of monsters killed </param>
+        /// <returns> IEnumerator for timing </returns>
+        private IEnumerator DisplayItemDrops(List<Monster> monstersKilled) {
+            for (int i = 0; i < monstersKilled.Count; i++) {
+                if (monstersKilled[i].CheckItemDrop() == true) {
+                    itemSlots[itemNum].SetVisible(true);
+                    itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItems(monstersKilled[i].monsterReward)[0]); // will only get one item
+                    itemNum++;
+                    yield return null;
+                }
+            }
         }
 
         /// <summary>

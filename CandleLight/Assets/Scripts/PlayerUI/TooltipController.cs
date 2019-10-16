@@ -28,7 +28,6 @@ namespace PlayerUI {
             }
         }
 
-        //Detect when Cursor leaves the GameObject
         public void OnPointerExit(PointerEventData pointerEventData) {
             if (b.interactable) {
                 t.SetVisible(false);
@@ -41,7 +40,6 @@ namespace PlayerUI {
             }
         }
 
-        //Detect when Cursor leaves the GameObject
         public void OnDeselect(BaseEventData baseEventData) {
             if (b.interactable) {
                 t.SetVisible(false);

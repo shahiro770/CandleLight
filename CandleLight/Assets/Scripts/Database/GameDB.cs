@@ -11,6 +11,7 @@
 using Characters;
 using Combat;
 using Events;
+using Items;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -50,8 +51,10 @@ namespace Database {
                         int multiplier = 0;
                         int HP = 0;
                         int MP = 0;
+                        int dropChance = 0;
                         int[] stats = {};
                         Attack[] attacks = new Attack[4];
+                        Result monsterReward = null;
 
                         if (reader.Read()) {
                             monsterNameID = reader.GetString(1);
@@ -69,13 +72,15 @@ namespace Database {
                                 string attackName = reader.GetString(14 + i);
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
+                            dropChance = reader.GetInt32(18);
+                            monsterReward = GetResultByName(reader.GetString(19), "", dbConnection);                     
                         }
                         else {
                             Debug.LogError("Monster " + monsterName + " does not exist in the DB");
                         }
 
                         monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
-                        monsterSize, monsterAI, multiplier, HP, MP, stats, attacks)); 
+                        monsterSize, monsterAI, multiplier, HP, MP, stats, attacks, dropChance, monsterReward)); 
                     }
                 }
             }          
@@ -439,6 +444,9 @@ namespace Database {
                     string scope = "";
                     string subAreaName = "";
                     string subEventName = "";
+                    string itemType = "";
+                    string[] specificItemNames = new string[3];
+                    string itemQuality = "";
                     string[] specificMonsterNames = new string[5];
                     int[] resultChanges = new int[4];
                     int monsterCount = 0;
@@ -462,9 +470,14 @@ namespace Database {
                         specificMonsterNames[2] = reader.GetString(15);
                         specificMonsterNames[3] = reader.GetString(16);
                         specificMonsterNames[4] = reader.GetString(17);
+                        itemType = reader.GetString(18);
+                        specificItemNames[0] = reader.GetString(19);
+                        specificItemNames[1] = reader.GetString(20);
+                        specificItemNames[2] = reader.GetString(21);
+                        itemQuality = reader.GetString(22);
 
                         newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultChanges, subAreaName, subEventName,
-                        monsterCount, specificMonsterNames);
+                        monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality);
                     }
                     else {
                          Debug.LogError("Result " + resultName + " does not exist in the DB");
@@ -475,6 +488,11 @@ namespace Database {
             }
         }
 
+        /// <summary>
+        /// Returns the names of all of the background packs for an area
+        /// </summary>
+        /// <param name="areaName"></param>
+        /// <returns></returns>
         public string[] GetBGPackNames(string areaName) {
             using(dbConnection = base.GetConnection()) {
 
@@ -509,6 +527,12 @@ namespace Database {
             }
         }
 
+        /// <summary>
+        /// Returns a background pack for an area
+        /// </summary>
+        /// <param name="areaName"></param>
+        /// <param name="bgPackName"></param>
+        /// <returns></returns>
         public BackgroundPack GetBGPack(string areaName, string bgPackName) {
             using(dbConnection = base.GetConnection()) {
 
@@ -542,6 +566,158 @@ namespace Database {
 
                         return newPack;
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns all of the consumables that can be found in a subArea
+        /// </summary>
+        /// <param name="subAreaName"></param>
+        /// <returns></returns>
+        public Consumable[] GetConsumablesBySubArea (string subAreaName) {
+            using(dbConnection = base.GetConnection()) {
+
+                dbConnection.Open();
+
+                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+
+                    dbcmd.CommandText = "SELECT * FROM ConsumablesItemPools WHERE name = '" + subAreaName + "'";
+
+                    using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        string[] consumableNameIDs = new string[10];
+                        Consumable[] consumableItems = new Consumable[10];
+
+                        if (reader.Read()) {
+                            consumableNameIDs[0] = reader.GetString(2);
+                            consumableNameIDs[1] = reader.GetString(3);
+                            consumableNameIDs[2] = reader.GetString(4);
+                            consumableNameIDs[3] = reader.GetString(5);
+                            consumableNameIDs[4] = reader.GetString(6);
+                            consumableNameIDs[5] = reader.GetString(7);
+                            consumableNameIDs[6] = reader.GetString(8);
+                            consumableNameIDs[7] = reader.GetString(9);
+                            consumableNameIDs[8] = reader.GetString(10);
+                            consumableNameIDs[9] = reader.GetString(11);
+
+                            for (int i = 0; i < consumableNameIDs.Length; i++) {
+                                consumableItems[i] = (Consumable)GetItemByNameID(consumableNameIDs[i], "consumable", dbConnection);
+                            }
+                        }
+                        else {
+                            Debug.LogError("ConsumableItemPool " + subAreaName + " does not exist in the DB");
+                        }
+
+                        return consumableItems;
+                    }
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns all of the gear that can be found in a subArea
+        /// </summary>
+        /// <param name="subAreaName"></param>
+        /// <returns></returns>
+        public Gear[] GetGearBySubArea (string subAreaName) {
+            using(dbConnection = base.GetConnection()) {
+
+                dbConnection.Open();
+
+                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+
+                    dbcmd.CommandText = "SELECT * FROM GearItemPools WHERE name = '" + subAreaName + "'";
+
+                    using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        string[] gearNameIDs = new string[10];
+                        Gear[] gearItems = new Gear[10];
+
+                        if (reader.Read()) {
+                            gearNameIDs[0] = reader.GetString(2);
+                            gearNameIDs[1] = reader.GetString(3);
+                            gearNameIDs[2] = reader.GetString(4);
+                            gearNameIDs[3] = reader.GetString(5);
+                            gearNameIDs[4] = reader.GetString(6);
+                            gearNameIDs[5] = reader.GetString(7);
+                            gearNameIDs[6] = reader.GetString(8);
+                            gearNameIDs[7] = reader.GetString(9);
+                            gearNameIDs[8] = reader.GetString(10);
+                            gearNameIDs[9] = reader.GetString(11);
+
+                            for (int i = 0; i < gearNameIDs.Length; i++) {
+                                gearItems[i] = (Gear)GetItemByNameID(gearNameIDs[i], "gear", dbConnection);
+                            }
+                        }
+                        else {
+                            Debug.LogError("ConsumableItemPool " + subAreaName + " does not exist in the DB");
+                        }
+
+                        return gearItems;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns an item from either the gear table or consumables table
+        /// </summary>
+        /// <param name="name"> Name of the item </param>
+        /// <param name="type"> Type of the item (consumable or gear) </param>
+        /// <param name="dbConnection"> IDbConnectino to get attack with </param>
+        /// <returns> Returns an Attack with the information initialized </returns>
+        public Item GetItemByNameID(string nameID, string type, IDbConnection dbConnection) {
+            using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+
+                if (type == "consumable") {
+                     dbcmd.CommandText = "SELECT * FROM Consumables WHERE NameID = '" + nameID + "'";
+                }
+                else if (type == "gear") {
+                    dbcmd.CommandText = "SELECT * FROM Gear WHERE NameID = '" + nameID + "'";
+                }
+
+                using (IDataReader reader = dbcmd.ExecuteReader()) {
+                    Item newItem = null;
+
+                    string subType = "";
+                    string className = "";
+                    string[] effects = new string[3];
+                    int[] values = new int[3];
+
+                    if (reader.Read()) {
+                        if (type == "consumable") {
+                            subType = reader.GetString(2);
+
+                            effects[0] = reader.GetString(3);
+                            effects[1] = reader.GetString(5);
+                            effects[2] = reader.GetString(7);
+
+                            values[0] = reader.GetInt32(4);
+                            values[1] = reader.GetInt32(6);
+                            values[2] = reader.GetInt32(8);
+
+                             newItem = new Consumable(nameID, type, subType, effects, values);
+                        }
+                        else if (type == "gear") {
+                            subType = reader.GetString(2);
+                            className = reader.GetString(3);
+
+                            effects[0] = reader.GetString(4);
+                            effects[1] = reader.GetString(6);
+                            effects[2] = reader.GetString(8);
+
+                            values[0] = reader.GetInt32(5);
+                            values[1] = reader.GetInt32(7);
+                            values[2] = reader.GetInt32(9);
+   
+                            newItem = new Gear(nameID, type, subType, className, effects, values);
+                        }
+                    }
+                    
+                    if (newItem == null) {
+                        Debug.LogError("Item " + nameID + " does not exist in the DB");
+                    }
+
+                    return newItem;
                 }
             }
         }

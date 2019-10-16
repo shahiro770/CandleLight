@@ -29,9 +29,9 @@ namespace Characters {
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
 
-        public Item weapon = new Item();        /// <value> Weapon </value>
-        public Item secondary = new Item();     /// <value> Secondary </value>
-        public Item armour = new Item();        /// <value> Armour </value>
+        public Gear weapon = new Gear();        /// <value> Weapon </value>
+        public Gear secondary = new Gear();     /// <value> Secondary </value>
+        public Gear armour = new Gear();        /// <value> Armour </value>
 
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
@@ -73,31 +73,33 @@ namespace Characters {
             LVL += 1;
 
             if (className == "Warrior") {
-                STR += (int)(LVL * 1.75);
-                DEX += (int)(LVL * 1.5);
-                INT += (int)(LVL * 1.25);
-                LUK += LVL;
+                baseSTR += (int)(LVL * 1.75);
+                baseDEX += (int)(LVL * 1.5);
+                baseINT += (int)(LVL * 1.25);
+                baseLUK += LVL;
             }
             else if (className == "Mage") {
-                STR += LVL;
-                DEX += (int)(LVL * 1.25);
-                INT += (int)(LVL * 1.75);
-                LUK += (int)(LVL * 1.5);
+                baseSTR += LVL;
+                baseDEX += (int)(LVL * 1.25);
+                baseINT += (int)(LVL * 1.75);
+                baseLUK += (int)(LVL * 1.5);
             }
             else if (className == "Archer") {
-                STR += (int)(LVL * 1.5);
-                DEX += (int)(LVL * 1.75);
-                INT += (int)(LVL * 1.25);
-                LUK += LVL;
+                baseSTR += (int)(LVL * 1.5);
+                baseDEX += (int)(LVL * 1.75);
+                baseINT += (int)(LVL * 1.25);
+                baseLUK += LVL;
             }
             else if (className == "Thief") {
-                STR += LVL;
-                DEX += (int)(LVL * 1.5);
-                INT += (int)(LVL * 1.25);
-                LUK += LVL * 2;
+                baseSTR += LVL;
+                baseDEX += (int)(LVL * 1.5);
+                baseINT += (int)(LVL * 1.25);
+                baseLUK += LVL * 2;
             }
-            
+
+            CalculateGearStatsPrimary(1);
             CalculateSecondaryStats();
+            CalculateGearStatsSecondary();
 
             pmvc.UpdateHPAndMPBars();
             pmvc.UpdateStats();
@@ -169,8 +171,8 @@ namespace Characters {
         /// Increase the partyMember's current mana and health points by 5% of their max amounts
         /// </summary>
         public void Regen() {
-            AddHP((int)(Mathf.Ceil((float)HP * 0.05f)));
-            AddMP((int)(Mathf.Ceil((float)MP * 0.05f)));
+            AddHP((int)(Mathf.Ceil((float)HP * 0.06f)));
+            AddMP((int)(Mathf.Ceil((float)MP * 0.06f)));
         }
 
         /// <summary>
@@ -260,6 +262,156 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator DodgeAttack() {
             yield return StartCoroutine(pmvc.DisplayAttackDodged());
+        }
+
+        /// <summary>
+        /// Updates all stats after a piece of equipment is equipped
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="subType"></param>
+        public void EquipGear(Gear g, string subType) {
+            if (subType == "weapon") {
+                weapon = g;
+            }
+            else if (subType == "secondary") {
+                secondary = g;
+            }
+            else if (subType == "armour") {
+                armour = g;
+            }
+
+            CalculateGearStatsPrimary(1);
+            CalculateSecondaryStats();
+            CalculateGearStatsSecondary();
+            pmvc.UpdateStats();
+            pmvc.SetEquippedGear();
+        }
+
+        /// <summary>
+        /// Updates all stats after a piece of gear is unequipped
+        /// </summary>
+        /// <param name="subType"></param>
+        public void UnequipGear(string subType) {
+            if (subType == "weapon") {
+                weapon = null;
+            }
+            else if (subType == "secondary") {
+                secondary = null;
+            }
+            else if (subType == "armour") {
+                armour = null;
+            }
+
+            CalculateGearStatsPrimary(1);
+            CalculateSecondaryStats();
+            CalculateGearStatsSecondary();
+            pmvc.UpdateStats();
+            pmvc.SetEquippedGear();
+        }
+
+        /// <summary>
+        /// Calculates stat changes to primary stats (STR, DEX, INT, LUK) after a gear is equipped
+        /// </summary>
+        /// <param name="addOrSubtract"></param>
+        public void CalculateGearStatsPrimary(int addOrSubtract) {
+            Gear gearToCalculate = null;
+            int numGear = 3;
+            STR = baseSTR;
+            DEX = baseDEX;
+            INT = baseINT;
+            LUK = baseLUK;
+
+            for (int i = 0; i < numGear; i++) {
+                if (i == 0) {
+                    gearToCalculate = weapon;
+                }
+                else if (i == 1) {
+                    gearToCalculate = secondary;
+                }
+                else {
+                    gearToCalculate = armour;
+                }
+
+                if (gearToCalculate != null) {
+                    for (int j = 0; j < gearToCalculate.effects.Length; j++) {
+                        switch(gearToCalculate.effects[j]) {
+                            case "STR":
+                                STR += gearToCalculate.values[j] * addOrSubtract;
+                                break;
+                            case "DEX":
+                                DEX += gearToCalculate.values[j] * addOrSubtract;
+                                break;
+                            case "INT":
+                                INT += gearToCalculate.values[j] * addOrSubtract;
+                                break;
+                            case "LUK":
+                                LUK += gearToCalculate.values[j] * addOrSubtract;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calculates all secondary stats (HP, MP, PATK, MATK, PDEF, MDEF, DODGE, ACC, CRITCHANCE, CRITMULT)
+        /// </summary>
+        public void CalculateGearStatsSecondary() {
+            Gear gearToCalculate = null;
+            int numGear = 3;
+
+            for (int i = 0; i < numGear; i++) {
+                if (i == 0) {
+                    gearToCalculate = weapon;
+                }
+                else if (i == 1) {
+                    gearToCalculate = secondary;
+                }
+                else {
+                    gearToCalculate = armour;
+                }
+
+                if (gearToCalculate != null) {
+                    for (int j = 0; j < gearToCalculate.effects.Length; j++) {
+                        switch(gearToCalculate.effects[j]) {
+                            case "HP":
+                                HP += gearToCalculate.values[j];
+                                break;
+                            case "MP":
+                                MP += gearToCalculate.values[j];
+                                break;
+                            case "PATK":
+                                PATK += gearToCalculate.values[j];
+                                break;
+                            case "MATK":
+                                MATK += gearToCalculate.values[j];
+                                break;
+                            case "PDEF":
+                                PDEF += gearToCalculate.values[j];
+                                break;
+                            case "MDEF":
+                                MDEF += gearToCalculate.values[j];
+                                break;
+                            case "DODGE":
+                                dodge += gearToCalculate.values[j];
+                                break;
+                            case "ACC":
+                                acc += gearToCalculate.values[j];
+                                break;
+                            case "CRITCHANCE":
+                                critChance += gearToCalculate.values[j];
+                                break;
+                            case "CRITMULT":
+                                critMult += gearToCalculate.values[j];
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

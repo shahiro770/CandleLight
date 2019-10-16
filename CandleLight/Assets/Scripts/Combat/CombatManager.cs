@@ -38,6 +38,7 @@ namespace Combat {
         public EventDescription eventDescription;   /// <value> Display for all text and prompts relevant to an action or event</value>
         public StatusPanel statusPanel;             /// <value> Display for active partyMember's status </value>
         public ActionsPanel actionsPanel;           /// <value> Display for active partyMember's actions </value>
+        public GearPanel gearPanel;                 /// <value> Display for active partyMember's gear </value>
         public PartyPanel partyPanel;               /// <value> Display for all partyMember's status </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
@@ -137,7 +138,6 @@ namespace Combat {
             monsterComponent.md.SetInteractable(false);
 
             newMonster.transform.SetParent(enemyCanvas.transform, false);
-            
             monsters.Add(monsterComponent);
             
             newMonster.SetActive(false); // hide after manipulating components so player doesn't see monster until ArrangeMonsters()
@@ -267,10 +267,11 @@ namespace Combat {
         /// <returns> IEnumerator for dramatic timing and animations </returns>
         /// <remark> Death animation for each monster is played as a de-spawning animation</remark>
         public IEnumerator AttemptFlee() {
-            int chance = Random.Range(activePartyMember.LVL, 100) - monsters[0].LVL;
+            // partyMembers with higher luck will have a better chance at escaping
+            int chance = Random.Range(activePartyMember.LVL + (activePartyMember.LUK / 3 * activePartyMember.LVL) , 100) - monsters[0].LVL;
             List<Monster> monstersToRemove = new List<Monster>();
 
-            // wait for all monsters to despawn
+            // wait for all monsters to "despawn"
             DisableAllButtons();
             for (int i = 0; i < monsters.Count - 1; i++) {  
                 StartCoroutine(monsters[i].md.PlayDeathAnimation());
@@ -280,7 +281,7 @@ namespace Combat {
             monstersToRemove.Add(monsters[monsters.Count - 1]);
             yield return new WaitForSeconds(0.75f);
 
-            if (chance >= 50) {
+            if (chance < 50) {
                 DestroyMonsters(monstersToRemove);
                 isFleeSuccessful = true;
             }
@@ -696,6 +697,7 @@ namespace Combat {
         /// </summary>
         public void DisableAllButtons() {
             actionsPanel.SetAllActionsUninteractable();
+            gearPanel.SetInteractable(false);
             partyPanel.DisableButtons();
             utilityTabManager.SetAllButtonsUninteractable();
             DeselectMonstersVisually();
@@ -710,6 +712,7 @@ namespace Combat {
             EnableAllMonsterSelection();
             utilityTabManager.SetAllButtonsInteractable();
             partyPanel.EnableButtons();
+            gearPanel.SetInteractable(true);
         }
         
         /// <summary>
@@ -718,7 +721,7 @@ namespace Combat {
         public void DisplayFirstPartyMember() {
             activePartyMember = cq.GetFirstPM();    // activePartyMember will be redundantly set a second time
             actionsPanel.DisplayFirstPartyMember(activePartyMember);
-            statusPanel.DisplayPartyMember(activePartyMember.pmvc);
+            PartyManager.instance.SetActivePartyMember(activePartyMember);
         }
 
         /// <summary>

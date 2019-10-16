@@ -25,11 +25,13 @@ namespace PlayerUI {
         public SpriteRenderer itemSprite;   /// <value> Sprite to be displayed </value>
         
         public string type;                 /// <value> Type of item </value>
-        public string subType;             /// <value> Subtype of item </value>
-        public bool isDragEnabled = true;   /// <value> Flag for if item is draggable </value>
+        public string subType;              /// <value> Subtype of item </value>
+        public string className = "any";    /// <value> Name of class item can be used by </value>
         public bool dragging = false;       /// <value> Flag for if item is currently being dragged </value>
         
         private Item displayedItem;         /// <value> Item </value>
+        private Gear displayedGear;         /// <value> Item as gear </value>
+        private Consumable displayedConsumable; /// <value> Item as consumable </value>
         private float lerpSpeed = 4;        /// <value> Speed at which item display fades in and out </value>
         
         /// <summary>
@@ -41,28 +43,85 @@ namespace PlayerUI {
             this.displayedItem = displayedItem;
             this.type = displayedItem.type;
             this.subType = displayedItem.subType;
+
+            if (type == "consumable") {
+                displayedConsumable = (Consumable)displayedItem;
+            }
+            else if (type == "gear") {
+                displayedGear = (Gear)displayedItem;
+                className = displayedItem.className;    // consumables will not be class restricted for now
+            }
             itemSprite.sprite = displayedItem.itemSprite;
             itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
-            isDragEnabled = true;
             
             gameObject.SetActive(true);
             SetVisible(true);
         }
 
         /// <summary>
-        /// Returns a string array containing texts that a tooltip uses to determine its keys
+        /// Returns item as gear
         /// </summary>
-        /// <returns> String array, size depending on what the tooltip cares about</returns>
-        public string[] GetTooltipKeys() {
-            return displayedItem.GetTooltipKeys();
+        /// <returns></returns>
+        public Gear GetGear() {
+            return displayedGear;
         }
 
         /// <summary>
-        /// Returns the amount an item has based on its subType
+        /// Returns item as consumable
         /// </summary>
-        /// <returns> Int amount </returns>
-        public int GetAmount() {
-            return displayedItem.GetAmount(subType);
+        /// <returns></returns>
+        public Consumable GetConsumable() {
+            return displayedConsumable;
+        }
+
+        /// <summary>
+        /// Returns all of the item's effects
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetEffects() {
+            if (displayedItem.type == "consumable") {
+                return displayedConsumable.GetEffects();
+            }
+            else { //if (displayedItem.type == "gear") {
+                return displayedGear.GetEffects();
+            }    
+        }
+
+        /// <summary>
+        /// Returns string array holding basic information about the item displayed
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetTooltipBasicKeys() {
+            return displayedItem.GetTooltipBasicKeys();
+        }  
+
+        /// <summary>
+        /// Returns the tooltip effect keys of the item
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetTooltipEffectKeys() {
+            if (displayedItem.type == "consumable") {
+                return displayedConsumable.GetTooltipEffectKeys();
+            }
+            else { //if (displayedItem.type == "gear") {
+                return displayedGear.GetTooltipEffectKeys();
+            }
+        }
+
+        /// <summary>
+        /// Returns the values of the item
+        /// </summary>
+        /// <returns></returns>
+        public int[] GetValues() {
+            return displayedItem.values;
+        }
+
+        /// <summary>
+        /// Returns the values of the item
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetValuesAsStrings() {
+            return displayedItem.GetAmountsAsStrings();
         }
 
         /// <summary>
@@ -104,31 +163,22 @@ namespace PlayerUI {
             
             if (targetAlpha == 0) {
                 gameObject.SetActive(false);
+                Destroy(this.gameObject);   // destroy the item after it is no longer visible
             }
         }
-
-        /// <summary>
-        /// Sets the item's draggable state
-        /// </summary>
-        /// <param name="value"></param>
-       public void SetDraggable(bool value) {
-           isDragEnabled = value;
-       }
 
         /// <summary>
         /// Start dragging the item, making it follow the cursor after its holding item slot is clicked
         /// </summary>
         /// <returns> IEnumerator to constantly update position </returns>
        public IEnumerator StartDragItem() {
-            if (isDragEnabled) {
-                dragging = true;
-            
-                while (dragging == true) {
-                    Vector3 screenPoint = Input.mousePosition;
-                    screenPoint.z = 5.0f; // distance of the plane from the camera
-                    transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
-                    yield return null;
-                }
+            dragging = true;
+        
+            while (dragging == true) {
+                Vector3 screenPoint = Input.mousePosition;
+                screenPoint.z = 5.0f; // distance of the plane from the camera
+                transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+                yield return null;
             }
        }
 

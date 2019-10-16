@@ -38,6 +38,39 @@ namespace Localization {
             key = newKey;
             meshText.text = LocalizationManager.instance.GetLocalizedValue(key);
         }
+        
+        /// <summary>
+        /// Sets the display text by appending multiple key'd values
+        /// </summary>
+        /// <param name="newKeys"> List of keys </param>
+        public void SetMultipleKeysAndJoin(string[] newKeys) {
+            string finalMeshText = "";
+
+            for (int i = 0; i < newKeys.Length; i++) {
+                finalMeshText += LocalizationManager.instance.GetLocalizedValue(newKeys[i]) + " ";
+            }
+
+            meshText.text = finalMeshText;
+            textPreset = true;
+        }
+
+        /// <summary>
+        /// Sets the display text by appending multiple key'd values with additional text, and appending those strings
+        /// </summary>
+        /// <param name="newKeys"> List of keys </param>
+        /// <param name="texts"> List of texts to append to keys </param>
+        public void SetMultipleKeysAndAppend(string[] newKeys, string[] texts) {
+            string finalMeshText = "";
+
+            for (int i = 0; i < newKeys.Length; i++) {
+                if (newKeys[i] != "none_label") {
+                    finalMeshText += LocalizationManager.instance.GetLocalizedValue(newKeys[i]) + " " + texts[i] + "\n";    
+                }
+            }
+
+            meshText.text = finalMeshText;
+            textPreset = true;
+        }
 
         /// <summary>
         /// Sets the text to the inputted value

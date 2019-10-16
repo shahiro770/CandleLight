@@ -12,10 +12,10 @@ namespace Constants {
 
     public static class AttackConstants {
 
-        public static readonly string PHYSICAL = "physical";  /// <value> Attack damage is reduced by pDef </value>
-        public static readonly string MAGICAL = "magical";    /// <value> Attack damage damage is reduced by mDef</value>
-        public static readonly string PHYSICALDEBUFF = "physicalDebuff";  /// <value> Debuff damage is reduced by pDef </value>
-        public static readonly string MAGICALDEBUFF = "magicalDebuff";    /// <value> Debuff damage is reduced by mDef </value>
+        public static readonly string PHYSICAL = "physical";  /// <value> Attack damage is reduced by PDEF </value>
+        public static readonly string MAGICAL = "magical";    /// <value> Attack damage damage is reduced by MDEF</value>
+        public static readonly string PHYSICALDEBUFF = "physicalDebuff";  /// <value> Debuff damage is reduced by PDEF </value>
+        public static readonly string MAGICALDEBUFF = "magicalDebuff";    /// <value> Debuff damage is reduced by MDEF </value>
         public static readonly string BUFF = "buff";          /// <value> Buffs cannot miss</value>
     }
 }

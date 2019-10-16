@@ -21,14 +21,18 @@ namespace Characters {
         [field: SerializeField] public int CHP { get; set; }              /// <value> Current health points </value>
         [field: SerializeField] public int MP { get; set; }               /// <value> Max mana points </value>
         [field: SerializeField] public int CMP { get; set; }              /// <value> Current mana points </value>
-        [field: SerializeField] public int STR { get; set; }              /// <value> Strength </value>
-        [field: SerializeField] public int DEX { get; set; }              /// <value> Dexterity </value>
-        [field: SerializeField] public int INT { get; set; }              /// <value> Intelligence </value>
-        [field: SerializeField] public int LUK { get; set; }              /// <value> Luck </value>
-        [field: SerializeField] public int pAtk { get; set; }             /// <value> Physical attack </value>
-        [field: SerializeField] public int mAtk { get; set; }             /// <value> Magical attack </value>
-        [field: SerializeField] public int pDef { get; set; }             /// <value> Physical defense </value>
-        [field: SerializeField] public int mDef { get; set; }             /// <value> Magical defense </value>
+        [field: SerializeField] public int baseSTR { get; set; }          /// <value> Strength </value>
+        [field: SerializeField] public int baseDEX { get; set; }          /// <value> Dexterity </value>
+        [field: SerializeField] public int baseINT { get; set; }          /// <value> Intelligence </value>
+        [field: SerializeField] public int baseLUK { get; set; }          /// <value> Luck </value>
+        [field: SerializeField] public int STR { get; set; }              /// <value> Strength after all modifiers </value>
+        [field: SerializeField] public int DEX { get; set; }              /// <value> Dexterity after all modifiers  </value>
+        [field: SerializeField] public int INT { get; set; }              /// <value> Intelligence after all modifiers </value>
+        [field: SerializeField] public int LUK { get; set; }              /// <value> Luck after all modifiers</value>
+        [field: SerializeField] public int PATK { get; set; }             /// <value> Physical attack </value>
+        [field: SerializeField] public int MATK { get; set; }             /// <value> Magical attack </value>
+        [field: SerializeField] public int PDEF { get; set; }             /// <value> Physical defense </value>
+        [field: SerializeField] public int MDEF { get; set; }             /// <value> Magical defense </value>
         [field: SerializeField] public int dodge { get; set; }            /// <value> Dodge rating </value>
         [field: SerializeField] public int acc { get; set; }              /// <value> Accuracy rating </value>
         [field: SerializeField] public int tempAcc = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
@@ -46,14 +50,18 @@ namespace Characters {
         /// <param name="LVL"> Power level </param>
         /// <param name="HP"> Max health points</param>
         /// <param name="MP"> Max mana points </param>
-        /// <param name="stats"> STR, DEX, INT, and LUK</param>
+        /// <param name="stats"> baseSTR, baseDEX, baseINT, and baseLUK </param>
         /// <param name="attacks"> List of known attacks (length 4) </param>
         public virtual void Init(int LVL, int HP, int MP, int[] stats, Attack[] attacks) {
             this.LVL = LVL;
-            this.STR = stats[0];
-            this.DEX = stats[1];
-            this.INT = stats[2];
-            this.LUK = stats[3];
+            this.baseSTR = stats[0];
+            STR = baseSTR;
+            this.baseDEX = stats[1];
+            DEX = baseDEX;
+            this.baseINT = stats[2];
+            INT = baseINT;
+            this.baseLUK = stats[3];
+            LUK = baseLUK;
             this.attacks = attacks; 
 
             CalculateSecondaryStats(true);
@@ -63,26 +71,32 @@ namespace Characters {
         /// Calculates secondary stats based off of the 4 primary stats
         /// </summary>
         /// <param name="setCurrent"> Flag for if CHP and CMP should equal new HP and MP values </param>
-        protected void CalculateSecondaryStats(bool setCurrent = false) {
+        protected virtual void CalculateSecondaryStats(bool setCurrent = false) {
            HP = (int)(STR * 2.25 + DEX * 1.5);
-           MP = (int)(INT * 1.5 + LUK * 1.25);
-           pAtk = (int)(STR * 0.5 + DEX * 0.25);
-           mAtk = (int)(INT * 0.5 + LUK * 0.25); 
-           pDef = (int)(STR * 0.1 + DEX * 0.05);
-           mDef = (int)(INT * 0.15 + LUK * 0.05);
+           MP = (int)(INT * 1.25 + LUK * 0.5);
+           PATK = (int)(STR * 0.5 + DEX * 0.25);
+           MATK = (int)(INT * 0.5 + LUK * 0.25); 
+           PDEF = (int)(STR * 0.1 + DEX * 0.05);
+           MDEF = (int)(INT * 0.15 + LUK * 0.05);
            dodge = (int)(DEX * 0.2 + LUK * 0.1);
            acc = (int)(DEX * 0.3) + baseAcc;
            critChance = (int)(LUK * 0.1) + baseCritChance;
            critMult = baseCritMult;
 
-           if (critChance > 100) {
-               critChance = 100;
-           }
+            if (CHP > HP) {
+                CHP = HP;
+            }
+            if (CMP > MP) {
+                CMP = MP;
+            }
+            if (critChance > 100) {
+                critChance = 100;
+            }
 
-           if (setCurrent) {
-               CHP = HP;
-               CMP = MP;
-           }
+            if (setCurrent) {
+                CHP = HP;
+                CMP = MP;
+            }
         }
 
         /// <summary>
@@ -105,10 +119,14 @@ namespace Characters {
         /// <param name="multiplier"> Bonus multiplier on stats </param>
         public virtual void LVLUp(int multiplier = 1) {
             LVL += 1;
-            STR += (int)(LVL * 1.5 * multiplier);
-            DEX += (int)(LVL * 1.5 * multiplier);
-            INT += (int)(LVL * 1.5 * multiplier);
-            LUK += (int)(LVL * 1.5 * multiplier);
+            baseSTR += (int)(LVL * 1.5 * multiplier);
+            STR = baseSTR;
+            baseDEX += (int)(LVL * 1.5 * multiplier);
+            DEX = baseDEX;
+            baseINT += (int)(LVL * 1.5 * multiplier);
+            INT = baseINT;
+            baseLUK += (int)(LVL * 1.5 * multiplier);
+            LUK = baseLUK;
             CalculateSecondaryStats(true);
         }
 
@@ -128,10 +146,10 @@ namespace Characters {
             parser.LocalVariables.Add("DEX", DEX);
             parser.LocalVariables.Add("INT", INT);
             parser.LocalVariables.Add("LUK", LUK);
-            parser.LocalVariables.Add("pAtk", pAtk);
-            parser.LocalVariables.Add("mAtk", mAtk);
-            parser.LocalVariables.Add("pDef", pDef);
-            parser.LocalVariables.Add("mDef", mDef);
+            parser.LocalVariables.Add("PATK", PATK);
+            parser.LocalVariables.Add("MATK", MATK);
+            parser.LocalVariables.Add("PDEF", PDEF);
+            parser.LocalVariables.Add("MDEF", MDEF);
 
             return (int)parser.Parse(attack.formula);
         }
@@ -209,10 +227,10 @@ namespace Characters {
         /// <returns></returns>
         public int CalculateAttackReductions(int damage, Attack a) {
              if (a.type == AttackConstants.PHYSICAL) {
-                damage = damage - pDef;
+                damage = damage - PDEF;
             }
             else if (a.type == AttackConstants.MAGICAL) {
-                damage = damage - mDef; 
+                damage = damage - MDEF; 
             }
             if (damage < 0) {
                 damage = 0;
@@ -243,7 +261,7 @@ namespace Characters {
         /// Logs stats to console for debugging
         /// </summary>
         public virtual void LogSecondaryStats() {
-            Debug.Log("pDef: " + pDef + " mDef: " + mDef + " acc: " + acc + " tempAcc:" + tempAcc + " dodge: " + dodge);
+            Debug.Log("PDEF: " + PDEF + " MDEF: " + MDEF + " acc: " + acc + " tempAcc:" + tempAcc + " dodge: " + dodge);
         }
 
         /// <summary>

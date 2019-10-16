@@ -37,9 +37,9 @@ namespace PlayerUI {
         public LocalizedText CRITText;  /// <value> Text displaying CRIT% </value>
         public LocalizedText NextLVLText;  /// <value> Text displaying EXP to next level </value>
 
-        private PartyMemberVisualController pmvc;
-        private string LVLText = LocalizationManager.instance.GetLocalizedValue("LVL_label");
-        public bool isOpen = false;
+        public PartyMemberVisualController pmvc;    /// <value> pmvc of pm currently being displayed</value>
+        private string LVLText = LocalizationManager.instance.GetLocalizedValue("LVL_label");   /// <value> "LVL" </value>
+        public bool isOpen = false; /// <value> Flag for if panel is open </value>
 
         /// <summary>
         /// Update the statsPanel with relevant information and visuals when opened
@@ -99,7 +99,6 @@ namespace PlayerUI {
             ACCText.SetText(stats[9].ToString());
             DOGText.SetText(stats[10].ToString());
             CRITText.SetText(stats[11] + "%");
-            print(stats[13]);
             NextLVLText.SetText((stats[12] - stats[13]).ToString());
         }
 

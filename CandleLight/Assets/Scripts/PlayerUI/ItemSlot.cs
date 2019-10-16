@@ -8,6 +8,7 @@
 *
 */
 
+using EventManager = Events.EventManager;
 using Items;
 using Party;
 using System.Collections;
@@ -21,7 +22,7 @@ namespace PlayerUI {
     public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
 
         /* external component references */
-        private EventSystem es;             /// <value> EventSystem reference </value>
+        public Panel parentPanel;           /// <value> Reference to the panel that contains this itemSlot </value>
         public CanvasGroup imgCanvas;       /// <value> Image alpha </value>
         public Button b;                    /// <value> Button component </value>
         public ButtonTransitionState bts;   /// <value> Button transisition state </value>
@@ -29,10 +30,13 @@ namespace PlayerUI {
         public ItemDisplay currentItemDisplay;  /// <value> Current itemDisplay held, null if empty </value>
         public Sprite defaultSprite = null; /// <value> Item sprite to display when no item is held </value>
         public SpriteRenderer defaultSpriteRenderer;   /// <value> Sprite to be displayed in the event no item is held </value>
-        public Image imgBackground;         /// <value> Background for image </value> 
+        public Image imgBackground;         /// <value> Background for image this tooltip is for </value> 
         public Tooltip t;                   /// <value> Tooltip component to display item info </value>
         public string itemSlotType;         /// <value> Item type this slot accepts </value>
+        public string itemSlotSubType;      /// <value> Item subType this slot accepts </value>
+        public bool isTakeable = true;      /// <value> Flag for if item is draggable </value>
         
+        private EventSystem es;             /// <value> EventSystem reference </value>
         private float lerpSpeed = 4;        /// <value> Speed at which item display fades in and out </value>
 
         /// <summary>
@@ -40,6 +44,7 @@ namespace PlayerUI {
         /// </summary>
         void Awake() {
             es = EventSystem.current;
+            defaultSpriteRenderer.sprite = defaultSprite;
         }
 
         /// <summary>
@@ -48,11 +53,10 @@ namespace PlayerUI {
         /// <param name="newItem"> Item object </param>
         public void PlaceItem(Item newItem) {
             if (newItem != null) {  
-
                 SetVisible(true);
-
+            
                 if (newItem.type == null) {
-                    defaultSpriteRenderer.sprite = defaultSprite;
+                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
                 } 
                 else {
                     GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
@@ -60,11 +64,12 @@ namespace PlayerUI {
                     currentItemDisplay.Init(newItem);
 
                     newItemDisplay.transform.SetParent(this.transform, false);
+                    // hide the defaultSprite if it shows
+                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
                 }       
 
                 t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
-                SetTooltipText();
-                
+                SetTooltipText();     
             }
             else {
                 SetVisible(true);
@@ -82,10 +87,21 @@ namespace PlayerUI {
             
             t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
             SetTooltipText();
-            t.SetVisible(true);
             
-            es.SetSelectedGameObject(this.gameObject);
+            if (itemSlotSubType != "any") {    // bad way to determine if its a partyMember's equipment slot
+                defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
+                if (itemSlotType == "gear") {
+                    PartyManager.instance.EquipGear(newItemDisplay, itemSlotSubType);
+                }    
+            }
+
+            if (es.currentSelectedGameObject == this.gameObject) {
+                es.SetSelectedGameObject(this.gameObject);
+                t.SetVisible(true);
+            }
         }
+
+        
 
         /// <summary>
         /// On click function
@@ -119,36 +135,73 @@ namespace PlayerUI {
         /// </summary>
         /// 
         public void TakeItem(bool direct = false) {
-            if (currentItemDisplay != null) {
+            if (currentItemDisplay != null && isTakeable == true) {
+                bool itemTaken = false;
+
                 if (currentItemDisplay.type == "consumable") {  // consumable items are used on click
-                    if (currentItemDisplay.subType == "EXP") {
-                        PartyManager.instance.AddEXP(currentItemDisplay.GetAmount());
+                    string[] effects = currentItemDisplay.GetEffects();
+                    int[] amounts = currentItemDisplay.GetValues();
+                    for (int i = 0; i < effects.Length; i++) {
+                        if (effects[i] == "EXP") {
+                            PartyManager.instance.AddEXP(amounts[i]);
+                        }
+                        if (effects[i] == "HP") {
+                            PartyManager.instance.AddHPAll(amounts[i]);
+                        }
+                        if (effects[i] == "MP") {
+                            PartyManager.instance.AddMPAll(amounts[i]);
+                        }
+                        if (effects[i] == "WAX") {
+                            PartyManager.instance.AddWAX(amounts[i]);
+                        }
                     }
-                    if (currentItemDisplay.subType == "HP") {
-                        PartyManager.instance.AddHPAll(currentItemDisplay.GetAmount());
-                    }
-                    if (currentItemDisplay.subType == "MP") {
-                        PartyManager.instance.AddMPAll(currentItemDisplay.GetAmount());
-                    }
-                    if (currentItemDisplay.subType == "WAX") {
-                        PartyManager.instance.AddWAX(currentItemDisplay.GetAmount());
-                    }
+                    itemTaken = true;
                     Destroy(currentItemDisplay.gameObject);
                 }
                 else {  // non-consumable items must be dragged into UI
-                    if (direct == true) {
-                        
+                    if (direct == true || Input.GetKeyDown(KeyCode.Return)) {
+                        Panel targetPanel = EventManager.instance.GetTargetPanel(currentItemDisplay.type);
+
+                        if (currentItemDisplay.type == "gear") {
+                            GearPanel gearPanel = (GearPanel)targetPanel;
+                            if (gearPanel.PlaceItem(currentItemDisplay)) {
+                                itemTaken = true;
+                            }
+                        }
                     }
-                    UIManager.instance.heldItemDisplay = currentItemDisplay;
-                    StartCoroutine(currentItemDisplay.StartDragItem());
-                    UIManager.instance.panelButtonsEnabled = false;
+                    else {
+                        UIManager.instance.heldItemDisplay = currentItemDisplay;
+                        StartCoroutine(currentItemDisplay.StartDragItem());
+                        UIManager.instance.panelButtonsEnabled = false;
+                        itemTaken = true;
+                    }
                 }
                 
-                currentItemDisplay = null;
-                defaultSpriteRenderer.sprite = defaultSprite;
-                defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
-                t.SetVisible(false);
+                if (itemTaken) {    // if item is taken, update the itemSlot
+                    currentItemDisplay = null;
+                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
+                    t.SetVisible(false);
+                    SetTooltipText();
+
+                    if (parentPanel != null) {
+                        if (itemSlotType == "gear" && itemSlotSubType == "any") {   // gearPanel updates to have more free spare itemSlots
+                            GearPanel gearPanel = (GearPanel)parentPanel;
+                            gearPanel.TakeItem();
+                        }
+                        else if (itemSlotSubType != "any") { // item was unequipped from partyMember
+                            PartyManager.instance.UnequipGear(itemSlotSubType);
+                        }
+                    }
+                }
             }
+        }
+
+        /// <summary>
+        /// Sets the itemSlot to allow its item to be taken
+        /// </summary>
+        /// <param name="value"> True if item can be taken, false otherwise </param>
+        public void SetTakeable(bool value) {
+            isTakeable = value;
         }
 
         /// <summary>
@@ -160,11 +213,46 @@ namespace PlayerUI {
             if (itemSlotType == "any") {
                 return true;
             }
-            else if (id.type == itemSlotType) {
-                return true;
+            else if (id.type == itemSlotType && id.subType == itemSlotSubType) {
+                if (id.className != "any") {
+                    if (id.className == PartyManager.instance.GetActivePartyMember().className) {
+                        return true;
+                    }
+                }
+                else {
+                    return true;
+                }
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Hides the item being displayed, so that if partyMembers switch,
+        /// instead of itemDisplays needing to be re-instantiated, the itemDisplayed can be hidden and displayed
+        /// </summary>
+        public void HideItem() {
+            currentItemDisplay.gameObject.SetActive(false);
+            currentItemDisplay = null;
+            SetTooltipText();
+
+            defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
+        }
+
+        /// <summary>
+        /// Shows the item being displayed, so that if partyMembers switch,
+        /// instead of itemDisplays needing to be re-instantiated, the itemDisplayed can be hidden and displayed
+        /// </summary>
+        /// <remark>
+        /// Assumes that there is already an item in the slot
+        /// </remark>
+        /// <param name="id"> ItemDisplay to show </param>
+        public void ShowItem(ItemDisplay id) {
+            currentItemDisplay = id;
+            currentItemDisplay.gameObject.SetActive(true);
+            SetTooltipText();
+
+            defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
         }
 
         /// <summary>
@@ -172,17 +260,28 @@ namespace PlayerUI {
         /// </summary>
         public void SetTooltipText() {
             if (currentItemDisplay != null) {
-                string[] itemKeys = currentItemDisplay.GetTooltipKeys();
+                string[] basicKeys = currentItemDisplay.GetTooltipBasicKeys();
 
-                if (itemKeys[0] == "consumable") {
-                    t.SetKey("title", itemKeys[1] + "_item");
-                    t.SetKey( "subtitle", itemKeys[0] + "_item_sub");
-                    t.SetAmountText( "description", itemKeys[1] + "_label", currentItemDisplay.GetAmount());
+                if (basicKeys[1] == "consumable") {
+                    t.SetKey("title", basicKeys[0] + "_item");
+                    t.SetKey( "subtitle", basicKeys[1] + "_item_sub");
+                    t.SetAmountTextMultiple( "description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
+                }
+                else if (basicKeys[1] == "gear") {
+                    t.SetKey("title", basicKeys[0] + "_item");
+                    if (currentItemDisplay.className == "any") {
+                        t.SetKey( "subtitle", basicKeys[2] + "_item_sub");
+                    }
+                    else {
+                        t.SetKeyMultiple( "subtitle", new string[2] {currentItemDisplay.className + "_label", basicKeys[2] + "_item_sub"});
+                    }
+                    
+                    t.SetAmountTextMultiple( "description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                 }
             }
-            else {
-                t.SetKey("title", itemSlotType + "_item");
-                t.SetKey( "subtitle", itemSlotType + "_item_sub");
+            else {  // if there is no item held
+                t.SetKey("title", itemSlotSubType + "_item");
+                t.SetKey( "subtitle", itemSlotSubType + "_item_sub_default");
                 t.SetKey( "description", "none_label");
             }
         }
@@ -201,9 +300,18 @@ namespace PlayerUI {
             else {
                 b.interactable = false;
                 StartCoroutine(Fade(0));
-                if (currentItemDisplay != null) {
-                    currentItemDisplay.SetVisible(false);
-                }
+            }
+        }
+
+        /// <summary>
+        /// Sets if the itemSlot can be interacted with (tooltip can only show if itemSlot can be interacted with)
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetInteractable(bool value) {
+            b.interactable = value;
+
+            if (value == false) {
+                t.SetVisible(false);
             }
         }
 
@@ -218,7 +326,10 @@ namespace PlayerUI {
             float percentageComplete = timeSinceStarted * lerpSpeed;
             float prevAlpha = imgCanvas.alpha;
             float newAlpha;
-
+            
+            if(currentItemDisplay != null) {
+                currentItemDisplay.SetVisible(false);
+            }
             while (imgCanvas.alpha != targetAlpha) {
                 timeSinceStarted = Time.time - timeStartedLerping;
                 percentageComplete = timeSinceStarted * lerpSpeed;
@@ -231,35 +342,32 @@ namespace PlayerUI {
                 yield return new WaitForEndOfFrame();
             }
             
-            if (targetAlpha == 0) {
-                if (currentItemDisplay != null) {
-                    Destroy(currentItemDisplay.gameObject);
-                    currentItemDisplay = null;
-                    gameObject.SetActive(false);
-                }
+            if (targetAlpha == 0) {              
+                currentItemDisplay = null;
+                gameObject.SetActive(false);
             }
         }
 
         public void OnPointerEnter(PointerEventData pointerEventData) {
-            if (defaultSprite != null || currentItemDisplay != null)  {
+            if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
                 t.SetVisible(true);
             }
         }
 
         public void OnPointerExit(PointerEventData pointerEventData) {
-            if (defaultSprite != null || currentItemDisplay != null) {
+            if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
                 t.SetVisible(false);
             }
         }
 
         public void OnSelect(BaseEventData baseEventData) {
-            if (defaultSprite != null || currentItemDisplay != null) {
+            if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
                 t.SetVisible(true);
             }
         }
 
         public void OnDeselect(BaseEventData baseEventData) {
-            if (defaultSprite != null || currentItemDisplay != null) {
+            if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
                 this.t.SetVisible(false);
             }
         }

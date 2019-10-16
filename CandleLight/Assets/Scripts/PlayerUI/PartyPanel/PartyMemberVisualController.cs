@@ -31,9 +31,15 @@ namespace Characters {
         public EventDescription eventDescription;           /// <value> Display that describes the event in text </value>
         public EXPBar statsPanelEXPBar { get; private set; }   /// <value> Visual for experience points in stats panel </value>
         public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
+        public GearPanel gearPanel;     /// <value> gearPanel reference </value>
+        public StatusPanel statusPanel; /// <value> </value>
+        public PartyPanel partyPanel;   /// <value> </value>
         public LocalizedText rewardsPanelLVLText { get; private set; }      /// <value> Visual for LVL in rewards panel</value>
         public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for partyMember's status in party panel </value>
         public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for partyMember's status in party panel </value>  
+        public ItemDisplay weapon;      /// <value> weapon reference </value>
+        public ItemDisplay secondary;   /// <value> secondary reference </value>
+        public ItemDisplay armour;      /// <value> armour reference </value>
 
         public Sprite partyMemberSprite { get; private set; }   /// <value> Icon sprite of the partyMember </value>
         public Color32 partyMemberColour { get; private set; }  /// <value> Theme colour of partyMember </value>
@@ -77,7 +83,7 @@ namespace Characters {
         public void SetPartyMemberDisplay(PartyMemberDisplay pmd, string panelName, Bar HPBar, Bar MPBar) {
             this.pmdPartyPanel = pmd;
             SetHPAndMPBar(panelName, HPBar, MPBar);
-            SetEventDescription();
+            SetExternalDisplayComponents();
         }
 
         /// <summary>
@@ -179,10 +185,22 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Sets the event description component reference
+        /// Sets references to components that will display information about a partyMember
         /// </summary>
-        public void SetEventDescription() {
+        public void SetExternalDisplayComponents() {
             eventDescription = EventManager.instance.eventDescription;
+            partyPanel = EventManager.instance.partyPanel;
+            gearPanel = EventManager.instance.gearPanel;
+            statusPanel = EventManager.instance.statusPanel;
+        }
+
+        /// <summary>
+        /// Sets the partyMember's equipped gear
+        /// </summary>
+        public void SetEquippedGear() {
+            weapon = gearPanel.weapon.currentItemDisplay;
+            secondary = gearPanel.secondary.currentItemDisplay;
+            armour = gearPanel.armour.currentItemDisplay;
         }
 
         /// <summary>
@@ -198,10 +216,26 @@ namespace Characters {
         /// <summary>
         /// Returns an array of stats
         /// </summary>
-        /// <returns></returns>
+        /// <returns></return-s>
         public int[] GetStats() {
             return new int[] { pm.LVL, pm.STR, pm.DEX, pm.INT, pm.LUK, 
-            pm.pAtk, pm.mAtk, pm.pDef, pm.mDef, pm.acc, pm.dodge, pm.critChance, pm.EXPToNextLVL, pm.EXP };
+            pm.PATK, pm.MATK, pm.PDEF, pm.MDEF, pm.acc, pm.dodge, pm.critChance, pm.EXPToNextLVL, pm.EXP };
+        }
+
+        /// <summary>
+        /// Sets the stored partyMember as the active partyMember
+        /// </summary>
+        public void SetActivePartyMember() {
+            PartyManager.instance.SetActivePartyMember(pm);
+        }
+        
+        /// <summary>
+        /// Changes all panels to show the stored partyMember's information
+        /// </summary>
+        public void DisplayActivePartyMember() {
+            partyPanel.DisplayActivePartyMember(pmdPartyPanel);
+            statusPanel.DisplayPartyMember(this);
+            gearPanel.Init(this);
         }
 
         /// <summary>
@@ -236,6 +270,7 @@ namespace Characters {
             if (statsPanelEXPBar != null) {
                 pmdPartyPanel.UpdateStatsPanel();
             }
+            UpdateHPAndMPBars();
         }
 
         /// <summary>
