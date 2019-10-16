@@ -162,7 +162,6 @@ namespace PlayerUI {
             }
             
             if (targetAlpha == 0) {
-                gameObject.SetActive(false);
                 Destroy(this.gameObject);   // destroy the item after it is no longer visible
             }
         }

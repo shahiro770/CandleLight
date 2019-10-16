@@ -101,7 +101,7 @@ namespace Events {
         /// Generates the values for EXP, HP, MP, and wax that the result will give
         /// </summary>
         public void GenerateResults() {
-            if (type == "item") {
+            if (type == "item" || type == "itemWithSubEvent") {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 1);
             }
             else if (type == "combatWithSideEffects" || type == "statAll") {

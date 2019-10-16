@@ -63,10 +63,10 @@ namespace Items {
                 multiplier = 0.5f;
             }
             else if (quality == "med") {
-                multiplier = 0.75f;
+                multiplier = 1f;
             }
             else {
-                multiplier = 1f;
+                multiplier = 1.5f;
             }
             
             for (int i = 0; i < effects.Length; i++) {

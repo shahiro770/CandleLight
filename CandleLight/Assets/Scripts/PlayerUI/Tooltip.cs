@@ -94,7 +94,7 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Changes the displayed text
+        /// Changes the displayed text 
         /// </summary>
 
         public void SetAmountTextMultiple(string textName, string[] textKeys, string[] amounts) {

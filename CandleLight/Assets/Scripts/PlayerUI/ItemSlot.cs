@@ -101,7 +101,15 @@ namespace PlayerUI {
             }
         }
 
-        
+        /// <summary>
+        /// Destroys the currently displayed item
+        /// </summary>
+        public void ClearItem() {
+            if (currentItemDisplay != null) {
+                Destroy(currentItemDisplay);
+                currentItemDisplay = null;
+            }
+        }
 
         /// <summary>
         /// On click function
@@ -327,7 +335,7 @@ namespace PlayerUI {
             float prevAlpha = imgCanvas.alpha;
             float newAlpha;
             
-            if(currentItemDisplay != null) {
+            if (currentItemDisplay != null) {
                 currentItemDisplay.SetVisible(false);
             }
             while (imgCanvas.alpha != targetAlpha) {
@@ -342,8 +350,8 @@ namespace PlayerUI {
                 yield return new WaitForEndOfFrame();
             }
             
-            if (targetAlpha == 0) {              
-                currentItemDisplay = null;
+            if (targetAlpha == 0) {       
+                ClearItem();
                 gameObject.SetActive(false);
             }
         }

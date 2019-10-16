@@ -136,8 +136,8 @@ namespace PlayerUI {
             }
 
             actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, travelInt);
-
-            SetAllActionsInteractable(true);
+            
+            SetAllActionsInteractable(false);
             SetInPanelNavigation();
         }
 
@@ -238,6 +238,7 @@ namespace PlayerUI {
         /// <summary>
         /// Enable all non-none actions to be interacted with using mouse or keys
         /// </summary>
+        /// <param name="initialSelection"> Flag for if current selected action should remain selected </param>
         public void SetAllActionsInteractable(bool initialSelection = false) {
             int firstInteractableIndex = 0;
             bool firstInteractableIndexSet = false;
@@ -254,7 +255,7 @@ namespace PlayerUI {
                 }
             }
             
-            if (initialSelection != true) {
+            if (initialSelection == false) {
                 es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first selectable action
             }
         }

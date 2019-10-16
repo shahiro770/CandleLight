@@ -99,6 +99,14 @@ namespace PlayerUI {
             }
         }
 
+        public void SetItemsVisible(bool value) {
+            for (int i = 0; i < itemNum; i++) {
+                if (itemSlots[i].gameObject.activeSelf){
+                    itemSlots[i].SetVisible(value);
+                }
+            }
+        }
+
         /// <summary>
         /// Sets the eventDisplay's position on screen
         /// </summary>

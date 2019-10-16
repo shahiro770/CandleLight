@@ -319,6 +319,44 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Displays the current event to the player, with no visual transitions
+        /// </summary>
+        public void DisplaySubEvent() {
+            if (currentEvent.type == EventConstants.COMBAT) {
+                eventDescription.SetKey(currentSubArea.GetCombatPrompt());
+                monstersToSpawn = currentSubArea.GetMonstersToSpawn();
+                
+                GetCombatEvent();
+            }
+            else {
+                if (currentEvent.type == EventConstants.NOTHING) {
+                    eventDescription.SetKey(currentSubArea.GetNothingPrompt());
+                }
+                else {
+                    eventDescription.SetKey(currentEvent.promptKey);
+                }
+
+                if (currentEvent.spriteNum > 0){
+                    ShowEventDisplays();
+                }
+                else {
+                    HideEventDisplays();
+                }
+
+                statusPanel.DisplayPartyMember(PartyManager.instance.GetFirstPartyMemberAlive().pmvc);
+                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
+                PartyManager.instance.RegenParty();
+                actionsPanel.Init(currentEvent.isLeavePossible);
+                actionsPanel.SetInteractionActions(currentEvent.interactions);
+                gearPanel.SetInteractable(true);
+                partyPanel.EnableButtons();
+                actionsPanel.SetAllActionsInteractable();
+                utilityTabManager.SetAllButtonsInteractable();
+                SetNavigation();
+            }
+        }
+
         public void SetNavigation() {
             actionsPanel.SetHorizontalNavigation(partyPanel);
             partyPanel.SetHorizontalNavigation();
@@ -374,27 +412,29 @@ namespace Events {
             List<Item> items = new List<Item>();
 
             if (r.specificItemAmount > 0) {
-                string specificItemName = r.specificItemNames[Random.Range(0, r.specificItemAmount)];
-                 if (r.itemType == "consumable") {
-                    for (int i = 0; i < consumablesNum; i++) {
-                        if (subAreaConsumables[i].nameID == specificItemName) {
-                            items.Add(new Consumable(subAreaConsumables[i]));
-                            ((Consumable)items[0]).RandomizeAmounts(r.itemQuality);
-                            break;
+                for (int i = 0; i < r.itemAmount; i++) {
+                    string specificItemName = r.specificItemNames[Random.Range(0, r.specificItemAmount)];
+                    if (r.itemType == "consumable") {
+                        for (int j = 0; j < consumablesNum; j++) {
+                            if (subAreaConsumables[j].nameID == specificItemName) {
+                                items.Add(new Consumable(subAreaConsumables[j]));
+                                ((Consumable)items[i]).RandomizeAmounts(r.itemQuality);
+                                break;
+                            }
                         }
                     }
-                }
-                else if (r.itemType == "gear") {
-                    for (int i = 0; i < gearNum; i++) {
-                        if (subAreaGear[i].nameID == specificItemName) {
-                            items.Add(new Gear(subAreaGear[i]));
-                            ((Gear)items[0]).RandomizeAmounts(r.itemQuality);
-                            break;
+                    else if (r.itemType == "gear") {
+                        for (int j = 0; j < gearNum; j++) {
+                            if (subAreaGear[j].nameID == specificItemName) {
+                                items.Add(new Gear(subAreaGear[j]));
+                                ((Gear)items[i]).RandomizeAmounts(r.itemQuality);
+                                break;
+                            }
                         }
                     }
-                }
-                if (items.Count == 0) {
-                    Debug.LogError("Item " + specificItemName + " could not be generated");
+                    if (items.Count == 0) {
+                        Debug.LogError("Item " + specificItemName + " could not be generated");
+                    }
                 }
             }
             else {
@@ -432,19 +472,29 @@ namespace Events {
             if (r.type == ResultConstants.NORESULT) {
                 eventDescription.SetKey(r.resultKey);
                 actionsPanel.TravelActions();
+                HideEventDisplayItemDisplays();
                 SetNavigation();
             }
-            if (r.type == ResultConstants.ITEM) {
+            else if (r.type == ResultConstants.TAKEALLITEMS) {
+                TakeAllItems();
+            }
+            else if (r.type == ResultConstants.ITEM) {
+                actionsPanel.SetItemActions();
+                eventDescription.SetKey(r.resultKey);
                 DisplayResultItems(r);
                 SetNavigation();
             }
             else if (r.type == ResultConstants.EVENT) {
-                if (r.subEventName != "none") {         // send to a specific event if it is named
-                    currentEvent = currentSubArea.GetSubEvent(r.subEventName);
-                }   
-                else {  // otherwise get the next event in the subArea
-                    GetNextEvent();
-                }
+                GetNextEvent();
+            }
+            else if (r.type == ResultConstants.SUBEVENT) {       
+                currentEvent = currentSubArea.GetSubEvent(r.subEventName);
+                DisplaySubEvent();
+            }
+            else if (r.type == ResultConstants.ITEMWITHSUBEVENT) {
+                currentEvent = currentSubArea.GetSubEvent(r.subEventName);
+                DisplaySubEvent();
+                DisplayResultItems(r);
             }
             else if (r.type == ResultConstants.SUBAREA) {
                 if (r.subAreaName != "none") { 
@@ -469,6 +519,7 @@ namespace Events {
                 SetNavigation();
             }
             else if (r.type == ResultConstants.PRECOMBAT) {
+                Debug.Log("THIS IS A PRECOMBAT INTERACTION");
                 eventDescription.FadeOut();
                 HideEventDisplays();
                 
@@ -559,15 +610,7 @@ namespace Events {
         /// <param name="r"> Result to have its items displayed </param>
         public void DisplayResultItems(Result r) {
             List<Item> items = GetResultItems(r);
-
-            eventDescription.SetKey(r.resultKey);
-            if (items.Count > 0) {
-                actionsPanel.SetItemActions();
-                eventDisplays[0].SetItemDisplays(items);    // will overwrite some action navigation
-            }
-            else {
-                actionsPanel.TravelActions();
-            }
+            eventDisplays[0].SetItemDisplays(items);    // will overwrite some action navigation
         }
 
         /// <summary>
@@ -661,15 +704,15 @@ namespace Events {
 
             for (int i = 0; i < bgPackNum; i++) {
                 if (bgPacks[i].name == confirmedBGPackName) {
-                    if (currentEvent.specificBGSprite != -1) {
+                    if (currentEvent.specificBGSprite != -1) {  
                         return bgPacks[i].GetBackground(currentEvent.specificBGSprite);
                     }
-
+            
                     return bgPacks[i].GetBackground();
                 }
             }
 
-            Debug.LogError("BackgroundPack of name " + bgPackName +  "does not exist");
+            Debug.LogError("BackgroundPack of name " + bgPackName +  " does not exist");
             return null;
         }
 
@@ -730,6 +773,18 @@ namespace Events {
         public void HideEventDisplays(int[] indices) {
             foreach (int index in indices) {
                 eventDisplays[index].SetVisible(false);
+            }
+        }
+        
+        public void HideEventDisplayItemDisplays() {
+            foreach (EventDisplay ed in eventDisplays) {
+                ed.SetItemsVisible(false);
+            }
+        }
+
+        public void HideEventDisplayItemDisplays(int[] indices) {
+            foreach (int index in indices) {
+                eventDisplays[index].SetItemsVisible(false);
             }
         }
 

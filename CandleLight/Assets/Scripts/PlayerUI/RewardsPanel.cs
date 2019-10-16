@@ -51,6 +51,7 @@ namespace PlayerUI {
                 monsterResultDisplays[i].gameObject.SetActive(false);
             }
             for (int i = 0; i <  itemSlots.Length; i++) {
+                itemSlots[i].SetTakeable(false);
                 itemSlots[i].gameObject.SetActive(false);
             }
             itemNum = 0;
@@ -70,6 +71,9 @@ namespace PlayerUI {
             yield return (StartCoroutine(DisplayMonstersDisplays(pms, monstersKilled)));
             yield return (StartCoroutine(DisplayItemDrops(monstersKilled)));
             yield return (StartCoroutine(UpdateEXPBars(pms)));
+            for (int i = 0; i < itemNum; i++) {
+                itemSlots[i].SetTakeable(true);
+            }
         }
 
         /// <summary>
@@ -115,6 +119,9 @@ namespace PlayerUI {
         /// <returns> IEnumerator for timing </returns>
         private IEnumerator DisplayItemDrops(List<Monster> monstersKilled) {
             for (int i = 0; i < monstersKilled.Count; i++) {
+                if (itemNum == itemSlots.Length) {  // if itemNum is maxed out, no more items
+                    break;
+                }
                 if (monstersKilled[i].CheckItemDrop() == true) {
                     itemSlots[itemNum].SetVisible(true);
                     itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItems(monstersKilled[i].monsterReward)[0]); // will only get one item
@@ -147,6 +154,9 @@ namespace PlayerUI {
             }
             else {
                 if (gameObject.activeSelf) {
+                    for (int i = 0; i < itemNum; i++) {
+                        itemSlots[i].SetVisible(false);
+                    }
                     StartCoroutine(Fade(0));
                 }
             }
