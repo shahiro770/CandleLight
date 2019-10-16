@@ -59,17 +59,17 @@ namespace PlayerUI {
         /// <remark> In the future, will have to navigate to other UI panels such as items or information </remark>
         private void SetInitialNavigation() {
             for (int i = 0; i < itemNum; i++) {
-                Button b = itemSlots[i].GetComponent<Button>();
+                Button b = itemSlots[i].b;
                 Navigation n = b.navigation;
                 
                 if (i > 0) {
                     n.selectOnUp = itemSlots[i - 1].b;
                 }
-                if (i  != itemNum - 1) {
+                if (i != itemNum - 1) {
                     n.selectOnDown = itemSlots[i + 1].b;
                 }
                 else {
-                    n.selectOnDown = actionsPanel.GetActionButton(0);   // actionsPanel's first button will always be active during item taking
+                    n.selectOnDown = actionsPanel.GetNavigatableButtonUp();   // actionsPanel's first button will always be active during item taking
                 }
 
                 b.navigation = n;

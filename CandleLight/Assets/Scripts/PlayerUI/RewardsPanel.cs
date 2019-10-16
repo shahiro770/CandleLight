@@ -23,6 +23,7 @@ namespace PlayerUI {
     public class RewardsPanel : Panel {
 
         /* external component references */
+        public ActionsPanel actionsPanel;
         public CanvasGroup imgCanvas;   /// <value> Alpha controller for display </value>
         public PartyMemberDisplay[] pmDisplays = new PartyMemberDisplay[4]; /// <value> Array of partyMemberDisplays </value>
         public MonsterResultsDisplay[] monsterResultDisplays = new MonsterResultsDisplay[5];    /// <value> Array of monsterResultDisplays</value>
@@ -129,6 +130,7 @@ namespace PlayerUI {
                     yield return null;
                 }
             }
+            SetNavigation();
         }
 
         /// <summary>
@@ -159,6 +161,27 @@ namespace PlayerUI {
                     }
                     StartCoroutine(Fade(0));
                 }
+            }
+        }
+
+        public void SetNavigation() {
+            for (int i = 0; i < itemNum; i++) {
+                Button b = itemSlots[i].b;
+                Navigation n = b.navigation;
+
+                if (i > 0) {
+                    n.selectOnLeft = itemSlots[i - 1].b;
+                }
+                if (i != itemSlots.Length - 1) {
+                    n.selectOnRight = itemSlots[i + 1].b;
+                }
+
+                n.selectOnDown = actionsPanel.GetNavigatableButtonUp();
+                b.navigation = n;
+            }
+
+            if (itemNum > 0) {
+                actionsPanel.SetButtonNavigation(4, "up", itemSlots[0].b);      
             }
         }
 
@@ -200,6 +223,9 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Button to be navigated to </returns>
         public override Button GetNavigatableButton() {
+            if (itemNum > 0) {
+                return itemSlots[0].b;
+            }
             return null; // will need to change this later
         }
     }

@@ -383,6 +383,18 @@ namespace PlayerUI {
                     SetButtonNavigation(4, "right", p.GetNavigatableButton());
                 }
             }
+
+            if (p.GetPanelName() == PanelConstants.GEARPANEL) {
+                if (actions[2].IsInteractable()) {
+                    SetButtonNavigation(2, "left", p.GetNavigatableButton());
+                }
+                if (actions[0].IsInteractable()) {
+                    SetButtonNavigation(0, "left", p.GetNavigatableButton());
+                }
+                if (actions[4].IsInteractable()) {
+                    SetButtonNavigation(4, "left", p.GetNavigatableButton());
+                }
+            }
         }
 
         public void SetVerticalNavigation() {
@@ -515,7 +527,19 @@ namespace PlayerUI {
         /// <summary>
         /// Returns the Button that a panel on the left would want to navigate to
         /// </summary>
-         public  Button GetNavigatableButtonLeft() {
+        public Button GetNavigatableButtonLeft() {
+            if (actions[0].IsInteractable()) {
+                return actions[0].b;
+            }
+            else {  // actions[4]
+                return actions[4].b;
+            }
+        }
+
+        /// <summary>
+        /// Returns the Button that a panel above would want to navigate to
+        /// </summary>
+        public Button GetNavigatableButtonUp() {
             if (actions[0].IsInteractable()) {
                 return actions[0].b;
             }

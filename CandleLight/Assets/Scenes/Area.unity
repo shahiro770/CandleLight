@@ -16965,10 +16965,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1694017497}
+  - component: {fileID: 1694017500}
   - component: {fileID: 1694017499}
   - component: {fileID: 1694017498}
   - component: {fileID: 1694017501}
-  - component: {fileID: 1694017500}
   m_Layer: 5
   m_Name: RewardsPanel
   m_TagString: Untagged
@@ -17051,6 +17051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b321eeabb6fb4e1dbf764223dbe6fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsPanel: {fileID: 1991115682}
   imgCanvas: {fileID: 1694017501}
   pmDisplays:
   - {fileID: 1563652961}
