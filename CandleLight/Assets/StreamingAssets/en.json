@@ -72,7 +72,7 @@
 		{ "key": "greyWastesPathSplit_event", "value": "A fork in the road. The right looks easier to travel." },
 		{ "key": "outpostCandleUsed_event", "value": "There's a recently used outpost nearby. Unkindled might be close." },
 		{ "key": "stingerBurrows_event", "value": "Stingers paralyze their prey and store them for later in burrows. There might be something useful. There might be someone home." },
-		{ "key": "stingerBurrowsRisky_event", "value": "You found some stuff, but something shiny caught your eye deeper in. Is it worth the risk?" },
+		{ "key": "stingerBurrowsRisky_event", "value": "You find what was left after their last meal. Something shiny caught your eye deeper in. Is it worth the risk?" },
 		
 		{ "key": "theGreyWastes0_int", "value": "Begin" },
 		{ "key": "fight_int", "value": "Fight" },

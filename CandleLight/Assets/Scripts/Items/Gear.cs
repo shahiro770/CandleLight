@@ -70,7 +70,7 @@ namespace Items {
             }
             
             for (int i = 0; i < effects.Length; i++) {
-                if (i == effectIndex && quality == "med") {         // medium quality will have at most 2 random effects
+                if (i == effectIndex && effectsNum > 1 && quality == "med" ) {         // medium quality will have at most 2 random effects
                     effects[i] = "none";
                 }   
                 else if (i != effectIndex && quality == "low") {    // low quality will have 1 random effect

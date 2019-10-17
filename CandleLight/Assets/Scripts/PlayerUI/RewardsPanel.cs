@@ -107,9 +107,9 @@ namespace PlayerUI {
                 }
             }
 
-            amountTextEXP.SetText(amountEXP.ToString());
-            yield return new WaitForSeconds(0.4f);
             amountTextWAX.SetText(amountWAX.ToString());
+            yield return new WaitForSeconds(0.4f);
+            amountTextEXP.SetText(amountEXP.ToString());
             PartyManager.instance.AddWAX(amountWAX);
         }
 
