@@ -98,10 +98,10 @@
 		{ "key": "outpostCandle0_0_res", "value": "The warmth is rejuvenating. Its as if your youth has returned to you." },
 		{ "key": "outpostCandleUsed0_0_res", "value": "The fire is nice. But you can't help but feel watched." },
 		{ "key": "outpostCandleUsed0_1_res", "value": "There's no rest for the wicked." },
-		{ "key": "stingerBurrows0_0_res", "value": "You found nothing. Stingers found you." },
+		{ "key": "stingerBurrows0_0_res", "value": "You found nothing. The stingers found you." },
 		{ "key": "stingerBurrowsRisky0_0_res", "value": "It wasn't worth it." },
 		{ "key": "stingerBurrowsRisky0_1_res", "value": "Only a stinger's eyes can shine inside their burrow." },
-		{ "key": "stingerBurrowsRisky0_2_res", "value": "You grabbed everything you could. Best not to stick around here any longer." },
+		{ "key": "stingerBurrowsRisky0_2_res", "value": "You grabbed everything you could. Should probably leave now." },
 		{ "key": "stingerBurrowsRisky0_3_res", "value": "You found nothing. Not the worst outcome." },
 		
 		{ "key": "none_label", "value": "None" },
