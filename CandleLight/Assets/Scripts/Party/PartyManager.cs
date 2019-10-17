@@ -66,6 +66,7 @@ namespace Party {
         /// Removes all partyMembers from PartyMembers list
         /// </summary>
         public void ClearPartyMembers() {
+            partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
         }

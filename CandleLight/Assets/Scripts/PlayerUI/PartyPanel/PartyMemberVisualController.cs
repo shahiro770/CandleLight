@@ -280,13 +280,13 @@ namespace Characters {
         /// <param name="maxAmount"> Positve int </param>
         /// <param name="currentAmount"> Positive int less than or equal to maxAmount</param>
         /// <returns></returns>
-        public IEnumerator DisplayEXPChange(int maxAmount, int currentAmount) {
+        public IEnumerator DisplayEXPChange(int maxAmount, int currentAmount, int LVLtoDisplay) {
             if (rewardsPanelEXPBar) { 
                 if (currentAmount == maxAmount) {
                     yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(maxAmount)));
                     yield return new WaitForSeconds(0.5f);
                     rewardsPanelEXPBar.SetMaxAndCurrentImmediate(pm.EXPToNextLVL, 0);
-                    rewardsPanelLVLText.SetText("LVL " + pm.LVL);
+                    rewardsPanelLVLText.SetText("LVL " + LVLtoDisplay);
                 }
                 else {
                     yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(currentAmount)));

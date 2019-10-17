@@ -121,12 +121,12 @@ namespace Characters {
                     overflow -= EXPToNextLVL;
                     prevEXPToNextLVL = EXPToNextLVL;
                     EXPToNextLVL = CalcEXPToNextLVL(LVL + 1);   // need this value to change the EXP display, but can't LVL up until after bar fills
-                    yield return(StartCoroutine(pmvc.DisplayEXPChange(prevEXPToNextLVL, prevEXPToNextLVL)));
+                    yield return(StartCoroutine(pmvc.DisplayEXPChange(prevEXPToNextLVL, prevEXPToNextLVL, LVL + 1)));
                     LVLUp();
                 }
                 EXP = overflow;
             }
-            yield return(StartCoroutine(pmvc.DisplayEXPChange(EXPToNextLVL, EXP)));
+            yield return(StartCoroutine(pmvc.DisplayEXPChange(EXPToNextLVL, EXP, LVL)));
 
             doneEXPGaining = true;         
         }
@@ -186,7 +186,7 @@ namespace Characters {
             
             CHP -= amount;
 
-            if (CHP < 0) {
+            if (CHP <= 0) {
                 CHP = 0;
                 PartyManager.instance.RegisterPartyMemberDead(this);
             }
