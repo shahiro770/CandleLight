@@ -43,7 +43,7 @@
 		{ "key": "pathNormalGreyWastes_flee_success_2", "value": "They're no longer following you." },
 		{ "key": "pathNormalGreyWastes_flee_success_3", "value": "You shout loudly and scare them off." },
 
-		{ "key": "pathNormalHardGreyWastes_nothing_event_0", "value": "Apparently strong winds here created the mounds and swept up entire roads. Folktales are hard to believe." },
+		{ "key": "pathNormalHardGreyWastes_nothing_event_0", "value": "Apparently strong winds created the mounds and swept up entire roads. Folktales are hard to believe." },
 		{ "key": "pathNormalHardGreyWastes_nothing_event_1", "value": "Sometimes you hear low pitched snarling. At least you think you do." },
 		{ "key": "pathNormalHardGreyWastes_nothing_event_2", "value": "It must have been difficult laying down rocks in the middle of nowhere. Who built these roads?" },
 		{ "key": "pathNormalHardGreyWastes_nothing_event_3", "value": "You stop at the peaks to look for the flames of Umaria. But you see nothing but more wasteland." },
