@@ -1910,6 +1910,7 @@ MonoBehaviour:
   partyPanel: {fileID: 1782737873}
   statusPanel: {fileID: 1216048677}
   infoPanel: {fileID: 1637168824}
+  itemsTabManager: {fileID: 677041051}
   utilityTabManager: {fileID: 1102624610}
   canvasWidth: 960
   canvasHeight: 540
@@ -3924,9 +3925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58240f88ac918b47b93f6cb9b55497a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryP: {fileID: 0}
-  EquipmentP: {fileID: 0}
-  CandleP: {fileID: 0}
 --- !u!1 &398869701
 GameObject:
   m_ObjectHideFlags: 0
@@ -6898,7 +6896,7 @@ GameObject:
   - component: {fileID: 677041052}
   - component: {fileID: 677041051}
   m_Layer: 5
-  m_Name: TabManager
+  m_Name: TabManagerItems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11888,7 +11886,7 @@ GameObject:
   - component: {fileID: 1102624609}
   - component: {fileID: 1102624610}
   m_Layer: 5
-  m_Name: TabManager
+  m_Name: TabManagerUtility
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14044,7 +14042,7 @@ GameObject:
   - component: {fileID: 1294357091}
   - component: {fileID: 1294357093}
   m_Layer: 5
-  m_Name: TabButton
+  m_Name: TabButtonGear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14065,9 +14063,9 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 731922896}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1967146484}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
@@ -14640,6 +14638,7 @@ MonoBehaviour:
   actionsPanel: {fileID: 1991115682}
   gearPanel: {fileID: 1861426946}
   partyPanel: {fileID: 1782737873}
+  itemsTabManager: {fileID: 677041051}
   utilityTabManager: {fileID: 1102624610}
   monster: {fileID: 4945471360017046569, guid: 7f4d4ee6c3ea946108f1deb439360092, type: 3}
 --- !u!4 &1365388870
@@ -18637,6 +18636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe69393acc33476a8e8563b2fe4539a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsPanel: {fileID: 1991115682}
   weapon: {fileID: 2098356947}
   secondary: {fileID: 560238025}
   armour: {fileID: 263456553}
@@ -20806,7 +20806,7 @@ GameObject:
   - component: {fileID: 1967146484}
   - component: {fileID: 1967146486}
   m_Layer: 5
-  m_Name: TabButton
+  m_Name: TabButtonCandles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20829,7 +20829,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 1294357091}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1266740567}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}

@@ -21,6 +21,7 @@ namespace PlayerUI {
     public class GearPanel : Panel {
         
         /* external component references */
+        public ActionsPanel actionsPanel;
         public ItemSlot weapon;     /// <value> Weapon item slot </value>
         public ItemSlot secondary;  /// <value> Secondary item slot </value>
         public ItemSlot armour;     /// <value> Armour item slot </value>
@@ -39,10 +40,7 @@ namespace PlayerUI {
         void OnEnable() {
             isOpen = true;
             Init(PartyManager.instance.GetActivePartyMember());
-
-            foreach (ItemSlot iSpare in spare) {
-                iSpare.PlaceItem(new Item());
-            }
+            SetHorizontalNavigation();
         }
 
         /// <summary>
@@ -163,6 +161,21 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Sets the horizontal navigation for PartyMemberDisplay to other panels
+        /// </summary>
+        public void SetHorizontalNavigation() {
+            for (int i = 0; i < 3; i++) {
+                Button b = spare[i].b;
+                Navigation n = b.navigation;
+
+                n.selectOnRight = actionsPanel.GetNavigatableButtonLeft();
+                b.navigation = n;
+            }   
+
+            actionsPanel.SetHorizontalNavigation(this);
+        }
+
+        /// <summary>
         /// Returns the name of this panel
         /// </summary>
         /// <returns> Name of panel </returns>
@@ -175,7 +188,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Button to be navigated to </returns>
         public override Button GetNavigatableButton() {
-            return null;
+            return spare[0].b;
         }
     }
 }

@@ -27,9 +27,9 @@ namespace PlayerUI {
         private int currentIndex = 0;
 
         /// <summary>
-        /// Sets the colorBlock to have the correct pressed colorBlocks
+        /// Sets the pressed colour block and opens the partyPanel to begin
         /// </summary>
-        void Awake() {
+        void Start() {
             ColorBlock pressedBlock = tabs[0].colors;
 
             pressedBlock.normalColor = new Color32(255, 255, 255, 255);
@@ -37,15 +37,10 @@ namespace PlayerUI {
             pressedBlock.pressedColor = new Color32(255, 255, 255, 255);
             pressedBlock.disabledColor = new Color32(255, 255, 255, 255);
 
-            foreach(ButtonTransitionState bts in btss) {
-               bts.SetColorBlock("pressed", pressedBlock);
+            for (int i = 0; i < btss.Length; i++) { //(ButtonTransitionState bts in btss) {
+                btss[i].SetColorBlock("pressed", pressedBlock);
             }
-        }
 
-        /// <summary>
-        /// Open the partyPanel to begin
-        /// </summary>
-        void Start() {
             if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                 OpenPanel(0);
             }
@@ -66,7 +61,6 @@ namespace PlayerUI {
                 currentIndex = index;
                 panels[currentIndex].gameObject.SetActive(true);
                 btss[currentIndex].SetColor("pressed");
-                actionsPanel.SetHorizontalNavigation(panels[index]);
             }
         }
 
@@ -78,6 +72,12 @@ namespace PlayerUI {
             if (panels[0].name == PanelConstants.PARTYPANEL) {  // right tabManager
                 Navigation n = tabs[0].navigation;
                 n.selectOnLeft = actionsPanel.GetNavigatableButtonRight();
+                tabs[0].navigation = n;
+            }
+            else { /// (panels[0].name == PanelConstants.GEARPANEL) {  // right tabManager
+                Navigation n = tabs[2].navigation;
+                n.selectOnRight = actionsPanel.GetNavigatableButtonLeft();
+                tabs[2].navigation = n;
             }
         }
 

@@ -40,6 +40,7 @@ namespace Combat {
         public ActionsPanel actionsPanel;           /// <value> Display for active partyMember's actions </value>
         public GearPanel gearPanel;                 /// <value> Display for active partyMember's gear </value>
         public PartyPanel partyPanel;               /// <value> Display for all partyMember's status </value>
+        public TabManager itemsTabManager;        /// <value> Click on to display other panels </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
 
@@ -236,8 +237,8 @@ namespace Combat {
             EnableAllButtonsInSidePanels();
             SetMonsterNavigation();
             
-            actionsPanel.SetHorizontalNavigation(partyPanel);
             partyPanel.SetHorizontalNavigation();
+            gearPanel.SetHorizontalNavigation();
         }
 
         /// <summary>
@@ -699,6 +700,7 @@ namespace Combat {
             actionsPanel.SetAllActionsUninteractable();
             gearPanel.SetInteractable(false);
             partyPanel.DisableButtons();
+            itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
             DeselectMonstersVisually();
             DisableAllMonsterSelection();
@@ -710,6 +712,7 @@ namespace Combat {
         /// </summary>
         public void EnableAllButtonsInSidePanels() {
             EnableAllMonsterSelection();
+            itemsTabManager.SetAllButtonsInteractable();
             utilityTabManager.SetAllButtonsInteractable();
             partyPanel.EnableButtons();
             gearPanel.SetInteractable(true);

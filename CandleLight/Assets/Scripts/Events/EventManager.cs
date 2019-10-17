@@ -40,8 +40,9 @@ namespace Events {
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
         public InfoPanel infoPanel;                 /// <value> InfoPanel reference </value>
-        public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
-
+        public TabManager itemsTabManager;          /// <value> Click on to display other panels with item information </value>
+        public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
+        
         public float canvasWidth = 960;     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasHeight = 540;    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code</value>
@@ -314,6 +315,7 @@ namespace Events {
                 gearPanel.SetInteractable(true);
                 partyPanel.EnableButtons();
                 actionsPanel.SetAllActionsInteractable();
+                itemsTabManager.SetAllButtonsInteractable();
                 utilityTabManager.SetAllButtonsInteractable();
                 SetNavigation();
             }
@@ -352,14 +354,15 @@ namespace Events {
                 gearPanel.SetInteractable(true);
                 partyPanel.EnableButtons();
                 actionsPanel.SetAllActionsInteractable();
+                itemsTabManager.SetAllButtonsInteractable();
                 utilityTabManager.SetAllButtonsInteractable();
                 SetNavigation();
             }
         }
 
         public void SetNavigation() {
-            actionsPanel.SetHorizontalNavigation(partyPanel);
-            partyPanel.SetHorizontalNavigation();
+            partyPanel.SetHorizontalNavigation();   
+            gearPanel.SetHorizontalNavigation();
         }
 
         public void DisplayPreCombat(Result r) {
@@ -396,6 +399,7 @@ namespace Events {
 
                 gearPanel.SetInteractable(true);
                 actionsPanel.SetAllActionsInteractable();
+                itemsTabManager.SetAllButtonsInteractable();
                 utilityTabManager.SetAllButtonsInteractable();
                 partyPanel.EnableButtons();
             }
@@ -624,6 +628,7 @@ namespace Events {
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             partyPanel.DisableButtons();
             gearPanel.SetInteractable(false);
+            itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
             yield return StartCoroutine(FadeBackgrounds());
         }

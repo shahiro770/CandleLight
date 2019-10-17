@@ -55,7 +55,7 @@ namespace PlayerUI {
             }
 
             SetVerticalNavigation();
-            SetHorizontalNavigation();
+            Invoke("SetHorizontalNavigation", 0.01f);   // hack because unity actions don't always OnEnable after everything Awakes
         }
 
         /// <summary>
@@ -99,6 +99,8 @@ namespace PlayerUI {
                     pmd.SetNavigation("left", actionsPanel.actions[4].b);
                 }
             }
+
+            actionsPanel.SetHorizontalNavigation(this);
         }
 
         /// <summary>
