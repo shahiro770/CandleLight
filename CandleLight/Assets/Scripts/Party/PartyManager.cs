@@ -334,5 +334,22 @@ namespace Party {
         public void UnequipGear(string subType) {
             activePartyMember.UnequipGear(subType);  // need to figure out if itemDisplay's item should be private
         }
+
+        public IEnumerator TriggerStatuses() { 
+            PartyMember yielding = null;
+            for (int i = 0; i < partyMembersAlive.Count; i++) {
+                if (yielding == null && partyMembersAlive[i].statusEffects.Count > 0) {
+                    yielding = partyMembersAlive[i];
+                }
+            }
+            for (int i = 0; i < partyMembersAlive.Count; i++) {
+                if (partyMembersAlive[i] != yielding) {
+                    StartCoroutine(partyMembersAlive[i].TriggerStatuses(false));
+                }
+            }
+            if (yielding != null) {
+                yield return (StartCoroutine(yielding.TriggerStatuses(false)));
+            }
+        }
     }
 }

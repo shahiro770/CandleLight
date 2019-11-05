@@ -222,7 +222,6 @@ namespace Combat {
                 EndCombat();
             }
             else {
-                EndPMTurn();
                 GetNextTurn();
             }
         }
@@ -339,6 +338,7 @@ namespace Combat {
         /// <returns> IEnumerator for animations </returns>
         public IEnumerator CleanUpPMTurn() {
             List<Monster> monstersToRemove = new List<Monster>();
+            List<PartyMember> partyMembersToRemove = new List<PartyMember>();
             
             foreach (Monster m in monsters) {
                 if (m.CheckDeath()) {
@@ -351,17 +351,22 @@ namespace Combat {
             }
             DestroyMonsters(monstersToRemove);
 
+            yield return StartCoroutine(activePartyMember.TriggerStatuses(true));  
+            foreach (PartyMember pm in partyMembers) {
+                if (pm.CheckDeath()) {
+                    cq.RemoveCharacter(pm.ID);
+                    partyMembersToRemove.Add(pm);
+                }
+            }
+            foreach (PartyMember pm in partyMembersToRemove) {
+                partyMembers.Remove(pm);
+                partyMembersAlive.Remove(pm);
+            }
+
             DeselectMonsters();
             selectedAttackpm = null;
             pmSelectionFinalized = false;
             eventDescription.ClearText();
-        }
-
-        /// <summary>
-        /// Ends the partyMember's turn, 
-        /// </summary>
-        public void EndPMTurn() {
-
         }
 
         #endregion
@@ -375,12 +380,11 @@ namespace Combat {
         private IEnumerator MonsterTurn() {
             StartMonsterTurn();
             yield return StartCoroutine(ExecuteMonsterAttack());
-            CleanUpMonsterTurn();
+            yield return StartCoroutine(CleanUpMonsterTurn());
             if (CheckBattleOver()) {
                 EndCombat();
             }
             else {
-                EndMonsterTurn();
                 GetNextTurn();
             }
         }
@@ -405,6 +409,7 @@ namespace Combat {
             selectedAttackMonster = activeMonster.SelectAttack();
             eventDescription.SetKey(selectedAttackMonster.nameKey);
             yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
+            print(partyMembersAlive.Count);
             if (activeMonster.monsterAI == "random") {
                 targetChoice = Random.Range(0, partyMembersAlive.Count);
             }
@@ -438,9 +443,22 @@ namespace Combat {
         /// Resolve end of turn effects (partyMembers's being dead, end of turn debuffs, etc.)
         /// </summary>
         /// <returns> IEnumerator for animations </returns>
-        public void CleanUpMonsterTurn() {
+        public IEnumerator CleanUpMonsterTurn() {
+            List<Monster> monstersToRemove = new List<Monster>();
             List<PartyMember> partyMembersToRemove = new List<PartyMember>();
             
+            yield return StartCoroutine(activeMonster.TriggerStatuses());  
+            foreach (Monster m in monsters) {
+                if (m.CheckDeath()) {
+                    cq.RemoveCharacter(m.ID);
+                    monstersToRemove.Add(m);
+                    monstersKilled.Add(m);
+
+                    yield return StartCoroutine(m.md.PlayDeathAnimation());
+                }
+            }
+            DestroyMonsters(monstersToRemove);
+
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath()) {
                     cq.RemoveCharacter(pm.ID);
@@ -452,14 +470,8 @@ namespace Combat {
                 partyMembersAlive.Remove(pm);
             }
 
+            selectedAttackMonster = null;
             eventDescription.ClearText();
-        }
-
-        /// <summary>
-        /// Ends the monster's turn
-        /// </summary>
-        public void EndMonsterTurn() {
-            // nothing for now
         }
 
         /// <summary>

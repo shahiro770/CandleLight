@@ -650,7 +650,7 @@ Transform:
   m_GameObject: {fileID: 2787557318452027557}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 40, y: 40, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4441724746801271242}
   m_RootOrder: 3
@@ -692,12 +692,12 @@ SpriteRenderer:
   m_SortingLayerID: 2061592957
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 07719222edb34413fb9a41cfd1ea4a99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.12, y: 5.12}
+  m_Size: {x: 256, y: 256}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -722,6 +722,41 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &2996922502180492720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1241757579263952954}
+  m_Layer: 0
+  m_Name: StatusEffectHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1241757579263952954
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2996922502180492720}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4441724746801271242}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -29.25}
+  m_SizeDelta: {x: 180, y: 22.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4423495334366531527
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +792,7 @@ RectTransform:
   - {fileID: 1475779495948089655}
   - {fileID: 2387337824692045382}
   - {fileID: 1331827010994098405}
+  - {fileID: 1241757579263952954}
   m_Father: {fileID: 149230361843528176}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1085,6 +1121,10 @@ MonoBehaviour:
   <CHP>k__BackingField: 0
   <MP>k__BackingField: 0
   <CMP>k__BackingField: 0
+  <baseSTR>k__BackingField: 0
+  <baseDEX>k__BackingField: 0
+  <baseINT>k__BackingField: 0
+  <baseLUK>k__BackingField: 0
   <STR>k__BackingField: 0
   <DEX>k__BackingField: 0
   <INT>k__BackingField: 0
@@ -1099,14 +1139,41 @@ MonoBehaviour:
   <critChance>k__BackingField: 0
   <critMult>k__BackingField: 0
   <attacks>k__BackingField: []
+  <statusEffects>k__BackingField: []
   md: {fileID: 8085412351755015521}
+  <monsterReward>k__BackingField:
+    <name>k__BackingField: 
+    <type>k__BackingField: 
+    <scope>k__BackingField: 
+    <subAreaName>k__BackingField: 
+    <subEventName>k__BackingField: 
+    resultKey: 
+    <itemType>k__BackingField: 
+    <specificItemNames>k__BackingField: []
+    <itemQuality>k__BackingField: 
+    specificMonsterNames: []
+    <EXPAmount>k__BackingField: 0
+    <HPAmount>k__BackingField: 0
+    <MPAmount>k__BackingField: 0
+    <WAXAmount>k__BackingField: 0
+    <itemAmount>k__BackingField: 0
+    <specificItemAmount>k__BackingField: 0
+    quantity: 0
+    multiplier: 0
+    minValue: 0
+    maxValue: 0
+    EXPChange: 0
+    HPChange: 0
+    MPChange: 0
+    WAXChange: 0
+    monsterCount: 0
+    isUnique: 0
   <monsterArea>k__BackingField: 
   <monsterSize>k__BackingField: 
   <monsterNameID>k__BackingField: 
   <monsterSpriteName>k__BackingField: 
   <monsterDisplayName>k__BackingField: 
   <monsterAI>k__BackingField: 
-  <itemDropPool>k__BackingField: []
   <multiplier>k__BackingField: 0
   <minLVL>k__BackingField: 0
   <maxLVL>k__BackingField: 0
@@ -1114,6 +1181,7 @@ MonoBehaviour:
   <WAX>k__BackingField: 0
   <attackNum>k__BackingField: 0
   <selectedAttackIndex>k__BackingField: 0
+  <dropChance>k__BackingField: 0
   <isReady>k__BackingField: 0
 --- !u!1 &4966123046020373190
 GameObject:
@@ -1802,12 +1870,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40dd5d9c14f404e928ed678e277743a1, type: 3}
---- !u!224 &3374978696928950151 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
-    type: 3}
-  m_PrefabInstance: {fileID: 4337278434447852003}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6508537844259145927 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7377990676677052708, guid: 40dd5d9c14f404e928ed678e277743a1,
@@ -1820,3 +1882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f83f341b2f77452ba146f11f8ceed79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3374978696928950151 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 4337278434447852003}
+  m_PrefabAsset: {fileID: 0}

@@ -23,7 +23,8 @@ namespace PlayerUI {
     public class PartyMemberDisplay : MonoBehaviour {
         
         /* external component references */
-        public Animator pmDisplayAnimator;  /// <value> Animator for entire display </value>
+        public Animator pmDisplayAnimator;  /// <value> Animator for display motion </value>
+        public Animator pmEffectsAnimator;  /// <value> Animator for effects that display over the pmd </value>
         public Image classIcon;         /// <value> Icon of class </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
@@ -135,6 +136,37 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Sets the animation clip (.anim files cause animation and animationClip are two ****ing different things) 
+        /// for the effects animator for the "attackedEffect" state. Used to show the animation of a partyMember's attack.
+        /// </summary>
+        /// <param name="animationClipName"> Name of animation clip to load </param>
+        /// <remark> 
+        /// In the future, will need to know which state is being 
+        /// changed as a parameter when effects has more than 1 state 
+        /// </remark>
+        public void SetEffectsAnimatorClip(string animationClipName) {
+            int SEAnimationStateIndex = 0;    // constant index of the state in the animator that is triggered by the "attacked" trigger
+            // TODO find a way to change animationClips for higher layers.
+            AnimatorOverrideController aoc = new AnimatorOverrideController(pmEffectsAnimator.runtimeAnimatorController);
+            List<KeyValuePair<AnimationClip, AnimationClip>> anims = new List<KeyValuePair<AnimationClip, AnimationClip>>(); // first clip is old clip to override, second is new clip
+
+            AnimationClip newClip = Resources.Load<AnimationClip>("AnimationsAndControllers/Animations/" + animationClipName);
+
+            for (int i = 0; i < aoc.animationClips.Length; i++) {
+                AnimationClip oldClip = aoc.animationClips[i];
+
+                if (i == SEAnimationStateIndex) {
+                    anims.Add(new KeyValuePair<AnimationClip, AnimationClip> (oldClip, newClip)); 
+                } else {
+                    anims.Add(new KeyValuePair<AnimationClip, AnimationClip> (oldClip, oldClip));
+                }   
+            }
+            
+            aoc.ApplyOverrides(anims);
+            pmEffectsAnimator.runtimeAnimatorController = aoc;   
+        }
+
+        /// <summary>
         /// Plays the animation for when the partyMember is damaged
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
@@ -168,6 +200,23 @@ namespace PlayerUI {
                 yield return null;    
             } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
             pmDisplayAnimator.ResetTrigger("dodged");
+        }
+
+        /// <summary>
+        /// Plays the animation for when the partyMember dodges an attack
+        /// </summary>
+        /// <returns> Waits for animation to finish playing </returns>
+        public IEnumerator PlayStatusEffectAnimations(List<string> animationClipNames) {
+            // for (int i = 0; i < animationClipNames.Count; i++) {
+            //      SetEffectsAnimatorClip(animationClipName, i);
+               
+            // }
+             SetEffectsAnimatorClip(animationClipNames[0]);
+            pmEffectsAnimator.SetTrigger("statusEffected");
+            do {
+                yield return null;    
+            } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmDisplayAnimator.ResetTrigger("statusEffected");
         }
 
         /// <summary>

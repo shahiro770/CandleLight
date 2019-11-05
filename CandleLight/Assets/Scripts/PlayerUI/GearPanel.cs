@@ -99,6 +99,10 @@ namespace PlayerUI {
             else {
                 armour.PlaceItem(new Gear());
             }
+
+            weapon.SetColour(pmvc.partyMemberColour);
+            secondary.SetColour(pmvc.partyMemberColour);
+            armour.SetColour(pmvc.partyMemberColour);
         }
 
         /// <summary>

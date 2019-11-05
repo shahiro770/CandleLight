@@ -218,7 +218,8 @@ namespace Events {
         /// <summary>
         /// Gets the next event
         /// </summary>
-        public void GetNextEvent() {      
+        public void GetNextEvent() {
+              
             actionsPanel.SetActionsUsable(true);
             subAreaProgress += currentEvent.progressAmount;
             if (subAreaProgress >= 100) {
@@ -277,6 +278,7 @@ namespace Events {
         public IEnumerator DisplayEvent() {
             if (displayStartEvent == false) {
                 nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
+                print("transitioning");
                 yield return StartCoroutine(TransitionToNextEvent());
             } 
             else {
@@ -358,6 +360,10 @@ namespace Events {
                 utilityTabManager.SetAllButtonsInteractable();
                 SetNavigation();
             }
+        }
+
+        public IEnumerator CleanUpPrevEvent() {
+            yield return StartCoroutine(PartyManager.instance.TriggerStatuses());
         }
 
         public void SetNavigation() {
@@ -495,7 +501,7 @@ namespace Events {
                 currentEvent = currentSubArea.GetSubEvent(r.subEventName);
                 DisplaySubEvent();
             }
-            else if (r.type == ResultConstants.ITEMWITHSUBEVENT) {
+            else if (r.type == ResultConstants.ITEMWITHSUBEVENT) {  // subEvents do not need result prompts
                 currentEvent = currentSubArea.GetSubEvent(r.subEventName);
                 DisplaySubEvent();
                 DisplayResultItems(r);
@@ -630,7 +636,8 @@ namespace Events {
             gearPanel.SetInteractable(false);
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
-            yield return StartCoroutine(FadeBackgrounds());
+            yield return (StartCoroutine(CleanUpPrevEvent()));
+            yield return (StartCoroutine(FadeBackgrounds()));
         }
 
         /// <summary>

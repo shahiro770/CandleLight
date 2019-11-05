@@ -151,24 +151,31 @@ namespace Database {
                     string type = "";
                     string formula = "";
                     string costType = "";
-                    int cost = 0;
                     string scope = "";
                     string animationClipName = "";
+                    string seName = "";
+                    int seChance = 0;
+                    int seDuration = 0;
+                    int cost = 0;
+                    
 
                     if (reader.Read()) {
                         type = reader.GetString(2);
                         formula = reader.GetString(3);
-                        costType = reader.GetString(4);
-                        cost = reader.GetInt32(5);
-                        scope = reader.GetString(6);
+                        seName = reader.GetString(4);
+                        seDuration = reader.GetInt32(5);
+                        seChance = reader.GetInt32(6);
+                        costType = reader.GetString(7);
+                        cost = reader.GetInt32(8);
+                        scope = reader.GetString(9);
                         if (isMonster) {
-                            animationClipName = reader.GetString(7);
+                            animationClipName = reader.GetString(10);
                         }
                         else {
-                            animationClipName = reader.GetString(8);
+                            animationClipName = reader.GetString(11);
                         }
 
-                        newAttack = new Attack(name, type, formula, costType, cost, scope, animationClipName);
+                        newAttack = new Attack(name, type, formula, seName, seDuration ,seChance, costType, cost, scope, animationClipName);
                     }
                     
                     if (newAttack == null) {

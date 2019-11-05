@@ -12,6 +12,8 @@ using Combat;
 using Items;
 using Party;
 using System.Collections;
+using System.Collections.Generic;
+using StatusEffectConstants = Constants.StatusEffectConstants;
 using UnityEngine;
 
 namespace Characters {
@@ -42,7 +44,7 @@ namespace Characters {
         /// <param name="CHP"> Current health points, for now irrelevant, but will be used for saving </param>
         /// <param name="CMP"> Current mana Points, for now irrelevant, but will be used for saving </param>
         /// <param name="stats"> STR, INT, DEX, LUK </param>
-        /// <param name="attacks"> List of known attacks (length 4)</param>
+        /// <param name="attacks"> Array of known attacks (length 4)</param>
         public void Init(string[] personalInfo, int LVL, int EXP, int CHP, int CMP, int[] stats, Attack[] attacks) {
             base.Init(LVL, CHP, CMP, stats, attacks);
             this.EXP = EXP;
@@ -239,12 +241,21 @@ namespace Characters {
             if (attackHit) {
                 int damage = CalculateAttackDamage(a);;
                 bool isCrit = CalculateAttackCrit(c);
+                bool isStatus = CalculateAttackStatus(a, c);
                 if (isCrit) {
                     damage = CalculateAttackDamageCrit(damage, c);
                     damage = CalculateAttackReductions(damage, a);
                 }
                 else {
                     damage = CalculateAttackReductions(damage, a);
+                }
+                if (isStatus) {
+                    int index = statusEffects.FindIndex(se => se.name == a.seName);
+                    if (index == -1) {  // no two statusEffects of the same type can be on at once
+                        StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
+                        newStatus.SetValue(c);
+                        AddStatusEffect(newStatus);
+                    }
                 }
                 
                 pmvc.SetDamageTaken(damage, isCrit);
@@ -263,6 +274,50 @@ namespace Characters {
         public IEnumerator DodgeAttack() {
             yield return StartCoroutine(pmvc.DisplayAttackDodged());
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inCombat"> 
+        /// Flag for if the statusEffect is triggering in combat.
+        /// Status effects cannot kill the player outside of combat.
+        /// </param>
+        /// <returns></returns>
+        public IEnumerator TriggerStatuses(bool inCombat) {
+            int damageTaken = 0;
+            List<string> animationClipNames = new List<string>();
+
+            foreach (StatusEffect se in statusEffects) {
+                if (se.name == StatusEffectConstants.BURN) {
+                    damageTaken += CalculateStatusEffectReductions(se);
+                    animationClipNames.Add(se.animationClipName);
+                }
+                se.duration -= 1;
+                
+                if (se.duration == 0) {
+                    seToRemove.Add(se);
+                }
+                
+            }
+
+            if (inCombat == false) {
+                if (CHP - damageTaken <= 0) {
+                    damageTaken = CHP - 1;
+                }
+            }
+            
+            // TODO: Make this play multiple animations overtop one another
+            if (damageTaken > 0) {
+                StartCoroutine(pmvc.DisplayStatusEffects(animationClipNames));
+                yield return StartCoroutine(LoseHP(damageTaken));
+            }
+
+            foreach (StatusEffect se in seToRemove) {
+                statusEffects.Remove(se);
+            }
+            seToRemove.Clear();
+        }
+
 
         /// <summary>
         /// Updates all stats after a piece of equipment is equipped

@@ -27,7 +27,7 @@ namespace Actions {
         public LocalizedText actionText;            /// <value> Text to be displayed </value>
         public CanvasGroup textCanvas;              /// <value> Canvas group for fading </value>
         public EventDescription eventDescription;   /// <value> Some actions will display what they do in the eventDescription </value>
-        
+
         public Attack a { get; private set; }               /// <value> Attack stored if attack </value>
         public Button b { get; private set; }               /// <value> Button component </value>
         public Interaction i { get; private set; }          /// <value> Interaction stored if interraction </value>

@@ -6,11 +6,15 @@
 * The Monster class is used to store and manipulate information about the Monster. 
 * It is always attached to a Monster gameObject.
 *
+* TO DO: Get rid of the monsterDisplayName and replace it with spriteName for tooltips
+*
 */
 
 using AssetManagers;
 using Combat;
+using StatusEffectConstants = Constants.StatusEffectConstants;
 using System.Collections;
+using System.Collections.Generic;
 using Result = Events.Result;
 using UnityEngine;
 
@@ -138,6 +142,35 @@ namespace Characters {
             yield return StartCoroutine(md.DisplayHPChange(amount, true, animationClipName));
         }
 
+        public IEnumerator TriggerStatuses() {
+            int damageTaken = 0;
+            List<string> animationClipNames = new List<string>();
+
+            foreach (StatusEffect se in statusEffects) {
+                if (se.name == StatusEffectConstants.BURN) {
+                    damageTaken += CalculateStatusEffectReductions(se);
+                    animationClipNames.Add(se.animationClipName);
+                }
+                se.duration -= 1;
+                
+                if (se.duration == 0) {
+                    seToRemove.Add(se);
+                }
+                
+            }
+
+            // TODO: Make this play multiple animations overtop one another
+            if (damageTaken > 0) { //might be a bad way to check cause 0 damage is the ting
+                yield return StartCoroutine(LoseHP(damageTaken, animationClipNames[0]));
+            }
+
+            foreach (StatusEffect se in seToRemove) {
+                statusEffects.Remove(se);
+            }
+            seToRemove.Clear();
+        }
+
+
         /// <summary>
         /// Handles the calculations involved when attack hits this monster
         /// </summary>
@@ -151,6 +184,7 @@ namespace Characters {
              if (attackHit) {
                 int damage = CalculateAttackDamage(a);
                 bool isCrit = CalculateAttackCrit(c);
+                bool isStatus = CalculateAttackStatus(a, c);
                 if (isCrit) {
                     damage = CalculateAttackDamageCrit(damage, c);
                     damage = CalculateAttackReductions(damage, a);
@@ -158,6 +192,14 @@ namespace Characters {
                 }
                 else {
                      damage = CalculateAttackReductions(damage, a);
+                }
+                if (isStatus) {
+                    int index = statusEffects.FindIndex(se => se.name == a.seName);
+                    if (index == -1) {  // no two tatusEffects of the same type can be on at once
+                        StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
+                        newStatus.SetValue(c);
+                        AddStatusEffect(newStatus);
+                    }
                 }
 
                 yield return StartCoroutine(LoseHP(damage, animationClipName));

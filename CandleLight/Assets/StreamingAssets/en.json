@@ -145,6 +145,7 @@
 		{ "key": "Ring0_item", "value": "Copper Ring" },
 		{ "key": "Pendant0_item", "value": "Copper Pendant" },
 		{ "key": "Armour0_item", "value": "Goblin Rags" },
+		{ "key": "Armour1_item", "value": "Wraith Cloak" },
 		{ "key": "Charm0_item", "value": "Greyhide Tail" },
 		{ "key": "WarriorWeapon0_item", "value": "Stinger Tibia" },
 		{ "key": "WarriorWeapon1_item", "value": "Copper Greatsword" },
@@ -184,6 +185,8 @@
 		{ "key": "greyhide_monster_description", "value": "They like to hunt in packs, preying on the weakest." },
 		{ "key": "stinger_monster", "value": "Stinger" },
 		{ "key": "stinger_monster_description", "value": "Its eyes reflect what little light there is to lure in prey." },
+		{ "key": "lesserWraith_monster", "value": "Lesser Wraith" },
+		{ "key": "lesserWraith_monster_description", "value": "Malevolent souls of those who died under false promises." },
 		{ "key": "greyhideAlpha_monster", "value": "Greyhide Alpha" },
 		{ "key": "greyhideAlpha_monster_description", "value": "Brute strength and a bit more brain. That's all it takes to become their alpha." },
 		
@@ -193,6 +196,8 @@
 		{ "key": "thrash_attack", "value": "Thrash" },
 		{ "key": "kick_attack", "value": "Kick" },
 		{ "key": "sting_attack", "value": "Sting" },
+		{ "key": "sneak_attack", "value": "Sneak" },
+		{ "key": "willOwisp_attack", "value": "Will'O'Wisp" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "whack_attack", "value": "Whack" },

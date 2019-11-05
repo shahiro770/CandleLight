@@ -42,7 +42,7 @@ namespace PlayerUI {
         /// <summary>
         /// Awake to get eventSystem reference
         /// </summary>
-        void Awake() {
+        public void Awake() {
             es = EventSystem.current;
             defaultSpriteRenderer.sprite = defaultSprite;
         }
@@ -295,6 +295,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Colours the default sprite and button outline
+        /// </summary>
+        /// <param name="newColour"> Color object </param>
+        /// <remark>
+        /// Used to colour equipment slots to make each character's gear visibly distinct
+        /// </remark>
+        public void SetColour(Color newColour) {
+            imgBackground.color = newColour;
+            defaultSpriteRenderer.color = new Color(newColour.r, newColour.g, newColour.b, defaultSpriteRenderer.color.a);
+        }
+
+        /// <summary>
         /// Makes the itemDisplay visible and interactable
         /// </summary>
         /// <param name="value"> true to make visible, false to hide </param>
@@ -345,7 +357,7 @@ namespace PlayerUI {
                 newAlpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
 
                 imgCanvas.alpha = newAlpha;
-                defaultSpriteRenderer.color = new Color(255, 255, 255, newAlpha);
+                defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, newAlpha);
 
                 yield return new WaitForEndOfFrame();
             }

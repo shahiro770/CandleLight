@@ -8,7 +8,10 @@
 */
 
 using AttackConstants = Constants.AttackConstants;
+using StatusEffectConstants = Constants.StatusEffectConstants;
 using Combat;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Characters {
@@ -39,11 +42,15 @@ namespace Characters {
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
         [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
-
+        [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
+        
+        protected int maxStatusEffects = 5;                               /// <value> Max number of status effects that can be on a character </value>
+        protected List<StatusEffect> seToRemove = new List <StatusEffect>();
+        
+        private float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
         private int baseCritChance = 5;                                   /// <value> Base chance of critting </value>
         private int baseAcc = 90;                                         /// <value> Base accuracy rating </value>
-        private float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
-
+       
         /// <summary>
         /// Initializes character properties
         /// </summary>
@@ -239,6 +246,20 @@ namespace Characters {
             return damage;
         }
 
+        public int CalculateStatusEffectReductions(StatusEffect se) {
+            int damage = se.value;
+
+            if (se.name == StatusEffectConstants.BURN) {
+                damage -= MDEF;
+            }
+            if (damage < 0) {
+                damage = 0;
+            }  
+
+            print("burn damage " + damage);
+            
+            return damage;
+        }
 
         /// <summary>
         /// Calculates the damage of a critical attack against this character
@@ -248,6 +269,18 @@ namespace Characters {
         /// <returns></returns>
         protected int CalculateAttackDamageCrit(int amount, Character c) {
             return (int)(amount * c.critMult);
+        }
+
+        protected bool CalculateAttackStatus(Attack a, Character c) {
+            bool attackStatus = Random.Range(0, 100) < a.seChance;
+
+            return attackStatus;
+        }
+
+        protected void AddStatusEffect(StatusEffect se) {
+            if (statusEffects.Count < maxStatusEffects) {
+                statusEffects.Add(se);
+            }
         }
 
         /// <summary>

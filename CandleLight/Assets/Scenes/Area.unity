@@ -211,8 +211,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -421,8 +419,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &78143140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,8 +437,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -577,8 +571,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &82578202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,8 +1426,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &151721934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,8 +1482,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  STR'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -2046,6 +2034,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Name
+      value: Tooltip2
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -2061,21 +2064,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 1698742928}
-    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Name
-      value: Tooltip2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &199835352 stripped
@@ -2165,8 +2153,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -2240,8 +2226,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -2475,16 +2459,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 560238026}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1275857260}
     - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: defaultSprite
@@ -2511,6 +2485,16 @@ PrefabInstance:
       propertyPath: itemSlotSubType
       value: armour
       objectReference: {fileID: 0}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 560238026}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1275857260}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &263456552 stripped
@@ -2600,8 +2584,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -2727,8 +2709,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Info
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -2886,8 +2866,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -3217,8 +3195,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 46431cec0ff194247bdbacbc93e3f5c5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -3358,8 +3334,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: WAX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -3517,8 +3491,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 100%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -3691,8 +3663,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -3821,7 +3791,6 @@ GameObject:
   - component: {fileID: 396602473}
   - component: {fileID: 396602472}
   - component: {fileID: 396602470}
-  - component: {fileID: 396602474}
   m_Layer: 5
   m_Name: ItemsCanvas
   m_TagString: Untagged
@@ -3913,18 +3882,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &396602474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396602468}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e58240f88ac918b47b93f6cb9b55497a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &398869701
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,8 +3953,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Event Description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -4155,8 +4110,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: WAX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -4331,8 +4284,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -4453,8 +4404,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: PROG
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -4612,8 +4561,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -4786,8 +4733,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  DEX'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -4960,8 +4905,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'HP
 
 '
@@ -5153,8 +5096,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -5228,8 +5169,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Party
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -5585,8 +5524,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 0d37f23cdd499414cba443b1f2159f94, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -5660,8 +5597,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: HP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -5895,21 +5830,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 263456554}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 2098356948}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1912594184}
     - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: defaultSprite
@@ -5936,6 +5856,21 @@ PrefabInstance:
       propertyPath: itemSlotSubType
       value: secondary
       objectReference: {fileID: 0}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 263456554}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 2098356948}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1912594184}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &560238024 stripped
@@ -6024,8 +5959,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -6244,8 +6177,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -6331,8 +6262,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '0
 
 '
@@ -6508,8 +6437,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -6644,6 +6571,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -6669,16 +6606,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 1294357091}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &660624173 stripped
@@ -6782,8 +6709,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Skills
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -7020,8 +6945,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -7095,8 +7018,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -7269,8 +7190,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: EXP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -7444,8 +7363,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Action 0
 
 '
@@ -7633,8 +7550,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -7769,6 +7684,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Name
+      value: Tooltip0
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -7789,21 +7719,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 1294357091}
-    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Name
-      value: Tooltip0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &731922894 stripped
@@ -7928,8 +7843,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &738896043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7948,8 +7861,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -8119,8 +8030,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  DOG'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -8316,8 +8225,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &763050406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8336,8 +8243,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -8412,8 +8317,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -8942,8 +8845,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5c2bbb7e0e068439ca86a3ef6cce9f18, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -9029,8 +8930,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 99999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -9245,8 +9144,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -9301,8 +9198,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Gear
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -9533,8 +9428,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  ACC'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -9708,8 +9601,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -9783,8 +9674,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: George LVL 99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -10156,8 +10045,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Items
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -10318,8 +10205,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -10460,8 +10345,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!224 &948483799 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2297247119919838524, guid: 039339a77bb6e4be394a3852374596d5,
@@ -10633,6 +10516,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Name
+      value: Tooltip4
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -10658,21 +10556,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnLeft
       value: 
       objectReference: {fileID: 1912594184}
-    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Name
-      value: Tooltip4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &960695803 stripped
@@ -10822,6 +10705,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Name
+      value: Tooltip3
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -10847,21 +10745,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 1294357091}
-    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Name
-      value: Tooltip3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &972309774 stripped
@@ -10986,8 +10869,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &991703033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11006,8 +10887,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -11374,8 +11253,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Next
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -11548,8 +11425,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  INT'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -11856,8 +11731,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 8f3630a9aa8ac471aaba68768fc55200, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -11991,8 +11864,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -12065,8 +11936,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -12140,8 +12009,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -12531,8 +12398,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: MP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -12745,8 +12610,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  MATK'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -12919,8 +12782,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -13212,8 +13073,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Action 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -13397,8 +13256,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -13518,8 +13375,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1273812872
 GameObject:
   m_ObjectHideFlags: 0
@@ -13576,8 +13431,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  MDEF'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -13811,6 +13664,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -13831,16 +13694,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 1912594184}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &1275857258 stripped
@@ -14100,8 +13953,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!224 &1294357092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14288,6 +14139,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Name
+      value: Tooltip5
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -14308,21 +14174,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnLeft
       value: 
       objectReference: {fileID: 1275857260}
-    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Name
-      value: Tooltip5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &1322070122 stripped
@@ -14411,8 +14262,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -14584,8 +14433,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -14762,8 +14609,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -14858,8 +14703,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  CRIT'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -15033,8 +14876,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -15127,8 +14968,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -15202,8 +15041,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 0%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -15377,8 +15214,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Action 4
 
 '
@@ -15565,8 +15400,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 99999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -15959,8 +15792,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1626114941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15979,8 +15810,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -16118,8 +15947,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Candles
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -16311,8 +16138,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  PDEF'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -16486,8 +16311,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -16724,8 +16547,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'Action 2
 
 '
@@ -16936,8 +16757,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -17019,8 +16838,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -17199,6 +17016,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Name
+      value: Tooltip1
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -17219,21 +17051,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 731922896}
-    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Name
-      value: Tooltip1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &1698742926 stripped
@@ -17370,8 +17187,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: EXP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -17771,8 +17586,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -17861,8 +17674,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '0
 
 '
@@ -18022,8 +17833,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '0
 
 '
@@ -18197,8 +18006,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -18769,8 +18576,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -18844,8 +18649,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -19585,8 +19388,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -19820,6 +19621,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 1861426946}
+    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: itemSlotSubType
+      value: any
+      objectReference: {fileID: 0}
     - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: m_Interactable
@@ -19845,16 +19656,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 1275857260}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: parentPanel
-      value: 
-      objectReference: {fileID: 1861426946}
-    - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: itemSlotSubType
-      value: any
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &1912594182 stripped
@@ -19943,8 +19744,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -20357,8 +20156,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1950631657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20377,8 +20174,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -20467,8 +20262,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '0
 
 '
@@ -20628,8 +20421,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  LUK'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -20864,8 +20655,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!224 &1967146485
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21014,8 +20803,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: MP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -21404,8 +21191,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5c2bbb7e0e068439ca86a3ef6cce9f18, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -21480,8 +21265,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Action 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
@@ -21911,26 +21694,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 560238026}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 660624175}
-    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 1294357091}
-    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
-        type: 3}
-      propertyPath: m_Name
-      value: TooltipW
-      objectReference: {fileID: 0}
     - target: {fileID: 7806433709260904960, guid: cd760e02436874e679642a9ea234f183,
         type: 3}
       propertyPath: defaultSprite
@@ -21957,6 +21720,26 @@ PrefabInstance:
       propertyPath: itemSlotSubType
       value: weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 5731446380579412910, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Name
+      value: TooltipW
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 560238026}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 660624175}
+    - target: {fileID: 8448935798598763705, guid: cd760e02436874e679642a9ea234f183,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1294357091}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd760e02436874e679642a9ea234f183, type: 3}
 --- !u!224 &2098356946 stripped
@@ -22081,8 +21864,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &2098523430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22101,8 +21882,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -22202,8 +21981,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: cafe835a9ecee476bb961dcd25e65916, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -22277,8 +22054,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: '  PATK'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}

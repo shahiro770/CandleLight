@@ -8,13 +8,13 @@
 *
 */
 
-using Combat;
 using Localization;
 using Events;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using PlayerUI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Characters {
@@ -358,6 +358,10 @@ namespace Characters {
         public IEnumerator DisplayAttackDodged() {
             eventDescription.SetPMDodgeText(pm);
             yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
+        }
+
+        public IEnumerator DisplayStatusEffects(List<string> animationClipNames) {
+            yield return (StartCoroutine(pmdPartyPanel.PlayStatusEffectAnimations(animationClipNames)));
         }
     }
 }
