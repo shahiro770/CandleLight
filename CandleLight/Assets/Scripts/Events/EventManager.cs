@@ -278,7 +278,6 @@ namespace Events {
         public IEnumerator DisplayEvent() {
             if (displayStartEvent == false) {
                 nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
-                print("transitioning");
                 yield return StartCoroutine(TransitionToNextEvent());
             } 
             else {
@@ -360,10 +359,6 @@ namespace Events {
                 utilityTabManager.SetAllButtonsInteractable();
                 SetNavigation();
             }
-        }
-
-        public IEnumerator CleanUpPrevEvent() {
-            yield return StartCoroutine(PartyManager.instance.TriggerStatuses());
         }
 
         public void SetNavigation() {
@@ -636,7 +631,7 @@ namespace Events {
             gearPanel.SetInteractable(false);
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
-            yield return (StartCoroutine(CleanUpPrevEvent()));
+            StartCoroutine(PartyManager.instance.TriggerStatuses(false));
             yield return (StartCoroutine(FadeBackgrounds()));
         }
 

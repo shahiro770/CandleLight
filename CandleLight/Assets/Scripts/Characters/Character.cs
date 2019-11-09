@@ -246,17 +246,21 @@ namespace Characters {
             return damage;
         }
 
+        /// <summary>
+        /// Reduces damage from a status effect depending on the partyMember
+        /// </summary>
+        /// <param name="se"> Status effect to calculate </param>
+        /// <returns></returns>
         public int CalculateStatusEffectReductions(StatusEffect se) {
             int damage = se.value;
 
             if (se.name == StatusEffectConstants.BURN) {
                 damage -= MDEF;
             }
+            // poison damage can't be reduced for now
             if (damage < 0) {
                 damage = 0;
             }  
-
-            print("burn damage " + damage);
             
             return damage;
         }

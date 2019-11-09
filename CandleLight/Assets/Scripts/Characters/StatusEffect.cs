@@ -15,7 +15,6 @@ namespace Characters {
     [System.Serializable]
     public class StatusEffect {
 
-        [field: SerializeField] public string animationClipName { get; private set; }   /// <value> Name of animation to be played when effect happens </value>
         [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of status effect </value>
         [field: SerializeField] public int value { get; private set; }          /// <value> Calculated value from formula </value>
@@ -30,18 +29,19 @@ namespace Characters {
             nameKey = name + "_status";
         }
 
-        public void SetValue(Character c) {
+        /// <summary>
+        /// Sets the value for a status effect (e.g. damage, defense buff amount)
+        /// </summary>
+        /// <param name="afflicter"></param>
+        /// <param name="afflicted"></param>
+        public void SetValue(Character afflicter, Character afflicted) {
             if (name == StatusEffectConstants.BURN) {
-                value = (int)(1 + c.MATK * 0.2f);
+                value = (int)(1 + afflicter.MATK * 0.2f);
+            }
+            else if (name == StatusEffectConstants.POISON) {
+                value = (int)(1 + afflicted.HP * 0.05f);
             }
         }
 
-        public string GetAnimationClipName(Character c) {
-            if (c.GetType().Name == "Monster") {
-                return "M" + name + "SEAnimation";
-            }
-            
-            return "PM" + name + "SEAnimation";
-        }
     }
 }

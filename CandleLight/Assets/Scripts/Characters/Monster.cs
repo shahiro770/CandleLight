@@ -144,24 +144,34 @@ namespace Characters {
 
         public IEnumerator TriggerStatuses() {
             int damageTaken = 0;
-            List<string> animationClipNames = new List<string>();
+            int[] animationsToPlay = new int[] { 0 ,0 }; 
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
                     damageTaken += CalculateStatusEffectReductions(se);
-                    animationClipNames.Add(se.animationClipName);
+                    animationsToPlay[0] = 1;
+                }
+                else if (se.name == StatusEffectConstants.POISON) {
+                    damageTaken += CalculateStatusEffectReductions(se);
+                    animationsToPlay[1] = 1;
                 }
                 se.duration -= 1;
                 
                 if (se.duration == 0) {
                     seToRemove.Add(se);
-                }
-                
+                }   
+            }
+
+            if (animationsToPlay[0] == 1) {
+                md.PlayBurnAnimation();
+            }
+            if (animationsToPlay[1] == 1) {
+                md.PlayPoisonAnimation();
             }
 
             // TODO: Make this play multiple animations overtop one another
             if (damageTaken > 0) { //might be a bad way to check cause 0 damage is the ting
-                yield return StartCoroutine(LoseHP(damageTaken, animationClipNames[0]));
+                yield return StartCoroutine(LoseHP(damageTaken, "MplaceHolderEffect"));
             }
 
             foreach (StatusEffect se in seToRemove) {
@@ -197,7 +207,7 @@ namespace Characters {
                     int index = statusEffects.FindIndex(se => se.name == a.seName);
                     if (index == -1) {  // no two tatusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                        newStatus.SetValue(c);
+                        newStatus.SetValue(this, c);
                         AddStatusEffect(newStatus);
                     }
                 }

@@ -253,7 +253,7 @@ namespace Characters {
                     int index = statusEffects.FindIndex(se => se.name == a.seName);
                     if (index == -1) {  // no two statusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                        newStatus.SetValue(c);
+                        newStatus.SetValue(c, this);
                         AddStatusEffect(newStatus);
                     }
                 }
@@ -284,33 +284,42 @@ namespace Characters {
         /// </param>
         /// <returns></returns>
         public IEnumerator TriggerStatuses(bool inCombat) {
-            int damageTaken = 0;
-            List<string> animationClipNames = new List<string>();
+            int SEDamageTaken = 0;
+            int[] animationsToPlay = new int[] { 0 ,0 }; 
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
-                    damageTaken += CalculateStatusEffectReductions(se);
-                    animationClipNames.Add(se.animationClipName);
+                    SEDamageTaken += CalculateStatusEffectReductions(se);
+                    animationsToPlay[0] = 1;
+                }
+                else if (se.name == StatusEffectConstants.POISON) {
+                    SEDamageTaken += CalculateStatusEffectReductions(se);
+                    animationsToPlay[1] = 1;
                 }
                 se.duration -= 1;
                 
                 if (se.duration == 0) {
                     seToRemove.Add(se);
                 }
-                
             }
 
-            if (inCombat == false) {
-                if (CHP - damageTaken <= 0) {
-                    damageTaken = CHP - 1;
+            if (inCombat == true) {
+                pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
+                if (SEDamageTaken > 0) {
+                    pmvc.SetDamageTaken(SEDamageTaken, false);
+                    yield return StartCoroutine(LoseHP(SEDamageTaken));
+                }
+            }
+            else {
+                if (CHP - SEDamageTaken <= 0) {
+                    SEDamageTaken = CHP - 1;
+                }
+                pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
+                if (SEDamageTaken > 0) {
+                    StartCoroutine(LoseHP(SEDamageTaken));
                 }
             }
             
-            // TODO: Make this play multiple animations overtop one another
-            if (damageTaken > 0) {
-                StartCoroutine(pmvc.DisplayStatusEffects(animationClipNames));
-                yield return StartCoroutine(LoseHP(damageTaken));
-            }
 
             foreach (StatusEffect se in seToRemove) {
                 statusEffects.Remove(se);

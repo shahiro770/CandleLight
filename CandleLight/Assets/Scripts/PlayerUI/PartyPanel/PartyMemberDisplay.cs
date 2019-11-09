@@ -25,6 +25,8 @@ namespace PlayerUI {
         /* external component references */
         public Animator pmDisplayAnimator;  /// <value> Animator for display motion </value>
         public Animator pmEffectsAnimator;  /// <value> Animator for effects that display over the pmd </value>
+        public Animator pmBurnAnimator;  /// <value> Animator for effects that display over the pmd </value>
+        public Animator pmPoisonAnimator;  /// <value> Animator for effects that display over the pmd </value>
         public Image classIcon;         /// <value> Icon of class </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
@@ -203,20 +205,53 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Plays the animation for when the partyMember dodges an attack
+        /// Plays the animation for when the partyMember has some effect occur on them
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
-        public IEnumerator PlayStatusEffectAnimations(List<string> animationClipNames) {
-            // for (int i = 0; i < animationClipNames.Count; i++) {
-            //      SetEffectsAnimatorClip(animationClipName, i);
-               
-            // }
-             SetEffectsAnimatorClip(animationClipNames[0]);
+        public IEnumerator PlayEffectAnimation(string animationClipName) {
+            SetEffectsAnimatorClip(animationClipName);
             pmEffectsAnimator.SetTrigger("statusEffected");
             do {
                 yield return null;    
-            } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            pmDisplayAnimator.ResetTrigger("statusEffected");
+            } while (pmEffectsAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmEffectsAnimator.ResetTrigger("statusEffected");
+        }
+
+        /// <summary>
+        /// Plays the burn animation
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator PlayBurnAnimation() {
+            pmBurnAnimator.SetTrigger("statusEffected");
+            do {
+                yield return null;    
+            } while (pmBurnAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmBurnAnimator.ResetTrigger("statusEffected");
+        }
+
+        /// <summary>
+        /// Plays the poison animation
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator PlayPoisonAnimation() {
+            pmPoisonAnimator.SetTrigger("statusEffected");
+            do {
+                yield return null;    
+            } while (pmPoisonAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmPoisonAnimator.ResetTrigger("statusEffected");
+        }
+
+        /// <summary>
+        /// Plays status effect animations depending on the partyMember's current status effects
+        /// </summary>
+        /// <param name="animationsToPlay"></param>
+        public void PlayCleanUpStatusEffectAnimations(int[] animationsToPlay) {
+            if (animationsToPlay[0] == 1) {
+                StartCoroutine(PlayBurnAnimation());
+            }
+            if (animationsToPlay[1] == 1) {
+                StartCoroutine(PlayPoisonAnimation());
+            }
         }
 
         /// <summary>

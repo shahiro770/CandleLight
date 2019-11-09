@@ -335,20 +335,32 @@ namespace Party {
             activePartyMember.UnequipGear(subType);  // need to figure out if itemDisplay's item should be private
         }
 
-        public IEnumerator TriggerStatuses() { 
-            PartyMember yielding = null;
-            for (int i = 0; i < partyMembersAlive.Count; i++) {
-                if (yielding == null && partyMembersAlive[i].statusEffects.Count > 0) {
-                    yielding = partyMembersAlive[i];
+        /// <summary>
+        /// Triggers status effects on all partyMembers
+        /// </summary>
+        /// <param name="inCombat"> True if in combat, false otherwise </param>
+        /// <returns></returns>
+        public IEnumerator TriggerStatuses(bool inCombat) {
+            if (inCombat) {
+                PartyMember yielding = null;
+                for (int i = 0; i < partyMembersAlive.Count; i++) {
+                    if (yielding == null && partyMembersAlive[i].statusEffects.Count > 0) {
+                        yielding = partyMembersAlive[i];
+                    }
+                }
+                for (int i = 0; i < partyMembersAlive.Count; i++) {
+                    if (partyMembersAlive[i] != yielding) {
+                        StartCoroutine(partyMembersAlive[i].TriggerStatuses(inCombat));
+                    }
+                }
+                if (yielding != null) {
+                    yield return (StartCoroutine(yielding.TriggerStatuses(inCombat)));
                 }
             }
-            for (int i = 0; i < partyMembersAlive.Count; i++) {
-                if (partyMembersAlive[i] != yielding) {
-                    StartCoroutine(partyMembersAlive[i].TriggerStatuses(false));
+            else {
+                for (int i = 0; i < partyMembersAlive.Count; i++) {
+                    StartCoroutine(partyMembersAlive[i].TriggerStatuses(inCombat));
                 }
-            }
-            if (yielding != null) {
-                yield return (StartCoroutine(yielding.TriggerStatuses(false)));
             }
         }
     }

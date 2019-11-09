@@ -360,8 +360,21 @@ namespace Characters {
             yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
         }
 
-        public IEnumerator DisplayStatusEffects(List<string> animationClipNames) {
-            yield return (StartCoroutine(pmdPartyPanel.PlayStatusEffectAnimations(animationClipNames)));
+        /// <summary>
+        /// Displays the animatino of an effect (usually buffs)
+        /// </summary>
+        /// <param name="animationClipName"> Name of animation clip to set </param>
+        /// <returns></returns>
+        public IEnumerator DisplayEffect(string animationClipName) {
+            yield return (StartCoroutine(pmdPartyPanel.PlayStatusEffectAnimation(animationClipName)));
+        }
+
+        /// <summary>
+        /// Plays status effect animations that trigger during the PartyMemberCleanUp 
+        /// </summary>
+        /// <param name="animationsToPlay"></param>
+        public void DisplayCleanUpStatusEffects(int[] animationsToPlay) {
+            pmdPartyPanel.PlayCleanUpStatusEffectAnimations(animationsToPlay);
         }
     }
 }

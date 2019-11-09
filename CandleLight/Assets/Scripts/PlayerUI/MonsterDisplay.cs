@@ -24,6 +24,8 @@ namespace Characters {
         
         /* external component references */
         public Animator effectsAnimator;    /// <value> Animator for all effects played over-top of monster </value>
+        public Animator burnAnimator;
+        public Animator poisonAnimator;
         public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
         public Bar HPBar;                   /// <value> Monster's health points display </value>
         public Button b;                    /// <value> Button to make monster selectable </value>
@@ -357,13 +359,27 @@ namespace Characters {
         public IEnumerator PlayStartTurnAnimation() {
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "startTurn")));
         }
-        
+
         /// <summary>
         /// Plays the attack animation of a monster
         /// </summary>
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlayAttackAnimation() {
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "attack" + displayedMonster.selectedAttackIndex)));
+        }
+
+        /// <summary>
+        /// Plays the burn animation of a monster
+        /// </summary>
+        public void PlayBurnAnimation() {
+            StartCoroutine(PlayAnimation(burnAnimator, "statusEffected"));
+        }
+
+        /// <summary>
+        /// Plays the poisonn animation of a monster
+        /// </summary>
+        public void PlayPoisonAnimation() {
+            StartCoroutine(PlayAnimation(poisonAnimator, "statusEffected"));
         }
 
          /// <summary>
