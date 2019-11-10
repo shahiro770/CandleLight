@@ -486,6 +486,7 @@ namespace Events {
             else if (r.type == ResultConstants.ITEM) {
                 actionsPanel.SetItemActions();
                 eventDescription.SetKey(r.resultKey);
+
                 DisplayResultItems(r);
                 SetNavigation();
             }
@@ -516,11 +517,19 @@ namespace Events {
                 GetNextEvent();
             }
             else if (r.type == ResultConstants.STATSINGLE) {
+                eventDescription.SetKey(r.resultKey);
                 ApplyResultStatChangesSingle(r);
                 SetNavigation();
             }
             else if (r.type == ResultConstants.STATALL) {
+                eventDescription.SetKey(r.resultKey);
                 ApplyResultStatChangesMultiple(r);
+                SetNavigation();
+            }
+            else if (r.type == ResultConstants.STATALLANDLEAVE) {
+                eventDescription.SetKey(r.resultKey);
+                ApplyResultStatChangesMultiple(r);
+                actionsPanel.TravelActions();
                 SetNavigation();
             }
             else if (r.type == ResultConstants.PRECOMBAT) {
@@ -599,7 +608,6 @@ namespace Events {
         /// <param name="r"> Result containing the stats to be changed </param>
         public void ApplyResultStatChangesMultiple(Result r) {
             r.GenerateResults();
-            eventDescription.SetKey(r.resultKey);
 
             if (r.HPAmount != 0) {
                 PartyManager.instance.AddHPAll(r.HPAmount);

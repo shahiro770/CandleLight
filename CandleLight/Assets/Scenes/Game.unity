@@ -330,9 +330,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b88ac7a1edbf428c9d9eda27baa5468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storageAccount: candlelight
-  accessKey: 2/SBY+w6wQCr5cN/Q+wEYkKTFKj2c+wMQi43Yx80PGANP5/8n8q5OgUdXj8SAAdyidG8xA48iJizIbIxFHPEKA==
-  container: sprites
+  storageAccount: 
+  accessKey: 
+  container: 
 --- !u!4 &1495799581
 Transform:
   m_ObjectHideFlags: 0

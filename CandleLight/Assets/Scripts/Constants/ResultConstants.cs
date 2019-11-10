@@ -19,6 +19,7 @@ namespace Constants {
         public static readonly string SUBEVENT = "subEvent";        /// <value> Player is thrown into a specific event </value>
         public static readonly string STATSINGLE = "statSingle";    /// <value> A single partyMember all recieve an instant stat change </value>
         public static readonly string STATALL = "statAll";          /// <value> All partyMembers all recieve an instant stat change </value>
+        public static readonly string STATALLANDLEAVE = "statAllAndLeave";   /// <value> All partyMembers receive an instant stat change, and then can leave </value> 
         public static readonly string PRECOMBAT = "preCombat";      /// <value> Not sure what this is for </value>
         public static readonly string COMBAT = "combat";            /// <value> Player must fight monsters </value>
         public static readonly string COMBATWITHSIDEEFFECTS = "combatWithSideEffects";  /// <value> Something happens before player fights monsters </value>
