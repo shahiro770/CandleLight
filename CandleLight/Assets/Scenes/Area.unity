@@ -9105,11 +9105,6 @@ PrefabInstance:
       propertyPath: b
       value: 
       objectReference: {fileID: 797477990}
-    - target: {fileID: 6700437132196628627, guid: eac1c7aed263a437896d760671851422,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 82578201}
     - target: {fileID: 8247081326552025637, guid: eac1c7aed263a437896d760671851422,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -9805,6 +9800,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6700437132196628627, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 82578201}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac1c7aed263a437896d760671851422, type: 3}
 --- !u!224 &797477988 stripped
@@ -24248,11 +24248,6 @@ PrefabInstance:
       propertyPath: itemDisplays.Array.data[3]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 3346768662948992289, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3346768662948992291, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
         type: 3}
       propertyPath: m_Alpha
@@ -24688,6 +24683,11 @@ PrefabInstance:
       propertyPath: rootCanvas
       value: 
       objectReference: {fileID: 109473394}
+    - target: {fileID: 3346768662948992289, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3de292233a9ed4c0bb1bcc5e5dbe901c, type: 3}
 --- !u!114 &3346768662779600147 stripped

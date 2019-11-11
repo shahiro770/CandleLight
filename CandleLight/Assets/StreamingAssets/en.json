@@ -20,7 +20,7 @@
 
 		{ "key": "cost_text", "value": "Cost"},
 		{ "key": "crit_text", "value": "Critical hit!"},
-		{ "key": "damage_text", "value": "Damage" },
+		{ "key": "damage_text", "value": "damage" },
 		{ "key": "dodged_text", "value": "dodged" },
 		{ "key": "lost_text", "value": "lost" },
 		{ "key": "miss_text", "value": "MISS"},
@@ -231,6 +231,7 @@
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "whack_attack", "value": "Whack" },
 		{ "key": "slash_attack", "value": "Slash" },
+		{ "key": "fireSlash_attack", "value": "Fire Slash" },
 		{ "key": "bash_attack", "value": "Bash" },
 		{ "key": "none_attack", "value": ""}
 	]

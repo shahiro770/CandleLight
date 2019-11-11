@@ -532,7 +532,6 @@ namespace Events {
                 SetNavigation();
             }
             else if (r.type == ResultConstants.PRECOMBAT) {
-                Debug.Log("THIS IS A PRECOMBAT INTERACTION");
                 eventDescription.FadeOut();
                 HideEventDisplays();
                 

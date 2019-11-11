@@ -95,7 +95,6 @@ namespace PlayerUI {
         /// <summary>
         /// Changes the displayed text 
         /// </summary>
-
         public void SetAmountTextMultiple(string textName, string[] textKeys, string[] amounts) {
             if (textName == "title") {
                 titleText.SetMultipleKeysAndAppend(textKeys, amounts);

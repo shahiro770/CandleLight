@@ -134,9 +134,12 @@ namespace Actions {
             if (value == false && isUsable == true) {
                 ShowActionDisabled();
             }
+            else if (value == true && isUsable == false) {
+                SetUsable(false);
+            }      
             else if (value == true) {
                 ShowActionUnselected();
-            }            
+            }
         }
         
         /// <summary>

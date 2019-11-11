@@ -77,7 +77,7 @@ namespace Items {
                     effects[i] = "none";
                 }
 
-                values[i] =  Random.Range((int)(values[i] * multiplier), (int)(values[i] * (1 + multiplier)));
+                values[i] =  Random.Range((int)(Mathf.Max(1, values[i] * multiplier)), (int)(values[i] * (1 + multiplier)));
             }
         }
  

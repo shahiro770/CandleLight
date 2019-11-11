@@ -231,7 +231,6 @@ namespace PlayerUI {
             }
 
             ResetFifthButtonNavigation();
-
             CombatManager.instance.UndoPMAction();  // update combat manager to know party members can't attack yet
         }
 
@@ -319,6 +318,9 @@ namespace PlayerUI {
                         }
                     }
                 } 
+                else {
+                    actions[i].SetUsable(true);
+                }
             } 
         }
 
@@ -405,10 +407,10 @@ namespace PlayerUI {
         /// Resets the navigation of the fifth button (flee, undo)
         /// </summary>
         private void ResetFifthButtonNavigation() {
-            Button b = actions[4].GetComponent<Button>();
+            Button b = actions[4].b;
             Navigation n = b.navigation;
 
-            n.selectOnUp = actions[2].IsInteractable() ? n.selectOnUp : actions[0].GetComponent<Button>();
+            n.selectOnUp = actions[2].IsInteractable() ?actions[2].b : actions[0].b;
             b.navigation = n;
         }
 

@@ -104,7 +104,7 @@ namespace Events {
             if (type == "item" || type == "itemWithSubEvent") {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 1);
             }
-            else if (type == "combatWithSideEffects" || type == "statAll") {
+            else if (type == "combatWithSideEffects" || type == "statAll" || type == "statAllAndLeave") {
                 EXPAmount = GenerateAmount(EXPChange);
                 HPAmount = GenerateAmount(HPChange);
                 MPAmount = GenerateAmount(MPChange);

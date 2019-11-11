@@ -221,7 +221,7 @@ namespace Characters {
                     int index = statusEffects.FindIndex(se => se.name == a.seName);
                     if (index == -1) {  // no two tatusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                        newStatus.SetValue(this, c);
+                        newStatus.SetValue(c, this);
                         AddStatusEffect(newStatus);
                         md.AddStatusEffectDisplay(newStatus);
                     }
