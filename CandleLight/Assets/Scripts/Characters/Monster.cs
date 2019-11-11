@@ -107,8 +107,13 @@ namespace Characters {
         /// <summary>
         /// Sets the monster's level between its minimum level and maximum level
         /// </summary>
-        public void MultipleLVLUp() {
-            base.MultipleLVLUp(minLVL, maxLVL, this.multiplier);  
+        public void MultipleLVLUp(int subAreaProgress) {
+            if (subAreaProgress < 35) { // prevent stronger monsters from appearing at the start of the area
+                base.MultipleLVLUp(minLVL, Mathf.Max(minLVL, maxLVL - 1), this.multiplier);  
+            }
+            else {
+                base.MultipleLVLUp(minLVL, maxLVL, this.multiplier);  
+            }
             // it takes 5 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
             // + LVL - 1 is meant to ease the grind in early levels

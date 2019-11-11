@@ -134,7 +134,7 @@ namespace Combat {
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             
             monsterComponent.ID = countID++;
-            monsterComponent.MultipleLVLUp();
+            monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
             monsterComponent.md.AddSMDListener(smd);
             monsterComponent.md.SetInteractable(false);
 

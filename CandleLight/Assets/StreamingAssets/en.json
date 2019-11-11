@@ -74,7 +74,9 @@
 		{ "key": "stingerBurrows_event", "value": "Stingers paralyze their prey and store them for later in burrows. There might be something useful. There might be someone home." },
 		{ "key": "stingerBurrowsRisky_event", "value": "You find what was left after their last meal. Something shiny caught your eye deeper in. Is it worth the risk?" },
 		{ "key": "wraithTomb_event", "value": "Larger tombs represent mass burials. Make a prayer?" },
-		
+		{ "key": "goblinHut_event", "value": "Smart goblins band together and stash whatever they find between some rocks. There doesn't seem to be anyone home."},
+		{ "key": "goblinHutLoud_event", "value": "There's a large amount of copper scraps in the pile. The sounds of the metal clinking together could alert nearby goblins."},
+
 		{ "key": "theGreyWastes0_int", "value": "Begin" },
 		{ "key": "fight_int", "value": "Fight" },
 		{ "key": "none_int", "value": "" },
@@ -88,10 +90,12 @@
 		{ "key": "greyWastesPathSplit1_int", "value": "Right" },
 		{ "key": "stingerBurrows0_int", "value": "Search" },
 		{ "key": "stingerBurrowsRisky0_int", "value": "Search" },
-		{ "key" : "wraithTomb0_int", "value": "Vigor"},
-		{ "key" : "wraithTomb1_int", "value": "Power"},
-		{ "key" : "wraithTomb2_int", "value": "Protection"},
-		{ "key" : "wraithTomb3_int", "value": "Wealth"},
+		{ "key": "wraithTomb0_int", "value": "Vigor"},
+		{ "key": "wraithTomb1_int", "value": "Power"},
+		{ "key": "wraithTomb2_int", "value": "Protection"},
+		{ "key": "wraithTomb3_int", "value": "Wealth"},
+		{ "key": "goblinHut0_int", "value": "Check"},
+		{ "key": "goblinHutLoud0_int", "value": "Rummage"},
 		{ "key": "takeAll_int", "value": "Take All" },
 		
 		{ "key": "lostPouch0_0_res", "value": "You found something useful." },
@@ -122,6 +126,10 @@
 		{ "key": "wraithTomb3_1_res", "value": "The tomb emits some kind of light. Oddly shaped coins are in your hands." },
 		{ "key": "wraithTomb3_2_res", "value": "The dead owe you nothing." },
 		{ "key": "wraithTomb3_3_res", "value": "You idle at the rock. Your prayers have gone unanswered. Not the first time this has happened to you." },
+		{ "key": "goblinHut0_0_res", "value": "The pile is worthless, but you notice its sitting on top of some good condition rags." },
+		{ "key": "goblinHut0_2_res", "value": "You inspect the goblin's crude hut, only to see a pile of garbage." },
+		{ "key": "goblinHutLoud0_0_res", "value": "You sift through their pile and find a lot of useful trinkets." },
+		{ "key": "goblinHutLoud0_1_res", "value": "You were too loud." },
 		
 		{ "key": "none_label", "value": "None" },
 		{ "key": "HP_label", "value": "HP" },
