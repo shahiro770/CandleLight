@@ -350,6 +350,66 @@ RectTransform:
   m_AnchoredPosition: {x: 66.75, y: 0}
   m_SizeDelta: {x: 174.5, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &7792862610634257583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6008353726526914949}
+  - component: {fileID: 2748725841467642069}
+  m_Layer: 5
+  m_Name: StatusEffectHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6008353726526914949
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792862610634257583}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8247081326829107968}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 210.25, y: 0}
+  m_SizeDelta: {x: 112.5, y: 45}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2748725841467642069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792862610634257583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 22.5, y: 22.5}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &8247081326552025635
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +965,7 @@ RectTransform:
   - {fileID: 3785256735923328690}
   - {fileID: 8247081327639305491}
   - {fileID: 8247081328169137586}
+  - {fileID: 6008353726526914949}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -941,6 +1002,9 @@ MonoBehaviour:
   LVLBackground: {fileID: 0}
   HPBar: {fileID: 8247081327639305492}
   MPBar: {fileID: 8247081328169137587}
+  SEDisplayPrefab: {fileID: 170406270222699413, guid: 9e4fef2cec32642d2ae57d1a7ceed047,
+    type: 3}
+  SEHolder: {fileID: 7792862610634257583}
   EXPBar: {fileID: 0}
   b: {fileID: 6700437132196628627}
   bts: {fileID: 3340190573911976427}

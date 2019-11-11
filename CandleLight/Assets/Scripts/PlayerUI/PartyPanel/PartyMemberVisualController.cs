@@ -370,6 +370,14 @@ namespace Characters {
         // }
 
         /// <summary>
+        /// Tell partyMemberDisplay to add a statusEffect
+        /// </summary>
+        /// <param name="se"></param>
+        public void AddStatusEffectDisplay(StatusEffect se) {
+            pmdPartyPanel.AddStatusEffectDisplay(se);
+        }
+
+        /// <summary>
         /// Plays status effect animations that trigger during the PartyMemberCleanUp 
         /// </summary>
         /// <param name="animationsToPlay"></param>

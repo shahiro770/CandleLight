@@ -81,6 +81,17 @@ namespace Characters {
             this.multiplier = multiplier;
             this.monsterSize = monsterSize;
 
+            // max number of status effects will vary depending on a monster's size
+             if (monsterSize == "small" || monsterSize == "extraSmall") {
+                maxStatusEffects = 5;
+            } 
+            else if (monsterSize == "medium") {
+                maxStatusEffects = 6;
+            }
+             else if (monsterSize == "large") {
+                maxStatusEffects = 10;
+            }
+
             foreach (Attack a in attacks) {
                 if (a.name != "none") {
                     attackNum++;
@@ -155,8 +166,8 @@ namespace Characters {
                     damageTaken += CalculateStatusEffectReductions(se);
                     animationsToPlay[1] = 1;
                 }
-                se.duration -= 1;
-                
+
+                se.UpdateDuration();
                 if (se.duration == 0) {
                     seToRemove.Add(se);
                 }   
@@ -175,11 +186,11 @@ namespace Characters {
             }
 
             foreach (StatusEffect se in seToRemove) {
+                se.DestroyDisplay();
                 statusEffects.Remove(se);
             }
             seToRemove.Clear();
         }
-
 
         /// <summary>
         /// Handles the calculations involved when attack hits this monster
@@ -191,7 +202,7 @@ namespace Characters {
         public IEnumerator GetAttacked(Attack a, Character c, string animationClipName) {
             bool attackHit = CalculateAttackHit(c);
            
-             if (attackHit) {
+            if (attackHit) {
                 int damage = CalculateAttackDamage(a);
                 bool isCrit = CalculateAttackCrit(c);
                 bool isStatus = CalculateAttackStatus(a, c);
@@ -203,16 +214,18 @@ namespace Characters {
                 else {
                      damage = CalculateAttackReductions(damage, a);
                 }
+
+                yield return StartCoroutine(LoseHP(damage, animationClipName));
+
                 if (isStatus) {
                     int index = statusEffects.FindIndex(se => se.name == a.seName);
                     if (index == -1) {  // no two tatusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
                         newStatus.SetValue(this, c);
                         AddStatusEffect(newStatus);
+                        md.AddStatusEffectDisplay(newStatus);
                     }
                 }
-
-                yield return StartCoroutine(LoseHP(damage, animationClipName));
             }
             else {
                 yield return StartCoroutine(DodgeAttack(animationClipName));

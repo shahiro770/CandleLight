@@ -97,7 +97,7 @@ namespace Combat {
         /// <returns></returns>
         public Character GetNextCharacter() {
             queuePos++;
-            if (queuePos == queueLength) { // wrap around circular queue if end is reached
+            if (queuePos >= queueLength) { // wrap around circular queue if end is reached
                 queuePos = 0;
             }
             return combatQueue[queuePos].c;

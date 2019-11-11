@@ -31,6 +31,8 @@ namespace PlayerUI {
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
         public Bar MPBar;               /// <value> Visual for mana points </value>
+        public GameObject SEDisplayPrefab;  /// <value> Status Effect display prefab </value>    
+        public GameObject SEHolder;     /// <value> Holds all of the statusEffects on the partyMember </value>
         public EXPBar EXPBar;           /// <value> Visual for experience points, should rename this </value>
         public Button b;                /// <value> Button to make display clickable for more info </value>
         public ButtonTransitionState bts;
@@ -86,6 +88,13 @@ namespace PlayerUI {
             if (statsPanel.isOpen == true) {
                 UpdateStatsPanel();
             }
+        }
+
+        public void AddStatusEffectDisplay(StatusEffect se) {
+            GameObject newSED = Instantiate(SEDisplayPrefab);
+            newSED.GetComponent<StatusEffectDisplay>().Init(se);
+
+            newSED.transform.SetParent(SEHolder.transform, false);
         }
 
         /// <summary>

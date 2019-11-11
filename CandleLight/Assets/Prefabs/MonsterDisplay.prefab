@@ -820,6 +820,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1241757579263952954}
+  - component: {fileID: 3996976030282061216}
+  - component: {fileID: 2957129585806540358}
+  - component: {fileID: 8135051198170885837}
+  - component: {fileID: 6178353608788450240}
   m_Layer: 0
   m_Name: StatusEffectHolder
   m_TagString: Untagged
@@ -844,8 +848,70 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: -29.25}
-  m_SizeDelta: {x: 180, y: 22.5}
+  m_SizeDelta: {x: 192, y: 22.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3996976030282061216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2996922502180492720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+--- !u!95 &2957129585806540358
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2996922502180492720}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6021e8ef4599b416b9c1c7a3929527c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!222 &8135051198170885837
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2996922502180492720}
+  m_CullTransparentMesh: 0
+--- !u!225 &6178353608788450240
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2996922502180492720}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4423495334366531527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,11 +1375,15 @@ MonoBehaviour:
   burnAnimator: {fileID: 5637346047841422586}
   poisonAnimator: {fileID: 3157163249382200219}
   monsterAnimator: {fileID: 2497414640868340419}
+  SEAnimator: {fileID: 2957129585806540358}
   HPBar: {fileID: 5904602688543524742}
   b: {fileID: 8848571942937455294}
   bts: {fileID: 5047602295156611218}
   monsterCanvas: {fileID: 8893029803877665006}
   dt: {fileID: 7751574751049048637}
+  SEDisplayPrefab: {fileID: 170406270222699413, guid: 9e4fef2cec32642d2ae57d1a7ceed047,
+    type: 3}
+  SEHolder: {fileID: 2996922502180492720}
   monsterSpriteHolder: {fileID: 586621550330952640}
   monsterSprite: {fileID: 6706296891139604858}
   t: {fileID: 6508537844259145927}

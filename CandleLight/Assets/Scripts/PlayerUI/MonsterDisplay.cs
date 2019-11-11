@@ -27,15 +27,18 @@ namespace Characters {
         public Animator burnAnimator;
         public Animator poisonAnimator;
         public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
+        public Animator SEAnimator;
         public Bar HPBar;                   /// <value> Monster's health points display </value>
         public Button b;                    /// <value> Button to make monster selectable </value>
         public ButtonTransitionState bts;   /// <value> Button's visual state controller </value>
         public Canvas monsterCanvas;        /// <value> Monster's personal canvas to display UI elements and minimize repainting </value>
         public DamageText dt;               /// <value> Text display to show how much damage taken by an attack </value>we
+        public GameObject SEDisplayPrefab;
+        public GameObject SEHolder;
         public RectTransform monsterSpriteHolder;   /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
         public SpriteRenderer monsterSprite;        /// <value> Sprite of monster </value>
         public Tooltip t;                   /// <value> Tooltip holding monster information </value>
-
+        
         [field: SerializeField] public Vector2 vectorSize { get; private set; }         /// <value> Size of monster's sprite </value>
         [field: SerializeField] public float spriteWidth { get; private set; }          /// <value> Width of sprite rect transform </value>
         
@@ -106,6 +109,21 @@ namespace Characters {
             }
         }
 
+        public void SetSEHolderSize() {
+            RectTransform rt = SEHolder.GetComponent<RectTransform>();
+            string monsterSize = displayedMonster.monsterSize;
+
+            if (monsterSize == "small" || monsterSize == "extraSmall") {
+                rt.sizeDelta = new Vector2(healthBarWidthSmall, rt.sizeDelta.y);
+            } 
+            else if (monsterSize == "medium") {
+                rt.sizeDelta = new Vector2(healthBarWidthMed, rt.sizeDelta.y);
+            }
+             else if (monsterSize == "large") {
+                rt.sizeDelta = new Vector2(healthBarWidthLarge, rt.sizeDelta.y);
+            }
+        }
+
         /// <summary>
         /// Sets the size of monster's rect 
         /// </summary>
@@ -132,6 +150,7 @@ namespace Characters {
             monsterRect.anchoredPosition = new Vector3(0, (vectorSize.y - 192) / 2 + 8);
             buttonRect.anchoredPosition = new Vector3(0, buttonVectorSize.y / 2);
             spriteWidth = vectorSize.x;
+            SetSEHolderSize();
         }
 
         #endregion
@@ -387,7 +406,9 @@ namespace Characters {
         /// </summary>
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlayDeathAnimation() {
-            yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, HPBar.barAnimator, "death", "death")));
+            StartCoroutine(PlayAnimation(SEAnimator, "death"));
+            StartCoroutine(PlayAnimation(HPBar.barAnimator, "death"));
+            yield return (StartCoroutine(PlayAnimation(monsterAnimator, "death")));
         }
 
         /// <summary>
@@ -395,7 +416,8 @@ namespace Characters {
         /// </summary>
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlaySpawnAnimation() {
-            yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, HPBar.barAnimator, "spawn", "spawn")));
+            StartCoroutine(PlayAnimation(HPBar.barAnimator, "spawn"));
+            yield return (StartCoroutine(PlayAnimation(monsterAnimator, "spawn")));
         }
 
         #endregion
@@ -437,6 +459,17 @@ namespace Characters {
             dt.ShowDodged();
             yield return (StartCoroutine(PlayAnimation(dt.textAnimator, "showDamage")));
             dt.HideDamage();
+        }
+
+        /// <summary>
+        /// Adds a status effect display to the status effect holder
+        /// </summary>
+        /// <param name="se"></param>
+        public void AddStatusEffectDisplay(StatusEffect se) {
+            GameObject newSED = Instantiate(SEDisplayPrefab);
+            newSED.GetComponent<StatusEffectDisplay>().Init(se);
+
+            newSED.transform.SetParent(SEHolder.transform, false);
         }
 
         #endregion

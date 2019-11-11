@@ -486,7 +486,6 @@ namespace Events {
             else if (r.type == ResultConstants.ITEM) {
                 actionsPanel.SetItemActions();
                 eventDescription.SetKey(r.resultKey);
-
                 DisplayResultItems(r);
                 SetNavigation();
             }

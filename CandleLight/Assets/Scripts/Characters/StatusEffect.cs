@@ -7,6 +7,7 @@
 * to a character's stats.
 */
 
+using StatusEffectDisplay = PlayerUI.StatusEffectDisplay;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ namespace Characters {
 
     [System.Serializable]
     public class StatusEffect {
+        
+        /* External component reference  */
+        public StatusEffectDisplay sed;
 
         [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of status effect </value>
@@ -27,6 +31,14 @@ namespace Characters {
             this.name = name;
             this.duration = duration;
             nameKey = name + "_status";
+        }
+
+        public void SetDisplay(StatusEffectDisplay sed) {
+            this.sed = sed;
+        }
+
+        public void DestroyDisplay() {
+            UnityEngine.GameObject.Destroy(sed.gameObject);
         }
 
         /// <summary>
@@ -43,5 +55,9 @@ namespace Characters {
             }
         }
 
+        public void UpdateDuration() {
+            duration--;
+            sed.UpdateText();
+        }
     }
 }

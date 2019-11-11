@@ -191,6 +191,7 @@ namespace Characters {
             if (CHP <= 0) {
                 CHP = 0;
                 PartyManager.instance.RegisterPartyMemberDead(this);
+                RemoveStatuses();
             }
 
             yield return (StartCoroutine(pmvc.DisplayHPChange(true)));
@@ -208,7 +209,7 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Check if the partyMember is dead
+        /// Returns true if the partyMember is dead
         /// </summary>
         /// <returns></returns>
         public bool CheckDeath() {
@@ -249,18 +250,20 @@ namespace Characters {
                 else {
                     damage = CalculateAttackReductions(damage, a);
                 }
-                if (isStatus) {
+                
+                pmvc.SetDamageTaken(damage, isCrit);
+
+                yield return StartCoroutine(LoseHP(damage));
+                
+                if (isStatus && CheckDeath() == false) {
                     int index = statusEffects.FindIndex(se => se.name == a.seName);
                     if (index == -1) {  // no two statusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
                         newStatus.SetValue(c, this);
                         AddStatusEffect(newStatus);
+                        pmvc.AddStatusEffectDisplay(newStatus);
                     }
                 }
-                
-                pmvc.SetDamageTaken(damage, isCrit);
-
-                yield return StartCoroutine(LoseHP(damage));
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
@@ -296,7 +299,7 @@ namespace Characters {
                     SEDamageTaken += CalculateStatusEffectReductions(se);
                     animationsToPlay[1] = 1;
                 }
-                se.duration -= 1;
+                se.UpdateDuration();
                 
                 if (se.duration == 0) {
                     seToRemove.Add(se);
@@ -320,13 +323,26 @@ namespace Characters {
                 }
             }
             
-
             foreach (StatusEffect se in seToRemove) {
+                se.DestroyDisplay();
                 statusEffects.Remove(se);
             }
             seToRemove.Clear();
         }
 
+        /// <summary>
+        /// Remove all statusEffects attached
+        /// </summary>
+        public void RemoveStatuses() {
+            foreach (StatusEffect se in statusEffects) {
+                seToRemove.Add(se);
+            }
+            foreach (StatusEffect se in seToRemove) {
+                se.DestroyDisplay();
+                statusEffects.Remove(se);
+            }
+            seToRemove.Clear();
+        }
 
         /// <summary>
         /// Updates all stats after a piece of equipment is equipped

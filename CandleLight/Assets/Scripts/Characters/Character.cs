@@ -44,7 +44,7 @@ namespace Characters {
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
-        protected int maxStatusEffects = 5;                               /// <value> Max number of status effects that can be on a character </value>
+        protected int maxStatusEffects = 10;                               /// <value> Max number of status effects that can be on a character </value>
         protected List<StatusEffect> seToRemove = new List <StatusEffect>();
         
         private float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
@@ -247,7 +247,7 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Reduces damage from a status effect depending on the partyMember
+        /// Reduces damage from a status effect depending on the character
         /// </summary>
         /// <param name="se"> Status effect to calculate </param>
         /// <returns></returns>
