@@ -22,6 +22,7 @@ namespace PlayerUI {
         public LocalizedText durationText;   /// <value> Text displaying the number of turns this SE has left </value>
         public Button b;                    /// <value> Button to hover over to trigger tooltip </value>
         public ButtonTransitionState bts;   /// <value> Button's visual state controller </value>
+        public Tooltip t;
 
         private StatusEffect se;     /// <value>  statusEffect being displayed  </value>
 
@@ -30,20 +31,19 @@ namespace PlayerUI {
         /// </summary>
         public void Init(StatusEffect se) {
             this.se = se;
+            gameObject.SetActive(false);
             se.SetDisplay(this);
             ColorBlock normalBlock = b.colors; 
 
             durationText.SetText(se.duration.ToString());
 
             if (se.name == StatusEffectConstants.BURN) {
-                Debug.Log("initing burn");
                 normalBlock.normalColor = new Color32(185, 29, 0, 200);
                 normalBlock.highlightedColor = new Color32(185, 29, 0, 255);
                 normalBlock.pressedColor = new Color32(185, 29, 0, 255);
                 durationText.SetColour(new Color32(185, 29, 0, 255));
             }
             else if (se.name == StatusEffectConstants.POISON) {
-                Debug.Log("initing");
                 normalBlock.normalColor = new Color32(92, 138, 57, 200);
                 normalBlock.highlightedColor = new Color32(92, 138, 57, 255);
                 normalBlock.pressedColor = new Color32(92, 138, 57, 255);
@@ -52,6 +52,32 @@ namespace PlayerUI {
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
+            gameObject.SetActive(true);
+            SetTooltip();
+        }
+
+        public void SetTooltip() {
+            RectTransform buttonRect = b.GetComponent<RectTransform>();
+            string[] textKeys = new string[2];    
+            string[] amounts = new string[2];
+
+            t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
+
+            textKeys[0] = se.name + "_description";
+            amounts[0] = "";
+            if (se.name == StatusEffectConstants.BURN) {
+                textKeys[1] = "damage_description";
+                amounts[1] = se.value.ToString();
+            }
+            else if (se.name == StatusEffectConstants.POISON) {
+                textKeys[1] = "damage_description";
+                amounts[1] = se.value.ToString();
+            }
+
+            t.SetKey("title", se.name + "_title");
+            t.SetKey( "subtitle", se.name + "_sub");
+            t.SetAmountTextMultiple( "description", textKeys, amounts);
+            
         }
 
         /// <summary>

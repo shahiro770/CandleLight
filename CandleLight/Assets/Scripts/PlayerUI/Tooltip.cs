@@ -77,7 +77,6 @@ namespace PlayerUI {
         /// <summary>
         /// Changes the displayed text to show text and append it with an integer amount
         /// </summary>
-
         public void SetAmountText(string textName, string textKey, int amount) {
             if (textName == "title") {
                 titleText.SetKeyAndAppend(textKey, amount.ToString());

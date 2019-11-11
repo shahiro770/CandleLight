@@ -180,12 +180,20 @@
 		{ "key": "weapon_item_sub", "value": "Weapon" },
 		{ "key": "secondary_item_sub", "value": "Secondary" },
 		{ "key": "armour_item_sub", "value": "Armour" },
+		{ "key": "consumable_item_sub", "value": "Consumable" },
 
 		{ "key": "weapon_item_sub_default", "value": "Item held to attack enemies" },
 		{ "key": "secondary_item_sub_default", "value": "Helmets, shields, trinkets, etc." },
 		{ "key": "armour_item_sub_default", "value": "Item worn to reduce damage" },
 
-		{ "key": "consumable_item_sub", "value": "Consumable" },
+		{ "key": "burn_title", "value": "Burn" },
+		{ "key": "burn_sub", "value": "Debuff" },
+		{ "key": "burn_description", "value": "Taking 20% of caster's MATK as magic damage at the end of its turn." },
+		{ "key": "poison_title", "value": "Poison" },
+		{ "key": "poison_sub", "value": "Debuff" },
+		{ "key": "poison_description", "value": "Losing 5% of its max HP at the end of its turn." },
+
+		{ "key": "damage_description", "value": "Damage "},
 
 		{ "key": "flee_action", "value": "Flee" },
 		{ "key": "travel_action", "value": "Travel" },
