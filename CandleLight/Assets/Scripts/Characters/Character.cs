@@ -138,6 +138,14 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Returns true if the partyMember is dead
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckDeath() {
+            return CHP == 0;
+        }
+
+        /// <summary>
         /// Returns the value from an attack, based on the attack's formula
         /// </summary>
         /// <param name="attack"> Attack of object </param>

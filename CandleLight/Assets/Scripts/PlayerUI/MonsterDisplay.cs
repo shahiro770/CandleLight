@@ -449,7 +449,7 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Plays animation of when monster is attacked with no damage numbers or hp bar change
+        /// Plays animation of when monster is attacked with no damage numbers or hp bar change.
         /// Used for buffs and debuffs.
         /// </summary>
         /// <param name="animationClipName"></param>

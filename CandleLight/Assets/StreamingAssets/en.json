@@ -202,7 +202,7 @@
 		{ "key": "poison_description", "value": "Losing 5% of its max HP at the end of its turn." },
 		{ "key": "taunt_title", "value": "Taunted" },
 		{ "key": "taunt_sub", "value": "Debuff" },
-		{ "key": "taunt_description", "value": "Has PATK increased by 30% and will focus its attacks on the caster" },
+		{ "key": "taunt_description", "value": "Has PATK increased by 30% and is forced to attack the caster when possible" },
 
 		{ "key": "damage_description", "value": "Damage "},
 

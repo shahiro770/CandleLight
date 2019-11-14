@@ -233,6 +233,14 @@ namespace Characters {
             }
         }
 
+        /// <summary>
+        /// Handles the calculations involved when attacked by an attack that only has a statusEffect
+        /// associated with it
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="c"></param>
+        /// <param name="animationClipName"></param>
+        /// <returns></returns>
         public IEnumerator GetStatused(Attack a, Character c, string animationClipName) {
             bool attackHit = CalculateAttackHit(c);
            
@@ -258,14 +266,6 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator DodgeAttack(string animationClipName) {
             yield return StartCoroutine(md.DisplayAttackDodged(animationClipName));
-        }
-
-        /// <summary>
-        /// Check if monster is dead
-        /// </summary>
-        /// <returns> True if monster is dead, false otherwise </returns>
-        public bool CheckDeath() {
-            return CHP == 0;
         }
 
         /// <summary>

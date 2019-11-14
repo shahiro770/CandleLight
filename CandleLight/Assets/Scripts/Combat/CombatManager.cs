@@ -252,13 +252,20 @@ namespace Combat {
         /// </remark>
         public void PreparePMAttack(Attack a) {
             selectedAttackpm = a;
-            foreach(Monster m in monsters) {
-                m.md.SetNavigation("down", actionsPanel.GetActionButton(4));
-            }
-            actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].md.b);
-            partyPanel.SetHorizontalNavigation();
+            int tauntIndex = activePartyMember.GetStatusEffect(StatusEffectConstants.TAUNT);
 
-            es.SetSelectedGameObject(monsters[middleMonster].md.b.gameObject);
+            if (tauntIndex != -1 && ((Monster)activePartyMember.statusEffects[tauntIndex].tauntTarget).CheckDeath() == false) {
+                SelectMonster((Monster)(activePartyMember.statusEffects[tauntIndex].tauntTarget));
+            }
+            else {
+                foreach(Monster m in monsters) {
+                    m.md.SetNavigation("down", actionsPanel.GetActionButton(4));
+                }
+                actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].md.b);
+                partyPanel.SetHorizontalNavigation();
+
+                es.SetSelectedGameObject(monsters[middleMonster].md.b.gameObject);
+            }
         }
 
         /// <summary>
