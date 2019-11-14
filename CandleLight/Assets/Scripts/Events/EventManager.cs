@@ -349,7 +349,6 @@ namespace Events {
 
                 statusPanel.DisplayPartyMember(PartyManager.instance.GetFirstPartyMemberAlive().pmvc);
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
-                PartyManager.instance.RegenParty();
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 gearPanel.SetInteractable(true);

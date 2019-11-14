@@ -74,7 +74,7 @@
 		{ "key": "stingerBurrows_event", "value": "Stingers paralyze their prey and store them for later in burrows. There might be something useful. There might be someone home." },
 		{ "key": "stingerBurrowsRisky_event", "value": "You find what was left after their last meal. Something shiny caught your eye deeper in. Is it worth the risk?" },
 		{ "key": "wraithTomb_event", "value": "Larger tombs represent mass burials. Make a prayer?" },
-		{ "key": "goblinHut_event", "value": "Smart goblins band together and stash whatever they find between some rocks. There doesn't seem to be anyone home."},
+		{ "key": "goblinHut_event", "value": "Smarter goblins band together and stash whatever they find between some rocks. There doesn't seem to be anyone home."},
 		{ "key": "goblinHutLoud_event", "value": "There's a large amount of copper scraps in the pile. The sounds of the metal clinking together could alert nearby goblins."},
 
 		{ "key": "theGreyWastes0_int", "value": "Begin" },
