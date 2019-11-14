@@ -328,6 +328,9 @@ namespace Combat {
             if (selectedAttackpm.scope == "single") {
                 if (selectedAttackpm.type == AttackConstants.PHYSICAL || selectedAttackpm.type == AttackConstants.MAGICAL) {
                     yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));    
+                }
+                else if (selectedAttackpm.type == AttackConstants.DEBUFF) {
+                    yield return (StartCoroutine(selectedMonster.GetStatused(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));
                 }   
             }
         }
@@ -404,14 +407,19 @@ namespace Combat {
         /// </summary>
         /// <returns> IEnumerator to play animations after each action </returns>
         private IEnumerator ExecuteMonsterAttack() {
-            int targetChoice = 0;
+            PartyMember targetChoice = null;
     
             selectedAttackMonster = activeMonster.SelectAttack();
             eventDescription.SetKey(selectedAttackMonster.nameKey);
             yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
-            print(partyMembersAlive.Count);
-            if (activeMonster.monsterAI == "random") {
-                targetChoice = Random.Range(0, partyMembersAlive.Count);
+
+            int tauntIndex = activeMonster.GetStatusEffect(StatusEffectConstants.TAUNT);
+
+            if (tauntIndex != -1 && ((PartyMember)activeMonster.statusEffects[tauntIndex].tauntTarget).CheckDeath() == false) {
+                targetChoice = (PartyMember)(activeMonster.statusEffects[tauntIndex].tauntTarget);
+            }
+            else if (activeMonster.monsterAI == "random") {
+                targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
             }
             else if (activeMonster.monsterAI == "weakHunter") {
                 int weakest = 0;
@@ -423,10 +431,10 @@ namespace Combat {
                             weakest = i;
                         }
                     }
-                    targetChoice = weakest;
+                    targetChoice = partyMembersAlive[weakest];
                 }
                 else {
-                    targetChoice = Random.Range(0, partyMembers.Count);
+                    targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
                 }
             }
 
@@ -434,7 +442,7 @@ namespace Combat {
 
             if (selectedAttackMonster.scope == "single") {
                 if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
-                    yield return (StartCoroutine(partyMembersAlive[targetChoice].GetAttacked(selectedAttackMonster, activeMonster)));
+                    yield return (StartCoroutine(targetChoice.GetAttacked(selectedAttackMonster, activeMonster)));
                 }
             }
         }

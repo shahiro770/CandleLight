@@ -49,6 +49,12 @@ namespace PlayerUI {
                 normalBlock.pressedColor = new Color32(92, 138, 57, 255);
                 durationText.SetColour(new Color32(92, 138, 57, 255));
             }
+            else if (se.name == StatusEffectConstants.TAUNT) {
+                normalBlock.normalColor = new Color32(255, 0, 0, 200);
+                normalBlock.highlightedColor = new Color32(255, 0, 0, 255);
+                normalBlock.pressedColor = new Color32(255, 0, 0, 255);
+                durationText.SetColour(new Color32(255, 0, 0, 255));
+            }
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
@@ -72,6 +78,10 @@ namespace PlayerUI {
             else if (se.name == StatusEffectConstants.POISON) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
+            }
+            else if (se.name == StatusEffectConstants.TAUNT) {
+                textKeys[1] = "none_label";
+                amounts[1] = "";
             }
 
             t.SetKey("title", se.name + "_title");

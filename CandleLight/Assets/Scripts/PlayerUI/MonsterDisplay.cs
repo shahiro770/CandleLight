@@ -449,6 +449,17 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Plays animation of when monster is attacked with no damage numbers or hp bar change
+        /// Used for buffs and debuffs.
+        /// </summary>
+        /// <param name="animationClipName"></param>
+        /// <returns></returns>
+        public IEnumerator DisplayAttackEffect(string animationClipName) {
+            SetEffectsAnimatorClip(animationClipName);
+            yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
+        }
+
+        /// <summary>
         /// Plays animation for when attack is dodged
         /// </summary>
         /// <param name="animationClipName"> Name of animation to play overtop of monster </param>

@@ -284,6 +284,50 @@ namespace Characters {
         protected void AddStatusEffect(StatusEffect se) {
             if (statusEffects.Count < maxStatusEffects) {
                 statusEffects.Add(se);
+                CalculateStatusEffectStats();
+            }
+        }
+
+        /// <summary>
+        /// Removes all status effects in the seToRemove list, undoing their effects
+        /// </summary>
+        protected void RemoveStatusEffects() {
+            foreach (StatusEffect se in seToRemove) {
+                if (se.name == StatusEffectConstants.TAUNT) {
+                    PATK -= (int)(PATK * 0.2);
+                }
+                se.DestroyDisplay();
+                statusEffects.Remove(se);
+            }
+            seToRemove.Clear();
+        }
+
+        /// <summary>
+        /// Returns the index of a status effect by name
+        /// </summary>
+        /// <param name="seName"> Name of statusEffect to find </param>
+        /// <returns></returns>
+        public int GetStatusEffect(string seName) {
+            return statusEffects.FindIndex(se => se.name == seName);
+        }
+
+        /// <summary>
+        /// Returns a status effect at a given index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public StatusEffect GetStatusEffect(int index) {
+            return statusEffects[index];
+        }
+
+        /// <summary>
+        /// Changes primary and secondary stats based on statusEffects
+        /// </summary>
+        protected void CalculateStatusEffectStats() {
+            foreach (StatusEffect se in statusEffects) {
+                if (se.name == StatusEffectConstants.TAUNT) {
+                    PATK += (int)(PATK * 0.3);
+                }
             }
         }
 

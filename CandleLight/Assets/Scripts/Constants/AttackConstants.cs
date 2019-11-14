@@ -14,8 +14,7 @@ namespace Constants {
 
         public static readonly string PHYSICAL = "physical";  /// <value> Attack damage is reduced by PDEF </value>
         public static readonly string MAGICAL = "magical";    /// <value> Attack damage damage is reduced by MDEF</value>
-        public static readonly string PHYSICALDEBUFF = "physicalDebuff";  /// <value> Debuff damage is reduced by PDEF </value>
-        public static readonly string MAGICALDEBUFF = "magicalDebuff";    /// <value> Debuff damage is reduced by MDEF </value>
-        public static readonly string BUFF = "buff";          /// <value> Buffs cannot miss</value>
+        public static readonly string DEBUFF = "debuff";      /// <value> Attack that gives a harmful status effect </value>
+        public static readonly string BUFF = "buff";          /// <value> Attack that gives a helpful status effect</value>
     }
 }

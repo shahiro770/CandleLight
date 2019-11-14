@@ -190,11 +190,7 @@ namespace Characters {
                 yield return StartCoroutine(LoseHP(damageTaken, "MplaceHolderEffect"));
             }
 
-            foreach (StatusEffect se in seToRemove) {
-                se.DestroyDisplay();
-                statusEffects.Remove(se);
-            }
-            seToRemove.Clear();
+            RemoveStatusEffects();
         }
 
         /// <summary>
@@ -231,6 +227,24 @@ namespace Characters {
                         md.AddStatusEffectDisplay(newStatus);
                     }
                 }
+            }
+            else {
+                yield return StartCoroutine(DodgeAttack(animationClipName));
+            }
+        }
+
+        public IEnumerator GetStatused(Attack a, Character c, string animationClipName) {
+            bool attackHit = CalculateAttackHit(c);
+           
+            if (attackHit) {
+                 yield return StartCoroutine(md.DisplayAttackEffect(animationClipName));
+                 int index = statusEffects.FindIndex(se => se.name == a.seName);
+                    if (index == -1) {  // no two tatusEffects of the same type can be on at once
+                        StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
+                        newStatus.SetValue(c, this);
+                        AddStatusEffect(newStatus);
+                        md.AddStatusEffectDisplay(newStatus);
+                    }
             }
             else {
                 yield return StartCoroutine(DodgeAttack(animationClipName));

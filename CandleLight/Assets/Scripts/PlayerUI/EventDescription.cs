@@ -111,7 +111,13 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetAttackText(Attack a, bool isUsable) {
-            string attackString = a.cost + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
+            string attackString;
+            if (a.attackValue == 0) {   // debuff attacks will always have 0 attack
+                attackString = a.cost + " " + a.costType;
+            }
+            else {
+                attackString = a.cost + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
+            }
             if (a.seName != "none") {
                 attackString += ". " + a.seChance + "% chance to " + a.seName;
             }

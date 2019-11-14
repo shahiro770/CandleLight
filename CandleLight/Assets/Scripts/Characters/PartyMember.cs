@@ -102,6 +102,7 @@ namespace Characters {
             CalculateGearStatsPrimary(1);
             CalculateSecondaryStats();
             CalculateGearStatsSecondary();
+            CalculateStatusEffectStats();
 
             pmvc.UpdateHPAndMPBars();
             pmvc.UpdateStats();
@@ -174,7 +175,7 @@ namespace Characters {
         /// </summary>
         public void Regen() {
             AddHP((int)(Mathf.Ceil((float)HP * 0.06f)));
-            AddMP((int)(Mathf.Ceil((float)MP * 0.06f)));
+            AddMP((int)(Mathf.Ceil((float)MP * 0.12f)));
         }
 
         /// <summary>
@@ -256,8 +257,7 @@ namespace Characters {
                 yield return StartCoroutine(LoseHP(damage));
                 
                 if (isStatus && CheckDeath() == false) {
-                    int index = statusEffects.FindIndex(se => se.name == a.seName);
-                    if (index == -1) {  // no two statusEffects of the same type can be on at once
+                    if (GetStatusEffect(a.seName) == -1) {  // no two statusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
                         newStatus.SetValue(c, this);
                         AddStatusEffect(newStatus);
@@ -306,7 +306,7 @@ namespace Characters {
                 }
             }
 
-            if (inCombat == true) {
+            if (inCombat == true) { // if in combat, always yield to status effect animations
                 pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
                 if (SEDamageTaken > 0) {
                     pmvc.SetDamageTaken(SEDamageTaken, false);
@@ -323,11 +323,7 @@ namespace Characters {
                 }
             }
             
-            foreach (StatusEffect se in seToRemove) {
-                se.DestroyDisplay();
-                statusEffects.Remove(se);
-            }
-            seToRemove.Clear();
+            RemoveStatusEffects();
         }
 
         /// <summary>
@@ -363,6 +359,7 @@ namespace Characters {
             CalculateGearStatsPrimary(1);
             CalculateSecondaryStats();
             CalculateGearStatsSecondary();
+            CalculateStatusEffectStats();
             pmvc.UpdateStats();
             pmvc.SetEquippedGear();
         }
@@ -385,6 +382,7 @@ namespace Characters {
             CalculateGearStatsPrimary(1);
             CalculateSecondaryStats();
             CalculateGearStatsSecondary();
+            CalculateStatusEffectStats();
             pmvc.UpdateStats();
             pmvc.SetEquippedGear();
         }

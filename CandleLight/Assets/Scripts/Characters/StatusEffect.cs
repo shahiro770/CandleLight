@@ -19,6 +19,7 @@ namespace Characters {
         /* External component reference  */
         public StatusEffectDisplay sed;
 
+        [field: SerializeField] public Character tauntTarget;                   /// <value> Target to attack when taunted </value>      
         [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of status effect </value>
         [field: SerializeField] public int value { get; private set; }          /// <value> Calculated value from formula </value>
@@ -52,6 +53,9 @@ namespace Characters {
             }
             else if (name == StatusEffectConstants.POISON) {
                 value = (int)(1 + afflicted.HP * 0.05f);
+            }
+            else if (name == StatusEffectConstants.TAUNT) {
+                tauntTarget = afflicter;
             }
         }
 
