@@ -9,7 +9,7 @@ Explore the Grey Wastes, a land devoid of light and colour.
 
 <img src="/CandleLight/ReadMe/Images/SampleTravelling.png" width="480" height="270">
 
-Fight against an endless number of monsters while searching anything that will help you stay alive.
+Fight against an endless number of monsters while searching for anything that will help you stay alive.
 
 <img src="/CandleLight/ReadMe/Images/SampleCombat.png" width="480" height="270">
 
