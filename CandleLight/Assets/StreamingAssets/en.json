@@ -199,10 +199,13 @@
 		{ "key": "burn_description", "value": "Taking 20% of caster's MATK as magic damage at the end of its turn." },
 		{ "key": "poison_title", "value": "Poison" },
 		{ "key": "poison_sub", "value": "Debuff" },
-		{ "key": "poison_description", "value": "Losing 5% of its max HP at the end of its turn." },
+		{ "key": "poison_description", "value": "Losing 7% of its max HP at the end of its turn." },
 		{ "key": "taunt_title", "value": "Taunted" },
 		{ "key": "taunt_sub", "value": "Debuff" },
 		{ "key": "taunt_description", "value": "Has PATK increased by 30% and must attack the caster when it can" },
+		{ "key": "freeze_title", "value": "Freeze" },
+		{ "key": "freeze_sub", "value": "Debuff" },
+		{ "key": "freeze_description", "value": "Has DOG, ACC, and PDEF reduced by 30%" },
 
 		{ "key": "damage_description", "value": "Damage "},
 
@@ -240,6 +243,7 @@
 		{ "key": "willOwisp_attack", "value": "Will'O'Wisp" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
+		{ "key": "frost_attack", "value": "Frost" },
 		{ "key": "whack_attack", "value": "Whack" },
 		{ "key": "slash_attack", "value": "Slash" },
 		{ "key": "fireSlash_attack", "value": "Fire Slash" },

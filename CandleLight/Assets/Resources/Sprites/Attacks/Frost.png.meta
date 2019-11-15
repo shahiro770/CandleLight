@@ -1,15 +1,21 @@
 fileFormatVersion: 2
-guid: 702047ce94f9f4be4beba98ce3d80506
+guid: fef3fc65d5dec407e906edfe4c479aae
 TextureImporter:
   fileIDToRecycleName:
-    21300000: FireSlash_0
-    21300002: FireSlash_1
-    21300004: FireSlash_2
-    21300006: FireSlash_3
-    21300008: FireSlash_4
-    21300010: FireSlash_5
-    21300012: FireSlash_6
-    21300014: FireSlash_7
+    21300000: Frost_0
+    21300002: Frost_1
+    21300004: Frost_2
+    21300006: Frost_3
+    21300008: Frost_4
+    21300010: Frost_5
+    21300012: Frost_6
+    21300014: Frost_7
+    21300016: Frost_8
+    21300018: Frost_9
+    21300020: Frost_10
+    21300022: Frost_11
+    21300024: Frost_12
+    21300026: Frost_13
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -103,7 +109,87 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FireSlash_0
+      name: Frost_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8eaad3fc2fab498ab050190da509487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8833bd27805d4abfb816370583ecbae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad6db8105979f43a880bd9d1a1e7ef59
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_3
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd0fb1c34584c4edbbd92a4932598a0d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_4
       rect:
         serializedVersion: 2
         x: 0
@@ -117,13 +203,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 544d9dd28607c4673abf342ba690459d
+      spriteID: 960a246c758994be5b4ead1ae147e7d2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireSlash_1
+      name: Frost_5
       rect:
         serializedVersion: 2
         x: 192
@@ -137,13 +223,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0d137ff89a1a4658922d615178b5509
+      spriteID: e3461db2e9dd44923815a64c37af3d67
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireSlash_2
+      name: Frost_6
       rect:
         serializedVersion: 2
         x: 384
@@ -157,13 +243,33 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03f4c8adee16d412ab877cdd6a0a39eb
+      spriteID: 1cdd0b1c6da69490aa6f705b54d1f4ae
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireSlash_3
+      name: Frost_7
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7af4c1d1e25e5462a88d77516895ee3b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_8
       rect:
         serializedVersion: 2
         x: 0
@@ -177,13 +283,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6d00f2c26c15474b96c69cd189921f9
+      spriteID: b4a0b3cd6fec34ef4a7521b3e8cfb050
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireSlash_4
+      name: Frost_9
       rect:
         serializedVersion: 2
         x: 192
@@ -197,13 +303,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de5a2a1cba50f43f28fb9dc9f7c56db5
+      spriteID: 2022135dd9c134ad68f8418ee8891f4e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireSlash_5
+      name: Frost_10
       rect:
         serializedVersion: 2
         x: 384
@@ -217,13 +323,33 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b8d3f482732c4cafb2edad93d0f98f4
+      spriteID: 7c6953c1c4339446da23ae47678353e7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireSlash_6
+      name: Frost_11
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7df4ced82e39b4ce5aa9a2f5390aa75e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_12
       rect:
         serializedVersion: 2
         x: 0
@@ -237,13 +363,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0f93ad16a10d4a60a432f2bc7dc5185
+      spriteID: c031daf8d035447c2b9c9b47c6d07cb0
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireSlash_7
+      name: Frost_13
       rect:
         serializedVersion: 2
         x: 192
@@ -257,7 +383,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc713a8d5338349adbac89363b6186d1
+      spriteID: d1bdf0752949b49a7b6400b1e85e605d
       vertices: []
       indices: 
       edges: []

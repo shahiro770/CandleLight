@@ -52,7 +52,7 @@ namespace Characters {
                 value = (int)(1 + afflicter.MATK * 0.2f);
             }
             else if (name == StatusEffectConstants.POISON) {
-                value = (int)(1 + afflicted.HP * 0.05f);
+                value = (int)(1 + afflicted.HP * 0.07f);
             }
             else if (name == StatusEffectConstants.TAUNT) {
                 tauntTarget = afflicter;

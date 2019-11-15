@@ -55,6 +55,12 @@ namespace PlayerUI {
                 normalBlock.pressedColor = new Color32(255, 0, 0, 255);
                 durationText.SetColour(new Color32(255, 0, 0, 255));
             }
+            else if (se.name == StatusEffectConstants.FREEZE) {
+                normalBlock.normalColor = new Color32(0, 152, 220, 200);
+                normalBlock.highlightedColor = new Color32(0, 152, 220, 255);
+                normalBlock.pressedColor = new Color32(0, 152, 220, 255);
+                durationText.SetColour(new Color32(0, 152, 220, 255));
+            }
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
@@ -83,11 +89,14 @@ namespace PlayerUI {
                 textKeys[1] = "none_label";
                 amounts[1] = "";
             }
+            else if (se.name == StatusEffectConstants.FREEZE) {
+                textKeys[1] = "none_label";
+                amounts[1] = "";
+            }
 
             t.SetKey("title", se.name + "_title");
             t.SetKey( "subtitle", se.name + "_sub");
             t.SetAmountTextMultiple( "description", textKeys, amounts);
-            
         }
 
         /// <summary>

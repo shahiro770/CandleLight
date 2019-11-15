@@ -36,11 +36,19 @@ namespace Characters {
         [field: SerializeField] public int MATK { get; set; }             /// <value> Magical attack </value>
         [field: SerializeField] public int PDEF { get; set; }             /// <value> Physical defense </value>
         [field: SerializeField] public int MDEF { get; set; }             /// <value> Magical defense </value>
-        [field: SerializeField] public int dodge { get; set; }            /// <value> Dodge rating </value>
-        [field: SerializeField] public int acc { get; set; }              /// <value> Accuracy rating </value>
-        [field: SerializeField] public int tempAcc = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
+        [field: SerializeField] public int DOG { get; set; }              /// <value> Dodge rating </value>
+        [field: SerializeField] public int ACC { get; set; }              /// <value> Accuracy rating </value>
+        [field: SerializeField] public int tempACC = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
         [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
+        [field: SerializeField] public int gearPATK { get; set; }         /// <value> Physical attack after gear changes </value>
+        [field: SerializeField] public int gearMATK { get; set; }         /// <value> Magical attack  after gear changes </value>
+        [field: SerializeField] public int gearPDEF { get; set; }         /// <value> Physical defense after gear changes </value>
+        [field: SerializeField] public int gearMDEF { get; set; }         /// <value> Magical defense after gear changes </value>
+        [field: SerializeField] public int gearDOG { get; set; }          /// <value> Dodge rating after gear changes </value>
+        [field: SerializeField] public int gearACC { get; set; }          /// <value> Accuracy rating after gear changes </value>
+        [field: SerializeField] public int gearCritChance { get; set; }   /// <value> Crit chance after gear changes </value>
+        [field: SerializeField] public float gearCritMult { get; set; }   /// <value> Crit attack damage multiplier after gear changes </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
@@ -49,7 +57,7 @@ namespace Characters {
         
         private float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
         private int baseCritChance = 5;                                   /// <value> Base chance of critting </value>
-        private int baseAcc = 90;                                         /// <value> Base accuracy rating </value>
+        private int defaultACC = 95;                                      /// <value> Base accuracy rating </value>
        
         /// <summary>
         /// Initializes character properties
@@ -85,8 +93,8 @@ namespace Characters {
            MATK = (int)(INT * 0.5 + LUK * 0.25); 
            PDEF = (int)(STR * 0.1 + DEX * 0.05);
            MDEF = (int)(INT * 0.15 + LUK * 0.05);
-           dodge = (int)(DEX * 0.2 + LUK * 0.1);
-           acc = (int)(DEX * 0.3) + baseAcc;
+           DOG = (int)(DEX * 0.2 + LUK * 0.1);
+           ACC = (int)(DEX * 0.3) + defaultACC;
            critChance = (int)(LUK * 0.1) + baseCritChance;
            critMult = baseCritMult;
 
@@ -100,6 +108,15 @@ namespace Characters {
                 critChance = 100;
             }
 
+            gearPATK = PATK;
+            gearMATK = MATK;
+            gearPDEF = PDEF;
+            gearMDEF = MDEF;
+            gearDOG = DOG;
+            gearACC = ACC;
+            gearCritChance = critChance;
+            gearCritMult = critMult;
+            
             if (setCurrent) {
                 CHP = HP;
                 CMP = MP;
@@ -191,7 +208,7 @@ namespace Characters {
         /// resetting that bonus back to 0 upon hitting.
         /// </remark>
         protected bool CalculateAttackHit(Character c) {
-            int hitChance = baseAcc + c.acc + c.tempAcc - dodge;
+            int hitChance = c.ACC + c.tempACC - DOG;
 
             if (hitChance > 100) {
                 hitChance = 100;
@@ -203,10 +220,10 @@ namespace Characters {
             bool attackHit = Random.Range(0, 100) < hitChance;
 
             if (attackHit) {
-                c.tempAcc = 0;
+                c.tempACC = 0;
             }
             else {
-                c.tempAcc += (int)(4 + c.tempAcc);  
+                c.tempACC += (int)(4 + c.tempACC);  
             }
 
             return attackHit;            
@@ -301,13 +318,11 @@ namespace Characters {
         /// </summary>
         protected void RemoveStatusEffects() {
             foreach (StatusEffect se in seToRemove) {
-                if (se.name == StatusEffectConstants.TAUNT) {
-                    PATK -= (int)(PATK * 0.2);
-                }
                 se.DestroyDisplay();
                 statusEffects.Remove(se);
             }
             seToRemove.Clear();
+            CalculateStatusEffectStats();
         }
 
         /// <summary>
@@ -332,9 +347,23 @@ namespace Characters {
         /// Changes primary and secondary stats based on statusEffects
         /// </summary>
         protected void CalculateStatusEffectStats() {
+            PATK = gearPATK;
+            MATK = gearMATK;
+            PDEF = gearPDEF;
+            MDEF = gearMDEF;
+            DOG = gearDOG;
+            ACC = gearACC;
+            critChance = gearCritChance;
+            critMult = gearCritMult;
+
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.TAUNT) {
                     PATK += (int)(PATK * 0.3);
+                }
+                if (se.name == StatusEffectConstants.FREEZE) {
+                    DOG -= (int)(DOG * 0.3);
+                    ACC -= (int)(ACC * 0.3);
+                    PDEF -= (int)(PDEF * 0.3);
                 }
             }
         }
@@ -350,7 +379,7 @@ namespace Characters {
         /// Logs stats to console for debugging
         /// </summary>
         public virtual void LogSecondaryStats() {
-            Debug.Log("PDEF: " + PDEF + " MDEF: " + MDEF + " acc: " + acc + " tempAcc:" + tempAcc + " dodge: " + dodge);
+            Debug.Log("PDEF: " + PDEF + " MDEF: " + MDEF + " acc: " + ACC + " tempAcc:" + tempACC + " dog: " + DOG);
         }
 
         /// <summary>

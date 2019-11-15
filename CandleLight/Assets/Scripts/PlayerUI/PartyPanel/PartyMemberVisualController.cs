@@ -219,7 +219,7 @@ namespace Characters {
         /// <returns></return-s>
         public int[] GetStats() {
             return new int[] { pm.LVL, pm.STR, pm.DEX, pm.INT, pm.LUK, 
-            pm.PATK, pm.MATK, pm.PDEF, pm.MDEF, pm.acc, pm.dodge, pm.critChance, pm.EXPToNextLVL, pm.EXP };
+            pm.PATK, pm.MATK, pm.PDEF, pm.MDEF, pm.ACC, pm.DOG, pm.critChance, pm.EXPToNextLVL, pm.EXP };
         }
 
         /// <summary>

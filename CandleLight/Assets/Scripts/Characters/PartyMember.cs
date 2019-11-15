@@ -192,7 +192,7 @@ namespace Characters {
             if (CHP <= 0) {
                 CHP = 0;
                 PartyManager.instance.RegisterPartyMemberDead(this);
-                RemoveStatuses();
+                RemoveStatusEffects();
             }
 
             yield return (StartCoroutine(pmvc.DisplayHPChange(true)));
@@ -207,14 +207,6 @@ namespace Characters {
             CMP -= amount;
             
             yield return (StartCoroutine(pmvc.DisplayMPChange(true)));
-        }
-
-        /// <summary>
-        /// Returns true if the partyMember is dead
-        /// </summary>
-        /// <returns></returns>
-        public bool CheckDeath() {
-            return CHP == 0;
         }
 
         /// <summary>
@@ -324,20 +316,6 @@ namespace Characters {
             }
             
             RemoveStatusEffects();
-        }
-
-        /// <summary>
-        /// Remove all statusEffects attached
-        /// </summary>
-        public void RemoveStatuses() {
-            foreach (StatusEffect se in statusEffects) {
-                seToRemove.Add(se);
-            }
-            foreach (StatusEffect se in seToRemove) {
-                se.DestroyDisplay();
-                statusEffects.Remove(se);
-            }
-            seToRemove.Clear();
         }
 
         /// <summary>
@@ -472,11 +450,11 @@ namespace Characters {
                             case "MDEF":
                                 MDEF += gearToCalculate.values[j];
                                 break;
-                            case "DODGE":
-                                dodge += gearToCalculate.values[j];
+                            case "DOG":
+                                DOG += gearToCalculate.values[j];
                                 break;
                             case "ACC":
-                                acc += gearToCalculate.values[j];
+                                ACC += gearToCalculate.values[j];
                                 break;
                             case "CRITCHANCE":
                                 critChance += gearToCalculate.values[j];
@@ -490,6 +468,15 @@ namespace Characters {
                     }
                 }
             }
+
+            gearPATK = PATK;
+            gearMATK = MATK;
+            gearPDEF = PDEF;
+            gearMDEF = MDEF;
+            gearDOG = DOG;
+            gearACC = ACC;
+            gearCritChance = critChance;
+            gearCritMult = critMult;
         }
 
         /// <summary>
