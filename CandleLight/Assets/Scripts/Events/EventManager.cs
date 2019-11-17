@@ -507,12 +507,33 @@ namespace Events {
                     LoadConsumables();
                     LoadGear();
                     subAreaProgress = 0; 
-                    if (infoPanel.isOpen) {
+                    if (infoPanel.isOpen == true) {
                         infoPanel.UpdateAmounts();
                     }
                 }
 
                 GetNextEvent();
+            }
+            else if (r.type == ResultConstants.SUBAREAANDCOMBAT) {
+                currentSubArea = currentArea.GetSubArea(r.subAreaName);
+                StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
+                LoadConsumables();
+                LoadGear();
+                subAreaProgress = 0;
+                if (infoPanel.isOpen == true) {
+                    infoPanel.UpdateAmounts();
+                }
+
+                monstersToSpawn = r.GetMonstersToSpawn();
+
+                for (int j = 0; j < monstersToSpawn.Length; j++) {
+                    if (monstersToSpawn[j] == "none") {
+                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    }
+                }
+                eventDescription.SetKey(r.resultKey);
+                HideEventDisplays();     
+                GetCombatEvent();
             }
             else if (r.type == ResultConstants.STATSINGLE) {
                 eventDescription.SetKey(r.resultKey);

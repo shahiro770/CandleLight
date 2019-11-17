@@ -24,5 +24,6 @@ namespace Constants {
         public static readonly string COMBAT = "combat";            /// <value> Player must fight monsters </value>
         public static readonly string COMBATWITHSIDEEFFECTS = "combatWithSideEffects";  /// <value> Something happens before player fights monsters </value>
         public static readonly string TAKEALLITEMS = "takeAllItems";                    /// <value> Take all items available </value>
+        public static readonly string SUBAREAANDCOMBAT = "subAreaAndCombat";    /// <value> Move to new subArea, immediately fight specific enemies </value>
     }
 }

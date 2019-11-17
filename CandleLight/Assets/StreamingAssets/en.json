@@ -93,7 +93,8 @@
 		{ "key": "wraithTomb_event", "value": "Larger tombs represent mass burials. Make a prayer?" },
 		{ "key": "goblinHut_event", "value": "Smarter goblins band together and stash whatever they find between some rocks. There doesn't seem to be anyone home."},
 		{ "key": "goblinHutLoud_event", "value": "There's a large amount of copper scraps in the pile. The sounds of the metal clinking together could alert nearby goblins."},
-		{ "key": "greyWastesPathEnd_event", "value": "The path ended. This won't be easy."},
+		{ "key": "greyWastesPathEnd_event", "value": "The path has ended. This won't be easy."},
+		{ "key": "theDenGreyWastes_event", "value": "Large packs of greyhides will dig out dens beside areas with lots of food. Only the strongest greyhides can maintain these dens."},
 
 		{ "key": "theGreyWastes0_int", "value": "Begin" },
 		{ "key": "fight_int", "value": "Fight" },
@@ -115,7 +116,8 @@
 		{ "key": "goblinHut0_int", "value": "Check"},
 		{ "key": "goblinHutLoud0_int", "value": "Rummage"},
 		{ "key": "takeAll_int", "value": "Take All" },
-		{ "key" : "greyWastesPathEnd0_int", "value": "Continue" },
+		{ "key": "greyWastesPathEnd0_int", "value": "Continue" },
+		{ "key": "theDenGreyWastes0_int", "value": "No Choice" },
 		
 		{ "key": "lostPouch0_0_res", "value": "You found something useful." },
 		{ "key": "lostPouch0_1_res", "value": "Whoever left this won't be needing it anymore." },
@@ -149,6 +151,7 @@
 		{ "key": "goblinHut0_2_res", "value": "You inspect the goblin's crude hut, only to see a pile of garbage." },
 		{ "key": "goblinHutLoud0_0_res", "value": "You sift through their pile and find a lot of useful trinkets." },
 		{ "key": "goblinHutLoud0_1_res", "value": "You were too loud." },
+		{ "key": "theDenGreyWastes0_0_res", "value": "The path is right there." },
 		
 		{ "key": "none_label", "value": "None" },
 		{ "key": "HP_label", "value": "HP" },
@@ -250,7 +253,7 @@
 		{ "key": "lesserWraith_monster", "value": "Lesser Wraith" },
 		{ "key": "lesserWraith_monster_description", "value": "Malevolent souls of those who died under false promises." },
 		{ "key": "greyhideAlpha_monster", "value": "Greyhide Alpha" },
-		{ "key": "greyhideAlpha_monster_description", "value": "Brute strength and a bit more brain. That's all it takes to become their alpha." },
+		{ "key": "greyhideAlpha_monster_description", "value": "All it takes to be their alpha is brute strength and a bit more brain." },
 		
 		{ "key": "pounce_attack", "value": "Pounce" },
 		{ "key": "scratch_attack", "value": "Scratch" },

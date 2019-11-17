@@ -141,8 +141,8 @@ namespace Characters {
                 buttonVectorSize = new Vector2(192, 192);
             }
              else if (monsterSize == "large") {
-                vectorSize = new Vector2(256, 256);
-                buttonVectorSize = new Vector2(280, 280);
+                vectorSize = new Vector2(192, 192);
+                buttonVectorSize = new Vector2(234, 192);
             }
 
             monsterRect.sizeDelta = vectorSize;
