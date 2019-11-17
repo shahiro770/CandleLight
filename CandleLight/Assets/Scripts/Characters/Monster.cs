@@ -38,7 +38,6 @@ namespace Characters {
         [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int attackNum { get; private set; } = 0;         /// <value> Number of attacks monster has (max 4) </value>
-        [field: SerializeField] public int selectedAttackIndex { get; private set; }    /// <value> Index of attack selected </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
@@ -129,18 +128,6 @@ namespace Characters {
         #region [ Section 0 ] Combat Information
 
         /// <summary>
-        /// Returns the monster's selected attack based on its AI
-        /// </summary>
-        /// <returns> An Attack object to be used </returns>
-        public Attack SelectAttack() {
-            if (monsterAI == "random" || monsterAI == "weakHunter") {
-                selectedAttackIndex = Random.Range(0, attackNum);
-            }
-
-            return attacks[selectedAttackIndex];  
-        }
-
-        /// <summary>
         /// Reduce monster's HP
         /// </summary>
         /// <param name="amount"> Amount of HP to lose, not negative </param>
@@ -219,8 +206,7 @@ namespace Characters {
                 yield return StartCoroutine(LoseHP(damage, animationClipName));
 
                 if (isStatus) {
-                    int index = statusEffects.FindIndex(se => se.name == a.seName);
-                    if (index == -1) {  // no two tatusEffects of the same type can be on at once
+                    if (GetStatusEffect(a.seName) == -1) {  // no two tatusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
                         newStatus.SetValue(c, this);
                         AddStatusEffect(newStatus);
@@ -238,24 +224,37 @@ namespace Characters {
         /// associated with it
         /// </summary>
         /// <param name="a"></param>
-        /// <param name="c"></param>
+        /// <param name="c"> Character statusing this </param>
         /// <param name="animationClipName"></param>
         /// <returns></returns>
-        public IEnumerator GetStatused(Attack a, Character c, string animationClipName) {
+        public IEnumerator GetStatusEffected(Attack a, Character c, string animationClipName) {
             bool attackHit = CalculateAttackHit(c);
            
             if (attackHit) {
-                 yield return StartCoroutine(md.DisplayAttackEffect(animationClipName));
-                 int index = statusEffects.FindIndex(se => se.name == a.seName);
-                    if (index == -1) {  // no two tatusEffects of the same type can be on at once
-                        StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                        newStatus.SetValue(c, this);
-                        AddStatusEffect(newStatus);
-                        md.AddStatusEffectDisplay(newStatus);
-                    }
+                yield return StartCoroutine(md.DisplayAttackEffect(animationClipName));
+                if (GetStatusEffect(a.seName) == -1) {  // no two tatusEffects of the same type can be on at once
+                    StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
+                    newStatus.SetValue(c, this);
+                    AddStatusEffect(newStatus);
+                    md.AddStatusEffectDisplay(newStatus);
+                }
             }
             else {
                 yield return StartCoroutine(DodgeAttack(animationClipName));
+            }
+        }
+
+        /// <summary>
+        /// Applies a statusEffect to itself
+        /// </summary>
+        /// <param name="a"></param>
+        public void GetStatusEffectedSelf(Attack a) {
+            int index = statusEffects.FindIndex(se => se.name == a.seName);
+             if (index == -1) {  // no two tatusEffects of the same type can be on at once
+                StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
+                newStatus.SetValue(this, this);
+                AddStatusEffect(newStatus);
+                md.AddStatusEffectDisplay(newStatus);
             }
         }
 

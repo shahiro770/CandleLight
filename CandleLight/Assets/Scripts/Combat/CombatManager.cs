@@ -61,6 +61,7 @@ namespace Combat {
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
         private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
+        private int selectedMonsterAttackIndex;     /// <value> Index of selectedMonster attack in its attack array </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
         private bool pmSelectionFinalized = false;  /// <value> Flag for if player has selected an action and a monster if its an attack </value>
         private bool isFleePossible = true;         /// <value> Flag for if player can flee battle, will need to make this changeable in the future </value>
@@ -337,7 +338,7 @@ namespace Combat {
                     yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));    
                 }
                 else if (selectedAttackpm.type == AttackConstants.DEBUFF) {
-                    yield return (StartCoroutine(selectedMonster.GetStatused(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));
+                    yield return (StartCoroutine(selectedMonster.GetStatusEffected(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));
                 }   
             }
         }
@@ -408,6 +409,32 @@ namespace Combat {
             activeMonster.SetAttackValues();
         }
 
+         /// <summary>
+        /// Returns the active monster's selected attack based on its AI
+        /// </summary>
+        /// <returns> An Attack object to be used </returns>
+        public Attack SelectMonsterAttack() {
+            Attack[] attacks = activeMonster.attacks;
+            string monsterAI = activeMonster.monsterAI;
+            int attackNum = activeMonster.attackNum;
+
+            if (monsterAI == "random" || monsterAI == "weakHunter") {
+                selectedMonsterAttackIndex = Random.Range(0, activeMonster.attackNum);
+            }
+            else if (monsterAI == "lastAtHalf") {    // only uses last attack after CHP falls below 50%, using it whenever possible if its a selfBuff
+                if (attacks[attackNum - 1].type == AttackConstants.BUFFSELF && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) != -1) {
+                    selectedMonsterAttackIndex = attackNum - 1;
+                }
+                else if ((attacks[3].type == AttackConstants.PHYSICAL || attacks[3].type == AttackConstants.MAGICAL)) {
+                    selectedMonsterAttackIndex = Random.Range(0, activeMonster.attackNum);
+                }
+                else {
+                    selectedMonsterAttackIndex = Random.Range(0, activeMonster.attackNum - 1);
+                }
+            }     
+            return attacks[selectedMonsterAttackIndex];  
+        }
+
         /// <summary>
         /// Executes a monster's attack, by first getting the attack it wants to use, and then selecting
         /// its target based on its AI
@@ -416,7 +443,7 @@ namespace Combat {
         private IEnumerator ExecuteMonsterAttack() {
             PartyMember targetChoice = null;
     
-            selectedAttackMonster = activeMonster.SelectAttack();
+            selectedAttackMonster = SelectMonsterAttack();
             eventDescription.SetKey(selectedAttackMonster.nameKey);
             yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
 
@@ -425,7 +452,7 @@ namespace Combat {
             if (tauntIndex != -1 && ((PartyMember)activeMonster.statusEffects[tauntIndex].tauntTarget).CheckDeath() == false) {
                 targetChoice = (PartyMember)(activeMonster.statusEffects[tauntIndex].tauntTarget);
             }
-            else if (activeMonster.monsterAI == "random") {
+            else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt50%") {
                 targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
             }
             else if (activeMonster.monsterAI == "weakHunter") {
@@ -445,12 +472,15 @@ namespace Combat {
                 }
             }
 
-            yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation()));
+            yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation(selectedMonsterAttackIndex)));
 
             if (selectedAttackMonster.scope == "single") {
                 if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
                     yield return (StartCoroutine(targetChoice.GetAttacked(selectedAttackMonster, activeMonster)));
                 }
+                else if (selectedAttackpm.type == AttackConstants.BUFFSELF) {
+                    activeMonster.GetStatusEffectedSelf(selectedAttackMonster);
+                }   
             }
         }
 

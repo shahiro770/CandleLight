@@ -16,5 +16,6 @@ namespace Constants {
         public static readonly string MAGICAL = "magical";    /// <value> Attack damage damage is reduced by MDEF</value>
         public static readonly string DEBUFF = "debuff";      /// <value> Attack that gives a harmful status effect </value>
         public static readonly string BUFF = "buff";          /// <value> Attack that gives a helpful status effect</value>
+        public static readonly string BUFFSELF = "buffSelf";  /// <value> Attack that gives a helpful status effect, but can only target user</value>
     }
 }

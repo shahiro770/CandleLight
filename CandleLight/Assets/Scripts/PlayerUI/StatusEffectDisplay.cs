@@ -50,16 +50,22 @@ namespace PlayerUI {
                 durationText.SetColour(new Color32(92, 138, 57, 255));
             }
             else if (se.name == StatusEffectConstants.TAUNT) {
-                normalBlock.normalColor = new Color32(255, 0, 0, 200);
-                normalBlock.highlightedColor = new Color32(255, 0, 0, 255);
-                normalBlock.pressedColor = new Color32(255, 0, 0, 255);
-                durationText.SetColour(new Color32(255, 0, 0, 255));
+                normalBlock.normalColor = new Color32(133, 133, 133, 200);
+                normalBlock.highlightedColor = new Color32(133, 133, 133, 255);
+                normalBlock.pressedColor = new Color32(133, 133, 133, 255);
+                durationText.SetColour(new Color32(133, 133, 133, 255));
             }
             else if (se.name == StatusEffectConstants.FREEZE) {
                 normalBlock.normalColor = new Color32(0, 152, 220, 200);
                 normalBlock.highlightedColor = new Color32(0, 152, 220, 255);
                 normalBlock.pressedColor = new Color32(0, 152, 220, 255);
                 durationText.SetColour(new Color32(0, 152, 220, 255));
+            }
+            else if (se.name == StatusEffectConstants.RAGE) {
+                normalBlock.normalColor = new Color32(234, 50, 60, 200);
+                normalBlock.highlightedColor = new Color32(234, 50, 60, 255);
+                normalBlock.pressedColor = new Color32(234, 50, 60, 255);
+                durationText.SetColour(new Color32(234, 50, 60, 255));
             }
 
             bts.SetColorBlock("normal", normalBlock);
@@ -90,6 +96,10 @@ namespace PlayerUI {
                 amounts[1] = "";
             }
             else if (se.name == StatusEffectConstants.FREEZE) {
+                textKeys[1] = "none_label";
+                amounts[1] = "";
+            }
+            else if (se.name == StatusEffectConstants.RAGE) {
                 textKeys[1] = "none_label";
                 amounts[1] = "";
             }

@@ -228,6 +228,9 @@
 		{ "key": "freeze_title", "value": "Freeze" },
 		{ "key": "freeze_sub", "value": "Debuff" },
 		{ "key": "freeze_description", "value": "Has DOG, ACC, and PDEF reduced by 30%" },
+		{ "key": "rage_title", "value": "Rage" },
+		{ "key": "rage_sub", "value": "Buff" },
+		{ "key": "rage_description", "value": "Has PATK increased by 30%" },
 
 		{ "key": "damage_description", "value": "Damage "},
 
@@ -263,6 +266,7 @@
 		{ "key": "sting_attack", "value": "Sting" },
 		{ "key": "sneak_attack", "value": "Sneak" },
 		{ "key": "willOwisp_attack", "value": "Will'O'Wisp" },
+		{ "key": "enrage_attack", "value": "Enrage" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "frost_attack", "value": "Frost" },

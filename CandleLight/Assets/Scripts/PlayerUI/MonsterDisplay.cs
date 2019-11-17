@@ -382,9 +382,10 @@ namespace Characters {
         /// <summary>
         /// Plays the attack animation of a monster
         /// </summary>
+         /// <param name="selectedMonsterAttackIndex"> Index of animation trigger </param>
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
-        public IEnumerator PlayAttackAnimation() {
-            yield return (StartCoroutine(PlayAnimation(monsterAnimator, "attack" + displayedMonster.selectedAttackIndex)));
+        public IEnumerator PlayAttackAnimation(int selectedMonsterAttackIndex) {
+            yield return (StartCoroutine(PlayAnimation(monsterAnimator, "attack" + selectedMonsterAttackIndex)));
         }
 
         /// <summary>

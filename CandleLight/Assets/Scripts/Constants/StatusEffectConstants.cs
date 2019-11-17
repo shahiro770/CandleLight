@@ -16,5 +16,6 @@ namespace Constants {
         public static readonly string PDEFUP = "PDEFup"; /// <value> Increases physical defense </value>
         public static readonly string TAUNT = "taunt";   /// <value> Gain 30% PATK and forces target to attack the caster </value>
         public static readonly string FREEZE = "freeze";     /// <value> Reduces PDEF, DOG, and ACC by 30% </value>
+        public static readonly string RAGE = "rage";     /// <value> Gain 30% PATK </value>
     }
 }
