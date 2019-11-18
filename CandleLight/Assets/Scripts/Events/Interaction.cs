@@ -21,12 +21,13 @@ namespace Events {
         public string name { get; private set; }        /// <value> Name of interaction </value>
         public string nameKey { get; private set; }     /// <value> Localization of interaction </value>
         public int resultIndex { get; private set; }    /// <value> Index of the result chosen </value>
+        public int statToCheck { get; private set; }    /// <value> Enumerated int stat to check </value>
+        public int statThreshold { get; private set; }  /// <value> Threshold the party must pass </value>
         public bool isSingleUse { get; private set; }
 
         private Result[] results = new Result[4];       /// <value> Result of the action if its an event action </value>
         private Sprite[] intSprites = new Sprite[4];    /// <value> List of sprites corresponding to each event action </value>
         private int resultNum = 0;                      /// <value> Amount of results for an interaction </value>
-        
 
         /// <summary>
         /// Constructor, each array is of length 4
@@ -39,10 +40,12 @@ namespace Events {
         /// to fetch information to save memory.
         /// </param>
         public Interaction(string name, string[] resultNames, 
-        string[] spriteNames, bool isSingleUse, IDbConnection dbConnection) {
+        string[] spriteNames, bool isSingleUse, int statToCheck, int statThreshold, IDbConnection dbConnection) {
             this.name = name;
             this.nameKey = name + "_int";
             this.isSingleUse = isSingleUse;
+            this.statToCheck = statToCheck;
+            this.statThreshold = statThreshold;
 
             string resultKey;
 
@@ -69,6 +72,15 @@ namespace Events {
             resultIndex = Random.Range(0, resultNum);
 
             return results[resultIndex];
+        }
+
+        /// <summary>
+        /// Returs a result based on index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns> Result at index </returns>
+        public Result GetResult (int index) {
+            return results[index];
         }
 
         /// <summary>

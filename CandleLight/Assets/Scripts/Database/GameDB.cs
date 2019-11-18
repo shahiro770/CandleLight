@@ -393,6 +393,8 @@ namespace Database {
                     string[] intResultKeys = new string[4];
                     string[] intSprites = new String[4];
                     string resultName = "";
+                    int statToCheck = 0;
+                    int statThreshold = 0;
                     bool isSingleUse = false;
 
                     if (reader.Read()) {
@@ -408,8 +410,11 @@ namespace Database {
                         intSprites[3] = reader.GetString(9);
 
                         isSingleUse = reader.GetBoolean(10);
+                        statToCheck = reader.GetInt32(11);
+                        statThreshold = reader.GetInt32(12);
+                        
 
-                        newInt = new Interaction(resultName, intResults, intSprites, isSingleUse, dbConnection);
+                        newInt = new Interaction(resultName, intResults, intSprites, isSingleUse, statToCheck, statThreshold, dbConnection);
                     }
                     else {
                          Debug.LogError("Interaction " + intName + " does not exist in the DB");

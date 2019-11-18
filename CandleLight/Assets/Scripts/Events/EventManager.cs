@@ -64,6 +64,7 @@ namespace Events {
         private Vector3 pos3d2 = new Vector3(0, -20, 0);
         private Vector3 pos3d3 = new Vector3(275, -20, 0);
 
+        private enum primaryStats { NONE, STR, DEX, INT, LUK };
         private string[] monstersToSpawn;       /// <value> List of monsters to spawn </value>
         private string currentAreaName;         /// <value> Name of current area </value>
         private int bgPackNum = 0;              /// <value> Number of backgroundPacks </value>
@@ -466,7 +467,19 @@ namespace Events {
         /// </summary>
         /// <param name="i"> Interaction object </param>
         public void Interact(Interaction i) {
-            Result r = i.GetResult();
+             Result r = i.GetResult();
+            if (i.statToCheck != (int)primaryStats.NONE) {  // events that are statChecks will have a good and bad outcome
+                if (PartyManager.instance.GetPrimaryStatAll(i.statToCheck) + 
+                (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range(i.statThreshold, (int)i.statThreshold * 1.5f)) {
+                    r = i.GetResult(0); // good result
+                }
+                else {
+                    r = i.GetResult(1); // bad result
+                }
+            }
+            else {
+                r = i.GetResult();
+            }
 
             if (i.GetSprite() != null) {
                 eventDisplays[0].SetSprite(i.GetSprite());

@@ -31,6 +31,7 @@ namespace Party {
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private PartyMember activePartyMember = null;
+        private enum primaryStats { NONE, STR, DEX, INT, LUK };                 /// <value> Enumerated primary stats </value>
         private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>
         
         /// <summary>
@@ -316,6 +317,31 @@ namespace Party {
             else {
                 WAX -= amount;
             }
+        }
+
+        /// <summary>
+        /// Returns the sum of a primary stat amongst all alive partyMembers
+        /// </summary>
+        /// <param name="stat"> Enumerated int </param>
+        /// <returns> Sum of stat </returns>
+        public int GetPrimaryStatAll(int stat) {
+            int sum = 0;
+            foreach (PartyMember pm in partyMembersAlive) {
+                if (stat == (int)primaryStats.STR) {
+                    sum += pm.STR;          
+                }
+                else if (stat == (int)primaryStats.DEX) {
+                    sum += pm.DEX;   
+                }
+                else if (stat == (int)primaryStats.INT) {
+                    sum += pm.INT;   
+                }
+                else if (stat == (int)primaryStats.LUK) {
+                    sum += pm.LUK;   
+                }
+            }
+
+            return sum;
         }
 
         /// <summary>
