@@ -270,7 +270,7 @@ namespace Events {
         public void GetCombatEvent() {
             gearPanel.SetTakeable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
-            StartCoroutine(combatManager.InitializeCombat(monstersToSpawn));
+            StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentEvent.isLeavePossible));
         }
 
         /// <summary>

@@ -88,7 +88,8 @@ namespace Combat {
         /// Start to initialize all monsters, characters, and combat queue before beginning combat
         /// </summary>
         /// <param name="monsterNames"> Names of monsters to spawn in for combat </param>
-        public IEnumerator InitializeCombat(string[] monsterNames) {
+        /// <param name="isFleePossible"> Flag for if the player can flee the combat event </param>
+        public IEnumerator InitializeCombat(string[] monsterNames, bool isFleePossible) {
             actionsPanel.Init(isFleePossible);
             isFleeSuccessful = false;
             cq.Reset();

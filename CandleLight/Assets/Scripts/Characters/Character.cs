@@ -94,7 +94,7 @@ namespace Characters {
            PDEF = (int)(STR * 0.1 + DEX * 0.05);
            MDEF = (int)(INT * 0.15 + LUK * 0.05);
            DOG = (int)(DEX * 0.2 + LUK * 0.1);
-           ACC = (int)(DEX * 0.3) + defaultACC;
+           ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
            critChance = (int)(LUK * 0.1) + baseCritChance;
            critMult = baseCritMult;
 
