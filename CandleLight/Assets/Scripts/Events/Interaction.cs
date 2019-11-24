@@ -75,14 +75,25 @@ namespace Events {
         }
 
         /// <summary>
-        /// Returs a result based on index
+        /// Returns a result based on index
         /// </summary>
         /// <param name="index"></param>
         /// <returns> Result at index </returns>
-        public Result GetResult (int index) {
+        public Result GetResult(int index) {
             return results[index];
         }
 
+        /// <summary>
+        /// Returns a random result, with a specific start index
+        /// </summary>
+        /// <param name="startIndex"> Starting index for range of random results to choose between </param>
+        /// <returns></returns>
+        public Result GetResultStartIndex(int startIndex) {
+            resultIndex = Random.Range(startIndex, resultNum);
+
+            return results[resultIndex];
+        }
+        
         /// <summary>
         /// Returns the sprite related to the chosen result
         /// </summary>

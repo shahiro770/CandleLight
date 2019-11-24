@@ -206,6 +206,7 @@ namespace PlayerUI {
                 }
             }
             actions[actions.Length - 1].SetAction(ActionConstants.UNDO);
+            actions[actions.Length - 1].SetInteractable(true);
 
             CombatManager.instance.PreparePMAttack(a);
         }
@@ -229,9 +230,10 @@ namespace PlayerUI {
             } else {
                 actions[actions.Length - 1].SetAction(ActionConstants.NONE);
             }
-
+            SetAllActionsInteractable();
             ResetFifthButtonNavigation();
             CombatManager.instance.UndoPMAction();  // update combat manager to know party members can't attack yet
+            
         }
 
         /// <summary>
@@ -239,15 +241,13 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="initialSelection"> Flag for if current selected action should remain selected </param>
         public void SetAllActionsInteractable(bool initialSelection = false) {
-            int firstInteractableIndex = 0;
-            bool firstInteractableIndexSet = false;
+            int firstInteractableIndex = -1;
 
             for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(true); 
-                    if (firstInteractableIndexSet == false) {
+                    if (firstInteractableIndex == -1) {
                         firstInteractableIndex = i;
-                        firstInteractableIndexSet = true;
                     } 
                 } else {
                     actions[i].SetInteractable(false);  

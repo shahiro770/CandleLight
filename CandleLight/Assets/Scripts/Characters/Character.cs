@@ -357,7 +357,7 @@ namespace Characters {
             critMult = gearCritMult;
 
             foreach (StatusEffect se in statusEffects) {
-                if (se.name == StatusEffectConstants.TAUNT) {
+                if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
                     PATK += (int)(PATK * 0.3);
                 }
                 if (se.name == StatusEffectConstants.FREEZE) {

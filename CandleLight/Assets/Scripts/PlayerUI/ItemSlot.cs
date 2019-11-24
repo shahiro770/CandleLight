@@ -11,6 +11,7 @@
 using EventManager = Events.EventManager;
 using Items;
 using Party;
+using StatusEffectConstants = Constants.StatusEffectConstants;
 using System.Collections;
 using UIEffects;
 using UnityEngine;
@@ -161,6 +162,9 @@ namespace PlayerUI {
                         }
                         if (effects[i] == "WAX") {
                             PartyManager.instance.AddWAX(amounts[i]);
+                        }
+                        if (effects[i] == StatusEffectConstants.POISON) {
+                            PartyManager.instance.AddSE(effects[i], amounts[i]);
                         }
                     }
                     itemTaken = true;

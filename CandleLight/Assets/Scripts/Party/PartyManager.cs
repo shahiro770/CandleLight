@@ -171,7 +171,7 @@ namespace Party {
         }
 
         /// <summary>
-        /// Adds EXP to each partyMember
+        /// Adds EXP to each partyMember who is alive
         /// </summary>
         /// <param name="amount"> Positive int amount to be added </param>
         public void AddEXP(int amount) {
@@ -316,6 +316,12 @@ namespace Party {
             }
             else {
                 WAX -= amount;
+            }
+        }
+
+        public void AddSE(string seName, int seDuration) {
+            foreach (PartyMember pm in partyMembersAlive) {
+                pm.AddStatusEffect(seName, seDuration, null);   // will fail for effects that care about the afflicter
             }
         }
 

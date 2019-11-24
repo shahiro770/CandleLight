@@ -462,6 +462,7 @@ namespace Database {
                     string[] specificMonsterNames = new string[5];
                     int[] resultChanges = new int[4];
                     int monsterCount = 0;
+                    int progressAmount = 0;
                     bool isUnique = false;
 
                     if (reader.Read()) {
@@ -474,21 +475,22 @@ namespace Database {
                         resultChanges[1] = reader.GetInt32(7);
                         resultChanges[2] = reader.GetInt32(8);
                         resultChanges[3] = reader.GetInt32(9);
-                        subAreaName = reader.GetString(10);
-                        subEventName = reader.GetString(11);
-                        monsterCount = reader.GetInt32(12);
-                        specificMonsterNames[0] = reader.GetString(13);
-                        specificMonsterNames[1] = reader.GetString(14);
-                        specificMonsterNames[2] = reader.GetString(15);
-                        specificMonsterNames[3] = reader.GetString(16);
-                        specificMonsterNames[4] = reader.GetString(17);
-                        itemType = reader.GetString(18);
-                        specificItemNames[0] = reader.GetString(19);
-                        specificItemNames[1] = reader.GetString(20);
-                        specificItemNames[2] = reader.GetString(21);
-                        itemQuality = reader.GetString(22);
+                        progressAmount = reader.GetInt32(10);
+                        subAreaName = reader.GetString(11);
+                        subEventName = reader.GetString(12);
+                        monsterCount = reader.GetInt32(13);
+                        specificMonsterNames[0] = reader.GetString(14);
+                        specificMonsterNames[1] = reader.GetString(15);
+                        specificMonsterNames[2] = reader.GetString(16);
+                        specificMonsterNames[3] = reader.GetString(17);
+                        specificMonsterNames[4] = reader.GetString(18);
+                        itemType = reader.GetString(19);
+                        specificItemNames[0] = reader.GetString(20);
+                        specificItemNames[1] = reader.GetString(21);
+                        specificItemNames[2] = reader.GetString(22);
+                        itemQuality = reader.GetString(23);
 
-                        newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultChanges, subAreaName, subEventName,
+                        newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultChanges, progressAmount, subAreaName, subEventName,
                         monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality);
                     }
                     else {

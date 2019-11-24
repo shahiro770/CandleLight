@@ -7,6 +7,7 @@
 * For now it doesn't allow for items to be found, or permanent stat changes, or partyMember changes.
 */
 
+using ResultConstants = Constants.ResultConstants;
 using UnityEngine;
 
 namespace Events {
@@ -28,6 +29,7 @@ namespace Events {
         [field: SerializeField] public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         [field: SerializeField] public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
         [field: SerializeField] public int WAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
+        [field: SerializeField] public int progressAmount { get; private set; } /// <value> Amount of progress result gives </value>
         [field: SerializeField] public int itemAmount { get; private set; }     /// <value> Amount of items result gives </value>
         [field: SerializeField] public int specificItemAmount { get; private set; } = 0;    /// <value> Amount of specific items result gives </value>
 
@@ -49,7 +51,7 @@ namespace Events {
         /// <param name="resultKey"> String key for result </param>
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
-        public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] changeValues,
+        public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] changeValues, int progressAmount,
         string subAreaName, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality) {
             this.name = name;
             this.resultKey = resultKey;
@@ -60,6 +62,7 @@ namespace Events {
             this.HPChange = changeValues[1];
             this.MPChange = changeValues[2];
             this.WAXChange = changeValues[3];
+            this.progressAmount = progressAmount;
             this.subAreaName = subAreaName;
             this.subEventName = subEventName;
             this.monsterCount = monsterCount;
@@ -101,14 +104,17 @@ namespace Events {
         /// Generates the values for EXP, HP, MP, and wax that the result will give
         /// </summary>
         public void GenerateResults() {
-            if (type == "item" || type == "itemWithSubEvent") {
+            if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT) {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 1);
             }
-            else if (type == "combatWithSideEffects" || type == "statAll" || type == "statAllAndLeave") {
+            else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE) {
                 EXPAmount = GenerateAmount(EXPChange);
                 HPAmount = GenerateAmount(HPChange);
                 MPAmount = GenerateAmount(MPChange);
                 WAXAmount = GenerateAmount(WAXChange);
+            }
+            else if (type == ResultConstants.PROGRESS) {
+                progressAmount *= (int)Random.Range(quantity, quantity + 1);
             }
         }
 

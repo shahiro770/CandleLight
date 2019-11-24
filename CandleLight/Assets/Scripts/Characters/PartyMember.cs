@@ -249,12 +249,7 @@ namespace Characters {
                 yield return StartCoroutine(LoseHP(damage));
                 
                 if (isStatus && CheckDeath() == false) {
-                    if (GetStatusEffect(a.seName) == -1) {  // no two statusEffects of the same type can be on at once
-                        StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                        newStatus.SetValue(c, this);
-                        AddStatusEffect(newStatus);
-                        pmvc.AddStatusEffectDisplay(newStatus);
-                    }
+                    AddStatusEffect(a.seName, a.seDuration, c);
                 }
             }
             else {
@@ -268,6 +263,21 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator DodgeAttack() {
             yield return StartCoroutine(pmvc.DisplayAttackDodged());
+        }
+
+        /// <summary>
+        /// Adds a status effect to the partyMember
+        /// </summary>
+        /// <param name="seName"> Name of the statusEffect </param>
+        /// <param name="seDuration"> Duration of the statusEffect </param>
+        /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
+        public void AddStatusEffect(string seName, int seDuration, Character c) {
+            if (GetStatusEffect(seName) == -1) {  // no two statusEffects of the same type can be on at once
+                StatusEffect newStatus = new StatusEffect(seName, seDuration);
+                newStatus.SetValue(c, this);
+                AddStatusEffect(newStatus);
+                pmvc.AddStatusEffectDisplay(newStatus);
+            }
         }
 
         /// <summary>

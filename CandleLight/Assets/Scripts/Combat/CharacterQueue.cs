@@ -134,7 +134,7 @@ namespace Combat {
                     int removedIndex = finalCombatQueue.IndexOf(q);
                     finalCombatQueue.Remove(q);
                     queueLength--;  
-                    if (queuePos > removedIndex) { // shift queue back by 1 if removed node was before current position
+                    if (queuePos >= removedIndex) { // shift queue back by 1 if removed node was before current position
                         queuePos--;
                     }
                 }

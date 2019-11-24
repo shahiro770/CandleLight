@@ -467,14 +467,14 @@ namespace Events {
         /// </summary>
         /// <param name="i"> Interaction object </param>
         public void Interact(Interaction i) {
-             Result r = i.GetResult();
+            Result r;
             if (i.statToCheck != (int)primaryStats.NONE) {  // events that are statChecks will have a good and bad outcome
                 if (PartyManager.instance.GetPrimaryStatAll(i.statToCheck) + 
                 (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range(i.statThreshold, (int)i.statThreshold * 1.5f)) {
                     r = i.GetResult(0); // good result
                 }
                 else {
-                    r = i.GetResult(1); // bad result
+                    r = i.GetResultStartIndex(1); // bad result(s)
                 }
             }
             else {
@@ -615,6 +615,23 @@ namespace Events {
                 actionsPanel.PreCombatActions();
                 SetNavigation();
             }
+            else if (r.type == ResultConstants.PROGRESS) {
+                eventDescription.SetKey(r.resultKey);
+
+                subAreaProgress += r.progressAmount;
+                if (subAreaProgress > 100) {
+                    subAreaProgress = 100;
+                }
+                else if (subAreaProgress < 0) {
+                    subAreaProgress = 0;
+                }
+                if (infoPanel.isOpen == true) {
+                    infoPanel.UpdateAmounts();
+                }
+
+                actionsPanel.TravelActions();
+                SetNavigation();
+            }
         }
 
         /// <summary>
@@ -645,6 +662,9 @@ namespace Events {
             }
             if (r.MPAmount != 0) {
                 PartyManager.instance.AddMPAll(r.MPAmount);
+            }
+            if (r.EXPAmount != 0) {
+                PartyManager.instance.AddEXP(r.EXPAmount);
             }
         }
 

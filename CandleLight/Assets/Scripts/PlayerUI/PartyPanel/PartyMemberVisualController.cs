@@ -281,7 +281,7 @@ namespace Characters {
         /// <param name="currentAmount"> Positive int less than or equal to maxAmount</param>
         /// <returns></returns>
         public IEnumerator DisplayEXPChange(int maxAmount, int currentAmount, int LVLtoDisplay) {
-            if (rewardsPanelEXPBar) { 
+            if (rewardsPanelEXPBar && rewardsPanelEXPBar.gameObject.activeInHierarchy) { 
                 if (currentAmount == maxAmount) {
                     yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(maxAmount)));
                     yield return new WaitForSeconds(0.5f);
@@ -291,6 +291,9 @@ namespace Characters {
                 else {
                     yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(currentAmount)));
                 }
+            }
+            else if (statsPanelEXPBar && statsPanelEXPBar.gameObject.activeSelf) {
+                UpdateStats();
             }
         }
 
