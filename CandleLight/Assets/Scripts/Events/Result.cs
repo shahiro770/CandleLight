@@ -18,7 +18,8 @@ namespace Events {
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of result </value>
         [field: SerializeField] public string type { get; private set; }
         [field: SerializeField] public string scope { get; private set; }
-        [field: SerializeField] public string subAreaName { get; private set; } /// <value> Name of subArea result leads to if possible, "none" otherwise </value>
+        [field: SerializeField] public string subAreaName0 { get; private set; } /// <value> Name of first subArea result leads to if possible, "none" otherwise </value>
+        [field: SerializeField] public string subAreaName1 { get; private set; } /// <value> Name of second subArea result leads to if possible, "none" otherwise </value>
         [field: SerializeField] public string subEventName{ get; private set; } /// <value> Name of event result leads to if possible, "none" otherwise </value>
         [field: SerializeField] public string resultKey;    /// <value> Localization key for displayed string for result </value>
         [field: SerializeField] public string itemType { get; private set; }                /// <value> Type of item (gear, consumables) </value>
@@ -52,7 +53,7 @@ namespace Events {
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
         public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] changeValues, int progressAmount,
-        string subAreaName, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality) {
+        string subAreaName0, string subAreaName1, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality) {
             this.name = name;
             this.resultKey = resultKey;
             this.type = type;
@@ -63,7 +64,8 @@ namespace Events {
             this.MPChange = changeValues[2];
             this.WAXChange = changeValues[3];
             this.progressAmount = progressAmount;
-            this.subAreaName = subAreaName;
+            this.subAreaName0 = subAreaName0;
+            this.subAreaName1 = subAreaName1;
             this.subEventName = subEventName;
             this.monsterCount = monsterCount;
             this.specificMonsterNames = specificMonsterNames;

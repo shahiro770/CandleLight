@@ -67,6 +67,7 @@ namespace Events {
         private enum primaryStats { NONE, STR, DEX, INT, LUK };
         private string[] monstersToSpawn;       /// <value> List of monsters to spawn </value>
         private string currentAreaName;         /// <value> Name of current area </value>
+        private string nextSubArea = "";        /// <value> Name of next subArea to move to </value>
         private int bgPackNum = 0;              /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;           /// <value> Area progress increments by 1 for each main event the player completes </value>
         private int consumablesNum = 0;         /// <value> Number of consumables to be found in the subArea </value>
@@ -268,6 +269,15 @@ namespace Events {
         /// Switches gameplay from exploring into turn-based combat with random monsters
         /// </summary>
         public void GetCombatEvent() {
+            gearPanel.SetTakeable(false);
+            StartCoroutine(AlterBackgroundColor(0.5f));
+            StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentEvent.isLeavePossible));
+        }
+
+        /// <summary>
+        /// Switches gameplay from exploring into turn-based combat with random monsters
+        /// </summary>
+        public void GetCombatEventBoss() {
             gearPanel.SetTakeable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentEvent.isLeavePossible));
@@ -514,8 +524,8 @@ namespace Events {
                 DisplayResultItems(r);
             }
             else if (r.type == ResultConstants.SUBAREA) {
-                if (r.subAreaName != "none") { 
-                    currentSubArea = currentArea.GetSubArea(r.subAreaName);
+                if (r.subAreaName0 != "none") { 
+                    currentSubArea = currentArea.GetSubArea(r.subAreaName0);
                     StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                     LoadConsumables();
                     LoadGear();
@@ -528,7 +538,29 @@ namespace Events {
                 GetNextEvent();
             }
             else if (r.type == ResultConstants.SUBAREAANDCOMBAT) {
-                currentSubArea = currentArea.GetSubArea(r.subAreaName);
+                currentSubArea = currentArea.GetSubArea(r.subAreaName0);
+                StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
+                LoadConsumables();
+                LoadGear();
+                subAreaProgress = 0;
+                if (infoPanel.isOpen == true) {
+                    infoPanel.UpdateAmounts();
+                }
+
+                monstersToSpawn = r.GetMonstersToSpawn();
+
+                for (int j = 0; j < monstersToSpawn.Length; j++) {
+                    if (monstersToSpawn[j] == "none") {
+                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    }
+                }
+                eventDescription.SetKey(r.resultKey);
+                HideEventDisplays();     
+                GetCombatEvent();
+            }
+            else if (r.type == ResultConstants.SUBAREAANDCOMBATANDSUBAREA) {
+                currentSubArea = currentArea.GetSubArea(r.subAreaName0);
+                nextSubArea = r.subAreaName1;
                 StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                 LoadConsumables();
                 LoadGear();
@@ -631,6 +663,9 @@ namespace Events {
 
                 actionsPanel.TravelActions();
                 SetNavigation();
+            }
+            else if (r.type == ResultConstants.END) {
+                GameManager.instance.LoadNextScene("MainMenu");
             }
         }
 

@@ -430,6 +430,9 @@ namespace Combat {
                     else if ((attacks[attackNum - 1].type == AttackConstants.PHYSICAL || attacks[attackNum - 1].type == AttackConstants.MAGICAL)) {
                         selectedMonsterAttackIndex = Random.Range(0, activeMonster.attackNum);
                     }
+                    else {
+                        selectedMonsterAttackIndex = Random.Range(0, activeMonster.attackNum - 1);
+                    }
                 }
                 else {
                     selectedMonsterAttackIndex = Random.Range(0, activeMonster.attackNum - 1);

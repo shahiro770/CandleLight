@@ -25,6 +25,8 @@ namespace Constants {
         public static readonly string COMBATWITHSIDEEFFECTS = "combatWithSideEffects";  /// <value> Something happens before player fights monsters </value>
         public static readonly string TAKEALLITEMS = "takeAllItems";                    /// <value> Take all items available </value>
         public static readonly string SUBAREAANDCOMBAT = "subAreaAndCombat";    /// <value> Move to new subArea, immediately fight specific enemies </value>
+        public static readonly string SUBAREAANDCOMBATANDSUBAREA = "subAreaAndCombatAndSubArea";    /// <value> Move to new subArea, immediately fight specific enemies, and then move to another subArea on clearing </value>
         public static readonly string PROGRESS = "progress";    /// <value> Changes progress amount </value>
+        public static readonly string END = "end";              /// <value> Ends the area, returning to the main menu </value>
     }
 }

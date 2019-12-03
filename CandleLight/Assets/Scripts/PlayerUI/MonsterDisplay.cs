@@ -418,6 +418,7 @@ namespace Characters {
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlaySpawnAnimation() {
             StartCoroutine(PlayAnimation(HPBar.barAnimator, "spawn"));
+            StartCoroutine(PlayAnimation(SEAnimator, "spawn"));
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "spawn")));
         }
 

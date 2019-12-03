@@ -77,6 +77,8 @@
 		{ "key": "lostGreyWastes_flee_success_2", "value": "A gust of wind throws off their senses" },
 		{ "key": "lostGreyWastes_flee_success_3", "value": "You're not the only one who's afraid to die." },
 
+		{ "key": "denGreyWastes_post_combat_event_0", "value": "With the alpha dead, the pack scatters. " },
+
 		{ "key": "flee_failed_0", "value": "You failed to get away." },
 		{ "key": "flee_failed_1", "value": "You couldn't." },
 		{ "key": "flee_failed_2", "value": "They're still chasing you." },
@@ -93,10 +95,14 @@
 		{ "key": "wraithTomb_event", "value": "Larger tombs represent mass burials. Make a prayer?" },
 		{ "key": "goblinHut_event", "value": "Smarter goblins band together and stash whatever they find between some rocks. There doesn't seem to be anyone home."},
 		{ "key": "goblinHutLoud_event", "value": "There's a large amount of copper scraps in the pile. The sounds of the metal clinking together could alert nearby goblins."},
-		{ "key": "greyWastesPathEnd_event", "value": "The path has ended. This won't be easy."},
+		{ "key": "greyWastesPathEnd_event", "value": "The path has ended. An endless desert is all that stands between you and Umaria. This won't be easy."},
 		{ "key": "monsterRemains_event", "value": "Unkindled aren't very wasteful. Maybe there's still something here?"},
 		{ "key": "dirtStorm_event", "value": "A violent storm of dirt will be passing over you soon."},
 		{ "key": "theDenGreyWastes_event", "value": "Large packs of greyhides will dig out dens beside areas with lots of food. Only the strongest greyhides can maintain these dens."},
+		{ "key": "end0GreyWastes_event", "value": "You limp back on to the path." },
+		{ "key": "end1GreyWastes_event", "value": "The battle with the alpha was too much. The blood from your wounds soak through your clothes. As long as the oil vial is unscathed..." },
+		{ "key": "end2GreyWastes_event", "value": "You see it. Umaria. The last of humanity's strongholds. Your body is barely moving. But the candle light. The light of her eyes." },
+		{ "key": "end3GreyWastes_event", "value": "You collapse at the gate. You hear a lot of shouting. The gate opening. Someone crying. And then nothing." },
 
 		{ "key": "theGreyWastes0_int", "value": "Begin" },
 		{ "key": "fight_int", "value": "Fight" },
@@ -123,6 +129,10 @@
 		{ "key": "dirtStorm0_int", "value": "Brave" },
 		{ "key": "dirtStorm1_int", "value": "Wait" },
 		{ "key": "theDenGreyWastes0_int", "value": "No Choice" },
+		{ "key": "end0GreyWastes0_int", "value": "Limp" },
+		{ "key": "end1GreyWastes0_int", "value": "Hobble" },
+		{ "key": "end2GreyWastes0_int", "value": "Struggle" },
+		{ "key": "end3GreyWastes0_int", "value": "Die" },
 		
 		{ "key": "lostPouch0_0_res", "value": "You found something useful." },
 		{ "key": "lostPouch0_1_res", "value": "Whoever left this won't be needing it anymore." },

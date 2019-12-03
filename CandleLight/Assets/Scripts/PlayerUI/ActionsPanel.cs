@@ -233,7 +233,6 @@ namespace PlayerUI {
             SetAllActionsInteractable();
             ResetFifthButtonNavigation();
             CombatManager.instance.UndoPMAction();  // update combat manager to know party members can't attack yet
-            
         }
 
         /// <summary>

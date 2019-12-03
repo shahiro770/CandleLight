@@ -119,7 +119,7 @@ namespace PlayerUI {
                 attackString = a.cost + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
             }
             if (a.seName != "none") {
-                attackString += ". " + a.seChance + "% chance to " + a.seName;
+                attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turns";
             }
             eventText.SetText(attackString);
 
