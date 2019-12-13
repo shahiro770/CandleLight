@@ -1046,6 +1046,7 @@ Transform:
   m_Children:
   - {fileID: 2638434336024939386}
   - {fileID: 1744702267749420029}
+  - {fileID: 4446465972864224532}
   m_Father: {fileID: 4441724746801271242}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1374,6 +1375,7 @@ MonoBehaviour:
   effectsAnimator: {fileID: 9202039021361903901}
   burnAnimator: {fileID: 5637346047841422586}
   poisonAnimator: {fileID: 3157163249382200219}
+  bleedAnimator: {fileID: 8613051705821106349}
   monsterAnimator: {fileID: 2497414640868340419}
   SEAnimator: {fileID: 2957129585806540358}
   HPBar: {fileID: 5904602688543524742}
@@ -1426,11 +1428,19 @@ MonoBehaviour:
   <MATK>k__BackingField: 0
   <PDEF>k__BackingField: 0
   <MDEF>k__BackingField: 0
-  <dodge>k__BackingField: 0
-  <acc>k__BackingField: 0
-  tempAcc: 0
+  <DOG>k__BackingField: 0
+  <ACC>k__BackingField: 0
+  tempACC: 0
   <critChance>k__BackingField: 0
   <critMult>k__BackingField: 0
+  <gearPATK>k__BackingField: 0
+  <gearMATK>k__BackingField: 0
+  <gearPDEF>k__BackingField: 0
+  <gearMDEF>k__BackingField: 0
+  <gearDOG>k__BackingField: 0
+  <gearACC>k__BackingField: 0
+  <gearCritChance>k__BackingField: 0
+  <gearCritMult>k__BackingField: 0
   <attacks>k__BackingField: []
   <statusEffects>k__BackingField: []
   md: {fileID: 8085412351755015521}
@@ -1438,7 +1448,8 @@ MonoBehaviour:
     <name>k__BackingField: 
     <type>k__BackingField: 
     <scope>k__BackingField: 
-    <subAreaName>k__BackingField: 
+    <subAreaName0>k__BackingField: 
+    <subAreaName1>k__BackingField: 
     <subEventName>k__BackingField: 
     resultKey: 
     <itemType>k__BackingField: 
@@ -1449,6 +1460,7 @@ MonoBehaviour:
     <HPAmount>k__BackingField: 0
     <MPAmount>k__BackingField: 0
     <WAXAmount>k__BackingField: 0
+    <progressAmount>k__BackingField: 0
     <itemAmount>k__BackingField: 0
     <specificItemAmount>k__BackingField: 0
     quantity: 0
@@ -1473,7 +1485,6 @@ MonoBehaviour:
   <EXP>k__BackingField: 0
   <WAX>k__BackingField: 0
   <attackNum>k__BackingField: 0
-  <selectedAttackIndex>k__BackingField: 0
   <dropChance>k__BackingField: 0
   <isReady>k__BackingField: 0
 --- !u!1 &4966123046020373190
@@ -1757,6 +1768,105 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 31e268b1fea8d4dacafa7694517007b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &7958237283760115690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4446465972864224532}
+  - component: {fileID: 1607707563792449918}
+  - component: {fileID: 8613051705821106349}
+  m_Layer: 10
+  m_Name: BleedAnimator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4446465972864224532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958237283760115690}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5973110991900967569}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1607707563792449918
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958237283760115690}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 2061592957
+  m_SortingLayer: 6
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 07719222edb34413fb9a41cfd1ea4a99, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 256, y: 256}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &8613051705821106349
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958237283760115690}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 385edc2c18b434f1fb80ad1ff18726b4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -6,10 +6,10 @@ public class StatCalculator : MonoBehaviour{
         Debug.Log("Monster: " + monster);
          Debug.Log("LVL: " + start + " STR: " + STR + " DEX: " + DEX + " INT: " + INT + " LUK: " + LUK);
         for (int i = start + 1; i <= cap; i++) {
-            STR += (int)(i * 1.5);
-            DEX += (int)(i * 1.5);
-            INT += (int)(i * 1.5);
-            LUK += (int)(i * 1.5);
+            STR += (int)(i * 0.5 + STR * 0.3);
+            DEX += (int)(i * 0.5 + DEX * 0.3);
+            INT += (int)(i * 0.5 + INT * 0.3);
+            LUK += (int)(i * 0.5 + LUK * 0.3);
             Debug.Log("LVL: " + i + " STR: " + STR + " DEX: " + DEX + " INT: " + INT + " LUK: " + LUK);
         }
     }

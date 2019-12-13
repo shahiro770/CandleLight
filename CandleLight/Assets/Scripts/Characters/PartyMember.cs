@@ -258,6 +258,29 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Handles the calculations involved when attacked by an attack that only has a statusEffect
+        /// associated with it
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="c"> Character statusing this </param>
+        /// <returns></returns>
+        public IEnumerator GetStatusEffected(Attack a, Character c) {
+            bool attackHit = CalculateAttackHit(c);
+           
+            if (attackHit) {
+                if (GetStatusEffect(a.seName) == -1) {  // no two tatusEffects of the same type can be on at once
+                    StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
+                    newStatus.SetValue(c, this);
+                    AddStatusEffect(newStatus);
+                    pmvc.AddStatusEffectDisplay(newStatus);
+                }
+            }
+            else {
+                yield return StartCoroutine(DodgeAttack());
+            }
+        }
+
+        /// <summary>
         /// Handles all logic and tells the visual component to update after dodging an attack
         /// </summary>
         /// <returns></returns>
@@ -289,17 +312,25 @@ namespace Characters {
         /// </param>
         /// <returns></returns>
         public IEnumerator TriggerStatuses(bool inCombat) {
-            int SEDamageTaken = 0;
-            int[] animationsToPlay = new int[] { 0 ,0 }; 
+            int damageTaken = 0;
+            int[] animationsToPlay = new int[] { 0 ,0, 0 }; 
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
-                    SEDamageTaken += CalculateStatusEffectReductions(se);
+                    damageTaken += CalculateStatusEffectReductions(se);
                     animationsToPlay[0] = 1;
                 }
                 else if (se.name == StatusEffectConstants.POISON) {
-                    SEDamageTaken += CalculateStatusEffectReductions(se);
+                    damageTaken += CalculateStatusEffectReductions(se);
                     animationsToPlay[1] = 1;
+                }
+                else if (se.name == StatusEffectConstants.BLEED) {
+                    int bleedDamage = CalculateStatusEffectReductions(se);
+                    damageTaken += bleedDamage;
+                    if (se.afflicter != null) {
+                        ((Monster)(se.afflicter)).AddHP(bleedDamage);
+                    }
+                    animationsToPlay[2] = 1;
                 }
                 se.UpdateDuration();
                 
@@ -310,18 +341,18 @@ namespace Characters {
 
             if (inCombat == true) { // if in combat, always yield to status effect animations
                 pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
-                if (SEDamageTaken > 0) {
-                    pmvc.SetDamageTaken(SEDamageTaken, false);
-                    yield return StartCoroutine(LoseHP(SEDamageTaken));
+                if (damageTaken > 0) {
+                    pmvc.SetDamageTaken(damageTaken, false);
+                    yield return StartCoroutine(LoseHP(damageTaken));
                 }
             }
             else {
-                if (CHP - SEDamageTaken <= 0) {
-                    SEDamageTaken = CHP - 1;
+                if (CHP - damageTaken <= 0) {
+                    damageTaken = CHP - 1;
                 }
                 pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
-                if (SEDamageTaken > 0) {
-                    StartCoroutine(LoseHP(SEDamageTaken));
+                if (damageTaken > 0) {
+                    StartCoroutine(LoseHP(damageTaken));
                 }
             }
             

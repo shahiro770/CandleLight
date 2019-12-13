@@ -77,7 +77,10 @@
 		{ "key": "lostGreyWastes_flee_success_2", "value": "A gust of wind throws off their senses" },
 		{ "key": "lostGreyWastes_flee_success_3", "value": "You're not the only one who's afraid to die." },
 
-		{ "key": "denGreyWastes_post_combat_event_0", "value": "With the alpha dead, the pack scatters. " },
+		{ "key": "denGreyWastes_post_combat_event_0", "value": "With the alpha dead, the pack scatters." },
+		{ "key": "denGreyWastes_post_combat_event_1", "value": "Their leader is no more. And neither is their home." },
+		{ "key": "denGreyWastes_post_combat_event_2", "value": "They greyhides were ruled by strength. But they won't follow you." },
+		{ "key": "denGreyWastes_post_combat_event_3", "value": "Even the greyhides mourn their own. The irony." },
 
 		{ "key": "flee_failed_0", "value": "You failed to get away." },
 		{ "key": "flee_failed_1", "value": "You couldn't." },
@@ -100,7 +103,7 @@
 		{ "key": "dirtStorm_event", "value": "A violent storm of dirt will be passing over you soon."},
 		{ "key": "theDenGreyWastes_event", "value": "Large packs of greyhides will dig out dens beside areas with lots of food. Only the strongest greyhides can maintain these dens."},
 		{ "key": "end0GreyWastes_event", "value": "You limp back on to the path." },
-		{ "key": "end1GreyWastes_event", "value": "The battle with the alpha was too much. The blood from your wounds soak through your clothes. As long as the oil vial is unscathed..." },
+		{ "key": "end1GreyWastes_event", "value": "The battle with the alpha was too much. The blood from your wounds soaks through your clothes. As long as the oil vial is unscathed..." },
 		{ "key": "end2GreyWastes_event", "value": "You see it. Umaria. The last of humanity's strongholds. Your body is barely moving. But the candle light. The light of her eyes." },
 		{ "key": "end3GreyWastes_event", "value": "You collapse at the gate. You hear a lot of shouting. The gate opening. Someone crying. And then nothing." },
 
@@ -226,6 +229,7 @@
 		{ "key": "Charm0_item", "value": "Greyhide Tail" },
 		{ "key": "Charm1_item", "value": "Prayer Charm" },
 		{ "key": "Charm2_item", "value": "Lucky Fang" },
+		{ "key": "Charm3_item", "value": "Torn Wing" },
 		{ "key": "Weapon0_item", "value": "Bone Club" },
 		{ "key": "WarriorWeapon0_item", "value": "Stinger Tibia" },
 		{ "key": "WarriorWeapon1_item", "value": "Copper Greatsword" },
@@ -259,7 +263,13 @@
 		{ "key": "freeze_description", "value": "Has DOG, ACC, and PDEF reduced by 30%" },
 		{ "key": "rage_title", "value": "Rage" },
 		{ "key": "rage_sub", "value": "Buff" },
-		{ "key": "rage_description", "value": "Has PATK increased by 30%" },
+		{ "key": "rage_description", "value": "Has PATK increased by 50%" },
+		{ "key": "bleed_title", "value": "Bleed" },
+		{ "key": "bleed_sub", "value": "Debuff" },
+		{ "key": "bleed_description", "value": "HP is being drained equal to 34% of caster's PATK at the end of its turn." },
+		{ "key": "weakness_title", "value": "Weakness" },
+		{ "key": "weakness_sub", "value": "Debuff" },
+		{ "key": "weakness_description", "value": "Has PATK decreased by 30%" },
 
 		{ "key": "damage_description", "value": "Damage "},
 
@@ -284,6 +294,12 @@
 		{ "key": "stinger_monster_description", "value": "Its eyes reflect what little light there is to lure in prey." },
 		{ "key": "lesserWraith_monster", "value": "Lesser Wraith" },
 		{ "key": "lesserWraith_monster_description", "value": "Malevolent souls of those who died under false promises." },
+		{ "key": "floatingHand_monster", "value": "Floating Hand" },
+		{ "key": "floatingHand_monster_description", "value": "Reanimated hand that became as cursed as the spirit that took control of it." },
+		{ "key": "ravager_monster", "value": "Ravager" },
+		{ "key": "ravager_monster_description", "value": "Feral beasts that live for the smell of blood." },
+		{ "key": "vampireBat_monster", "value": "Vampire Bat" },
+		{ "key": "vampireBat_monster_description", "value": "A single bite and they can siphon off all of a victim's blood." },
 		{ "key": "greyhideAlpha_monster", "value": "Greyhide Alpha" },
 		{ "key": "greyhideAlpha_monster_description", "value": "All it takes to be their alpha is brute strength and a bit more brain." },
 		
@@ -296,6 +312,10 @@
 		{ "key": "sneak_attack", "value": "Sneak" },
 		{ "key": "willOwisp_attack", "value": "Will'O'Wisp" },
 		{ "key": "enrage_attack", "value": "Enrage" },
+		{ "key": "gaze_attack", "value": "Gaze" },
+		{ "key": "slam_attack", "value": "Slam" },
+		{ "key": "fang_attack", "value": "Fang" },
+		{ "key": "ravage_attack", "value": "Ravage" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "frost_attack", "value": "Frost" },

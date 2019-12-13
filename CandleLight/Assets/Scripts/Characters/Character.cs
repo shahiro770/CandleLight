@@ -143,13 +143,13 @@ namespace Characters {
         /// <param name="multiplier"> Bonus multiplier on stats </param>
         public virtual void LVLUp(int multiplier = 1) {
             LVL += 1;
-            baseSTR += (int)(LVL * 1.5 * multiplier);
+            baseSTR += (int)(LVL * 0.5 + baseSTR * 0.3 * multiplier);
             STR = baseSTR;
-            baseDEX += (int)(LVL * 1.5 * multiplier);
+            baseDEX += (int)(LVL * 0.5 + baseDEX * 0.3 * multiplier);
             DEX = baseDEX;
-            baseINT += (int)(LVL * 1.5 * multiplier);
+            baseINT += (int)(LVL * 0.5 + baseINT * 0.3 * multiplier);
             INT = baseINT;
-            baseLUK += (int)(LVL * 1.5 * multiplier);
+            baseLUK += (int)(LVL * 0.5 + baseLUK * 0.3 * multiplier);
             LUK = baseLUK;
             CalculateSecondaryStats(true);
         }
@@ -282,7 +282,9 @@ namespace Characters {
             if (se.name == StatusEffectConstants.BURN) {
                 damage -= MDEF;
             }
-            // poison damage can't be reduced for now
+            if (se.name == StatusEffectConstants.BLEED) {
+                damage -= PDEF;
+            }
             if (damage < 0) {
                 damage = 0;
             }  
@@ -358,12 +360,15 @@ namespace Characters {
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
-                    PATK += (int)(PATK * 0.3);
+                    PATK += (int)(PATK * 0.5);
                 }
                 if (se.name == StatusEffectConstants.FREEZE) {
                     DOG -= (int)(DOG * 0.3);
                     ACC -= (int)(ACC * 0.3);
                     PDEF -= (int)(PDEF * 0.3);
+                }
+                if (se.name == StatusEffectConstants.WEAKNESS) {
+                    PATK -= (int)(PATK * 0.3);
                 }
             }
         }

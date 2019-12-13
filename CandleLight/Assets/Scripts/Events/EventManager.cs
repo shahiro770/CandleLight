@@ -480,7 +480,7 @@ namespace Events {
             Result r;
             if (i.statToCheck != (int)primaryStats.NONE) {  // events that are statChecks will have a good and bad outcome
                 if (PartyManager.instance.GetPrimaryStatAll(i.statToCheck) + 
-                (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range(i.statThreshold, (int)i.statThreshold * 1.5f)) {
+                (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.75f, (int)i.statThreshold * 1.5f)) {
                     r = i.GetResult(0); // good result
                 }
                 else {

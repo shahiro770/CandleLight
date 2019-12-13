@@ -67,6 +67,18 @@ namespace PlayerUI {
                 normalBlock.pressedColor = new Color32(234, 50, 60, 255);
                 durationText.SetColour(new Color32(234, 50, 60, 255));
             }
+            else if (se.name == StatusEffectConstants.BLEED) {
+                normalBlock.normalColor = new Color32(138, 7, 7, 200);
+                normalBlock.highlightedColor = new Color32(138, 7, 7, 255);
+                normalBlock.pressedColor = new Color32(138, 7, 7, 255);
+                durationText.SetColour(new Color32(138, 7, 7, 255));
+            }
+            else if (se.name == StatusEffectConstants.WEAKNESS) {
+                normalBlock.normalColor = new Color32(98, 36, 97, 200);
+                normalBlock.highlightedColor = new Color32(98, 36, 97, 255);
+                normalBlock.pressedColor = new Color32(98, 36, 97, 255);
+                durationText.SetColour(new Color32(98, 36, 97, 255));
+            }
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
@@ -100,6 +112,14 @@ namespace PlayerUI {
                 amounts[1] = "";
             }
             else if (se.name == StatusEffectConstants.RAGE) {
+                textKeys[1] = "none_label";
+                amounts[1] = "";
+            }
+            else if (se.name == StatusEffectConstants.BLEED) {
+                textKeys[1] = "damage_description";
+                amounts[1] = se.value.ToString();
+            }
+            else if (se.name == StatusEffectConstants.WEAKNESS) {
                 textKeys[1] = "none_label";
                 amounts[1] = "";
             }

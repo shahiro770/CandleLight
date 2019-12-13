@@ -127,6 +127,16 @@ namespace Characters {
 
         #region [ Section 0 ] Combat Information
 
+        public void AddHP(int amount) {    
+            CHP += amount;
+
+            if (CHP > HP) {
+                CHP = HP;
+            }
+
+            StartCoroutine(md.DisplayHPChange(amount, false, "MplaceHolderEffect"));
+        }
+
         /// <summary>
         /// Reduce monster's HP
         /// </summary>
@@ -147,7 +157,7 @@ namespace Characters {
 
         public IEnumerator TriggerStatuses() {
             int damageTaken = 0;
-            int[] animationsToPlay = new int[] { 0 ,0 }; 
+            int[] animationsToPlay = new int[] { 0 ,0, 0 }; 
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
@@ -157,6 +167,14 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.POISON) {
                     damageTaken += CalculateStatusEffectReductions(se);
                     animationsToPlay[1] = 1;
+                }
+                else if (se.name == StatusEffectConstants.BLEED) {
+                    int bleedDamage = CalculateStatusEffectReductions(se);
+                    damageTaken += bleedDamage;
+                    if (se.afflicter != null) {
+                        ((PartyMember)(se.afflicter)).AddHP(bleedDamage);
+                    }
+                    animationsToPlay[2] = 1;
                 }
 
                 se.UpdateDuration();
@@ -170,6 +188,9 @@ namespace Characters {
             }
             if (animationsToPlay[1] == 1) {
                 md.PlayPoisonAnimation();
+            }
+            if (animationsToPlay[2] == 1) {
+                md.PlayBleedAnimation();
             }
 
             // TODO: Make this play multiple animations overtop one another

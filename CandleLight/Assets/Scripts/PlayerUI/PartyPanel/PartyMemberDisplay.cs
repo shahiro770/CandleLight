@@ -25,8 +25,9 @@ namespace PlayerUI {
         /* external component references */
         public Animator pmDisplayAnimator;  /// <value> Animator for display motion </value>
         public Animator pmEffectsAnimator;  /// <value> Animator for effects that display over the pmd </value>
-        public Animator pmBurnAnimator;  /// <value> Animator for effects that display over the pmd </value>
-        public Animator pmPoisonAnimator;  /// <value> Animator for effects that display over the pmd </value>
+        public Animator pmBurnAnimator;     /// <value> Animator for burns </value>
+        public Animator pmBleedAnimator;    /// <value> Animator for bleeds </value>
+        public Animator pmPoisonAnimator;   /// <value> Animator for poison </value>
         public Image classIcon;         /// <value> Icon of class </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
@@ -251,6 +252,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Plays the bleed animation
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator PlayBleedAnimation() {
+            pmBleedAnimator.SetTrigger("statusEffected");
+            do {
+                yield return null;    
+            } while (pmBleedAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmBleedAnimator.ResetTrigger("statusEffected");
+        }
+
+        /// <summary>
         /// Plays status effect animations depending on the partyMember's current status effects
         /// </summary>
         /// <param name="animationsToPlay"></param>
@@ -260,6 +273,9 @@ namespace PlayerUI {
             }
             if (animationsToPlay[1] == 1) {
                 StartCoroutine(PlayPoisonAnimation());
+            }
+            if (animationsToPlay[2] == 1) {
+                StartCoroutine(PlayBleedAnimation());
             }
         }
 

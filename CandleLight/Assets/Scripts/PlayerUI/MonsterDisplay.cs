@@ -26,6 +26,7 @@ namespace Characters {
         public Animator effectsAnimator;    /// <value> Animator for all effects played over-top of monster </value>
         public Animator burnAnimator;
         public Animator poisonAnimator;
+        public Animator bleedAnimator;
         public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
         public Animator SEAnimator;
         public Bar HPBar;                   /// <value> Monster's health points display </value>
@@ -396,10 +397,17 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Plays the poisonn animation of a monster
+        /// Plays the poison animation of a monster
         /// </summary>
         public void PlayPoisonAnimation() {
             StartCoroutine(PlayAnimation(poisonAnimator, "statusEffected"));
+        }
+
+        /// <summary>
+        /// Plays the bleed animation
+        /// </summary>
+        public void PlayBleedAnimation() {
+            StartCoroutine(PlayAnimation(bleedAnimator, "statusEffected"));
         }
 
          /// <summary>
@@ -447,6 +455,9 @@ namespace Characters {
                     yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damaged", "showDamage")));
                 }
                 dt.HideDamage();
+            }
+            else {
+                 HPBar.SetCurrent(displayedMonster.CHP);
             }
         }
 
