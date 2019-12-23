@@ -276,7 +276,7 @@ namespace Combat {
         /// <remark> Death animation for each monster is played as a de-spawning animation</remark>
         public IEnumerator AttemptFlee() {
             // partyMembers with higher luck will have a better chance at escaping
-            int chance = Random.Range(activePartyMember.LVL + (activePartyMember.LUK / 3 * activePartyMember.LVL) , 100) - monsters[0].LVL;
+            int chance = Random.Range(activePartyMember.LVL + (activePartyMember.LUK / 3 * activePartyMember.LVL), 100) - monsters[0].LVL;
             List<Monster> monstersToRemove = new List<Monster>();
 
             // wait for all monsters to "despawn"
@@ -287,7 +287,7 @@ namespace Combat {
             }
             yield return (StartCoroutine(monsters[monsters.Count - 1].md.PlayDeathAnimation())); // yield to last monster so we wait for all monsters to die
             monstersToRemove.Add(monsters[monsters.Count - 1]);
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(Random.Range(0.5f, 1f));
 
             if (chance < 50) {
                 DestroyMonsters(monstersToRemove);

@@ -824,7 +824,7 @@ GameObject:
   - component: {fileID: 2957129585806540358}
   - component: {fileID: 8135051198170885837}
   - component: {fileID: 6178353608788450240}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StatusEffectHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
