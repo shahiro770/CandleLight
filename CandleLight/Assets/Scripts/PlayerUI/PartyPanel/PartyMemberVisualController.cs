@@ -198,9 +198,9 @@ namespace Characters {
         /// Sets the partyMember's equipped gear
         /// </summary>
         public void SetEquippedGear() {
-            weapon = gearPanel.weapon.currentItemDisplay;
-            secondary = gearPanel.secondary.currentItemDisplay;
-            armour = gearPanel.armour.currentItemDisplay;
+            weapon = gearPanel.weaponSlot.currentItemDisplay;
+            secondary = gearPanel.secondarySlot.currentItemDisplay;
+            armour = gearPanel.armourSlot.currentItemDisplay;
         }
 
         /// <summary>
@@ -233,9 +233,13 @@ namespace Characters {
         /// Changes all panels to show the stored partyMember's information
         /// </summary>
         public void DisplayActivePartyMember() {
-            partyPanel.DisplayActivePartyMember(pmdPartyPanel);
+            if (partyPanel.isOpen) {
+                partyPanel.DisplayActivePartyMember(pmdPartyPanel);
+            }
             statusPanel.DisplayPartyMember(this);
-            gearPanel.Init(this);
+            if (gearPanel.isOpen) {
+                gearPanel.Init(this);
+            }
         }
 
         /// <summary>

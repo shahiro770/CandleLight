@@ -22,9 +22,9 @@ namespace PlayerUI {
         
         /* external component references */
         public ActionsPanel actionsPanel;
-        public ItemSlot weapon;     /// <value> Weapon item slot </value>
-        public ItemSlot secondary;  /// <value> Secondary item slot </value>
-        public ItemSlot armour;     /// <value> Armour item slot </value>
+        public ItemSlot weaponSlot;     /// <value> Weapon item slot </value>
+        public ItemSlot secondarySlot;  /// <value> Secondary item slot </value>
+        public ItemSlot armourSlot;     /// <value> Armour item slot </value>
         public ItemSlot[] spare = new ItemSlot[9];  /// <value> Item slots as equipment inventory </value>
         public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember</value>
 
@@ -56,10 +56,26 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember who's equipped gear should be displayed </param>
         public void Init(PartyMember pm) {
             this.pmvc = pm.pmvc;
+            if (this.pmvc.weapon != null) {
+                weaponSlot.ShowItem(pmvc.weapon);
+            }
+            else {
+                weaponSlot.PlaceItemInstant(pm.weapon);
+            }
 
-            weapon.PlaceItem(pm.weapon);
-            secondary.PlaceItem(pm.secondary);
-            armour.PlaceItem(pm.armour);
+            if (this.pmvc.secondary != null) {
+                secondarySlot.ShowItem(pmvc.secondary);
+            }
+            else {
+                secondarySlot.PlaceItemInstant(pm.secondary);
+            }
+
+            if (this.pmvc.armour != null) {
+                armourSlot.ShowItem(pmvc.armour);
+            }
+            else {
+                armourSlot.PlaceItemInstant(pm.armour);
+            }
         }
 
         /// <summary>
@@ -68,41 +84,30 @@ namespace PlayerUI {
         /// <param name="pmvc"> PartyMemberVisualController of partyMember to display </param>
         public void Init(PartyMemberVisualController pmvc) {
             if (this.pmvc.weapon != null) {
-                weapon.HideItem();
+                weaponSlot.HideItem();
             }
             if (this.pmvc.secondary != null) {
-                secondary.HideItem();
+                secondarySlot.HideItem();
             }
             if (this.pmvc.armour != null) {
-                armour.HideItem();
+                armourSlot.HideItem();
             }
             
             this.pmvc = pmvc;
 
             if (pmvc.weapon != null) {
-                weapon.ShowItem(pmvc.weapon);
+                weaponSlot.ShowItem(pmvc.weapon);
             }
-            else {
-                weapon.PlaceItem(new Gear());
-            }
-            
             if (pmvc.secondary != null) {
-                secondary.ShowItem(pmvc.secondary);
+                secondarySlot.ShowItem(pmvc.secondary);
             }
-            else {
-                secondary.PlaceItem(new Gear());
-            }
-            
             if (pmvc.armour != null) {
-                armour.ShowItem(pmvc.armour);
-            }
-            else {
-                armour.PlaceItem(new Gear());
+                armourSlot.ShowItem(pmvc.armour);
             }
 
-            weapon.SetColour(pmvc.partyMemberColour);
-            secondary.SetColour(pmvc.partyMemberColour);
-            armour.SetColour(pmvc.partyMemberColour);
+            weaponSlot.SetColour(pmvc.partyMemberColour);
+            secondarySlot.SetColour(pmvc.partyMemberColour);
+            armourSlot.SetColour(pmvc.partyMemberColour);
         }
 
         /// <summary>
@@ -143,9 +148,9 @@ namespace PlayerUI {
                 spare[i].SetTakeable(value);
             }
 
-            weapon.SetTakeable(value);
-            secondary.SetTakeable(value);
-            armour.SetTakeable(value);
+            weaponSlot.SetTakeable(value);
+            secondarySlot.SetTakeable(value);
+            armourSlot.SetTakeable(value);
         }
 
         /// <summary>
@@ -158,9 +163,9 @@ namespace PlayerUI {
                     spare[i].SetInteractable(value);
                 }
 
-                weapon.SetInteractable(value);
-                secondary.SetInteractable(value);
-                armour.SetInteractable(value);
+                weaponSlot.SetInteractable(value);
+                secondarySlot.SetInteractable(value);
+                armourSlot.SetInteractable(value);
             }
         }
 

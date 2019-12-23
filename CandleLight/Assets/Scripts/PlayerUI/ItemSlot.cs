@@ -56,8 +56,8 @@ namespace PlayerUI {
             if (newItem != null) {  
                 SetVisible(true);
             
-                if (newItem.type == null) {
-                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
+                if (newItem.type == null) { // show the default sprite if nothing is in the slot (assuming there is a default sprite)
+                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255); //not this one
                 } 
                 else {
                     GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
@@ -74,6 +74,35 @@ namespace PlayerUI {
             }
             else {
                 SetVisible(true);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the i
+        /// </summary>
+        /// <param name="newItem"></param>
+        public void PlaceItemInstant(Item newItem) {
+            if (newItem != null) {  
+            
+                if (newItem.type == null) {
+                    print(gameObject.name);
+                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
+                } 
+                else {
+                    GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
+                    currentItemDisplay = newItemDisplay.GetComponent<ItemDisplay>();
+                    currentItemDisplay.Init(newItem);
+
+                    newItemDisplay.transform.SetParent(this.transform, false);
+                    // hide the defaultSprite if it shows
+                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
+                }       
+
+                t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
+                SetTooltipText();
+            }
+            else {
+                defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
             }
         }
 
@@ -107,7 +136,7 @@ namespace PlayerUI {
         /// </summary>
         public void ClearItem() {
             if (currentItemDisplay != null) {
-                Destroy(currentItemDisplay);
+                Destroy(currentItemDisplay.gameObject);
                 currentItemDisplay = null;
             }
         }
@@ -313,7 +342,7 @@ namespace PlayerUI {
         /// <summary>
         /// Makes the itemDisplay visible and interactable
         /// </summary>
-        /// <param name="value"> true to make visible, false to hide </param>
+        /// <param name="value"> true to make visible, false to hide </param>  
         public void SetVisible(bool value) {
             if (value == true) {
                 b.interactable = true;

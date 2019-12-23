@@ -28,7 +28,7 @@
 
 		{ "key": "pathNormalGreyWastes_nothing_event_0", "value": "There's something oddly charming about a vast expanse full of nothing. Somewhat like a blank canvas." },
 		{ "key": "pathNormalGreyWastes_nothing_event_1", "value": "A few cracks here and there, but you doubt this stone path has ever needed maintenance." },
-		{ "key": "pathNormalGreyWastes_nothing_event_2", "value": "The air feels so empty. If it weren't for the cold breeze's every now and then, you'd forget it even existed." },
+		{ "key": "pathNormalGreyWastes_nothing_event_2", "value": "The air feels so empty. If it weren't for the cold breeze every now and then, you'd forget it even existed." },
 		{ "key": "pathNormalGreyWastes_nothing_event_3", "value": "You gaze up at the black sky. It would be more enjoyable if there was a starker contrast between it and the ground." },
 		{ "key": "pathNormalGreyWastes_combat_event_0", "value": "You've been ambushed. They look hungry." },
 		{ "key": "pathNormalGreyWastes_combat_event_1", "value": "You've taken a wrong turn." },
@@ -74,7 +74,7 @@
 		{ "key": "lostGreyWastes_post_combat_event_3", "value": "The fresh carcasses will draw more Unkindled." },
 		{ "key": "lostGreyWastes_flee_success_0", "value": "The Unkindled are sensitive to heat and sound. They'll find you again." },
 		{ "key": "lostGreyWastes_flee_success_1", "value": "You kick up some dirt and run." },
-		{ "key": "lostGreyWastes_flee_success_2", "value": "A gust of wind throws off their senses" },
+		{ "key": "lostGreyWastes_flee_success_2", "value": "A gust of wind throws off their senses." },
 		{ "key": "lostGreyWastes_flee_success_3", "value": "You're not the only one who's afraid to die." },
 
 		{ "key": "denGreyWastes_post_combat_event_0", "value": "With the alpha dead, the pack scatters." },
@@ -288,6 +288,8 @@
 
 		{ "key": "goblin_monster", "value": "Goblin" },
 		{ "key": "goblin_monster_description", "value": "Curious wanderers of the wastes. Who knows where it found its clothes." },
+		{ "key": "hobgoblin_monster", "value": "Hobgoblin" },
+		{ "key": "hobgoblin_monster_description", "value": "Goblin that studied a warrior before killing them." },
 		{ "key": "greyhide_monster", "value": "Greyhide" },
 		{ "key": "greyhide_monster_description", "value": "They like to hunt in packs, preying on the weakest." },
 		{ "key": "stinger_monster", "value": "Stinger" },
