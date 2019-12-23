@@ -41,42 +41,49 @@ namespace PlayerUI {
                 normalBlock.normalColor = new Color32(185, 29, 0, 200);
                 normalBlock.highlightedColor = new Color32(185, 29, 0, 255);
                 normalBlock.pressedColor = new Color32(185, 29, 0, 255);
+                normalBlock.disabledColor = new Color32(185, 29, 0, 150);
                 durationText.SetColour(new Color32(185, 29, 0, 255));
             }
             else if (se.name == StatusEffectConstants.POISON) {
                 normalBlock.normalColor = new Color32(92, 138, 57, 200);
                 normalBlock.highlightedColor = new Color32(92, 138, 57, 255);
                 normalBlock.pressedColor = new Color32(92, 138, 57, 255);
+                normalBlock.disabledColor = new Color32(92, 138, 57, 150);
                 durationText.SetColour(new Color32(92, 138, 57, 255));
             }
             else if (se.name == StatusEffectConstants.TAUNT) {
                 normalBlock.normalColor = new Color32(133, 133, 133, 200);
                 normalBlock.highlightedColor = new Color32(133, 133, 133, 255);
                 normalBlock.pressedColor = new Color32(133, 133, 133, 255);
+                normalBlock.disabledColor = new Color32(133, 133, 133, 150);
                 durationText.SetColour(new Color32(133, 133, 133, 255));
             }
             else if (se.name == StatusEffectConstants.FREEZE) {
                 normalBlock.normalColor = new Color32(0, 152, 220, 200);
                 normalBlock.highlightedColor = new Color32(0, 152, 220, 255);
                 normalBlock.pressedColor = new Color32(0, 152, 220, 255);
+                normalBlock.disabledColor = new Color32(0, 152, 220, 150);
                 durationText.SetColour(new Color32(0, 152, 220, 255));
             }
             else if (se.name == StatusEffectConstants.RAGE) {
                 normalBlock.normalColor = new Color32(234, 50, 60, 200);
                 normalBlock.highlightedColor = new Color32(234, 50, 60, 255);
                 normalBlock.pressedColor = new Color32(234, 50, 60, 255);
+                normalBlock.disabledColor = new Color32(234, 50, 60, 150);
                 durationText.SetColour(new Color32(234, 50, 60, 255));
             }
             else if (se.name == StatusEffectConstants.BLEED) {
                 normalBlock.normalColor = new Color32(138, 7, 7, 200);
                 normalBlock.highlightedColor = new Color32(138, 7, 7, 255);
                 normalBlock.pressedColor = new Color32(138, 7, 7, 255);
+                normalBlock.disabledColor = new Color32(138, 7, 7, 150);
                 durationText.SetColour(new Color32(138, 7, 7, 255));
             }
             else if (se.name == StatusEffectConstants.WEAKNESS) {
                 normalBlock.normalColor = new Color32(98, 36, 97, 200);
                 normalBlock.highlightedColor = new Color32(98, 36, 97, 255);
                 normalBlock.pressedColor = new Color32(98, 36, 97, 255);
+                normalBlock.disabledColor = new Color32(98, 36, 97, 150);
                 durationText.SetColour(new Color32(98, 36, 97, 255));
             }
 

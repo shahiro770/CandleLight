@@ -280,12 +280,19 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets the interactivity of the action's button, and handles consequences
+        /// Sets the interactivity of the partyMemberDisplay's button and statusEffectsDisplays
         /// </summary>
         /// <param name="value"> Enable interactivity on true and disable on false </param>
          public void SetInteractable(bool value) {
             b.interactable = value;
             classIcon.raycastTarget = value;
+
+            if (SEHolder != null) {     // partyMemberDisplay in rewards panel will have no SEHolder
+                foreach (StatusEffectDisplay SED in SEHolder.GetComponentsInChildren<StatusEffectDisplay>()) {
+                    SED.b.interactable = value;
+                    SED.t.SetVisible(false);
+                }
+            }
         }
     }
 }

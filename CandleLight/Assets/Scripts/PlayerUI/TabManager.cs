@@ -54,14 +54,12 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="index"> Index in the panels array to open </param>
         public void OpenPanel(int index) {
-            if (UIManager.instance.panelButtonsEnabled == true) {
-                panels[currentIndex].gameObject.SetActive(false);
-                btss[currentIndex].SetColor("normal");
-                
-                currentIndex = index;
-                panels[currentIndex].gameObject.SetActive(true);
-                btss[currentIndex].SetColor("pressed");
-            }
+            panels[currentIndex].gameObject.SetActive(false);
+            btss[currentIndex].SetColor("normal");
+            
+            currentIndex = index;
+            panels[currentIndex].gameObject.SetActive(true);
+            btss[currentIndex].SetColor("pressed");
         }
 
         public void SetAllButtonsInteractable() {
