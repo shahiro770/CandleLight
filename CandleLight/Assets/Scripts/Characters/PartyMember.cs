@@ -75,10 +75,10 @@ namespace Characters {
             LVL += 1;
 
             if (className == "Warrior") {
-                baseSTR += (int)(LVL * 1.75);
+                baseSTR += (int)(LVL * 1.5);
                 baseDEX += (int)(LVL * 1.5);
                 baseINT += (int)(LVL * 1.25);
-                baseLUK += LVL;
+                baseLUK += (int)(LVL * 1.25);
             }
             else if (className == "Mage") {
                 baseSTR += LVL;
