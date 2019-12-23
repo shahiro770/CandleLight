@@ -31,7 +31,7 @@
 		{ "key": "pathNormalGreyWastes_nothing_event_2", "value": "The air feels so empty. If it weren't for the cold breeze every now and then, you'd forget it even existed." },
 		{ "key": "pathNormalGreyWastes_nothing_event_3", "value": "You gaze up at the black sky. It would be more enjoyable if there was a starker contrast between it and the ground." },
 		{ "key": "pathNormalGreyWastes_combat_event_0", "value": "You've been ambushed. They look hungry." },
-		{ "key": "pathNormalGreyWastes_combat_event_1", "value": "You've taken a wrong turn." },
+		{ "key": "pathNormalGreyWastes_combat_event_1", "value": "You're not alone out here." },
 		{ "key": "pathNormalGreyWastes_combat_event_2", "value": "The Unkindled need to eat too." },
 		{ "key": "pathNormalGreyWastes_combat_event_3", "value": "There was something hiding in the dirt. They attack." },
 		{ "key": "pathNormalGreyWastes_post_combat_event_0", "value": "And that's another reason why you need to get home." },
