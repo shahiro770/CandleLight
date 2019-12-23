@@ -335,7 +335,7 @@ namespace Characters {
                 if (isLoss) {
                     eventDescription.SetPMDamageText(pm, damageTaken);
                 }
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.75f);
             }
         }
 
@@ -364,7 +364,12 @@ namespace Characters {
         /// <returns> IEnumerator cause animations </returns>
         public IEnumerator DisplayAttackDodged() {
             eventDescription.SetPMDodgeText(pm);
-            yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
+            }
+            else {
+                yield return new WaitForSeconds(0.75f);
+            }
         }
 
         // /// <summary>

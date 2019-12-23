@@ -85,7 +85,6 @@ namespace PlayerUI {
             if (newItem != null) {  
             
                 if (newItem.type == null) {
-                    print(gameObject.name);
                     defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
                 } 
                 else {
