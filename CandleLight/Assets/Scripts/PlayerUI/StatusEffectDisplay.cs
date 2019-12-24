@@ -25,6 +25,8 @@ namespace PlayerUI {
         public Tooltip t;
 
         private StatusEffect se;     /// <value>  statusEffect being displayed  </value>
+        private string[] textKeys = new string[2];  /// <value> Text keys for status effects </value>    
+        private string[] amounts = new string[2];   /// <value> Amounts to the displayed in tooltips </value>    
 
         /// <summary>
         /// Constructor to initialize statusEffect display's properties
@@ -95,8 +97,6 @@ namespace PlayerUI {
 
         public void SetTooltip() {
             RectTransform buttonRect = b.GetComponent<RectTransform>();
-            string[] textKeys = new string[2];    
-            string[] amounts = new string[2];
 
             t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
 
@@ -141,6 +141,26 @@ namespace PlayerUI {
         /// </summary>
         public void UpdateText() {
             durationText.SetText(se.duration.ToString());
+        }
+
+        /// <summary>
+        /// Update the values in the status effect tooltip
+        /// </summary>
+        public void UpdateValue() {
+            if (se.name == StatusEffectConstants.BURN) {
+                textKeys[1] = "damage_description";
+                amounts[1] = se.value.ToString();
+            }
+            else if (se.name == StatusEffectConstants.POISON) {
+                textKeys[1] = "damage_description";
+                amounts[1] = se.value.ToString();
+            }
+            else if (se.name == StatusEffectConstants.BLEED) {
+                textKeys[1] = "damage_description";
+                amounts[1] = se.value.ToString();
+            }
+
+            t.SetAmountTextMultiple( "description", textKeys, amounts);
         }
     }
 }

@@ -26,6 +26,8 @@ namespace Characters {
         [field: SerializeField] public int value { get; private set; }          /// <value> Calculated value from formula </value>
         [field: SerializeField] public int duration;                            /// <value> Turn duration of status </value>      
 
+        private int preValue = 0;  /// <value> Damage amount of status effect before reductions </value>
+
         /// <summary>
         /// Constructor to initialize statusEffect's properties
         /// </summary>
@@ -49,25 +51,56 @@ namespace Characters {
         /// <param name="afflicter"></param>
         /// <param name="afflicted"></param>
         public void SetValue(Character afflicter, Character afflicted) {
+            this.afflicted = afflicted;
+            
             if (name == StatusEffectConstants.BURN) {
-                value = (int)(1 + afflicter.MATK * 0.2f);
+                preValue = (int)(1 + afflicter.MATK * 0.2f);
+                value = preValue - afflicted.MDEF;
             }
             else if (name == StatusEffectConstants.POISON) {
-                value = (int)(1 + afflicted.HP * 0.07f);
+                preValue = (int)(1 + afflicted.HP * 0.07f);
+                value = preValue;
             }
             else if (name == StatusEffectConstants.TAUNT) {
                 this.afflicter = afflicter;
             }
             else if (name == StatusEffectConstants.BLEED) {
-                this.afflicter = afflicter;
-                value = (int)(1 + afflicter.PATK * 0.34f);
-
+                preValue = (int)(1 + afflicter.PATK * 0.34f);
+                value = preValue - afflicted.PDEF;
             }
+
+            if (value < 0) {
+                value = 0;
+            }   
         }
 
+        /// <summary>
+        /// Updates the duration of the statusEffect and then updates the display
+        /// </summary>
         public void UpdateDuration() {
             duration--;
             sed.UpdateText();
+        }
+
+        /// <summary>
+        /// Updates the value of the statusEffect and then updates the display
+        /// </summary>
+        public void UpdateValue() {
+            if (name == StatusEffectConstants.BURN) {
+                value = preValue - afflicted.MDEF;
+            }
+            else if (name == StatusEffectConstants.POISON) {
+                value = preValue;
+            }
+            else if (name == StatusEffectConstants.BLEED) {
+                value = preValue - afflicted.PDEF;
+            }
+
+            if (value < 0) {
+                value = 0;
+            }   
+
+            sed.UpdateValue();
         }
     }
 }

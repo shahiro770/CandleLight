@@ -251,6 +251,8 @@ namespace Characters {
                 if (isStatus && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
                 }
+
+                UpdateStatusEffectValues();
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
@@ -273,6 +275,8 @@ namespace Characters {
                     newStatus.SetValue(c, this);
                     AddStatusEffect(newStatus);
                     pmvc.AddStatusEffectDisplay(newStatus);
+
+                    UpdateStatusEffectValues();
                 }
             }
             else {
@@ -317,15 +321,15 @@ namespace Characters {
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
-                    damageTaken += CalculateStatusEffectReductions(se);
+                    damageTaken += se.value;
                     animationsToPlay[0] = 1;
                 }
                 else if (se.name == StatusEffectConstants.POISON) {
-                    damageTaken += CalculateStatusEffectReductions(se);
+                    damageTaken += se.value;
                     animationsToPlay[1] = 1;
                 }
                 else if (se.name == StatusEffectConstants.BLEED) {
-                    int bleedDamage = CalculateStatusEffectReductions(se);
+                    int bleedDamage = se.value;
                     damageTaken += bleedDamage;
                     if (se.afflicter != null) {
                         ((Monster)(se.afflicter)).AddHP(bleedDamage);
@@ -379,6 +383,7 @@ namespace Characters {
             CalculateSecondaryStats();
             CalculateGearStatsSecondary();
             CalculateStatusEffectStats();
+            UpdateStatusEffectValues();
             pmvc.UpdateStats();
             pmvc.SetEquippedGear();
         }
@@ -402,6 +407,7 @@ namespace Characters {
             CalculateSecondaryStats();
             CalculateGearStatsSecondary();
             CalculateStatusEffectStats();
+            UpdateStatusEffectValues();
             pmvc.UpdateStats();
             pmvc.SetEquippedGear();
         }

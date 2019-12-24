@@ -272,27 +272,6 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Reduces damage from a status effect depending on the character
-        /// </summary>
-        /// <param name="se"> Status effect to calculate </param>
-        /// <returns></returns>
-        public int CalculateStatusEffectReductions(StatusEffect se) {
-            int damage = se.value;
-
-            if (se.name == StatusEffectConstants.BURN) {
-                damage -= MDEF;
-            }
-            if (se.name == StatusEffectConstants.BLEED) {
-                damage -= PDEF;
-            }
-            if (damage < 0) {
-                damage = 0;
-            }  
-            
-            return damage;
-        }
-
-        /// <summary>
         /// Calculates the damage of a critical attack against this character
         /// </summary>
         /// <param name="amount"> Damage value coming in </param>
@@ -312,6 +291,15 @@ namespace Characters {
             if (statusEffects.Count < maxStatusEffects) {
                 statusEffects.Add(se);
                 CalculateStatusEffectStats();
+            }
+        }
+
+        /// <summary>
+        /// Updates the values on statusEffects
+        /// </summary>
+        protected void UpdateStatusEffectValues() {
+             foreach (StatusEffect se in statusEffects) {
+                se.UpdateValue();
             }
         }
 

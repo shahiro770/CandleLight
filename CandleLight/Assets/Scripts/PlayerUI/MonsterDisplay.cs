@@ -203,7 +203,7 @@ namespace Characters {
 
             foreach (StatusEffectDisplay SED in SEHolder.GetComponentsInChildren<StatusEffectDisplay>()) {
                 SED.b.interactable = value;
-                SED.t.SetVisible(false);
+                SED.t.SetVisible(false);    
             }
 
             if (value == false) {

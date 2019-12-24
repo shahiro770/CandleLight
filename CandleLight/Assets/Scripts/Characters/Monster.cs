@@ -161,15 +161,15 @@ namespace Characters {
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
-                    damageTaken += CalculateStatusEffectReductions(se);
+                    damageTaken += se.value;
                     animationsToPlay[0] = 1;
                 }
                 else if (se.name == StatusEffectConstants.POISON) {
-                    damageTaken += CalculateStatusEffectReductions(se);
+                    damageTaken += se.value;
                     animationsToPlay[1] = 1;
                 }
                 else if (se.name == StatusEffectConstants.BLEED) {
-                    int bleedDamage = CalculateStatusEffectReductions(se);
+                    int bleedDamage = se.value;
                     damageTaken += bleedDamage;
                     if (se.afflicter != null) {
                         ((PartyMember)(se.afflicter)).AddHP(bleedDamage);
@@ -234,6 +234,8 @@ namespace Characters {
                         md.AddStatusEffectDisplay(newStatus);
                     }
                 }
+                
+                UpdateStatusEffectValues();
             }
             else {
                 yield return StartCoroutine(DodgeAttack(animationClipName));
@@ -258,6 +260,8 @@ namespace Characters {
                     newStatus.SetValue(c, this);
                     AddStatusEffect(newStatus);
                     md.AddStatusEffectDisplay(newStatus);
+
+                    UpdateStatusEffectValues();
                 }
             }
             else {
@@ -276,6 +280,8 @@ namespace Characters {
                 newStatus.SetValue(this, this);
                 AddStatusEffect(newStatus);
                 md.AddStatusEffectDisplay(newStatus);
+
+                UpdateStatusEffectValues();
             }
         }
 
