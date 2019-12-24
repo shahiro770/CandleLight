@@ -31,7 +31,15 @@ namespace Characters {
         [field: SerializeField] public int STR { get; set; }              /// <value> Strength after all modifiers </value>
         [field: SerializeField] public int DEX { get; set; }              /// <value> Dexterity after all modifiers  </value>
         [field: SerializeField] public int INT { get; set; }              /// <value> Intelligence after all modifiers </value>
-        [field: SerializeField] public int LUK { get; set; }              /// <value> Luck after all modifiers</value>
+        [field: SerializeField] public int LUK { get; set; }              /// <value> Luck after all modifiers </value>
+        [field: SerializeField] public int gearPATK { get; set; }         /// <value> Physical attack after gear changes (effective base value) </value>
+        [field: SerializeField] public int gearMATK { get; set; }         /// <value> Magical attack  after gear changes (effective base value) </value>
+        [field: SerializeField] public int gearPDEF { get; set; }         /// <value> Physical defense after gear changes (effective base value) </value>
+        [field: SerializeField] public int gearMDEF { get; set; }         /// <value> Magical defense after gear changes (effective base value) </value>
+        [field: SerializeField] public int gearDOG { get; set; }          /// <value> Dodge rating after gear changes (effective base value) </value>
+        [field: SerializeField] public int gearACC { get; set; }          /// <value> Accuracy rating after gear changes (effective base value) </value>
+        [field: SerializeField] public int gearCritChance { get; set; }   /// <value> Crit chance after gear changes (effective base value) </value>
+        [field: SerializeField] public float gearCritMult { get; set; }   /// <value> Crit attack damage multiplier after gear changes (effective base value) </value>
         [field: SerializeField] public int PATK { get; set; }             /// <value> Physical attack </value>
         [field: SerializeField] public int MATK { get; set; }             /// <value> Magical attack </value>
         [field: SerializeField] public int PDEF { get; set; }             /// <value> Physical defense </value>
@@ -41,14 +49,6 @@ namespace Characters {
         [field: SerializeField] public int tempACC = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
         [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
-        [field: SerializeField] public int gearPATK { get; set; }         /// <value> Physical attack after gear changes </value>
-        [field: SerializeField] public int gearMATK { get; set; }         /// <value> Magical attack  after gear changes </value>
-        [field: SerializeField] public int gearPDEF { get; set; }         /// <value> Physical defense after gear changes </value>
-        [field: SerializeField] public int gearMDEF { get; set; }         /// <value> Magical defense after gear changes </value>
-        [field: SerializeField] public int gearDOG { get; set; }          /// <value> Dodge rating after gear changes </value>
-        [field: SerializeField] public int gearACC { get; set; }          /// <value> Accuracy rating after gear changes </value>
-        [field: SerializeField] public int gearCritChance { get; set; }   /// <value> Crit chance after gear changes </value>
-        [field: SerializeField] public float gearCritMult { get; set; }   /// <value> Crit attack damage multiplier after gear changes </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         

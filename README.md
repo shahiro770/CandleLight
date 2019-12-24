@@ -28,10 +28,10 @@ Current list:
 - Calculating the MVP of the fight, based on kills, most damage healed, buffs that resulted in clutch kills or saves, etc.
 - Colour coding for rarities
 
-# SubArea Creation Checlist
+# SubArea Creation Checklist
 In order to create a new subArea for the player to explore the following must be done in the database and code.
 1) Add the subArea's name to Area table
 2) Add the subArea's name to SubAreas table (give it the events and chances)
 3) Add the subArea's name to the gear and consumable item pool tables
 4) Add the subArea's name to the background pack table
-5) Add the subArea's name to the monsterPools
+5) Add the subArea's name to the monsterPools table

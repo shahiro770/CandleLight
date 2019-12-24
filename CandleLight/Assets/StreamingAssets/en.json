@@ -181,6 +181,7 @@
 		{ "key": "theDenGreyWastes0_0_res", "value": "The path is right there." },
 		
 		{ "key": "none_label", "value": "None" },
+		{ "key": "empty_label", "value": "" },
 		{ "key": "HP_label", "value": "HP" },
 		{ "key": "MP_label", "value": "MP" },
 		{ "key": "LVL_label", "value": "LVL" },

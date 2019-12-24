@@ -1424,6 +1424,14 @@ MonoBehaviour:
   <DEX>k__BackingField: 0
   <INT>k__BackingField: 0
   <LUK>k__BackingField: 0
+  <gearPATK>k__BackingField: 0
+  <gearMATK>k__BackingField: 0
+  <gearPDEF>k__BackingField: 0
+  <gearMDEF>k__BackingField: 0
+  <gearDOG>k__BackingField: 0
+  <gearACC>k__BackingField: 0
+  <gearCritChance>k__BackingField: 0
+  <gearCritMult>k__BackingField: 0
   <PATK>k__BackingField: 0
   <MATK>k__BackingField: 0
   <PDEF>k__BackingField: 0
@@ -1433,14 +1441,6 @@ MonoBehaviour:
   tempACC: 0
   <critChance>k__BackingField: 0
   <critMult>k__BackingField: 0
-  <gearPATK>k__BackingField: 0
-  <gearMATK>k__BackingField: 0
-  <gearPDEF>k__BackingField: 0
-  <gearMDEF>k__BackingField: 0
-  <gearDOG>k__BackingField: 0
-  <gearACC>k__BackingField: 0
-  <gearCritChance>k__BackingField: 0
-  <gearCritMult>k__BackingField: 0
   <attacks>k__BackingField: []
   <statusEffects>k__BackingField: []
   md: {fileID: 8085412351755015521}
@@ -2050,7 +2050,7 @@ PrefabInstance:
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 112
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
@@ -2080,16 +2080,6 @@ PrefabInstance:
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
-        type: 3}
-      propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5219446022169754282, guid: 40dd5d9c14f404e928ed678e277743a1,

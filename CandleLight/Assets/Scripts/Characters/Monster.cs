@@ -232,6 +232,7 @@ namespace Characters {
                         newStatus.SetValue(c, this);
                         AddStatusEffect(newStatus);
                         md.AddStatusEffectDisplay(newStatus);
+                        md.UpdateTooltip();
                     }
                 }
                 
@@ -260,6 +261,7 @@ namespace Characters {
                     newStatus.SetValue(c, this);
                     AddStatusEffect(newStatus);
                     md.AddStatusEffectDisplay(newStatus);
+                    md.UpdateTooltip();
 
                     UpdateStatusEffectValues();
                 }
@@ -280,6 +282,7 @@ namespace Characters {
                 newStatus.SetValue(this, this);
                 AddStatusEffect(newStatus);
                 md.AddStatusEffectDisplay(newStatus);
+                md.UpdateTooltip();
 
                 UpdateStatusEffectValues();
             }
