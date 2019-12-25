@@ -20,10 +20,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Actions {
+namespace PlayerUI {
+
     public class Action : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
 
         /* external component references */
+        public ActionsPanel actionsPanel;
         public LocalizedText actionText;            /// <value> Text to be displayed </value>
         public CanvasGroup textCanvas;              /// <value> Canvas group for fading </value>
         public EventDescription eventDescription;   /// <value> Some actions will display what they do in the eventDescription </value>
@@ -73,9 +75,6 @@ namespace Actions {
             else if (actionType == ActionConstants.TAKEALL) {
                 SetKey("take_all_action");
             }
-            else if (actionType == ActionConstants.UNDO) {
-                SetKey("undo_action");
-            } 
             else if (actionType == ActionConstants.NONE) {
                 SetKey("none_action");
             }
@@ -161,7 +160,12 @@ namespace Actions {
         /// Change button colour back to default
         /// </summary>
         public void ShowActionUnselected() {
-            bts.SetColor("normal");
+            if (isUsable == true) {
+                bts.SetColor("normal");
+            }
+            else {
+                bts.SetColor("normalAlternate");
+            }
         }
 
         /// <summary>
@@ -224,8 +228,13 @@ namespace Actions {
 
         //Detect when Cursor leaves the GameObject
         public void OnPointerExit(PointerEventData pointerEventData) {
-            if (b.interactable && a != null && actionType != ActionConstants.UNDO) {
-                eventDescription.ClearText();
+            if (b.interactable && a != null) {
+                if (actionsPanel.selectedAction != null) {
+                    eventDescription.SetAttackText(actionsPanel.selectedAction.a, actionsPanel.selectedAction.isUsable);
+                }
+                else {
+                    eventDescription.ClearText();
+                }  
             }
         }
 
@@ -237,8 +246,13 @@ namespace Actions {
 
         //Detect when Cursor leaves the GameObject
         public void OnDeselect(BaseEventData baseEventData) {
-            if (b.interactable && a != null && actionType != ActionConstants.UNDO) {
-               eventDescription.ClearText();
+            if (b.interactable && a != null) {
+                if (actionsPanel.selectedAction != null) {
+                    eventDescription.SetAttackText(actionsPanel.selectedAction.a, actionsPanel.selectedAction.isUsable);
+                }
+                else {
+                    eventDescription.ClearText();
+                }  
             }
         }
     }

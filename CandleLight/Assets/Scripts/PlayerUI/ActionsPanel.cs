@@ -9,7 +9,6 @@
 */
 
 using ActionConstants = Constants.ActionConstants;
-using Actions;
 using Characters;
 using Combat;
 using Events;
@@ -28,8 +27,9 @@ namespace PlayerUI {
         public EventDescription actionDescription;
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
         
+        public Action selectedAction;              /// <value> Action that was selected </value>
+
         private EventSystem es;                     /// <value> eventSystem reference </value>
-        private Action selectedAction;              /// <value> Action that was selected </value>
         private Interaction travelInt;
         private Interaction fightInt;
         private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
@@ -173,9 +173,6 @@ namespace PlayerUI {
                     selectedAction = a;
                     AttackActionSelected(a.a);
                 }
-                else if (a.actionType == ActionConstants.UNDO) {
-                    UndoAttackActionSelected();
-                }
                 else if (a.actionType == ActionConstants.INTERACTION) {
                     if (a.i.isSingleUse) {
                         a.SetUsable(false);
@@ -198,41 +195,15 @@ namespace PlayerUI {
         /// <param name="a"> Name of action to be taken </param>
         public void AttackActionSelected(Attack a) {
             for (int i = 0; i < actions.Length - 1;i++) {
-                if (actions[i].actionType != ActionConstants.NONE) {
-                    actions[i].SetInteractable(false);  
-                } 
                 if (actions[i] == selectedAction) {
                     actions[i].ShowActionSelected();
                 }
+                else if (actions[i].actionType != ActionConstants.NONE) {
+                    actions[i].ShowActionUnselected();  
+                }
             }
-            actions[actions.Length - 1].SetAction(ActionConstants.UNDO);
-            actions[actions.Length - 1].SetInteractable(true);
-
+           
             CombatManager.instance.PreparePMAttack(a);
-        }
-
-        /// <summary>
-        /// Reverts UI back to before an attack was selected, enabling all options that were selectable
-        /// </summary>
-        public void UndoAttackActionSelected() {
-            for (int i = 0; i < actions.Length ;i++) {
-                if (actions[i].actionType != ActionConstants.NONE) {
-                    actions[i].SetInteractable(true);  
-                }
-                if (actions[i] == selectedAction) {
-                    actions[i].ShowActionUnselected();
-                    selectedAction = null;
-                }
-            }
-
-            if (isLeavePossible) {
-                actions[actions.Length - 1].SetAction(ActionConstants.FLEE);
-            } else {
-                actions[actions.Length - 1].SetAction(ActionConstants.NONE);
-            }
-            SetAllActionsInteractable();
-            ResetFifthButtonNavigation();
-            CombatManager.instance.UndoPMAction();  // update combat manager to know party members can't attack yet
         }
 
         /// <summary>
@@ -403,7 +374,7 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Resets the navigation of the fifth button (flee, undo)
+        /// Resets the navigation of the fifth button (flee)
         /// </summary>
         private void ResetFifthButtonNavigation() {
             Button b = actions[4].b;

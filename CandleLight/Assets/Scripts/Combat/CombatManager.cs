@@ -303,7 +303,8 @@ namespace Combat {
                 monstersToRemove.Add(monsters[monsters.Count - 1]);
                 yield return new WaitForSeconds(0.25f);
             }
-
+            
+            selectedAttackpm = null;
             pmSelectionFinalized = true;
         }
 

@@ -276,7 +276,6 @@
 
 		{ "key": "flee_action", "value": "Flee" },
 		{ "key": "travel_action", "value": "Travel" },
-		{ "key": "undo_action", "value": "Undo" },
 		{ "key": "take_all_action", "value": "Take All" },
 		{ "key": "none_action", "value": "" },
 		

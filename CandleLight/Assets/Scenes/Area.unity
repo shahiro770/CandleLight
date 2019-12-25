@@ -413,7 +413,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 78143142}
-          m_ObjectArgumentAssemblyTypeName: Actions.Action, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerUI.Action, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -466,6 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8af9619550054f14b89fe5844681b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsPanel: {fileID: 1991115682}
   actionText: {fileID: 1572908073}
   textCanvas: {fileID: 1572908074}
   eventDescription: {fileID: 95653651}
@@ -8437,7 +8438,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 738896045}
-          m_ObjectArgumentAssemblyTypeName: Actions.Action, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerUI.Action, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8490,6 +8491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8af9619550054f14b89fe5844681b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsPanel: {fileID: 1991115682}
   actionText: {fileID: 1667380055}
   textCanvas: {fileID: 1667380056}
   eventDescription: {fileID: 95653651}
@@ -12064,7 +12066,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 991703035}
-          m_ObjectArgumentAssemblyTypeName: Actions.Action, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerUI.Action, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12117,6 +12119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8af9619550054f14b89fe5844681b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsPanel: {fileID: 1991115682}
   actionText: {fileID: 723320193}
   textCanvas: {fileID: 723320194}
   eventDescription: {fileID: 95653651}
@@ -17080,7 +17083,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1626114943}
-          m_ObjectArgumentAssemblyTypeName: Actions.Action, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerUI.Action, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -17133,6 +17136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8af9619550054f14b89fe5844681b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsPanel: {fileID: 1991115682}
   actionText: {fileID: 1252734833}
   textCanvas: {fileID: 1252734834}
   eventDescription: {fileID: 95653651}
@@ -22641,6 +22645,7 @@ MonoBehaviour:
   - {fileID: 738896045}
   - {fileID: 2098523432}
   - {fileID: 78143142}
+  selectedAction: {fileID: 0}
 --- !u!1 &2024570999
 GameObject:
   m_ObjectHideFlags: 0
@@ -23752,7 +23757,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2098523432}
-          m_ObjectArgumentAssemblyTypeName: Actions.Action, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: PlayerUI.Action, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -23805,6 +23810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8af9619550054f14b89fe5844681b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsPanel: {fileID: 1991115682}
   actionText: {fileID: 2072464302}
   textCanvas: {fileID: 2072464303}
   eventDescription: {fileID: 95653651}
