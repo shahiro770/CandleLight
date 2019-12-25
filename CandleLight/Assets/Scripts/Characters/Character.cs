@@ -105,7 +105,7 @@ namespace Characters {
                 CMP = MP;
             }
             if (critChance > 100) {
-                critChance = 100;
+                critChance = 99;
             }
 
             gearPATK = PATK;
