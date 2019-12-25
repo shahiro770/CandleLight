@@ -281,6 +281,7 @@ namespace Combat {
 
             // wait for all monsters to "despawn"
             DisableAllButtons();
+            eventDescription.ClearText();
             for (int i = 0; i < monsters.Count - 1; i++) {  
                 StartCoroutine(monsters[i].md.PlayDeathAnimation());
                 monstersToRemove.Add(monsters[i]);
@@ -484,7 +485,7 @@ namespace Combat {
                 int weakest = 0;
                 int weakestHitChance = Random.Range(0, 100);
 
-                if (weakestHitChance < 33) {    // 33% chance of attacking weakest partyMember
+                if (weakestHitChance < 26) {    // 25% chance of attacking weakest partyMember
                     for (int i = 1; i < partyMembersAlive.Count; i++) {          
                         if (partyMembersAlive[i].CHP < partyMembersAlive[weakest].CHP && !partyMembersAlive[i].CheckDeath()) {
                             weakest = i;
