@@ -8,8 +8,9 @@
 *
 */
 
-using Localization;
+using Combat;
 using Events;
+using Localization;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using PlayerUI;
@@ -42,6 +43,7 @@ namespace Characters {
         public ItemDisplay armour;      /// <value> armour reference </value>
 
         public Sprite partyMemberSprite { get; private set; }   /// <value> Icon sprite of the partyMember </value>
+        public Sprite[] skillSprites = new Sprite[12];
         public Color32 partyMemberColour { get; private set; }  /// <value> Theme colour of partyMember </value>
         
         private PartyMember pm;      /// <value> PartyMember object visual controller is referring to </value>
@@ -67,6 +69,12 @@ namespace Characters {
             }
             else if (pm.className == "Thief") {
                 partyMemberColour = new Color32(255, 235, 87, 255);
+            }
+
+            for (int i = 0; i < pm.skills.Length; i++) {
+                if (pm.skills[i] != null) {    // temporary until all 12 skills for each class get filled out
+                    skillSprites[i] = Resources.Load<Sprite>("Sprites/Skills/" + pm.className + "/" + pm.skills[i].name);
+                }
             }
         }
         
@@ -313,9 +321,9 @@ namespace Characters {
             if (statsPanelHPBar != null) {
                 statsPanelHPBar.SetCurrent(pm.CHP);
             }
-            if (EventManager.instance.partyPanel.isOpen == true) {
+            if (EventManager.instance.partyPanel.isOpen) {
                 partyPanelHPBar.SetCurrent(pm.CHP);
-                if (isLoss) {
+                if (isLoss && CombatManager.instance.inCombat == true) {
                     if (isCrit) {
                         eventDescription.SetPMDamageCritText(pm, damageTaken);
                         yield return (StartCoroutine(pmdPartyPanel.PlayCritDamagedAnimation()));
@@ -332,7 +340,7 @@ namespace Characters {
                 }
             }
             else {
-                if (isLoss) {
+                if (isLoss && CombatManager.instance.inCombat) {
                     eventDescription.SetPMDamageText(pm, damageTaken);
                 }
                 yield return new WaitForSeconds(0.75f);

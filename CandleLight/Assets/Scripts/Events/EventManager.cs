@@ -38,6 +38,7 @@ namespace Events {
         public GearPanel gearPanel;                 /// <value> GearPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
+        public SkillsPanel skillsPanel;             /// <value> SkillsPanel reference </value>
         public StatusPanel statusPanel;             /// <value> StatusPanel reference </value>
         public InfoPanel infoPanel;                 /// <value> InfoPanel reference </value>
         public TabManager itemsTabManager;          /// <value> Click on to display other panels with item information </value>
@@ -270,6 +271,7 @@ namespace Events {
         /// </summary>
         public void GetCombatEvent() {
             gearPanel.SetTakeable(false);
+            skillsPanel.SetTogglable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentEvent.isLeavePossible));
         }
@@ -390,6 +392,7 @@ namespace Events {
             actionsPanel.PostCombatActions();
             PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
             gearPanel.SetTakeable(true);
+            skillsPanel.SetTogglable(true);
             rewardsPanel.SetVisible(true);
 
             if (endString == "DEFEAT") {
@@ -480,7 +483,7 @@ namespace Events {
             Result r;
             if (i.statToCheck != (int)primaryStats.NONE) {  // events that are statChecks will have a good and bad outcome
                 if (PartyManager.instance.GetPrimaryStatAll(i.statToCheck) + 
-                (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.75f, (int)i.statThreshold * 1.5f)) {
+                (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.25f)) {
                     r = i.GetResult(0); // good result
                 }
                 else {

@@ -19,6 +19,9 @@ namespace UIEffects {
 
     public class MultiImageButton : UnityEngine.UI.Button {
         
+        /* external component references */
+        public Sprite sprite;
+
         private Graphic[] m_graphics;   /// <value> Backing field for Graphics </value>
         protected Graphic[] Graphics {  /// <value> List of graphic components that need to be affected by attached component's transitions </value>
             get {

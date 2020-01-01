@@ -11,6 +11,8 @@
 using Combat;
 using Items;
 using Party;
+using Skills;
+using SkillConstants = Constants.SkillConstants;
 using System.Collections;
 using System.Collections.Generic;
 using StatusEffectConstants = Constants.StatusEffectConstants;
@@ -29,8 +31,11 @@ namespace Characters {
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
+        public int skillPoints;
         public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
 
+        public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", 0, "single", "none");
+        public Skill[] skills = new Skill[12];
         public Gear weapon = new Gear();        /// <value> Weapon </value>
         public Gear secondary = new Gear();     /// <value> Secondary </value>
         public Gear armour = new Gear();        /// <value> Armour </value>
@@ -45,7 +50,7 @@ namespace Characters {
         /// <param name="CMP"> Current mana Points, for now irrelevant, but will be used for saving </param>
         /// <param name="stats"> STR, INT, DEX, LUK </param>
         /// <param name="attacks"> Array of known attacks (length 4)</param>
-        public void Init(string[] personalInfo, int LVL, int EXP, int CHP, int CMP, int[] stats, Attack[] attacks) {
+        public void Init(string[] personalInfo, int LVL, int EXP, int CHP, int CMP, int[] stats, Attack[] attacks, Skill[] skills) {
             base.Init(LVL, CHP, CMP, stats, attacks);
             this.EXP = EXP;
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
@@ -53,6 +58,9 @@ namespace Characters {
             this.subClassName = personalInfo[1];
             this.pmName = personalInfo[2];
             this.race = personalInfo[3];
+            this.skills = skills;
+
+            skillPoints = 1;
 
             pmvc.Init(this);
         }
@@ -73,6 +81,9 @@ namespace Characters {
         /// <param name="multiplier"> Multiplier because base needed it, won't be used here </param>
         public override void LVLUp(int multiplier = 1) {
             LVL += 1;
+            if (LVL % 2 == 1) {     // gain a skill point every other level
+                skillPoints++;
+            }
 
             if (className == "Warrior") {
                 baseSTR += (int)(LVL * 1.5);
@@ -175,7 +186,17 @@ namespace Characters {
         /// </summary>
         public void Regen() {
             AddHP((int)(Mathf.Ceil((float)HP * 0.06f)));
-            AddMP((int)(Mathf.Ceil((float)MP * 0.12f)));
+            if (className != "Mage") {
+                AddMP((int)(Mathf.Ceil((float)MP * 0.12f)));
+            }
+            else {  
+                if (skills[1].skillEnabled == true) {
+                    AddMP((int)(Mathf.Ceil((float)MP * 0.24f)));
+                }
+                else {
+                    AddMP((int)(Mathf.Ceil((float)MP * 0.12f)));
+                }
+            }
         }
 
         /// <summary>
@@ -524,6 +545,60 @@ namespace Characters {
             gearACC = ACC;
             gearCritChance = critChance;
             gearCritMult = critMult;
+        }
+
+        public bool EnableSkill(int index) {
+            if (skills[index].type == SkillConstants.ACTIVE) {
+                if (attackNum < maxAttacks) {
+                    skillPoints--;
+                    attacks[attackNum] = skills[index].a;
+                    attackNum++;
+                    skills[index].skillEnabled = true;
+
+                    return true;
+                }
+            }
+            else if (skills[index].type == SkillConstants.PASSIVE) {
+                skillPoints--;
+                skills[index].skillEnabled = true;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool DisableSkill(int index) {
+            skills[index].skillEnabled = false;
+           
+            if (skills[index].type == SkillConstants.ACTIVE) {
+                int attackIndex = -1;
+                if (attackNum > minAttacks) {
+                    skillPoints++;
+                    attackNum--;
+                    skills[index].skillEnabled = false;
+                    for (int i = 0; i <= attackNum; i++) {   // shift skills back                    
+                        if (attacks[i].nameKey == skills[index].a.nameKey) {
+                            attackIndex = i;
+                            break;
+                        }
+                    }
+                    for (int i = attackIndex; i < attackNum; i++) {
+                        attacks[i] = attacks[i + 1];
+                    }
+                    attacks[attackNum] = noneAttack;
+
+                    return true;
+                }
+            }
+            else if (skills[index].type == SkillConstants.PASSIVE) {
+                skillPoints++;
+                skills[index].skillEnabled = false;
+
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

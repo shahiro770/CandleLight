@@ -37,7 +37,6 @@ namespace Characters {
         [field: SerializeField] public int maxLVL { get; private set; }                 /// <value> Maximum power level monster can spawn at </param>
         [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
-        [field: SerializeField] public int attackNum { get; private set; } = 0;         /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
@@ -89,12 +88,6 @@ namespace Characters {
             }
              else if (monsterSize == "large") {
                 maxStatusEffects = 10;
-            }
-
-            foreach (Attack a in attacks) {
-                if (a.name != "none") {
-                    attackNum++;
-                }
             }
 
             StartCoroutine(md.Init(this));

@@ -367,6 +367,19 @@ namespace Party {
             activePartyMember.UnequipGear(subType);  // need to figure out if itemDisplay's item should be private
         }
 
+        public int GetSkillPoints() {
+            return activePartyMember.skillPoints;
+        }
+
+        public bool EnableSkill(int index) {
+            return activePartyMember.EnableSkill(index);
+        }
+
+        public bool DisableSkill(int index) {
+            return activePartyMember.DisableSkill(index);
+        }
+
+
         /// <summary>
         /// Triggers status effects on all partyMembers
         /// </summary>

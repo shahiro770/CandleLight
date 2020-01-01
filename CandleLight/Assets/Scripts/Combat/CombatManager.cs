@@ -44,6 +44,7 @@ namespace Combat {
         public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
 
+        public bool inCombat { get; private set; } = false;       
         public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
         public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
@@ -91,6 +92,7 @@ namespace Combat {
         public IEnumerator InitializeCombat(string[] monsterNames, bool isFleePossible) {
             actionsPanel.Init(isFleePossible);
             isFleeSuccessful = false;
+            inCombat = true;
             cq.Reset();
             countID = 0;
             monsters = new List<Monster>();
@@ -485,7 +487,7 @@ namespace Combat {
                 int weakest = 0;
                 int weakestHitChance = Random.Range(0, 100);
 
-                if (weakestHitChance < 26) {    // 25% chance of attacking weakest partyMember
+                if (weakestHitChance < 25) {    // 25% chance of attacking weakest partyMember
                     for (int i = 1; i < partyMembersAlive.Count; i++) {          
                         if (partyMembersAlive[i].CHP < partyMembersAlive[weakest].CHP && !partyMembersAlive[i].CheckDeath()) {
                             weakest = i;
@@ -583,6 +585,7 @@ namespace Combat {
         /// </remark>
         private void EndCombat() {
             string endString = "";
+            inCombat = false;
 
             if (isFleeSuccessful) {
                 endString = "FLEE";

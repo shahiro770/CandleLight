@@ -72,7 +72,10 @@ namespace UIEffects {
         /// </summary>
         /// <param name="type"> String indicating which colour to become the normal colour </param>
         public void SetColor(string type) {
-            if (type == "normal") {
+            if (b == null) {                // hack because for skillDisplays, awake doesn't happen in time
+                b = GetComponent<Button>();
+            }
+            if (type == "normal") {     
                 b.colors = normalBlock;
             }
             else if (type == "normalAlternate") { 

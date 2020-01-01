@@ -48,12 +48,15 @@ namespace Characters {
         [field: SerializeField] public int ACC { get; set; }              /// <value> Accuracy rating </value>
         [field: SerializeField] public int tempACC = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
+        [field: SerializeField] public int attackNum { get; set; } = 0;   /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
-        protected int maxStatusEffects = 10;                               /// <value> Max number of status effects that can be on a character </value>
-        protected List<StatusEffect> seToRemove = new List <StatusEffect>();
+        protected int minAttacks = 1;
+        protected int maxAttacks = 4;
+        protected int maxStatusEffects = 10;                                /// <value> Max number of status effects that can be on a character </value>
+        protected List<StatusEffect> seToRemove = new List <StatusEffect>();    /// <value> Status effects to remove </value>
         
         private float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
         private int baseCritChance = 5;                                   /// <value> Base chance of critting </value>
@@ -78,6 +81,12 @@ namespace Characters {
             this.baseLUK = stats[3];
             LUK = baseLUK;
             this.attacks = attacks; 
+
+            foreach (Attack a in attacks) {
+                if (a.name != "none") {
+                    attackNum++;
+                }
+            }
 
             CalculateSecondaryStats(true);
         }

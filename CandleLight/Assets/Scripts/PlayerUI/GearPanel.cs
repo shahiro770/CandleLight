@@ -26,7 +26,7 @@ namespace PlayerUI {
         public ItemSlot secondarySlot;  /// <value> Secondary item slot </value>
         public ItemSlot armourSlot;     /// <value> Armour item slot </value>
         public ItemSlot[] spare = new ItemSlot[9];  /// <value> Item slots as equipment inventory </value>
-        public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember</value>
+        public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember </value>
 
         public int numSpareFull = 0;    /// <value> Number of spare itemSlots with items in them (max 9) </value>
         public bool isOpen;             /// <value> Flag for if this panel is open (true if open, false otherwise) </value>

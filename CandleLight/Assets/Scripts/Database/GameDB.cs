@@ -8,10 +8,12 @@
 *
 */
 
+using Constants;
 using Characters;
 using Combat;
 using Events;
 using Items;
+using Skills;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -107,6 +109,7 @@ namespace Database {
                         int CMP = 0;
                         int[] stats = {};
                         Attack[] attacks = new Attack[4];
+                        Skill[] skills = new Skill[16];
 
                         if (reader.Read()) {
                             personalInfo[0] = reader.GetString(1);
@@ -124,15 +127,53 @@ namespace Database {
                                 string attackName = reader.GetString(13 + i);
                                 attacks[i] = GetAttack(attackName, false, dbConnection);
                             }
+
+                            skills = GetSkills(className, dbConnection);
                         }
                         else {
                             Debug.LogError("PartyMember with className " + className + " does not exist in the DB");
                         }
                         // need to figure out how to attach this information to a monster gameObject, can't use new
-                        pm.Init(personalInfo, LVL, EXP, CHP, CMP, stats, attacks); 
+                        pm.Init(personalInfo, LVL, EXP, CHP, CMP, stats, attacks, skills); 
                     }
                 }
             }          
+        }
+
+        public Skill[] GetSkills(string name, IDbConnection dbConnection) {
+            
+            using (IDbCommand dbcmd = dbConnection.CreateCommand()) { // using will call dispose when done, which calls close
+                dbcmd.CommandText = "SELECT * FROM Skills WHERE Class = '" + name + "'";
+
+                using (IDataReader reader = dbcmd.ExecuteReader()) {
+                    
+                    Skill[] skills = new Skill[12];
+
+                    for (int i = 0; i < 2; i++) {   // TEMPORARY
+                        if (reader.Read()) {
+                            string skillName = reader.GetString(1);
+                            string attackType = "";
+                            Attack a = null;
+                            Color skillColor = new Color32(reader.GetByte(4), reader.GetByte(5), reader.GetByte(6), 255);
+
+                            if (reader.GetBoolean(3) == true) {
+                                a = GetAttack(skillName, false, dbConnection);
+                                attackType = SkillConstants.ACTIVE;
+                            }
+                            else {
+                                attackType = SkillConstants.PASSIVE;
+                            }
+
+                            skills[i] = new Skill(skillName, attackType, a, skillColor);
+                        }
+                        else {
+                            Debug.LogError("Skills for class " + name + " does not exist in the DB");
+                        }
+                    }
+
+                    return skills;
+                }
+            }
         }
 
         /// <summary>

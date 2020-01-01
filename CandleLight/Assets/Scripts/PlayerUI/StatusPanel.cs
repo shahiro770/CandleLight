@@ -19,7 +19,7 @@ namespace PlayerUI {
         public Bar HPBar;               /// <value> HPBar of active partyMember </value>
         public Bar MPBar;               /// <value> MPBar of active partyMember </value>
         public EffectsBar effectsBar;   /// <value> EffectBar of active partyMember </value>
-        public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember</value>
+        public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember </value>
 
         /// <summary>
         /// Initialize all the bars of the active partyMember
