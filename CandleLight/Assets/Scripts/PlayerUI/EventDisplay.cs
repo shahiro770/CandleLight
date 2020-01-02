@@ -24,8 +24,10 @@ namespace PlayerUI {
         public CanvasGroup imgCanvas;           /// <value> Background cavnas to control alpha</value> 
         public ItemSlot[] itemSlots = new ItemSlot[3];  /// <value> Item slots references</value> 
         
+        public int itemNum = 0;         /// <value> Number of items shown </value>
+        
         private float lerpSpeed = 4;    /// <value> Speed at which eventDisplay fades in and out </value>
-        private int itemNum = 0;        /// <value> Number of items shown </value>
+        
 
         /// <summary>
         /// Sets image to display a given sprite
@@ -95,6 +97,7 @@ namespace PlayerUI {
                         itemSlots[i].SetVisible(false);
                     }
                 }
+                itemNum = 0;
                 StartCoroutine(Fade(0));
             }
         }

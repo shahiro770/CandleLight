@@ -146,6 +146,12 @@ namespace PlayerUI {
             }
         }
 
+        public void TakeAllItems() {
+            for (int i = 0; i < itemNum; i++) {
+                itemSlots[i].TakeItem(true);
+            }
+        }
+
         /// <summary>
         /// Makes the rewardsDisplay visible
         /// </summary>
@@ -160,6 +166,7 @@ namespace PlayerUI {
                     for (int i = 0; i < itemNum; i++) {
                         itemSlots[i].SetVisible(false);
                     }
+                    itemNum = 0;
                     StartCoroutine(Fade(0));
                 }
             }

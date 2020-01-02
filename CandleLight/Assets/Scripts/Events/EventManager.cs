@@ -884,7 +884,12 @@ namespace Events {
         /// Take all items from an event display
         /// </summary>
         public void TakeAllItems() {
-            eventDisplays[0].TakeAllItems();
+            if (eventDisplays[0].itemNum > 0) {
+                eventDisplays[0].TakeAllItems();
+            }
+            else if (rewardsPanel.itemNum > 0) {
+                rewardsPanel.TakeAllItems();
+            }
         }
 
         public Panel GetTargetPanel(string type) {
