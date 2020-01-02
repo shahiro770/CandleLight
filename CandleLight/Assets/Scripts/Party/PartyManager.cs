@@ -13,6 +13,7 @@ using Events;
 using General;
 using PlayerUI;
 using SkillConstants = Constants.SkillConstants;
+using ResultConstants = Constants.ResultConstants;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -185,12 +186,22 @@ namespace Party {
         /// Change CHP of a random partyMember
         /// </summary>
         /// <param name="amount"> Positive int amount to be added </param>
-        public void ChangeHPSingle(int amount) {
+        public void ChangeHPSingle(int amount, string type) {
             if (amount >= 0) {
                 partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddHP(amount);
             }
             else {
-                partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseHP(amount);
+                PartyMember pm = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
+                if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS) {
+                    if (pm.className == "Warrior") {
+                        if (pm.skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                            pm.LoseHP(amount >> 1);
+                        }
+                    }
+                    else {
+                        pm.LoseHP(amount);
+                    }
+                }
             }
         }
 
@@ -211,7 +222,7 @@ namespace Party {
         /// Change CHP of all partyMembers
         /// </summary>
         /// <param name="amount"></param>
-        public void ChangeHPAll(int amount) {
+        public void ChangeHPAll(int amount, string type = "none") {
             if (amount >= 0) {
                 foreach (PartyMember pm in partyMembersAlive) {
                     pm.AddHP(amount);
@@ -219,7 +230,16 @@ namespace Party {
             }
             else {
                 foreach (PartyMember pm in partyMembersAlive) {
-                    pm.LoseHP(amount);
+                    if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS) {
+                        if (pm.className == "Warrior") {
+                            if (pm.skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                                pm.LoseHP(amount >> 1);
+                            }
+                        }
+                        else {
+                            pm.LoseHP(amount);
+                        }
+                    }
                 }
             }
         } 
@@ -228,7 +248,7 @@ namespace Party {
         /// Change CMP of a random partyMember
         /// </summary>
         /// <param name="amount"> Positive int amount to be added </param>
-        public void ChangeMPSingle(int amount) {
+        public void ChangeMPSingle(int amount, string type = "none") {
             if (amount >= 0) {
                 partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddMP(amount);
             }
@@ -254,7 +274,7 @@ namespace Party {
         /// Change CMP of all partyMembers
         /// </summary>
         /// <param name="amount"></param>
-        public void ChangeMPAll(int amount) {
+        public void ChangeMPAll(int amount, string type = "none") {
             if (amount >= 0) {
                 foreach (PartyMember pm in partyMembersAlive) {
                     pm.AddMP(amount);

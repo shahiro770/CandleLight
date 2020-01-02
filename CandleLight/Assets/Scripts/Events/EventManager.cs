@@ -586,17 +586,17 @@ namespace Events {
             }
             else if (r.type == ResultConstants.STATSINGLE) {
                 eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesSingle(r);
+                ApplyResultStatChangesSingle(r, ResultConstants.STATSINGLE);
                 SetNavigation();
             }
             else if (r.type == ResultConstants.STATALL) {
                 eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesAll(r);
+                ApplyResultStatChangesAll(r, ResultConstants.STATALL);
                 SetNavigation();
             }
             else if (r.type == ResultConstants.STATALLANDLEAVE) {
                 eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesAll(r);
+                ApplyResultStatChangesAll(r, ResultConstants.STATALLANDLEAVE);
                 actionsPanel.TravelActions();
                 SetNavigation();
             }
@@ -629,10 +629,10 @@ namespace Events {
                 }
 
                 if (r.scope == "all") {
-                    ApplyResultStatChangesAll(r);
+                    ApplyResultStatChangesAll(r, ResultConstants.COMBATWITHSIDEEFFECTS);
                 }
                 else if (r.scope == "single") {
-                    ApplyResultStatChangesSingle(r);
+                    ApplyResultStatChangesSingle(r, ResultConstants.COMBATWITHSIDEEFFECTS);
                 }
 
                 eventDescription.SetKey(r.resultKey);
@@ -665,14 +665,14 @@ namespace Events {
         /// Applies stat changes (HP, MP, STR, INT, DEX, LUK) to a single partyMember at random
         /// </summary>
         /// <param name="r"> Result containing the stats to be changed </param>
-        public void ApplyResultStatChangesSingle(Result r) {
+        public void ApplyResultStatChangesSingle(Result r, string type) {
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
-                PartyManager.instance.ChangeHPSingle(r.HPAmount);
+                PartyManager.instance.ChangeHPSingle(r.HPAmount, type);
             }
             if (r.MPAmount != 0) {
-                PartyManager.instance.ChangeMPSingle(r.MPAmount);
+                PartyManager.instance.ChangeMPSingle(r.MPAmount, type);
             }
         }
 
@@ -680,14 +680,14 @@ namespace Events {
         ///  Applies stat changes (HP, MP, STR, INT, DEX, LUK) to all partyMembers
         /// </summary>
         /// <param name="r"> Result containing the stats to be changed </param>
-        public void ApplyResultStatChangesAll(Result r) {
+        public void ApplyResultStatChangesAll(Result r, string type) {
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
-                PartyManager.instance.ChangeHPAll(r.HPAmount);
+                PartyManager.instance.ChangeHPAll(r.HPAmount, type);
             }
             if (r.MPAmount != 0) {
-                PartyManager.instance.ChangeMPAll(r.MPAmount);
+                PartyManager.instance.ChangeMPAll(r.MPAmount, type);
             }
             if (r.EXPAmount != 0) {
                 PartyManager.instance.AddEXP(r.EXPAmount);
