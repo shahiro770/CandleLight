@@ -34,14 +34,13 @@ namespace Events {
         [field: SerializeField] public int itemAmount { get; private set; }     /// <value> Amount of items result gives </value>
         [field: SerializeField] public int specificItemAmount { get; private set; } = 0;    /// <value> Amount of specific items result gives </value>
 
+        [field: SerializeField] public int baseEXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
+        [field: SerializeField] public int baseHPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
+        [field: SerializeField] public int baseMPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
+        [field: SerializeField] public int baseWAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
+        [field: SerializeField] public int baseProgressAmount { get; private set; } /// <value> Amount of progress result gives </value>
         [field: SerializeField] private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
         [field: SerializeField] private float multiplier;    /// <value> Multiplier on result depending on area </value>
-        [field: SerializeField] private int minValue = 5;    /// <value> Min value for numeric rewards pre-multiplier </value>
-        [field: SerializeField] private int maxValue = 10;   /// <value> Max value for numeric rewards pre-multiplier </value>
-        [field: SerializeField] private int EXPChange;       /// <value> EXP affected 0, 1 (none, increased) </value>
-        [field: SerializeField] private int HPChange;        /// <value> HP affected 0, 1, -1 (none, increased, decreased) </value>
-        [field: SerializeField] private int MPChange;        /// <value> MP affected 0, 1, -1 (none, increased, decreased) </value>
-        [field: SerializeField] private int WAXChange;       /// <value> wax affected 0, 1, -1 (none, increased, decreased) </value>
         [field: SerializeField] private int monsterCount;    /// <value> MAx number of monsters this event can spawn </value>
         [field: SerializeField] private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
 
@@ -52,18 +51,18 @@ namespace Events {
         /// <param name="resultKey"> String key for result </param>
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
-        public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] changeValues, int progressAmount,
+        public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] amounts,
         string subAreaName0, string subAreaName1, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality) {
             this.name = name;
             this.resultKey = resultKey;
             this.type = type;
             this.isUnique = isUnique;
             this.scope = scope;
-            this.EXPChange = changeValues[0];
-            this.HPChange = changeValues[1];
-            this.MPChange = changeValues[2];
-            this.WAXChange = changeValues[3];
-            this.progressAmount = progressAmount;
+            this.baseEXPAmount = amounts[0];
+            this.baseHPAmount = amounts[1];
+            this.baseMPAmount = amounts[2];
+            this.baseWAXAmount = amounts[3];
+            this.baseProgressAmount = amounts[4];
             this.subAreaName0 = subAreaName0;
             this.subAreaName1 = subAreaName1;
             this.subEventName = subEventName;
@@ -110,30 +109,13 @@ namespace Events {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 1);
             }
             else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE) {
-                EXPAmount = GenerateAmount(EXPChange);
-                HPAmount = GenerateAmount(HPChange);
-                MPAmount = GenerateAmount(MPChange);
-                WAXAmount = GenerateAmount(WAXChange);
+                EXPAmount = (int)(baseEXPAmount * Random.Range(quantity, quantity + 1));
+                HPAmount = (int)(baseHPAmount * Random.Range(quantity, quantity + 1));
+                MPAmount = (int)(baseMPAmount * Random.Range(quantity, quantity + 1));
+                WAXAmount = (int)(baseWAXAmount * Random.Range(quantity, quantity + 1));
             }
             else if (type == ResultConstants.PROGRESS) {
-                progressAmount *= (int)Random.Range(quantity, quantity + 1);
-            }
-        }
-
-        /// <summary>
-        /// Generates an integer number between the minValue and maxValue
-        /// </summary>
-        /// <param name="mode"> 0, 1 or -1 indicating if the amount should be 0, positive, or negative respectively </param>
-        /// <returns> Int </returns>
-        public int GenerateAmount(int mode) {
-            if (mode == 0) {
-                return 0;
-            }
-            else if (mode == 1) {
-                return (int)((float)Random.Range(minValue, maxValue) * multiplier * quantity);
-            }
-            else {  // mode == -1
-                return (int)((float)Random.Range(minValue, maxValue) * multiplier * quantity * -1);
+                progressAmount = (int)(baseProgressAmount * Random.Range(quantity, quantity + 1));
             }
         }
         

@@ -502,9 +502,8 @@ namespace Database {
                     string[] specificItemNames = new string[3];
                     string itemQuality = "";
                     string[] specificMonsterNames = new string[5];
-                    int[] resultChanges = new int[4];
+                    int[] resultAmounts = new int[5];
                     int monsterCount = 0;
-                    int progressAmount = 0;
                     bool isUnique = false;
 
                     if (reader.Read()) {
@@ -513,11 +512,11 @@ namespace Database {
                         isUnique = reader.GetBoolean(3);
                         quantity = reader.GetString(4);
                         scope = reader.GetString(5);
-                        resultChanges[0] = reader.GetInt32(6);
-                        resultChanges[1] = reader.GetInt32(7);
-                        resultChanges[2] = reader.GetInt32(8);
-                        resultChanges[3] = reader.GetInt32(9);
-                        progressAmount = reader.GetInt32(10);
+                        resultAmounts[0] = reader.GetInt32(6);
+                        resultAmounts[1] = reader.GetInt32(7);
+                        resultAmounts[2] = reader.GetInt32(8);
+                        resultAmounts[3] = reader.GetInt32(9);
+                        resultAmounts[4] = reader.GetInt32(10);
                         subAreaName0 = reader.GetString(11);
                         subAreaName1 = reader.GetString(12);
                         subEventName = reader.GetString(13);
@@ -533,7 +532,7 @@ namespace Database {
                         specificItemNames[2] = reader.GetString(23);
                         itemQuality = reader.GetString(24);
 
-                        newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultChanges, progressAmount, subAreaName0, subAreaName1, subEventName, 
+                        newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultAmounts, subAreaName0, subAreaName1, subEventName, 
                         monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality);
                     }
                     else {
