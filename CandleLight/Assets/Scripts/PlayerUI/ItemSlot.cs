@@ -183,10 +183,10 @@ namespace PlayerUI {
                             PartyManager.instance.AddEXP(amounts[i]);
                         }
                         if (effects[i] == "HP") {
-                            PartyManager.instance.AddHPAll(amounts[i]);
+                            PartyManager.instance.ChangeHPAll(amounts[i]);
                         }
                         if (effects[i] == "MP") {
-                            PartyManager.instance.AddMPAll(amounts[i]);
+                            PartyManager.instance.ChangeMPAll(amounts[i]);
                         }
                         if (effects[i] == "WAX") {
                             PartyManager.instance.AddWAX(amounts[i]);
@@ -304,25 +304,25 @@ namespace PlayerUI {
 
                 if (basicKeys[1] == "consumable") {
                     t.SetKey("title", basicKeys[0] + "_item");
-                    t.SetKey( "subtitle", basicKeys[1] + "_item_sub");
-                    t.SetAmountTextMultiple( "description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
+                    t.SetKey("subtitle", basicKeys[1] + "_item_sub");
+                    t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                 }
                 else if (basicKeys[1] == "gear") {
                     t.SetKey("title", basicKeys[0] + "_item");
                     if (currentItemDisplay.className == "any") {
-                        t.SetKey( "subtitle", basicKeys[2] + "_item_sub");
+                        t.SetKey("subtitle", basicKeys[2] + "_item_sub");
                     }
                     else {
-                        t.SetKeyMultiple( "subtitle", new string[2] {currentItemDisplay.className + "_label", basicKeys[2] + "_item_sub"});
+                        t.SetKeyMultiple("subtitle", new string[2] {currentItemDisplay.className + "_label", basicKeys[2] + "_item_sub"});
                     }
                     
-                    t.SetAmountTextMultiple( "description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
+                    t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                 }
             }
             else {  // if there is no item held
                 t.SetKey("title", itemSlotSubType + "_item");
-                t.SetKey( "subtitle", itemSlotSubType + "_item_sub_default");
-                t.SetKey( "description", "none_label");
+                t.SetKey("subtitle", itemSlotSubType + "_item_sub_default");
+                t.SetKey("description", "none_label");
             }
         }
 

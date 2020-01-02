@@ -117,9 +117,18 @@ namespace PlayerUI {
         /// <summary>
         /// Displays actions for after combat
         /// </summary>
-        public void PostCombatActions() { 
-            for (int i = 0; i < actions.Length - 1; i++) {
-                actions[i].SetAction(ActionConstants.NONE);
+        /// <param name="itemNum"> Number of items being displayed in the rewardsPanel </param>
+        public void PostCombatActions(int itemNum) { 
+            if (itemNum > 0) {
+                actions[0].SetAction(ActionConstants.TAKEALL);
+                for (int i = 1; i < actions.Length - 1; i++) {
+                    actions[i].SetAction(ActionConstants.NONE);
+                }
+            }
+            else {
+                for (int i = 0; i < actions.Length - 1; i++) {
+                    actions[i].SetAction(ActionConstants.NONE);
+                }
             }
 
             actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, travelInt);

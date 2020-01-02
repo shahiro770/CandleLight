@@ -389,7 +389,7 @@ namespace Events {
         /// <param name="endString"> String constant explaining how combat ended </param>
         public IEnumerator DisplayPostCombat(string endString) {
             StartCoroutine(AlterBackgroundColor(1f));
-            actionsPanel.PostCombatActions();
+
             PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
             gearPanel.SetTakeable(true);
             skillsPanel.SetTogglable(true);
@@ -411,6 +411,7 @@ namespace Events {
                     infoPanel.UpdateAmounts();
                 }
 
+                actionsPanel.PostCombatActions(rewardsPanel.itemNum);
                 gearPanel.SetInteractable(true);
                 actionsPanel.SetAllActionsInteractable();
                 itemsTabManager.SetAllButtonsInteractable();
@@ -590,12 +591,12 @@ namespace Events {
             }
             else if (r.type == ResultConstants.STATALL) {
                 eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesMultiple(r);
+                ApplyResultStatChangesAll(r);
                 SetNavigation();
             }
             else if (r.type == ResultConstants.STATALLANDLEAVE) {
                 eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesMultiple(r);
+                ApplyResultStatChangesAll(r);
                 actionsPanel.TravelActions();
                 SetNavigation();
             }
@@ -627,23 +628,11 @@ namespace Events {
                     }
                 }
 
-                r.GenerateResults();
-
-                if (r.HPAmount < 0) {
-                    if (r.scope == "all") {
-                        PartyManager.instance.LoseHPAll(r.HPAmount);
-                    }
-                    else if (r.scope == "single") {
-                        PartyManager.instance.LoseHPSingle(r.HPAmount);
-                    }
+                if (r.scope == "all") {
+                    ApplyResultStatChangesAll(r);
                 }
-                if (r.MPAmount < 0) {
-                    if (r.scope == "all") {
-                        PartyManager.instance.LoseMPAll(r.MPAmount);
-                    }
-                    else if (r.scope == "single") {
-                        PartyManager.instance.LoseMPSingle(r.MPAmount);
-                    }
+                else if (r.scope == "single") {
+                    ApplyResultStatChangesSingle(r);
                 }
 
                 eventDescription.SetKey(r.resultKey);
@@ -678,13 +667,12 @@ namespace Events {
         /// <param name="r"> Result containing the stats to be changed </param>
         public void ApplyResultStatChangesSingle(Result r) {
             r.GenerateResults();
-            eventDescription.SetKey(r.resultKey);
 
             if (r.HPAmount != 0) {
-                PartyManager.instance.AddHPSingle(r.HPAmount);
+                PartyManager.instance.ChangeHPSingle(r.HPAmount);
             }
             if (r.MPAmount != 0) {
-                PartyManager.instance.AddMPSingle(r.MPAmount);
+                PartyManager.instance.ChangeMPSingle(r.MPAmount);
             }
         }
 
@@ -692,14 +680,14 @@ namespace Events {
         ///  Applies stat changes (HP, MP, STR, INT, DEX, LUK) to all partyMembers
         /// </summary>
         /// <param name="r"> Result containing the stats to be changed </param>
-        public void ApplyResultStatChangesMultiple(Result r) {
+        public void ApplyResultStatChangesAll(Result r) {
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
-                PartyManager.instance.AddHPAll(r.HPAmount);
+                PartyManager.instance.ChangeHPAll(r.HPAmount);
             }
             if (r.MPAmount != 0) {
-                PartyManager.instance.AddMPAll(r.MPAmount);
+                PartyManager.instance.ChangeMPAll(r.MPAmount);
             }
             if (r.EXPAmount != 0) {
                 PartyManager.instance.AddEXP(r.EXPAmount);

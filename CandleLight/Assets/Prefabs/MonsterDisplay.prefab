@@ -1440,6 +1440,7 @@ MonoBehaviour:
   <ACC>k__BackingField: 0
   tempACC: 0
   <critChance>k__BackingField: 0
+  <attackNum>k__BackingField: 0
   <critMult>k__BackingField: 0
   <attacks>k__BackingField: []
   <statusEffects>k__BackingField: []
@@ -1484,7 +1485,6 @@ MonoBehaviour:
   <maxLVL>k__BackingField: 0
   <EXP>k__BackingField: 0
   <WAX>k__BackingField: 0
-  <attackNum>k__BackingField: 0
   <dropChance>k__BackingField: 0
   <isReady>k__BackingField: 0
 --- !u!1 &4966123046020373190

@@ -190,7 +190,7 @@ namespace Characters {
                 AddMP((int)(Mathf.Ceil((float)MP * 0.12f)));
             }
             else {  
-                if (skills[1].skillEnabled == true) {
+                if (skills[(int)SkillConstants.mageSkills.THIRDEYE].skillEnabled == true) {
                     AddMP((int)(Mathf.Ceil((float)MP * 0.24f)));
                 }
                 else {
@@ -562,6 +562,16 @@ namespace Characters {
                 skillPoints--;
                 skills[index].skillEnabled = true;
 
+                if (className == "Mage") {
+                    if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
+                        for (int i = 0; i < attackNum; i++) {
+                            if (attacks[i].seName == StatusEffectConstants.BURN) {
+                                attacks[i].seChance = attacks[i].seChance << 1;
+                            }
+                        }
+                    }
+                }
+
                 return true;
             }
 
@@ -594,6 +604,16 @@ namespace Characters {
             else if (skills[index].type == SkillConstants.PASSIVE) {
                 skillPoints++;
                 skills[index].skillEnabled = false;
+
+                if (className == "Mage") {
+                    if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
+                        for (int i = 0; i < attackNum; i++) {
+                            if (attacks[i].seName == StatusEffectConstants.BURN) {
+                                attacks[i].seChance = attacks[i].seChance >> 1;
+                            }
+                        }
+                    }
+                }
 
                 return true;
             }

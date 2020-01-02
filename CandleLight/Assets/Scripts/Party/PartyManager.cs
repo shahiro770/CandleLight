@@ -12,6 +12,7 @@ using Characters;
 using Events;
 using General;
 using PlayerUI;
+using SkillConstants = Constants.SkillConstants;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -181,112 +182,90 @@ namespace Party {
         }
 
         /// <summary>
-        /// Adds HP to a random partyMember
+        /// Change CHP of a random partyMember
         /// </summary>
         /// <param name="amount"> Positive int amount to be added </param>
-        public void AddHPSingle(int amount) {
-            partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddHP(amount);
+        public void ChangeHPSingle(int amount) {
+            if (amount >= 0) {
+                partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddHP(amount);
+            }
+            else {
+                partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseHP(amount);
+            }
         }
 
         /// <summary>
-        /// Adds HP to a specific partyMember
-        /// </summary>
-        /// <param name="pm"> partyMember object </param>
-        /// <param name="amount"> Positive int amount to be added </param>
-        public void AddHPSingle(PartyMember pm, int amount) {
-            pm.AddHP(amount);
-        }
-
-        /// <summary>
-        /// Adds HP to all partyMembers
+        /// Change CHP of a specific partyMember
         /// </summary>
         /// <param name="amount"> Positive int amount to be added </param>
-        public void AddHPAll(int amount) {
-            foreach (PartyMember pm in partyMembersAlive) {
+        public void ChangeHPSingle(PartyMember pm, int amount) {
+            if (amount >= 0) {
                 pm.AddHP(amount);
             }
-        }
-
-        /// <summary>
-        /// Lose HP from a random partyMember
-        /// </summary>
-        /// <param name="amount"> Positive int amount to be lost </param>
-        public void LoseHPSingle(int amount) {
-            StartCoroutine(partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseHP(amount));
-        }
-
-        /// <summary>
-        /// Lose HP from a specific partyMember
-        /// </summary>
-        /// <param name="pm"> partyMember object </param>
-        /// <param name="amount"> Positive int amount to be lost </param>
-        public void LoseHPSingle(PartyMember pm, int amount) {
-            StartCoroutine(pm.LoseHP(amount));
-        }
-
-        /// <summary>
-        /// Lose HP from all partyMembers
-        /// </summary>
-        /// <param name="amount"> Positive int to be lost </param>
-        public void LoseHPAll(int amount) {
-            foreach (PartyMember pm in partyMembersAll) {
-                StartCoroutine(pm.LoseHP(amount));
+            else {
+                pm.LoseHP(amount);
             }
         }
 
         /// <summary>
-        /// Add MP to a random partyMember
+        /// Change CHP of all partyMembers
         /// </summary>
-        /// <param name="amount"> Positive int to be added </param>
-        public void AddMPSingle(int amount) {
-            partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddMP(amount);
+        /// <param name="amount"></param>
+        public void ChangeHPAll(int amount) {
+            if (amount >= 0) {
+                foreach (PartyMember pm in partyMembersAlive) {
+                    pm.AddHP(amount);
+                }
+            }
+            else {
+                foreach (PartyMember pm in partyMembersAlive) {
+                    pm.LoseHP(amount);
+                }
+            }
+        } 
+
+         /// <summary>
+        /// Change CMP of a random partyMember
+        /// </summary>
+        /// <param name="amount"> Positive int amount to be added </param>
+        public void ChangeMPSingle(int amount) {
+            if (amount >= 0) {
+                partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddMP(amount);
+            }
+            else {
+                partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseMP(amount);
+            }
         }
 
         /// <summary>
-        /// Add MP to a specific partyMember
+        /// Change CMP of a specific partyMember
         /// </summary>
-        /// <param name="pm"> partyMember object </param>
-        /// <param name="amount"> Positive int to be added </param>
-        public void AddMPSingle(PartyMember pm, int amount) {
-            pm.AddMP(amount);
-        }
-
-        /// <summary>
-        /// Add MP to all partyMembers
-        /// </summary>
-        /// <param name="amount"> Positive int to be added </param>
-        public void AddMPAll(int amount) {
-            foreach (PartyMember pm in partyMembersAlive) {
+        /// <param name="amount"> Positive int amount to be added </param>
+        public void ChangeMPSingle(PartyMember pm, int amount) {
+            if (amount >= 0) {
                 pm.AddMP(amount);
             }
-        }
-
-        /// <summary>
-        /// Lose MP from a random partyMember
-        /// </summary>
-        /// <param name="amount"> Positive int to be lost </param>
-        public void LoseMPSingle(int amount) {
-            StartCoroutine(partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].LoseMP(amount));
-        }
-
-        /// <summary>
-        /// Lose MP from a specific partyMember
-        /// </summary>
-        /// <param name="pm"> partyMember object </param>
-        /// <param name="amount"> Positive int to be lost </param>
-        public void LoseMPSingle(PartyMember pm, int amount) {
-            StartCoroutine(pm.LoseMP(amount));
-        }
-
-        /// <summary>
-        /// Lose MP from all partyMembers
-        /// </summary>
-        /// <param name="amount"> Positive int to be lost </param>
-        public void LoseMPAll(int amount) {
-            foreach (PartyMember pm in partyMembersAlive) {
-                StartCoroutine(pm.LoseMP(amount));
+            else {
+                pm.LoseMP(amount);
             }
         }
+
+        /// <summary>
+        /// Change CMP of all partyMembers
+        /// </summary>
+        /// <param name="amount"></param>
+        public void ChangeMPAll(int amount) {
+            if (amount >= 0) {
+                foreach (PartyMember pm in partyMembersAlive) {
+                    pm.AddMP(amount);
+                }
+            }
+            else {
+                foreach (PartyMember pm in partyMembersAlive) {
+                    pm.LoseMP(amount);
+                }
+            }
+        } 
 
         /// <summary>
         /// Regenerates MP and HP for all partyMembers

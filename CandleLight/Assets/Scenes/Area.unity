@@ -3455,6 +3455,41 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 211022727}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 211022727}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b082285eabaf54a5d9b750027301b4f7, type: 3}
 --- !u!224 &211022726 stripped
@@ -4054,6 +4089,41 @@ PrefabInstance:
       value: PlayerUI.SkillDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 85500646453093490, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 269119631}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -4681,6 +4751,41 @@ PrefabInstance:
       value: PlayerUI.SkillDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 85500646453093490, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 328319810}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -5654,6 +5759,41 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 390759336}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 390759336}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b082285eabaf54a5d9b750027301b4f7, type: 3}
 --- !u!224 &390759335 stripped
@@ -6548,6 +6688,41 @@ PrefabInstance:
       value: PlayerUI.SkillDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 85500646453093490, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 426152591}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -8290,6 +8465,41 @@ PrefabInstance:
       value: PlayerUI.SkillDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 85500646453093490, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 574413510}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -10723,6 +10933,41 @@ PrefabInstance:
       value: PlayerUI.SkillDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 85500646453093490, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 777747556}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -13975,6 +14220,41 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 974587584}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 974587584}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b082285eabaf54a5d9b750027301b4f7, type: 3}
 --- !u!224 &974587583 stripped
@@ -17137,6 +17417,41 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1286620170}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1286620170}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b082285eabaf54a5d9b750027301b4f7, type: 3}
 --- !u!224 &1286620169 stripped
@@ -17789,6 +18104,41 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1322691890}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1322691890}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b082285eabaf54a5d9b750027301b4f7, type: 3}
 --- !u!224 &1322691889 stripped
@@ -18201,6 +18551,41 @@ PrefabInstance:
       value: PlayerUI.SkillDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 85500646453093490, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1364147148}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -20699,6 +21084,41 @@ PrefabInstance:
       value: PlayerUI.SkillDisplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 85500646453093490, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1685745860}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 951980778}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: PlayerUI.SkillDisplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138161636129987987, guid: b082285eabaf54a5d9b750027301b4f7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 

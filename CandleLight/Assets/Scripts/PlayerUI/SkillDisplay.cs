@@ -7,6 +7,7 @@
 *
 */
 
+using Skills;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ namespace PlayerUI {
         public ButtonTransitionState bts;
         public SpriteRenderer skillSpriteRenderer;   /// <value> Sprite to be displayed </value>
         public Sprite lockedSkillSprite;
+        public Tooltip t;
     
         public PartyMemberDisplay pmd;
         public Color skillColour;
@@ -28,13 +30,19 @@ namespace PlayerUI {
         public bool skillDisplayEnabled;
 
         private Color lockedSkillColour = new Color(255, 255, 255, 255);
+        private Skill displayedSkill;
+        private string lockedKeyTitle = "locked_skill_title";
+        private string lockedKeySub = "locked_skill_sub";
+        private string lockedKeyDes = "locked_skill_des";
 
-        public void Init(int skillIndex, bool skillDisplayEnabled, Sprite skillSprite, Color skillColour, PartyMemberDisplay pmd) {
+        public void Init(int skillIndex, Skill displayedSkill, Sprite skillSprite, Color skillColour, PartyMemberDisplay pmd) {
             skillSpriteRenderer.sprite = skillSprite;
             this.skillColour = skillColour;
             this.skillIndex = skillIndex;
-            this.skillDisplayEnabled = skillDisplayEnabled;
+            this.skillDisplayEnabled = displayedSkill.skillEnabled;
+            this.displayedSkill = displayedSkill;
             this.pmd = pmd;
+            SetTooltip();
 
             ColorBlock normalBlock = b.colors; 
 
@@ -58,7 +66,9 @@ namespace PlayerUI {
 
         public void Init() {
             skillSpriteRenderer.sprite = lockedSkillSprite;
+            this.skillIndex = -1;           // no skill shown
             skillDisplayEnabled = false;
+            SetTooltip();
 
             ColorBlock normalBlock = b.colors; 
             normalBlock.highlightedColor = lockedSkillColour;
@@ -86,6 +96,25 @@ namespace PlayerUI {
                 skillSpriteRenderer.color = new Color32(133, 133, 133, 255);
                 bts.SetColorBlock("normal", normalBlock);
                 bts.SetColor("normal");
+            }
+        }
+
+        /// <summary>
+        /// Sets the text displayed in the tooltip
+        /// </summary>
+        public void SetTooltip() {
+            RectTransform buttonRect = b.GetComponent<RectTransform>();
+            t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
+
+            if (skillIndex != -1) {
+                t.SetKey("title", displayedSkill.titleKey);
+                t.SetKey("subtitle", displayedSkill.subKey);
+                t.SetKey("description", displayedSkill.desKey);
+            }
+            else {
+                t.SetKey("title", lockedKeyTitle);
+                t.SetKey("subtitle", lockedKeySub);
+                t.SetKey("description", lockedKeyDes);
             }
         }
 

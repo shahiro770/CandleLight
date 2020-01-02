@@ -53,7 +53,7 @@ namespace PlayerUI {
             for (int i = 0; i < skillDisplays.Length; i++) {
                 if (pm.skills[i] != null) { // temporary
                     int x = i;
-                    skillDisplays[i].Init(i, pm.skills[i].skillEnabled, pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
+                    skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
                 } 
                 else {
                     skillDisplays[i].Init();

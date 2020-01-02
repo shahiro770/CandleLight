@@ -31,10 +31,11 @@ namespace PlayerUI {
         public LocalizedText amountTextEXP; /// <value> Display of total EXP earned in combat instance </value>
         public LocalizedText amountTextWAX; /// <value> Display of total WAX earned in combat instance </value>
         
+        public int itemNum = 0;    /// <value> Number of items displayed </value>
+
         private Monster[] monstersToDisplay;    /// <value> Monsters to display in monsterResultDisplays </value>
         private float lerpSpeed = 4;    /// <value> Speed at which rewardsPanel fades in and out </value>
         private int[] monsterCounts;    /// <value> Number of each monster in each monsterResultDisplays killed</value>
-        private int itemNum = 0;    /// <value> Number of items displayed </value>
         private int amountEXP;      /// <value> Total EXP earned in combat </value>
         private int amountWAX;      /// <value> Total WAX earned in combat </value>
         
