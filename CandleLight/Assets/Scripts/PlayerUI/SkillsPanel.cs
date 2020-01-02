@@ -3,13 +3,15 @@
 * Author: Shahir Chowdhury
 * Date: August 1, 2019
 * 
-* The 
+* The skillsPanel class is used to show a partyMember's skill tree, and handle
+* all interactions that would happen on it.
 *
 */
 
 using Characters;
 using Localization;
 using Party;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +20,7 @@ namespace PlayerUI {
     public class SkillsPanel : Panel {
 
         public SkillDisplay[] skillDisplays = new SkillDisplay[12];
-        public Image skillPointsSquare;
-        public LocalizedText skillPointsAmount;
+        public PartyMemberDisplay[] pmDisplays = new PartyMemberDisplay[4];
 
         public int[] colPoints = new int[] { 0, 0, 0, 0 };
         public bool isOpen;             /// <value> Flag for if this panel is open (true if open, false otherwise) </value>
@@ -28,28 +29,39 @@ namespace PlayerUI {
 
         public void OnEnable() {
             isOpen = true;
-            Init(PartyManager.instance.GetActivePartyMember());
+            Init();
         }
 
         public void OnDisable() {
             isOpen = false;
         }
 
-        public void Init(PartyMember pm) {
+        public void Init() {
+            List<PartyMember> pms = PartyManager.instance.GetPartyMembers();
+            PartyMember pm = PartyManager.instance.GetActivePartyMember();
+
+            for (int i = 0; i < pmDisplays.Length;i++) {
+                pmDisplays[i].gameObject.SetActive(false);
+            }
+    
+            for (int i = 0; i < pms.Count; i++) {
+                int x = i;          // unity loses track of loop variable, so copying somehow fixes this
+                pmDisplays[i].gameObject.SetActive(true);
+                pmDisplays[i].InitSkillsDisplay(pms[i].pmvc, pms[i].skillPoints);
+            }
+
             for (int i = 0; i < skillDisplays.Length; i++) {
                 if (pm.skills[i] != null) { // temporary
-                    skillDisplays[i].Init(i, pm.skills[i].skillEnabled, pm.pmvc.skillSprites[i], pm.skills[i].skillColour);;
+                    int x = i;
+                    skillDisplays[i].Init(i, pm.skills[i].skillEnabled, pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
                 } 
                 else {
                     skillDisplays[i].Init();
                 }
             }
-
-            UpdateSkillPointsSquare();
         }
 
         public void ToggleSkill(SkillDisplay sd) {
-            int currentPoints = PartyManager.instance.GetSkillPoints();
             if (isTogglable == true) {
                 if (sd.skillDisplayEnabled == true) {
                     if ((sd.colIndex != 3 && colPoints[sd.colIndex + 1] == 0) || sd.colIndex == 3) {
@@ -58,8 +70,8 @@ namespace PlayerUI {
                             colPoints[sd.colIndex]--;
                             
                             sd.SetColour(sd.skillDisplayEnabled);
-                            UpdateSkillPointsSquare();
                             UpdateSkillsVisible();
+                            sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }            
                     }
                 }
@@ -70,26 +82,11 @@ namespace PlayerUI {
                             colPoints[sd.colIndex]++;
                             
                             sd.SetColour(sd.skillDisplayEnabled);
-                            UpdateSkillPointsSquare();
                             UpdateSkillsVisible();
+                            sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }
                     }     
                 }
-            }
-        }
-
-        public void UpdateSkillPointsSquare() {
-            int currentPoints = PartyManager.instance.GetSkillPoints();
-            print(currentPoints);
-            skillPointsAmount.SetText(currentPoints.ToString());
-
-            if (currentPoints > 0) {
-                skillPointsAmount.SetColour(new Color(255, 255, 255, 255));
-                skillPointsSquare.color = new Color(255, 255, 255, 255);
-            }
-            else {
-                skillPointsAmount.SetColour(new Color(255, 255, 255, 128));
-                skillPointsSquare.color = new Color(255, 255, 255, 128);
             }
         }
 
@@ -108,8 +105,7 @@ namespace PlayerUI {
                 skillDisplays[9].Init();
                 skillDisplays[10].Init();
                 skillDisplays[11].Init();
-            }
-            
+            } 
         }
 
         public void SetTogglable(bool value) {

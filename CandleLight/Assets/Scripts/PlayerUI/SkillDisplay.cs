@@ -8,9 +8,6 @@
 */
 
 using UIEffects;
-using Skills;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +20,8 @@ namespace PlayerUI {
         public ButtonTransitionState bts;
         public SpriteRenderer skillSpriteRenderer;   /// <value> Sprite to be displayed </value>
         public Sprite lockedSkillSprite;
-
+    
+        public PartyMemberDisplay pmd;
         public Color skillColour;
         public int colIndex;
         public int skillIndex;
@@ -31,11 +29,12 @@ namespace PlayerUI {
 
         private Color lockedSkillColour = new Color(255, 255, 255, 255);
 
-        public void Init(int skillIndex, bool skillDisplayEnabled, Sprite skillSprite, Color skillColour) {
+        public void Init(int skillIndex, bool skillDisplayEnabled, Sprite skillSprite, Color skillColour, PartyMemberDisplay pmd) {
             skillSpriteRenderer.sprite = skillSprite;
             this.skillColour = skillColour;
             this.skillIndex = skillIndex;
             this.skillDisplayEnabled = skillDisplayEnabled;
+            this.pmd = pmd;
 
             ColorBlock normalBlock = b.colors; 
 

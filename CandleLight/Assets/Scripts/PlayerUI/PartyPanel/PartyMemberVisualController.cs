@@ -33,11 +33,13 @@ namespace Characters {
         public EXPBar statsPanelEXPBar { get; private set; }   /// <value> Visual for experience points in stats panel </value>
         public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
         public GearPanel gearPanel;     /// <value> gearPanel reference </value>
-        public StatusPanel statusPanel; /// <value> </value>
-        public PartyPanel partyPanel;   /// <value> </value>
+        public StatusPanel statusPanel; /// <value> statusPanel reference </value>
+        public PartyPanel partyPanel;   /// <value> partyPanel reference </value>
+        public SkillsPanel skillsPanel; /// <value> skillsPanel reference </value>
         public LocalizedText rewardsPanelLVLText { get; private set; }      /// <value> Visual for LVL in rewards panel</value>
-        public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for partyMember's status in party panel </value>
-        public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for partyMember's status in party panel </value>  
+        public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for partyMember in party panel </value>
+        public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for partyMember in rewardsPanel </value>  
+        public PartyMemberDisplay pmdSkillsPanel { get; private set; }      /// <value> Visual for partyMember in skillsPanel </value>  
         public ItemDisplay weapon;      /// <value> weapon reference </value>
         public ItemDisplay secondary;   /// <value> secondary reference </value>
         public ItemDisplay armour;      /// <value> armour reference </value>
@@ -95,7 +97,7 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Sets the partyMemberDisplay for the rewards panel of displayed partyMember
+        /// Sets the partyMemberDisplay for the rewards panel
         /// </summary>
         /// <param name="pmd"> PartyMemberDisplay object </param>
         /// <param name="panelName"> String </param>
@@ -105,6 +107,14 @@ namespace Characters {
             this.pmdRewardsPanel = pmd;
             SetEXPBar(panelName, EXPBarRef);
             SetLVLText(panelName, LVLTextRef);
+        }
+
+        /// <summary>
+        /// Sets the partyMemberDisplay for the skillsPanel
+        /// </summary>
+        /// <param name="pmd"></param>
+        public void SetPartyMemberDisplaySkillsPanel(PartyMemberDisplay pmd) {
+            this.pmdSkillsPanel = pmd;
         }
 
         /// <summary>
@@ -200,6 +210,7 @@ namespace Characters {
             partyPanel = EventManager.instance.partyPanel;
             gearPanel = EventManager.instance.gearPanel;
             statusPanel = EventManager.instance.statusPanel;
+            skillsPanel = EventManager.instance.skillsPanel;
         }
 
         /// <summary>
@@ -247,6 +258,9 @@ namespace Characters {
             statusPanel.DisplayPartyMember(this);
             if (gearPanel.isOpen) {
                 gearPanel.Init(this);
+            }
+            if (skillsPanel.isOpen) {
+                skillsPanel.Init();
             }
         }
 

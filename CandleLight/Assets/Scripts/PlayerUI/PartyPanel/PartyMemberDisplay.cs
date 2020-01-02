@@ -38,6 +38,7 @@ namespace PlayerUI {
         public Button b;                /// <value> Button to make display clickable for more info </value>
         public ButtonTransitionState bts;
         public LocalizedText LVLText;   /// <value> Text displaying current level </value>
+        public LocalizedText skillPointsText;   /// <value> Text displaying current skillPoints </value>
         public StatsPanel statsPanel;   /// <value> Panel for stats </value>
 
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
@@ -75,6 +76,20 @@ namespace PlayerUI {
             pmvc.SetPartyMemberDisplayRewardsPanel(this, PanelConstants.REWARDSPANEL, EXPBar, LVLText);
             SetInteractable(false);
         }
+        
+        /// <summary>
+        /// Displays the amount of skill pointsa partyMember has
+        /// </summary>
+        /// <param name="pmvc"></param>
+        /// <param name="skillPoints"></param>
+        public void InitSkillsDisplay(PartyMemberVisualController pmvc, int skillPoints) {
+            this.pmvc = pmvc;
+
+            classIcon.sprite = pmvc.partyMemberSprite;
+            UpdateSkillPointsText(skillPoints);
+
+            pmvc.SetPartyMemberDisplaySkillsPanel(this);
+        }
 
         /// <summary>
         /// Toggles the stats panel open or close
@@ -88,6 +103,28 @@ namespace PlayerUI {
             
             if (statsPanel.isOpen == true) {
                 UpdateStatsPanel();
+            }
+        }
+
+        /// <summary>
+        /// Sets the active partyMember to the one this pmd shows
+        /// </summary>
+        public void DisplayPMSkills() {
+            pmvc.SetActivePartyMember();
+        }
+
+        /// <summary>
+        /// Updates the skill points text to show the right amount and colour for visual feedback
+        /// </summary>
+        /// <param name="amount"></param>
+        public void UpdateSkillPointsText(int amount) {
+            skillPointsText.SetText(amount.ToString());
+
+            if (amount > 0) {
+                skillPointsText.SetColour(new Color(255, 255, 255, 255));
+            }
+            else {
+                skillPointsText.SetColour(new Color(141, 141, 141, 255));
             }
         }
 
@@ -283,7 +320,7 @@ namespace PlayerUI {
         /// Sets the interactivity of the partyMemberDisplay's button and statusEffectsDisplays
         /// </summary>
         /// <param name="value"> Enable interactivity on true and disable on false </param>
-         public void SetInteractable(bool value) {
+        public void SetInteractable(bool value) {
             b.interactable = value;
             classIcon.raycastTarget = value;
 

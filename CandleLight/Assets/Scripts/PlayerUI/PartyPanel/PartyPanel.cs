@@ -11,9 +11,7 @@
 using Characters;
 using PanelConstants = Constants.PanelConstants;
 using Party;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace PlayerUI {
