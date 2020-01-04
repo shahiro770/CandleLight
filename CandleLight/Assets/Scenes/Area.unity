@@ -9137,7 +9137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: skills_tab
+  key: skills_tab_(!)
   meshText: {fileID: 662891786}
   textPreset: 0
 --- !u!114 &662891786
@@ -9158,7 +9158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Skills
+  m_text: Skills(!)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
@@ -9228,7 +9228,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 662891786}
-    characterCount: 6
+    characterCount: 9
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -9270,7 +9270,7 @@ GameObject:
   - component: {fileID: 677041052}
   - component: {fileID: 677041051}
   m_Layer: 5
-  m_Name: TabManagerItems
+  m_Name: ItemsTabManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9293,6 +9293,10 @@ MonoBehaviour:
   - {fileID: 1294357091}
   - {fileID: 1967146484}
   - {fileID: 1266740567}
+  tabTexts:
+  - {fileID: 879496646}
+  - {fileID: 1638261186}
+  - {fileID: 928566187}
   panels:
   - {fileID: 1861426946}
   - {fileID: 1962842815}
@@ -10738,7 +10742,7 @@ RectTransform:
   m_GameObject: {fileID: 774460371}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.00008, y: 1.00008, z: 1.00008}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 144312170}
   - {fileID: 951980777}
@@ -15298,7 +15302,7 @@ GameObject:
   - component: {fileID: 1102624609}
   - component: {fileID: 1102624610}
   m_Layer: 5
-  m_Name: TabManagerUtility
+  m_Name: UtilityTabManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15340,6 +15344,10 @@ MonoBehaviour:
   - {fileID: 82578201}
   - {fileID: 144312172}
   - {fileID: 946583273}
+  tabTexts:
+  - {fileID: 542413808}
+  - {fileID: 662891785}
+  - {fileID: 292147657}
   panels:
   - {fileID: 1782737873}
   - {fileID: 951980778}

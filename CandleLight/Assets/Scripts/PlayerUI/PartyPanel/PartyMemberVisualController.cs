@@ -36,6 +36,7 @@ namespace Characters {
         public StatusPanel statusPanel; /// <value> statusPanel reference </value>
         public PartyPanel partyPanel;   /// <value> partyPanel reference </value>
         public SkillsPanel skillsPanel; /// <value> skillsPanel reference </value>
+        public TabManager utilityTabManager;
         public LocalizedText rewardsPanelLVLText { get; private set; }      /// <value> Visual for LVL in rewards panel</value>
         public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for partyMember in party panel </value>
         public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for partyMember in rewardsPanel </value>  
@@ -115,6 +116,7 @@ namespace Characters {
         /// <param name="pmd"></param>
         public void SetPartyMemberDisplaySkillsPanel(PartyMemberDisplay pmd) {
             this.pmdSkillsPanel = pmd;
+            utilityTabManager = EventManager.instance.utilityTabManager;
         }
 
         /// <summary>
@@ -425,6 +427,10 @@ namespace Characters {
         /// <param name="animationsToPlay"></param>
         public void DisplayCleanUpStatusEffects(int[] animationsToPlay) {
             pmdPartyPanel.PlayCleanUpStatusEffectAnimations(animationsToPlay);
+        }
+
+        public void ExciteSkillsTab() {
+            utilityTabManager.ExciteTab(1); // skills tab index
         }
     }
 }

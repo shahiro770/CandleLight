@@ -271,7 +271,7 @@
 		{ "key": "thirdEye_skill_des", "value": "Double mana regeneration while travelling" },
 		{ "key": "pyromancy_skill_title", "value": "Pyromancy" },
 		{ "key": "pyromancy_skill_sub", "value": "Passive" },
-		{ "key": "pyromancy_skill_des", "value": "Burn chance on attacks is doubled." },
+		{ "key": "pyromancy_skill_des", "value": "Burn chance on attacks is doubled" },
 
 		{ "key": "burn_title", "value": "Burn" },
 		{ "key": "burn_sub", "value": "Debuff" },
@@ -307,6 +307,7 @@
 		{ "key": "items_tab", "value": "Items" },
 		{ "key": "party_tab", "value": "Party" },
 		{ "key": "skills_tab", "value": "Skills" },
+		{ "key": "skills_tab_(!)", "value": "Skills(!)" },
 		{ "key": "info_tab", "value": "Info" },
 
 		{ "key": "goblin_monster", "value": "Goblin" },

@@ -83,6 +83,7 @@ namespace Characters {
             LVL += 1;
             if (LVL % 2 == 1) {     // gain a skill point every other level
                 skillPoints++;
+                pmvc.ExciteSkillsTab();
             }
 
             if (className == "Warrior") {

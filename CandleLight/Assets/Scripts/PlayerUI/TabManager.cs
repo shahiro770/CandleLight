@@ -8,6 +8,7 @@
 *
 */
 
+using Localization;
 using PanelConstants = Constants.PanelConstants;
 using UIEffects;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace PlayerUI {
         /* external component references */ 
         public ActionsPanel actionsPanel;       /// <value> Trigger navigation settting whenever tabs switch </value>
         public Button[] tabs = new Button[3];   /// <value> Three tabs per tabManager </value>
+        public LocalizedText[] tabTexts = new LocalizedText[3];    /// <value> Text for each tab </value>
         public Panel[] panels = new Panel[3];   /// <value> Panel references </value>
         public ButtonTransitionState[] btss = new ButtonTransitionState[3]; /// <value> Indicate which tabs are selected </value>
 
@@ -60,6 +62,11 @@ namespace PlayerUI {
             currentIndex = index;
             panels[currentIndex].gameObject.SetActive(true);
             btss[currentIndex].SetColor("pressed");
+
+            if (tabTexts[index].key.EndsWith("_(!)")) {
+                tabTexts[index].SetKey(tabTexts[index].key.Substring(0, tabTexts[index].key.Length - 4));
+                print(tabTexts[index].key);
+            }
         }
 
         public void SetAllButtonsInteractable() {
@@ -72,7 +79,7 @@ namespace PlayerUI {
                 n.selectOnLeft = actionsPanel.GetNavigatableButtonRight();
                 tabs[0].navigation = n;
             }
-            else { /// (panels[0].name == PanelConstants.GEARPANEL) {  // right tabManager
+            else { /// (panels[0].name == PanelConstants.GEARPANEL) {  // left tabManager
                 Navigation n = tabs[2].navigation;
                 n.selectOnRight = actionsPanel.GetNavigatableButtonLeft();
                 tabs[2].navigation = n;
@@ -82,6 +89,12 @@ namespace PlayerUI {
         public void SetAllButtonsUninteractable() {
             foreach (Button b in tabs) {
                 b.interactable = false;
+            }
+        }
+
+        public void ExciteTab(int index) {
+            if (tabTexts[index].key.EndsWith("_(!)") == false) {
+                tabTexts[index].SetKey(tabTexts[index].key + "_(!)");
             }
         }
     }

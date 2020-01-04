@@ -44,14 +44,16 @@ namespace PlayerUI {
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
 
         public void Awake() {
-            ColorBlock activeBlock = b.colors;
-            
-            activeBlock.normalColor = new Color32(255, 255, 255, 255);
-            activeBlock.highlightedColor = new Color32(255, 255, 255, 200);
-            activeBlock.pressedColor = new Color32(255, 255, 255, 255);
-            activeBlock.disabledColor = new Color32(255, 255, 255, 255);
-            
-            bts.SetColorBlock("normalAlternate", activeBlock);
+            if (bts != null) {
+                ColorBlock activeBlock = b.colors;
+                
+                activeBlock.normalColor = new Color32(255, 255, 255, 255);
+                activeBlock.highlightedColor = new Color32(255, 255, 255, 200);
+                activeBlock.pressedColor = new Color32(255, 255, 255, 255);
+                activeBlock.disabledColor = new Color32(255, 255, 255, 255);
+                
+                bts.SetColorBlock("normalAlternate", activeBlock);
+            }
         }
 
         /// <summary>
