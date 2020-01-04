@@ -130,6 +130,14 @@ namespace Party {
         }
 
         /// <summary>
+        /// Returns the number of partyMembers dead
+        /// </summary>
+        /// <returns></returns>
+        public int GetNumPartyMembersDead() {
+            return partyMembersDead.Count;
+        }
+
+        /// <summary>
         /// Returns the first partyMember in the list of partyMembers alive
         /// </summary>
         /// <returns> PartyMember that is alive</returns>
@@ -308,6 +316,20 @@ namespace Party {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.Regen();
             }
+        }
+
+        /// <summary>
+        /// Brings all dead partyMembers back to life with a minimum of a third of their health and mana
+        /// </summary>
+        public void RevivePartyMembers() {
+            foreach (PartyMember pm in partyMembersDead) {
+                pm.AddHP((int)(pm.HP * 0.34));
+                pm.AddMP((int)(pm.MP * 0.34));
+            }
+            foreach(PartyMember pm in partyMembersDead) {
+                partyMembersAlive.Add(pm);
+            }
+            partyMembersDead.Clear();
         }
 
         /// <summary>

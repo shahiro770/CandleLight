@@ -28,5 +28,7 @@ namespace Constants {
         public static readonly string SUBAREAANDCOMBATANDSUBAREA = "subAreaAndCombatAndSubArea";    /// <value> Move to new subArea, immediately fight specific enemies, and then move to another subArea on clearing </value>
         public static readonly string PROGRESS = "progress";    /// <value> Changes progress amount </value>
         public static readonly string END = "end";              /// <value> Ends the area, returning to the main menu </value>
+        public static readonly string REVIVE = "revive";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP </value>
+        public static readonly string REVIVEANDLEAVE = "reviveAndLeave";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP and leave </value>
     }
 }

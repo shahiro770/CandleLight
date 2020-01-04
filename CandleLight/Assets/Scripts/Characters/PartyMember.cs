@@ -153,10 +153,6 @@ namespace Characters {
         /// </summary> 
         /// <param name="amount"> Amount of health points lost </param>
         public void AddHP(int amount) {    
-            if (CHP == 0) { // Reviving a dead partyMember if CHP was originally 0 and addHp is allowed
-                PartyManager.instance.RegisterPartyMemberAlive(this);
-            }
-
             CHP += amount;
 
             if (CHP > HP) {

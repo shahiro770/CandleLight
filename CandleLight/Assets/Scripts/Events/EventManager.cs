@@ -641,6 +641,18 @@ namespace Events {
                 actionsPanel.PreCombatActions();
                 SetNavigation();
             }
+            else if (r.type == ResultConstants.REVIVE) {  
+                PartyManager.instance.RevivePartyMembers();
+
+                eventDescription.SetKey(r.resultKey);   
+            }
+            else if (r.type == ResultConstants.REVIVEANDLEAVE) {             
+                PartyManager.instance.RevivePartyMembers();
+
+                eventDescription.SetKey(r.resultKey); 
+                actionsPanel.TravelActions();
+                SetNavigation();
+            }
             else if (r.type == ResultConstants.PROGRESS) {
                 r.GenerateResults();
 
