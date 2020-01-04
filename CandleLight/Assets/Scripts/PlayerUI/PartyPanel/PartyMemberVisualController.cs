@@ -262,6 +262,14 @@ namespace Characters {
             if (skillsPanel.isOpen) {
                 skillsPanel.Init();
             }
+
+            pmdSkillsPanel.ShowActive();
+            pmdPartyPanel.ShowActive();      
+        }
+
+        public void ShowNormal() {
+            pmdSkillsPanel.ShowNormal();
+            pmdPartyPanel.ShowNormal();
         }
 
         /// <summary>

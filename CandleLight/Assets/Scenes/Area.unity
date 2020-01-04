@@ -13625,7 +13625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &951980777
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21256,6 +21256,7 @@ MonoBehaviour:
   - {fileID: 330082944}
   amountTextEXP: {fileID: 598447381}
   amountTextWAX: {fileID: 1916235090}
+  itemNum: 0
 --- !u!225 &1694017501
 CanvasGroup:
   m_ObjectHideFlags: 0

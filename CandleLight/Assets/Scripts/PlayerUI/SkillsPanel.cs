@@ -25,11 +25,17 @@ namespace PlayerUI {
         public int[] colPoints = new int[] { 0, 0, 0, 0 };
         public bool isOpen;             /// <value> Flag for if this panel is open (true if open, false otherwise) </value>
 
+        private bool initializing = true;
         private bool isTogglable = true;
 
         public void OnEnable() {
             isOpen = true;
             Init();
+
+            if (initializing == true) {     // initialize to set pmd references for pmvc, implies skillsPanel is initially open 
+                initializing = false;
+                gameObject.SetActive(false);
+            }
         }
 
         public void OnDisable() {
@@ -48,7 +54,7 @@ namespace PlayerUI {
                 int x = i;          // unity loses track of loop variable, so copying somehow fixes this
                 pmDisplays[i].gameObject.SetActive(true);
                 pmDisplays[i].InitSkillsDisplay(pms[i].pmvc, pms[i].skillPoints);
-            }
+            }     
 
             for (int i = 0; i < skillDisplays.Length; i++) {
                 if (pm.skills[i] != null) { // temporary
@@ -110,6 +116,18 @@ namespace PlayerUI {
 
         public void SetTogglable(bool value) {
             isTogglable = value;
+        }
+
+        /// <summary>
+        /// Displays the active partyMember with the proper visual colouring
+        /// </summary>
+        /// <param name="pmd"></param>
+        public void DisplayActivePartyMember(PartyMemberDisplay pmd) {
+            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
+                pmDisplays[i].ShowNormal();
+            }
+
+            pmd.ShowActive();
         }
     }
 }

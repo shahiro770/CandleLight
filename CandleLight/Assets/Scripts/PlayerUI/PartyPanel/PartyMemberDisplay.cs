@@ -43,16 +43,7 @@ namespace PlayerUI {
 
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
 
-        /// <summary>
-        /// Displays the class, health, and mana of a partyMember
-        /// </summary>
-        /// <param name="pm"></param>
-        public void Init(PartyMemberVisualController pmvc) {
-            this.pmvc = pmvc;
-            classIcon.sprite = pmvc.partyMemberSprite;
-            pmvc.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
-
-            ColorBlock normalBlock = b.colors; 
+        public void Awake() {
             ColorBlock activeBlock = b.colors;
             
             activeBlock.normalColor = new Color32(255, 255, 255, 255);
@@ -61,6 +52,16 @@ namespace PlayerUI {
             activeBlock.disabledColor = new Color32(255, 255, 255, 255);
             
             bts.SetColorBlock("normalAlternate", activeBlock);
+        }
+
+        /// <summary>
+        /// Displays the class, health, and mana of a partyMember
+        /// </summary>
+        /// <param name="pm"></param>
+        public void Init(PartyMemberVisualController pmvc) {
+            this.pmvc = pmvc;
+            classIcon.sprite = pmvc.partyMemberSprite;
+            pmvc.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
         }
 
         /// <summary>

@@ -836,8 +836,7 @@ namespace Combat {
         /// </summary>s
         public void DisplayActivePartyMember() {
             actionsPanel.DisplayPartyMember(activePartyMember);
-            statusPanel.DisplayPartyMember(activePartyMember.pmvc);
-            partyPanel.DisplayActivePartyMember(activePartyMember.pmvc.pmdPartyPanel);
+            activePartyMember.pmvc.DisplayActivePartyMember();
         }
 
         #endregion
