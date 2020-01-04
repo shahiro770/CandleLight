@@ -393,7 +393,9 @@ namespace Events {
             PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
             gearPanel.SetTakeable(true);
             skillsPanel.SetTogglable(true);
+            actionsPanel.ClearAllActions();
             rewardsPanel.SetVisible(true);
+           
 
             if (endString == "DEFEAT") {
                 GameManager.instance.LoadNextScene("MainMenu");

@@ -24,7 +24,8 @@ namespace Combat {
         [field: SerializeField] public string scope { get; private set; }       /// <value> String describing the number of targets the attack affects </value>
         [field: SerializeField] public string seName { get; private set; }      /// <value> Status effect of attack </value>
         [field: SerializeField] public int seDuration { get; private set; }     /// <value> Number of turns status effect lasts </value>       
-        [field: SerializeField] public int seChance { get; set; }               /// <value> Chance of status effect occuring </value>       
+        [field: SerializeField] public int baseSeChance { get; private set; }   /// <value> Base chance of status effect occurring </value>
+        [field: SerializeField] public int seChance { get; set; }               /// <value> Chance of status effect occurring </value>       
         [field: SerializeField] public int cost { get; private set; }           /// <value> Cost to use attack </value>      
         
         public int attackValue;  /// <value> Amount related to attack </value>
@@ -45,6 +46,7 @@ namespace Combat {
             this.formula = formula;
             this.seName = seName;
             this.seDuration = seDuration;
+            this.baseSeChance = seChance;
             this.seChance = seChance;
             this.costType = costType;
             this.cost = cost;            

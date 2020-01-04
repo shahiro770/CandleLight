@@ -554,6 +554,14 @@ namespace Characters {
                     attacks[attackNum] = skills[index].a;
                     attackNum++;
                     skills[index].skillEnabled = true;
+                    
+                    if (className == "Mage") {
+                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {  
+                            if (attacks[attackNum].seName == StatusEffectConstants.BURN) {
+                                attacks[attackNum].seChance = attacks[attackNum].baseSeChance << 1;
+                            }
+                        }
+                    }
 
                     return true;
                 }
@@ -566,7 +574,7 @@ namespace Characters {
                     if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
                             if (attacks[i].seName == StatusEffectConstants.BURN) {
-                                attacks[i].seChance = attacks[i].seChance << 1;
+                                attacks[i].seChance = attacks[i].baseSeChance << 1;
                             }
                         }
                     }
@@ -609,7 +617,7 @@ namespace Characters {
                     if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
                             if (attacks[i].seName == StatusEffectConstants.BURN) {
-                                attacks[i].seChance = attacks[i].seChance >> 1;
+                                attacks[i].seChance = attacks[i].baseSeChance;
                             }
                         }
                     }

@@ -115,6 +115,15 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Displays all actions as empty
+        /// </summary>
+        public void ClearAllActions() {
+            for (int i = 0; i < actions.Length; i++) {
+                actions[i].SetAction(ActionConstants.NONE);
+            }
+        }
+
+        /// <summary>
         /// Displays actions for after combat
         /// </summary>
         /// <param name="itemNum"> Number of items being displayed in the rewardsPanel </param>

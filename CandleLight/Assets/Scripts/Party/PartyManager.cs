@@ -231,9 +231,13 @@ namespace Party {
             else {
                 foreach (PartyMember pm in partyMembersAlive) {
                     if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS) {
+                        print(amount);
                         if (pm.className == "Warrior") {
                             if (pm.skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
                                 pm.LoseHP(amount >> 1);
+                            }
+                            else {
+                                pm.LoseHP(amount);
                             }
                         }
                         else {

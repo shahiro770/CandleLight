@@ -255,10 +255,11 @@ namespace Combat {
         /// </remark>
         public void PreparePMAttack(Attack a) {
             selectedAttackpm = a;
-            int tauntIndex = activePartyMember.GetStatusEffect(StatusEffectConstants.TAUNT);
 
-            if (tauntIndex != -1 && (Monster)activePartyMember.statusEffects[tauntIndex].afflicter != null) {
-                SelectMonster((Monster)(activePartyMember.statusEffects[tauntIndex].afflicter));
+            Monster taunter = (Monster)CheckTauntIndex(activePartyMember);
+
+            if (taunter != null) {
+                SelectMonster(taunter);
             }
             else {
                 foreach(Monster m in monsters) {
@@ -475,10 +476,10 @@ namespace Combat {
         private IEnumerator ExecuteMonsterAttack() {
             PartyMember targetChoice = null;
 
-            int tauntIndex = activeMonster.GetStatusEffect(StatusEffectConstants.TAUNT);
+            PartyMember taunter = (PartyMember)CheckTauntIndex(activeMonster);
 
-            if (tauntIndex != -1 && (PartyMember)activeMonster.statusEffects[tauntIndex].afflicter != null) {
-                targetChoice = (PartyMember)(activeMonster.statusEffects[tauntIndex].afflicter);
+            if (taunter != null) {
+                targetChoice = taunter;
             }
             else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAtHalf" || activeMonster.monsterAI == "debuffer") {
                 targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
@@ -847,6 +848,25 @@ namespace Combat {
         /// <returns> String </returns>
         public string GetFleeFailedKey() {
             return "flee_failed_" + Random.Range(0, 4);
+        }
+
+        /// <summary>
+        /// Return the character another character is taunted by if they exist and are alive
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public Character CheckTauntIndex(Character c) {
+            int tauntIndex = c.GetStatusEffect(StatusEffectConstants.TAUNT);
+
+            if (tauntIndex != -1) {
+                Character taunter = c.statusEffects[tauntIndex].afflicter;
+
+                if (taunter != null && taunter.CheckDeath() == false) {
+                    return taunter;
+                }
+            }
+
+            return null;
         }
     }
 }
