@@ -231,6 +231,7 @@
 		{ "key": "Charm1_item", "value": "Prayer Charm" },
 		{ "key": "Charm2_item", "value": "Lucky Fang" },
 		{ "key": "Charm3_item", "value": "Torn Wing" },
+		{ "key": "Charm4_item", "value": "Palm Gem" },
 		{ "key": "Weapon0_item", "value": "Bone Club" },
 		{ "key": "WarriorWeapon0_item", "value": "Stinger Tibia" },
 		{ "key": "WarriorWeapon1_item", "value": "Copper Greatsword" },
