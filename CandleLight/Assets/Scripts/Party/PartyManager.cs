@@ -226,28 +226,34 @@ namespace Party {
         /// Change CHP of all partyMembers
         /// </summary>
         /// <param name="amount"></param>
-        public void ChangeHPAll(int amount, string type = "none") {
+        public IEnumerator ChangeHPAll(int amount, string type = "none") {
             if (amount >= 0) {
                 foreach (PartyMember pm in partyMembersAlive) {
                     pm.AddHP(amount);
                 }
             }
             else {
-                foreach (PartyMember pm in partyMembersAlive) {
+                for (int i = 0; i < partyMembersAll.Count; i++) {
                     if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS) {
-                        print(amount);
-                        if (pm.className == "Warrior") {
-                            if (pm.skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
-                                pm.LoseHP(amount >> 1);
+                        if (partyMembersAll[i].CheckDeath() == false) {
+                            if (partyMembersAll[i].className == "Warrior") {
+                                if (partyMembersAll[i].skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                                    StartCoroutine(partyMembersAll[i].LoseHP(amount >> 1));
+                                }
+                                else {
+                                    StartCoroutine(partyMembersAll[i].LoseHP(amount));
+                                }
                             }
                             else {
-                                pm.LoseHP(amount);
+                                StartCoroutine(partyMembersAll[i].LoseHP(amount));
                             }
                         }
-                        else {
-                            pm.LoseHP(amount);
-                        }
                     }
+                }
+
+                if (partyMembersAlive.Count == 0) { // this will have to change if combat gets aoe attacks
+                    yield return new WaitForSeconds(1.25f);
+                    GameManager.instance.LoadNextScene("MainMenu");
                 }
             }
         } 

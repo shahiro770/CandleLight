@@ -65,7 +65,6 @@ namespace PlayerUI {
 
             if (tabTexts[index].key.EndsWith("_(!)")) {
                 tabTexts[index].SetKey(tabTexts[index].key.Substring(0, tabTexts[index].key.Length - 4));
-                print(tabTexts[index].key);
             }
         }
 

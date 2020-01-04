@@ -642,7 +642,7 @@ namespace Events {
                 SetNavigation();
             }
             else if (r.type == ResultConstants.PROGRESS) {
-                eventDescription.SetKey(r.resultKey);
+                r.GenerateResults();
 
                 subAreaProgress += r.progressAmount;
                 if (subAreaProgress > 100) {
@@ -655,6 +655,7 @@ namespace Events {
                     infoPanel.UpdateAmounts();
                 }
 
+                eventDescription.SetKey(r.resultKey);
                 actionsPanel.TravelActions();
                 SetNavigation();
             }
@@ -686,7 +687,7 @@ namespace Events {
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
-                PartyManager.instance.ChangeHPAll(r.HPAmount, type);
+                StartCoroutine(PartyManager.instance.ChangeHPAll(r.HPAmount, type));
             }
             if (r.MPAmount != 0) {
                 PartyManager.instance.ChangeMPAll(r.MPAmount, type);

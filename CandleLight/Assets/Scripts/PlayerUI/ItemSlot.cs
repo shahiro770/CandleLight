@@ -183,7 +183,7 @@ namespace PlayerUI {
                             PartyManager.instance.AddEXP(amounts[i]);
                         }
                         if (effects[i] == "HP") {
-                            PartyManager.instance.ChangeHPAll(amounts[i]);
+                            StartCoroutine(PartyManager.instance.ChangeHPAll(amounts[i]));
                         }
                         if (effects[i] == "MP") {
                             PartyManager.instance.ChangeMPAll(amounts[i]);
