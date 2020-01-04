@@ -427,8 +427,8 @@ namespace Combat {
             if (monsterAI == "random" || monsterAI == "weakHunter" || monsterAI == "bleedHunter") {
                 selectedMonsterAttackIndex = Random.Range(0, attackNum);
             }
-            else if (monsterAI == "lastAtHalf") {    // only uses last attack after CHP falls below 50%, using it whenever possible if its a selfBuff
-                if (activeMonster.CHP <= (int)(activeMonster.HP * 0.5f)) {
+            else if (monsterAI == "lastAt60") {    // only uses last attack after CHP falls below 60%, using it whenever possible if its a selfBuff
+                if (activeMonster.CHP <= (int)(activeMonster.HP * 0.6f)) {
 
                     if (attacks[attackNum - 1].type == AttackConstants.BUFFSELF && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) == -1) {
                         selectedMonsterAttackIndex = attackNum - 1;
@@ -481,7 +481,7 @@ namespace Combat {
             if (taunter != null) {
                 targetChoice = taunter;
             }
-            else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAtHalf" || activeMonster.monsterAI == "debuffer") {
+            else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt60" || activeMonster.monsterAI == "debuffer") {
                 targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
             }
             else if (activeMonster.monsterAI == "weakHunter") {
