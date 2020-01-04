@@ -426,7 +426,9 @@ namespace Characters {
         /// </summary>
         /// <param name="animationsToPlay"></param>
         public void DisplayCleanUpStatusEffects(int[] animationsToPlay) {
-            pmdPartyPanel.PlayCleanUpStatusEffectAnimations(animationsToPlay);
+            if (partyPanel.isOpen == true) {
+                pmdPartyPanel.PlayCleanUpStatusEffectAnimations(animationsToPlay);
+            }
         }
 
         public void ExciteSkillsTab() {

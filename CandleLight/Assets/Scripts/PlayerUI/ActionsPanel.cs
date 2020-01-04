@@ -120,6 +120,7 @@ namespace PlayerUI {
         public void ClearAllActions() {
             for (int i = 0; i < actions.Length; i++) {
                 actions[i].SetAction(ActionConstants.NONE);
+                actions[i].SetUsable(true);
             }
         }
 
