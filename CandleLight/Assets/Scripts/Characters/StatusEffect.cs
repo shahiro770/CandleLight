@@ -66,7 +66,7 @@ namespace Characters {
             }
             else if (name == StatusEffectConstants.BLEED) {
                 this.afflicter = afflicter;
-                preValue = (int)(1 + afflicter.PATK * 0.34f);
+                preValue = (int)(1 + afflicter.PATK * 0.4f);
                 value = preValue - afflicted.PDEF;
             }
 

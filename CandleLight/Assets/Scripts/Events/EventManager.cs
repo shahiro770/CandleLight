@@ -222,7 +222,6 @@ namespace Events {
         /// Gets the next event
         /// </summary>
         public void GetNextEvent() {
-              
             actionsPanel.SetActionsUsable(true);
             subAreaProgress += currentEvent.progressAmount;
             if (subAreaProgress >= 100) {
@@ -272,15 +271,6 @@ namespace Events {
         public void GetCombatEvent() {
             gearPanel.SetTakeable(false);
             skillsPanel.SetTogglable(false);
-            StartCoroutine(AlterBackgroundColor(0.5f));
-            StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentEvent.isLeavePossible));
-        }
-
-        /// <summary>
-        /// Switches gameplay from exploring into turn-based combat with random monsters
-        /// </summary>
-        public void GetCombatEventBoss() {
-            gearPanel.SetTakeable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentEvent.isLeavePossible));
         }
@@ -504,6 +494,9 @@ namespace Events {
 
             if (r.type == ResultConstants.NORESULT) {
                 eventDescription.SetKey(r.resultKey);
+            }
+            else if (r.type == ResultConstants.NORESULTANDLEAVE) {
+                eventDescription.SetKey(r.resultKey);
                 actionsPanel.TravelActions();
                 HideEventDisplayItemDisplays();
                 SetNavigation();
@@ -515,6 +508,11 @@ namespace Events {
                 actionsPanel.SetItemActions();
                 eventDescription.SetKey(r.resultKey);
                 DisplayResultItems(r);
+                SetNavigation();
+            }
+            else if (r.type == ResultConstants.NEWINT) {
+                actionsPanel.AddInteraction(r.newIntName);
+                eventDescription.SetKey(r.resultKey);
                 SetNavigation();
             }
             else if (r.type == ResultConstants.EVENT) {
@@ -706,6 +704,9 @@ namespace Events {
             }
             if (r.EXPAmount != 0) {
                 PartyManager.instance.AddEXP(r.EXPAmount);
+            }
+            if (r.seName != "none") {
+                PartyManager.instance.AddSE(r.seName, r.seDuration);
             }
         }
 

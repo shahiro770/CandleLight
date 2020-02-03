@@ -153,18 +153,19 @@ namespace Combat {
         /// </summary>
         /// <returns> IEnumerator cause animations </returns>
         private IEnumerator DisplayCombatIntro() {
+            actionsPanel.SetAllActionsUninteractableAndFadeOut();
             DisableAllButtons();
             foreach (Monster m in monsters) {
                 StartCoroutine(m.md.PlaySpawnAnimation());
             }
-
+                  
             if (eventDescription.HasText()) {
                 yield return new WaitForSeconds(1.5f);   
                 eventDescription.ClearText();    
             }
             else {
                 yield return new WaitForSeconds(0.6f);   
-            }
+            }   
         }
 
         /// <summary>
@@ -268,7 +269,8 @@ namespace Combat {
                 actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].md.b);
                 partyPanel.SetHorizontalNavigation();
 
-                es.SetSelectedGameObject(monsters[middleMonster].md.b.gameObject);
+                // uncomment if player gets to choose between mouse and keyboard at some point
+                // es.SetSelectedGameObject(monsters[middleMonster].md.b.gameObject);
             }
         }
 

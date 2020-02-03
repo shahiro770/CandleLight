@@ -12,6 +12,7 @@ using ActionConstants = Constants.ActionConstants;
 using Characters;
 using Combat;
 using Events;
+using GameManager = General.GameManager;
 using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
@@ -158,6 +159,22 @@ namespace PlayerUI {
             
             SetAllActionsInteractable(false);
             SetInPanelNavigation();
+        }
+
+        /// <summary>
+        /// Load a new interaction into the actionsPanel
+        /// Will not do anything if maximum number of actions is reached
+        /// </summary>
+        /// <param name="intName"> Name of the interaction to load </param>
+        public void AddInteraction(string intName) {
+            for (int i = 0; i < actions.Length -1; i++) {
+                if (actions[i].actionType == ActionConstants.NONE) {
+                    actions[i].SetAction(ActionConstants.INTERACTION, GameManager.instance.DB.GetInteractionByName(intName));
+                    actions[i].SetInteractable(true);
+                    SetInPanelNavigation();
+                    break;
+                }
+            }
         }
 
         /// <summary>

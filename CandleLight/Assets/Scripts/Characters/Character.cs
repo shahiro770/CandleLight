@@ -367,6 +367,10 @@ namespace Characters {
                 if (se.name == StatusEffectConstants.WEAKNESS) {
                     PATK -= (int)(PATK * 0.3);
                 }
+                if (se.name == StatusEffectConstants.ADVANTAGE) {
+                    critChance += 50;
+                    ACC += (int)(ACC * 0.5);
+                }
             }
         }
 

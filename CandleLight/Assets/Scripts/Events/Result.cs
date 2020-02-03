@@ -26,6 +26,8 @@ namespace Events {
         [field: SerializeField] public string[] specificItemNames { get; private set; }     /// <value> Names of specific items dropped </value>
         [field: SerializeField] public string itemQuality { get; private set; }             /// <value> String quality of item (low, med, high) </value>
         [field: SerializeField] public string[] specificMonsterNames;           /// <value> Names of monsters this event spawns </value>
+        [field: SerializeField] public string newIntName;                       /// <value> Name of interaction to load if result has one </value>
+        [field: SerializeField] public string seName;                           /// <value> Name of the status effect this result causes </value>
         [field: SerializeField] public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         [field: SerializeField] public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         [field: SerializeField] public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
@@ -33,6 +35,7 @@ namespace Events {
         [field: SerializeField] public int progressAmount { get; private set; } /// <value> Amount of progress result gives </value>
         [field: SerializeField] public int itemAmount { get; private set; }     /// <value> Amount of items result gives </value>
         [field: SerializeField] public int specificItemAmount { get; private set; } = 0;    /// <value> Amount of specific items result gives </value>
+        [field: SerializeField] public int seDuration { get; private set; } = 0;    /// <value> Duration of status effect </value>
 
         [field: SerializeField] public int baseEXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         [field: SerializeField] public int baseHPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
@@ -52,7 +55,8 @@ namespace Events {
         /// <param name="quantity"></param>
         /// <param name="changeValues"></param>
         public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] amounts,
-        string subAreaName0, string subAreaName1, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality) {
+        string subAreaName0, string subAreaName1, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality,
+        string newIntName, string seName, int seDuration) {
             this.name = name;
             this.resultKey = resultKey;
             this.type = type;
@@ -70,6 +74,10 @@ namespace Events {
             this.specificMonsterNames = specificMonsterNames;
             this.itemType = itemType;
             this.specificItemNames = specificItemNames;
+            this.newIntName = newIntName;
+            this.seName = seName;
+            this.seDuration = seDuration;
+
             for (int i = 0; i < specificItemNames.Length; i++) {
                 if (specificItemNames[i] != "none") {
                     specificItemAmount++;

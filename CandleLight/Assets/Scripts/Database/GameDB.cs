@@ -504,6 +504,9 @@ namespace Database {
                     string[] specificMonsterNames = new string[5];
                     int[] resultAmounts = new int[5];
                     int monsterCount = 0;
+                    string newIntName = ""; 
+                    string seName = "";
+                    int seDuration = 0;
                     bool isUnique = false;
 
                     if (reader.Read()) {
@@ -531,9 +534,12 @@ namespace Database {
                         specificItemNames[1] = reader.GetString(22);
                         specificItemNames[2] = reader.GetString(23);
                         itemQuality = reader.GetString(24);
+                        newIntName = reader.GetString(25);
+                        seName = reader.GetString(26);
+                        seDuration = reader.GetInt32(27);
 
                         newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultAmounts, subAreaName0, subAreaName1, subEventName, 
-                        monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality);
+                        monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality, newIntName, seName, seDuration);
                     }
                     else {
                          Debug.LogError("Result " + resultName + " does not exist in the DB");

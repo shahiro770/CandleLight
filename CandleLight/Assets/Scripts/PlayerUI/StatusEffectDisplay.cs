@@ -88,6 +88,13 @@ namespace PlayerUI {
                 normalBlock.disabledColor = new Color32(98, 36, 97, 150);
                 durationText.SetColour(new Color32(98, 36, 97, 255));
             }
+            else if (se.name == StatusEffectConstants.ADVANTAGE) {
+                normalBlock.normalColor = new Color32(230, 126, 34, 200);
+                normalBlock.highlightedColor = new Color32(230, 126, 34, 255);
+                normalBlock.pressedColor = new Color32(230, 126, 34, 255);
+                normalBlock.disabledColor = new Color32(230, 126, 34, 150);
+                durationText.SetColour(new Color32(230, 126, 34, 255));
+            }
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
@@ -127,6 +134,10 @@ namespace PlayerUI {
                 amounts[1] = se.value.ToString();
             }
             else if (se.name == StatusEffectConstants.WEAKNESS) {
+                textKeys[1] = "none_label";
+                amounts[1] = "";
+            }
+            else if (se.name == StatusEffectConstants.ADVANTAGE) {
                 textKeys[1] = "none_label";
                 amounts[1] = "";
             }
