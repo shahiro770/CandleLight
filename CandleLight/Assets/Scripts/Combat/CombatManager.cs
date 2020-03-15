@@ -317,15 +317,15 @@ namespace Combat {
         /// <summary>
         /// Revert target selection UI to action selection phase
         /// </summary>
-        public void UndoPMAction() {
-            selectedAttackpm = null;
-            foreach(Monster m in monsters) {
-                m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
-            }
+        // public void UndoPMAction() {
+        //     selectedAttackpm = null;
+        //     foreach(Monster m in monsters) {
+        //         m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
+        //     }
 
-            eventDescription.ClearText();
-            partyPanel.SetHorizontalNavigation();
-        }
+        //     eventDescription.ClearText();
+        //     partyPanel.SetHorizontalNavigation();
+        // }
 
         /// <summary>
         /// Deals damage to a monster.
@@ -426,8 +426,25 @@ namespace Combat {
             int attackNum = activeMonster.attackNum;
             selectedMonsterAttackIndex = -1;
 
-            if (monsterAI == "random" || monsterAI == "weakHunter" || monsterAI == "bleedHunter") {
+            if (monsterAI == "random" || monsterAI == "weakHunter") {
                 selectedMonsterAttackIndex = Random.Range(0, attackNum);
+            }
+            else if (monsterAI == "bleedHunter") {  // if a partyMember is bleeding, use last attack
+                bool isBleeding = false;
+
+                for (int i = 0; i < partyMembersAlive.Count; i++) {
+                    if (partyMembersAlive[i].GetStatusEffect("bleed") != -1) {
+                        isBleeding = true;
+                        break;
+                    }
+                }
+
+                if (isBleeding) {
+                    selectedMonsterAttackIndex = attackNum - 1;
+                }
+                else {
+                    selectedMonsterAttackIndex = Random.Range(0, attackNum - 1);
+                }
             }
             else if (monsterAI == "lastAt60") {    // only uses last attack after CHP falls below 60%, using it whenever possible if its a selfBuff
                 if (activeMonster.CHP <= (int)(activeMonster.HP * 0.6f)) {

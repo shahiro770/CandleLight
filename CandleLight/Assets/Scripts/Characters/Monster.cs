@@ -12,6 +12,7 @@
 
 using AssetManagers;
 using Combat;
+using SkillConstants = Constants.SkillConstants;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using System.Collections;
 using System.Collections.Generic;
@@ -203,6 +204,7 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator GetAttacked(Attack a, Character c, string animationClipName) {
             bool attackHit = CalculateAttackHit(c);
+            PartyMember pc = (PartyMember)c;
            
             if (attackHit) {
                 int damage = CalculateAttackDamage(a);
@@ -219,8 +221,15 @@ namespace Characters {
 
                 yield return StartCoroutine(LoseHP(damage, animationClipName));
 
+                // side effects from partyMember skills
+                if (pc.className == "Warrior") {
+                    if (pc.skills[(int)SkillConstants.warriorSkills.MANABLADE].skillEnabled == true) {
+                        pc.AddMP((int)(damage * 0.25f));
+                    }
+                }
+
                 if (isStatus) {
-                    if (GetStatusEffect(a.seName) == -1) {  // no two tatusEffects of the same type can be on at once
+                    if (GetStatusEffect(a.seName) == -1) {  // no two statusEffects of the same type can be on at once
                         StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
                         newStatus.SetValue(c, this);
                         AddStatusEffect(newStatus);

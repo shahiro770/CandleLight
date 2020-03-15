@@ -45,6 +45,7 @@ namespace PlayerUI {
         public void Init() {
             List<PartyMember> pms = PartyManager.instance.GetPartyMembers();
             PartyMember pm = PartyManager.instance.GetActivePartyMember();
+            colPoints = new int[] { 0, 0, 0, 0 };
 
             for (int i = 0; i < pmDisplays.Length;i++) {
                 pmDisplays[i].gameObject.SetActive(false);
@@ -57,9 +58,18 @@ namespace PlayerUI {
             }     
 
             for (int i = 0; i < skillDisplays.Length; i++) {
-                if (pm.skills[i] != null) { // temporary
-                    int x = i;
-                    skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
+                int x = i;          // dumb hack cause unity forgets for loop ints
+                if (pm.skills[i] != null) { // TEMPORARY
+                    if (pm.skills[i].skillEnabled == true) {   
+                        colPoints[i / 3]++;
+                        skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
+                    }
+                    else if (i < 3 || ( i >= 3 && colPoints[(i / 3) - 1] > 0)) {
+                        skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
+                    }
+                    else {
+                        skillDisplays[i].Init();
+                    }
                 } 
                 else {
                     skillDisplays[i].Init();
@@ -71,6 +81,7 @@ namespace PlayerUI {
             if (isTogglable == true) {
                 if (sd.skillDisplayEnabled == true) {
                     if ((sd.colIndex != 3 && colPoints[sd.colIndex + 1] == 0) || sd.colIndex == 3) {
+                        //Debug.Log(colPoints[sd.colIndex + 1] + " " + sd.colIndex);
                         if (PartyManager.instance.DisableSkill(sd.skillIndex)) {
                             sd.skillDisplayEnabled = false;
                             colPoints[sd.colIndex]--;
@@ -86,6 +97,7 @@ namespace PlayerUI {
                         if (PartyManager.instance.EnableSkill(sd.skillIndex)) {
                             sd.skillDisplayEnabled = true;
                             colPoints[sd.colIndex]++;
+                            // Debug.Log(colPoints[sd.colIndex] + " " + sd.colIndex);
                             
                             sd.SetColour(sd.skillDisplayEnabled);
                             UpdateSkillsVisible();
@@ -97,7 +109,14 @@ namespace PlayerUI {
         }
 
         public void UpdateSkillsVisible() {
+            PartyMember pm = PartyManager.instance.GetActivePartyMember();
+
             if (colPoints[0] > 0 && colPoints[1] == 0) {
+                skillDisplays[3].Init(3, pm.skills[3], pm.pmvc.skillSprites[3], pm.skills[3].skillColour,  pm.pmvc.pmdSkillsPanel);
+                //skillDisplays[4].Init();
+                //skillDisplays[5].Init();
+            }
+            else if (colPoints[0] == 0) {
                 skillDisplays[3].Init();
                 skillDisplays[4].Init();
                 skillDisplays[5].Init();
@@ -107,11 +126,21 @@ namespace PlayerUI {
                 skillDisplays[7].Init();
                 skillDisplays[8].Init();
             }
+            else if (colPoints[1] == 0) {
+                skillDisplays[6].Init();
+                skillDisplays[7].Init();
+                skillDisplays[8].Init();
+            }
             if (colPoints[2] > 0 && colPoints[3] == 0) {
                 skillDisplays[9].Init();
                 skillDisplays[10].Init();
                 skillDisplays[11].Init();
             } 
+            else if (colPoints[2] == 0) {
+                skillDisplays[9].Init();
+                skillDisplays[10].Init();
+                skillDisplays[11].Init();
+            }
         }
 
         public void SetTogglable(bool value) {

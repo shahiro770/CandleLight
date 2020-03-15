@@ -22,10 +22,10 @@ namespace PlayerUI {
         public SpriteRenderer skillSpriteRenderer;   /// <value> Sprite to be displayed </value>
         public Sprite lockedSkillSprite;
         public Tooltip t;
+        public int colIndex;
     
         public PartyMemberDisplay pmd;
-        public Color skillColour;
-        public int colIndex;
+        public Color skillColour;    
         public int skillIndex;
         public bool skillDisplayEnabled;
 
@@ -75,6 +75,7 @@ namespace PlayerUI {
             normalBlock.pressedColor = lockedSkillColour;
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
+            SetColour(skillDisplayEnabled);
         }
 
         public void SetColour(bool skillDisplayEnabled) {

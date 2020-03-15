@@ -618,6 +618,10 @@ namespace Characters {
                             }
                         }
                     }
+                    if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
+                        CalculateStatusEffectStats();
+                        //CalculateSkillStats();
+                    }
                 }
 
                 return true;
@@ -625,6 +629,15 @@ namespace Characters {
 
             return false;
         }
+
+
+        // public void CalculateSkillStats() {
+        //     if (className == "Mage") {
+        //         if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
+        //              critChance *= 1.25f;
+        //         }
+        //     }
+        // }
 
         /// <summary>
         /// Log stats informaton about the PartyMember for debugging
