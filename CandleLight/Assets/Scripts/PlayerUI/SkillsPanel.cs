@@ -81,7 +81,6 @@ namespace PlayerUI {
             if (isTogglable == true) {
                 if (sd.skillDisplayEnabled == true) {
                     if ((sd.colIndex != 3 && colPoints[sd.colIndex + 1] == 0) || sd.colIndex == 3) {
-                        //Debug.Log(colPoints[sd.colIndex + 1] + " " + sd.colIndex);
                         if (PartyManager.instance.DisableSkill(sd.skillIndex)) {
                             sd.skillDisplayEnabled = false;
                             colPoints[sd.colIndex]--;
@@ -97,7 +96,6 @@ namespace PlayerUI {
                         if (PartyManager.instance.EnableSkill(sd.skillIndex)) {
                             sd.skillDisplayEnabled = true;
                             colPoints[sd.colIndex]++;
-                            // Debug.Log(colPoints[sd.colIndex] + " " + sd.colIndex);
                             
                             sd.SetColour(sd.skillDisplayEnabled);
                             UpdateSkillsVisible();

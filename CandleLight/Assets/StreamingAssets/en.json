@@ -312,7 +312,7 @@
 		{ "key": "poison_description", "value": "Losing 7% of its max HP at the end of its turn" },
 		{ "key": "taunt_title", "value": "Taunted" },
 		{ "key": "taunt_sub", "value": "Debuff" },
-		{ "key": "taunt_description", "value": "Has PATK increased by 30% and must attack the caster when it can" },
+		{ "key": "taunt_description", "value": "Has PATK increased by 50% and must attack the caster when it can" },
 		{ "key": "freeze_title", "value": "Freeze" },
 		{ "key": "freeze_sub", "value": "Debuff" },
 		{ "key": "freeze_description", "value": "Has DOG, ACC, and PDEF reduced by 30%" },

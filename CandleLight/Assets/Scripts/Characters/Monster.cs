@@ -75,6 +75,7 @@ namespace Characters {
             this.minLVL = int.Parse(LVLString[1]);  // efficiency won't matter for numbers less than 1000
             this.maxLVL = int.Parse(LVLString[2]);
             base.Init(minLVL, HP, MP, stats, attacks);  // use minLVL for initialization, will use for scaling up on spawning
+            CalculateStats(true);
 
             this.dropChance = dropChance;
             this.multiplier = multiplier;

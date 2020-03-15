@@ -39,6 +39,8 @@ namespace Characters {
         public Gear weapon = new Gear();        /// <value> Weapon </value>
         public Gear secondary = new Gear();     /// <value> Secondary </value>
         public Gear armour = new Gear();        /// <value> Armour </value>
+        
+        private int numGear = 3;                /// <value> Max number of gear items a partyMember has </value>
 
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
@@ -52,6 +54,7 @@ namespace Characters {
         /// <param name="attacks"> Array of known attacks (length 4)</param>
         public void Init(string[] personalInfo, int LVL, int EXP, int CHP, int CMP, int[] stats, Attack[] attacks, Skill[] skills) {
             base.Init(LVL, CHP, CMP, stats, attacks);
+            CalculateStats(true);
             this.EXP = EXP;
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
             this.className = personalInfo[0];
@@ -111,13 +114,150 @@ namespace Characters {
                 baseLUK += LVL * 2;
             }
 
-            CalculateGearStatsPrimary(1);
-            CalculateSecondaryStats();
-            CalculateGearStatsSecondary();
-            CalculateStatusEffectStats();
+
+            CalculateStats();
 
             pmvc.UpdateHPAndMPBars();
             pmvc.UpdateStats();
+        }
+
+        protected override void CalculateStats(bool setCurrent = false) {
+            Gear gearToCalculate = null;
+
+            STR = baseSTR;
+            DEX = baseDEX;
+            INT = baseINT;
+            LUK = baseLUK;
+
+            /* primary stats changes from gear */
+            for (int i = 0; i < numGear; i++) {
+                if (i == 0) {
+                    gearToCalculate = weapon;
+                }
+                else if (i == 1) {
+                    gearToCalculate = secondary;
+                }
+                else {
+                    gearToCalculate = armour;
+                }
+
+                if (gearToCalculate != null) {
+                    for (int j = 0; j < gearToCalculate.effects.Length; j++) {
+                        switch(gearToCalculate.effects[j]) {
+                            case "STR":
+                                STR += gearToCalculate.values[j];
+                                break;
+                            case "DEX":
+                                DEX += gearToCalculate.values[j];
+                                break;
+                            case "INT":
+                                INT += gearToCalculate.values[j];
+                                break;
+                            case "LUK":
+                                LUK += gearToCalculate.values[j];
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            /* secondary stats */
+            HP = (int)(STR * 2.25 + DEX * 1.5);
+            MP = (int)(INT * 1.25 + LUK * 0.5);
+            PATK = (int)(STR * 0.5 + DEX * 0.25);
+            MATK = (int)(INT * 0.5 + LUK * 0.25); 
+            PDEF = (int)(STR * 0.1 + DEX * 0.05);
+            MDEF = (int)(INT * 0.15 + LUK * 0.05);
+            DOG = (int)(DEX * 0.2 + LUK * 0.1);
+            ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
+            critChance = (int)(LUK * 0.1) + baseCritChance;
+            critMult = baseCritMult;
+
+            /* secondary stats changes from gear */
+            for (int i = 0; i < numGear; i++) {
+                if (i == 0) {
+                    gearToCalculate = weapon;
+                }
+                else if (i == 1) {
+                    gearToCalculate = secondary;
+                }
+                else {
+                    gearToCalculate = armour;
+                }
+
+                if (gearToCalculate != null) {
+                    for (int j = 0; j < gearToCalculate.effects.Length; j++) {
+                        switch(gearToCalculate.effects[j]) {
+                            case "HP":
+                                HP += gearToCalculate.values[j];
+                                break;
+                            case "MP":
+                                MP += gearToCalculate.values[j];
+                                break;
+                            case "PATK":
+                                PATK += gearToCalculate.values[j];
+                                break;
+                            case "MATK":
+                                MATK += gearToCalculate.values[j];
+                                break;
+                            case "PDEF":
+                                PDEF += gearToCalculate.values[j];
+                                break;
+                            case "MDEF":
+                                MDEF += gearToCalculate.values[j];
+                                break;
+                            case "DOG":
+                                DOG += gearToCalculate.values[j];
+                                break;
+                            case "ACC":
+                                ACC += gearToCalculate.values[j];
+                                break;
+                            case "CRITCHANCE":
+                                critChance += gearToCalculate.values[j];
+                                break;
+                            case "CRITMULT":
+                                critMult += gearToCalculate.values[j];
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            /* secondary stat changes from skills */
+            if (className == "Mage") {
+                if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
+                     critChance = (int)(critChance * 1.25f);
+                }
+            }
+
+            /* secondary stat changes from status effects */
+            foreach (StatusEffect se in statusEffects) {
+                if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
+                    PATK += (int)(PATK * 0.5);
+                }
+                if (se.name == StatusEffectConstants.FREEZE) {
+                    DOG -= (int)(DOG * 0.3);
+                    ACC -= (int)(ACC * 0.3);
+                    PDEF -= (int)(PDEF * 0.3);
+                }
+                if (se.name == StatusEffectConstants.WEAKNESS) {
+                    PATK -= (int)(PATK * 0.3);
+                }
+                if (se.name == StatusEffectConstants.ADVANTAGE) {
+                    critChance += 50;
+                    ACC += (int)(ACC * 0.5);
+                }
+            }
+
+            
+            if (setCurrent) {
+                CHP = HP;
+                CMP = MP;
+            }
         }
 
         /// <summary>
@@ -397,10 +537,7 @@ namespace Characters {
                 armour = g;
             }
 
-            CalculateGearStatsPrimary(1);
-            CalculateSecondaryStats();
-            CalculateGearStatsSecondary();
-            CalculateStatusEffectStats();
+            CalculateStats();
             UpdateStatusEffectValues();
             pmvc.UpdateStats();
             pmvc.SetEquippedGear();
@@ -421,130 +558,16 @@ namespace Characters {
                 armour = null;
             }
 
-            CalculateGearStatsPrimary(1);
-            CalculateSecondaryStats();
-            CalculateGearStatsSecondary();
-            CalculateStatusEffectStats();
+            CalculateStats();
             UpdateStatusEffectValues();
             pmvc.UpdateStats();
             pmvc.SetEquippedGear();
         }
 
-        /// <summary>
-        /// Calculates stat changes to primary stats (STR, DEX, INT, LUK) after a gear is equipped
-        /// </summary>
-        /// <param name="addOrSubtract"></param>
-        public void CalculateGearStatsPrimary(int addOrSubtract) {
-            Gear gearToCalculate = null;
-            int numGear = 3;
-            STR = baseSTR;
-            DEX = baseDEX;
-            INT = baseINT;
-            LUK = baseLUK;
-
-            for (int i = 0; i < numGear; i++) {
-                if (i == 0) {
-                    gearToCalculate = weapon;
-                }
-                else if (i == 1) {
-                    gearToCalculate = secondary;
-                }
-                else {
-                    gearToCalculate = armour;
-                }
-
-                if (gearToCalculate != null) {
-                    for (int j = 0; j < gearToCalculate.effects.Length; j++) {
-                        switch(gearToCalculate.effects[j]) {
-                            case "STR":
-                                STR += gearToCalculate.values[j] * addOrSubtract;
-                                break;
-                            case "DEX":
-                                DEX += gearToCalculate.values[j] * addOrSubtract;
-                                break;
-                            case "INT":
-                                INT += gearToCalculate.values[j] * addOrSubtract;
-                                break;
-                            case "LUK":
-                                LUK += gearToCalculate.values[j] * addOrSubtract;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Calculates all secondary stats (HP, MP, PATK, MATK, PDEF, MDEF, DODGE, ACC, CRITCHANCE, CRITMULT)
-        /// </summary>
-        public void CalculateGearStatsSecondary() {
-            Gear gearToCalculate = null;
-            int numGear = 3;
-
-            for (int i = 0; i < numGear; i++) {
-                if (i == 0) {
-                    gearToCalculate = weapon;
-                }
-                else if (i == 1) {
-                    gearToCalculate = secondary;
-                }
-                else {
-                    gearToCalculate = armour;
-                }
-
-                if (gearToCalculate != null) {
-                    for (int j = 0; j < gearToCalculate.effects.Length; j++) {
-                        switch(gearToCalculate.effects[j]) {
-                            case "HP":
-                                HP += gearToCalculate.values[j];
-                                break;
-                            case "MP":
-                                MP += gearToCalculate.values[j];
-                                break;
-                            case "PATK":
-                                PATK += gearToCalculate.values[j];
-                                break;
-                            case "MATK":
-                                MATK += gearToCalculate.values[j];
-                                break;
-                            case "PDEF":
-                                PDEF += gearToCalculate.values[j];
-                                break;
-                            case "MDEF":
-                                MDEF += gearToCalculate.values[j];
-                                break;
-                            case "DOG":
-                                DOG += gearToCalculate.values[j];
-                                break;
-                            case "ACC":
-                                ACC += gearToCalculate.values[j];
-                                break;
-                            case "CRITCHANCE":
-                                critChance += gearToCalculate.values[j];
-                                break;
-                            case "CRITMULT":
-                                critMult += gearToCalculate.values[j];
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-
-            gearPATK = PATK;
-            gearMATK = MATK;
-            gearPDEF = PDEF;
-            gearMDEF = MDEF;
-            gearDOG = DOG;
-            gearACC = ACC;
-            gearCritChance = critChance;
-            gearCritMult = critMult;
-        }
 
         public bool EnableSkill(int index) {
+            bool statChange = false;
+
             if (skills[index].type == SkillConstants.ACTIVE) {
                 if (attackNum < maxAttacks) {
                     skillPoints--;
@@ -553,7 +576,7 @@ namespace Characters {
                     skills[index].skillEnabled = true;
                     
                     if (className == "Mage") {
-                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {  
+                        if (index == (int)SkillConstants.mageSkills.PYROMANCY == true) {  
                             if (attacks[attackNum].seName == StatusEffectConstants.BURN) {
                                 attacks[attackNum].seChance = attacks[attackNum].baseSeChance << 1;
                             }
@@ -575,6 +598,15 @@ namespace Characters {
                             }
                         }
                     }
+                    else if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
+                        statChange = true; 
+                    }
+                }
+
+                if (statChange == true) {
+                    CalculateStats();
+                    UpdateStatusEffectValues();
+                    pmvc.UpdateStats();
                 }
 
                 return true;
@@ -584,7 +616,7 @@ namespace Characters {
         }
 
         public bool DisableSkill(int index) {
-            skills[index].skillEnabled = false;
+            bool statChange = false;
            
             if (skills[index].type == SkillConstants.ACTIVE) {
                 int attackIndex = -1;
@@ -592,7 +624,7 @@ namespace Characters {
                     skillPoints++;
                     attackNum--;
                     skills[index].skillEnabled = false;
-                    for (int i = 0; i <= attackNum; i++) {   // shift skills back                    
+                    for (int i = 0; i <= attackNum; i++) {   // shift attacks back                    
                         if (attacks[i].nameKey == skills[index].a.nameKey) {
                             attackIndex = i;
                             break;
@@ -619,9 +651,14 @@ namespace Characters {
                         }
                     }
                     if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
-                        CalculateStatusEffectStats();
-                        //CalculateSkillStats();
+                        statChange = true;     
                     }
+                }
+
+                if (statChange == true) {
+                    CalculateStats();
+                    UpdateStatusEffectValues();
+                    pmvc.UpdateStats();
                 }
 
                 return true;
@@ -629,15 +666,6 @@ namespace Characters {
 
             return false;
         }
-
-
-        // public void CalculateSkillStats() {
-        //     if (className == "Mage") {
-        //         if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
-        //              critChance *= 1.25f;
-        //         }
-        //     }
-        // }
 
         /// <summary>
         /// Log stats informaton about the PartyMember for debugging
