@@ -22,6 +22,7 @@ namespace Events {
         public Event[] events = new Event[10];      /// <value> 10 Events max per subArea </value>
         public Event[] subEvents = new Event[10];   /// <value> 10 SubEvents max per subArea </value>
         public string[] monsterPool;                /// <value> Pool of monsters subArea uses for random combat events </value>
+        public int[] monsterChances;                /// <value> Chance for each monster in the subArea to appear (must total to 100) </value>
         public string name;                         /// <value> Name of event </value>
         public string defaultBGPackName;            /// <value> Name of default backgroundPack for subArea</value>
         public int eventNum = 0;                    /// <value> Number of events in a subArea </value>
@@ -39,10 +40,11 @@ namespace Events {
         /// dbConnection will be passed down to each subArea and other storage classes
         /// to fetch information to save memory.
         /// </param>
-        public SubArea(string name, string areaName, string[] eventNames, int[] eventChances, string[] monsterPool, int minMonsterNum, int maxMonsterNum, 
+        public SubArea(string name, string areaName, string[] eventNames, int[] eventChances, string[] monsterPool, int[] monsterChances, int minMonsterNum, int maxMonsterNum, 
         string defaultBGPackName, IDbConnection dbConnection) {
             this.name = name;
             this.monsterPool = monsterPool;
+            this.monsterChances = monsterChances;
             this.minMonsterNum = minMonsterNum;
             this.maxMonsterNum = maxMonsterNum;
             this.defaultBGPackName = defaultBGPackName;
@@ -195,7 +197,16 @@ namespace Events {
             string[] monsterNames = new string[numToSpawn];
 
             for (int i = 0; i < numToSpawn; i++) {
-                monsterNames[i] = this.monsterPool[Random.Range(0, monsterNum)];
+                int monsterChance = Random.Range(0, 100);
+
+                for (int j = 0; j < monsterNum; j++) {
+                    monsterChance -= monsterChances[j];
+
+                    if (monsterChance < 0) {
+                        monsterNames[i] = monsterPool[j];
+                        break;
+                    }
+                }
             }
 
             return monsterNames;

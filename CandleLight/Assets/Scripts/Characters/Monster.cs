@@ -10,12 +10,11 @@
 *
 */
 
-using AssetManagers;
+using AttackConstants = Constants.AttackConstants;
 using Combat;
 using SkillConstants = Constants.SkillConstants;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using System.Collections;
-using System.Collections.Generic;
 using Result = Events.Result;
 using UnityEngine;
 
@@ -225,7 +224,9 @@ namespace Characters {
                 // side effects from partyMember skills
                 if (pc.className == "Warrior") {
                     if (pc.skills[(int)SkillConstants.warriorSkills.MANABLADE].skillEnabled == true) {
-                        pc.AddMP((int)(damage * 0.25f));
+                        if (a.type == AttackConstants.PHYSICAL) {
+                            pc.AddMP((int)(damage * 0.25f));
+                        }
                     }
                 }
 

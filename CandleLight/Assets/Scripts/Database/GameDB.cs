@@ -292,6 +292,7 @@ namespace Database {
                     string[] subAreaEvents = new string[10];
                     int[] subAreaEventChances = new int[10];
                     string[] monsterPool;
+                    int[] monsterChances;
                     
                     if (reader.Read()) {
                         subAreaEvents[0] = reader.GetString(2);
@@ -317,12 +318,14 @@ namespace Database {
                         subAreaEventChances[9] = reader.GetInt32(21);
 
                         name = reader.GetString(1);
-                        monsterPool = GetMonsterPool(reader.GetString(22), dbConnection);
+                        Tuple <string[], int[]> monsterInfo = GetMonsterPool(reader.GetString(22), dbConnection);
+                        monsterPool = monsterInfo.Item1;
+                        monsterChances = monsterInfo.Item2;
                         minMonsterNum = reader.GetInt32(23);
                         maxMonsterNum = reader.GetInt32(24);
                         defaultBGPackName = reader.GetString(25);
 
-                        newSubArea = new SubArea(name, areaName, subAreaEvents, subAreaEventChances, monsterPool, minMonsterNum, maxMonsterNum, 
+                        newSubArea = new SubArea(name, areaName, subAreaEvents, subAreaEventChances, monsterPool, monsterChances, minMonsterNum, maxMonsterNum, 
                         defaultBGPackName, dbConnection);
                     }
                     else {
@@ -340,30 +343,42 @@ namespace Database {
         /// <param name="name"> Name of the attack</param>
         /// <param name="dbConnection"> IDbConnectino to get attack with </param>
         /// <returns> Returns an Attack with the information initialized </returns>
-        public string[] GetMonsterPool(string name, IDbConnection dbConnection) {
+        public Tuple<string[], int[]> GetMonsterPool(string name, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
                 dbcmd.CommandText = "SELECT * FROM MonsterPools WHERE Name = '" + name + "'";
 
                 using (IDataReader reader = dbcmd.ExecuteReader()) {
                     string[] monsterPool = new string[10];
+                    int[] monsterChances = new int[10];
 
                     if (reader.Read()) {
                         monsterPool[0] = reader.GetString(2);
-                        monsterPool[1] = reader.GetString(3);
-                        monsterPool[2] = reader.GetString(4);
-                        monsterPool[3] = reader.GetString(5);
-                        monsterPool[4] = reader.GetString(6);
-                        monsterPool[5] = reader.GetString(7);
-                        monsterPool[6] = reader.GetString(8);
-                        monsterPool[7] = reader.GetString(9);
-                        monsterPool[8] = reader.GetString(10);
-                        monsterPool[9] = reader.GetString(11);
+                        monsterPool[1] = reader.GetString(4);
+                        monsterPool[2] = reader.GetString(6);
+                        monsterPool[3] = reader.GetString(8);
+                        monsterPool[4] = reader.GetString(10);
+                        monsterPool[5] = reader.GetString(12);
+                        monsterPool[6] = reader.GetString(14);
+                        monsterPool[7] = reader.GetString(16);
+                        monsterPool[8] = reader.GetString(18);
+                        monsterPool[9] = reader.GetString(20);
+
+                        monsterChances[0] = reader.GetInt32(3);
+                        monsterChances[1] = reader.GetInt32(5);
+                        monsterChances[2] = reader.GetInt32(7);
+                        monsterChances[3] = reader.GetInt32(9);
+                        monsterChances[4] = reader.GetInt32(11);
+                        monsterChances[5] = reader.GetInt32(13);
+                        monsterChances[6] = reader.GetInt32(15);
+                        monsterChances[7] = reader.GetInt32(17);
+                        monsterChances[8] = reader.GetInt32(19);
+                        monsterChances[9] = reader.GetInt32(21);
                     }
                     else {
                         Debug.LogError("MonsterPool " + name + " does not exist in the DB");
                     }
 
-                    return monsterPool;
+                    return new Tuple<string[], int[]>(monsterPool, monsterChances);
                 }
             }
         }

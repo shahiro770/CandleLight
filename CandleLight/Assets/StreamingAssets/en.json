@@ -188,7 +188,7 @@
 		{ "key": "monsterRemains0_2_res", "value": "Some of the bones might be of use." },
 		{ "key": "dirtStorm0_0_res", "value": "You brace against the current and slowly move forward. Any experience that does not kill you makes you stronger, right?" },
 		{ "key": "dirtStorm0_1_res", "value": "You attempt to stand your ground, but the wind is too much. A strong gust picks you off your feet and carries you with the storm." },
-		{ "key": "dirtStorm0_2_res", "value": "You're not strong enough to brave the storm. Dirt, rocks, and remains pelt you to the ground" },
+		{ "key": "dirtStorm0_2_res", "value": "You're not strong enough to brave the storm.\nDirt, rocks, and remains pelt you to the ground" },
 		{ "key": "dirtStorm0_3_res", "value": "This storm isn't the worst. It passes over you peacefully." },
 		{ "key": "dirtStorm1_0_res", "value": "The sky turns grey as you're consumed by dust and dirt. The winds are furious and drag you in their direction." },
 		{ "key": "dirtStorm1_1_res", "value": "You find a small hill and lay flat against it.\nSoon enough, you can see the sky again." },
