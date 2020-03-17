@@ -53,6 +53,7 @@ namespace Events {
         private Area currentArea;            /// <value> Area to select subAreas from </value>
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
         private Event currentEvent;          /// <value> Event being displayed </value>
+        private Result currentResult;        /// <value> Result being obtained </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
         private Consumable[] subAreaConsumables = new Consumable[10];   /// <value> Consumable items that can be found (max 10) </value>
         private Gear[] subAreaGear = new Gear[10];  /// <value> Gear items that can be found (max 10) </value>
@@ -326,9 +327,13 @@ namespace Events {
         }
 
         /// <summary>
-        /// Displays the current event to the player, with no visual transitions
+        /// Displays the current event to the player, with no visual transitions unless the background image is specified
         /// </summary>
-        public void DisplaySubEvent() {
+        public IEnumerator DisplaySubEvent() {
+            if (currentEvent.specificBGSprite != -1) {
+                nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
+                yield return StartCoroutine(TransitionToNextEvent());
+            }
             if (currentEvent.type == EventConstants.COMBAT) {
                 eventDescription.SetKey(currentSubArea.GetCombatPrompt());
                 monstersToSpawn = currentSubArea.GetMonstersToSpawn();
@@ -368,10 +373,6 @@ namespace Events {
             gearPanel.SetHorizontalNavigation();
         }
 
-        public void DisplayPreCombat(Result r) {
-            actionsPanel.PreCombatActions();
-        }
-
         /// <summary>
         /// Displays post combat information such as the RewardsPanel, and prepares player to continue exploring
         /// TODO: Make the postCombat event have interactions in each action somehow
@@ -395,7 +396,12 @@ namespace Events {
                     eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatFleePrompt());
                 }
                 else if (endString == "VICTORY") {
-                    eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatPrompt());
+                    if (currentResult.hasPostCombatPrompt == true) {
+                        eventDescription.SetKeyAndFadeIn(currentSubArea.GetCustomPostCombatPrompt(currentResult.name));
+                    }
+                    else {
+                        eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatPrompt());
+                    }
                 }
 
                 yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
@@ -472,19 +478,18 @@ namespace Events {
         /// Does something depending on the interaction selected by the player
         /// </summary>
         /// <param name="i"> Interaction object </param>
-        public void Interact(Interaction i) {
-            Result r;
+        public IEnumerator Interact(Interaction i) {
             if (i.statToCheck != (int)primaryStats.NONE) {  // events that are statChecks will have a good and bad outcome
                 if (PartyManager.instance.GetPrimaryStatAll(i.statToCheck) + 
                 (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
-                    r = i.GetResult(0); // good result
+                    currentResult = i.GetResult(0); // good result
                 }
                 else {
-                    r = i.GetResultStartIndex(1); // bad result(s)
+                    currentResult = i.GetResultStartIndex(1); // bad result(s)
                 }
             }
             else {
-                r = i.GetResult();
+                currentResult = i.GetResult();
             }
 
             if (i.GetSprite() != null) {
@@ -492,44 +497,44 @@ namespace Events {
                 eventDisplays[0].SetPosition(pos1d1);
             }
 
-            if (r.type == ResultConstants.NORESULT) {
-                eventDescription.SetKey(r.resultKey);
+            if (currentResult.type == ResultConstants.NORESULT) {
+                eventDescription.SetKey(currentResult.resultKey);
             }
-            else if (r.type == ResultConstants.NORESULTANDLEAVE) {
-                eventDescription.SetKey(r.resultKey);
+            else if (currentResult.type == ResultConstants.NORESULTANDLEAVE) {
+                eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.TravelActions();
                 HideEventDisplayItemDisplays();
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.TAKEALLITEMS) {
+            else if (currentResult.type == ResultConstants.TAKEALLITEMS) {
                 TakeAllItems();
             }
-            else if (r.type == ResultConstants.ITEM) {
+            else if (currentResult.type == ResultConstants.ITEM) {
                 actionsPanel.SetItemActions();
-                eventDescription.SetKey(r.resultKey);
-                DisplayResultItems(r);
+                eventDescription.SetKey(currentResult.resultKey);
+                DisplayResultItems(currentResult);
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.NEWINT) {
-                actionsPanel.AddInteraction(r.newIntName);
-                eventDescription.SetKey(r.resultKey);
+            else if (currentResult.type == ResultConstants.NEWINT) {
+                actionsPanel.AddInteraction(currentResult.newIntName);
+                eventDescription.SetKey(currentResult.resultKey);
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.EVENT) {
+            else if (currentResult.type == ResultConstants.EVENT) {
                 GetNextEvent();
             }
-            else if (r.type == ResultConstants.SUBEVENT) {       
-                currentEvent = currentSubArea.GetSubEvent(r.subEventName);
-                DisplaySubEvent();
+            else if (currentResult.type == ResultConstants.SUBEVENT) {       
+                currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
+                yield return StartCoroutine(DisplaySubEvent());
             }
-            else if (r.type == ResultConstants.ITEMWITHSUBEVENT) {  // subEvents do not need result prompts
-                currentEvent = currentSubArea.GetSubEvent(r.subEventName);
-                DisplaySubEvent();
-                DisplayResultItems(r);
+            else if (currentResult.type == ResultConstants.ITEMWITHSUBEVENT) {  // subEvents do not need result prompts
+                currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
+                yield return StartCoroutine(DisplaySubEvent());
+                DisplayResultItems(currentResult);
             }
-            else if (r.type == ResultConstants.SUBAREA) {
-                if (r.subAreaName0 != "none") { 
-                    currentSubArea = currentArea.GetSubArea(r.subAreaName0);
+            else if (currentResult.type == ResultConstants.SUBAREA) {
+                if (currentResult.subAreaName0 != "none") { 
+                    currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
                     StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                     LoadConsumables();
                     LoadGear();
@@ -541,8 +546,8 @@ namespace Events {
 
                 GetNextEvent();
             }
-            else if (r.type == ResultConstants.SUBAREAANDCOMBAT) {
-                currentSubArea = currentArea.GetSubArea(r.subAreaName0);
+            else if (currentResult.type == ResultConstants.SUBAREAANDCOMBAT) {
+                currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
                 StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                 LoadConsumables();
                 LoadGear();
@@ -551,20 +556,20 @@ namespace Events {
                     infoPanel.UpdateAmounts();
                 }
 
-                monstersToSpawn = r.GetMonstersToSpawn();
+                monstersToSpawn = currentResult.GetMonstersToSpawn();
 
                 for (int j = 0; j < monstersToSpawn.Length; j++) {
                     if (monstersToSpawn[j] == "none") {
                         monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
                     }
                 }
-                eventDescription.SetKey(r.resultKey);
+                eventDescription.SetKey(currentResult.resultKey);
                 HideEventDisplays();     
                 GetCombatEvent();
             }
-            else if (r.type == ResultConstants.SUBAREAANDCOMBATANDSUBAREA) {
-                currentSubArea = currentArea.GetSubArea(r.subAreaName0);
-                nextSubArea = r.subAreaName1;
+            else if (currentResult.type == ResultConstants.SUBAREAANDCOMBATANDSUBAREA) {
+                currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
+                nextSubArea = currentResult.subAreaName1;
                 StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                 LoadConsumables();
                 LoadGear();
@@ -573,54 +578,54 @@ namespace Events {
                     infoPanel.UpdateAmounts();
                 }
 
-                monstersToSpawn = r.GetMonstersToSpawn();
+                monstersToSpawn = currentResult.GetMonstersToSpawn();
 
                 for (int j = 0; j < monstersToSpawn.Length; j++) {
                     if (monstersToSpawn[j] == "none") {
                         monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
                     }
                 }
-                eventDescription.SetKey(r.resultKey);
+                eventDescription.SetKey(currentResult.resultKey);
                 HideEventDisplays();     
                 GetCombatEvent();
             }
-            else if (r.type == ResultConstants.STATSINGLE) {
-                eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesSingle(r, ResultConstants.STATSINGLE);
+            else if (currentResult.type == ResultConstants.STATSINGLE) {
+                eventDescription.SetKey(currentResult.resultKey);
+                ApplyResultStatChangesSingle(currentResult, ResultConstants.STATSINGLE);
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.STATALL) {
-                eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesAll(r, ResultConstants.STATALL);
+            else if (currentResult.type == ResultConstants.STATALL) {
+                eventDescription.SetKey(currentResult.resultKey);
+                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALL);
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.STATALLANDLEAVE) {
-                eventDescription.SetKey(r.resultKey);
-                ApplyResultStatChangesAll(r, ResultConstants.STATALLANDLEAVE);
+            else if (currentResult.type == ResultConstants.STATALLANDLEAVE) {
+                eventDescription.SetKey(currentResult.resultKey);
+                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDLEAVE);
                 actionsPanel.TravelActions();
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.PRECOMBAT) {
+            else if (currentResult.type == ResultConstants.PRECOMBAT) {
                 eventDescription.FadeOut();
                 HideEventDisplays();
                 
                 actionsPanel.SetAllActionsUninteractable(); // hack
                 GetCombatEvent();
             }
-            else if (r.type == ResultConstants.COMBAT) {
-                monstersToSpawn = r.GetMonstersToSpawn();
+            else if (currentResult.type == ResultConstants.COMBAT) {
+                monstersToSpawn = currentResult.GetMonstersToSpawn();
 
                 for (int j = 0; j < monstersToSpawn.Length; j++) {
                     if (monstersToSpawn[j] == "none") {
                         monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
                     }
                 }
-                eventDescription.SetKey(r.resultKey);
+                eventDescription.SetKey(currentResult.resultKey);
                 HideEventDisplays();     
                 GetCombatEvent();
             }
-            else if (r.type == ResultConstants.COMBATWITHSIDEEFFECTS) {
-                monstersToSpawn = r.GetMonstersToSpawn();
+            else if (currentResult.type == ResultConstants.COMBATWITHSIDEEFFECTS) {
+                monstersToSpawn = currentResult.GetMonstersToSpawn();
 
                 for (int j = 0; j < monstersToSpawn.Length; j++) {
                     if (monstersToSpawn[j] == "none") {
@@ -628,33 +633,33 @@ namespace Events {
                     }
                 }
 
-                if (r.scope == "all") {
-                    ApplyResultStatChangesAll(r, ResultConstants.COMBATWITHSIDEEFFECTS);
+                if (currentResult.scope == "all") {
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.COMBATWITHSIDEEFFECTS);
                 }
-                else if (r.scope == "single") {
-                    ApplyResultStatChangesSingle(r, ResultConstants.COMBATWITHSIDEEFFECTS);
+                else if (currentResult.scope == "single") {
+                    ApplyResultStatChangesSingle(currentResult, ResultConstants.COMBATWITHSIDEEFFECTS);
                 }
 
-                eventDescription.SetKey(r.resultKey);
+                eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.PreCombatActions();
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.REVIVE) {  
+            else if (currentResult.type == ResultConstants.REVIVE) {  
                 PartyManager.instance.RevivePartyMembers();
 
-                eventDescription.SetKey(r.resultKey);   
+                eventDescription.SetKey(currentResult.resultKey);   
             }
-            else if (r.type == ResultConstants.REVIVEANDLEAVE) {             
+            else if (currentResult.type == ResultConstants.REVIVEANDLEAVE) {             
                 PartyManager.instance.RevivePartyMembers();
 
-                eventDescription.SetKey(r.resultKey); 
+                eventDescription.SetKey(currentResult.resultKey); 
                 actionsPanel.TravelActions();
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.PROGRESS) {
-                r.GenerateResults();
+            else if (currentResult.type == ResultConstants.PROGRESS) {
+                currentResult.GenerateResults();
 
-                subAreaProgress += r.progressAmount;
+                subAreaProgress += currentResult.progressAmount;
                 if (subAreaProgress > 100) {
                     subAreaProgress = 100;
                 }
@@ -665,11 +670,11 @@ namespace Events {
                     infoPanel.UpdateAmounts();
                 }
 
-                eventDescription.SetKey(r.resultKey);
+                eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.TravelActions();
                 SetNavigation();
             }
-            else if (r.type == ResultConstants.END) {
+            else if (currentResult.type == ResultConstants.END) {
                 GameManager.instance.LoadNextScene("MainMenu");
             }
         }

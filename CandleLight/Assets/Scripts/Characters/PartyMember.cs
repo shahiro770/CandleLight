@@ -253,7 +253,6 @@ namespace Characters {
                 }
             }
 
-            
             if (setCurrent) {
                 CHP = HP;
                 CMP = MP;

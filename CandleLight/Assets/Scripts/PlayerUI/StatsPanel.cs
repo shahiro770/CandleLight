@@ -11,6 +11,7 @@ using Characters;
 using EventManager = Events.EventManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
+using PartyManager = Party.PartyManager;
 using UnityEngine.UI;
 
 namespace PlayerUI {
@@ -46,6 +47,7 @@ namespace PlayerUI {
         /// </summary>
         void OnEnable() {
             isOpen = true;
+            Init(PartyManager.instance.GetActivePartyMember().pmvc);
         }
 
         /// <summary>

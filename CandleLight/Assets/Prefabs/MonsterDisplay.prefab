@@ -1424,14 +1424,6 @@ MonoBehaviour:
   <DEX>k__BackingField: 0
   <INT>k__BackingField: 0
   <LUK>k__BackingField: 0
-  <gearPATK>k__BackingField: 0
-  <gearMATK>k__BackingField: 0
-  <gearPDEF>k__BackingField: 0
-  <gearMDEF>k__BackingField: 0
-  <gearDOG>k__BackingField: 0
-  <gearACC>k__BackingField: 0
-  <gearCritChance>k__BackingField: 0
-  <gearCritMult>k__BackingField: 0
   <PATK>k__BackingField: 0
   <MATK>k__BackingField: 0
   <PDEF>k__BackingField: 0
@@ -1457,6 +1449,8 @@ MonoBehaviour:
     <specificItemNames>k__BackingField: []
     <itemQuality>k__BackingField: 
     specificMonsterNames: []
+    newIntName: 
+    seName: 
     <EXPAmount>k__BackingField: 0
     <HPAmount>k__BackingField: 0
     <MPAmount>k__BackingField: 0
@@ -1464,14 +1458,14 @@ MonoBehaviour:
     <progressAmount>k__BackingField: 0
     <itemAmount>k__BackingField: 0
     <specificItemAmount>k__BackingField: 0
+    <seDuration>k__BackingField: 0
+    <baseEXPAmount>k__BackingField: 0
+    <baseHPAmount>k__BackingField: 0
+    <baseMPAmount>k__BackingField: 0
+    <baseWAXAmount>k__BackingField: 0
+    <baseProgressAmount>k__BackingField: 0
     quantity: 0
     multiplier: 0
-    minValue: 0
-    maxValue: 0
-    EXPChange: 0
-    HPChange: 0
-    MPChange: 0
-    WAXChange: 0
     monsterCount: 0
     isUnique: 0
   <monsterArea>k__BackingField: 

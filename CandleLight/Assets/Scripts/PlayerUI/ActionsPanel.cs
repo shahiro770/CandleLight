@@ -213,7 +213,7 @@ namespace PlayerUI {
                     if (a.i.isSingleUse) {
                         a.SetUsable(false);
                     }
-                    EventManager.instance.Interact(a.i);
+                    StartCoroutine(EventManager.instance.Interact(a.i));
                 }
                 else if (a.actionType == ActionConstants.TAKEALL) {
                     EventManager.instance.TakeAllItems();

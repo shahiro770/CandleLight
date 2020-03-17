@@ -88,7 +88,7 @@ namespace Events {
             for (int i = 0; i < eventNum; i++) {
                 eventChance -= events[i].chance;
 
-                if (eventChance < 0) {
+                if (eventChance <= 0) {
                     return events[i];
                 }
             }
@@ -175,6 +175,20 @@ namespace Events {
         }
 
         /// <summary>
+        /// Returns a random event prompt string based on the sub area's name and a custom string for combat events
+        /// that ended by killing all monsters
+        /// </summary>
+        /// <param name="customName"> Custom string to base post combat prompt off of</param>
+        /// <returns> String that is a key text for a prompt in en.json </returns>
+        /// <remark>
+        /// There will always be exactly 4 random prompts per custom string prompt (cause variety is nice)
+        /// </remark>
+        public string GetCustomPostCombatPrompt(string customName) {
+            int index = Random.Range(0, 4);
+            return name + "_" + customName + "_post_combat_event_" + index.ToString();
+        }
+
+        /// <summary>
         /// Returns a random event prompt string based on the sub area's name for post combat events
         /// that were ended via fleeing
         /// </summary>
@@ -202,7 +216,7 @@ namespace Events {
                 for (int j = 0; j < monsterNum; j++) {
                     monsterChance -= monsterChances[j];
 
-                    if (monsterChance < 0) {
+                    if (monsterChance <= 0) {
                         monsterNames[i] = monsterPool[j];
                         break;
                     }
@@ -213,7 +227,18 @@ namespace Events {
         }
 
         public string GetMonsterToSpawn() {
-            return this.monsterPool[Random.Range(0, monsterNum)];
+            int monsterChance = Random.Range(0, 100);
+
+                for (int i = 0; i < monsterNum; i++) {
+                    monsterChance -= monsterChances[i];
+
+                    if (monsterChance <= 0) {
+                        return monsterPool[i];
+                        
+                    }
+                }
+
+            return null;
         }
     }
 }

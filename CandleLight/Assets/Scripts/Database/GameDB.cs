@@ -523,6 +523,7 @@ namespace Database {
                     string seName = "";
                     int seDuration = 0;
                     bool isUnique = false;
+                    bool hasPostCombatPrompt = false;
 
                     if (reader.Read()) {
                         name = reader.GetString(1);
@@ -552,9 +553,10 @@ namespace Database {
                         newIntName = reader.GetString(25);
                         seName = reader.GetString(26);
                         seDuration = reader.GetInt32(27);
-
+                        hasPostCombatPrompt = reader.GetBoolean(28);
+                        
                         newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultAmounts, subAreaName0, subAreaName1, subEventName, 
-                        monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality, newIntName, seName, seDuration);
+                        monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality, newIntName, seName, seDuration, hasPostCombatPrompt);
                     }
                     else {
                          Debug.LogError("Result " + resultName + " does not exist in the DB");

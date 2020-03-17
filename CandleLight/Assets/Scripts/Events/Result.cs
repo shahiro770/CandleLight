@@ -35,7 +35,8 @@ namespace Events {
         [field: SerializeField] public int progressAmount { get; private set; } /// <value> Amount of progress result gives </value>
         [field: SerializeField] public int itemAmount { get; private set; }     /// <value> Amount of items result gives </value>
         [field: SerializeField] public int specificItemAmount { get; private set; } = 0;    /// <value> Amount of specific items result gives </value>
-        [field: SerializeField] public int seDuration { get; private set; } = 0;    /// <value> Duration of status effect </value>
+        [field: SerializeField] public int seDuration { get; private set; } = 0;        /// <value> Duration of status effect </value>
+        [field: SerializeField] public bool hasPostCombatPrompt { get; private set; }   /// <value> true if result has a custom post combat prompt for the subarea </value>
 
         [field: SerializeField] public int baseEXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         [field: SerializeField] public int baseHPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
@@ -46,7 +47,7 @@ namespace Events {
         [field: SerializeField] private float multiplier;    /// <value> Multiplier on result depending on area </value>
         [field: SerializeField] private int monsterCount;    /// <value> MAx number of monsters this event can spawn </value>
         [field: SerializeField] private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
-
+        
         /// <summary>
         /// Constructor
         /// </summary>
@@ -56,7 +57,7 @@ namespace Events {
         /// <param name="changeValues"></param>
         public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] amounts,
         string subAreaName0, string subAreaName1, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality,
-        string newIntName, string seName, int seDuration) {
+        string newIntName, string seName, int seDuration, bool hasPostCombatPrompt) {
             this.name = name;
             this.resultKey = resultKey;
             this.type = type;
@@ -77,6 +78,7 @@ namespace Events {
             this.newIntName = newIntName;
             this.seName = seName;
             this.seDuration = seDuration;
+            this.hasPostCombatPrompt = hasPostCombatPrompt;
 
             for (int i = 0; i < specificItemNames.Length; i++) {
                 if (specificItemNames[i] != "none") {
