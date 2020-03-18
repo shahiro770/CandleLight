@@ -344,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partyMember: {fileID: 2217478394506290349, guid: 12f8eecac5fd44407a088ea2e2ecc932,
     type: 3}
+  itemDropMultiplier: 1
 --- !u!1 &1495799579
 GameObject:
   m_ObjectHideFlags: 0

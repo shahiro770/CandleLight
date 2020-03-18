@@ -124,7 +124,7 @@ namespace PlayerUI {
                 if (itemNum == itemSlots.Length) {  // if itemNum is maxed out, no more items
                     break;
                 }
-                if (monstersKilled[i].CheckItemDrop() == true) {
+                if (monstersKilled[i].CheckItemDrop(PartyManager.instance.itemDropMultiplier) == true) {
                     itemSlots[itemNum].SetVisible(true);
                     itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItems(monstersKilled[i].monsterReward)[0]); // will only get one item
                     itemNum++;

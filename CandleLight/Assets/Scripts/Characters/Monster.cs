@@ -305,8 +305,8 @@ namespace Characters {
         /// Returns true if the monster should drop an item
         /// </summary>
         /// <returns></returns>
-        public bool CheckItemDrop() {
-            if (Random.Range(0, 100) < dropChance) {
+        public bool CheckItemDrop(float multiplier) {
+            if (Random.Range(0, 100) < (int)(dropChance * multiplier)) {
                 return true;
             }
 

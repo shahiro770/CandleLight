@@ -102,6 +102,11 @@ namespace Combat {
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath() == false) {
                     partyMembersAlive.Add(pm);
+                    if (pm.className == "Archer") {
+                        if (pm.skills[(int)SkillConstants.archerSkills.VANTAGEPOINT].skillEnabled == true) {
+                            pm.AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, null);
+                        }
+                    }
                 }
             }
 

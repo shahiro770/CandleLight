@@ -28,6 +28,7 @@ namespace Party {
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
 
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
+        public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
 
         private List<PartyMember> partyMembersAll = new List <PartyMember>();
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>

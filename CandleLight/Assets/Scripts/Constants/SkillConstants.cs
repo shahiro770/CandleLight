@@ -17,5 +17,6 @@ namespace Constants {
         // if skill indexing changes, the order of these values might change
         public enum mageSkills { THIRDEYE, FROST, PYROMANCY, CRITICALMAGIC };      
         public enum warriorSkills { FIRESLASH, TAUNT, STEADFAST, MANABLADE };
+        public enum archerSkills { VANTAGEPOINT, SCAVENGER, POISONARROW, SURVIVALIST };
     }
 }

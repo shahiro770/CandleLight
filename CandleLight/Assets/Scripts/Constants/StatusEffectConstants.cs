@@ -20,6 +20,6 @@ namespace Constants {
         public static readonly string BLEED = "bleed";   /// <value> Lose HP equal to % attacker's PATK, restore that much health to the attacker </value>
         public static readonly string WEAKNESS = "weakness";    /// <value> Reduces PATK </value>
         public static readonly string ADVANTAGE = "advantage";  /// <value> Gain increased crit chance </value>
-        public static readonly string ROOT = "root"; /// <value> DOG is reduced by 100% </value>
+        public static readonly string ROOT = "root";     /// <value> DOG is reduced by 50% and takes double damage from burn </value>
     }
 }

@@ -518,6 +518,7 @@ namespace Characters {
                 }
             }
             else {
+                print(damageTaken + " " + CHP);
                 if (CHP - damageTaken <= 0) {
                     damageTaken = CHP - 1;
                 }
@@ -611,6 +612,14 @@ namespace Characters {
                         statChange = true; 
                     }
                 }
+                else if (className == "Archer") {
+                    if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
+                        PartyManager.instance.itemDropMultiplier *= 1.25f;
+                    }
+                    if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                        statChange = true;
+                    }
+                }
 
                 if (statChange == true) {
                     CalculateStats();
@@ -661,6 +670,14 @@ namespace Characters {
                     }
                     if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
                         statChange = true;     
+                    }
+                }
+                 else if (className == "Archer") {
+                    if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
+                        PartyManager.instance.itemDropMultiplier *= 0.8f;
+                    }
+                    if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                        statChange = true;
                     }
                 }
 

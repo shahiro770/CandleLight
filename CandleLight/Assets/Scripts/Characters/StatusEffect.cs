@@ -5,8 +5,11 @@
 * 
 * The StatusEffect class is used to hold and retrieve information about a temporary change
 * to a character's stats.
+*
+* TO DO: Figure out a way to grant a character immunity to a status effect and not screw over AI
 */
 
+using SkillConstants = Constants.SkillConstants;
 using StatusEffectDisplay = PlayerUI.StatusEffectDisplay;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using UnityEngine;
@@ -59,7 +62,14 @@ namespace Characters {
             }
             else if (name == StatusEffectConstants.POISON) {
                 preValue = (int)(1 + afflicted.HP * 0.07f);
-                value = preValue;
+
+                PartyMember pm = afflicted as PartyMember;
+                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                    value = (int)(preValue * 0.5f);
+                }
+                else {
+                    value = preValue;
+                }
             }
             else if (name == StatusEffectConstants.TAUNT) {
                 this.afflicter = afflicter;
@@ -67,7 +77,14 @@ namespace Characters {
             else if (name == StatusEffectConstants.BLEED) {
                 this.afflicter = afflicter;
                 preValue = (int)(1 + afflicter.PATK * 0.4f);
-                value = preValue - afflicted.PDEF;
+
+                PartyMember pm = afflicted as PartyMember;
+                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                    value = (int)(preValue * 0.5f) - afflicted.PDEF;
+                }
+                else {
+                    value = preValue - afflicted.PDEF;;
+                }
             }
 
             if (value < 0) {
@@ -96,10 +113,22 @@ namespace Characters {
                 }
             }
             else if (name == StatusEffectConstants.POISON) {
-                value = preValue;
+                PartyMember pm = afflicted as PartyMember;
+                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                    value = (int)(preValue * 0.5f) - afflicted.PDEF;
+                }
+                else {
+                    value = preValue - afflicted.PDEF;;
+                }
             }
             else if (name == StatusEffectConstants.BLEED) {
-                value = preValue - afflicted.PDEF;
+                PartyMember pm = afflicted as PartyMember;
+                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                    value = (int)(preValue * 0.5f) - afflicted.PDEF;
+                }
+                else {
+                    value = preValue - afflicted.PDEF;;
+                }
             }
 
             if (value < 0) {
