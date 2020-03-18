@@ -110,17 +110,20 @@ namespace Characters {
                 if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
                     PATK += (int)(PATK * 0.5);
                 }
-                if (se.name == StatusEffectConstants.FREEZE) {
+                else if (se.name == StatusEffectConstants.FREEZE) {
                     DOG -= (int)(DOG * 0.3);
                     ACC -= (int)(ACC * 0.3);
                     PDEF -= (int)(PDEF * 0.3);
                 }
-                if (se.name == StatusEffectConstants.WEAKNESS) {
+                else if (se.name == StatusEffectConstants.WEAKNESS) {
                     PATK -= (int)(PATK * 0.3);
                 }
-                if (se.name == StatusEffectConstants.ADVANTAGE) {
+                else if (se.name == StatusEffectConstants.ADVANTAGE) {
                     critChance += 50;
                     ACC += (int)(ACC * 0.5);
+                }
+                else if (se.name == StatusEffectConstants.ROOT) {
+                    DOG -= (int)(DOG * 0.5);
                 }
             }
 

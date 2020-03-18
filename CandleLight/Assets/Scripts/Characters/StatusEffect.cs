@@ -88,7 +88,12 @@ namespace Characters {
         /// </summary>
         public void UpdateValue() {
             if (name == StatusEffectConstants.BURN) {
-                value = preValue - afflicted.MDEF;
+                if (afflicted.GetStatusEffect(StatusEffectConstants.ROOT) != -1){
+                     value = preValue * 2 - afflicted.MDEF ;
+                }
+                else {
+                    value = preValue - afflicted.MDEF;
+                }
             }
             else if (name == StatusEffectConstants.POISON) {
                 value = preValue;

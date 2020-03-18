@@ -347,6 +347,9 @@
 		{ "key": "advantage_title", "value": "Advantage" },
 		{ "key": "advantage_sub", "value": "Buff" },
 		{ "key": "advantage_description", "value": "Has CRIT and DOG increased by 50%" },
+		{ "key": "root_title", "value": "Root" },
+		{ "key": "root_sub", "value": "Debuff" },
+		{ "key": "root_description", "value": "Has DOG decreased by 50% and takes double damage from burns" },
 
 		{ "key": "damage_description", "value": "Damage "},
 
@@ -404,6 +407,9 @@
 		{ "key": "whack_attack", "value": "Whack" },
 		{ "key": "slash_attack", "value": "Slash" },
 		{ "key": "fireSlash_attack", "value": "Fire Slash" },
+		{ "key": "arrow_attack", "value": "Arrow" },
+		{ "key": "poisonArrow_attack", "value": "P. Arrow" },
+		{ "key": "enroot_attack", "value": "Enroot" },
 		{ "key": "taunt_attack", "value": "Taunt" },
 		{ "key": "bash_attack", "value": "Bash" },
 		{ "key": "none_attack", "value": ""}
