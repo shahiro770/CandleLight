@@ -143,7 +143,7 @@ namespace Combat {
             
             monsterComponent.ID = countID++;
             monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
-            monsterComponent.GetChampionBuff(championBuffs);
+            monsterComponent.GetBuffs(championBuffs);
             monsterComponent.md.AddSMDListener(smd);
             monsterComponent.md.SetInteractable(false);
 

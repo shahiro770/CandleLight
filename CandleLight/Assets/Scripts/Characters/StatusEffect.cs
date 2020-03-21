@@ -67,7 +67,12 @@ namespace Characters {
                     value = (int)(preValue * 0.5f);
                 }
                 else {
-                    value = preValue;
+                    if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                        value = (int)(preValue * 0.5f);
+                    }
+                    else { 
+                        value = preValue;
+                    }
                 }
             }
             else if (name == StatusEffectConstants.TAUNT) {
@@ -111,13 +116,15 @@ namespace Characters {
                     value = preValue - afflicted.MDEF;
                 }
             }
-            else if (name == StatusEffectConstants.POISON) {
+            else if (name == StatusEffectConstants.POISON) { // right now poison damage only needs to update for partyMembers
                 PartyMember pm = afflicted as PartyMember;
-                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
-                    value = (int)(preValue * 0.5f) - afflicted.PDEF;
-                }
-                else {
-                    value = preValue - afflicted.PDEF;;
+                if (pm != null) {
+                    if (pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                        value = (int)(preValue * 0.5f);
+                    }
+                    else {  // skill reducing poison damage was toggled off 
+                        value = preValue;
+                    }
                 }
             }
             else if (name == StatusEffectConstants.BLEED) {

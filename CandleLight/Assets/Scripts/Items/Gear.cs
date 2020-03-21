@@ -76,7 +76,6 @@ namespace Items {
                 multiplier = 2f;
             }
 
-
             for (int i = 0; i < effects.Length; i++) {
                 if (i == effectIndex && effectsNum > 1 && quality == "med" ) {         // medium quality will have at most 2 random effects
                     effects[i] = "none";

@@ -191,6 +191,22 @@ namespace Characters {
             md.SetHealthBar();
         }
 
+        public void GetBuffs(string[] championBuffs) {
+            GetBossBuff();
+            GetChampionBuff(championBuffs);
+            md.UpdateTooltip();
+            md.SetHealthBar();
+        }
+
+        public void GetBossBuff() {
+            if (multiplier == 3) {      // boss monsters will always have an EXP multiplier of 3
+                StatusEffect newStatus = new StatusEffect(StatusEffectConstants.BOSS, 999);
+                AddStatusEffectPermanent(newStatus);
+                md.AddStatusEffectDisplay(newStatus);
+            }
+        }
+
+
         /// <summary>
         /// Applies a champion buff to a monster at random
         /// </summary>
@@ -239,9 +255,6 @@ namespace Characters {
                             break;
                         }
                 }
-
-                md.UpdateTooltip();
-                md.SetHealthBar();
             }
         }
 
@@ -287,6 +300,7 @@ namespace Characters {
                     animationsToPlay[0] = 1;
                 }
                 else if (se.name == StatusEffectConstants.POISON) {
+
                     damageTaken += se.value;
                     animationsToPlay[1] = 1;
                 }

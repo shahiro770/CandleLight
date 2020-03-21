@@ -112,6 +112,7 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(93, 44, 40, 255));
                     break;
                 
+                case StatusEffectConstants.BOSS:
                 case StatusEffectConstants.CHAMPIONHP:
                 case StatusEffectConstants.CHAMPIONPATK:
                 case StatusEffectConstants.CHAMPIONMATK:
