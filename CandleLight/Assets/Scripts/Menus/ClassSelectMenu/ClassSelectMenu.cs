@@ -123,9 +123,10 @@ namespace Menus.ClassSelectMenu {
         /// <remark> TODO: World map scene still has to be made </remark>
         public void BeginGame() {
             if (selectButtonEnabled) {
-                PartyManager.instance.ClearPartyMembers();
-                PartyManager.instance.AddPartyMember("Mage");
+                PartyManager.instance.ResetGame();
+                // PartyManager.instance.AddPartyMember("Mage");
                 PartyManager.instance.AddPartyMember("Archer");
+                PartyManager.instance.AddPartyMember("Warrior");
                 GameManager.instance.LoadAreaScene("GreyWastes");
             }
         }

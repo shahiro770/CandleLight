@@ -89,7 +89,7 @@ namespace Combat {
         /// </summary>
         /// <param name="monsterNames"> Names of monsters to spawn in for combat </param>
         /// <param name="isFleePossible"> Flag for if the player can flee the combat event </param>
-        public IEnumerator InitializeCombat(string[] monsterNames, bool isFleePossible) {
+        public IEnumerator InitializeCombat(string[] monsterNames, string[] championBuffs, bool isFleePossible) {
             actionsPanel.Init(isFleePossible);
             isFleeSuccessful = false;
             inCombat = true;
@@ -111,7 +111,7 @@ namespace Combat {
             }
 
             foreach (string monsterName in monsterNames) {
-                yield return StartCoroutine(AddMonster(monsterName));
+                yield return StartCoroutine(AddMonster(monsterName, championBuffs));
             }
             ArrangeMonsters();
             
@@ -134,7 +134,7 @@ namespace Combat {
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
         /// <returns> IEnumerator cause animations </returns>
         /// <remark> Assumes there will always be an action at button 0 </remark>
-        private IEnumerator AddMonster(string monsterName) {
+        private IEnumerator AddMonster(string monsterName, string[] championBuffs) {
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonsterDisplay(monsterName));
             newMonster.SetActive(true); // monster game object must be active to manipulate its components
             
@@ -143,6 +143,7 @@ namespace Combat {
             
             monsterComponent.ID = countID++;
             monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
+            monsterComponent.GetChampionBuff(championBuffs);
             monsterComponent.md.AddSMDListener(smd);
             monsterComponent.md.SetInteractable(false);
 

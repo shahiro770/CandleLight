@@ -38,6 +38,7 @@ namespace Characters {
         [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
+        [field: SerializeField] public int championChance { get; private set; }         /// <value> Chance of monster spawning with a champion buff </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
         #region [ Initialization ] Initialization
@@ -62,13 +63,14 @@ namespace Characters {
         /// <param name="monsterReward"> Result from monster dying </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
         string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, Attack[] attacks,
-        int dropChance, Result monsterReward) {
+        int dropChance, Result monsterReward, int championChance) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterDisplayName = monsterDisplayName;
             this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
             this.monsterReward = monsterReward;
+            this.championChance = championChance;
 
             string[] LVLString = monsterNameID.Split(' ');
             this.minLVL = int.Parse(LVLString[1]);  // efficiency won't matter for numbers less than 1000
@@ -97,6 +99,78 @@ namespace Characters {
             yield break;
         }
 
+         /// <summary>
+        /// Calculates secondary stats based off of the 4 primary stats
+        /// </summary>
+        /// <param name="setCurrent"> Flag for if CHP and CMP should equal new HP and MP values </param>
+        protected override void CalculateStats(bool setCurrent = false) {
+            HP = (int)(STR * 2.25 + DEX * 1.5);
+            MP = (int)(INT * 1.25 + LUK * 0.5);
+            PATK = (int)(STR * 0.5 + DEX * 0.25);
+            MATK = (int)(INT * 0.5 + LUK * 0.25);
+            PDEF = (int)(STR * 0.1 + DEX * 0.05);
+            MDEF = (int)(INT * 0.15 + LUK * 0.05);
+            DOG = (int)(DEX * 0.2 + LUK * 0.1);
+            ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
+            critChance = (int)(LUK * 0.1) + baseCritChance;
+            critMult = baseCritMult;
+
+            foreach (StatusEffect se in statusEffects) {
+                if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
+                    PATK += (int)(PATK * 0.5);
+                }
+                else if (se.name == StatusEffectConstants.FREEZE) {
+                    DOG -= (int)(DOG * 0.3);
+                    ACC -= (int)(ACC * 0.3);
+                    PDEF -= (int)(PDEF * 0.3);
+                }
+                else if (se.name == StatusEffectConstants.WEAKNESS) {
+                    PATK -= (int)(PATK * 0.3);
+                }
+                else if (se.name == StatusEffectConstants.ADVANTAGE) {
+                    critChance += 50;
+                    ACC += (int)(ACC * 0.5);
+                }
+                else if (se.name == StatusEffectConstants.ROOT) {
+                    DOG -= (int)(DOG * 0.5);
+                }
+                else if (se.name == StatusEffectConstants.CHAMPIONHP) {
+                    HP += (int)(HP * 0.5);
+                }
+                else if (se.name == StatusEffectConstants.CHAMPIONPATK) {
+                    PATK += (int)(1 + PATK * 0.5);
+                    HP += (int)(HP * 0.25);
+                }
+                else if (se.name == StatusEffectConstants.CHAMPIONMATK) {
+                    MATK += (int)(1 + MATK * 0.5);
+                    HP += (int)(HP * 0.25);
+                }
+                else if (se.name == StatusEffectConstants.CHAMPIONPDEF) {
+                    PDEF += (int)(1 + PDEF * 0.5);
+                    HP += (int)(HP * 0.25);
+                }
+                else if (se.name == StatusEffectConstants.CHAMPIONMDEF) {
+                    MDEF += (int)(1 + MDEF * 0.5);
+                    HP += (int)(HP * 0.25);
+                }
+            }
+
+            if (setCurrent) {
+                CHP = HP;
+                CMP = MP;
+            }
+
+            if (CHP > HP) {
+                CHP = HP;
+            }
+            if (CMP > MP) {
+                CMP = MP;
+            }
+            if (critChance > 100) {
+                critChance = 100;
+            }
+        }
+
         /// <summary>
         /// Sets the monster's level between its minimum level and maximum level
         /// </summary>
@@ -115,6 +189,60 @@ namespace Characters {
 
             md.SetTooltip();
             md.SetHealthBar();
+        }
+
+        /// <summary>
+        /// Applies a champion buff to a monster at random
+        /// </summary>
+        /// <param name="championBuffs"> List of championBuffs that can be applied in the subArea (assumed length 3) </param>
+        public void GetChampionBuff(string[] championBuffs) {
+            bool isChampion = Random.Range(0, 100) < championChance;
+
+            if (isChampion) {
+                multiplier += 1;
+                this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier);  
+                monsterReward.UpgradeResult();
+                dropChance = 100;
+
+                string championBuff = championBuffs[Random.Range(0, 3)];    // three champion buffs per subArea
+                StatusEffect newStatus;
+                switch (championBuff) {
+                    case StatusEffectConstants.CHAMPIONATK:
+                        {
+                            if (PATK >= MATK) {
+                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONPATK, 999);
+                            }
+                            else {
+                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONMATK, 999);
+                            }
+                            AddStatusEffectPermanent(newStatus);
+                            md.AddStatusEffectDisplay(newStatus);
+                            break;
+                        }     
+                    case StatusEffectConstants.CHAMPIONDEF:
+                        {
+                            if (PDEF >= MDEF) {
+                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONPDEF, 999);
+                            }
+                            else {
+                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONMDEF, 999);
+                            }
+                            AddStatusEffectPermanent(newStatus);
+                            md.AddStatusEffectDisplay(newStatus);
+                            break;
+                        }
+                    case StatusEffectConstants.CHAMPIONHP:
+                        {
+                            newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONHP, 999);
+                            AddStatusEffectPermanent(newStatus);
+                            md.AddStatusEffectDisplay(newStatus);
+                            break;
+                        }
+                }
+
+                md.UpdateTooltip();
+                md.SetHealthBar();
+            }
         }
 
         #endregion
@@ -170,6 +298,9 @@ namespace Characters {
                     }
                     animationsToPlay[2] = 1;
                 }
+                else if (se.name == StatusEffectConstants.CHAMPIONHP) {
+                    damageTaken -= (int)(Mathf.Ceil((float)HP * 0.05f));
+                }
 
                 se.UpdateDuration();
                 if (se.duration == 0) {
@@ -187,9 +318,11 @@ namespace Characters {
                 md.PlayBleedAnimation();
             }
 
-            // TODO: Make this play multiple animations overtop one another
-            if (damageTaken > 0) { //might be a bad way to check cause 0 damage is the ting
+            if (damageTaken > 0) {
                 yield return StartCoroutine(LoseHP(damageTaken, "MplaceHolderEffect"));
+            }
+            else if (damageTaken < 0) {     
+                AddHP(damageTaken * -1);
             }
 
             RemoveStatusEffects();

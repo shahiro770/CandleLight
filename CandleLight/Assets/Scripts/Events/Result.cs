@@ -138,5 +138,20 @@ namespace Events {
 
             return monsterNames;
         }
+
+        /// <summary>
+        /// /// Upgrades the result to be higher quality
+        /// </summary>
+        public void UpgradeResult() {
+            if (itemQuality == "low") {
+                itemQuality = "med";
+            }
+            else if (itemQuality == "med") {
+                itemQuality = "high";
+            }
+            else if (itemQuality == "high") {
+                itemQuality = "perfect";
+            }
+        }
     }
 }

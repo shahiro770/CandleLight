@@ -84,54 +84,7 @@ namespace Characters {
         /// Calculates secondary stats based off of the 4 primary stats
         /// </summary>
         /// <param name="setCurrent"> Flag for if CHP and CMP should equal new HP and MP values </param>
-        protected virtual void CalculateStats(bool setCurrent = false) {
-            HP = (int)(STR * 2.25 + DEX * 1.5);
-            MP = (int)(INT * 1.25 + LUK * 0.5);
-            PATK = (int)(STR * 0.5 + DEX * 0.25);
-            MATK = (int)(INT * 0.5 + LUK * 0.25);
-            PDEF = (int)(STR * 0.1 + DEX * 0.05);
-            MDEF = (int)(INT * 0.15 + LUK * 0.05);
-            DOG = (int)(DEX * 0.2 + LUK * 0.1);
-            ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
-            critChance = (int)(LUK * 0.1) + baseCritChance;
-            critMult = baseCritMult;
-
-            if (CHP > HP) {
-                CHP = HP;
-            }
-            if (CMP > MP) {
-                CMP = MP;
-            }
-            if (critChance > 100) {
-                critChance = 100;
-            }
-
-             foreach (StatusEffect se in statusEffects) {
-                if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
-                    PATK += (int)(PATK * 0.5);
-                }
-                else if (se.name == StatusEffectConstants.FREEZE) {
-                    DOG -= (int)(DOG * 0.3);
-                    ACC -= (int)(ACC * 0.3);
-                    PDEF -= (int)(PDEF * 0.3);
-                }
-                else if (se.name == StatusEffectConstants.WEAKNESS) {
-                    PATK -= (int)(PATK * 0.3);
-                }
-                else if (se.name == StatusEffectConstants.ADVANTAGE) {
-                    critChance += 50;
-                    ACC += (int)(ACC * 0.5);
-                }
-                else if (se.name == StatusEffectConstants.ROOT) {
-                    DOG -= (int)(DOG * 0.5);
-                }
-            }
-
-            if (setCurrent) {
-                CHP = HP;
-                CMP = MP;
-            }
-        }
+        protected virtual void CalculateStats(bool setCurrent = false) { }
 
         /// <summary>
         /// Levels up a character a somewhat random number of times
@@ -301,6 +254,13 @@ namespace Characters {
             if (statusEffects.Count < maxStatusEffects) {
                 statusEffects.Add(se);
                 CalculateStats();
+            }
+        }
+
+        protected void AddStatusEffectPermanent(StatusEffect se) {
+            if (statusEffects.Count < maxStatusEffects) {
+                statusEffects.Add(se);
+                CalculateStats(true);
             }
         }
 

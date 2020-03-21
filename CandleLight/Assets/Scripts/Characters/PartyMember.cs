@@ -261,11 +261,15 @@ namespace Characters {
                 CHP = HP;
                 CMP = MP;
             }
+
             if (CHP > HP) {
                 CHP = HP;
             }
             if (CMP > MP) {
                 CMP = MP;
+            }
+            if (critChance > 100) {
+                critChance = 100;
             }
         }
 

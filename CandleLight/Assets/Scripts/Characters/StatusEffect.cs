@@ -5,8 +5,6 @@
 * 
 * The StatusEffect class is used to hold and retrieve information about a temporary change
 * to a character's stats.
-*
-* TO DO: Figure out a way to grant a character immunity to a status effect and not screw over AI
 */
 
 using SkillConstants = Constants.SkillConstants;
@@ -28,6 +26,7 @@ namespace Characters {
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of status effect </value>
         [field: SerializeField] public int value { get; private set; }          /// <value> Calculated value from formula </value>
         [field: SerializeField] public int duration;                            /// <value> Turn duration of status </value>      
+        [field: SerializeField] public bool isDispellable;                      /// <value> Flag for if a statusEffect can be removed </value>
 
         private int preValue = 0;  /// <value> Damage amount of status effect before reductions </value>
 

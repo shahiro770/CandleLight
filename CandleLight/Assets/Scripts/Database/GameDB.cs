@@ -54,6 +54,7 @@ namespace Database {
                         int HP = 0;
                         int MP = 0;
                         int dropChance = 0;
+                        int championChance = 0;
                         int[] stats = {};
                         Attack[] attacks = new Attack[4];
                         Result monsterReward = null;
@@ -75,14 +76,15 @@ namespace Database {
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
                             dropChance = reader.GetInt32(18);
-                            monsterReward = GetResultByName(reader.GetString(19), "", dbConnection);                     
+                            monsterReward = GetResultByName(reader.GetString(19), "", dbConnection);      
+                            championChance = reader.GetInt32(20);               
                         }
                         else {
                             Debug.LogError("Monster " + monsterName + " does not exist in the DB");
                         }
 
                         monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
-                        monsterSize, monsterAI, multiplier, HP, MP, stats, attacks, dropChance, monsterReward)); 
+                        monsterSize, monsterAI, multiplier, HP, MP, stats, attacks, dropChance, monsterReward, championChance)); 
                     }
                 }
             }          
@@ -293,6 +295,7 @@ namespace Database {
                     int[] subAreaEventChances = new int[10];
                     string[] monsterPool;
                     int[] monsterChances;
+                    string[] championBuffs = new string[3];
                     
                     if (reader.Read()) {
                         subAreaEvents[0] = reader.GetString(2);
@@ -324,9 +327,13 @@ namespace Database {
                         minMonsterNum = reader.GetInt32(23);
                         maxMonsterNum = reader.GetInt32(24);
                         defaultBGPackName = reader.GetString(25);
+                        
+                        championBuffs[0] = reader.GetString(26);
+                        championBuffs[1] = reader.GetString(27);
+                        championBuffs[2] = reader.GetString(28);
 
                         newSubArea = new SubArea(name, areaName, subAreaEvents, subAreaEventChances, monsterPool, monsterChances, minMonsterNum, maxMonsterNum, 
-                        defaultBGPackName, dbConnection);
+                        defaultBGPackName, championBuffs, dbConnection);
                     }
                     else {
                         Debug.LogError("SubArea " + subAreaName + " does not exist in the DB");

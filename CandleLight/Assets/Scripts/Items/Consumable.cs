@@ -64,18 +64,21 @@ namespace Items {
             else if (quality == "med") {
                 multiplier = 1f;
             }
-            else {
+            else if (quality == "high") {
                 multiplier = 1.5f;
             }
+            else {      // perfect quality, can only be achieved under rare circumstances
+                multiplier = 2f;
+            }
 
-            for (int i = 0; i < effects.Length; i++) {      
-                if (i == effectIndex && effectsNum > 1 && quality == "med") {         // medium quality will have at most 2 random effects
+            for (int i = 0; i < effects.Length; i++) {
+                if (i == effectIndex && effectsNum > 1 && quality == "med" ) {         // medium quality will have at most 2 random effects
                     effects[i] = "none";
                 }   
                 else if (i != effectIndex && quality == "low") {    // low quality will have 1 random effect
                     effects[i] = "none";
                 }
-               
+
                 values[i] =  Random.Range((int)(Mathf.Max(1, values[i] * multiplier)), (int)(values[i] * (1 + multiplier)));
             }
         }

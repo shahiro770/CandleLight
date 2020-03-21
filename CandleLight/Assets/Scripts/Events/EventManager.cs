@@ -5,6 +5,7 @@
 * 
 * The EventManager class manages the current scenarios (events) 
 * the player will encounter based on the area they are in. 
+* TODO: Bug with partyMembers having status effects after dying (should be cleared)
 *
 */
 
@@ -273,7 +274,7 @@ namespace Events {
             gearPanel.SetTakeable(false);
             skillsPanel.SetTogglable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
-            StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentEvent.isLeavePossible));
+            StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentSubArea.championBuffs, currentEvent.isLeavePossible));
         }
 
         /// <summary>

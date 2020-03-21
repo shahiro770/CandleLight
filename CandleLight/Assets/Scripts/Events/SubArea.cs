@@ -22,6 +22,7 @@ namespace Events {
         public Event[] events = new Event[10];      /// <value> 10 Events max per subArea </value>
         public Event[] subEvents = new Event[10];   /// <value> 10 SubEvents max per subArea </value>
         public string[] monsterPool;                /// <value> Pool of monsters subArea uses for random combat events </value>
+        public string[] championBuffs;              /// <value> List of champion buffs that can occur a monster in this subArea (max 3) </value>
         public int[] monsterChances;                /// <value> Chance for each monster in the subArea to appear (must total to 100) </value>
         public string name;                         /// <value> Name of event </value>
         public string defaultBGPackName;            /// <value> Name of default backgroundPack for subArea</value>
@@ -41,13 +42,14 @@ namespace Events {
         /// to fetch information to save memory.
         /// </param>
         public SubArea(string name, string areaName, string[] eventNames, int[] eventChances, string[] monsterPool, int[] monsterChances, int minMonsterNum, int maxMonsterNum, 
-        string defaultBGPackName, IDbConnection dbConnection) {
+        string defaultBGPackName, string[] championBuffs, IDbConnection dbConnection) {
             this.name = name;
             this.monsterPool = monsterPool;
             this.monsterChances = monsterChances;
             this.minMonsterNum = minMonsterNum;
             this.maxMonsterNum = maxMonsterNum;
             this.defaultBGPackName = defaultBGPackName;
+            this.championBuffs = championBuffs;
 
             for (int i = 0; i < events.Length; i++) {
                 string eventName = eventNames[i];

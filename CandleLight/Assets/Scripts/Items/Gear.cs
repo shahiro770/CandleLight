@@ -54,7 +54,11 @@ namespace Items {
         /// <summary>
         /// Randomizes the amounts for all effects depending on the items' qualities
         /// </summary>
-        /// <param name="quality"></param>
+        /// <param name="quality"> String quality of the gear, will make this into a constant soon </param>
+        /// <remark>
+        /// This function is kept seperate from the consumable's version for future changes
+        /// (such as handling custom gear modifiers, like "10% chance to poison enemies on attacks")
+        /// </remark>
         public void RandomizeAmounts(string quality) {
             float multiplier;
             int effectIndex = Random.Range(0, effectsNum);
@@ -65,10 +69,14 @@ namespace Items {
             else if (quality == "med") {
                 multiplier = 1f;
             }
-            else {
+            else if (quality == "high") {
                 multiplier = 1.5f;
             }
-            
+            else {      // perfect quality, can only be achieved under rare circumstances
+                multiplier = 2f;
+            }
+
+
             for (int i = 0; i < effects.Length; i++) {
                 if (i == effectIndex && effectsNum > 1 && quality == "med" ) {         // medium quality will have at most 2 random effects
                     effects[i] = "none";

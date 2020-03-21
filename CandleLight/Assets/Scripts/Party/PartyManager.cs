@@ -69,7 +69,8 @@ namespace Party {
         /// <summary>
         /// Removes all partyMembers from PartyMembers list
         /// </summary>
-        public void ClearPartyMembers() {
+        public void ResetGame() {
+            WAX = 0;
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
