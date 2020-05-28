@@ -1,0 +1,6 @@
+ChangeLog
+---------
+Attacks now have scaling manacosts (it was too strong)
+Made reviving fail if there's no one to revive
+Redid class icons
+Testing for bug with stingerBurrows event

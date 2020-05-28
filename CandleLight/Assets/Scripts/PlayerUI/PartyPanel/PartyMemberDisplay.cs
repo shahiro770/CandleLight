@@ -28,7 +28,6 @@ namespace PlayerUI {
         public Animator pmBurnAnimator;     /// <value> Animator for burns </value>
         public Animator pmBleedAnimator;    /// <value> Animator for bleeds </value>
         public Animator pmPoisonAnimator;   /// <value> Animator for poison </value>
-        public Image classIcon;         /// <value> Icon of class </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
         public Bar MPBar;               /// <value> Visual for mana points </value>
@@ -37,8 +36,9 @@ namespace PlayerUI {
         public EXPBar EXPBar;           /// <value> Visual for experience points, should rename this </value>
         public Button b;                /// <value> Button to make display clickable for more info </value>
         public ButtonTransitionState bts;
-        public LocalizedText LVLText;   /// <value> Text displaying current level </value>
+        public LocalizedText LVLText;           /// <value> Text displaying current level </value>
         public LocalizedText skillPointsText;   /// <value> Text displaying current skillPoints </value>
+        public SpriteRenderer classIcon;        /// <value> Icon of class </value>
         public StatsPanel statsPanel;   /// <value> Panel for stats </value>
 
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
@@ -325,7 +325,7 @@ namespace PlayerUI {
         /// <param name="value"> Enable interactivity on true and disable on false </param>
         public void SetInteractable(bool value) {
             b.interactable = value;
-            classIcon.raycastTarget = value;
+            //classIcon.sprite.raycastTarget = value;
 
             if (SEHolder != null) {     // partyMemberDisplay in rewards panel will have no SEHolder
                 foreach (StatusEffectDisplay SED in SEHolder.GetComponentsInChildren<StatusEffectDisplay>()) {

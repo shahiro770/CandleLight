@@ -308,7 +308,7 @@ namespace PlayerUI {
                     Attack a = actions[i].a;
                 
                     if (a.costType == "MP") {
-                        if (a.cost > CMP) {
+                        if (a.costValue > CMP) {
                             actions[i].SetUsable(false);
                         }
                         else {
@@ -316,7 +316,7 @@ namespace PlayerUI {
                         }
                     }
                     else if (a.costType == "HP") {
-                        if (a.cost > CHP) {
+                        if (a.costValue > CHP) {
                             actions[i].SetUsable(false);
                         }
                         else {

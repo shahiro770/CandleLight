@@ -225,6 +225,9 @@ namespace Events {
         /// </summary>
         public void GetNextEvent() {
             actionsPanel.SetActionsUsable(true);
+            if (currentEvent.name == "stingerBurrows") { // TODO: Debug stingerBurrows as it seems to sometimes not give progress
+                print(currentEvent.progressAmount);
+            }
             subAreaProgress += currentEvent.progressAmount;
             if (subAreaProgress >= 100) {
                 subAreaProgress = 100;
@@ -281,11 +284,11 @@ namespace Events {
         /// Displays the current event to the player
         /// </summary>
         public IEnumerator DisplayEvent() {
-            if (displayStartEvent == false) {
+            if (displayStartEvent == false) { 
                 nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
                 yield return StartCoroutine(TransitionToNextEvent());
             } 
-            else {
+            else {  // for very first event in an area, there is no need to visually transition (just blit onto screen)
                 eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
                 displayStartEvent = false;
             }
@@ -480,6 +483,8 @@ namespace Events {
         /// </summary>
         /// <param name="i"> Interaction object </param>
         public IEnumerator Interact(Interaction i) {
+            bool changeSprite = true; // flag to change the event's sprite to the result's sprite 
+
             if (i.statToCheck != (int)primaryStats.NONE) {  // events that are statChecks will have a good and bad outcome
                 if (PartyManager.instance.GetPrimaryStatAll(i.statToCheck) + 
                 (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
@@ -491,11 +496,6 @@ namespace Events {
             }
             else {
                 currentResult = i.GetResult();
-            }
-
-            if (i.GetSprite() != null) {
-                eventDisplays[0].SetSprite(i.GetSprite());
-                eventDisplays[0].SetPosition(pos1d1);
             }
 
             if (currentResult.type == ResultConstants.NORESULT) {
@@ -646,16 +646,28 @@ namespace Events {
                 SetNavigation();
             }
             else if (currentResult.type == ResultConstants.REVIVE) {  
-                PartyManager.instance.RevivePartyMembers();
+                if (PartyManager.instance.GetNumPartyMembersDead() > 0) {
+                    PartyManager.instance.RevivePartyMembers();
 
-                eventDescription.SetKey(currentResult.resultKey);   
+                    eventDescription.SetKey(currentResult.resultKey);   
+                }
+                else {
+                    changeSprite = false;
+                    eventDescription.SetNoReviveText();
+                }
             }
-            else if (currentResult.type == ResultConstants.REVIVEANDLEAVE) {             
-                PartyManager.instance.RevivePartyMembers();
+            else if (currentResult.type == ResultConstants.REVIVEANDLEAVE) {     
+                if (PartyManager.instance.GetNumPartyMembersDead() > 0) {        
+                    PartyManager.instance.RevivePartyMembers();
 
-                eventDescription.SetKey(currentResult.resultKey); 
-                actionsPanel.TravelActions();
-                SetNavigation();
+                    eventDescription.SetKey(currentResult.resultKey); 
+                    actionsPanel.TravelActions();
+                    SetNavigation();
+                }
+                else {
+                    changeSprite = false;
+                    eventDescription.SetNoReviveText();
+                }
             }
             else if (currentResult.type == ResultConstants.PROGRESS) {
                 currentResult.GenerateResults();
@@ -677,6 +689,11 @@ namespace Events {
             }
             else if (currentResult.type == ResultConstants.END) {
                 GameManager.instance.LoadNextScene("MainMenu");
+            }
+
+            if (i.GetSprite() != null && changeSprite == true) {
+                eventDisplays[0].SetSprite(i.GetSprite());
+                eventDisplays[0].SetPosition(pos1d1);
             }
         }
 

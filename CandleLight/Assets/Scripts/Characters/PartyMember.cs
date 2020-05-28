@@ -34,7 +34,7 @@ namespace Characters {
         public int skillPoints;
         public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
 
-        public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", 0, "single", "none");
+        public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");
         public Skill[] skills = new Skill[12];
         public Gear weapon = new Gear();        /// <value> Weapon </value>
         public Gear secondary = new Gear();     /// <value> Secondary </value>
@@ -75,7 +75,7 @@ namespace Characters {
         public int CalcEXPToNextLVL(int LVL) {
             // it takes 4 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
-            return (int)(5 * Mathf.Pow(LVL, 2.15f) + 3); 
+            return (int)(5 * Mathf.Pow(LVL, 2.21f) + 3 * LVL); 
         }
 
         /// <summary>
@@ -249,14 +249,12 @@ namespace Characters {
                 }
                 else if (se.name == StatusEffectConstants.ADVANTAGE) {
                     critChance += 50;
-                    ACC += (int)(ACC * 0.5);
                 }
                 else if (se.name == StatusEffectConstants.ROOT) {
                     DOG -= (int)(DOG * 0.5);;
                 }
             }
             
-
             if (setCurrent) {
                 CHP = HP;
                 CMP = MP;
@@ -522,7 +520,6 @@ namespace Characters {
                 }
             }
             else {
-                print(damageTaken + " " + CHP);
                 if (CHP - damageTaken <= 0) {
                     damageTaken = CHP - 1;
                 }

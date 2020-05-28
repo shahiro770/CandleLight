@@ -130,8 +130,9 @@ namespace Characters {
         /// </summary>
         /// <param name="attack"> Attack of object </param>
         /// <returns> Integer amount </returns>
-        public int GetAttackValue(Attack attack) {
+        public int GetAttackValue(Attack a) {
             Mathos.Parser.MathParser parser = new Mathos.Parser.MathParser();
+
             parser.LocalVariables.Add("LVL", LVL);
             parser.LocalVariables.Add("HP", HP);
             parser.LocalVariables.Add("CHP", CHP);
@@ -146,7 +147,15 @@ namespace Characters {
             parser.LocalVariables.Add("PDEF", PDEF);
             parser.LocalVariables.Add("MDEF", MDEF);
 
-            return (int)parser.Parse(attack.formula);
+            return (int)parser.Parse(a.damageFormula);
+        }
+
+        public int GetCostValue(Attack a) {
+            Mathos.Parser.MathParser parser = new Mathos.Parser.MathParser();
+
+            parser.LocalVariables.Add("LVL", LVL);
+
+            return (int)parser.Parse(a.costFormula);
         }
 
         /// <summary>
@@ -156,6 +165,7 @@ namespace Characters {
             foreach(Attack a in attacks) {
                 if (a.nameKey != "none_attack") {
                     a.attackValue = GetAttackValue(a);
+                    a.costValue = GetCostValue(a);
                 }
             }
         }

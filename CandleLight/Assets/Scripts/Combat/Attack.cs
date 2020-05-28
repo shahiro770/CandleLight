@@ -20,15 +20,16 @@ namespace Combat {
         [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of attack </value>
         [field: SerializeField] public string type { get; private set; }        /// <value> Type of attack </value>
-        [field: SerializeField] public string formula { get; private set; }     /// <value> Damage dealt by attack </value>
+        [field: SerializeField] public string costFormula { get; private set; }       /// <value> Formula for calculating cost to use attack </value>      
+        [field: SerializeField] public string damageFormula { get; private set; }     /// <value> Formula for calculating damage dealt by attack </value>
         [field: SerializeField] public string scope { get; private set; }       /// <value> String describing the number of targets the attack affects </value>
         [field: SerializeField] public string seName { get; private set; }      /// <value> Status effect of attack </value>
         [field: SerializeField] public int seDuration { get; private set; }     /// <value> Number of turns status effect lasts </value>       
         [field: SerializeField] public int baseSeChance { get; private set; }   /// <value> Base chance of status effect occurring </value>
         [field: SerializeField] public int seChance { get; set; }               /// <value> Chance of status effect occurring </value>       
-        [field: SerializeField] public int cost { get; private set; }           /// <value> Cost to use attack </value>      
         
         public int attackValue;  /// <value> Amount related to attack </value>
+        public int costValue;    /// <value> Amount related to cost </value>
 
         /// <summary>
         /// Constructor to initialize attack's properties
@@ -40,16 +41,16 @@ namespace Combat {
         /// <param name="cost"> Cost of attack (in MP or HP) </param>
         /// <param name="scope"> String describing the targets this attack hits </param>
         /// <param name="animationClipName"> Animation clip to play when attack is used </param>
-        public Attack(string name, string type, string formula, string seName, int seDuration, int seChance, string costType, int cost, string scope, string animationClipName) {
+        public Attack(string name, string type, string damageFormula, string seName, int seDuration, int seChance, string costType, string costFormula, string scope, string animationClipName) {
             this.name = name;
             this.type = type;
-            this.formula = formula;
+            this.damageFormula = damageFormula;
             this.seName = seName;
             this.seDuration = seDuration;
             this.baseSeChance = seChance;
             this.seChance = seChance;
             this.costType = costType;
-            this.cost = cost;            
+            this.costFormula = costFormula;            
             this.scope = scope;
             this.animationClipName = animationClipName; 
             nameKey = name + "_attack";

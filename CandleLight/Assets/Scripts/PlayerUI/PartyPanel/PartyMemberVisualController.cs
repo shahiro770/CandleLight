@@ -59,7 +59,7 @@ namespace Characters {
         /// <param name="pm"> partyMember object </param>
         public void Init(PartyMember pm) {
             this.pm = pm;
-            partyMemberSprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "PMIcon");
+            partyMemberSprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "Icon");
             
             if (pm.className == "Warrior") {
                 partyMemberColour = new Color32(189, 29, 0, 255);

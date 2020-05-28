@@ -39,3 +39,9 @@ sysinfo.txt
 Icon?
 ehthumbs.db
 Thumbs.db
+
+###
+# Build stuff
+###
+TestBuilds/
+Builds/

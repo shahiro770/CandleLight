@@ -169,6 +169,7 @@ MonoBehaviour:
   t: {fileID: 6065794865113401404}
   itemSlotType: any
   itemSlotSubType: any
+  isTakeable: 1
 --- !u!114 &4439609894423774707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,8 +188,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 5250c00b7759a4d95b3cd126def5a252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
@@ -249,8 +248,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &3338809024801491861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,11 +383,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}

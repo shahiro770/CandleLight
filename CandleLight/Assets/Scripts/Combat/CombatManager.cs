@@ -345,7 +345,7 @@ namespace Combat {
             eventDescription.SetKey(selectedAttackpm.nameKey); 
             yield return new WaitForSeconds(0.25f);
 
-            yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackpm.costType, selectedAttackpm.cost)));
+            yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackpm.costType, selectedAttackpm.costValue)));
             if (selectedAttackpm.scope == "single") {
                 if (selectedAttackpm.type == AttackConstants.PHYSICAL || selectedAttackpm.type == AttackConstants.MAGICAL) {
                     yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));    

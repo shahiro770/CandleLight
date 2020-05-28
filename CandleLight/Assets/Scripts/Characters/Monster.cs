@@ -129,29 +129,28 @@ namespace Characters {
                 }
                 else if (se.name == StatusEffectConstants.ADVANTAGE) {
                     critChance += 50;
-                    ACC += (int)(ACC * 0.5);
                 }
                 else if (se.name == StatusEffectConstants.ROOT) {
                     DOG -= (int)(DOG * 0.5);
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
-                    HP += (int)(HP * 0.5);
+                    HP += (int)(HP * 0.66);
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONPATK) {
                     PATK += (int)(1 + PATK * 0.5);
-                    HP += (int)(HP * 0.25);
+                    HP += (int)(HP * 0.33);
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONMATK) {
                     MATK += (int)(1 + MATK * 0.5);
-                    HP += (int)(HP * 0.25);
+                    HP += (int)(HP * 0.33);
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONPDEF) {
                     PDEF += (int)(1 + PDEF * 0.5);
-                    HP += (int)(HP * 0.25);
+                    HP += (int)(HP * 0.33);
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONMDEF) {
                     MDEF += (int)(1 + MDEF * 0.5);
-                    HP += (int)(HP * 0.25);
+                    HP += (int)(HP * 0.33);
                 }
             }
 

@@ -192,24 +192,23 @@ namespace Database {
                     Attack newAttack = null;
 
                     string type = "";
-                    string formula = "";
+                    string damageFormula = "";
+                    string costFormula = "";
                     string costType = "";
                     string scope = "";
                     string animationClipName = "";
                     string seName = "";
                     int seChance = 0;
                     int seDuration = 0;
-                    int cost = 0;
                     
-
                     if (reader.Read()) {
                         type = reader.GetString(2);
-                        formula = reader.GetString(3);
+                        damageFormula = reader.GetString(3);
                         seName = reader.GetString(4);
                         seDuration = reader.GetInt32(5);
                         seChance = reader.GetInt32(6);
                         costType = reader.GetString(7);
-                        cost = reader.GetInt32(8);
+                        costFormula = reader.GetString(8);
                         scope = reader.GetString(9);
                         if (isMonster) {
                             animationClipName = reader.GetString(10);
@@ -218,7 +217,7 @@ namespace Database {
                             animationClipName = reader.GetString(11);
                         }
 
-                        newAttack = new Attack(name, type, formula, seName, seDuration ,seChance, costType, cost, scope, animationClipName);
+                        newAttack = new Attack(name, type, damageFormula, seName, seDuration ,seChance, costType, costFormula, scope, animationClipName);
                     }
                     
                     if (newAttack == null) {
@@ -715,30 +714,25 @@ namespace Database {
                     dbcmd.CommandText = "SELECT * FROM GearItemPools WHERE name = '" + subAreaName + "'";
 
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
-                        string[] gearNameIDs = new string[10];
-                        Gear[] gearItems = new Gear[10];
+                        string[] gearNameIDs;
+                        Gear[] gearItems;
 
                         if (reader.Read()) {
-                            gearNameIDs[0] = reader.GetString(2);
-                            gearNameIDs[1] = reader.GetString(3);
-                            gearNameIDs[2] = reader.GetString(4);
-                            gearNameIDs[3] = reader.GetString(5);
-                            gearNameIDs[4] = reader.GetString(6);
-                            gearNameIDs[5] = reader.GetString(7);
-                            gearNameIDs[6] = reader.GetString(8);
-                            gearNameIDs[7] = reader.GetString(9);
-                            gearNameIDs[8] = reader.GetString(10);
-                            gearNameIDs[9] = reader.GetString(11);
-
+                            gearItems = new Gear[reader.FieldCount - 2];
+                            gearNameIDs = new string[reader.FieldCount - 2];
                             for (int i = 0; i < gearNameIDs.Length; i++) {
+                                gearNameIDs[i] = reader.GetString(i + 2);   // the names start on index 2
+                            }
+
+                            for (int i = 0; i < gearItems.Length; i++) {
                                 gearItems[i] = (Gear)GetItemByNameID(gearNameIDs[i], "gear", dbConnection);
                             }
+                            return gearItems;
                         }
                         else {
                             Debug.LogError("ConsumableItemPool " + subAreaName + " does not exist in the DB");
+                            return null;
                         }
-
-                        return gearItems;
                     }
                 }
             }

@@ -34,6 +34,7 @@ namespace PlayerUI {
         private string damageText = LocalizationManager.instance.GetLocalizedValue("damage_text");  /// <value> Localized text for the word "damage" </value>
         private string dodgedText = LocalizationManager.instance.GetLocalizedValue("dodged_text");  /// <value> Localized text for the word "dodged" </value>
         private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");  /// <value> Localized text for the word "lost" </value>
+        private string noReviveText = LocalizationManager.instance.GetLocalizedValue("no_revive_text"); /// <value> Localized text for the phrase "No one needs to be revived." </value>
         private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
@@ -113,10 +114,10 @@ namespace PlayerUI {
         public void SetAttackText(Attack a, bool isUsable) {
             string attackString;
             if (a.attackValue == 0) {   // debuff attacks will always have 0 attack
-                attackString = a.cost + " " + a.costType;
+                attackString = a.costValue + " " + a.costType;
             }
             else {
-                attackString = a.cost + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
+                attackString = a.costValue + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
             }
             if (a.seName != "none") {
                 attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turns";
@@ -130,6 +131,10 @@ namespace PlayerUI {
                 SetColour("normal");
             }
             textBackgroundCanvas.alpha = 1;
+        }
+
+        public void SetNoReviveText() {
+            eventText.SetText(noReviveText);
         }
 
         /// <summary>
