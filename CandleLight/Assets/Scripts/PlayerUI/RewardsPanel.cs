@@ -104,7 +104,7 @@ namespace PlayerUI {
                     monsterResultDisplays[i].gameObject.SetActive(true);
                     yield return (StartCoroutine(monsterResultDisplays[i].Init(monstersToDisplay[i], monsterCounts[i])));
                     amountEXP += monstersToDisplay[i].EXP * monsterCounts[i];
-                    amountWAX += monstersToDisplay[i].WAX * monsterCounts[i];
+                    amountWAX += (int)(monstersToDisplay[i].WAX * monsterCounts[i] * PartyManager.instance.WAXDropMultiplier);
                 }
             }
 

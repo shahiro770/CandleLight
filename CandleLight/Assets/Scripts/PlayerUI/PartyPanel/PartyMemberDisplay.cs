@@ -325,7 +325,6 @@ namespace PlayerUI {
         /// <param name="value"> Enable interactivity on true and disable on false </param>
         public void SetInteractable(bool value) {
             b.interactable = value;
-            //classIcon.sprite.raycastTarget = value;
 
             if (SEHolder != null) {     // partyMemberDisplay in rewards panel will have no SEHolder
                 foreach (StatusEffectDisplay SED in SEHolder.GetComponentsInChildren<StatusEffectDisplay>()) {

@@ -29,6 +29,7 @@ namespace Party {
 
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
+        public float WAXDropMultiplier = 1f;    /// <value> Current multiplier on WAX drop amounts from enemies </value>
 
         private List<PartyMember> partyMembersAll = new List <PartyMember>();
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
@@ -416,6 +417,27 @@ namespace Party {
             return activePartyMember.DisableSkill(index);
         }
 
+        /// <summary>
+        /// Looks through the party to see if the matching skill is enabled, and trigger it
+        /// if it is
+        /// </summary>
+        /// <param name="className"> PartyMember's the class </param>
+        /// <param name="index"> Index of skill </param>
+        /// <param name="cpm"> Current partyMember that just attacked if in combat </param>
+        public void TriggerSkillEnabled(string className, int index, PartyMember cpm = null) {
+            foreach (PartyMember pm in partyMembersAlive) {
+                if (pm.className == className) {
+                    if (pm.skills[(int)index].skillEnabled == true) {
+                        if (pm.pmName == cpm.pmName) {
+                             pm.TriggerSkillJustAttacked(className, index);
+                        }
+                        else {
+                             pm.TriggerSkill(className, index);
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Triggers status effects on all partyMembers

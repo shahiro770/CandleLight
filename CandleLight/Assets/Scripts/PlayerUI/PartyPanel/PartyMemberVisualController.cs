@@ -70,8 +70,8 @@ namespace Characters {
             else if (pm.className == "Archer") {
                 partyMemberColour = new Color32(90, 197, 79, 255);
             }
-            else if (pm.className == "Thief") {
-                partyMemberColour = new Color32(255, 235, 87, 255);
+            else if (pm.className == "Rogue") {
+                partyMemberColour = new Color32(255, 205, 2, 255);
             }
 
             for (int i = 0; i < pm.skills.Length; i++) {

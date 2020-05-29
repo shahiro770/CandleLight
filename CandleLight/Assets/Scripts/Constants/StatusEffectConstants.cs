@@ -23,6 +23,8 @@ namespace Constants {
         public const string ROOT = "root";     /// <value> DOG is reduced by 50% and takes double damage from burn </value>
         public const string TRAP = "trap";     /// <value> Can't escape until attacker is killed </value>
         public const string HPREGEN = "HPregen";      /// <value> Restoring HP at the end of its turn </value>
+        public const string STUN = "stun";     /// <value> Cannot act on their turn </value>
+        public const string SHOCK = "shock";   /// <value> Taking bonus damage from magical attacks</value>
         public const string BOSS = "boss";     /// <value> Makes the enemy stronger against shenanigans </value>
         public const string CHAMPIONHP = "championHP";        /// <value> Bonus HP and HP regen  </value>
         public const string CHAMPIONATK = "championATK";      /// <value> Bonus ATK (used to indicate CHAMPIONPATK or CHAMPIONMATK) </value>

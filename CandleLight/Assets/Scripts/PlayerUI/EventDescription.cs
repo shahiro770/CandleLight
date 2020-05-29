@@ -35,6 +35,7 @@ namespace PlayerUI {
         private string dodgedText = LocalizationManager.instance.GetLocalizedValue("dodged_text");  /// <value> Localized text for the word "dodged" </value>
         private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");  /// <value> Localized text for the word "lost" </value>
         private string noReviveText = LocalizationManager.instance.GetLocalizedValue("no_revive_text"); /// <value> Localized text for the phrase "No one needs to be revived." </value>
+        private string noMoveText = LocalizationManager.instance.GetLocalizedValue("no_move_text");    /// <value> Localized text for the phrase " can't move!" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
@@ -120,7 +121,12 @@ namespace PlayerUI {
                 attackString = a.costValue + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
             }
             if (a.seName != "none") {
-                attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turns";
+                if (a.seDuration == 1) {
+                    attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turn";
+                }
+                else {
+                    attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turns";
+                }
             }
             eventText.SetText(attackString);
 
@@ -130,6 +136,11 @@ namespace PlayerUI {
             else {
                 SetColour("normal");
             }
+            textBackgroundCanvas.alpha = 1;
+        }
+
+        public void SetNoMoveText(string cname) {
+            eventText.SetText(cname + " " + noMoveText);
             textBackgroundCanvas.alpha = 1;
         }
 

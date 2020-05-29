@@ -25,7 +25,7 @@ namespace Characters {
         /* external component references */
         public PartyMemberVisualController pmvc;    /// <value> Handles all visual components related to partyMember </value>
 
-        public string className { get; set; }       /// <value> Warrior, Mage, Archer, or Thief </value>
+        public string className { get; set; }       /// <value> Warrior, Mage, Archer, or Rogue </value>
         public string subClassName { get; set; }    /// <value> Class specializations </value>
         public string pmName { get; set; }          /// <value> Name of the partyMember </value>
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
@@ -63,7 +63,7 @@ namespace Characters {
             this.race = personalInfo[3];
             this.skills = skills;
 
-            skillPoints = 1;
+            skillPoints = 4;
 
             pmvc.Init(this);
         }
@@ -107,7 +107,7 @@ namespace Characters {
                 baseINT += (int)(LVL * 1.5);
                 baseLUK += LVL;
             }
-            else if (className == "Thief") {
+            else if (className == "Rogue") {
                 baseSTR += LVL;
                 baseDEX += (int)(LVL * 1.5);
                 baseINT += (int)(LVL * 1.25);
@@ -231,6 +231,12 @@ namespace Characters {
             if (className == "Mage") {
                 if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
                      critChance = (int)(critChance * 1.25f);
+                }
+            }
+            else if (className == "Rogue") {
+                if (skills[(int)SkillConstants.rogueSkills.CLOAKED].skillEnabled == true) {
+                    int DOGBoost = (int)(DOG * 0.15f);
+                    DOG += 15 >= DOGBoost ? 15 : DOGBoost;
                 }
             }
 
@@ -615,9 +621,17 @@ namespace Characters {
                 }
                 else if (className == "Archer") {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
-                        PartyManager.instance.itemDropMultiplier *= 1.25f;
+                        PartyManager.instance.itemDropMultiplier *= 1.5f;
                     }
                     if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                        statChange = true;
+                    }
+                }
+                else if (className == "Rogue") {
+                    if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
+                        PartyManager.instance.WAXDropMultiplier *= 1.5f;
+                    }
+                    if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
                         statChange = true;
                     }
                 }
@@ -673,14 +687,23 @@ namespace Characters {
                         statChange = true;     
                     }
                 }
-                 else if (className == "Archer") {
+                else if (className == "Archer") {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
-                        PartyManager.instance.itemDropMultiplier *= 0.8f;
+                        PartyManager.instance.itemDropMultiplier /= 1.5f;
                     }
                     if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
                         statChange = true;
                     }
                 }
+                else if (className == "Rogue") {
+                    if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
+                        PartyManager.instance.WAXDropMultiplier /= 1.5f;
+                    }
+                    if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
+                        statChange = true;
+                    }
+                }
+
 
                 if (statChange == true) {
                     CalculateStats();
@@ -692,6 +715,34 @@ namespace Characters {
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Trigger a skill on a partyMember, applying its effects.
+        /// Due to the ordering of the combat loop, if a skill applies an SE to the unit that just acted,
+        /// the duration will be reduced by 1 turn immediately (hence need to extend by one additional turn).
+        /// </summary>
+        /// <param name="className"> PartyMember class </param>
+        /// <param name="index"> Index of skill </param>
+        public void TriggerSkillJustAttacked(string className, int index) {
+            if (className == "Rogue") {
+                if (index == (int)SkillConstants.rogueSkills.AMBUSHER) {
+                    AddStatusEffect(StatusEffectConstants.ADVANTAGE, 2, this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Trigger a skill on a partyMember, applying its effects
+        /// </summary>
+        /// <param name="className"> PartyMember class </param>
+        /// <param name="index"> Index of skill </param>
+        public void TriggerSkill(string className, int index) {
+            if (className == "Rogue") {
+                if (index == (int)SkillConstants.rogueSkills.AMBUSHER) {
+                    AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, this);
+                }
+            }
         }
 
         /// <summary>

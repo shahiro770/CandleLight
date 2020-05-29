@@ -65,6 +65,8 @@ namespace Combat {
         private int selectedMonsterAttackIndex;     /// <value> Index of selectedMonster attack in its attack array </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
         private bool pmSelectionFinalized = false;  /// <value> Flag for if player has selected an action and a monster if its an attack </value>
+        private bool pmNoAction = false;            /// <value> Flag for if active partyMember can't do anything </value>
+        private bool mNoAction = false;             /// <value> Flag for if active monster can't do anything </value>
         private bool isFleeSuccessful = false;      /// <value> Flag for if player successfully fled from battle </value>
 
         #region [ Initialization ] Initialization
@@ -264,7 +266,11 @@ namespace Combat {
             selectedAttackpm = a;
 
             Monster taunter = (Monster)CheckTauntIndex(activePartyMember);
+            pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstants.STUN) != -1;
 
+            if (pmNoAction) {
+                pmSelectionFinalized = true;
+            }
             if (taunter != null) {
                 SelectMonster(taunter);
             }
@@ -342,17 +348,23 @@ namespace Combat {
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// </returns>
         public IEnumerator ExecutePMAttack() {    
-            eventDescription.SetKey(selectedAttackpm.nameKey); 
-            yield return new WaitForSeconds(0.25f);
+            if (pmNoAction == true) {
+                eventDescription.SetNoMoveText(activePartyMember.pmName);
+                yield return new WaitForSeconds(0.25f);
+            }
+            else {
+                eventDescription.SetKey(selectedAttackpm.nameKey); 
+                yield return new WaitForSeconds(0.25f);
 
-            yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackpm.costType, selectedAttackpm.costValue)));
-            if (selectedAttackpm.scope == "single") {
-                if (selectedAttackpm.type == AttackConstants.PHYSICAL || selectedAttackpm.type == AttackConstants.MAGICAL) {
-                    yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));    
+                yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackpm.costType, selectedAttackpm.costValue)));
+                if (selectedAttackpm.scope == "single") {
+                    if (selectedAttackpm.type == AttackConstants.PHYSICAL || selectedAttackpm.type == AttackConstants.MAGICAL) {
+                        yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));    
+                    }
+                    else if (selectedAttackpm.type == AttackConstants.DEBUFF) {
+                        yield return (StartCoroutine(selectedMonster.GetStatusEffected(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));
+                    }   
                 }
-                else if (selectedAttackpm.type == AttackConstants.DEBUFF) {
-                    yield return (StartCoroutine(selectedMonster.GetStatusEffected(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));
-                }   
             }
         }
 
@@ -390,6 +402,7 @@ namespace Combat {
             DeselectMonsters();
             selectedAttackpm = null;
             pmSelectionFinalized = false;
+            pmNoAction = false;
             eventDescription.ClearText();
         }
 
@@ -502,56 +515,64 @@ namespace Combat {
             PartyMember targetChoice = null;
 
             PartyMember taunter = (PartyMember)CheckTauntIndex(activeMonster);
+            mNoAction = activeMonster.GetStatusEffect(StatusEffectConstants.STUN) != -1;
 
-            if (taunter != null) {
-                targetChoice = taunter;
+            if (mNoAction == true) {
+                eventDescription.SetNoMoveText(activeMonster.monsterSpriteName);
+                yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
+                yield return new WaitForSeconds(0.3f);   
             }
-            else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt60" || activeMonster.monsterAI == "debuffer") {
-                targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
-            }
-            else if (activeMonster.monsterAI == "weakHunter") {
-                int weakest = 0;
-                int weakestHitChance = Random.Range(0, 100);
+            else {
+                if (taunter != null) {
+                    targetChoice = taunter;
+                }
+                else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt60" || activeMonster.monsterAI == "debuffer") {
+                    targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
+                }
+                else if (activeMonster.monsterAI == "weakHunter") {
+                    int weakest = 0;
+                    int weakestHitChance = Random.Range(0, 100);
 
-                if (weakestHitChance < 25) {    // 25% chance of attacking weakest partyMember
-                    for (int i = 1; i < partyMembersAlive.Count; i++) {          
-                        if (partyMembersAlive[i].CHP < partyMembersAlive[weakest].CHP && !partyMembersAlive[i].CheckDeath()) {
-                            weakest = i;
+                    if (weakestHitChance < 25) {    // 25% chance of attacking weakest partyMember
+                        for (int i = 1; i < partyMembersAlive.Count; i++) {          
+                            if (partyMembersAlive[i].CHP < partyMembersAlive[weakest].CHP && !partyMembersAlive[i].CheckDeath()) {
+                                weakest = i;
+                            }
+                        }
+                        targetChoice = partyMembersAlive[weakest];
+                    }
+                    else {
+                        targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
+                    }
+                }
+                else if (activeMonster.monsterAI == "bleedHunter") {
+                    for (int i = 0; i < partyMembersAlive.Count; i++) {
+                        if (partyMembersAlive[i].GetStatusEffect("bleed") != -1) {
+                            targetChoice = partyMembersAlive[i];
+                            break;
                         }
                     }
-                    targetChoice = partyMembersAlive[weakest];
-                }
-                else {
-                    targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
-                }
-            }
-            else if (activeMonster.monsterAI == "bleedHunter") {
-                for (int i = 0; i < partyMembersAlive.Count; i++) {
-                    if (partyMembersAlive[i].GetStatusEffect("bleed") != -1) {
-                        targetChoice = partyMembersAlive[i];
-                        break;
+                    if (targetChoice == null) {
+                        targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
                     }
                 }
-                if (targetChoice == null) {
-                    targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
-                }
-            }
-            selectedAttackMonster = SelectMonsterAttack(targetChoice);
-            eventDescription.SetKey(selectedAttackMonster.nameKey);
-            yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
-            
-            yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation(selectedMonsterAttackIndex)));
+                selectedAttackMonster = SelectMonsterAttack(targetChoice);
+                eventDescription.SetKey(selectedAttackMonster.nameKey);
+                yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
+                
+                yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation(selectedMonsterAttackIndex)));
 
-            if (selectedAttackMonster.scope == "single") {
-                if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
-                    yield return (StartCoroutine(targetChoice.GetAttacked(selectedAttackMonster, activeMonster)));
-                } 
-                else if (selectedAttackMonster.type == AttackConstants.DEBUFF) {
-                    yield return (StartCoroutine(targetChoice.GetStatusEffected(selectedAttackMonster, activeMonster)));
-                }  
-                else if (selectedAttackMonster.type == AttackConstants.BUFFSELF) {
-                    activeMonster.GetStatusEffectedSelf(selectedAttackMonster);
-                }   
+                if (selectedAttackMonster.scope == "single") {
+                    if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
+                        yield return (StartCoroutine(targetChoice.GetAttacked(selectedAttackMonster, activeMonster)));
+                    } 
+                    else if (selectedAttackMonster.type == AttackConstants.DEBUFF) {
+                        yield return (StartCoroutine(targetChoice.GetStatusEffected(selectedAttackMonster, activeMonster)));
+                    }  
+                    else if (selectedAttackMonster.type == AttackConstants.BUFFSELF) {
+                        activeMonster.GetStatusEffectedSelf(selectedAttackMonster);
+                    }   
+                }
             }
         }
 
@@ -587,6 +608,7 @@ namespace Combat {
             }
 
             selectedAttackMonster = null;
+            mNoAction = false;
             eventDescription.ClearText();
         }
 

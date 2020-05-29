@@ -18,5 +18,6 @@ namespace Constants {
         public enum mageSkills { THIRDEYE, FROST, PYROMANCY, CRITICALMAGIC };      
         public enum warriorSkills { FIRESLASH, TAUNT, STEADFAST, MANABLADE };
         public enum archerSkills { VANTAGEPOINT, SCAVENGER, POISONARROW, SURVIVALIST };
+        public enum rogueSkills { FAEDUST, CLOAKED, WAXTHIEF, AMBUSHER };
     }
 }

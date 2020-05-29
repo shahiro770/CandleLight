@@ -188,9 +188,9 @@ MonoBehaviour:
   skillSpriteRenderer: {fileID: 4416476495031384204}
   lockedSkillSprite: {fileID: 21300000, guid: 8594e0bb591424516bafe0e81a660335, type: 3}
   t: {fileID: 7839279659111829215}
+  colIndex: 0
   pmd: {fileID: 0}
   skillColour: {r: 0, g: 0, b: 0, a: 0}
-  colIndex: 0
   skillIndex: 0
   skillDisplayEnabled: 0
 --- !u!114 &4138161636129987987
@@ -325,6 +325,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560515055815530552, guid: 40dd5d9c14f404e928ed678e277743a1,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}

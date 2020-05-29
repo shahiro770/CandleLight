@@ -176,7 +176,7 @@ namespace Characters {
         /// <param name="c"> Other character attacking </param>
         /// <returns> True if attack hits, false otherwise </returns>
         /// <remark> 
-        /// Base chance to hit is 90%.
+        /// Base accuracy is 95
         /// Every time an attack misses, the attacking character gets increasing bonus accuracy,
         /// resetting that bonus back to 0 upon hitting.
         /// </remark>

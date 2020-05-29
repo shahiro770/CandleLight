@@ -27229,6 +27229,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8360594794262677027, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7962397391172608374, guid: eac1c7aed263a437896d760671851422,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -27267,6 +27272,31 @@ PrefabInstance:
     - target: {fileID: 780853545644791675, guid: eac1c7aed263a437896d760671851422,
         type: 3}
       propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247081327216849519, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5211649703569555227, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2571259009183429051, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6068944343892009637, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6068944343892009637, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

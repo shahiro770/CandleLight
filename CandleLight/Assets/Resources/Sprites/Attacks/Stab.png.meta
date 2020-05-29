@@ -1,15 +1,18 @@
 fileFormatVersion: 2
-guid: 7b37fbee20308446a91d6338db05f85d
+guid: 5c6ed73a930fb4871b7e50cd930a26bb
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MBleed_0
-    21300002: MBleed_1
-    21300004: MBleed_2
-    21300006: MBleed_3
-    21300008: MBleed_4
-    21300010: MBleed_5
-    21300012: MBleed_6
-    21300014: MBleed_7
+    21300000: Stab_0
+    21300002: Stab_1
+    21300004: Stab_2
+    21300006: Stab_3
+    21300008: Stab_4
+    21300010: Stab_5
+    21300012: Stab_6
+    21300014: Stab_7
+    21300016: Stab_8
+    21300018: Stab_9
+    21300020: Stab_10
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -103,7 +106,87 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MBleed_0
+      name: Stab_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79bc620a948c5475f985ace33514f12c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stab_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e51b221bdc95423088ad13a55790dfb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stab_2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6208727e901048eead4f697e410fe53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stab_3
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6990bc6c819334734a5eae65650caf7c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stab_4
       rect:
         serializedVersion: 2
         x: 0
@@ -117,13 +200,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7730664ed6324863b1c68e207b64b92
+      spriteID: b978c8619527c4d77b6e38651d62a2d3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_1
+      name: Stab_5
       rect:
         serializedVersion: 2
         x: 192
@@ -137,13 +220,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98105961ea1f84f1ebd4178e0a78f201
+      spriteID: 9172631504dde4789b2c764fb72d41d5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_2
+      name: Stab_6
       rect:
         serializedVersion: 2
         x: 384
@@ -157,13 +240,33 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51dac7f6fa18f43cba8f505cb0a9ace4
+      spriteID: 74f490333926f48e591eee874154fce1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_3
+      name: Stab_7
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d9650182f4c34c4fb8bd781bc2e053f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stab_8
       rect:
         serializedVersion: 2
         x: 0
@@ -177,13 +280,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38764b74173ec45c797ee011849eef36
+      spriteID: e180d6890cd634cf2a8e8177763f63c4
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_4
+      name: Stab_9
       rect:
         serializedVersion: 2
         x: 192
@@ -197,13 +300,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0690b8836db4442ca958dad9fd9fb62
+      spriteID: 59b1a8ead750748fbb328a6583039242
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_5
+      name: Stab_10
       rect:
         serializedVersion: 2
         x: 384
@@ -217,47 +320,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85a8e03b9ea534553a734331199588aa
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MBleed_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 192
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b2a9e3d1863d44d82ae4337e0da4a1b2
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MBleed_7
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 192
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8df7c3a0285a34301bd719a9cbc4b493
+      spriteID: 01068ecca498544669b974c34fe6e9bf
       vertices: []
       indices: 
       edges: []

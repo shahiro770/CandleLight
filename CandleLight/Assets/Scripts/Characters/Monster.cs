@@ -12,10 +12,11 @@
 
 using AttackConstants = Constants.AttackConstants;
 using Combat;
+using PartyManager = Party.PartyManager;
+using Result = Events.Result;
 using SkillConstants = Constants.SkillConstants;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using System.Collections;
-using Result = Events.Result;
 using UnityEngine;
 
 namespace Characters {
@@ -350,7 +351,7 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator GetAttacked(Attack a, Character c, string animationClipName) {
             bool attackHit = CalculateAttackHit(c);
-            PartyMember pc = (PartyMember)c;
+            PartyMember pmc = (PartyMember)c;
            
             if (attackHit) {
                 int damage = CalculateAttackDamage(a);
@@ -368,10 +369,10 @@ namespace Characters {
                 yield return StartCoroutine(LoseHP(damage, animationClipName));
 
                 // side effects from partyMember skills
-                if (pc.className == "Warrior") {
-                    if (pc.skills[(int)SkillConstants.warriorSkills.MANABLADE].skillEnabled == true) {
+                if (pmc.className == "Warrior") {
+                    if (pmc.skills[(int)SkillConstants.warriorSkills.MANABLADE].skillEnabled == true) {
                         if (a.type == AttackConstants.PHYSICAL) {
-                            pc.AddMP((int)(damage * 0.25f));
+                            pmc.AddMP((int)(damage * 0.25f));
                         }
                     }
                 }
@@ -383,6 +384,10 @@ namespace Characters {
                         AddStatusEffect(newStatus);
                         md.AddStatusEffectDisplay(newStatus);
                         md.UpdateTooltip();
+
+                        if (a.seName == StatusEffectConstants.STUN) {
+                            PartyManager.instance.TriggerSkillEnabled("Rogue", (int)SkillConstants.rogueSkills.AMBUSHER, pmc);
+                        }
                     }
                 }
                 

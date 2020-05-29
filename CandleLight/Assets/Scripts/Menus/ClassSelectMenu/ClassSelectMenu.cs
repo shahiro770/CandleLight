@@ -4,7 +4,7 @@
 * Date: January 23, 2019
 * 
 * The ClassSelectMenu class is used to control all elements on the class select menu UI.
-* It is the screen where the user chooses their class (Warrior, Mage, Archer, Thief) to start the
+* It is the screen where the user chooses their class (Warrior, Mage, Archer, Rogue) to start the
 * game with.
 * It stores information when the user clicks a ClassButton, and visually updates other UI
 * gameObjects in it.
@@ -125,8 +125,9 @@ namespace Menus.ClassSelectMenu {
             if (selectButtonEnabled) {
                 PartyManager.instance.ResetGame();
                 //PartyManager.instance.AddPartyMember("Mage");
-                PartyManager.instance.AddPartyMember("Archer");
+                //PartyManager.instance.AddPartyMember("Archer");
                 PartyManager.instance.AddPartyMember("Warrior");
+                PartyManager.instance.AddPartyMember("Rogue");
                 GameManager.instance.LoadAreaScene("GreyWastes");
             }
         }
