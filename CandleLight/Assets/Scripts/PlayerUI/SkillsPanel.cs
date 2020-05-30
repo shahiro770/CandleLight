@@ -146,6 +146,19 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Sets the skillPanel's buttons interactability
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetInteractable(bool value) {
+            for (int i = 0; i < skillDisplays.Length; i++) {
+                skillDisplays[i].SetInteractable(value);
+            }
+            for (int i = 0; i < pmDisplays.Length; i++) {
+                pmDisplays[i].SetInteractable(value);
+            }
+        }
+
+        /// <summary>
         /// Displays the active partyMember with the proper visual colouring
         /// </summary>
         /// <param name="pmd"></param>

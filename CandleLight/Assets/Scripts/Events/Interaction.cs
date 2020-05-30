@@ -80,6 +80,8 @@ namespace Events {
         /// <param name="index"></param>
         /// <returns> Result at index </returns>
         public Result GetResult(int index) {
+            resultIndex = index;
+
             return results[index];
         }
 

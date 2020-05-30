@@ -54,6 +54,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Initializes the max and current amounts of the bar, and displays the current / max as the amount text
+        /// </summary>
+        /// <param name="maxAmount"> Max amount, must be greater than 0 </param>
+        /// <param name="currentAmount"> Current amount </param>
+        /// <param name="vectorSize"> Vector, only width component matters for now </param>
+        public void SetMaxAndCurrentDisplayCurrentOverMax(int maxAmount, int currentAmount) {
+            this.maxAmount = maxAmount;
+            this.currentAmount = currentAmount;
+            SetDisplayCurrentOverMax(true);
+        }
+
+        /// <summary>
         /// Sets the width of the bar in pixels (may be scaled due to canvas)
         /// </summary>
         /// <param name="width"> Width of the bar, float due to Vector2 </param>
@@ -77,6 +89,21 @@ namespace PlayerUI {
         /// </summary>
         private void SetDisplay(bool immediate = false) {
             text.SetText(currentAmount.ToString());
+            fillAmount = currentAmount / maxAmount;
+            if (immediate) {
+                frontFill.fillAmount = fillAmount;
+            }
+            else {
+                StartCoroutine(Fill());
+            }
+        }
+
+        /// <summary>
+        /// Displays the HP bar with the current/max as the amount text
+        /// </summary>
+        /// <param name="immediate"></param>
+        private void SetDisplayCurrentOverMax(bool immediate = false) {
+            text.SetText(currentAmount.ToString() + "/" + maxAmount.ToString());
             fillAmount = currentAmount / maxAmount;
             if (immediate) {
                 frontFill.fillAmount = fillAmount;

@@ -31,7 +31,7 @@ namespace PlayerUI {
         public ItemDisplay currentItemDisplay;  /// <value> Current itemDisplay held, null if empty </value>
         public Sprite defaultSprite = null; /// <value> Item sprite to display when no item is held </value>
         public SpriteRenderer defaultSpriteRenderer;   /// <value> Sprite to be displayed in the event no item is held </value>
-        public Image imgBackground;         /// <value> Background for image this tooltip is for </value> 
+        public Image imgBackground;         /// <value> Background for image tooltip will be on </value> 
         public Tooltip t;                   /// <value> Tooltip component to display item info </value>
         public string itemSlotType;         /// <value> Item type this slot accepts </value>
         public string itemSlotSubType;      /// <value> Item subType this slot accepts </value>

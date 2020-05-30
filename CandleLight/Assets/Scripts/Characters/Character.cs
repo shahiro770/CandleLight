@@ -42,6 +42,7 @@ namespace Characters {
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
         [field: SerializeField] public int attackNum { get; set; } = 0;   /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
+        [field: SerializeField] public bool bleedPlus { get; set; } = false;    /// <value> Flag for if this character can inflict stronger bleeds </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
@@ -50,7 +51,7 @@ namespace Characters {
         protected int minAttacks = 1;
         protected int maxAttacks = 4;
         protected int maxStatusEffects = 10;                                /// <value> Max number of status effects that can be on a character </value>
-        protected int baseCritChance = 5;                                   /// <value> Base chance of critting </value>
+        protected int baseCritChance = 5;                                   /// <value> Base chance of an attack doing critMultiplier* damage </value>
         protected int defaultACC = 95;                                      /// <value> Base accuracy rating </value>
        
         /// <summary>

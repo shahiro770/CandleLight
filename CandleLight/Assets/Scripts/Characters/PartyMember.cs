@@ -63,7 +63,7 @@ namespace Characters {
             this.race = personalInfo[3];
             this.skills = skills;
 
-            skillPoints = 4;
+            skillPoints = 1;
 
             pmvc.Init(this);
         }
@@ -111,7 +111,7 @@ namespace Characters {
                 baseSTR += LVL;
                 baseDEX += (int)(LVL * 1.5);
                 baseINT += (int)(LVL * 1.25);
-                baseLUK += LVL * 2;
+                baseLUK += (int)(LVL * 2.25);
             }
 
 
@@ -174,6 +174,7 @@ namespace Characters {
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             critChance = (int)(LUK * 0.1) + baseCritChance;
             critMult = baseCritMult;
+            bleedPlus = false;
 
             /* secondary stats changes from gear */
             for (int i = 0; i < numGear; i++) {
@@ -219,6 +220,9 @@ namespace Characters {
                                 break;
                             case "CRITMULT":
                                 critMult += gearToCalculate.values[j];
+                                break;
+                            case "BLEEDUP":
+                                bleedPlus = true;
                                 break;
                             default:
                                 break;

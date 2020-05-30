@@ -219,12 +219,12 @@ namespace Characters {
         /// </summary>
         public void SetTooltip() {
             RectTransform buttonRect = b.GetComponent<RectTransform>();
-            string[] textKeys = new string[4] { displayedMonster.monsterDisplayName + "_monster_description", "empty_label", "PDEF_label", "MDEF_label" };
+            string[] textKeys = new string[4] { displayedMonster.monsterSpriteName + "_monster_description", "empty_label", "PDEF_label", "MDEF_label" };
             string[] textAmounts = new string[4] { "", "", displayedMonster.PDEF.ToString(), displayedMonster.MDEF.ToString() };
 
             t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
 
-            t.SetKey("title", displayedMonster.monsterDisplayName + "_monster");
+            t.SetKey("title", displayedMonster.monsterSpriteName + "_monster");
             t.SetAmountText("subtitle", "LVL_label", displayedMonster.LVL);  
             t.SetAmountTextMultiple("description", textKeys, textAmounts);
         }
@@ -233,7 +233,7 @@ namespace Characters {
         /// Update the tooltip's information for the monster's PDEF and MDEF
         /// </summary>
         public void UpdateTooltip() {
-            string[] textKeys = new string[4] { displayedMonster.monsterDisplayName + "_monster_description", "empty_label", "PDEF_label", "MDEF_label" };
+            string[] textKeys = new string[4] { displayedMonster.monsterSpriteName + "_monster_description", "empty_label", "PDEF_label", "MDEF_label" };
             string[] textAmounts = new string[4] { "", "", displayedMonster.PDEF.ToString(), displayedMonster.MDEF.ToString() };
 
             t.SetAmountTextMultiple("description", textKeys, textAmounts);

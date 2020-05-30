@@ -129,18 +129,24 @@ namespace Characters {
             if (panelName == PanelConstants.STATUSPANEL) {
                 statusPanelHPBar = HPBar;
                 statusPanelMPBar = MPBar;
+                
+                HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+                MPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
             }
             else if (panelName == PanelConstants.PARTYPANEL) {
                 partyPanelHPBar = HPBar;
                 partyPanelMPBar = MPBar;
+                        
+                HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+                MPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
             }
             else if (panelName == PanelConstants.STATSPANEL) {
                 statsPanelHPBar = HPBar;
                 statsPanelMPBar = MPBar;
-            }
 
-            HPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
-            MPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
+                HPBar.SetMaxAndCurrentDisplayCurrentOverMax(pm.HP, pm.CHP);
+                MPBar.SetMaxAndCurrentDisplayCurrentOverMax(pm.MP, pm.CMP);
+            }
         }
 
         /// <summary>

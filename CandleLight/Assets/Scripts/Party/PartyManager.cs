@@ -260,11 +260,9 @@ namespace Party {
                             }
                         }
                     }
-                }
-
-                if (partyMembersAlive.Count == 0) { // this will have to change if combat gets aoe attacks
-                    yield return new WaitForSeconds(1.25f);
-                    GameManager.instance.LoadNextScene("MainMenu");
+                    else if (type == "Combat") {    // TODO: Make AoE attacks against the party print damage taken by everyone, as well as combat constants for type
+                        yield return null;
+                    }
                 }
             }
         } 

@@ -139,11 +139,27 @@ namespace PlayerUI {
             textBackgroundCanvas.alpha = 1;
         }
 
-        public void SetNoMoveText(string cname) {
-            eventText.SetText(cname + " " + noMoveText);
+        /// <summary>
+        /// Displays text informing the player a partyMember can't do anything on their combat turn
+        /// </summary>
+        /// <param name="cname"></param>
+        public void SetNoMoveTextPM(string pmname) {
+            eventText.SetText(pmname + " " + noMoveText);
             textBackgroundCanvas.alpha = 1;
         }
 
+        /// <summary>
+        /// Displays text informing the player a monster can't do anything on their combat turn
+        /// </summary>
+        /// <param name="cname"></param>
+        public void SetNoMoveTextM(string mname) {
+            eventText.SetText(LocalizationManager.instance.GetLocalizedValue(mname + "_monster") + " " + noMoveText);
+            textBackgroundCanvas.alpha = 1;
+        }
+
+        /// <summary>
+        /// Displays text informing the player they can't revive anyone
+        /// </summary>
         public void SetNoReviveText() {
             eventText.SetText(noReviveText);
         }

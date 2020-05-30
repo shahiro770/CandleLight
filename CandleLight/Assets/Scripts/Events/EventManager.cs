@@ -322,6 +322,7 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 gearPanel.SetInteractable(true);
+                skillsPanel.SetInteractable(true);
                 partyPanel.EnableButtons();
                 actionsPanel.SetAllActionsInteractable();
                 itemsTabManager.SetAllButtonsInteractable();
@@ -364,6 +365,7 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 gearPanel.SetInteractable(true);
+                skillsPanel.SetInteractable(true);
                 partyPanel.EnableButtons();
                 actionsPanel.SetAllActionsInteractable();
                 itemsTabManager.SetAllButtonsInteractable();
@@ -393,7 +395,7 @@ namespace Events {
            
 
             if (endString == "DEFEAT") {
-                GameManager.instance.LoadNextScene("MainMenu");
+                StartCoroutine(DisplayGameOver());
             }
             else {
                 if (endString == "FLEE") {
@@ -415,6 +417,7 @@ namespace Events {
 
                 actionsPanel.PostCombatActions(rewardsPanel.itemNum);
                 gearPanel.SetInteractable(true);
+                skillsPanel.SetInteractable(true);
                 actionsPanel.SetAllActionsInteractable();
                 itemsTabManager.SetAllButtonsInteractable();
                 utilityTabManager.SetAllButtonsInteractable();
@@ -599,12 +602,14 @@ namespace Events {
                 eventDescription.SetKey(currentResult.resultKey);
                 ApplyResultStatChangesAll(currentResult, ResultConstants.STATALL);
                 SetNavigation();
+                CheckGameOver();
             }
             else if (currentResult.type == ResultConstants.STATALLANDLEAVE) {
                 eventDescription.SetKey(currentResult.resultKey);
                 ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDLEAVE);
                 actionsPanel.TravelActions();
                 SetNavigation();
+                CheckGameOver();
             }
             else if (currentResult.type == ResultConstants.PRECOMBAT) {
                 eventDescription.FadeOut();
@@ -644,6 +649,7 @@ namespace Events {
                 eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.PreCombatActions();
                 SetNavigation();
+                CheckGameOver();
             }
             else if (currentResult.type == ResultConstants.REVIVE) {  
                 if (PartyManager.instance.GetNumPartyMembersDead() > 0) {
@@ -753,6 +759,7 @@ namespace Events {
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             partyPanel.DisableButtons();
             gearPanel.SetInteractable(false);
+            skillsPanel.SetInteractable(false);
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
             StartCoroutine(PartyManager.instance.TriggerStatuses(false));
@@ -845,6 +852,30 @@ namespace Events {
 
             Debug.LogError("BackgroundPack of name " + bgPackName +  " does not exist");
             return null;
+        }
+
+        /// <summary>
+        /// Checks if the game is over (only due to partyMembers all being dead for now)
+        /// </summary>
+        public void CheckGameOver() {
+            if (PartyManager.instance.GetNumPartyMembersAlive() == 0) {
+                StartCoroutine(EventManager.instance.DisplayGameOver());
+            }
+        }
+
+        /// <summary>
+        /// Makes everything uninteractable and brings the player to the main menu
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator DisplayGameOver() {
+            actionsPanel.SetAllActionsUninteractable();
+            partyPanel.DisableButtons();
+            gearPanel.SetInteractable(false);
+            skillsPanel.SetInteractable(false);
+            itemsTabManager.SetAllButtonsUninteractable();
+            utilityTabManager.SetAllButtonsUninteractable();
+            yield return new WaitForSeconds(2f);
+            GameManager.instance.LoadNextScene("MainMenu");
         }
 
         #endregion

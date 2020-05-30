@@ -1041,6 +1041,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6700616899140608829, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac1c7aed263a437896d760671851422, type: 3}
 --- !u!224 &116347986 stripped
@@ -1342,6 +1347,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700616899140608829, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac1c7aed263a437896d760671851422, type: 3}
@@ -9413,7 +9423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8392157, g: 0.68235296, b: 0.34117648, a: 1}
+  m_Color: {r: 0.14901961, g: 0.14901961, b: 0.14901961, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12252,7 +12262,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99999
+  m_text: 99/99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
@@ -12325,7 +12335,7 @@ MonoBehaviour:
     characterCount: 5
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -19648,7 +19658,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99999
+  m_text: 99/99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
@@ -19721,7 +19731,7 @@ MonoBehaviour:
     characterCount: 5
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -22459,7 +22469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.92156863, b: 0.34117648, a: 1}
+  m_Color: {r: 0.3019608, g: 0.3019608, b: 0.3019608, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -27299,6 +27309,11 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6700616899140608829, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac1c7aed263a437896d760671851422, type: 3}
 --- !u!224 &2103014618 stripped
@@ -27600,6 +27615,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700616899140608829, guid: eac1c7aed263a437896d760671851422,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac1c7aed263a437896d760671851422, type: 3}

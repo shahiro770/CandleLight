@@ -114,6 +114,9 @@ namespace Items {
                 if (effects[i] == "%MAXHP" || effects[i] == "CRITCHANCE") {     // TODO Make this account for percent effects
                     amountStrings[i] = values[i] + "%";
                 }
+                else if (effects[i] == "BLEEDPLUS") {
+                    amountStrings[i] = "";
+                }
                 else {
                     amountStrings[i] = values[i].ToString();
                 }

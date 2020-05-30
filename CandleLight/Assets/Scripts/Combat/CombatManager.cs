@@ -349,7 +349,7 @@ namespace Combat {
         /// </returns>
         public IEnumerator ExecutePMAttack() {    
             if (pmNoAction == true) {
-                eventDescription.SetNoMoveText(activePartyMember.pmName);
+                eventDescription.SetNoMoveTextPM(activePartyMember.pmName);
                 yield return new WaitForSeconds(0.25f);
             }
             else {
@@ -518,7 +518,7 @@ namespace Combat {
             mNoAction = activeMonster.GetStatusEffect(StatusEffectConstants.STUN) != -1;
 
             if (mNoAction == true) {
-                eventDescription.SetNoMoveText(activeMonster.monsterSpriteName);
+                eventDescription.SetNoMoveTextM(activeMonster.monsterSpriteName);
                 yield return StartCoroutine(activeMonster.md.PlayStartTurnAnimation());
                 yield return new WaitForSeconds(0.3f);   
             }

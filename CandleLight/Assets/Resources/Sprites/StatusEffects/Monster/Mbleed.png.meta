@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 7b37fbee20308446a91d6338db05f85d
+guid: ed5989541dcac42f08fa4c6206199111
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MBleed_0
-    21300002: MBleed_1
-    21300004: MBleed_2
-    21300006: MBleed_3
-    21300008: MBleed_4
-    21300010: MBleed_5
-    21300012: MBleed_6
-    21300014: MBleed_7
+    21300000: Mbleed_0
+    21300002: Mbleed_1
+    21300004: Mbleed_2
+    21300006: Mbleed_3
+    21300008: Mbleed_4
+    21300010: Mbleed_5
+    21300012: Mbleed_6
+    21300014: Mbleed_7
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -103,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MBleed_0
+      name: Mbleed_0
       rect:
         serializedVersion: 2
         x: 0
@@ -117,13 +117,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7730664ed6324863b1c68e207b64b92
+      spriteID: 903abb1586cbe4e52b3a7ed6af0166f8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_1
+      name: Mbleed_1
       rect:
         serializedVersion: 2
         x: 192
@@ -137,13 +137,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98105961ea1f84f1ebd4178e0a78f201
+      spriteID: cd2b620a0d4bd43ebbb545bdc6bb23e1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_2
+      name: Mbleed_2
       rect:
         serializedVersion: 2
         x: 384
@@ -157,13 +157,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51dac7f6fa18f43cba8f505cb0a9ace4
+      spriteID: 570240edc2780496cb4b32993fcb942d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_3
+      name: Mbleed_3
       rect:
         serializedVersion: 2
         x: 0
@@ -177,13 +177,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38764b74173ec45c797ee011849eef36
+      spriteID: 3d40c9c3d8f154a51926d42a9aa8538f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_4
+      name: Mbleed_4
       rect:
         serializedVersion: 2
         x: 192
@@ -197,13 +197,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0690b8836db4442ca958dad9fd9fb62
+      spriteID: da6746fb8d96b45deb2dddcb97e806b6
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_5
+      name: Mbleed_5
       rect:
         serializedVersion: 2
         x: 384
@@ -217,13 +217,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85a8e03b9ea534553a734331199588aa
+      spriteID: 762587d23cbbd424c9d398bcb0e3afdc
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_6
+      name: Mbleed_6
       rect:
         serializedVersion: 2
         x: 0
@@ -237,13 +237,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2a9e3d1863d44d82ae4337e0da4a1b2
+      spriteID: 5dd5cd44853744c9695d21d922e33775
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MBleed_7
+      name: Mbleed_7
       rect:
         serializedVersion: 2
         x: 192
@@ -257,7 +257,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8df7c3a0285a34301bd719a9cbc4b493
+      spriteID: 32725f3809a1b47579364a9d860f2428
       vertices: []
       indices: 
       edges: []

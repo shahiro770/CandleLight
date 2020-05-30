@@ -125,8 +125,8 @@ namespace Menus.ClassSelectMenu {
             if (selectButtonEnabled) {
                 PartyManager.instance.ResetGame();
                 //PartyManager.instance.AddPartyMember("Mage");
-                //PartyManager.instance.AddPartyMember("Archer");
-                PartyManager.instance.AddPartyMember("Warrior");
+                PartyManager.instance.AddPartyMember("Archer");
+                //PartyManager.instance.AddPartyMember("Warrior");
                 PartyManager.instance.AddPartyMember("Rogue");
                 GameManager.instance.LoadAreaScene("GreyWastes");
             }

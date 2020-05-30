@@ -26,7 +26,8 @@ namespace Characters {
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of status effect </value>
         [field: SerializeField] public int value { get; private set; }          /// <value> Calculated value from formula </value>
         [field: SerializeField] public int duration;                            /// <value> Turn duration of status </value>      
-        [field: SerializeField] public bool isDispellable;                      /// <value> Flag for if a statusEffect can be removed </value>
+        [field: SerializeField] public bool isDispellable;                      /// <value> Flag for if the statusEffect can be removed </value>
+        [field: SerializeField] public bool plus;                               /// <value> Flag for if the statusEffect is more potent than normal </value>
 
         private int preValue = 0;  /// <value> Damage amount of status effect before reductions </value>
 
@@ -50,17 +51,17 @@ namespace Characters {
         /// <summary>
         /// Sets the value for a status effect (e.g. damage, defense buff amount)
         /// </summary>
-        /// <param name="afflicter"></param>
-        /// <param name="afflicted"></param>
+        /// <param name="afflicter"> Character that caused the status effect </param>
+        /// <param name="afflicted"> Character being affected by the status effect </param>
         public void SetValue(Character afflicter, Character afflicted) {
             this.afflicted = afflicted;
             
             if (name == StatusEffectConstants.BURN) {
-                preValue = (int)(1 + afflicter.MATK * 0.2f);
+                preValue = (int)(afflicter.MATK * 0.3f);
                 value = preValue - afflicted.MDEF;
             }
             else if (name == StatusEffectConstants.POISON) {
-                preValue = (int)(1 + afflicted.HP * 0.07f);
+                preValue = (int)(afflicted.HP * 0.08f);
 
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
@@ -80,7 +81,13 @@ namespace Characters {
             }
             else if (name == StatusEffectConstants.BLEED) {
                 this.afflicter = afflicter;
-                preValue = (int)(1 + afflicter.PATK * 0.4f);
+                if (afflicter.bleedPlus == true) {
+                    plus = true;
+                    preValue = (int)(afflicter.PATK * 0.4f);
+                }
+                else {
+                    preValue = (int)(afflicter.PATK * 0.7f);
+                }
 
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
@@ -89,6 +96,10 @@ namespace Characters {
                 else {
                     value = preValue - afflicted.PDEF;;
                 }
+            }
+            else if (name == StatusEffectConstants.CHAMPIONHP) {
+                preValue = (int)(Mathf.Ceil((float)afflicted.HP * 0.05f));
+                value = preValue;
             }
 
             if (value < 0) {

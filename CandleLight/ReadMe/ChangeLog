@@ -4,3 +4,22 @@ Attacks now have scaling manacosts (it was too strong)
 Made reviving fail if there's no one to revive
 Redid class icons
 Testing for bug with stingerBurrows event
+Added Rogue
+Added Rogue skills
+Tweaked bleed colour to be more bloody
+Warrior Bash now can stun the enemy
+Made goblin hut event slightly more likely to end badly
+Tweaked statusEffect damage numbers
+Monsters now deal more damage
+Tweaked EXP bar colouring
+HP and MP bars in statsPanel now show current over max (this will break if the numbers get too large)
+Fixing sprites being wrong for dirt storm event
+Fixing actions panel interactability on death
+Made skillsPanel uninteractable on death
+Buffed Hobgoblin attack, Warrior's Bash, 
+Prevent status effects from triggering if someone is dead (Bleed can't revive)
+Add HP regen amount to Everlasting
+
+CURRENTLY DOING
+---------------
+

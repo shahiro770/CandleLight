@@ -149,8 +149,13 @@ namespace PlayerUI {
             RectTransform buttonRect = b.GetComponent<RectTransform>();
 
             t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
-
-            textKeys[0] = se.name + "_description";
+            if (se.plus == false) {
+                textKeys[0] = se.name + "_description";
+            }
+            else {
+                textKeys[0] = se.name + "_plus_description";
+            }
+            
             amounts[0] = "";
             if (se.name == StatusEffectConstants.BURN) {
                 textKeys[1] = "damage_description";
@@ -162,6 +167,10 @@ namespace PlayerUI {
             }
             else if (se.name == StatusEffectConstants.BLEED) {
                 textKeys[1] = "damage_description";
+                amounts[1] = se.value.ToString();
+            }
+            else if (se.name == StatusEffectConstants.CHAMPIONHP) {
+                textKeys[1] = "HP_regen_description";
                 amounts[1] = se.value.ToString();
             }
             else {

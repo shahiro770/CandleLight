@@ -107,8 +107,8 @@ namespace Characters {
         protected override void CalculateStats(bool setCurrent = false) {
             HP = (int)(STR * 2.25 + DEX * 1.5);
             MP = (int)(INT * 1.25 + LUK * 0.5);
-            PATK = (int)(STR * 0.5 + DEX * 0.25);
-            MATK = (int)(INT * 0.5 + LUK * 0.25);
+            PATK = (int)(STR * 0.65 + DEX * 0.35);  // monsters have better primary scaling on PATK and MATK than players
+            MATK = (int)(INT * 0.65 + LUK * 0.35);
             PDEF = (int)(STR * 0.1 + DEX * 0.05);
             MDEF = (int)(INT * 0.15 + LUK * 0.05);
             DOG = (int)(DEX * 0.2 + LUK * 0.1);
@@ -250,6 +250,7 @@ namespace Characters {
                     case StatusEffectConstants.CHAMPIONHP:
                         {
                             newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONHP, 999);
+                            newStatus.SetValue(this, this);
                             AddStatusEffectPermanent(newStatus);
                             md.AddStatusEffectDisplay(newStatus);
                             break;
@@ -307,13 +308,13 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.BLEED) {
                     int bleedDamage = se.value;
                     damageTaken += bleedDamage;
-                    if (se.afflicter != null) {
+                    if (se.afflicter != null && se.afflicted.CheckDeath() == false) {
                         ((PartyMember)(se.afflicter)).AddHP(bleedDamage);
                     }
                     animationsToPlay[2] = 1;
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
-                    damageTaken -= (int)(Mathf.Ceil((float)HP * 0.05f));
+                    damageTaken -= se.value; 
                 }
 
                 se.UpdateDuration();
