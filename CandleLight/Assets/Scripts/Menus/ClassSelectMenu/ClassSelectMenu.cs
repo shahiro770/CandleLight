@@ -25,15 +25,25 @@ namespace Menus.ClassSelectMenu {
 
     public class ClassSelectMenu : MonoBehaviour {
     
+        /* external component references */
         public Button selectButton;                 /// <value> Confirmation button  </value>
-        public ClassButton firstToSelect;           /// <value> First button to select on enabling </value>
+        public Button firstToSelect;                /// <value> First button to select on enabling </value>
+        public Button selectedCompButton;           /// <value> Currently selected composition button </value>
+        public ButtonTransitionState sbBts;         /// <value> Confirmation button's visual state controller </value>   
+        public ButtonTransitionState[] classBtss;   /// <value> List of all class buttons </value>
+        public ButtonTransitionState[] compBtss;    /// <value> List of all composition buttons </value>
         public ClassInfo classInfo;                 /// <value> Displays information of a class </value>
-        
+        public SpriteRenderer[] compSprites;        /// <value> Sprites currently visible in the composition buttons </value>
+
         private EventSystem es;                     /// <value> eventSystem reference </value>
-        private ButtonTransitionState sbBts;        /// <value> Confirmation button's visual state controller </value>   
-        private ClassButton[] classButtons;         /// <value> List of all class buttons </value>
-        private string classString = null;          /// <value> name of currently selected class </value>
-        private int classNum = 4;                   /// <value> Number of classes is 4 for now </value>
+        private Sprite warriorIcon;
+        private Sprite mageIcon;
+        private Sprite archerIcon;
+        private Sprite rogueIcon;
+       
+        private string[] partyComposition;    /// <value> </value>  
+        private int compIndex = 0;
+        private int numPartyMembers = 0;
         private bool selectButtonEnabled = false;   /// <value> Select button will only move to next scene if a class is selected </value>
 
         /// <summary>
@@ -41,14 +51,38 @@ namespace Menus.ClassSelectMenu {
         /// </summary> 
         void Awake() {
             es = EventSystem.current;
-            classButtons = GetComponentsInChildren<ClassButton>();
 
             ColorBlock sbEnabledBlock = selectButton.colors; 
+            ColorBlock btsPressedBlock = selectButton.colors;   // arbitrary, just need a color block
+            ColorBlock btsNormalBlock = selectButton.colors;    // arbitrary, just need a color block
             sbEnabledBlock.normalColor = new Color32(215, 215, 215, 255);
             sbEnabledBlock.highlightedColor = new Color32(255, 255, 255, 255);
             sbEnabledBlock.pressedColor = sbEnabledBlock.highlightedColor;
 
-            sbBts = selectButton.GetComponent<ButtonTransitionState>();
+            btsPressedBlock.normalColor = new Color32(141, 141, 141, 255);
+            btsPressedBlock.highlightedColor = new Color32(255, 255, 255, 200);
+            btsPressedBlock.pressedColor = new Color32(255, 255, 255, 255);
+            btsPressedBlock.disabledColor = new Color32(61, 61, 61, 255);
+
+            btsPressedBlock.normalColor = new Color32(255, 255, 255, 255);
+            btsPressedBlock.highlightedColor = new Color32(255, 255, 255, 200);
+            btsPressedBlock.pressedColor = new Color32(255, 255, 255, 255);
+            btsPressedBlock.disabledColor = new Color32(255, 255, 255, 255);
+            
+            foreach(ButtonTransitionState bts in compBtss) {
+                bts.SetColorBlock("normal", btsNormalBlock);
+                bts.SetColorBlock("normalAlternate", btsPressedBlock);   
+            }
+            foreach(ButtonTransitionState bts in classBtss) {
+                bts.SetColorBlock("normal", btsNormalBlock);
+                bts.SetColorBlock("normalAlternate", btsPressedBlock);
+            }
+
+            warriorIcon = Resources.Load<Sprite>("Sprites/Classes/WarriorIcon");
+            mageIcon = Resources.Load<Sprite>("Sprites/Classes/MageIcon");
+            archerIcon = Resources.Load<Sprite>("Sprites/Classes/ArcherIcon");
+            rogueIcon = Resources.Load<Sprite>("Sprites/Classes/RogueIcon");
+
             sbBts.SetColorBlock("normalAlternate", sbEnabledBlock);
         }
 
@@ -56,26 +90,25 @@ namespace Menus.ClassSelectMenu {
         /// OnEnable to select first class button and revert previous selections due to switching menus
         /// </summary> 
         void OnEnable() {
-            es.SetSelectedGameObject(firstToSelect.b.gameObject);
-            firstToSelect.OnSelect(null);   // hack to ensure first button to select is visibly selected
-            
-            StartCoroutine(SetupButtons());
-            classString = null;
-            classInfo.SetClassInfo(classString);
-            if (selectButtonEnabled) {
-                ToggleSelectButton();
+            partyComposition = new string[] {"", ""};
+            numPartyMembers = 0;
+            compIndex = 0;
+
+            foreach (ButtonTransitionState bts in compBtss) {
+                bts.SetColor("normal");
             }
-        }
-        
-        /// <summary>
-        /// Reset class button sprites back to their default unselected sprites
-        /// </summary> 
-        private IEnumerator SetupButtons() {
-            for (int i = 0; i < classButtons.Length; i++) {
-                while (!classButtons[i].isReady) {  // hack to prevent unity from setting sprites on not-awake'd buttons
-                    yield return null;
-                }
-                classButtons[i].SetSprite("normal");
+            foreach (ButtonTransitionState bts in classBtss) {
+                bts.SetColor("normal");
+            }
+            foreach (SpriteRenderer sr in compSprites) {
+                sr.sprite = null;
+            }
+            
+            SelectCompositionButton(compIndex);
+            
+            classInfo.SetClassInfo("");
+            if (selectButtonEnabled) {
+                SetSelectButtonEnabled(false);
             }
         }
 
@@ -85,35 +118,103 @@ namespace Menus.ClassSelectMenu {
         /// Also changes the displayed class info.
         /// </summary> 
         /// <param name="cb"> Class button to change appearance of </param>
-        public void SelectClassButton(ClassButton cb) {
-            SpriteState bSpriteState = cb.GetComponentInChildren<Button>().spriteState;
+        public void SelectClassButton(int index) {
+            if (partyComposition[compIndex] == "") {
+                numPartyMembers++;
+            }
 
-            for (int i = 0; i < classNum; i++) {
-                if (cb != classButtons[i]) {
-                    classButtons[i].SetSprite("normal");
-                } else {
-                    classButtons[i].SetSprite("pressed");
-                    classString = classButtons[i].GetClassString();
-                    classInfo.SetClassInfo(classString); 
+            for (int i = 0; i < classBtss.Length; i++) {
+                if (i == index) {
+                    classBtss[i].SetColor("normalAlternate"); 
+                }
+                else {
+                    classBtss[i].SetColor("normal");                  
                 }
             }
 
-            if (!selectButtonEnabled) {
-                ToggleSelectButton();
+            classBtss[index].SetColor("normalAlternate");
+
+            if (index == 0) {
+                partyComposition[compIndex] = "Warrior";
+                compSprites[compIndex].sprite = warriorIcon;
+            }
+            else if (index == 1) {
+                partyComposition[compIndex] = "Mage";
+                compSprites[compIndex].sprite = mageIcon;
+            }
+            else if (index == 2) {
+                partyComposition[compIndex] = "Archer";
+                compSprites[compIndex].sprite = archerIcon;
+            }
+            else if (index == 3) {
+                partyComposition[compIndex] = "Rogue";
+                compSprites[compIndex].sprite = rogueIcon;
+            }
+
+            classInfo.SetClassInfo(partyComposition[compIndex]);
+            SetSelectButtonEnabled(numPartyMembers >= 2);
+        }
+
+        public void SelectCompositionButton(int index) {
+            int correspondingClassIndex = -1;
+            for (int i = 0; i < compBtss.Length; i++) {
+                if (i == index) {
+                    compBtss[i].SetColor("normalAlternate"); 
+                    compIndex = index;
+                }
+                else {
+                    compBtss[i].SetColor("normal");                  
+                }
+            }
+
+            if (partyComposition[index] == "Warrior") {
+                correspondingClassIndex = 0;
+            }
+            else if (partyComposition[index] == "Mage") {
+                correspondingClassIndex = 1;
+            }
+            else if (partyComposition[index] == "Archer") {
+                correspondingClassIndex = 2;
+            }
+            else if (partyComposition[index] == "Rogue") {
+                correspondingClassIndex = 3;
+            }
+
+            for (int i = 0; i < classBtss.Length; i++) {
+                if (i == correspondingClassIndex) {
+                    classBtss[i].SetColor("normalAlternate");       
+                }
+                else {
+                    classBtss[i].SetColor("normal");                  
+                }
+            }
+            
+            if (correspondingClassIndex == -1) {
+                classInfo.SetClassInfo("");
+            }
+            else {
+                classInfo.SetClassInfo(partyComposition[compIndex]);
             }
         }
+
+        // public void SetSelectedCompIndex() {
+        //     if (compIndex < compBtss.Length) {
+        //         compIndex++;
+        //         SelectCompositionButton(compIndex);
+        //     }
+        // }
 
         /// <summary>
         /// Toggle select button's colouring to show if its enabled or disabled
         /// </summary> 
-        public void ToggleSelectButton() {
-            if (!selectButtonEnabled) {
-                selectButtonEnabled = true;
-                sbBts.SetColor("normalAlternate");
+        public void SetSelectButtonEnabled(bool value) {
+            selectButtonEnabled = value;
+
+            if (value == false) {
+                sbBts.SetColor("normal");
             }
             else {
-                selectButtonEnabled = false;
-                sbBts.SetColor("normal");
+                sbBts.SetColor("normalAlternate");
             }
         }
 
@@ -124,10 +225,10 @@ namespace Menus.ClassSelectMenu {
         public void BeginGame() {
             if (selectButtonEnabled) {
                 PartyManager.instance.ResetGame();
-                //PartyManager.instance.AddPartyMember("Mage");
-                PartyManager.instance.AddPartyMember("Archer");
-                //PartyManager.instance.AddPartyMember("Warrior");
-                PartyManager.instance.AddPartyMember("Rogue");
+                foreach (string pm in partyComposition) {
+                    PartyManager.instance.AddPartyMember(pm);
+                }
+
                 GameManager.instance.LoadAreaScene("GreyWastes");
             }
         }

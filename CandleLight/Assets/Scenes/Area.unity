@@ -483,6 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1 &82578199
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1 &95653649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1990,6 +1992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!114 &144312172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10390,6 +10393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1 &750913400
 GameObject:
   m_ObjectHideFlags: 0
@@ -13625,6 +13629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!114 &946583273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14510,6 +14515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1 &1016602173
 GameObject:
   m_ObjectHideFlags: 0
@@ -16945,6 +16951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!114 &1266740567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17819,6 +17826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1 &1320963372
 GameObject:
   m_ObjectHideFlags: 0
@@ -18743,6 +18751,7 @@ MonoBehaviour:
   actionsPanel: {fileID: 1991115682}
   gearPanel: {fileID: 1861426946}
   partyPanel: {fileID: 1782737873}
+  skillsPanel: {fileID: 951980778}
   itemsTabManager: {fileID: 677041051}
   utilityTabManager: {fileID: 1102624610}
   monster: {fileID: 4945471360017046569, guid: 7f4d4ee6c3ea946108f1deb439360092, type: 3}
@@ -20114,6 +20123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1 &1637168822
 GameObject:
   m_ObjectHideFlags: 0
@@ -25755,6 +25765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1 &1991115680
 GameObject:
   m_ObjectHideFlags: 0
@@ -26997,6 +27008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!1001 &2103014617
 PrefabInstance:
   m_ObjectHideFlags: 0

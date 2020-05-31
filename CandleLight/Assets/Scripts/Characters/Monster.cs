@@ -308,7 +308,7 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.BLEED) {
                     int bleedDamage = se.value;
                     damageTaken += bleedDamage;
-                    if (se.afflicter != null && se.afflicted.CheckDeath() == false) {
+                    if (se.afflicter != null && se.afflicter.CheckDeath() == false) {
                         ((PartyMember)(se.afflicter)).AddHP(bleedDamage);
                     }
                     animationsToPlay[2] = 1;

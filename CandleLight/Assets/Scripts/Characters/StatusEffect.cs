@@ -83,10 +83,10 @@ namespace Characters {
                 this.afflicter = afflicter;
                 if (afflicter.bleedPlus == true) {
                     plus = true;
-                    preValue = (int)(afflicter.PATK * 0.4f);
+                    preValue = (int)(afflicter.PATK * 0.7f);
                 }
                 else {
-                    preValue = (int)(afflicter.PATK * 0.7f);
+                    preValue = (int)(afflicter.PATK * 0.4f);
                 }
 
                 PartyMember pm = afflicted as PartyMember;

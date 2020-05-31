@@ -37,7 +37,8 @@ namespace Party {
         private PartyMember activePartyMember = null;
         private enum primaryStats { NONE, STR, DEX, INT, LUK };                 /// <value> Enumerated primary stats </value>
         private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>
-        
+        private int uniqueIDNum = 0;                                            /// <value> ID number to assign to each pm</value>
+
         /// <summary>
         /// Awake to instantiate singleton
         /// </summary> 
@@ -56,10 +57,11 @@ namespace Party {
         /// </summary>   
         /// <param name="className"> Class of the partyMember to be added </param>
         public void AddPartyMember(string className) {
-            if (partyMembersAlive.Count + partyMembersDead.Count < maxPartyMembers) {
+            if (GetNumPartyMembers() < maxPartyMembers) {
                 GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
                 GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
                 newMember.transform.SetParent(gameObject.transform, false);
+                newMember.GetComponent<PartyMember>().AssignPMID(uniqueIDNum++);
                 partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
                 partyMembersAll.Add(newMember.GetComponent<PartyMember>());
             }
@@ -72,6 +74,7 @@ namespace Party {
         /// </summary>
         public void ResetGame() {
             WAX = 0;
+            uniqueIDNum = 0;
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
@@ -185,6 +188,8 @@ namespace Party {
         public void RegisterPartyMemberDead(PartyMember pm) {
             partyMembersAlive.Remove(pm);
             partyMembersDead.Add(pm);
+
+            pm.RemoveAllStatusEffects();
         }
 
         /// <summary>
@@ -426,7 +431,7 @@ namespace Party {
             foreach (PartyMember pm in partyMembersAlive) {
                 if (pm.className == className) {
                     if (pm.skills[(int)index].skillEnabled == true) {
-                        if (pm.pmName == cpm.pmName) {
+                        if (pm.pmID == cpm.pmID) {
                              pm.TriggerSkillJustAttacked(className, index);
                         }
                         else {

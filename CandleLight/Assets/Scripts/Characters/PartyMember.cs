@@ -32,6 +32,7 @@ namespace Characters {
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public int skillPoints;
+        public int pmID;                            /// <value> Unique identifier to distinguish partyMember from partyMember </value>
         public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
 
         public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");
@@ -69,6 +70,14 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Assigns an ID number to this partyMember
+        /// </summary>
+        /// <param name="id"></param>
+        public void AssignPMID(int id) {
+            pmID = id;
+        }
+
+        /// <summary>
         /// Sets EXPToNextLevel based off of a math
         /// </summary>
         /// <param name="level"> Level to calculate EXP to next level for </param>
@@ -84,7 +93,7 @@ namespace Characters {
         /// <param name="multiplier"> Multiplier because base needed it, won't be used here </param>
         public override void LVLUp(int multiplier = 1) {
             LVL += 1;
-            if (LVL % 2 == 1) {     // gain a skill point every other level
+            if (LVL % 1 == 0) {     // gain a skill point every other level 
                 skillPoints++;
                 pmvc.ExciteSkillsTab();
             }
@@ -371,7 +380,6 @@ namespace Characters {
             if (CHP <= 0) {
                 CHP = 0;
                 PartyManager.instance.RegisterPartyMemberDead(this);
-                RemoveStatusEffects();
             }
 
             yield return (StartCoroutine(pmvc.DisplayHPChange(true)));
@@ -510,7 +518,7 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.BLEED) {
                     int bleedDamage = se.value;
                     damageTaken += bleedDamage;
-                    if (se.afflicter != null) {
+                    if (se.afflicter != null && se.afflicter.CheckDeath() == false) {
                         ((Monster)(se.afflicter)).AddHP(bleedDamage);
                     }
                     animationsToPlay[2] = 1;

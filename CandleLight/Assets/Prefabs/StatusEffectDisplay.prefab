@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInitialize: 1
 --- !u!114 &998330418290671360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +369,7 @@ PrefabInstance:
     - target: {fileID: 3960168972768849427, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3960168972768849427, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}

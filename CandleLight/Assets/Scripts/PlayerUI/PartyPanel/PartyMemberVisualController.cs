@@ -59,7 +59,7 @@ namespace Characters {
         /// <param name="pm"> partyMember object </param>
         public void Init(PartyMember pm) {
             this.pm = pm;
-            partyMemberSprite = Resources.Load<Sprite>("Sprites/Combat/PartyMemberIcons/" + pm.className + "Icon");
+            partyMemberSprite = Resources.Load<Sprite>("Sprites/Classes/" + pm.className + "Icon");
             
             if (pm.className == "Warrior") {
                 partyMemberColour = new Color32(189, 29, 0, 255);
@@ -439,6 +439,9 @@ namespace Characters {
 
         public void ExciteSkillsTab() {
             utilityTabManager.ExciteTab(1); // skills tab index
+            if (skillsPanel.isOpen) {
+                pmdSkillsPanel.UpdateSkillPointsText(pm.skillPoints);
+            }
         }
     }
 }

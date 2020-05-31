@@ -40,7 +40,8 @@ namespace Combat {
         public ActionsPanel actionsPanel;           /// <value> Display for active partyMember's actions </value>
         public GearPanel gearPanel;                 /// <value> Display for active partyMember's gear </value>
         public PartyPanel partyPanel;               /// <value> Display for all partyMember's status </value>
-        public TabManager itemsTabManager;        /// <value> Click on to display other panels </value>
+        public SkillsPanel skillsPanel;             /// <value> Display for active  partyMember's skills</value>
+        public TabManager itemsTabManager;          /// <value> Click on to display other panels </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
 
@@ -162,6 +163,9 @@ namespace Combat {
         /// <returns> IEnumerator cause animations </returns>
         private IEnumerator DisplayCombatIntro() {
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
+            if (partyPanel.isOpen == false) {
+                utilityTabManager.OpenPanel(0);
+            }
             DisableAllButtons();
             foreach (Monster m in monsters) {
                 StartCoroutine(m.md.PlaySpawnAnimation());
@@ -375,7 +379,8 @@ namespace Combat {
         public IEnumerator CleanUpPMTurn() {
             List<Monster> monstersToRemove = new List<Monster>();
             List<PartyMember> partyMembersToRemove = new List<PartyMember>();
-            
+               
+            yield return StartCoroutine(activePartyMember.TriggerStatuses(true));  
             foreach (Monster m in monsters) {
                 if (m.CheckDeath()) {
                     cq.RemoveCharacter(m.ID);
@@ -387,7 +392,6 @@ namespace Combat {
             }
             DestroyMonsters(monstersToRemove);
 
-            yield return StartCoroutine(activePartyMember.TriggerStatuses(true));  
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath()) {
                     cq.RemoveCharacter(pm.ID);
@@ -594,6 +598,7 @@ namespace Combat {
                     yield return StartCoroutine(m.md.PlayDeathAnimation());
                 }
             }
+
             DestroyMonsters(monstersToRemove);
 
             foreach (PartyMember pm in partyMembers) {
@@ -850,6 +855,7 @@ namespace Combat {
         public void DisableAllButtons() {
             actionsPanel.SetAllActionsUninteractable();
             gearPanel.SetInteractable(false);
+            skillsPanel.SetInteractable(false);
             partyPanel.DisableButtons();
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();

@@ -22,4 +22,17 @@ Add HP regen amount to Everlasting
 
 CURRENTLY DOING
 ---------------
+Clean Up: Have eventManager have a function that disables all panels (So I don't need to do it in every place)
 
+Bug: StatusEffects dont' disapear on death for pmd???
+Bug: AttackText null what the fuck
+Bug: SED is interactable when the pmd isn't
+Bug: Killing enemies on final hit will give 2 advantage instead of 1
+Bug: SEDs are interactable when the monster isn't
+Bug: Rewards panel showing up on death???
+Tweak bleed animation to be a little further up
+Bug: HP and MP bar snap instantly due to toggling to partyPanel (just make it so only if not on partyPanel)
+Bug: When combat starts, default to party panel
+Bug: Rogue weapon is not spawning
+Bug: Skill points don't update if you level up with the skillsPanel open
+Bug: Ambusher is bugged if two people have it (the off person gets 2 advantage)

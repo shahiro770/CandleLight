@@ -177,6 +177,10 @@ namespace PlayerUI {
             descriptionText.SetColour(new Color32(255, 255, 255 ,255));
         }
 
+        /// <summary>
+        /// Makes the tooltip visible or invisible
+        /// </summary>
+        /// <param name="value"> true to make visible, false otherwise</param>
         public void SetVisible(bool value) {
             if (this.gameObject.activeSelf != value) {  // prevents itemSlot tooltips from blinking because the events seem to trigger statically (not sure why)
                 this.gameObject.SetActive(value);

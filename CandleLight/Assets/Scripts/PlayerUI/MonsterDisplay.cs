@@ -509,9 +509,11 @@ namespace Characters {
         /// <param name="se"></param>
         public void AddStatusEffectDisplay(StatusEffect se) {
             GameObject newSED = Instantiate(SEDisplayPrefab);
-            newSED.GetComponent<StatusEffectDisplay>().Init(se);
+            StatusEffectDisplay SEDComponent = newSED.GetComponent<StatusEffectDisplay>();
+            SEDComponent.Init(se);
+            SEDComponent.b.interactable = b.gameObject.activeSelf;  // sed will be uninteractable if md is uninteractable
 
-            newSED.transform.SetParent(SEHolder.transform, false);
+            SEDComponent.transform.SetParent(SEHolder.transform, false);
         }
 
         #endregion

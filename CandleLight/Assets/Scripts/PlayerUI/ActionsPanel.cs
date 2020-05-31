@@ -274,6 +274,7 @@ namespace PlayerUI {
                     actions[i].SetInteractable(false);  
                 } 
             }
+            selectedAction = null;
         }
 
         /// <summary>
@@ -285,6 +286,7 @@ namespace PlayerUI {
                     actions[i].SetInteractable(false);  
                 } 
             }
+            selectedAction = null;
             FadeActions(0);
         }
 

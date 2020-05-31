@@ -287,7 +287,22 @@ namespace Characters {
         /// <summary>
         /// Removes all status effects in the seToRemove list, undoing their effects
         /// </summary>
-        protected void RemoveStatusEffects() {
+        public void RemoveStatusEffects() {
+            foreach (StatusEffect se in seToRemove) {
+                se.DestroyDisplay();
+                statusEffects.Remove(se);
+            }
+            seToRemove.Clear();
+            CalculateStats();   // TODO: Convert all status effects to ints instead of strings
+        }
+
+        /// <summary>
+        /// Removes all status effects
+        /// </summary>
+        public void RemoveAllStatusEffects() {
+            foreach (StatusEffect se in statusEffects) {
+                seToRemove.Add(se);
+            }
             foreach (StatusEffect se in seToRemove) {
                 se.DestroyDisplay();
                 statusEffects.Remove(se);

@@ -225,9 +225,6 @@ namespace Events {
         /// </summary>
         public void GetNextEvent() {
             actionsPanel.SetActionsUsable(true);
-            if (currentEvent.name == "stingerBurrows") { // TODO: Debug stingerBurrows as it seems to sometimes not give progress
-                print(currentEvent.progressAmount);
-            }
             subAreaProgress += currentEvent.progressAmount;
             if (subAreaProgress >= 100) {
                 subAreaProgress = 100;
@@ -385,19 +382,15 @@ namespace Events {
         /// </summary>
         /// <param name="endString"> String constant explaining how combat ended </param>
         public IEnumerator DisplayPostCombat(string endString) {
-            StartCoroutine(AlterBackgroundColor(1f));
-
-            PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
-            gearPanel.SetTakeable(true);
-            skillsPanel.SetTogglable(true);
-            actionsPanel.ClearAllActions();
-            rewardsPanel.SetVisible(true);
-           
-
             if (endString == "DEFEAT") {
                 StartCoroutine(DisplayGameOver());
             }
             else {
+                StartCoroutine(AlterBackgroundColor(1f));
+                actionsPanel.ClearAllActions();
+                rewardsPanel.SetVisible(true);
+                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
+                
                 if (endString == "FLEE") {
                     eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatFleePrompt());
                 }
@@ -414,7 +407,10 @@ namespace Events {
                 if (infoPanel.isOpen) {
                     infoPanel.UpdateAmounts();
                 }
-
+                           
+                gearPanel.SetTakeable(true);
+                skillsPanel.SetTogglable(true);  
+                
                 actionsPanel.PostCombatActions(rewardsPanel.itemNum);
                 gearPanel.SetInteractable(true);
                 skillsPanel.SetInteractable(true);
@@ -859,7 +855,7 @@ namespace Events {
         /// </summary>
         public void CheckGameOver() {
             if (PartyManager.instance.GetNumPartyMembersAlive() == 0) {
-                StartCoroutine(EventManager.instance.DisplayGameOver());
+                StartCoroutine(DisplayGameOver());
             }
         }
 
@@ -874,7 +870,7 @@ namespace Events {
             skillsPanel.SetInteractable(false);
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
             GameManager.instance.LoadNextScene("MainMenu");
         }
 

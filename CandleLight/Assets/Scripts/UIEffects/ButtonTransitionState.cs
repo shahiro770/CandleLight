@@ -18,6 +18,8 @@ using UnityEngine.UI;
 namespace UIEffects {
 
     public class ButtonTransitionState : MonoBehaviour {
+
+        public bool autoInitialize = true;          /// <value> Some btss don't initialize in time during awake unless done manually </value>
         
         private Button b;                           /// <value> Button to have its state managed </value>
         private Image i;                            /// <value> Image is used to get a button's default sprite </value>
@@ -39,31 +41,33 @@ namespace UIEffects {
             b = GetComponent<Button>();
             i = GetComponent<Image>();
 
-            if (b.transition == Selectable.Transition.ColorTint) {
-                ColorBlock initial = b.colors;
-                normalBlock = initial;
-                highlightedBlock = initial;
-                pressedBlock =  initial;
-                disabledBlock = initial;
+            if (autoInitialize) {
+                if (b.transition == Selectable.Transition.ColorTint) {
+                    ColorBlock initial = b.colors;
+                    normalBlock = initial;
+                    highlightedBlock = initial;
+                    pressedBlock =  initial;
+                    disabledBlock = initial;
 
-                pressedBlock.normalColor = pressedBlock.pressedColor;
-                pressedBlock.highlightedColor = pressedBlock.pressedColor;
-                pressedBlock.disabledColor = pressedBlock.pressedColor;
+                    pressedBlock.normalColor = pressedBlock.pressedColor;
+                    pressedBlock.highlightedColor = pressedBlock.pressedColor;
+                    pressedBlock.disabledColor = pressedBlock.pressedColor;
 
-                disabledBlock.normalColor = disabledBlock.disabledColor;
-                disabledBlock.highlightedColor = disabledBlock.disabledColor;
-                disabledBlock.pressedColor = disabledBlock.disabledColor;
-            }
-            else if (b.transition == Selectable.Transition.SpriteSwap) {
-                SpriteState initial = b.spriteState;
-                normalState = initial;
-                highlightedState = initial;
-                pressedState = initial;
-                disabledState = initial;
+                    disabledBlock.normalColor = disabledBlock.disabledColor;
+                    disabledBlock.highlightedColor = disabledBlock.disabledColor;
+                    disabledBlock.pressedColor = disabledBlock.disabledColor;
+                }
+                else if (b.transition == Selectable.Transition.SpriteSwap) {
+                    SpriteState initial = b.spriteState;
+                    normalState = initial;
+                    highlightedState = initial;
+                    pressedState = initial;
+                    disabledState = initial;
 
-                normalSprite = i.sprite;
-                pressedState.highlightedSprite = initial.pressedSprite;
-                disabledState.highlightedSprite = initial.disabledSprite;
+                    normalSprite = i.sprite;
+                    pressedState.highlightedSprite = initial.pressedSprite;
+                    disabledState.highlightedSprite = initial.disabledSprite;
+                }
             }
         }
 

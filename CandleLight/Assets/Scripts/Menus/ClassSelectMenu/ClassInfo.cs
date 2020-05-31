@@ -17,24 +17,15 @@ namespace Menus.ClassSelectMenu {
 
     public class ClassInfo : MonoBehaviour {
         
-        private LocalizedText[] classInfo;      /// <value> Reference to localized text </value>
+        /* external component references */
+        public LocalizedText[] classInfo;      /// <value> Reference to localized text </value>
         
-        /// <summary>
-        /// Awake to get references to child components
-        /// </summary>
-        void Awake() {
-            classInfo = GetComponentsInChildren<LocalizedText>();
-        }
-
         /// <summary>
         /// Change the displayed class description
         /// </summary>
-        /// <param name="classString"> Changes the class description depending on the class. Null to clear </param>
+        /// <param name="classString"> Changes the class description depending on the class. "" to clear </param>
         public void SetClassInfo(string classString) {
-            if (classInfo == null)  {                   // weird behaviour where awake is not called in time
-                classInfo = GetComponentsInChildren<LocalizedText>();
-            }
-            if (classString == null) {
+            if (classString == "") {
                 classInfo[0].Clear();
                 classInfo[1].Clear();
             }
