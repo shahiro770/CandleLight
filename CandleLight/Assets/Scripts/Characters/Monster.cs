@@ -348,9 +348,8 @@ namespace Characters {
         /// </summary>
         /// <param name="a"> Attack used on this character </param>
         /// <param name="c"> Character attacking this </param>
-        /// <param name="animationClipName"> Animation clip to play of the attack used </param>
         /// <returns></returns>
-        public IEnumerator GetAttacked(Attack a, Character c, string animationClipName) {
+        public IEnumerator GetAttacked(Attack a, Character c) {
             bool attackHit = CalculateAttackHit(c);
             PartyMember pmc = (PartyMember)c;
            
@@ -367,7 +366,7 @@ namespace Characters {
                      damage = CalculateAttackReductions(damage, a);
                 }
 
-                yield return StartCoroutine(LoseHP(damage, animationClipName));
+                yield return StartCoroutine(LoseHP(damage, a.animationClipName));
 
                 // side effects from partyMember skills
                 if (pmc.className == "Warrior") {
@@ -395,7 +394,7 @@ namespace Characters {
                 UpdateStatusEffectValues();
             }
             else {
-                yield return StartCoroutine(DodgeAttack(animationClipName));
+                yield return StartCoroutine(DodgeAttack(a.animationClipName));
             }
         }
 
@@ -405,13 +404,12 @@ namespace Characters {
         /// </summary>
         /// <param name="a"></param>
         /// <param name="c"> Character statusing this </param>
-        /// <param name="animationClipName"></param>
         /// <returns></returns>
-        public IEnumerator GetStatusEffected(Attack a, Character c, string animationClipName) {
+        public IEnumerator GetStatusEffected(Attack a, Character c) {
             bool attackHit = CalculateAttackHit(c);
            
             if (attackHit) {
-                yield return StartCoroutine(md.DisplayAttackEffect(animationClipName));
+                yield return StartCoroutine(md.DisplayAttackEffect(a.animationClipName));
                 if (GetStatusEffect(a.seName) == -1) {  // no two tatusEffects of the same type can be on at once
                     StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
                     newStatus.SetValue(c, this);
@@ -423,14 +421,14 @@ namespace Characters {
                 }
             }
             else {
-                yield return StartCoroutine(DodgeAttack(animationClipName));
+                yield return StartCoroutine(DodgeAttack(a.animationClipName));
             }
         }
 
         /// <summary>
         /// Applies a statusEffect to itself
         /// </summary>
-        /// <param name="a"></param>
+        /// <param name="a"> Attack </param>
         public void GetStatusEffectedSelf(Attack a) {
             int index = statusEffects.FindIndex(se => se.name == a.seName);
              if (index == -1) {  // no two tatusEffects of the same type can be on at once

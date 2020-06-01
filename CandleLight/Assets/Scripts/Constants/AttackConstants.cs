@@ -17,5 +17,6 @@ namespace Constants {
         public static readonly string DEBUFF = "debuff";      /// <value> Attack that gives a harmful status effect </value>
         public static readonly string BUFF = "buff";          /// <value> Attack that gives a helpful status effect</value>
         public static readonly string BUFFSELF = "buffSelf";  /// <value> Attack that gives a helpful status effect, but can only target user</value>
+        public static readonly string HEALHP = "healHP";      /// <value> Attack that heals someone on the same side as caster </value>
     }
 }

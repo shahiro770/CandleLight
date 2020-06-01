@@ -151,7 +151,7 @@ namespace Database {
                     
                     Skill[] skills = new Skill[12];
 
-                    for (int i = 0; i < 4; i++) {   // TEMPORARY
+                    for (int i = 0; i < 5; i++) {   // TEMPORARY
                         if (reader.Read()) {
                             string skillName = reader.GetString(1);
                             string attackType = "";

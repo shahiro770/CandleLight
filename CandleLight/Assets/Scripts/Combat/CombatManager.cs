@@ -53,13 +53,14 @@ namespace Combat {
         private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers </value>
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers that are alive </value>
         private PartyMember activePartyMember;                              /// <value> Current partyMember preparing to act </value>
+        private PartyMember selectedPartyMember;                            /// <value> Selected partyMember for heal/buff from party </value>
         private List<Monster> monsters =  new List<Monster>();              /// <value> List of monsters </value>
         private List<Monster> selectedMonsterAdjacents = new List<Monster>();   /// <value> List of monsters adjacent to the monster selected that will be affected </value>
         private Monster selectedMonster = null;                             /// <value> Selected monster </value>
         private Monster activeMonster;                                      /// <value> Current monster preparing to act </value>
         private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
         private Attack selectedAttackMonster = null;/// <value> Attack selected by monster </value>
-        private Attack selectedAttackpm = null;     /// <value> Attack selected by partyMember </value>
+        private Attack selectedAttackPM = null;     /// <value> Attack selected by partyMember </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
         private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
@@ -230,7 +231,7 @@ namespace Combat {
                 yield return null;
             }
             DisableAllButtons();
-            if (selectedAttackpm != null) {
+            if (selectedAttackPM != null) {
                 yield return StartCoroutine(ExecutePMAttack());  
             }
             yield return StartCoroutine(CleanUpPMTurn());
@@ -267,26 +268,24 @@ namespace Combat {
         /// selecting the middle most monster by default)
         /// </remark>
         public void PreparePMAttack(Attack a) {
-            selectedAttackpm = a;
+            selectedAttackPM = a;
 
             Monster taunter = (Monster)CheckTauntIndex(activePartyMember);
             pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstants.STUN) != -1;
-
+            
             if (pmNoAction) {
                 pmSelectionFinalized = true;
             }
-            if (taunter != null) {
+            else if (taunter != null) {
                 SelectMonster(taunter);
             }
             else {
-                foreach(Monster m in monsters) {
-                    m.md.SetNavigation("down", actionsPanel.GetActionButton(4));
+                if (selectedAttackPM.type == AttackConstants.HEALHP) {          // highlight the party if the attack targets the party
+                    partyPanel.SetBlinkSelectables(selectedAttackPM, true);
                 }
-                actionsPanel.SetButtonNavigation(4, "up", monsters[middleMonster].md.b);
-                partyPanel.SetHorizontalNavigation();
-
-                // uncomment if player gets to choose between mouse and keyboard at some point
-                // es.SetSelectedGameObject(monsters[middleMonster].md.b.gameObject);
+                else {
+                    partyPanel.SetBlinkSelectables(null, false);
+                }
             }
         }
 
@@ -326,22 +325,16 @@ namespace Combat {
                 yield return new WaitForSeconds(0.25f);
             }
             
-            selectedAttackpm = null;
+            selectedAttackPM = null;
             pmSelectionFinalized = true;
         }
 
-        /// <summary>
-        /// Revert target selection UI to action selection phase
-        /// </summary>
-        // public void UndoPMAction() {
-        //     selectedAttackpm = null;
-        //     foreach(Monster m in monsters) {
-        //         m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
-        //     }
+        public void SelectPartyMember(PartyMember pmToSelect) {
+            selectedPartyMember = pmToSelect;
+            partyPanel.SetBlinkSelectables(null, false);
 
-        //     eventDescription.ClearText();
-        //     partyPanel.SetHorizontalNavigation();
-        // }
+            pmSelectionFinalized = true;
+        }
 
         /// <summary>
         /// Deals damage to a monster.
@@ -357,16 +350,19 @@ namespace Combat {
                 yield return new WaitForSeconds(0.25f);
             }
             else {
-                eventDescription.SetKey(selectedAttackpm.nameKey); 
+                eventDescription.SetKey(selectedAttackPM.nameKey); 
                 yield return new WaitForSeconds(0.25f);
 
-                yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackpm.costType, selectedAttackpm.costValue)));
-                if (selectedAttackpm.scope == "single") {
-                    if (selectedAttackpm.type == AttackConstants.PHYSICAL || selectedAttackpm.type == AttackConstants.MAGICAL) {
-                        yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));    
+                yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackPM.costType, selectedAttackPM.costValue)));
+                if (selectedAttackPM.scope == "single") {
+                    if (selectedAttackPM.type == AttackConstants.PHYSICAL || selectedAttackPM.type == AttackConstants.MAGICAL) {
+                        yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackPM, activePartyMember)));    
                     }
-                    else if (selectedAttackpm.type == AttackConstants.DEBUFF) {
-                        yield return (StartCoroutine(selectedMonster.GetStatusEffected(selectedAttackpm, activePartyMember, selectedAttackpm.animationClipName)));
+                    else if (selectedAttackPM.type == AttackConstants.DEBUFF) {
+                        yield return (StartCoroutine(selectedMonster.GetStatusEffected(selectedAttackPM, activePartyMember)));
+                    }
+                    else if (selectedAttackPM.type == AttackConstants.HEALHP) {
+                        yield return (StartCoroutine(selectedPartyMember.GetHelped(selectedAttackPM, activePartyMember)));
                     }   
                 }
             }
@@ -404,7 +400,8 @@ namespace Combat {
             }
 
             DeselectMonsters();
-            selectedAttackpm = null;
+            selectedPartyMember = null;
+            selectedAttackPM = null;
             pmSelectionFinalized = false;
             pmNoAction = false;
             eventDescription.ClearText();
@@ -669,8 +666,8 @@ namespace Combat {
 
             // Player can freely click on monsters without having an attack selected
             // Will probably make a UI popup when clicking on monsters with no attack in the future
-            if (selectedAttackpm != null) {
-                if (selectedAttackpm.scope != "single") {
+            if (selectedAttackPM != null) {
+                if (selectedAttackPM.scope != "single") {
                     int monsterIndex = 0;
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID == monsterToSelect.ID) {
@@ -678,7 +675,7 @@ namespace Combat {
                             break;
                         }
                     }
-                    if (selectedAttackpm.scope == "adjacent") {
+                    if (selectedAttackPM.scope == "adjacent") {
                         if (monsterIndex - 1 > 0) {
                             selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
                         }

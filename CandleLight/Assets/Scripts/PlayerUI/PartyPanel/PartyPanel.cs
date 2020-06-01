@@ -8,6 +8,8 @@
 *
 */
 
+using Attack  = Combat.Attack;
+using AttackConstants = Constants.AttackConstants;
 using Characters;
 using PanelConstants = Constants.PanelConstants;
 using Party;
@@ -29,6 +31,18 @@ namespace PlayerUI {
         void OnEnable() {
             isOpen = true;
             Init(PartyManager.instance.GetPartyMembers());
+
+            if (actionsPanel.selectedAction != null) {
+                Attack selectedAttack = actionsPanel.selectedAction.a;   
+                if (selectedAttack != null) {
+                    if (selectedAttack.type == AttackConstants.HEALHP) {
+                        SetBlinkSelectables(selectedAttack, true);
+                    }
+                    else {
+                        SetBlinkSelectables(selectedAttack, false);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -36,6 +50,18 @@ namespace PlayerUI {
         /// </summary>
         void OnDisable() {
             isOpen = false;
+
+            if (actionsPanel.selectedAction != null) {  
+                Attack selectedAttack = actionsPanel.selectedAction.a;   
+                if (selectedAttack != null) {
+                    if (selectedAttack.type == AttackConstants.HEALHP) {
+                        SetBlinkSelectables(selectedAttack, true);
+                    }
+                    else {
+                        SetBlinkSelectables(selectedAttack, false);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -76,6 +102,24 @@ namespace PlayerUI {
             }
 
             pmd.ShowActive();
+        }
+
+        /// <summary>
+        /// Makes all PMDs blink if an attack a partyMember can use on another partyMember
+        /// </summary>
+        /// <param name="a"> Attack </param>
+        /// <param name="value"> True to enable blinking, false to disable </param>
+        public void SetBlinkSelectables(Attack a, bool value) {
+            if (value == true) {
+                foreach (PartyMemberDisplay pmd in pmDisplays) {
+                    pmd.PlaySelectMeAnimation(true);
+                }
+            }
+            else {
+                foreach (PartyMemberDisplay pmd in pmDisplays) {
+                    pmd.PlaySelectMeAnimation(false);
+                }
+            }
         }
 
         /// <summary>
@@ -139,6 +183,7 @@ namespace PlayerUI {
                 pmDisplays[i].SetInteractable(false);
                 pmDisplays[i].ShowNormal();
             }
+            SetBlinkSelectables(null, false);
             statsPanel.gameObject.SetActive(false);
         }
 

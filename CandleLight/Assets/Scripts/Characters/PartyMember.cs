@@ -8,6 +8,7 @@
 *
 */
 
+using AttackConstants = Constants.AttackConstants;
 using Combat;
 using Items;
 using Party;
@@ -321,7 +322,7 @@ namespace Characters {
         /// TODO: Cleanup logic so that AddHP manages whether or not the player recieve HP under
         /// various circumstances (e.g. only revival skills can bring a partyMember back from 0 CHP)
         /// </summary> 
-        /// <param name="amount"> Amount of health points lost </param>
+        /// <param name="amount"> Amount of health points to add </param>
         public void AddHP(int amount) {    
             CHP += amount;
 
@@ -330,6 +331,22 @@ namespace Characters {
             }
 
             StartCoroutine(pmvc.DisplayHPChange(false));
+        }
+
+        /// <summary>
+        /// Increase the PartyMember's current health points by a specified amount,
+        /// yielding to the DisplayHPChange animation
+        /// </summary>
+        /// <param name="amount"> Amount of health points to add</param>
+        /// <returns> Yields for animations </returns>
+        public IEnumerator AddHPYield(int amount) {    
+            CHP += amount;
+
+            if (CHP > HP) {
+                CHP = HP;
+            }
+
+            yield return StartCoroutine(pmvc.DisplayHPChange(false, true));
         }
 
         /// <summary>
@@ -420,7 +437,7 @@ namespace Characters {
             bool attackHit = CalculateAttackHit(c);
 
             if (attackHit) {
-                int damage = CalculateAttackDamage(a);;
+                int damage = CalculateAttackDamage(a);
                 bool isCrit = CalculateAttackCrit(c);
                 bool isStatus = CalculateAttackStatus(a, c);
                 if (isCrit) {
@@ -431,7 +448,7 @@ namespace Characters {
                     damage = CalculateAttackReductions(damage, a);
                 }
                 
-                pmvc.SetDamageTaken(damage, isCrit);
+                pmvc.SetAttackAmount(damage, isCrit);
 
                 yield return StartCoroutine(LoseHP(damage));
                 
@@ -468,6 +485,27 @@ namespace Characters {
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
+            }
+        }
+
+        /// <summary>
+        /// Handles all logic when a partyMember's attack helps a partyMember (healing, buffs, etc.)
+        /// </summary>
+        /// <param name="a"> Attack targeting this partyMember </param>
+        /// <param name="c"> Character targeting this </param>
+        /// <returns></returns>
+        public IEnumerator GetHelped(Attack a, Character c) {
+            if (a.type == AttackConstants.HEALHP) {
+                int healed = CalculateAttackHeal(a);
+                bool isCrit = CalculateAttackCrit(c);
+
+                if (isCrit) {
+                    healed = CalculateAttackHealCrit(healed, c);
+                }
+
+                pmvc.SetAttackAmount(healed, isCrit);
+                yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
+                yield return StartCoroutine(AddHPYield(healed));
             }
         }
 
@@ -533,7 +571,7 @@ namespace Characters {
             if (inCombat == true) { // if in combat, always yield to status effect animations
                 pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
                 if (damageTaken > 0) {
-                    pmvc.SetDamageTaken(damageTaken, false);
+                    pmvc.SetAttackAmount(damageTaken, false);
                     yield return StartCoroutine(LoseHP(damageTaken));
                 }
             }

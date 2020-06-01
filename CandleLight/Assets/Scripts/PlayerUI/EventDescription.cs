@@ -9,6 +9,7 @@
 */
 
 using Attack = Combat.Attack;
+using AttackConstants = Constants.AttackConstants;
 using Characters;
 using Localization;
 using System.Collections;
@@ -30,12 +31,16 @@ namespace PlayerUI {
         private Color32 unusableColourHalfAlpha = new Color32(196, 36, 48, 128);    /// <value> Red colour half alpha to indicate unusable attack </value>
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
         private string costText = LocalizationManager.instance.GetLocalizedValue("cost_text");  /// <value> Localized text for the word "cost" </value>
-        private string critText = LocalizationManager.instance.GetLocalizedValue("crit_text");      /// <value> Localized text for the phrase "Critical Hit!" </value>
+        private string critHitText = LocalizationManager.instance.GetLocalizedValue("crit_hit_text");      /// <value> Localized text for the phrase "Critical Hit!" </value>
+        private string critHealText = LocalizationManager.instance.GetLocalizedValue("crit_heal_text");    /// <value> Localized text for the phrase "Critical Heal!" </value>
         private string damageText = LocalizationManager.instance.GetLocalizedValue("damage_text");  /// <value> Localized text for the word "damage" </value>
         private string dodgedText = LocalizationManager.instance.GetLocalizedValue("dodged_text");  /// <value> Localized text for the word "dodged" </value>
-        private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");  /// <value> Localized text for the word "lost" </value>
+        private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");      /// <value> Localized text for the word "lost" </value>
         private string noReviveText = LocalizationManager.instance.GetLocalizedValue("no_revive_text"); /// <value> Localized text for the phrase "No one needs to be revived." </value>
-        private string noMoveText = LocalizationManager.instance.GetLocalizedValue("no_move_text");    /// <value> Localized text for the phrase " can't move!" </value>
+        private string noMoveText = LocalizationManager.instance.GetLocalizedValue("no_move_text");     /// <value> Localized text for the phrase " can't move!" </value>
+        private string HPText = LocalizationManager.instance.GetLocalizedValue("HP_text");          /// <value> Localized text for the text "HP" </value>
+        private string healText = LocalizationManager.instance.GetLocalizedValue("heal_text");      /// <value> Localized text for the text "HP" </value>
+        private string wasHealedForText = LocalizationManager.instance.GetLocalizedValue("was_healed_for_text");     /// <value> Localized text for the text "HP" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
@@ -89,7 +94,7 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageCritText(PartyMember pm, int amount) {
-            string damagedText = critText + " " + pm.pmName + " " + lostText + " " + amount.ToString() + " HP";
+            string damagedText = critHitText + " " + pm.pmName + " " + lostText + " " + amount.ToString() + " " + HPText;
             eventText.SetText(damagedText);
 
             if (this.colour != "normal") {
@@ -98,7 +103,7 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Changes the displayed text to show that the partyMember dodged the attack
+        /// Changes the displayed text to show that a partyMember dodged the attack
         /// </summary>
         /// <param name="pm"> PartyMember that dodged the attack </param>
         public void SetPMDodgeText(PartyMember pm) {
@@ -108,16 +113,47 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Changes the displayed text to show that a partyMember was healed by a healing attack
+        /// </summary>
+        /// <param name="pm"> PartyMember that was healed </param>
+        /// <param name="amount"> Amount that was healed for </param>
+        public void SetPMHealText(PartyMember pm, int amount) {
+            string healedText = pm.pmName + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            eventText.SetText(healedText);
+
+            if (this.colour != "normal") {
+                SetColour("normal");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show that a partyMember was healed by a healing attack
+        /// </summary>
+        /// <param name="pm"> PartyMember that was healed </param>
+        /// <param name="amount"> Amount that was healed for </param>
+        public void SetPMHealCritText(PartyMember pm, int amount) {
+            string healedText = critHealText + " " + pm.pmName + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            eventText.SetText(healedText);
+
+            if (this.colour != "normal") {
+                SetColour("normal");
+            }
+        }
+
+        /// <summary>
         /// Changes the displayed text to show the cost and effects of an attack action
         /// </summary>
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetAttackText(Attack a, bool isUsable) {
             string attackString;
-            if (a.attackValue == 0) {   // debuff attacks will always have 0 attack
+            if (a.type == AttackConstants.DEBUFF) {   
                 attackString = a.costValue + " " + a.costType;
             }
-            else {
+            else if (a.type == AttackConstants.HEALHP) {
+                attackString = a.costValue + " " + a.costType + " " + healText + " " + a.attackValue + " " + HPText; 
+            }
+            else {  // physical or magical attack
                 attackString = a.costValue + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
             }
             if (a.seName != "none") {

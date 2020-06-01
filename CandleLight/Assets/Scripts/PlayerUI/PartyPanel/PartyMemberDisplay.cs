@@ -9,13 +9,13 @@
 */
 
 using Characters;
+using CombatManager = Combat.CombatManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
 using UIEffects;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PlayerUI {
@@ -42,6 +42,7 @@ namespace PlayerUI {
         public StatsPanel statsPanel;   /// <value> Panel for stats </value>
 
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
+        private bool selectForAttack = false;           /// <value> Flag for if partyMember can be selected for an attack target on the next click</value>
 
         public void Awake() {
             if (bts != null) {
@@ -106,6 +107,18 @@ namespace PlayerUI {
             
             if (statsPanel.isOpen == true) {
                 UpdateStatsPanel();
+            }
+        }
+
+        /// <summary>
+        /// Handles logic that happens when the PMD is clicked
+        /// </summary>
+        public void OnClick() {
+            if (selectForAttack == true) {
+                pmvc.SelectPartyMember();
+            }
+            else {
+                ToggleStatsPanel();
             }
         }
 
@@ -255,6 +268,23 @@ namespace PlayerUI {
                 yield return null;    
             } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
             pmDisplayAnimator.ResetTrigger("dodged");
+        }
+
+        /// <summary>
+        /// Plays the blinking animation indicating s
+        /// </summary>
+        /// <param name="value"> True to start blinking, false to stop </param>
+        public void PlaySelectMeAnimation(bool value) {
+            if (value == true) {
+                pmDisplayAnimator.SetTrigger("blinking");
+                pmDisplayAnimator.ResetTrigger("blinkingEnd");
+                selectForAttack = true;
+            }
+            else if (value == false) {
+                pmDisplayAnimator.SetTrigger("blinkingEnd");
+                pmDisplayAnimator.ResetTrigger("blinking");
+                selectForAttack = false;
+            }
         }
 
         /// <summary>

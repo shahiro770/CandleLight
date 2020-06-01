@@ -261,6 +261,35 @@ namespace Characters {
             return attackStatus;
         }
 
+        /// <summary>
+        /// Calculates the amount healed by an attack against this character
+        /// </summary>
+        /// <param name="a"> Attack object </param>
+        /// <returns> The amount of HP healed </returns>
+        public int CalculateAttackHeal(Attack a) { 
+            if (CHP + a.attackValue > HP) {
+                return CHP + a.attackValue - HP;
+            }
+
+            return a.attackValue;
+        }
+
+        /// <summary>
+        /// Calculates the healing of a critical heal against this character
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public int CalculateAttackHealCrit(int amount, Character c) {
+            int healAmount = (int)(amount * c.critMult);
+
+             if (CHP + healAmount > HP) {
+                return CHP + healAmount - HP;
+            }
+
+            return healAmount;
+        }
+
         protected void AddStatusEffect(StatusEffect se) {
             if (statusEffects.Count < maxStatusEffects) {
                 statusEffects.Add(se);

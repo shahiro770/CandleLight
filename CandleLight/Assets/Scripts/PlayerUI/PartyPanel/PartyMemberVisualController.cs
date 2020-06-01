@@ -49,9 +49,9 @@ namespace Characters {
         public Sprite[] skillSprites = new Sprite[12];
         public Color32 partyMemberColour { get; private set; }  /// <value> Theme colour of partyMember </value>
         
-        private PartyMember pm;      /// <value> PartyMember object visual controller is referring to </value>
-        private int damageTaken = 0; /// <value> Amount of damage taken to display via the eventDescription </value>
-        private bool isCrit = false; /// <value> Flag for if eventDescription will mention the attack dealt a critical hit </value>
+        private PartyMember pm;         /// <value> PartyMember object visual controller is referring to </value>
+        private int attackAmount = 0;   /// <value> Amount of damage taken/ healed to display via the eventDescription </value>
+        private bool isCrit = false;    /// <value> Flag for if eventDescription will mention the attack dealt a critical hit/heal </value>
 
         /// <summary>
         /// Initializes with basic information using a given partyMember
@@ -231,12 +231,12 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Sets the damage taken and if the attack was a crit
+        /// Sets the damage taken/amount healed and if the attack was a crit
         /// </summary>
-        /// <param name="damageTaken"> Amount of damage taken </param>
+        /// <param name="attackAmount"> Amount (damage/heal) from the attack </param>
         /// <param name="isCrit"> Flag for if attack that this character was a crit </param>
-        public void SetDamageTaken(int damageTaken, bool isCrit) {
-            this.damageTaken = damageTaken;
+        public void SetAttackAmount(int attackAmount, bool isCrit) {
+            this.attackAmount = attackAmount;
             this.isCrit = isCrit;
         }
 
@@ -255,7 +255,14 @@ namespace Characters {
         public void SetActivePartyMember() {
             PartyManager.instance.SetActivePartyMember(pm);
         }
-        
+
+        /// <summary>
+        /// Tells combatManager that this pmvc's pm has been selected as an attack target by the player
+        /// </summary>
+        public void SelectPartyMember() {
+            CombatManager.instance.SelectPartyMember(pm);
+        }
+
         /// <summary>
         /// Changes all panels to show the stored partyMember's information
         /// </summary>
@@ -343,37 +350,60 @@ namespace Characters {
         /// Updates the current fill amount on all HPBars to show HP being added or lost
         /// </summary>
         /// <param name="isLoss"> Flag for if damaged animation should play </param>
+        /// <param name="isHealAnim"> Flag for if there is a healing animation that needs to be yielded to </param>
         /// <returns> IEnumerator for animations </returns>
-        public IEnumerator DisplayHPChange(bool isLoss) {
+        public IEnumerator DisplayHPChange(bool isLoss, bool isHealAnim = false) {
             if (statusPanelHPBar != null) {
                 statusPanelHPBar.SetCurrent(pm.CHP);  
             }
             if (statsPanelHPBar != null) {
                 statsPanelHPBar.SetCurrent(pm.CHP);
             }
+
             if (EventManager.instance.partyPanel.isOpen) {
                 partyPanelHPBar.SetCurrent(pm.CHP);
-                if (isLoss && CombatManager.instance.inCombat == true) {
+                
+                if (isLoss == true && CombatManager.instance.inCombat == true) {
                     if (isCrit) {
-                        eventDescription.SetPMDamageCritText(pm, damageTaken);
+                        eventDescription.SetPMDamageCritText(pm, attackAmount);
                         yield return (StartCoroutine(pmdPartyPanel.PlayCritDamagedAnimation()));
-                        isCrit = false;
-                        damageTaken = 0;
                     }
                     else {
-                        eventDescription.SetPMDamageText(pm, damageTaken);
+                        eventDescription.SetPMDamageText(pm, attackAmount);
                         yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
                     }
                     if (pm.CHP == 0) {
                         yield return new WaitForSeconds(0.5f);
                     }
                 }
+                else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
+                    if (isCrit) {
+                        eventDescription.SetPMHealCritText(pm, attackAmount);
+                    }
+                    else {
+                        eventDescription.SetPMHealText(pm, attackAmount);
+                    }
+                    yield return new WaitForSeconds(1f);
+                }
             }
             else {
-                if (isLoss && CombatManager.instance.inCombat) {
-                    eventDescription.SetPMDamageText(pm, damageTaken);
+                if (isLoss == true && CombatManager.instance.inCombat == true) {
+                    if (isCrit) {
+                        eventDescription.SetPMDamageCritText(pm, attackAmount);
+                    }
+                    else {
+                        eventDescription.SetPMDamageText(pm, attackAmount);
+                    }
                 }
-                yield return new WaitForSeconds(0.75f);
+                else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
+                     if (isCrit) {
+                        eventDescription.SetPMHealCritText(pm, attackAmount);
+                    }
+                    else {
+                        eventDescription.SetPMHealText(pm, attackAmount);
+                    }
+                }
+                yield return new WaitForSeconds(1f);
             }
         }
 
@@ -410,14 +440,19 @@ namespace Characters {
             }
         }
 
-        // /// <summary>
-        // /// Displays the animatino of an effect (usually buffs)
-        // /// </summary>
-        // /// <param name="animationClipName"> Name of animation clip to set </param>
-        // /// <returns></returns>
-        // public IEnumerator DisplayEffect(string animationClipName) {
-        //     yield return (StartCoroutine(pmdPartyPanel.PlayStatusEffectAnimation(animationClipName)));
-        // }
+        /// <summary>
+        /// Plays buffing/healing animation on the pmd
+        /// </summary>
+        /// <param name="animationClipName"> Name of animation to play </param>
+        /// <returns></returns>
+        public IEnumerator DisplayAttackHelped(string animationClipName) {
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                yield return (StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName)));
+            }
+            else {
+                yield return new WaitForSeconds(0.75f);
+            }
+        }
 
         /// <summary>
         /// Tell partyMemberDisplay to add a statusEffect

@@ -15,8 +15,8 @@ namespace Constants {
         public static readonly string PASSIVE = "passive";
 
         // if skill indexing changes, the order of these values might change
-        public enum mageSkills { THIRDEYE, FROST, PYROMANCY, CRITICALMAGIC };      
         public enum warriorSkills { FIRESLASH, TAUNT, STEADFAST, MANABLADE };
+        public enum mageSkills { THIRDEYE, FROST, PYROMANCY, CRITICALMAGIC, HEAL };   
         public enum archerSkills { VANTAGEPOINT, SCAVENGER, POISONARROW, SURVIVALIST };
         public enum rogueSkills { FAEDUST, CLOAKED, WAXTHIEF, AMBUSHER };
     }
