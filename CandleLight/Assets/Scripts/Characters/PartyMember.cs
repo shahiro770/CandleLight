@@ -252,6 +252,9 @@ namespace Characters {
                     int DOGBoost = (int)(DOG * 0.15f);
                     DOG += 15 >= DOGBoost ? 15 : DOGBoost;
                 }
+                if (skills[(int)SkillConstants.rogueSkills.DEADLY].skillEnabled == true) {
+                    PATK += 5;
+                }
             }
 
             /* secondary stat changes from status effects */
@@ -272,6 +275,9 @@ namespace Characters {
                 }
                 else if (se.name == StatusEffectConstants.ROOT) {
                     DOG -= (int)(DOG * 0.5);;
+                }
+                else if (se.name == StatusEffectConstants.GUARD) {
+                    PDEF += PDEF;
                 }
             }
             
@@ -498,6 +504,7 @@ namespace Characters {
             if (a.type == AttackConstants.HEALHP) {
                 int healed = CalculateAttackHeal(a);
                 bool isCrit = CalculateAttackCrit(c);
+                bool isStatus = CalculateAttackStatus(a, c);
 
                 if (isCrit) {
                     healed = CalculateAttackHealCrit(healed, c);
@@ -506,6 +513,19 @@ namespace Characters {
                 pmvc.SetAttackAmount(healed, isCrit);
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
                 yield return StartCoroutine(AddHPYield(healed));
+
+                if (isStatus && CheckDeath() == false) {
+                    AddStatusEffect(a.seName, a.seDuration, c);
+                }
+            }
+            else if (a.type == AttackConstants.BUFF) {
+                yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
+                if (c.ID == this.ID) {
+                    AddStatusEffect(a.seName, a.seDuration + 1, c); // status effects proc the same turn they show up, so to keep the duration equal between all partyMembers, add 1 if self-casted
+                }
+                else {
+                    AddStatusEffect(a.seName, a.seDuration, c);
+                }
             }
         }
 
@@ -542,7 +562,8 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator TriggerStatuses(bool inCombat) {
             int damageTaken = 0;
-            int[] animationsToPlay = new int[] { 0 ,0, 0 }; 
+            int[] animationsToPlay = new int[] { 0 ,0, 0, 0 }; 
+            bool isCure = GetStatusEffect(StatusEffectConstants.CURE) != -1;
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
@@ -561,7 +582,17 @@ namespace Characters {
                     }
                     animationsToPlay[2] = 1;
                 }
-                se.UpdateDuration();
+                else if (se.name == StatusEffectConstants.REGENERATE) {
+                    damageTaken -= se.value;
+                    animationsToPlay[3] = 1;
+                }
+
+                if (isCure && se.isBuff == false) {
+                    se.UpdateDuration(-2);
+                }
+                else {
+                    se.UpdateDuration(-1);
+                }
                 
                 if (se.duration == 0) {
                     seToRemove.Add(se);
@@ -574,6 +605,10 @@ namespace Characters {
                     pmvc.SetAttackAmount(damageTaken, false);
                     yield return StartCoroutine(LoseHP(damageTaken));
                 }
+                else if (damageTaken < 0) {
+                    pmvc.SetAttackAmount(damageTaken, true);
+                    yield return StartCoroutine(AddHPYield(damageTaken));
+                }
             }
             else {
                 if (CHP - damageTaken <= 0) {
@@ -582,6 +617,9 @@ namespace Characters {
                 pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
                 if (damageTaken > 0) {
                     StartCoroutine(LoseHP(damageTaken));
+                }
+                else if (damageTaken < 0) {
+                    AddHP(damageTaken * -1);
                 }
             }
             
@@ -684,6 +722,9 @@ namespace Characters {
                     if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
                         statChange = true;
                     }
+                    if (index == (int)SkillConstants.rogueSkills.DEADLY) {
+                        statChange = true;
+                    }
                 }
 
                 if (statChange == true) {
@@ -750,6 +791,9 @@ namespace Characters {
                         PartyManager.instance.WAXDropMultiplier /= 1.5f;
                     }
                     if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
+                        statChange = true;
+                    }
+                    if (index == (int)SkillConstants.rogueSkills.DEADLY) {
                         statChange = true;
                     }
                 }

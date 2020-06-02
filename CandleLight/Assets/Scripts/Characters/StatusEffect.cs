@@ -27,8 +27,9 @@ namespace Characters {
         [field: SerializeField] public int value { get; private set; }          /// <value> Calculated value from formula </value>
         [field: SerializeField] public int duration;                            /// <value> Turn duration of status </value>      
         [field: SerializeField] public bool isDispellable;                      /// <value> Flag for if the statusEffect can be removed </value>
+        [field: SerializeField] public bool isBuff;                             /// <value> True if the statusEffect is a buff, false if debuff </value>
         [field: SerializeField] public bool plus;                               /// <value> Flag for if the statusEffect is more potent than normal </value>
-
+        
         private int preValue = 0;  /// <value> Damage amount of status effect before reductions </value>
 
         /// <summary>
@@ -37,6 +38,34 @@ namespace Characters {
         public StatusEffect(string name, int duration) {
             this.name = name;
             this.duration = duration;
+            
+             switch(name) {
+                case StatusEffectConstants.BURN:
+                case StatusEffectConstants.POISON:
+                case StatusEffectConstants.TAUNT:
+                case StatusEffectConstants.FREEZE:
+                case StatusEffectConstants.BLEED:
+                case StatusEffectConstants.WEAKNESS:
+                case StatusEffectConstants.ROOT:
+                case StatusEffectConstants.STUN:
+                case StatusEffectConstants.SHOCK:
+                    isBuff = false;
+                    break;
+                case StatusEffectConstants.RAGE:
+                case StatusEffectConstants.ADVANTAGE:
+                case StatusEffectConstants.REGENERATE:
+                case StatusEffectConstants.GUARD:
+                case StatusEffectConstants.CURE:           
+                case StatusEffectConstants.BOSS:
+                case StatusEffectConstants.CHAMPIONHP:
+                case StatusEffectConstants.CHAMPIONPATK:
+                case StatusEffectConstants.CHAMPIONMATK:
+                case StatusEffectConstants.CHAMPIONPDEF:
+                case StatusEffectConstants.CHAMPIONMDEF:
+                    isBuff = true;
+                    break;
+            }
+
             nameKey = name + "_status";
         }
 
@@ -110,8 +139,9 @@ namespace Characters {
         /// <summary>
         /// Updates the duration of the statusEffect and then updates the display
         /// </summary>
-        public void UpdateDuration() {
-            duration--;
+        /// <param name="value"> Amount duration is increased/decreased by </param>
+        public void UpdateDuration(int value) {
+            duration += value;
             sed.UpdateText();
         }
 

@@ -28,6 +28,7 @@ namespace PlayerUI {
         public Animator pmBurnAnimator;     /// <value> Animator for burns </value>
         public Animator pmBleedAnimator;    /// <value> Animator for bleeds </value>
         public Animator pmPoisonAnimator;   /// <value> Animator for poison </value>
+        public Animator pmRegenerateAnimator;   /// <value> Animator for poison </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
         public Bar MPBar;               /// <value> Visual for mana points </value>
@@ -337,6 +338,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Plays the regenerate animation
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator PlayRegenerateAnimation() {
+            pmRegenerateAnimator.SetTrigger("statusEffected");
+            do {
+                yield return null;    
+            } while (pmRegenerateAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmRegenerateAnimator.ResetTrigger("statusEffected");
+        }
+
+        /// <summary>
         /// Plays status effect animations depending on the partyMember's current status effects
         /// </summary>
         /// <param name="animationsToPlay"></param>
@@ -349,6 +362,9 @@ namespace PlayerUI {
             }
             if (animationsToPlay[2] == 1) {
                 StartCoroutine(PlayBleedAnimation());
+            }
+            if (animationsToPlay[3] == 1) {
+                StartCoroutine(PlayRegenerateAnimation());
             }
         }
 

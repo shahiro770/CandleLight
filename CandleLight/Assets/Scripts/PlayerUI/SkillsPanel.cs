@@ -80,7 +80,7 @@ namespace PlayerUI {
         public void ToggleSkill(SkillDisplay sd) {
             if (isTogglable == true) {
                 if (sd.skillDisplayEnabled == true) {
-                    if ((sd.colIndex != 3 && colPoints[sd.colIndex + 1] == 0) || sd.colIndex == 3) {
+                    if ((sd.colIndex != 3 && (colPoints[sd.colIndex + 1] == 0 || colPoints[sd.colIndex] > 1)) || sd.colIndex == 3) {
                         if (PartyManager.instance.DisableSkill(sd.skillIndex)) {
                             sd.skillDisplayEnabled = false;
                             colPoints[sd.colIndex]--;

@@ -147,7 +147,7 @@ namespace PlayerUI {
         /// <param name="amount"> Positive int amount </param>
         public void SetAttackText(Attack a, bool isUsable) {
             string attackString;
-            if (a.type == AttackConstants.DEBUFF) {   
+            if (a.type == AttackConstants.BUFF || a.type == AttackConstants.DEBUFF) {   
                 attackString = a.costValue + " " + a.costType;
             }
             else if (a.type == AttackConstants.HEALHP) {
@@ -156,6 +156,7 @@ namespace PlayerUI {
             else {  // physical or magical attack
                 attackString = a.costValue + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
             }
+
             if (a.seName != "none") {
                 if (a.seDuration == 1) {
                     attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turn";
@@ -164,6 +165,7 @@ namespace PlayerUI {
                     attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turns";
                 }
             }
+            
             eventText.SetText(attackString);
 
             if (!isUsable) {

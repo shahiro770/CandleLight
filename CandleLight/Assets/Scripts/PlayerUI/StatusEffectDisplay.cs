@@ -115,15 +115,36 @@ namespace PlayerUI {
                     normalBlock.normalColor = new Color32(255, 205, 2, 200);
                     normalBlock.highlightedColor = new Color32(255, 205, 2, 255);
                     normalBlock.pressedColor = new Color32(255, 205, 2, 255);
-                    normalBlock.disabledColor = new Color32(255, 205, 2, 255);
+                    normalBlock.disabledColor = new Color32(255, 205, 2, 150);
                     durationText.SetColour(new Color32(255, 205, 2, 255));
                     break;
                 case StatusEffectConstants.SHOCK:
                     normalBlock.normalColor = new Color32(255, 235, 87, 200);
                     normalBlock.highlightedColor = new Color32(255, 235, 87, 255);
                     normalBlock.pressedColor = new Color32(255, 235, 87, 255);
-                    normalBlock.disabledColor = new Color32(255, 235, 87, 255);
+                    normalBlock.disabledColor = new Color32(255, 235, 87, 150);
                     durationText.SetColour(new Color32(255, 235, 87, 255));
+                    break;
+                case StatusEffectConstants.REGENERATE:
+                    normalBlock.normalColor = new Color32(90, 197, 79, 200);
+                    normalBlock.highlightedColor = new Color32(90, 197, 79, 255);
+                    normalBlock.pressedColor = new Color32(90, 197, 79, 255);
+                    normalBlock.disabledColor = new Color32(90, 197, 79, 255);
+                    durationText.SetColour(new Color32(90, 197, 79, 255));
+                    break;
+                case StatusEffectConstants.GUARD:
+                    normalBlock.normalColor = new Color32(155, 66, 28, 200);
+                    normalBlock.highlightedColor = new Color32(155, 66, 28, 255);
+                    normalBlock.pressedColor = new Color32(155, 66, 28, 255);
+                    normalBlock.disabledColor = new Color32(155, 66, 28, 150);
+                    durationText.SetColour(new Color32(155, 66, 28, 255));
+                    break;
+                case StatusEffectConstants.CURE:
+                    normalBlock.normalColor = new Color32(90, 197, 79, 200);
+                    normalBlock.highlightedColor = new Color32(90, 197, 79, 255);
+                    normalBlock.pressedColor = new Color32(90, 197, 79, 255);
+                    normalBlock.disabledColor = new Color32(90, 197, 79, 150);
+                    durationText.SetColour(new Color32(90, 197, 79, 255));
                     break;
                 case StatusEffectConstants.BOSS:
                 case StatusEffectConstants.CHAMPIONHP:

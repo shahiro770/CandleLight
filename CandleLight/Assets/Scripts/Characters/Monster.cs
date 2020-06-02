@@ -134,6 +134,9 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.ROOT) {
                     DOG -= (int)(DOG * 0.5);
                 }
+                else if (se.name == StatusEffectConstants.GUARD) {
+                    PDEF += PDEF;
+                }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);
                 }
@@ -317,7 +320,7 @@ namespace Characters {
                     damageTaken -= se.value; 
                 }
 
-                se.UpdateDuration();
+                se.UpdateDuration(-1);
                 if (se.duration == 0) {
                     seToRemove.Add(se);
                 }   

@@ -98,11 +98,11 @@ namespace Combat {
             isFleeSuccessful = false;
             inCombat = true;
             cq.Reset();
-            countID = 0;
             monsters = new List<Monster>();
             monstersKilled = new List<Monster>();
             partyMembersAlive = new List<PartyMember>();
-            partyMembers = PartyManager.instance.GetPartyMembers(ref countID);
+            partyMembers = PartyManager.instance.GetPartyMembers();
+            countID = partyMembers[partyMembers.Count - 1].ID + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath() == false) {
                     partyMembersAlive.Add(pm);
@@ -279,8 +279,9 @@ namespace Combat {
             else if (taunter != null) {
                 SelectMonster(taunter);
             }
-            else {
-                if (selectedAttackPM.type == AttackConstants.HEALHP) {          // highlight the party if the attack targets the party
+            else {  
+                // highlight the party if the attack targets the party
+                if (selectedAttackPM.type == AttackConstants.HEALHP || selectedAttackPM.type == AttackConstants.BUFF) {          
                     partyPanel.SetBlinkSelectables(selectedAttackPM, true);
                 }
                 else {
@@ -361,7 +362,7 @@ namespace Combat {
                     else if (selectedAttackPM.type == AttackConstants.DEBUFF) {
                         yield return (StartCoroutine(selectedMonster.GetStatusEffected(selectedAttackPM, activePartyMember)));
                     }
-                    else if (selectedAttackPM.type == AttackConstants.HEALHP) {
+                    else if (selectedAttackPM.type == AttackConstants.HEALHP || selectedAttackPM.type == AttackConstants.BUFF) {
                         yield return (StartCoroutine(selectedPartyMember.GetHelped(selectedAttackPM, activePartyMember)));
                     }   
                 }

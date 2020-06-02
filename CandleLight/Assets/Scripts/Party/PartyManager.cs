@@ -37,7 +37,7 @@ namespace Party {
         private PartyMember activePartyMember = null;
         private enum primaryStats { NONE, STR, DEX, INT, LUK };                 /// <value> Enumerated primary stats </value>
         private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>
-        private int uniqueIDNum = 0;                                            /// <value> ID number to assign to each pm</value>
+        private int ID = 0;                                                     /// <value> ID number to assign to each pm</value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -61,7 +61,7 @@ namespace Party {
                 GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
                 GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
                 newMember.transform.SetParent(gameObject.transform, false);
-                newMember.GetComponent<PartyMember>().AssignPMID(uniqueIDNum++);
+                newMember.GetComponent<PartyMember>().ID = (ID++);
                 partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
                 partyMembersAll.Add(newMember.GetComponent<PartyMember>());
             }
@@ -74,35 +74,12 @@ namespace Party {
         /// </summary>
         public void ResetGame() {
             WAX = 0;
-            uniqueIDNum = 0;
+            ID = 0;
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
         }
         
-        /// <summary>
-        /// Returns a list containing all partyMembers
-        /// </summary> 
-        /// <returns>
-        /// A list of partyMembers. 
-        /// Each partyMember is assigned a unique ID in preparation for queueing in combat. 
-        /// ID is incremented for each partyMember.
-        /// </returns>
-        /// <param name="countID"> ID that is incremented and assigned to each partyMember for queuing </param>
-        public List<PartyMember> GetPartyMembers(ref int countID) {
-            List<PartyMember> partyMembers = new List<PartyMember>();
-            foreach (PartyMember pm in partyMembersAlive) {
-                pm.ID = countID++;
-                partyMembers.Add(pm);
-            }
-            foreach (PartyMember pm in partyMembersDead) {
-                pm.ID = countID++;
-                partyMembers.Add(pm);
-            }
-
-            return partyMembers;
-        }
-
         /// <summary>
         /// Returns the list of partyMembers
         /// </summary>
