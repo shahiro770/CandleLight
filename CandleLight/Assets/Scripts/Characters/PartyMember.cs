@@ -33,7 +33,6 @@ namespace Characters {
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public int skillPoints;
-        public int pmID;                            /// <value> Unique identifier to distinguish partyMember from partyMember </value>
         public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
 
         public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");
@@ -61,7 +60,7 @@ namespace Characters {
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
             this.className = personalInfo[0];
             this.subClassName = personalInfo[1];
-            this.pmName = personalInfo[2];
+            this.pmName = GenerateName();
             this.race = personalInfo[3];
             this.skills = skills;
 
@@ -71,11 +70,13 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Assigns an ID number to this partyMember
+        /// Assigns a random name to this partyMember
         /// </summary>
         /// <param name="id"></param>
-        public void AssignPMID(int id) {
-            pmID = id;
+        public string GenerateName() {
+            string[] names = new string[] { "Alan", "Bryony", "Candace", "Duran", "Edith", "Flatyz", "Grace", "Holst", "Iliad", "John", "Kempf", "Ludwig", "Madeline", "Nord", "Orvis", "Priscilla", "Qyburn", "Raven", "Seth", "Tao", "Ursula", "Valter", "Wallace", "Xylo", "Yoan", "Zelot" };
+            
+            return names[Random.Range(0, names.Length)];
         }
 
         /// <summary>

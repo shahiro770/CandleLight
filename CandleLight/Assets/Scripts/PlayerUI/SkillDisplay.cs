@@ -50,6 +50,7 @@ namespace PlayerUI {
                 normalBlock.normalColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.5f);
                 normalBlock.highlightedColor = skillColour;
                 normalBlock.pressedColor = skillColour;
+                normalBlock.disabledColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.59f);
                 skillSpriteRenderer.color = skillColour;
                 bts.SetColorBlock("normal", normalBlock);
                 bts.SetColor("normal");   
@@ -58,6 +59,7 @@ namespace PlayerUI {
                 normalBlock.normalColor = new Color32(141, 141, 141, 255);
                 normalBlock.highlightedColor = new Color32(255, 255, 255, 200);
                 normalBlock.pressedColor = new Color32(255, 255, 255, 255);
+                normalBlock.disabledColor = new Color32(61, 61, 61, 255);
                 skillSpriteRenderer.color = new Color32(133, 133, 133, 255);
                 bts.SetColorBlock("normal", normalBlock);
                 bts.SetColor("normal");
@@ -73,6 +75,7 @@ namespace PlayerUI {
             ColorBlock normalBlock = b.colors; 
             normalBlock.highlightedColor = lockedSkillColour;
             normalBlock.pressedColor = lockedSkillColour;
+            normalBlock.disabledColor = new Color32(61, 61, 61, 255);
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
             SetColour(skillDisplayEnabled);
@@ -86,6 +89,7 @@ namespace PlayerUI {
                 normalBlock.normalColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.75f);
                 normalBlock.highlightedColor = skillColour;
                 normalBlock.pressedColor = skillColour;
+                normalBlock.disabledColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.59f);
                 skillSpriteRenderer.color = skillColour;
                 bts.SetColorBlock("normal", normalBlock);
                 bts.SetColor("normal");   
@@ -94,6 +98,7 @@ namespace PlayerUI {
                 normalBlock.normalColor = new Color32(141, 141, 141, 150);
                 normalBlock.highlightedColor = new Color32(255, 255, 255, 200);
                 normalBlock.pressedColor = new Color32(255, 255, 255, 255);
+                normalBlock.disabledColor = new Color32(61, 61, 61, 255);
                 skillSpriteRenderer.color = new Color32(133, 133, 133, 255);
                 bts.SetColorBlock("normal", normalBlock);
                 bts.SetColor("normal");
