@@ -232,7 +232,7 @@ namespace Characters {
                             case "CRITMULT":
                                 critMult += gearToCalculate.values[j];
                                 break;
-                            case "BLEEDUP":
+                            case "BLEEDPLUS":
                                 bleedPlus = true;
                                 break;
                             default:
@@ -608,7 +608,7 @@ namespace Characters {
                 }
                 else if (damageTaken < 0) {
                     pmvc.SetAttackAmount(damageTaken, true);
-                    yield return StartCoroutine(AddHPYield(damageTaken));
+                    yield return StartCoroutine(AddHPYield(damageTaken * -1));
                 }
             }
             else {

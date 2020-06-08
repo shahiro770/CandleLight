@@ -47,10 +47,10 @@ namespace PlayerUI {
             ColorBlock normalBlock = b.colors; 
 
             if (skillDisplayEnabled == true) {
-                normalBlock.normalColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.5f);
+                normalBlock.normalColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.75f);
                 normalBlock.highlightedColor = skillColour;
                 normalBlock.pressedColor = skillColour;
-                normalBlock.disabledColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.59f);
+                normalBlock.disabledColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.33f);
                 skillSpriteRenderer.color = skillColour;
                 bts.SetColorBlock("normal", normalBlock);
                 bts.SetColor("normal");   
@@ -89,7 +89,7 @@ namespace PlayerUI {
                 normalBlock.normalColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.75f);
                 normalBlock.highlightedColor = skillColour;
                 normalBlock.pressedColor = skillColour;
-                normalBlock.disabledColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.59f);
+                normalBlock.disabledColor = new Color(skillColour.r, skillColour.g, skillColour.b, 0.33f);
                 skillSpriteRenderer.color = skillColour;
                 bts.SetColorBlock("normal", normalBlock);
                 bts.SetColor("normal");   

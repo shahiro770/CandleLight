@@ -36,6 +36,7 @@ namespace Events {
         public Image eventBackground;               /// <value> Image background for current event </value>
         public Image nextEventBackground;           /// <value> Image background for next event </value>
         public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
+        public ToastPanel toastPanel;               /// <value> ToastPanel reference </value>
         public GearPanel gearPanel;                 /// <value> GearPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
@@ -659,7 +660,7 @@ namespace Events {
                 }
             }
             else if (currentResult.type == ResultConstants.REVIVEANDLEAVE) {     
-                if (PartyManager.instance.GetNumPartyMembersDead() > 0) {        
+                if (PartyManager.instance.GetNumPartyMembersDead() > 0) { 
                     PartyManager.instance.RevivePartyMembers();
 
                     eventDescription.SetKey(currentResult.resultKey); 
@@ -672,7 +673,12 @@ namespace Events {
                 }
             }
             else if (currentResult.type == ResultConstants.PROGRESS) {
+                bool[] changes = new bool[5];
+                string[] amounts = new string[5];
                 currentResult.GenerateResults();
+
+                changes[(int)ToastPanel.toastType.PROGRESS] = true;
+                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.progressAmount.ToString();
 
                 subAreaProgress += currentResult.progressAmount;
                 if (subAreaProgress > 100) {
@@ -684,7 +690,7 @@ namespace Events {
                 if (infoPanel.isOpen == true) {
                     infoPanel.UpdateAmounts();
                 }
-
+                toastPanel.SetNotification(changes, amounts);
                 eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.TravelActions();
                 SetNavigation();
@@ -715,24 +721,36 @@ namespace Events {
         }
 
         /// <summary>
-        ///  Applies stat changes (HP, MP, STR, INT, DEX, LUK) to all partyMembers
+        ///  Applies stat changes (HP, MP, STR, INT, DEX, LUK, EXP, status effects) to all partyMembers
         /// </summary>
         /// <param name="r"> Result containing the stats to be changed </param>
         public void ApplyResultStatChangesAll(Result r, string type) {
+            bool[] changes = new bool[5];
+            string[] amounts = new string[5];
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
                 StartCoroutine(PartyManager.instance.ChangeHPAll(r.HPAmount, type));
+                changes[(int)ToastPanel.toastType.HP] = true;
+                amounts[(int)ToastPanel.toastType.HP] = r.HPAmount.ToString();
             }
             if (r.MPAmount != 0) {
                 PartyManager.instance.ChangeMPAll(r.MPAmount, type);
+                changes[(int)ToastPanel.toastType.MP] = true;
+                amounts[(int)ToastPanel.toastType.MP] = r.MPAmount.ToString();
             }
             if (r.EXPAmount != 0) {
                 PartyManager.instance.AddEXP(r.EXPAmount);
+                changes[(int)ToastPanel.toastType.EXP] = true;
+                amounts[(int)ToastPanel.toastType.EXP] = r.EXPAmount.ToString();
             }
             if (r.seName != "none") {
                 PartyManager.instance.AddSE(r.seName, r.seDuration);
+                changes[(int)ToastPanel.toastType.SE] = true;
+                amounts[(int)ToastPanel.toastType.SE] = r.seName;
             }
+
+            toastPanel.SetNotification(changes, amounts);
         }
 
         /// <summary>
@@ -752,6 +770,7 @@ namespace Events {
             eventDescription.FadeOut();
             HideEventDisplays();
             rewardsPanel.SetVisible(false);
+            toastPanel.SetVisible(false);
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             partyPanel.DisableButtons();
             gearPanel.SetInteractable(false);

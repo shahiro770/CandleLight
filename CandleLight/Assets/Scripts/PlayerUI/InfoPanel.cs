@@ -64,7 +64,7 @@ namespace PlayerUI {
         /// </summary>
         public void UpdateAmounts() {
             amountTextWAX.SetText(PartyManager.instance.WAX.ToString());
-            amountTextPROG.SetText(EventManager.instance.subAreaProgress.ToString());
+            amountTextPROG.SetText(EventManager.instance.subAreaProgress.ToString() + "%");
         }
     }
 }

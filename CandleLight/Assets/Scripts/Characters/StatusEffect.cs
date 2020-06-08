@@ -126,7 +126,7 @@ namespace Characters {
                     value = preValue - afflicted.PDEF;;
                 }
             }
-            else if (name == StatusEffectConstants.CHAMPIONHP) {
+            else if (name == StatusEffectConstants.CHAMPIONHP || name == StatusEffectConstants.REGENERATE) {
                 preValue = (int)(Mathf.Ceil((float)afflicted.HP * 0.05f));
                 value = preValue;
             }

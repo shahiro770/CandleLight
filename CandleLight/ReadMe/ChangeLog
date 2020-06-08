@@ -15,7 +15,7 @@ Tweaked EXP bar colouring
 HP and MP bars in statsPanel now show current over max (this will break if the numbers get too large)
 Fixing sprites being wrong for dirt storm event
 Fixing actions panel interactability on death
-Made skillsPanel uninteractable on death
+Made skillsPanel uninteractable on death??
 Buffed Hobgoblin attack, Warrior's Bash, 
 Prevent status effects from triggering if someone is dead (Bleed can't revive)
 Add HP regen amount to Everlasting
@@ -34,12 +34,13 @@ Bug: Ambusher is bugged if two people have it (the off person gets 2 advantage)
 Feature: Mage heal
 Feature: Warrior safeguard
 Bug: Speccin 1 into first col, 1 into 2nd, and 1 into 3rd makes 1st col bugged
+Bug: Skill display disabled looks weird
 Feature: 
 
 CURRENTLY DOING
 ---------------
 Clean Up: Have eventManager have a function that disables all panels (So I don't need to do it in every place)
 
-Bug: Skill display disabled looks weird
+
 
 
