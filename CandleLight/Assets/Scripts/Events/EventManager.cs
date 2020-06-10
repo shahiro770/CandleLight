@@ -777,7 +777,7 @@ namespace Events {
             if (r.seName != "none") {
                 PartyManager.instance.AddSE(r.seName, r.seDuration);
                 changes[(int)ToastPanel.toastType.SE] = true;
-                amounts[(int)ToastPanel.toastType.SE] = r.seName;
+                amounts[(int)ToastPanel.toastType.SE] = r.seName + "_title";
             }
 
             SetNotification(changes, amounts);
@@ -1046,7 +1046,12 @@ namespace Events {
         /// Used primarily for shops so player doesn't have to tab back and forth between panels
         /// </summary>
         public void SetShopNotification() {
-            toastPanel0.SetShopNotification();
+            if (toastPanel0.gameObject.activeSelf == true) {
+                toastPanel1.SetShopNotification();
+            }
+            else {
+                toastPanel0.SetShopNotification();    
+            }
         }
 
         /// <summary>

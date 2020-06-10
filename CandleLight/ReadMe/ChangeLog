@@ -1,44 +1,13 @@
 ChangeLog
 ---------
-Attacks now have scaling manacosts (it was too strong)
-Made reviving fail if there's no one to revive
-Redid class icons
-Testing for bug with stingerBurrows event
-Added Rogue
-Added Rogue skills
-Tweaked bleed colour to be more bloody
-Warrior Bash now can stun the enemy
-Made goblin hut event slightly more likely to end badly
-Tweaked statusEffect damage numbers
-Monsters now deal more damage
-Tweaked EXP bar colouring
-HP and MP bars in statsPanel now show current over max (this will break if the numbers get too large)
-Fixing sprites being wrong for dirt storm event
-Fixing actions panel interactability on death
-Made skillsPanel uninteractable on death??
-Buffed Hobgoblin attack, Warrior's Bash, 
-Prevent status effects from triggering if someone is dead (Bleed can't revive)
-Add HP regen amount to Everlasting
-Bug: StatusEffects dont' disapear on death for pmd???
-Bug: AttackText null what the fuck
-Bug: SED is interactable when the pmd isn't
-Bug: Killing enemies on final hit will give 2 advantage instead of 1
-Bug: SEDs are interactable when the monster isn't
-Bug: Rewards panel showing up on death???
-Tweak bleed animation to be a little further up
-Bug: HP and MP bar snap instantly due to toggling to partyPanel (just make it so only if not on partyPanel)
-Bug: When combat starts, default to party panel
-Bug: Rogue weapon is not spawning
-Bug: Skill points don't update if you level up with the skillsPanel open
-Bug: Ambusher is bugged if two people have it (the off person gets 2 advantage)
-Feature: Mage heal
-Feature: Warrior safeguard
-Bug: Speccin 1 into first col, 1 into 2nd, and 1 into 3rd makes 1st col bugged
-Bug: Skill display disabled looks weird
-Feature: 
+the winds are furious \n
+Test for toast0 being used have toast1 show the shop stuff
+Weird value text blinking when swiping through real fast (might have to do with the setActive)
 
 CURRENTLY DOING
 ---------------
+
+
 Clean Up: Have eventManager have a function that disables all panels (So I don't need to do it in every place)
 
 

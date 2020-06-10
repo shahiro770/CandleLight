@@ -180,6 +180,7 @@ namespace PlayerUI {
             titleText.SetColour(new Color32(0, 0, 0 ,0));
             subtitleText.SetColour(new Color32(0, 0, 0 ,0));
             descriptionText.SetColour(new Color32(0, 0, 0 ,0));
+            valueText.SetColour(new Color32(0, 0 ,0 ,0));
             yield return new WaitForEndOfFrame();
             float textBackgroundWidth = textBackground.rectTransform.sizeDelta.x;
             float textBackgroundHeight = textBackground.rectTransform.sizeDelta.y;
@@ -220,6 +221,7 @@ namespace PlayerUI {
             titleText.SetColour(new Color32(255, 255, 255 , 255));
             subtitleText.SetColour(new Color32(178, 178, 178 ,255));
             descriptionText.SetColour(new Color32(255, 255, 255 ,255));
+            valueText.SetColour(new Color32(225, 205 ,2 , 225));
         }
 
         /// <summary>

@@ -242,7 +242,7 @@ namespace Party {
                             }
                         }
                     }
-                    else if (type == "Combat") {    // TODO: Make AoE attacks against the party print damage taken by everyone, as well as combat constants for type
+                    else if (type == "Combat") {    // TODO: Make AoE attacks against the party show damage taken by everyone, as well as combat constants for type
                         yield return null;
                     }
                 }
@@ -293,7 +293,7 @@ namespace Party {
         } 
 
         /// <summary>
-        /// Recovers MP and HP for all partyMembers
+        /// Recovers a tiny bit of MP and HP for all partyMembers
         /// </summary>
         public void RegenParty() {
             foreach (PartyMember pm in partyMembersAlive) {

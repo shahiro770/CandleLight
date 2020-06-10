@@ -43,8 +43,8 @@ namespace PlayerUI {
             }
             if (types[(int)toastType.SE] == true) {
                 titleKey += "SE_";
-                descriptionKeys[3] = "SE_label";
-                amountStrings[3] = amounts[3];
+                descriptionKeys[3] = amounts[3];    // for status effects, just showing the SE name is enough (no fancy descriptors)
+                amountStrings[3] = "";
                 typesCount++;
             }
             if (types[(int)toastType.PROGRESS] == true) {

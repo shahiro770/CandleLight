@@ -115,13 +115,13 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="id"> ItemDisplay </param>
         /// <returns> True if possible, false otherwise </returns>
-        public bool PlaceItem(ItemDisplay id) {
+        public bool PlaceItem(ItemDisplay id, bool direct = false) {
             if (maxSpare > numSpareFull) {
                 numSpareFull++;
 
                 for (int i = 0;i < spare.Length; i++) {
                     if (spare[i].currentItemDisplay == null) {
-                        spare[i].PlaceItem(id);
+                        spare[i].PlaceItem(id, direct);
                         break;
                     }
                 }

@@ -126,9 +126,11 @@ namespace Items {
                         break;
                     case "PATK":
                     case "MATK":
+                        WAX += values[i] * 3;
+                        break;
                     case "PDEF":
                     case "MDEF":
-                        WAX += values[i] * 3;
+                        WAX += values[i] * 4;
                         break;
                     case "CRITMULT":
                         WAX += values[i] * 100;
