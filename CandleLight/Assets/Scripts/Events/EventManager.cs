@@ -36,7 +36,8 @@ namespace Events {
         public Image eventBackground;               /// <value> Image background for current event </value>
         public Image nextEventBackground;           /// <value> Image background for next event </value>
         public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
-        public ToastPanel toastPanel;               /// <value> ToastPanel reference </value>
+        public ToastPanel toastPanel0;               /// <value> ToastPanel reference </value>
+        public ToastPanel toastPanel1;               /// <value> ToastPanel reference </value>
         public GearPanel gearPanel;                 /// <value> GearPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
@@ -57,8 +58,8 @@ namespace Events {
         private Event currentEvent;          /// <value> Event being displayed </value>
         private Result currentResult;        /// <value> Result being obtained </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
-        private Consumable[] subAreaConsumables = new Consumable[10];   /// <value> Consumable items that can be found (max 10) </value>
-        private Gear[] subAreaGear = new Gear[10];  /// <value> Gear items that can be found (max 10) </value>
+        private Consumable[] subAreaConsumables;   /// <value> Consumable items that can be found (max 10) </value>
+        private Gear[] subAreaGear;          /// <value> Gear items that can be found (max 10) </value>
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, -20, 0);
@@ -690,10 +691,39 @@ namespace Events {
                 if (infoPanel.isOpen == true) {
                     infoPanel.UpdateAmounts();
                 }
-                toastPanel.SetNotification(changes, amounts);
+                SetNotification(changes, amounts);
+                eventDescription.SetKey(currentResult.resultKey);
+            }
+            else if (currentResult.type == ResultConstants.PROGRESSANDLEAVE) {
+                bool[] changes = new bool[5];
+                string[] amounts = new string[5];
+                currentResult.GenerateResults();
+
+                changes[(int)ToastPanel.toastType.PROGRESS] = true;
+                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.progressAmount.ToString();
+
+                subAreaProgress += currentResult.progressAmount;
+                if (subAreaProgress > 100) {
+                    subAreaProgress = 100;
+                }
+                else if (subAreaProgress < 0) {
+                    subAreaProgress = 0;
+                }
+                if (infoPanel.isOpen == true) {
+                    infoPanel.UpdateAmounts();
+                }
+                SetNotification(changes, amounts);
                 eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.TravelActions();
-                SetNavigation();
+            }
+            else if (currentResult.type == ResultConstants.SHOP) {
+                UIManager.instance.inShop = true;
+
+                List<Item> items = GetResultItems(currentResult);
+                eventDisplays[0].SetItemDisplaysShop(items);
+                SetShopNotification();
+
+                eventDescription.SetKey(currentResult.resultKey);
             }
             else if (currentResult.type == ResultConstants.END) {
                 GameManager.instance.LoadNextScene("MainMenu");
@@ -750,16 +780,26 @@ namespace Events {
                 amounts[(int)ToastPanel.toastType.SE] = r.seName;
             }
 
-            toastPanel.SetNotification(changes, amounts);
+            SetNotification(changes, amounts);
         }
 
         /// <summary>
-        /// Dispays the items found in the item displays of a single event display
+        /// Displays the items found in the item displays of a single event display
         /// </summary>
         /// <param name="r"> Result to have its items displayed </param>
         public void DisplayResultItems(Result r) {
             List<Item> items = GetResultItems(r);
             eventDisplays[0].SetItemDisplays(items);    // will overwrite some action navigation
+        }
+
+        /// <summary>
+        /// Updates all WAX amount displays to show the accurate number
+        /// </summary>
+        public void UpdateWAXAmounts(){
+            EventManager.instance.infoPanel.UpdateAmounts();
+            if (UIManager.instance.inShop) {
+                EventManager.instance.toastPanel0.UpdateWAXAmount(); 
+            }
         }
 
         /// <summary>
@@ -770,13 +810,14 @@ namespace Events {
             eventDescription.FadeOut();
             HideEventDisplays();
             rewardsPanel.SetVisible(false);
-            toastPanel.SetVisible(false);
+            SetToastPanelsVisible(false);
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             partyPanel.DisableButtons();
             gearPanel.SetInteractable(false);
             skillsPanel.SetInteractable(false);
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
+            UIManager.instance.inShop = false;
             StartCoroutine(PartyManager.instance.TriggerStatuses(false));
             yield return (StartCoroutine(FadeBackgrounds()));
         }
@@ -984,6 +1025,37 @@ namespace Events {
 
             Debug.LogError("Panel for an item with type " + type + " does not exist");
             return null;             
+        }
+
+        /// <summary>
+        /// Sets a toast notification
+        /// </summary>
+        /// <param name="types"> The values the notification is about (HP, MP, EXP, PROG, SE) </param>
+        /// <param name="amounts"> The relevant amounts (or status effect name for SEs)</param>
+        public void SetNotification(bool[] types, string[] amounts) {
+            if (UIManager.instance.inShop == true) {
+                toastPanel1.SetNotification(types, amounts);
+            }
+            else {
+                toastPanel0.SetNotification(types, amounts);
+            }
+        }
+
+        /// <summary>
+        /// Turns one of the toast notifications into a temporary display showing the player's WAX
+        /// Used primarily for shops so player doesn't have to tab back and forth between panels
+        /// </summary>
+        public void SetShopNotification() {
+            toastPanel0.SetShopNotification();
+        }
+
+        /// <summary>
+        /// Controls the visibility of the toast panels
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetToastPanelsVisible(bool value) {
+            toastPanel0.SetVisible(value);
+            toastPanel1.SetVisible(value);
         }
 
         #endregion

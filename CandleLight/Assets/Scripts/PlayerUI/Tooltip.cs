@@ -18,9 +18,10 @@ namespace PlayerUI {
 
     public class Tooltip : MonoBehaviour {
         
-        public LocalizedText titleText;     /// <value> Text for event </value>
+        public LocalizedText titleText;     /// <value> Text for title </value>
         public LocalizedText subtitleText;
         public LocalizedText descriptionText;
+        public LocalizedText valueText;     /// <value> Text for the monetary value of an item (items only) </value>
         public Image textBackground;        /// <value> Image behind text </value>
         public Image imageDisplayBackground; /// <value> Largest image around the image that when hovered, will display the tooltip </value>
 
@@ -50,6 +51,9 @@ namespace PlayerUI {
             else if (textName == "description") {
                 descriptionText.SetKey(textKey);
             }
+            else if (textName == "value") {
+                valueText.SetKey(textKey);
+            }
             else {
                 Debug.LogError("TextName " + textName + " does not exist");
             }
@@ -69,6 +73,9 @@ namespace PlayerUI {
             else if (textName == "description") {
                 descriptionText.SetMultipleKeysAndJoin(textKeys);
             }
+            else if (textName == "value") {
+                valueText.SetMultipleKeysAndJoin(textKeys);
+            }
             else {
                 Debug.LogError("TextName " + textName + " does not exist");
             }
@@ -86,6 +93,12 @@ namespace PlayerUI {
             }
             else if (textName == "description") {
                 descriptionText.SetKeyAndAppend(textKey, amount.ToString());
+            }
+            else if (textName == "value") {
+                if (valueText.gameObject.activeSelf == false) {
+                    SetTextActive("value", true);
+                }
+                valueText.SetKeyAndAppend(textKey, amount.ToString());
             }
             else {
                 Debug.LogError("TextName " + textName + " does not exist");
@@ -105,6 +118,12 @@ namespace PlayerUI {
             else if (textName == "description") {
                 descriptionText.SetMultipleKeysAndAppend(textKeys, amounts);
             }
+            else if (textName == "value") {
+                if (valueText.gameObject.activeSelf == false) {
+                    SetTextActive("value", true);
+                }
+                valueText.SetMultipleKeysAndAppend(textKeys, amounts);
+            }
             else {
                 Debug.LogError("TextName " + textName + " does not exist");
             }     
@@ -121,6 +140,32 @@ namespace PlayerUI {
              titleText.Clear();
              subtitleText.Clear();
              descriptionText.Clear();
+             valueText.Clear();
+        }
+
+        /// <summary>
+        /// Sets the gameObject of a given text active or inactive
+        /// Used to negate unnecessary spacing added to a tooltip because 
+        /// vertical layout groups will add spacing to gameObjects of height and width 0
+        /// </summary>
+        /// <param name="textName"></param>
+        /// <param name="value"></param>
+        public void SetTextActive(string textName, bool value) {
+            if (textName == "title") {
+                titleText.gameObject.SetActive(value);
+            }
+            else if (textName == "subtitle") {
+                subtitleText.gameObject.SetActive(value);
+            }
+            else if (textName == "description") {
+                descriptionText.gameObject.SetActive(value);
+            }
+            else if (textName == "value") {
+                valueText.gameObject.SetActive(value);
+            }
+            else {
+                Debug.LogError("TextName " + textName + " does not exist");
+            }     
         }
 
         /// <summary>

@@ -9,6 +9,7 @@
 */
 
 using Items;
+using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,13 +17,13 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class EventDisplay : MonoBehaviour {
+    public class EventDisplay : Panel {
 
         /* external component references */
-        public ActionsPanel actionsPanel;       /// <value> actionsPanel reference</value>
+        public ActionsPanel actionsPanel;       /// <value> actionsPanel reference </value>
         public SpriteRenderer eventSprite;      /// <value> Image to be displayed </value>
-        public CanvasGroup imgCanvas;           /// <value> Background cavnas to control alpha</value> 
-        public ItemSlot[] itemSlots = new ItemSlot[3];  /// <value> Item slots references</value> 
+        public CanvasGroup imgCanvas;           /// <value> Background cavnas to control alpha </value> 
+        public ItemSlot[] itemSlots = new ItemSlot[6];  /// <value> Item slots references </value> 
         
         public int itemNum = 0;         /// <value> Number of items shown </value>
         
@@ -37,14 +38,31 @@ namespace PlayerUI {
             eventSprite.sprite = spr;
         }
 
+        /// <summary>
+        /// Initializes the item displays, showing items that can be taken
+        /// </summary>
+        /// <param name="items"></param>
         public void SetItemDisplays(List<Item> items) {
             this.itemNum = items.Count > itemSlots.Length ? itemSlots.Length : items.Count;
 
             for (int i = 0; i < itemNum; i++) {
                 itemSlots[i].PlaceItem(items[i]);
             }
+        }
 
-            SetInitialNavigation();
+        /// <summary>
+        /// Initializes the item displays, showing items that can be purchased, with extra ones for selling
+        /// </summary>
+        /// <param name="items"></param>
+        public void SetItemDisplaysShop(List<Item> items) {
+            this.itemNum = items.Count > itemSlots.Length ? itemSlots.Length : items.Count;
+
+            for (int i = 0; i < itemNum; i++) {
+                itemSlots[i].PlaceItemShop(items[i]);
+            }
+            for (int i = itemNum; i < itemSlots.Length; i++) {
+                itemSlots[i].SetVisibleShop(true);
+            }
         }
 
         public void TakeAllItems() {
@@ -92,7 +110,7 @@ namespace PlayerUI {
             }
             else {
                 imgCanvas.blocksRaycasts = false;
-                for (int i = 0; i < itemNum; i++) {
+                for (int i = 0; i < itemSlots.Length; i++) {
                     if (itemSlots[i].gameObject.activeSelf){
                         itemSlots[i].SetVisible(false);
                     }
@@ -141,6 +159,10 @@ namespace PlayerUI {
 
                 yield return new WaitForEndOfFrame();
             }
+        }
+
+        public override string GetPanelName() {
+            return PanelConstants.EVENTDISPLAY;    
         }
     }
 }

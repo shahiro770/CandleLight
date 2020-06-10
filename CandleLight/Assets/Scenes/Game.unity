@@ -523,3 +523,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heldItemDisplay: {fileID: 0}
   panelButtonsEnabled: 1
+  inShop: 0

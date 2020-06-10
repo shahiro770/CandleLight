@@ -17,6 +17,7 @@ namespace PlayerUI {
 
         public ItemDisplay heldItemDisplay;
         public bool panelButtonsEnabled = true;
+        public bool inShop = false;                 /// <value> Flag for if the player is currently in a shop </value>
 
         /// <summary>
         /// Awake to instantiate singleton

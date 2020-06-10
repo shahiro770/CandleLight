@@ -73,7 +73,7 @@ namespace Party {
         /// Removes all partyMembers from PartyMembers list
         /// </summary>
         public void ResetGame() {
-            WAX = 0;
+            WAX = 100;
             ID = 0;
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
@@ -293,7 +293,7 @@ namespace Party {
         } 
 
         /// <summary>
-        /// Regenerates MP and HP for all partyMembers
+        /// Recovers MP and HP for all partyMembers
         /// </summary>
         public void RegenParty() {
             foreach (PartyMember pm in partyMembersAlive) {
@@ -321,7 +321,7 @@ namespace Party {
         /// <param name="amount"> Positive int to increase by </param>
         public void AddWAX(int amount) {
             WAX += amount;
-            EventManager.instance.infoPanel.UpdateAmounts(); //with singletons you can reference across scenes!
+            EventManager.instance.UpdateWAXAmounts();
         }
 
         /// <summary>
@@ -335,6 +335,7 @@ namespace Party {
             else {
                 WAX -= amount;
             }
+            EventManager.instance.UpdateWAXAmounts();
         }
 
         public void AddSE(string seName, int seDuration) {

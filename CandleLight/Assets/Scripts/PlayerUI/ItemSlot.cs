@@ -10,8 +10,8 @@
 
 using EventManager = Events.EventManager;
 using Items;
+using PanelConstants = Constants.PanelConstants;
 using Party;
-using StatusEffectConstants = Constants.StatusEffectConstants;
 using System.Collections;
 using UIEffects;
 using UnityEngine;
@@ -50,9 +50,12 @@ namespace PlayerUI {
 
         /// <summary>
         /// Initializes the itemSlot with an item, creating an itemDisplay
+        /// Only used for item creation on eventDisplays, hence the itemSlot type can be defaulted to "any"
         /// </summary>
         /// <param name="newItem"> Item object </param>
         public void PlaceItem(Item newItem) {
+            itemSlotType = "any";
+
             if (newItem != null) {  
                 SetVisible(true);
             
@@ -78,9 +81,10 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Initializes the i
+        /// Initializes the item slot with a new item, creating an item display
+        /// Used for the gearPanel to instantly show partyMember's equipped items when switching between partyMembers
         /// </summary>
-        /// <param name="newItem"></param>
+        /// <param name="newItem"> Item data </param>
         public void PlaceItemInstant(Item newItem) {
             if (newItem != null) {  
             
@@ -121,13 +125,25 @@ namespace PlayerUI {
                 defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
                 if (itemSlotType == "gear") {
                     PartyManager.instance.EquipGear(newItemDisplay, itemSlotSubType);
-                }    
+                }
             }
 
             if (es.currentSelectedGameObject == this.gameObject) {
                 es.SetSelectedGameObject(this.gameObject);
                 t.SetVisible(true);
             }
+        }
+
+        /// <summary>
+        /// Initializes the itemSlot with an item, creating an itemDisplay.
+        /// Used for shops by identifying the itemSlot as a "shop" type, forcing the checking
+        /// of transactions to take the item, or place an item into the slot.
+        /// </summary>
+        /// <param name="newItem"></param>
+        public void PlaceItemShop(Item newItem) {
+            PlaceItem(newItem);
+
+            itemSlotType = "shop";
         }
 
         /// <summary>
@@ -144,31 +160,60 @@ namespace PlayerUI {
         /// On click function
         /// </summary>
         public void OnClick() {
-            if (UIManager.instance.heldItemDisplay != null) {
-                if (CheckCorrectItemType(UIManager.instance.heldItemDisplay) == true) {
-                    if (currentItemDisplay != null) {
-                        ItemDisplay temp = UIManager.instance.heldItemDisplay;
+            if (itemSlotType == "shop") {
+                if (UIManager.instance.heldItemDisplay != null) {
+                    if (TryShopTransaction(UIManager.instance.heldItemDisplay) == true) {
+                        if (currentItemDisplay != null) {
+                            ItemDisplay temp = UIManager.instance.heldItemDisplay;
+                            UIManager.instance.heldItemDisplay = null;
 
-                        TakeItem();
+                            TakeItem();
 
-                        temp.EndDragItem();
-                        PlaceItem(temp);
+                            temp.EndDragItem();
+                            PlaceItem(temp);
+                        }
+                        else {
+                            UIManager.instance.heldItemDisplay.EndDragItem();
+                            PlaceItem(UIManager.instance.heldItemDisplay);
+                            UIManager.instance.heldItemDisplay = null;
+                            UIManager.instance.panelButtonsEnabled = true;
+                        }
                     }
-                    else {
-                        UIManager.instance.heldItemDisplay.EndDragItem();
-                        PlaceItem(UIManager.instance.heldItemDisplay);
-                        UIManager.instance.heldItemDisplay = null;
-                        UIManager.instance.panelButtonsEnabled = true;
+                }
+                else {
+                    if (TryShopTransaction() == true) {
+                        TakeItem();
                     }
                 }
             }
-            else if (currentItemDisplay != null) {
-                TakeItem();
+            else {
+                if (UIManager.instance.heldItemDisplay != null) {
+                    if (CheckCorrectItemType(UIManager.instance.heldItemDisplay) == true) {
+                        if (currentItemDisplay != null) {
+                            ItemDisplay temp = UIManager.instance.heldItemDisplay;
+                            UIManager.instance.heldItemDisplay = null;
+
+                            TakeItem();
+
+                            temp.EndDragItem();
+                            PlaceItem(temp);
+                        }
+                        else {
+                            UIManager.instance.heldItemDisplay.EndDragItem();
+                            PlaceItem(UIManager.instance.heldItemDisplay);
+                            UIManager.instance.heldItemDisplay = null;
+                            UIManager.instance.panelButtonsEnabled = true;
+                        }
+                    }
+                }
+                else if (currentItemDisplay != null) {
+                    TakeItem();
+                }
             }
        }
 
         /// <summary>
-        /// Takes the item from the item display
+        /// Takes the item from the item slot
         /// </summary>
         /// 
         public void TakeItem(bool direct = false) {
@@ -182,24 +227,24 @@ namespace PlayerUI {
                         if (effects[i] == "EXP") {
                             PartyManager.instance.AddEXP(amounts[i]);
                         }
-                        if (effects[i] == "HP") {
+                        else if (effects[i] == "HP") {
                             StartCoroutine(PartyManager.instance.ChangeHPAll(amounts[i]));
                         }
-                        if (effects[i] == "MP") {
+                        else if (effects[i] == "MP") {
                             PartyManager.instance.ChangeMPAll(amounts[i]);
                         }
-                        if (effects[i] == "WAX") {
+                        else if (effects[i] == "WAX") {
                             PartyManager.instance.AddWAX(amounts[i]);
                         }
-                        if (effects[i] == StatusEffectConstants.POISON) {
+                        else if (effects[i] != "none") { // status effects
                             PartyManager.instance.AddSE(effects[i], amounts[i]);
                         }
                     }
                     itemTaken = true;
                     Destroy(currentItemDisplay.gameObject);
                 }
-                else {  // non-consumable items must be dragged into UI
-                    if (direct == true || Input.GetKeyDown(KeyCode.Return)) {
+                else {  // non-consumable items must be dragged into the user's inventory, or placed directly via button
+                    if (direct == true) {
                         Panel targetPanel = EventManager.instance.GetTargetPanel(currentItemDisplay.type);
 
                         if (currentItemDisplay.type == "gear") {
@@ -296,6 +341,43 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Attempts a shop transaction, completing the transaction if the player can afford it
+        /// </summary>
+        /// <param name="newItemDisplay"> Item being placed into the slot (i.e. selling or trading), can be null if only buying</param>
+        /// <returns> true if transaction is succesful, false otherwise</returns>
+        public bool TryShopTransaction(ItemDisplay newItemDisplay = null) {
+            if (currentItemDisplay == null) {
+                if (newItemDisplay == null) {   // clicking on an empty slot with nothing in hand
+                    return false;
+                }
+
+                // selling
+                PartyManager.instance.AddWAX((int)(newItemDisplay.GetWAXValue() * 0.5f));
+
+                return true;
+            }
+            else {
+                if (newItemDisplay == null) {   // buying
+                    if (PartyManager.instance.WAX - currentItemDisplay.GetWAXValue() >= 0) {
+                        PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValue());
+                        return true;
+                    }
+                    
+                    return false;
+                }
+                else {  // trading
+                    if ((int)(PartyManager.instance.WAX + newItemDisplay.GetWAXValue() * 0.5f) - currentItemDisplay.GetWAXValue() >= 0) {
+                        PartyManager.instance.AddWAX((int)(newItemDisplay.GetWAXValue() * 0.5f));
+                        PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValue());
+                        return true;
+                    }
+
+                    return false;
+                }
+            } 
+        }
+
+        /// <summary>
         /// Sets the text displayed in the tooltip
         /// </summary>
         public void SetTooltipText() {
@@ -306,6 +388,7 @@ namespace PlayerUI {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
+                    t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
                 }
                 else if (basicKeys[1] == "gear") {
                     t.SetKey("title", basicKeys[0] + "_item");
@@ -317,12 +400,14 @@ namespace PlayerUI {
                     }
                     
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
+                    t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
                 }
             }
             else {  // if there is no item held
                 t.SetKey("title", itemSlotSubType + "_item");
                 t.SetKey("subtitle", itemSlotSubType + "_item_sub_default");
                 t.SetKey("description", "none_label");
+                t.SetTextActive("value", false);    // don't display the worth text if there is no item
             }
         }
 
@@ -353,6 +438,16 @@ namespace PlayerUI {
                 b.interactable = false;
                 StartCoroutine(Fade(0));
             }
+        }
+
+        /// <summary>
+        /// Sets the itemSlot visible and sets its type to "shop"
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetVisibleShop(bool value) {
+            itemSlotType = "shop";
+
+            SetVisible(value);
         }
 
         /// <summary>

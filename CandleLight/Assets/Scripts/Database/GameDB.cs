@@ -718,10 +718,10 @@ namespace Database {
                         Gear[] gearItems;
 
                         if (reader.Read()) {
-                            gearItems = new Gear[reader.FieldCount - 2];
-                            gearNameIDs = new string[reader.FieldCount - 2];
+                            gearItems = new Gear[reader.FieldCount - 2];     // the names start on index 2
+                            gearNameIDs = new string[reader.FieldCount - 2]; // the names start on index 2
                             for (int i = 0; i < gearNameIDs.Length; i++) {
-                                gearNameIDs[i] = reader.GetString(i + 2);   // the names start on index 2
+                                gearNameIDs[i] = reader.GetString(i + 2);    // the names start on index 2
                             }
 
                             for (int i = 0; i < gearItems.Length; i++) {

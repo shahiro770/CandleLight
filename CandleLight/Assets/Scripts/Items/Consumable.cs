@@ -84,6 +84,34 @@ namespace Items {
         }
 
         /// <summary>
+        /// Returns how much an item is worth
+        /// </summary>
+        /// <returns></returns>
+        public override int GetWAXValue() {
+            int WAX = 0;
+
+            for (int i = 0; i < effects.Length; i++) {
+                switch(effects[i]) {
+                    case "HP":
+                    case "MP":
+                        WAX += (int)(values[i] * 0.5f);
+                        break;
+                    case "regenerate":
+                    case "cure":
+                        WAX += values[i] * 2;
+                        break;
+                    case "poison":
+                        WAX -= values[i] * 5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return WAX;
+        }
+
+        /// <summary>
         /// Returns effects
         /// </summary>
         /// <returns></returns>

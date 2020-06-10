@@ -20,7 +20,7 @@ namespace Constants {
         public static readonly string SUBEVENT = "subEvent";        /// <value> Player is thrown into a specific event </value>
         public static readonly string STATSINGLE = "statSingle";    /// <value> A single partyMember all recieve an instant stat change </value>
         public static readonly string STATALL = "statAll";          /// <value> All partyMembers all recieve an instant stat change </value>
-        public static readonly string STATALLANDLEAVE = "statAllAndLeave";   /// <value> All partyMembers receive an instant stat change, and then can leave </value> 
+        public static readonly string STATALLANDLEAVE = "statAllAndLeave";      /// <value> All partyMembers receive an instant stat change, and then can leave </value> 
         public static readonly string PRECOMBAT = "preCombat";      /// <value> Not sure what this is for </value>
         public static readonly string COMBAT = "combat";            /// <value> Player must fight monsters </value>
         public static readonly string COMBATWITHSIDEEFFECTS = "combatWithSideEffects";  /// <value> Something happens before player fights monsters </value>
@@ -28,9 +28,11 @@ namespace Constants {
         public static readonly string SUBAREAANDCOMBAT = "subAreaAndCombat";    /// <value> Move to new subArea, immediately fight specific enemies </value>
         public static readonly string SUBAREAANDCOMBATANDSUBAREA = "subAreaAndCombatAndSubArea";    /// <value> Move to new subArea, immediately fight specific enemies, and then move to another subArea on clearing </value>
         public static readonly string PROGRESS = "progress";    /// <value> Changes progress amount </value>
+        public static readonly string PROGRESSANDLEAVE = "progressAndLeave";            /// <value> Changes progress amount and then leave the event </value>
         public static readonly string END = "end";              /// <value> Ends the area, returning to the main menu </value>
         public static readonly string REVIVE = "revive";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP </value>
         public static readonly string REVIVEANDLEAVE = "reviveAndLeave";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP and leave </value>
         public static readonly string NEWINT = "newInt";        /// <value> Add a new interaction to the list of available ones </value>
+        public static readonly string SHOP = "shop";            /// <value> Player can purchase items here </value>
     }
 }

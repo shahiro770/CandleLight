@@ -125,6 +125,22 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Returns how much the itemDisplay's item is worth
+        /// </summary>
+        /// <returns></returns>
+        public int GetWAXValue() {
+            return displayedItem.GetWAXValue();
+        }
+
+        /// <summary>
+        /// Returns how much the itemDisplay's item is worth, as a string
+        /// </summary>
+        /// <returns></returns>
+        public string GetWAXValueAsString() {
+            return displayedItem.GetWAXValue().ToString();
+        }
+
+        /// <summary>
         /// Makes the itemDisplay visible and interactable
         /// </summary>
         /// <param name="value"> true to make visible, false to hide </param>

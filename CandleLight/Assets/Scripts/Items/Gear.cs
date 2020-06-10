@@ -105,6 +105,46 @@ namespace Items {
         }
 
         /// <summary>
+        /// Returns how much an item is worth
+        /// </summary>
+        /// <returns></returns>
+        public override int GetWAXValue() {
+            int WAX = 0;
+
+            for (int i = 0; i < effects.Length; i++) {
+                switch(effects[i]) {
+                    case "STR":
+                    case "DEX":   
+                    case "INT":  
+                    case "LUK":   
+                    case "HP":
+                    case "MP":
+                    case "DOG":
+                    case "ACC":
+                    case "CRITCHANCE":
+                        WAX += values[i];
+                        break;
+                    case "PATK":
+                    case "MATK":
+                    case "PDEF":
+                    case "MDEF":
+                        WAX += values[i] * 3;
+                        break;
+                    case "CRITMULT":
+                        WAX += values[i] * 100;
+                        break;
+                    case "BLEEDPLUS":
+                        WAX += 10;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return WAX;
+        }
+
+        /// <summary>
         /// Returns the amounts as strings
         /// </summary>
         /// <returns></returns>

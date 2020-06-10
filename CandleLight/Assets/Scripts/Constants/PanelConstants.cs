@@ -17,5 +17,6 @@ namespace Constants {
         public static readonly string STATUSPANEL = "statusPanel";      /// <value> Status of active partyMember </value>
         public static readonly string REWARDSPANEL = "rewardsPanel";    /// <value> Shows everything rewarded after combat </value>
         public static readonly string GEARPANEL = "gearPanel";          /// <value> PartyMember's equipment </value>
+        public static readonly string EVENTDISPLAY = "eventDisplay";    /// <value> Interactable display showing event and other </value>
     }
 }

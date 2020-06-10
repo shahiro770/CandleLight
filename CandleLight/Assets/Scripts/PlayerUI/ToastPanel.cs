@@ -1,4 +1,5 @@
 using Localization;
+using PartyManager = Party.PartyManager;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,6 +65,24 @@ namespace PlayerUI {
 
             SetVisible(true);
             StartCoroutine(FadeOut());
+        }
+
+        /// <summary>
+        /// Turns the toast into a temporary display for the player's WAX, that doesn't fade immediately 
+        /// Used during shops
+        /// </summary>
+        public void SetShopNotification() {
+            titleText.SetKey("shop_toast");
+            descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
+            SetVisible(true);
+        }
+
+        /// <summary>
+        /// Updates the amount of WAX being displayed in the notification.
+        /// Assumes the notification is a shop notification
+        /// </summary>
+        public void UpdateWAXAmount() {
+            descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
         }
 
         public IEnumerator FadeOut() {

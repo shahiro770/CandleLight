@@ -57,6 +57,14 @@ namespace Items {
         }
 
         /// <summary>
+        /// Returns how much an item is worth
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetWAXValue() {
+            return -1;
+        }
+
+        /// <summary>
         /// Returns amounts as strings
         /// </summary>
         /// <returns></returns>
