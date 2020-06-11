@@ -197,12 +197,21 @@ namespace Menus.ClassSelectMenu {
             }
         }
 
-        // public void SetSelectedCompIndex() {
-        //     if (compIndex < compBtss.Length) {
-        //         compIndex++;
-        //         SelectCompositionButton(compIndex);
-        //     }
-        // }
+        /// <summary>
+        /// Rotates from the current comp button to another by a set amount
+        /// </summary>
+        /// <param name="amount"> Number of indices to rotate by </param>
+        public void RotateSelectedCompIndex(int amount) {
+            compIndex += amount;
+            if (compIndex == compBtss.Length ) {
+                compIndex = 0;
+            }
+            else if (compIndex < 0) {
+                compIndex = compBtss.Length - 1;
+            }
+
+            SelectCompositionButton(compIndex);
+        }
 
         /// <summary>
         /// Toggle select button's colouring to show if its enabled or disabled
