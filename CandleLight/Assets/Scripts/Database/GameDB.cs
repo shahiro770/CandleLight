@@ -686,7 +686,7 @@ namespace Database {
                             consumableNameIDs[9] = reader.GetString(11);
 
                             for (int i = 0; i < consumableNameIDs.Length; i++) {
-                                consumableItems[i] = (Consumable)GetItemByNameID(consumableNameIDs[i], "consumable", dbConnection);
+                                consumableItems[i] = (Consumable)GetItemByNameID(consumableNameIDs[i], "Consumables", dbConnection);
                             }
                         }
                         else {
@@ -725,12 +725,12 @@ namespace Database {
                             }
 
                             for (int i = 0; i < gearItems.Length; i++) {
-                                gearItems[i] = (Gear)GetItemByNameID(gearNameIDs[i], "gear", dbConnection);
+                                gearItems[i] = (Gear)GetItemByNameID(gearNameIDs[i], "Gear", dbConnection);
                             }
                             return gearItems;
                         }
                         else {
-                            Debug.LogError("ConsumableItemPool " + subAreaName + " does not exist in the DB");
+                            Debug.LogError("GeartemPool " + subAreaName + " does not exist in the DB");
                             return null;
                         }
                     }
@@ -739,21 +739,57 @@ namespace Database {
         }
 
         /// <summary>
-        /// Returns an item from either the gear table or consumables table
+        /// Returns all of the gear that can be found in a subArea
+        /// </summary>
+        /// <param name="subAreaName"></param>
+        /// <returns></returns>
+        public Candle[] GetCandlesBySubArea (string subAreaName) {
+            using(dbConnection = base.GetConnection()) {
+
+                dbConnection.Open();
+
+                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+
+                    dbcmd.CommandText = "SELECT * FROM CandlesItemPools WHERE name = '" + subAreaName + "'";
+
+                    using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        string[] candleNameIDs;
+                        Candle[] candleItems;
+
+                        if (reader.Read()) {
+                            candleItems = new Candle[reader.FieldCount - 2];    // the names start on index 2
+                            candleNameIDs = new string[reader.FieldCount - 2];    // the names start on index 2
+                            for (int i = 0; i < candleNameIDs.Length; i++) {
+                                candleNameIDs[i] = reader.GetString(i + 2);       // the names start on index 2
+                            }
+
+                            for (int i = 0; i < candleItems.Length; i++) {
+                                if (candleNameIDs[i] != "") {
+                                    candleItems[i] = (Candle)GetItemByNameID(candleNameIDs[i], "Candles", dbConnection);
+                                }
+                            }
+                            return candleItems;
+                        }
+                        else {
+                            Debug.LogError("CandletemPool " + subAreaName + " does not exist in the DB");
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns an item from either the gear, consumables, or candles table
         /// </summary>
         /// <param name="name"> Name of the item </param>
-        /// <param name="type"> Type of the item (consumable or gear) </param>
+        /// <param name="type"> Type of the item (consumable, gear, or candle) </param>
         /// <param name="dbConnection"> IDbConnectino to get attack with </param>
         /// <returns> Returns an Attack with the information initialized </returns>
         public Item GetItemByNameID(string nameID, string type, IDbConnection dbConnection) {
             using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
 
-                if (type == "consumable") {
-                     dbcmd.CommandText = "SELECT * FROM Consumables WHERE NameID = '" + nameID + "'";
-                }
-                else if (type == "gear") {
-                    dbcmd.CommandText = "SELECT * FROM Gear WHERE NameID = '" + nameID + "'";
-                }
+                dbcmd.CommandText = "SELECT * FROM " + type + " WHERE NameID = '" + nameID + "'";
 
                 using (IDataReader reader = dbcmd.ExecuteReader()) {
                     Item newItem = null;
@@ -764,7 +800,7 @@ namespace Database {
                     int[] values = new int[3];
 
                     if (reader.Read()) {
-                        if (type == "consumable") {
+                        if (type == "Consumables") {
                             subType = reader.GetString(2);
 
                             effects[0] = reader.GetString(3);
@@ -775,9 +811,9 @@ namespace Database {
                             values[1] = reader.GetInt32(6);
                             values[2] = reader.GetInt32(8);
 
-                             newItem = new Consumable(nameID, type, subType, effects, values);
+                             newItem = new Consumable(nameID, "consumable", subType, effects, values);
                         }
-                        else if (type == "gear") {
+                        else if (type == "Gear") {
                             subType = reader.GetString(2);
                             className = reader.GetString(3);
 
@@ -789,7 +825,23 @@ namespace Database {
                             values[1] = reader.GetInt32(7);
                             values[2] = reader.GetInt32(9);
    
-                            newItem = new Gear(nameID, type, subType, className, effects, values);
+                            newItem = new Gear(nameID, "gear", subType, className, effects, values);
+                        }
+                        else if (type == "Candles") {
+                            Attack a = GetAttack(nameID, false, dbConnection);
+
+                            subType = reader.GetString(2);
+                            className = reader.GetString(3);
+
+                            effects[0] = reader.GetString(4);
+                            effects[1] = reader.GetString(6);
+                            effects[2] = reader.GetString(8);
+
+                            values[0] = reader.GetInt32(5);
+                            values[1] = reader.GetInt32(7);
+                            values[2] = reader.GetInt32(9);
+   
+                            newItem = new Candle(nameID, "candle", subType, className, a, effects, values);
                         }
                     }
                     

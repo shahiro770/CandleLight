@@ -10,6 +10,7 @@
 * Need to work with attacks that target multiple monsters, and multiple partyMembers
 */
 
+using Candle = Items.Candle;
 using Constants;
 using Characters;
 using EventManager = Events.EventManager;
@@ -35,12 +36,13 @@ namespace Combat {
 
         /* external component references */
         public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
-        public EventDescription eventDescription;   /// <value> Display for all text and prompts relevant to an action or event</value>
-        public StatusPanel statusPanel;             /// <value> Display for active partyMember's status </value>
-        public ActionsPanel actionsPanel;           /// <value> Display for active partyMember's actions </value>
-        public GearPanel gearPanel;                 /// <value> Display for active partyMember's gear </value>
-        public PartyPanel partyPanel;               /// <value> Display for all partyMember's status </value>
-        public SkillsPanel skillsPanel;             /// <value> Display for active  partyMember's skills</value>
+        public EventDescription eventDescription;   /// <value> eventDescription reference </value>
+        public StatusPanel statusPanel;             /// <value> statusPanel reference </value>
+        public ActionsPanel actionsPanel;           /// <value> actionsPanel reference </value>
+        public GearPanel gearPanel;                 /// <value> gearPanel reference </value>
+        public CandlesPanel candlesPanel;           /// <value> candlesPanel reference </value>
+        public PartyPanel partyPanel;               /// <value> partyPanel reference </value>
+        public SkillsPanel skillsPanel;             /// <value> skillsPanel reference </value>
         public TabManager itemsTabManager;          /// <value> Click on to display other panels </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels </value>
         public GameObject monster;                  /// <value> Monster GO to instantiate </value>
@@ -102,6 +104,7 @@ namespace Combat {
             monstersKilled = new List<Monster>();
             partyMembersAlive = new List<PartyMember>();
             partyMembers = PartyManager.instance.GetPartyMembers();
+            PartyManager.instance.GetChampionChanceAll();
             countID = partyMembers[partyMembers.Count - 1].ID + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath() == false) {
@@ -166,6 +169,9 @@ namespace Combat {
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             if (partyPanel.isOpen == false) {
                 utilityTabManager.OpenPanel(0);
+            }
+            if (candlesPanel.isOpen == false) {
+                itemsTabManager.OpenPanel(1);
             }
             DisableAllButtons();
             foreach (Monster m in monsters) {
@@ -252,9 +258,6 @@ namespace Combat {
             DisplayActivePartyMember();
             EnableAllButtonsInSidePanels();
             SetMonsterNavigation();
-            
-            partyPanel.SetHorizontalNavigation();
-            gearPanel.SetHorizontalNavigation();
         }
 
         /// <summary>
@@ -330,11 +333,27 @@ namespace Combat {
             pmSelectionFinalized = true;
         }
 
+        /// <summary>
+        /// Select a partyMember from the partyPanel as the target of an attack
+        /// </summary>
+        /// <param name="pmToSelect"> PartyMember to select </param>
         public void SelectPartyMember(PartyMember pmToSelect) {
             selectedPartyMember = pmToSelect;
             partyPanel.SetBlinkSelectables(null, false);
 
             pmSelectionFinalized = true;
+        }
+
+        /// <summary>
+        /// Use a candle's attack instead of a normal attack as an action
+        /// </summary>
+        /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
+        public void UseCandle(int index) {
+            if (PartyManager.instance.GetActivePartyMember().ID == activePartyMember.ID) {
+                selectedAttackPM = activePartyMember.activeCandles[index].a;
+                activePartyMember.activeCandles[index].Use();
+                pmSelectionFinalized = true;
+            }
         }
 
         /// <summary>
@@ -364,6 +383,9 @@ namespace Combat {
                     }
                     else if (selectedAttackPM.type == AttackConstants.HEALHP || selectedAttackPM.type == AttackConstants.BUFF) {
                         yield return (StartCoroutine(selectedPartyMember.GetHelped(selectedAttackPM, activePartyMember)));
+                    }
+                    else if (selectedAttackPM.type == AttackConstants.HEALMPSELF) {
+                        yield return (StartCoroutine(activePartyMember.GetHelped(selectedAttackPM, activePartyMember)));
                     }   
                 }
             }
@@ -853,6 +875,7 @@ namespace Combat {
         public void DisableAllButtons() {
             actionsPanel.SetAllActionsUninteractable();
             gearPanel.SetInteractable(false);
+            candlesPanel.SetInteractable(false);
             skillsPanel.SetInteractable(false);
             partyPanel.DisableButtons();
             itemsTabManager.SetAllButtonsUninteractable();
@@ -871,6 +894,8 @@ namespace Combat {
             utilityTabManager.SetAllButtonsInteractable();
             partyPanel.EnableButtons();
             gearPanel.SetInteractable(true);
+            candlesPanel.SetInteractable(true);
+            skillsPanel.SetInteractable(true);
         }
         
         /// <summary>

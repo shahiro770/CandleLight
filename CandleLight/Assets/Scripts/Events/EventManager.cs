@@ -36,9 +36,10 @@ namespace Events {
         public Image eventBackground;               /// <value> Image background for current event </value>
         public Image nextEventBackground;           /// <value> Image background for next event </value>
         public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
-        public ToastPanel toastPanel0;               /// <value> ToastPanel reference </value>
-        public ToastPanel toastPanel1;               /// <value> ToastPanel reference </value>
+        public ToastPanel toastPanel0;              /// <value> ToastPanel reference </value>
+        public ToastPanel toastPanel1;              /// <value> ToastPanel reference </value>
         public GearPanel gearPanel;                 /// <value> GearPanel reference </value>
+        public CandlesPanel candlesPanel;           /// <value> CandlesPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public SkillsPanel skillsPanel;             /// <value> SkillsPanel reference </value>
@@ -58,8 +59,9 @@ namespace Events {
         private Event currentEvent;          /// <value> Event being displayed </value>
         private Result currentResult;        /// <value> Result being obtained </value>
         private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
-        private Consumable[] subAreaConsumables;   /// <value> Consumable items that can be found (max 10) </value>
-        private Gear[] subAreaGear;          /// <value> Gear items that can be found (max 10) </value>
+        private Consumable[] subAreaConsumables;   /// <value> Consumable items that can be found in the current subArea </value>
+        private Gear[] subAreaGear;          /// <value> Gear items that can be found in the current subArea </value>
+        private Candle[] subAreaCandles;     /// <value> Candle items that can be found in the current subArea </value>
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, -20, 0);
@@ -76,7 +78,8 @@ namespace Events {
         private int bgPackNum = 0;              /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;           /// <value> Area progress increments by 1 for each main event the player completes </value>
         private int consumablesNum = 0;         /// <value> Number of consumables to be found in the subArea </value>
-        private int gearNum = 0;                /// <value> Number of gear to be found in the subArea</value>
+        private int gearNum = 0;                /// <value> Number of gear to be found in the subArea </value>
+        private int candleNum = 0;              /// <value> Number of candles to be found in the subArea </value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
@@ -170,6 +173,32 @@ namespace Events {
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Loads candles for the current subArea
+        /// </summary>
+        public void LoadCandles() {
+            subAreaCandles = GameManager.instance.DB.GetCandlesBySubArea(currentSubArea.name);
+            candleNum = 0;
+
+            for (int i = 0; i < subAreaGear.Length; i++) {
+                if (subAreaCandles[i] != null) {
+                    candleNum++;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads all items for a subArea
+        /// </summary>
+        public void LoadSubAreaItems() {
+            LoadConsumables();
+            LoadGear();
+            LoadCandles();
         }
 
         /// <summary>
@@ -274,6 +303,7 @@ namespace Events {
         /// </summary>
         public void GetCombatEvent() {
             gearPanel.SetTakeable(false);
+            candlesPanel.SetTakeable(false);
             skillsPanel.SetTogglable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentSubArea.championBuffs, currentEvent.isLeavePossible));
@@ -321,6 +351,7 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 gearPanel.SetInteractable(true);
+                candlesPanel.SetInteractable(true);
                 skillsPanel.SetInteractable(true);
                 partyPanel.EnableButtons();
                 actionsPanel.SetAllActionsInteractable();
@@ -364,6 +395,7 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 gearPanel.SetInteractable(true);
+                candlesPanel.SetInteractable(true);
                 skillsPanel.SetInteractable(true);
                 partyPanel.EnableButtons();
                 actionsPanel.SetAllActionsInteractable();
@@ -375,7 +407,6 @@ namespace Events {
 
         public void SetNavigation() {
             partyPanel.SetHorizontalNavigation();   
-            gearPanel.SetHorizontalNavigation();
         }
 
         /// <summary>
@@ -411,10 +442,12 @@ namespace Events {
                 }
                            
                 gearPanel.SetTakeable(true);
+                candlesPanel.SetTakeable(true);
                 skillsPanel.SetTogglable(true);  
                 
                 actionsPanel.PostCombatActions(rewardsPanel.itemNum);
                 gearPanel.SetInteractable(true);
+                candlesPanel.SetInteractable(true);
                 skillsPanel.SetInteractable(true);
                 actionsPanel.SetAllActionsInteractable();
                 itemsTabManager.SetAllButtonsInteractable();
@@ -454,6 +487,14 @@ namespace Events {
                             }
                         }
                     }
+                    else if (r.itemType == "candle") {
+                        for (int j = 0; j < candleNum; j++) {
+                            if (subAreaCandles[j].nameID == specificItemName) {
+                                items.Add(new Candle(subAreaCandles[j]));
+                                break;
+                            }
+                        }
+                    }
                     if (items.Count == 0) {
                         Debug.LogError("Item " + specificItemName + " could not be generated");
                     }
@@ -468,6 +509,10 @@ namespace Events {
                     else if (r.itemType == "gear") {
                         items.Add(new Gear(subAreaGear[Random.Range(0, gearNum)]));
                          ((Gear)items[i]).RandomizeAmounts(r.itemQuality);
+                    }
+                    else if (r.itemType == "candle") {
+                        items.Add(new Candle(subAreaCandles[Random.Range(0, candleNum)]));
+                        ((Candle)items[i]).RandomizeAmounts(r.itemQuality);
                     }
                 }
             }
@@ -538,8 +583,7 @@ namespace Events {
                 if (currentResult.subAreaName0 != "none") { 
                     currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
                     StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
-                    LoadConsumables();
-                    LoadGear();
+                    LoadSubAreaItems();
                     subAreaProgress = 0; 
                     if (infoPanel.isOpen == true) {
                         infoPanel.UpdateAmounts();
@@ -551,8 +595,7 @@ namespace Events {
             else if (currentResult.type == ResultConstants.SUBAREAANDCOMBAT) {
                 currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
                 StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
-                LoadConsumables();
-                LoadGear();
+                LoadSubAreaItems();
                 subAreaProgress = 0;
                 if (infoPanel.isOpen == true) {
                     infoPanel.UpdateAmounts();
@@ -573,8 +616,7 @@ namespace Events {
                 currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
                 nextSubArea = currentResult.subAreaName1;
                 StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
-                LoadConsumables();
-                LoadGear();
+                LoadSubAreaItems();
                 subAreaProgress = 0;
                 if (infoPanel.isOpen == true) {
                     infoPanel.UpdateAmounts();
@@ -814,6 +856,7 @@ namespace Events {
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             partyPanel.DisableButtons();
             gearPanel.SetInteractable(false);
+            candlesPanel.SetInteractable(false);
             skillsPanel.SetInteractable(false);
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
@@ -927,6 +970,7 @@ namespace Events {
             actionsPanel.SetAllActionsUninteractable();
             partyPanel.DisableButtons();
             gearPanel.SetInteractable(false);
+            candlesPanel.SetInteractable(false);
             skillsPanel.SetInteractable(false);
             itemsTabManager.SetAllButtonsUninteractable();
             utilityTabManager.SetAllButtonsUninteractable();
@@ -1018,10 +1062,18 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Returns the panel that the item is going towards
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public Panel GetTargetPanel(string type) {
             if (type == "gear") {
                 return gearPanel;
-            }   
+            } 
+            else if (type == "candle") {
+                return candlesPanel;
+            }  
 
             Debug.LogError("Panel for an item with type " + type + " does not exist");
             return null;             
@@ -1064,6 +1116,19 @@ namespace Events {
         }
 
         #endregion
+
+        /// <summary>
+        /// Opens the respective item panel that an itemDisplay belongs in
+        /// </summary>
+        /// <param name="id"></param>
+        public void OpenItemPanel(ItemDisplay id) {
+            if (id.type == "gear") {
+                itemsTabManager.OpenPanel(0);
+            }
+            else if (id.type == "candle") {
+                itemsTabManager.OpenPanel(1);
+            }
+        }
 
         /// <summary>
         /// Returns a Color32 based on the theme colour of the current area

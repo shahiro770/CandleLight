@@ -30,6 +30,10 @@ namespace PlayerUI {
         [field: SerializeField] private float canvasScaleFactor;    
         [field: SerializeField] private float imageDisplayBackgroundWidthHalved;    /// <value> Half the width of whatever image is being displayed </value>
 
+        /// <summary>
+        /// Sets a bunch of parameters for properly positioning the tooltip
+        /// </summary>
+        /// <param name="width"> Width of the image this tooltip is for </param>
         public void SetImageDisplayBackgroundWidth(float width) {
             rootCanvasWidthHalved = EventManager.instance.canvasWidth * 0.5f;
             rootCanvasHeightHalved = EventManager.instance.canvasHeight * 0.5f;
@@ -99,6 +103,34 @@ namespace PlayerUI {
                     SetTextActive("value", true);
                 }
                 valueText.SetKeyAndAppend(textKey, amount.ToString());
+            }
+            else {
+                Debug.LogError("TextName " + textName + " does not exist");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show text and append it with an integer amount
+        /// with a string entered as the amount
+        /// </summary>
+        /// <param name="textName"></param>
+        /// <param name="textKey"></param>
+        /// <param name="amount"></param>
+        public void SetAmountText(string textName, string textKey, string amount) {
+            if (textName == "title") {
+                titleText.SetKeyAndAppend(textKey, amount);
+            }
+            else if (textName == "subtitle") {
+                subtitleText.SetKeyAndAppend(textKey, amount);
+            }
+            else if (textName == "description") {
+                descriptionText.SetKeyAndAppend(textKey, amount);
+            }
+            else if (textName == "value") {
+                if (valueText.gameObject.activeSelf == false) {
+                    SetTextActive("value", true);
+                }
+                valueText.SetKeyAndAppend(textKey, amount);
             }
             else {
                 Debug.LogError("TextName " + textName + " does not exist");

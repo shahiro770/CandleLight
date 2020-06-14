@@ -7,11 +7,14 @@
 *
 */
 
+using ItemDisplay = PlayerUI.ItemDisplay;
 using UnityEngine;
 
 namespace Items {
 
     public class Item {
+
+        public ItemDisplay id;                          /// <value> Reference to the visual component of the item </value>
         
         public string nameID;                           /// <value> Name of item </value>
         public string type { get; private set; }        /// <value> Type of item (consumable, weapon, secondary, armor) </value>
@@ -69,7 +72,20 @@ namespace Items {
         /// </summary>
         /// <returns></returns>
         public virtual string[] GetAmountsAsStrings() {
-            return null;
+            string[] amountStrings = new string[effects.Length];
+            for (int i = 0; i < effects.Length; i++) {
+                if (effects[i] == "%MAXHP" || effects[i] == "CRITCHANCE" || effects[i] == "CHAMPIONCHANCE") {     // TODO Make this account for percent effects
+                    amountStrings[i] = values[i] + "%";
+                }
+                else if (effects[i] == "BLEEDPLUS" || effects[i] == "MPREGENDOUBLE") {
+                    amountStrings[i] = "";
+                }
+                else {
+                    amountStrings[i] = values[i].ToString();
+                }
+            }
+
+            return amountStrings;
         }
 
         /// <summary>
@@ -87,5 +103,11 @@ namespace Items {
         public virtual string[] GetTooltipEffectKeys() {
             return null;
         }
+
+        /// <summary>
+        /// Updates the item's itemDisplays' sprite to the desired sprite
+        /// </summary>
+        /// <param name="s"></param>
+        public virtual void SetSprite(Sprite s) {}
     }
 }

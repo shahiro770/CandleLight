@@ -188,6 +188,19 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Sets if the statsPanel is open or closed
+        /// </summary>
+        /// <param name="value"> true to open, false to close </param>
+        public void SetStatsPanel(bool value) {
+            if (value == true && statsPanel.isOpen == false) {
+                statsPanel.gameObject.SetActive(!statsPanel.isOpen);
+            }
+            else if (value == false && statsPanel.isOpen == true) {
+                statsPanel.gameObject.SetActive(!statsPanel.isOpen);
+            }
+        }
+
+        /// <summary>
         /// Returns the name of this panel
         /// </summary>
         /// <returns> Name of panel </returns>

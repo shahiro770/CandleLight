@@ -39,8 +39,10 @@ namespace PlayerUI {
         private string noReviveText = LocalizationManager.instance.GetLocalizedValue("no_revive_text"); /// <value> Localized text for the phrase "No one needs to be revived." </value>
         private string noMoveText = LocalizationManager.instance.GetLocalizedValue("no_move_text");     /// <value> Localized text for the phrase " can't move!" </value>
         private string HPText = LocalizationManager.instance.GetLocalizedValue("HP_text");          /// <value> Localized text for the text "HP" </value>
-        private string healText = LocalizationManager.instance.GetLocalizedValue("heal_text");      /// <value> Localized text for the text "HP" </value>
+        private string MPText = LocalizationManager.instance.GetLocalizedValue("MP_text");          /// <value> Localized text for the text "MP" </value>
+        private string healText = LocalizationManager.instance.GetLocalizedValue("heal_text");      /// <value> Localized text for the text "heal" </value>
         private string wasHealedForText = LocalizationManager.instance.GetLocalizedValue("was_healed_for_text");     /// <value> Localized text for the text "HP" </value>
+        private string restoredText = LocalizationManager.instance.GetLocalizedValue("restored_text");     /// <value> Localized text for the text "restored" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageText(PartyMember pm, int amount) {
-            string damagedText = pm.pmName + " " + lostText + " " + amount.ToString() + " HP";
+            string damagedText = pm.pmName + " " + lostText + " " + amount.ToString() + " " + HPText;
             eventText.SetText(damagedText);
 
             if (this.colour != "normal") {
@@ -134,6 +136,34 @@ namespace PlayerUI {
         public void SetPMHealCritText(PartyMember pm, int amount) {
             string healedText = critHealText + " " + pm.pmName + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
             eventText.SetText(healedText);
+
+            if (this.colour != "normal") {
+                SetColour("normal");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show that a partyMember recovered MP by a focus attack
+        /// </summary>
+        /// <param name="pm"> PartyMember that was focus'd </param>
+        /// <param name="amount"> Amount of MP recovered </param>
+        public void SetPMFocusText(PartyMember pm, int amount) {
+            string focusText = pm.pmName + " " + restoredText + " " + amount.ToString() + " " + MPText;
+            eventText.SetText(focusText);
+
+            if (this.colour != "normal") {
+                SetColour("normal");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show that a partyMember recovered MP by a focus attack
+        /// </summary>
+        /// <param name="pm"> PartyMember that was healed </param>
+        /// <param name="amount"> Amount of MP recovered </param>
+        public void SetPMFocusCritText(PartyMember pm, int amount) {
+            string focusText = critHealText + " " + pm.pmName + " " + restoredText + " " + amount.ToString() + " " + MPText;
+            eventText.SetText(focusText);
 
             if (this.colour != "normal") {
                 SetColour("normal");

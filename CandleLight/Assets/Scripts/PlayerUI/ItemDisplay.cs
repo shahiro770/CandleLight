@@ -22,16 +22,18 @@ namespace PlayerUI {
 
         /* external component references */
         public CanvasGroup imgCanvas;       /// <value> Image alpha </value>
+        public ItemSlot parentSlot = null;  /// <value> Itemslot currently holding this itemDisplay </value>
         public SpriteRenderer itemSprite;   /// <value> Sprite to be displayed </value>
         
+        public Consumable displayedConsumable { get; private set; } /// <value> Item as consumable </value>
+        public Candle displayedCandle { get; private set; }         /// <value> Item as candle </value>
+        public Gear displayedGear { get; private set; }             /// <value> Item as gear </value>
         public string type;                 /// <value> Type of item </value>
         public string subType;              /// <value> Subtype of item </value>
         public string className = "any";    /// <value> Name of class item can be used by </value>
-        public bool dragging = false;       /// <value> Flag for if item is currently being dragged </value>
+        public bool dragging = false;       /// <value> Flag for if item is currently being dragged </value>    
         
         private Item displayedItem;         /// <value> Item </value>
-        private Gear displayedGear;         /// <value> Item as gear </value>
-        private Consumable displayedConsumable; /// <value> Item as consumable </value>
         private float lerpSpeed = 4;        /// <value> Speed at which item display fades in and out </value>
         
         /// <summary>
@@ -40,6 +42,7 @@ namespace PlayerUI {
         /// <param name="displayedItem"> Item to display </param>
         /// <param name="startSlot"></param>
         public void Init(Item displayedItem) {
+            displayedItem.id = this;
             this.displayedItem = displayedItem;
             this.type = displayedItem.type;
             this.subType = displayedItem.subType;
@@ -51,27 +54,15 @@ namespace PlayerUI {
                 displayedGear = (Gear)displayedItem;
                 className = displayedItem.className;    // consumables will not be class restricted for now
             }
+            else if (type == "candle") {
+                displayedCandle = (Candle)displayedItem;
+                className = displayedItem.className;
+            }
             itemSprite.sprite = displayedItem.itemSprite;
             itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
             
             gameObject.SetActive(true);
             SetVisible(true);
-        }
-
-        /// <summary>
-        /// Returns item as gear
-        /// </summary>
-        /// <returns></returns>
-        public Gear GetGear() {
-            return displayedGear;
-        }
-
-        /// <summary>
-        /// Returns item as consumable
-        /// </summary>
-        /// <returns></returns>
-        public Consumable GetConsumable() {
-            return displayedConsumable;
         }
 
         /// <summary>
@@ -103,8 +94,11 @@ namespace PlayerUI {
             if (displayedItem.type == "consumable") {
                 return displayedConsumable.GetTooltipEffectKeys();
             }
-            else { //if (displayedItem.type == "gear") {
+            else if (displayedItem.type == "gear") {
                 return displayedGear.GetTooltipEffectKeys();
+            }
+            else { //if (displayedItem.type == "candle") {
+                return displayedCandle.GetTooltipEffectKeys();
             }
         }
 
@@ -138,6 +132,23 @@ namespace PlayerUI {
         /// <returns></returns>
         public string GetWAXValueAsString() {
             return displayedItem.GetWAXValue().ToString();
+        }
+
+        /// <summary>
+        /// Sets the itemDisplay's sprite to the desired sprite
+        /// </summary>
+        /// <param name="s"></param>
+        public void SetSprite(Sprite s) {
+            itemSprite.sprite = s;
+        }
+
+        /// <summary>
+        /// Used to communicate up to the candlePanel if the item (assuming its a candle)
+        /// is usable.
+        /// </summary>
+        /// <param name="value"> True for usable, false otherwise </param>
+        public void SetUsable(bool value) {
+            parentSlot.SetUsable(value);
         }
 
         /// <summary>
@@ -188,10 +199,12 @@ namespace PlayerUI {
         /// <returns> IEnumerator to constantly update position </returns>
        public IEnumerator StartDragItem() {
             dragging = true;
+            // UIManager becomes temporary parent so if itemSlot holding this goes inactive, the coroutine allowing dragging doesn't stop
+            transform.SetParent(UIManager.instance.transform, false);   
         
             while (dragging == true) {
                 Vector3 screenPoint = Input.mousePosition;
-                screenPoint.z = 5.0f; // distance of the plane from the camera
+                screenPoint.z = 5.0f; // distance of the plane from the camera       
                 transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
                 yield return null;
             }

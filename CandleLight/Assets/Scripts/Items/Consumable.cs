@@ -128,24 +128,6 @@ namespace Items {
         }
 
         /// <summary>
-        /// Returns the amounts as strings
-        /// </summary>
-        /// <returns></returns>
-        public override string[] GetAmountsAsStrings() {
-            string[] amountStrings = new string[effects.Length];
-            for (int i = 0; i < effects.Length; i++) {
-                if (effects[i] == "%MAXHP") {           // TODO Make this account for percent effects
-                    amountStrings[i] = values[i] + "%";
-                }
-                else {
-                    amountStrings[i] = values[i].ToString();
-                }
-            }
-
-            return amountStrings;
-        }
-
-        /// <summary>
         /// Returns the effect keys in a string array
         /// </summary>
         /// <returns></returns>

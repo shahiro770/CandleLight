@@ -24,6 +24,8 @@ namespace Characters {
         [field: SerializeField] public int CHP { get; set; }              /// <value> Current health points </value>
         [field: SerializeField] public int MP { get; set; }               /// <value> Max mana points </value>
         [field: SerializeField] public int CMP { get; set; }              /// <value> Current mana points </value>
+        [field: SerializeField] public float MPRegen { get; set; }        /// <value> Percentage amount of mana points regenerated between events </value>
+        [field: SerializeField] public float HPRegen { get; set; }        /// <value> Percentage amount of health points regenerated between events </value>
         [field: SerializeField] public int baseSTR { get; set; }          /// <value> Strength </value>
         [field: SerializeField] public int baseDEX { get; set; }          /// <value> Dexterity </value>
         [field: SerializeField] public int baseINT { get; set; }          /// <value> Intelligence </value>
@@ -41,19 +43,22 @@ namespace Characters {
         [field: SerializeField] public int tempACC = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
         [field: SerializeField] public int attackNum { get; set; } = 0;   /// <value> Number of attacks monster has (max 4) </value>
+        [field: SerializeField] public int championChance { get; set; }   /// <value> Additional percentage chance of a champion monster spawning for PartyMembers, or base chance for Monsters </value>
         [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
         [field: SerializeField] public bool bleedPlus { get; set; } = false;    /// <value> Flag for if this character can inflict stronger bleeds </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
         protected List<StatusEffect> seToRemove = new List <StatusEffect>();    /// <value> Status effects to remove </value>
+        protected float baseHPRegen = 0.06f;                                /// <value> Base percentage of max MP recovered between events </value>
+        protected float baseMPRegen = 0.12f;                                /// <value> Base percentage of max HP recovered between events </value>
         protected float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
         protected int minAttacks = 1;
         protected int maxAttacks = 4;
         protected int maxStatusEffects = 10;                                /// <value> Max number of status effects that can be on a character </value>
         protected int baseCritChance = 5;                                   /// <value> Base chance of an attack doing critMultiplier* damage </value>
         protected int defaultACC = 95;                                      /// <value> Base accuracy rating </value>
-       
+
         /// <summary>
         /// Initializes character properties
         /// </summary>
@@ -162,7 +167,7 @@ namespace Characters {
         /// <summary>
         /// Set each attack's attack value
         /// </summary>
-        public void SetAttackValues() {
+        public virtual void SetAttackValues() {
             foreach(Attack a in attacks) {
                 if (a.nameKey != "none_attack") {
                     a.attackValue = GetAttackValue(a);
@@ -290,6 +295,34 @@ namespace Characters {
             return healAmount;
         }
 
+        /// <summary>
+        /// Calculates the amount of mana restored by an attack against this character
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public int CalculateAttackFocus(Attack a) {
+            if (CMP + a.attackValue > MP) {
+                return CMP + a.attackValue - MP;
+            }
+
+            return a.attackValue;
+        }
+
+        /// <summary>
+        /// Calculates the amount of mana restored by an attack against this character
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public int CalculateAttackFocusCrit(int amount, Character c) {
+            int healAmount = (int)(amount * c.critMult);
+
+            if (CMP + healAmount > MP) {
+                return CMP + healAmount - MP;
+            }
+
+            return healAmount;
+        }
+
         protected void AddStatusEffect(StatusEffect se) {
             if (statusEffects.Count < maxStatusEffects) {
                 statusEffects.Add(se);
@@ -316,6 +349,12 @@ namespace Characters {
         /// <summary>
         /// Removes all status effects in the seToRemove list, undoing their effects
         /// </summary>
+        /// <remarks>
+        /// As a side effect, due to triggerStatusEffects always being called at the end of most
+        /// stat relevant actions (such as at the end of a combat turn, or transitioning between events),
+        /// this forces a stat recalculation for a character, meaning stat changes from candles 
+        /// are removed at the end of a turn after a candle is made unusable during combat.
+        /// </remarks>
         public void RemoveStatusEffects() {
             foreach (StatusEffect se in seToRemove) {
                 se.DestroyDisplay();

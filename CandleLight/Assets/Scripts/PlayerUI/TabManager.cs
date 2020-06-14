@@ -72,17 +72,6 @@ namespace PlayerUI {
             foreach (Button b in tabs) {
                 b.interactable = true;
             }
-
-            if (panels[0].name == PanelConstants.PARTYPANEL) {  // right tabManager
-                Navigation n = tabs[0].navigation;
-                n.selectOnLeft = actionsPanel.GetNavigatableButtonRight();
-                tabs[0].navigation = n;
-            }
-            else { /// (panels[0].name == PanelConstants.GEARPANEL) {  // left tabManager
-                Navigation n = tabs[2].navigation;
-                n.selectOnRight = actionsPanel.GetNavigatableButtonLeft();
-                tabs[2].navigation = n;
-            }
         }
 
         public void SetAllButtonsUninteractable() {
@@ -91,6 +80,10 @@ namespace PlayerUI {
             }
         }
 
+        /// <summary>
+        /// Excites a tab at the index, giving it !!!!!!!!!
+        /// </summary>
+        /// <param name="index"> Index of tab button </param>
         public void ExciteTab(int index) {
             if (tabTexts[index].key.EndsWith("_(!)") == false) {
                 tabTexts[index].SetKey(tabTexts[index].key + "_(!)");

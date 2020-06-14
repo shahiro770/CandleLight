@@ -22,6 +22,7 @@ namespace Constants {
         public const string ROOT = "root";     /// <value> DOG is reduced by 50% and takes double damage from burn </value>
         public const string TRAP = "trap";     /// <value> Can't escape until attacker is killed </value>
         public const string REGENERATE = "regenerate";   /// <value> Restoring HP at the end of its turn </value>
+        public const string FOCUS = "focus";   /// <value> Restoring MP at the end of its turn </value>
         public const string STUN = "stun";     /// <value> Cannot act on their turn </value>
         public const string SHOCK = "shock";   /// <value> Taking bonus damage from magical attacks</value>
         public const string GUARD = "guard";   /// <value> Gains PDEF </value>

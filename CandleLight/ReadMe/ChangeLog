@@ -6,7 +6,15 @@ Weird value text blinking when swiping through real fast (might have to do with 
 
 CURRENTLY DOING
 ---------------
+Prevent non active pm from using candles
+Auto jump to candlesPanel when combat starts
+Prevent all effects from a used candle
+Give candles x uses
+Show negative effect
 
+Might be stupid how im setting null type items to load stuff in on partyMember
+Gotta add item constants for stats, gear, consumable, candle, and eventually, key
+Make skill columns require two skill points in the previous column
 
 Clean Up: Have eventManager have a function that disables all panels (So I don't need to do it in every place)
 

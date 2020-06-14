@@ -8,12 +8,8 @@
 */
 
 using Characters;
-using Items;
 using PanelConstants = Constants.PanelConstants;
 using Party;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace PlayerUI {
@@ -34,13 +30,11 @@ namespace PlayerUI {
         private int maxSpare = 9;       /// <value> Max number of spare itemSlots </value>
 
         /// <summary>
-        /// Update the partyPanel with relevant information and visuals when opened
-        /// TODO: This renders twice for some reason at the start
+        /// Update the panel with relevant information and visuals when opened
         /// </summary>
         void OnEnable() {
             isOpen = true;
             Init(PartyManager.instance.GetActivePartyMember());
-            SetHorizontalNavigation();
         }
 
         /// <summary>
@@ -55,27 +49,31 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pm"> PartyMember who's equipped gear should be displayed </param>
         public void Init(PartyMember pm) {
-            this.pmvc = pm.pmvc;
-            if (this.pmvc.weapon != null) {
+            pmvc = pm.pmvc;
+            if (pmvc.weapon != null) {
                 weaponSlot.ShowItem(pmvc.weapon);
             }
             else {
                 weaponSlot.PlaceItemInstant(pm.weapon);
             }
 
-            if (this.pmvc.secondary != null) {
+            if (pmvc.secondary != null) {
                 secondarySlot.ShowItem(pmvc.secondary);
             }
             else {
                 secondarySlot.PlaceItemInstant(pm.secondary);
             }
 
-            if (this.pmvc.armour != null) {
+            if (pmvc.armour != null) {
                 armourSlot.ShowItem(pmvc.armour);
             }
             else {
                 armourSlot.PlaceItemInstant(pm.armour);
             }
+
+            weaponSlot.SetColour(pmvc.partyMemberColour);
+            secondarySlot.SetColour(pmvc.partyMemberColour);
+            armourSlot.SetColour(pmvc.partyMemberColour);
         }
 
         /// <summary>
@@ -158,30 +156,13 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="value"></param>
         public void SetInteractable(bool value) {
-            if (isOpen == true) {
-                for (int i = 0;i < spare.Length; i++) {
-                    spare[i].SetInteractable(value);
-                }
-
-                weaponSlot.SetInteractable(value);
-                secondarySlot.SetInteractable(value);
-                armourSlot.SetInteractable(value);
+            for (int i = 0;i < spare.Length; i++) {
+                spare[i].SetInteractable(value);
             }
-        }
 
-        /// <summary>
-        /// Sets the horizontal navigation for PartyMemberDisplay to other panels
-        /// </summary>
-        public void SetHorizontalNavigation() {
-            for (int i = 0; i < 3; i++) {
-                Button b = spare[i].b;
-                Navigation n = b.navigation;
-
-                n.selectOnRight = actionsPanel.GetNavigatableButtonLeft();
-                b.navigation = n;
-            }   
-
-            actionsPanel.SetHorizontalNavigation(this);
+            weaponSlot.SetInteractable(value);
+            secondarySlot.SetInteractable(value);
+            armourSlot.SetInteractable(value);    
         }
 
         /// <summary>

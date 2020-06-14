@@ -23,27 +23,29 @@ namespace Characters {
     public class PartyMemberVisualController : MonoBehaviour {
         
         /* external component references */
-        public Bar statusPanelHPBar { get; private set; }   /// <value> Visual for health points in status panel </value>
-        public Bar statusPanelMPBar { get; private set; }   /// <value> Visual for mana points in status panel </value>
-        public Bar partyPanelHPBar { get; private set; }    /// <value> Visual for health points in party panel </value>
-        public Bar partyPanelMPBar { get; private set; }    /// <value> Visual for mana points in party panel </value>
-        public Bar statsPanelHPBar { get; private set; }    /// <value> Visual for health points in stats panel </value>
-        public Bar statsPanelMPBar { get; private set; }    /// <value> Visual for mana points in stats panel </value>
-        public EventDescription eventDescription;           /// <value> Display that describes the event in text </value>
+        public Bar statusPanelHPBar { get; private set; }       /// <value> Visual for health points in status panel </value>
+        public Bar statusPanelMPBar { get; private set; }       /// <value> Visual for mana points in status panel </value>
+        public Bar partyPanelHPBar { get; private set; }        /// <value> Visual for health points in party panel </value>
+        public Bar partyPanelMPBar { get; private set; }        /// <value> Visual for mana points in party panel </value>
+        public Bar statsPanelHPBar { get; private set; }        /// <value> Visual for health points in stats panel </value>
+        public Bar statsPanelMPBar { get; private set; }        /// <value> Visual for mana points in stats panel </value>
+        public EventDescription eventDescription;               /// <value> Display that describes the event in text </value>
         public EXPBar statsPanelEXPBar { get; private set; }   /// <value> Visual for experience points in stats panel </value>
         public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
-        public GearPanel gearPanel;     /// <value> gearPanel reference </value>
-        public StatusPanel statusPanel; /// <value> statusPanel reference </value>
-        public PartyPanel partyPanel;   /// <value> partyPanel reference </value>
-        public SkillsPanel skillsPanel; /// <value> skillsPanel reference </value>
-        public TabManager utilityTabManager;
+        public GearPanel gearPanel;             /// <value> gearPanel reference </value>
+        public CandlesPanel candlesPanel;       /// <value> candlesPanel reference </value>
+        public StatusPanel statusPanel;         /// <value> statusPanel reference </value>
+        public PartyPanel partyPanel;           /// <value> partyPanel reference </value>
+        public SkillsPanel skillsPanel;         /// <value> skillsPanel reference </value>
+        public TabManager utilityTabManager;    /// <value> right tabManager reference </value>
         public LocalizedText rewardsPanelLVLText { get; private set; }      /// <value> Visual for LVL in rewards panel</value>
         public PartyMemberDisplay pmdPartyPanel { get; private set; }       /// <value> Visual for partyMember in party panel </value>
         public PartyMemberDisplay pmdRewardsPanel { get; private set; }     /// <value> Visual for partyMember in rewardsPanel </value>  
         public PartyMemberDisplay pmdSkillsPanel { get; private set; }      /// <value> Visual for partyMember in skillsPanel </value>  
-        public ItemDisplay weapon;      /// <value> weapon reference </value>
-        public ItemDisplay secondary;   /// <value> secondary reference </value>
-        public ItemDisplay armour;      /// <value> armour reference </value>
+        public ItemDisplay weapon;          /// <value> weapon reference </value>
+        public ItemDisplay secondary;       /// <value> secondary reference </value>
+        public ItemDisplay armour;          /// <value> armour reference </value>
+        public ItemDisplay[] activeCandles; /// <value> candles reference </value>
 
         public Sprite partyMemberSprite { get; private set; }   /// <value> Icon sprite of the partyMember </value>
         public Sprite[] skillSprites = new Sprite[12];
@@ -59,6 +61,7 @@ namespace Characters {
         /// <param name="pm"> partyMember object </param>
         public void Init(PartyMember pm) {
             this.pm = pm;
+            activeCandles = new ItemDisplay[3]; // due to object intialization orders, if this isnt dont here, it'll just be null
             partyMemberSprite = Resources.Load<Sprite>("Sprites/Classes/" + pm.className + "Icon");
             
             if (pm.className == "Warrior") {
@@ -116,7 +119,6 @@ namespace Characters {
         /// <param name="pmd"></param>
         public void SetPartyMemberDisplaySkillsPanel(PartyMemberDisplay pmd) {
             this.pmdSkillsPanel = pmd;
-            utilityTabManager = EventManager.instance.utilityTabManager;
         }
 
         /// <summary>
@@ -217,8 +219,10 @@ namespace Characters {
             eventDescription = EventManager.instance.eventDescription;
             partyPanel = EventManager.instance.partyPanel;
             gearPanel = EventManager.instance.gearPanel;
+            candlesPanel = EventManager.instance.candlesPanel;
             statusPanel = EventManager.instance.statusPanel;
             skillsPanel = EventManager.instance.skillsPanel;
+            utilityTabManager = EventManager.instance.utilityTabManager;
         }
 
         /// <summary>
@@ -228,6 +232,23 @@ namespace Characters {
             weapon = gearPanel.weaponSlot.currentItemDisplay;
             secondary = gearPanel.secondarySlot.currentItemDisplay;
             armour = gearPanel.armourSlot.currentItemDisplay;
+        }
+
+        /// <summary>
+        /// Sets the partyMember's equipped candles
+        /// </summary>
+        public void SetEquippedCandles() {
+            activeCandles[0] = candlesPanel.activeCandles[0].currentItemDisplay;
+            activeCandles[1] = candlesPanel.activeCandles[1].currentItemDisplay;
+            activeCandles[2] = candlesPanel.activeCandles[2].currentItemDisplay;
+        }
+
+        /// <summary>
+        /// Sets a specific candle at an index for if it is usable
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetUsableCandles(int index) {
+            candlesPanel.SetUsable(index);
         }
 
         /// <summary>
@@ -274,6 +295,10 @@ namespace Characters {
             if (gearPanel.isOpen) {
                 gearPanel.Init(this);
             }
+            else if (candlesPanel.isOpen) {
+                candlesPanel.Init(this);
+            }
+
             if (skillsPanel.isOpen) {
                 skillsPanel.Init();
             }
@@ -364,7 +389,7 @@ namespace Characters {
                 partyPanelHPBar.SetCurrent(pm.CHP);
                 
                 if (isLoss == true && CombatManager.instance.inCombat == true) {
-                    if (isCrit) {
+                    if (isCrit == true) {
                         eventDescription.SetPMDamageCritText(pm, attackAmount);
                         yield return (StartCoroutine(pmdPartyPanel.PlayCritDamagedAnimation()));
                     }
@@ -377,7 +402,7 @@ namespace Characters {
                     }
                 }
                 else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
-                    if (isCrit) {
+                    if (isCrit == true) {
                         eventDescription.SetPMHealCritText(pm, attackAmount);
                     }
                     else {
@@ -388,7 +413,7 @@ namespace Characters {
             }
             else {
                 if (isLoss == true && CombatManager.instance.inCombat == true) {
-                    if (isCrit) {
+                    if (isCrit == true) {
                         eventDescription.SetPMDamageCritText(pm, attackAmount);
                     }
                     else {
@@ -396,7 +421,7 @@ namespace Characters {
                     }
                 }
                 else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
-                     if (isCrit) {
+                    if (isCrit == true) {
                         eventDescription.SetPMHealCritText(pm, attackAmount);
                     }
                     else {
@@ -410,9 +435,10 @@ namespace Characters {
         /// <summary>
         /// Updates the current fill amount on all MPBars to show MP being added or lost
         /// </summary>
-        /// <param name="isLoss"> Flag for if damaged animation should play (does nothing right now) </param>
+        /// <param name="isLoss"> Flag for if damaged animation should play </param>
+        /// <param name="isFocusAnim"> Flag for if there is a focus animation that needs to be yielded to </param>
         /// <returns> IEnumerator for animations </returns>
-        public IEnumerator DisplayMPChange(bool isLoss) {
+        public IEnumerator DisplayMPChange(bool isLoss, bool isFocusAnim) {
             if (statusPanelMPBar != null) {
                 statusPanelMPBar.SetCurrent(pm.CMP);  
             }
@@ -421,6 +447,17 @@ namespace Characters {
             }
             if (EventManager.instance.partyPanel.isOpen == true) {
                 partyPanelMPBar.SetCurrent(pm.CMP);
+            }
+
+            if (isFocusAnim == true) {
+                if (isCrit == true) {
+                    eventDescription.SetPMFocusCritText(pm, attackAmount);
+                }
+                else {
+                    eventDescription.SetPMFocusText(pm, attackAmount);
+                }
+
+                yield return new WaitForSeconds(1f);
             }
 
             yield break;
@@ -447,6 +484,7 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator DisplayAttackHelped(string animationClipName) {
             if (EventManager.instance.partyPanel.isOpen == true) {
+                EventManager.instance.partyPanel.SetStatsPanel(false);  // if outside of combat, statsPanel might be open during animations
                 yield return (StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName)));
             }
             else {

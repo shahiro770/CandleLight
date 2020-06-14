@@ -29,6 +29,7 @@ namespace PlayerUI {
         public Animator pmBleedAnimator;    /// <value> Animator for bleeds </value>
         public Animator pmPoisonAnimator;   /// <value> Animator for poison </value>
         public Animator pmRegenerateAnimator;   /// <value> Animator for poison </value>
+        public Animator pmFocusAnimator;        /// <value> Animator for focus </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
         public Bar MPBar;               /// <value> Visual for mana points </value>
@@ -350,6 +351,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Plays the focus animation
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator PlayFocusAnimation() {
+            pmFocusAnimator.SetTrigger("statusEffected");
+            do {
+                yield return null;    
+            } while (pmFocusAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmFocusAnimator.ResetTrigger("statusEffected");
+        }
+
+        /// <summary>
         /// Plays status effect animations depending on the partyMember's current status effects
         /// </summary>
         /// <param name="animationsToPlay"></param>
@@ -365,6 +378,9 @@ namespace PlayerUI {
             }
             if (animationsToPlay[3] == 1) {
                 StartCoroutine(PlayRegenerateAnimation());
+            }
+            if (animationsToPlay[4] == 1) {
+                StartCoroutine(PlayFocusAnimation());
             }
         }
 

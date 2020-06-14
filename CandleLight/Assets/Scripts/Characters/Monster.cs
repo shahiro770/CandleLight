@@ -39,7 +39,6 @@ namespace Characters {
         [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
-        [field: SerializeField] public int championChance { get; private set; }         /// <value> Chance of monster spawning with a champion buff </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
         #region [ Initialization ] Initialization
@@ -215,7 +214,7 @@ namespace Characters {
         /// </summary>
         /// <param name="championBuffs"> List of championBuffs that can be applied in the subArea (assumed length 3) </param>
         public void GetChampionBuff(string[] championBuffs) {
-            bool isChampion = Random.Range(0, 100) < championChance;
+            bool isChampion = Random.Range(0, 100) < (championChance + PartyManager.instance.bonusChampionChance);
 
             if (isChampion) {
                 multiplier += 1;

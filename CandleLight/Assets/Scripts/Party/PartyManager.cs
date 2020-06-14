@@ -27,6 +27,7 @@ namespace Party {
         /* external component references */
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
 
+        public int bonusChampionChance = 0;     /// <value> Chance of encountering champion monsters, summed from all partyMembers </value>
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
         public float WAXDropMultiplier = 1f;    /// <value> Current multiplier on WAX drop amounts from enemies </value>
@@ -369,13 +370,20 @@ namespace Party {
             return sum;
         }
 
+        public void GetChampionChanceAll() {
+            bonusChampionChance = 0;
+            foreach (PartyMember pm in partyMembersAlive) {
+                bonusChampionChance += pm.championChance;
+            }
+        }
+
         /// <summary>
         /// Equips a gear item to the activePartyMember
         /// </summary>
         /// <param name="id"> ItemDisplay </param>
         /// <param name="subType"> Subtype of gear (weapon, secondary, armour) </param>
         public void EquipGear(ItemDisplay id, string subType) {
-            activePartyMember.EquipGear(id.GetGear(), id.subType);  // need to figure out if itemDisplay's item should be private
+            activePartyMember.EquipGear(id.displayedGear, id.subType);  // need to figure out if itemDisplay's item should be private
         }
 
         /// <summary>
@@ -384,6 +392,33 @@ namespace Party {
         /// <param name="subType"> Subtype of gear (weapon, secondary, armour) </param>
         public void UnequipGear(string subType) {
             activePartyMember.UnequipGear(subType);  // need to figure out if itemDisplay's item should be private
+        }
+
+        /// <summary>
+        /// Equips the active partyMember with a candle, altering stats
+        /// </summary>
+        /// <param name="id"> itemDisplay </param>
+        /// <param name="subType"> subType for candles is a number correlating to the equippable index (0, 1, or 2) </param>
+        public void EquipCandle(ItemDisplay id, string subType) {
+            int index = (subType[0] - '0');
+            activePartyMember.EquipCandle(id.displayedCandle, index);
+        }
+
+        /// <summary>
+        /// Unequips the active partyMember with a candle, altering stats
+        /// </summary>
+        /// <param name="subType"> subType for candles is a number correlating to the equippable index (0, 1, or 2) </param>
+        public void UnequipCandle(string subType) {
+            int index = (subType[0] - '0');
+            activePartyMember.UnequipCandle(index);
+        }
+
+        /// <summary>
+        /// Use one of the active partyMember's candles
+        /// </summary>
+        /// <param name="index"> Index (0, 1, or 2) correlating to the active candle index </param>
+        public void UseCandle(int index) {
+            activePartyMember.UseCandle(index);
         }
 
         public int GetSkillPoints() {

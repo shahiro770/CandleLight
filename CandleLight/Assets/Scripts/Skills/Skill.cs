@@ -28,8 +28,6 @@ namespace Skills {
         public string titleKey;
         public string subKey; 
         public string desKey;
-        // public string[] bodyKeys = new string[3];
-        // public string[] bodyKeyAmounts = new string[3];
         public bool skillEnabled;
         
         public Skill(string name, string type, Attack a, Color skillColour) {
@@ -41,13 +39,6 @@ namespace Skills {
             titleKey = name + "_skill_title";
             subKey = name + "_skill_sub";
             desKey = name + "_skill_des";
-            // bodyKeys[0] = name + "_skill_body0";
-            // bodyKeys[1] = name + "_skill_body1";
-            // bodyKeys[2] = name + "_skill_body2";
-            // bodyKeyAmounts[0] = name + "_skill_body_amount0";
-            // bodyKeyAmounts[1] = name + "_skill_body_amount1";
-            // bodyKeyAmounts[2] = name + "_skill_body_amount2";
-
             skillEnabled = false;
         }
     }

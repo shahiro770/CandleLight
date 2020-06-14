@@ -40,8 +40,10 @@ namespace Characters {
         public Gear weapon = new Gear();        /// <value> Weapon </value>
         public Gear secondary = new Gear();     /// <value> Secondary </value>
         public Gear armour = new Gear();        /// <value> Armour </value>
+        public Candle[] activeCandles = new Candle[3] {new Candle(), new Candle(), new Candle()};
         
-        private int numGear = 3;                /// <value> Max number of gear items a partyMember has </value>
+        private int numGear = 3;                /// <value> Max number of gear items a partyMember can have </value>
+        private int numCandles = 3;             /// <value> Max number of active candles a partyMember can have </value>
 
         /// <summary>
         /// When a PartyMember GO is instantiated, it needs to have its values initialized
@@ -74,7 +76,7 @@ namespace Characters {
         /// </summary>
         /// <param name="id"></param>
         public string GenerateName() {
-            string[] names = new string[] { "Alan", "Bryony", "Candace", "Duran", "Edith", "Flatyz", "Grace", "Holst", "Iliad", "John", "Kempf", "Ludwig", "Madeline", "Nord", "Orvis", "Priscilla", "Qyburn", "Raven", "Seth", "Tao", "Ursula", "Valter", "Wallace", "Xylo", "Yoan", "Zelot" };
+            string[] names = new string[] { "Alan", "Bryony", "Carme", "Dione", "Edith", "Flatyz", "Grace", "Holst", "Iliad", "John", "Kempf", "Lodis", "Madeline", "Nord", "Orvis", "Priscilla", "Qyburn", "Raven", "Seth", "Tao", "Ursula", "Valter", "Wallace", "Xylo", "Yoan", "Zelot" };
             
             return names[Random.Range(0, names.Length)];
         }
@@ -174,6 +176,27 @@ namespace Characters {
                 }
             }
 
+            for (int i = 0; i < numCandles; i++) {
+                if (activeCandles[i] != null && activeCandles[i].isUsable == true) {
+                    switch(activeCandles[i].effects[0]) {
+                        case "STR":
+                            STR += activeCandles[i].values[0];
+                            break;
+                        case "DEX":
+                            DEX += activeCandles[i].values[0];
+                            break;
+                        case "INT":
+                            INT += activeCandles[i].values[0];
+                            break;
+                        case "LUK":
+                            LUK += activeCandles[i].values[0];
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
             /* secondary stats */
             HP = (int)(STR * 2.25 + DEX * 1.5);
             MP = (int)(INT * 1.25 + LUK * 0.5);
@@ -185,6 +208,9 @@ namespace Characters {
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             critChance = (int)(LUK * 0.1) + baseCritChance;
             critMult = baseCritMult;
+            HPRegen = baseHPRegen;
+            MPRegen = baseMPRegen;
+            championChance = 0;
             bleedPlus = false;
 
             /* secondary stats changes from gear */
@@ -235,6 +261,9 @@ namespace Characters {
                             case "BLEEDPLUS":
                                 bleedPlus = true;
                                 break;
+                            case "MPREGENDOUBLE":
+                                MPRegen *= 2f;
+                                break;
                             default:
                                 break;
                         }
@@ -242,10 +271,66 @@ namespace Characters {
                 }
             }
 
+            /* secondary stat changes from candles */
+            for (int i = 0; i < numCandles; i++) {
+                if (activeCandles[i] != null && activeCandles[i].isUsable == true) {
+                    switch(activeCandles[i].effects[0]) {       // positive effect
+                        case "HP":
+                            HP += activeCandles[i].values[0];
+                            break;
+                        case "MP":
+                            MP += activeCandles[i].values[0];
+                            break;
+                        case "PATK":
+                            PATK += activeCandles[i].values[0];
+                            break;
+                        case "MATK":
+                            MATK += activeCandles[i].values[0];
+                            break;
+                        case "PDEF":
+                            PDEF += activeCandles[i].values[0];
+                            break;
+                        case "MDEF":
+                            MDEF += activeCandles[i].values[0];
+                            break;
+                        case "DOG":
+                            DOG += activeCandles[i].values[0];
+                            break;
+                        case "ACC":
+                            ACC += activeCandles[i].values[0];
+                            break;
+                        case "CRITCHANCE":
+                            critChance += activeCandles[i].values[0];
+                            break;
+                        case "CRITMULT":
+                            critMult += activeCandles[i].values[0];
+                            break;
+                        case "BLEEDPLUS":
+                            bleedPlus = true;
+                            break;
+                        case "MPREGENDOUBLE":
+                            MPRegen *= 2f;
+                            break;
+                        default:
+                            break;
+                    }
+                    switch(activeCandles[i].effects[2]) {       // negative effects
+                        case "CHAMPIONCHANCE":
+                            championChance += activeCandles[i].values[2];
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
             /* secondary stat changes from skills */
             if (className == "Mage") {
                 if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
-                     critChance = (int)(critChance * 1.25f);
+                     critChance = 10;
+                }
+                if (skills[(int)SkillConstants.mageSkills.THIRDEYE].skillEnabled == true) {
+                    MPRegen *= 2f;
                 }
             }
             else if (className == "Rogue") {
@@ -295,6 +380,19 @@ namespace Characters {
             }
             if (critChance > 100) {
                 critChance = 100;
+            }
+        }
+
+        /// <summary>
+        /// Set each attack's attack value, including canddle attacks
+        /// </summary>
+        public override void SetAttackValues() {
+            base.SetAttackValues();
+            foreach (Candle c in activeCandles) {
+                if (c != null && c.a != null) {
+                    c.a.attackValue = GetAttackValue(c.a);
+                    c.a.costValue = GetCostValue(c.a);
+                }
             }
         }
 
@@ -369,25 +467,31 @@ namespace Characters {
                 CMP = MP;
             }
 
-            StartCoroutine(pmvc.DisplayMPChange(false));
+            StartCoroutine(pmvc.DisplayMPChange(false, false));
+        }
+
+        /// <summary>
+        /// Increase the PartyMember's current mana points by a specified amount.
+        /// TODO: Cleanup logic so that AddMP manages whether or not the player recieve MP under
+        /// various circumstances (e.g. only revival skills can bring a partyMember back from 0 CMP)
+        /// </summary> 
+        /// <param name="amount"></param>
+        public IEnumerator AddMPYield(int amount) {
+            CMP += amount;
+
+            if (CMP > MP) {
+                CMP = MP;
+            }
+
+            yield return StartCoroutine(pmvc.DisplayMPChange(false, true));
         }
 
         /// <summary>
         /// Increase the partyMember's current mana and health points by 5% of their max amounts
         /// </summary>
         public void Regen() {
-            AddHP((int)(Mathf.Ceil((float)HP * 0.06f)));
-            if (className != "Mage") {
-                AddMP((int)(Mathf.Ceil((float)MP * 0.12f)));
-            }
-            else {  
-                if (skills[(int)SkillConstants.mageSkills.THIRDEYE].skillEnabled == true) {
-                    AddMP((int)(Mathf.Ceil((float)MP * 0.24f)));
-                }
-                else {
-                    AddMP((int)(Mathf.Ceil((float)MP * 0.12f)));
-                }
-            }
+            AddHP((int)(Mathf.Ceil((float)HP * HPRegen)));
+            AddMP((int)(Mathf.Ceil((float)MP * MPRegen)));
         }
 
         /// <summary>
@@ -417,7 +521,7 @@ namespace Characters {
         public IEnumerator LoseMP(int amount) {
             CMP -= amount;
             
-            yield return (StartCoroutine(pmvc.DisplayMPChange(true)));
+            yield return (StartCoroutine(pmvc.DisplayMPChange(true, false)));
         }
 
         /// <summary>
@@ -519,6 +623,28 @@ namespace Characters {
                     AddStatusEffect(a.seName, a.seDuration, c);
                 }
             }
+            else if (a.type == AttackConstants.HEALMP || a.type == AttackConstants.HEALMPSELF) {
+                int focused = CalculateAttackFocus(a);
+                bool isCrit = CalculateAttackCrit(c);
+                bool isStatus = CalculateAttackStatus(a, c);
+
+                if (isCrit) {
+                    focused = CalculateAttackFocusCrit(focused, c);
+                }
+
+                pmvc.SetAttackAmount(focused, isCrit);
+                yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
+                if (CombatManager.instance.inCombat == true) {
+                    yield return StartCoroutine(AddMPYield(focused));
+                }
+                else {
+                    AddMP(focused);
+                }
+
+                if (isStatus && CheckDeath() == false) {
+                    AddStatusEffect(a.seName, a.seDuration, c);
+                }
+            }
             else if (a.type == AttackConstants.BUFF) {
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
                 if (c.ID == this.ID) {
@@ -562,30 +688,35 @@ namespace Characters {
         /// </param>
         /// <returns></returns>
         public IEnumerator TriggerStatuses(bool inCombat) {
-            int damageTaken = 0;
-            int[] animationsToPlay = new int[] { 0 ,0, 0, 0 }; 
+            int HPchange = 0;   // negative means HP gained
+            int MPchange = 0;   // negative means MP gained
+            int[] animationsToPlay = new int[] { 0 ,0, 0, 0, 0 }; 
             bool isCure = GetStatusEffect(StatusEffectConstants.CURE) != -1;
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
-                    damageTaken += se.value;
+                    HPchange += se.value;
                     animationsToPlay[0] = 1;
                 }
                 else if (se.name == StatusEffectConstants.POISON) {
-                    damageTaken += se.value;
+                    HPchange += se.value;
                     animationsToPlay[1] = 1;
                 }
                 else if (se.name == StatusEffectConstants.BLEED) {
                     int bleedDamage = se.value;
-                    damageTaken += bleedDamage;
+                    HPchange += bleedDamage;
                     if (se.afflicter != null && se.afflicter.CheckDeath() == false) {
                         ((Monster)(se.afflicter)).AddHP(bleedDamage);
                     }
                     animationsToPlay[2] = 1;
                 }
                 else if (se.name == StatusEffectConstants.REGENERATE) {
-                    damageTaken -= se.value;
+                    HPchange -= se.value;
                     animationsToPlay[3] = 1;
+                }
+                else if (se.name == StatusEffectConstants.FOCUS) {
+                    MPchange -= se.value;
+                    animationsToPlay[4] = 1;
                 }
 
                 if (isCure && se.isBuff == false) {
@@ -602,25 +733,25 @@ namespace Characters {
 
             if (inCombat == true) { // if in combat, always yield to status effect animations
                 pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
-                if (damageTaken > 0) {
-                    pmvc.SetAttackAmount(damageTaken, false);
-                    yield return StartCoroutine(LoseHP(damageTaken));
+                if (HPchange > 0) {
+                    pmvc.SetAttackAmount(HPchange, false);
+                    yield return StartCoroutine(LoseHP(HPchange));
                 }
-                else if (damageTaken < 0) {
-                    pmvc.SetAttackAmount(damageTaken, true);
-                    yield return StartCoroutine(AddHPYield(damageTaken * -1));
+                else if (HPchange < 0) {
+                    pmvc.SetAttackAmount(HPchange, true);
+                    yield return StartCoroutine(AddHPYield(HPchange * -1));
                 }
             }
             else {
-                if (CHP - damageTaken <= 0) {
-                    damageTaken = CHP - 1;
+                if (CHP - HPchange <= 0) {
+                    HPchange = CHP - 1;
                 }
                 pmvc.DisplayCleanUpStatusEffects(animationsToPlay);
-                if (damageTaken > 0) {
-                    StartCoroutine(LoseHP(damageTaken));
+                if (HPchange > 0) {
+                    StartCoroutine(LoseHP(HPchange));
                 }
-                else if (damageTaken < 0) {
-                    AddHP(damageTaken * -1);
+                else if (HPchange < 0) {
+                    AddHP(HPchange * -1);
                 }
             }
             
@@ -670,7 +801,50 @@ namespace Characters {
             pmvc.SetEquippedGear();
         }
 
+        /// <summary>
+        /// Equip a candle, changing stats
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
+        public void EquipCandle(Candle c, int index) {
+            activeCandles[index] = c;
+            SetAttackValues();          // candle attack values need to be set
 
+            if (c.isUsable == true) {   // no need to recalculate stats if the equipped candle is unusable
+                CalculateStats();
+                UpdateStatusEffectValues();
+            }
+            pmvc.UpdateStats();
+            pmvc.SetEquippedCandles();
+        }
+
+        /// <summary>
+        /// Unequips a candle, changing stats
+        /// </summary>
+        /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
+        public void UnequipCandle(int index) {
+            activeCandles[index] = null;
+
+            CalculateStats();
+            UpdateStatusEffectValues();
+            pmvc.UpdateStats();
+            pmvc.SetEquippedCandles();
+        }
+
+        /// <summary>
+        /// Use a candle's attack 
+        /// </summary>
+        /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
+        public void UseCandle(int index) {
+            StartCoroutine(GetHelped(activeCandles[index].a, this));
+            activeCandles[index].Use(); 
+        }
+
+        /// <summary>
+        /// Enables a skill at a given index, changing stats
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public bool EnableSkill(int index) {
             bool statChange = false;
 

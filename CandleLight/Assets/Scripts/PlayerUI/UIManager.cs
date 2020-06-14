@@ -31,5 +31,13 @@ namespace PlayerUI {
                 instance = this;
             }
         }
+        
+        /// <summary>
+        /// Starts dragging the held item across the screen wherever the mouse position is.
+        /// UIManager is never set unactive, so itemDisplays being dragged won't stop until placed somewhere.
+        /// </summary>
+        public void StartDragItem() {
+            StartCoroutine(heldItemDisplay.StartDragItem());
+        }
     }
 }
