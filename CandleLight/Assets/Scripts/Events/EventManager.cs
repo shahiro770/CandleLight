@@ -767,6 +767,17 @@ namespace Events {
 
                 eventDescription.SetKey(currentResult.resultKey);
             }
+            else if (currentResult.type == ResultConstants.REKINDLE) {
+                PartyManager.instance.Rekindle();
+
+                eventDescription.SetKey(currentResult.resultKey);
+            }
+            else if (currentResult.type == ResultConstants.REKINDLEANDLEAVE) {
+                PartyManager.instance.Rekindle();
+
+                eventDescription.SetKey(currentResult.resultKey);
+                actionsPanel.TravelActions();
+            }
             else if (currentResult.type == ResultConstants.END) {
                 GameManager.instance.LoadNextScene("MainMenu");
             }

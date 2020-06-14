@@ -163,9 +163,9 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets if a use button is usable, updating its tooltip for the attack
+        /// Checks if a use button is usable, updating its tooltip for the attack
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="index"> Active candle slot to check (0, 1, or 2) </param>
         public void SetUsable(int index) {
             if (activeCandles[index].currentItemDisplay != null) {
                 if (activeCandles[index].currentItemDisplay.displayedCandle.isUsable == true) {

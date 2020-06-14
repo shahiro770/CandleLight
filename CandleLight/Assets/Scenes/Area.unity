@@ -2038,6 +2038,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2560515055815530552, guid: 40dd5d9c14f404e928ed678e277743a1,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1519063691
+      objectReference: {fileID: 0}
     - target: {fileID: 901351864927752650, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -12129,6 +12134,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560515055815530552, guid: 40dd5d9c14f404e928ed678e277743a1,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1519063691
       objectReference: {fileID: 0}
     - target: {fileID: 901351864927752650, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
@@ -27277,6 +27287,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2560515055815530552, guid: 40dd5d9c14f404e928ed678e277743a1,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1519063691
+      objectReference: {fileID: 0}
     - target: {fileID: 901351864927752650, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -35281,7 +35296,6 @@ MonoBehaviour:
   - {fileID: 397636677}
   - {fileID: 1105474160}
   - {fileID: 1890914610}
-  pmvc: {fileID: 0}
   useButtons:
   - {fileID: 783402133}
   - {fileID: 1321402209}
@@ -35294,6 +35308,7 @@ MonoBehaviour:
   - {fileID: 645446874}
   - {fileID: 1645704039}
   - {fileID: 123548745}
+  pmvc: {fileID: 0}
   numSpareFull: 0
   isOpen: 0
 --- !u!1 &1967146483

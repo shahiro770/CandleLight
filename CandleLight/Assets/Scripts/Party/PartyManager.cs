@@ -421,6 +421,15 @@ namespace Party {
             activePartyMember.UseCandle(index);
         }
 
+        /// <summary>
+        /// Have each partyMember rekindle all of their active candles
+        /// </summary>
+        public void Rekindle() {
+            foreach (PartyMember pm in partyMembersAlive) {
+                pm.Rekindle();
+            }
+        }
+
         public int GetSkillPoints() {
             return activePartyMember.skillPoints;
         }

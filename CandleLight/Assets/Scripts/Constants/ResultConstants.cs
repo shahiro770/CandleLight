@@ -34,5 +34,7 @@ namespace Constants {
         public static readonly string REVIVEANDLEAVE = "reviveAndLeave";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP and leave </value>
         public static readonly string NEWINT = "newInt";        /// <value> Add a new interaction to the list of available ones </value>
         public static readonly string SHOP = "shop";            /// <value> Player can purchase items here </value>
+        public static readonly string REKINDLE = "rekindle";    /// <value> All active candle uses are restored </value>
+        public static readonly string REKINDLEANDLEAVE = "rekindleAndLeave";    /// <value> All active candle uses are restored and leave the event </value>
     }
 }

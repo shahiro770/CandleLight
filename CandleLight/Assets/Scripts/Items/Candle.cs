@@ -20,8 +20,9 @@ namespace Items {
 
         public Attack a;
         public bool isUsable;
-        private int maxUses;
-        public int uses;
+        public int uses = 0;
+
+        private int maxUses = 0;
 
         /// <summary>
         /// Candle item constructor
@@ -44,6 +45,7 @@ namespace Items {
             this.effects = effects;
             this.values = values;
             this.a = a;
+            a.nameKey = nameID + "_use_title";
             itemSprite = Resources.Load<Sprite>("Sprites/Items/Candles/" + nameID);
             activeSprite = Resources.Load<Sprite>("Sprites/Items/Candles/" + nameID + "Active");
             usedSprite = Resources.Load<Sprite>("Sprites/Items/Candles/" + nameID + "Used");
@@ -116,18 +118,30 @@ namespace Items {
         /// <returns></returns>
         public override int GetWAXValue() {
             int WAX = 0;
+    
+            switch(effects[0]) {
+                case "MPREGENDOUBLE":
+                case "HPREGENDOUBLE":
+                    WAX += 22;
+                    break;
+                case "PATK":
+                    WAX += values[0] * 8;
+                    break;
+                case "PDEF":
+                    WAX += values[0] * 7;
+                    break;
+                default:
+                    break;
+            }
 
-            for (int i = 0; i < effects.Length; i++) {
-                switch(effects[i]) {
-                    case "MPREGENDOUBLE":
-                        WAX += 10;
-                        break;
-                    case "MP50%":
-                        WAX += 20;
-                        break;
-                    default:
-                        break;
-                }
+            WAX *= maxUses;
+
+            switch(effects[2]) {       
+                case "CHAMPIONCHANCE":
+                    WAX -= values[2];
+                    break;
+                default:
+                    break;
             }
 
             return WAX;
@@ -151,14 +165,14 @@ namespace Items {
         /// <param name="value"> true if usable, false otherwise </param>
         public void SetUsable(bool value) {
             if (isUsable != value) {
-                if (value == true) {
-                    SetSprite(itemSprite);
-                }
-                else if (value == false) {
-                    SetSprite(usedSprite);
-                }
-                id.SetUsable(value);
                 isUsable = value;
+                if (isUsable == true) {
+                    SetActive(true);
+                }
+                else if (isUsable == false) {
+                    SetActive(false);
+                }
+                id.SetUsable(isUsable);
             }           
         }
 

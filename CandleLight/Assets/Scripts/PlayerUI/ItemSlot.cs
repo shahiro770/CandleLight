@@ -462,7 +462,12 @@ namespace PlayerUI {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
-                    t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
+                    if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
+                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
+                    }
+                    else {
+                        t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue() * 0.5f));
+                    }
                 }
             }
             else {  // if there is no item held

@@ -258,11 +258,14 @@ namespace Characters {
                             case "CRITMULT":
                                 critMult += gearToCalculate.values[j];
                                 break;
-                            case "BLEEDPLUS":
-                                bleedPlus = true;
-                                break;
                             case "MPREGENDOUBLE":
                                 MPRegen *= 2f;
+                                break;
+                            case "HPREGENDOUBLE":
+                                HPRegen *= 2f;
+                                break;
+                            case "BLEEDPLUS":
+                                bleedPlus = true;
                                 break;
                             default:
                                 break;
@@ -305,11 +308,14 @@ namespace Characters {
                         case "CRITMULT":
                             critMult += activeCandles[i].values[0];
                             break;
-                        case "BLEEDPLUS":
-                            bleedPlus = true;
-                            break;
                         case "MPREGENDOUBLE":
                             MPRegen *= 2f;
+                            break;
+                        case "HPREGENDOUBLE":
+                            HPRegen *= 2f;
+                            break;
+                        case "BLEEDPLUS":
+                            bleedPlus = true;
                             break;
                         default:
                             break;
@@ -606,7 +612,7 @@ namespace Characters {
         /// <param name="c"> Character targeting this </param>
         /// <returns></returns>
         public IEnumerator GetHelped(Attack a, Character c) {
-            if (a.type == AttackConstants.HEALHP) {
+            if (a.type == AttackConstants.HEALHP || a.type == AttackConstants.HEALHPSELF) {
                 int healed = CalculateAttackHeal(a);
                 bool isCrit = CalculateAttackCrit(c);
                 bool isStatus = CalculateAttackStatus(a, c);
@@ -645,9 +651,9 @@ namespace Characters {
                     AddStatusEffect(a.seName, a.seDuration, c);
                 }
             }
-            else if (a.type == AttackConstants.BUFF) {
+            else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) {
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
-                if (c.ID == this.ID) {
+                if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
                     AddStatusEffect(a.seName, a.seDuration + 1, c); // status effects proc the same turn they show up, so to keep the duration equal between all partyMembers, add 1 if self-casted
                 }
                 else {
@@ -838,6 +844,17 @@ namespace Characters {
         public void UseCandle(int index) {
             StartCoroutine(GetHelped(activeCandles[index].a, this));
             activeCandles[index].Use(); 
+        }
+
+        /// <summary>
+        /// Restore uses to all active candles
+        /// </summary>
+        public void Rekindle() {
+            foreach(Candle c in activeCandles) {
+                if (c != null && c.a != null) {
+                    c.Rekindle();
+                }
+            }
         }
 
         /// <summary>

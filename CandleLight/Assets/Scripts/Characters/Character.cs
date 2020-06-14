@@ -272,10 +272,6 @@ namespace Characters {
         /// <param name="a"> Attack object </param>
         /// <returns> The amount of HP healed </returns>
         public int CalculateAttackHeal(Attack a) { 
-            if (CHP + a.attackValue > HP) {
-                return CHP + a.attackValue - HP;
-            }
-
             return a.attackValue;
         }
 
@@ -286,13 +282,7 @@ namespace Characters {
         /// <param name="c"></param>
         /// <returns></returns>
         public int CalculateAttackHealCrit(int amount, Character c) {
-            int healAmount = (int)(amount * c.critMult);
-
-             if (CHP + healAmount > HP) {
-                return CHP + healAmount - HP;
-            }
-
-            return healAmount;
+            return (int)(amount * c.critMult);
         }
 
         /// <summary>
@@ -301,10 +291,6 @@ namespace Characters {
         /// <param name="a"></param>
         /// <returns></returns>
         public int CalculateAttackFocus(Attack a) {
-            if (CMP + a.attackValue > MP) {
-                return CMP + a.attackValue - MP;
-            }
-
             return a.attackValue;
         }
 
@@ -314,13 +300,7 @@ namespace Characters {
         /// <param name="a"></param>
         /// <returns></returns>
         public int CalculateAttackFocusCrit(int amount, Character c) {
-            int healAmount = (int)(amount * c.critMult);
-
-            if (CMP + healAmount > MP) {
-                return CMP + healAmount - MP;
-            }
-
-            return healAmount;
+            return (int)(amount * c.critMult);
         }
 
         protected void AddStatusEffect(StatusEffect se) {

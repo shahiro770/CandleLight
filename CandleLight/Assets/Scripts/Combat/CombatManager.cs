@@ -384,9 +384,9 @@ namespace Combat {
                     else if (selectedAttackPM.type == AttackConstants.HEALHP || selectedAttackPM.type == AttackConstants.BUFF) {
                         yield return (StartCoroutine(selectedPartyMember.GetHelped(selectedAttackPM, activePartyMember)));
                     }
-                    else if (selectedAttackPM.type == AttackConstants.HEALMPSELF) {
+                    else if (selectedAttackPM.type == AttackConstants.HEALMPSELF || selectedAttackPM.type == AttackConstants.HEALHPSELF || selectedAttackPM.type == AttackConstants.BUFFSELF) {
                         yield return (StartCoroutine(activePartyMember.GetHelped(selectedAttackPM, activePartyMember)));
-                    }   
+                    }
                 }
             }
         }

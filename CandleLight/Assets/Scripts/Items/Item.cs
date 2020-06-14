@@ -77,7 +77,7 @@ namespace Items {
                 if (effects[i] == "%MAXHP" || effects[i] == "CRITCHANCE" || effects[i] == "CHAMPIONCHANCE") {     // TODO Make this account for percent effects
                     amountStrings[i] = values[i] + "%";
                 }
-                else if (effects[i] == "BLEEDPLUS" || effects[i] == "MPREGENDOUBLE") {
+                else if (effects[i] == "BLEEDPLUS" || effects[i] == "MPREGENDOUBLE" || effects[i] == "HPREGENDOUBLE") {
                     amountStrings[i] = "";
                 }
                 else {

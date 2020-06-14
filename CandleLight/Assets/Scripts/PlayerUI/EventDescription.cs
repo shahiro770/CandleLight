@@ -37,6 +37,7 @@ namespace PlayerUI {
         private string dodgedText = LocalizationManager.instance.GetLocalizedValue("dodged_text");  /// <value> Localized text for the word "dodged" </value>
         private string lostText = LocalizationManager.instance.GetLocalizedValue("lost_text");      /// <value> Localized text for the word "lost" </value>
         private string noReviveText = LocalizationManager.instance.GetLocalizedValue("no_revive_text"); /// <value> Localized text for the phrase "No one needs to be revived." </value>
+        private string noRekindleText = LocalizationManager.instance.GetLocalizedValue("no_rekindle_text"); /// <value> Localized text for the phrase "Only equipped candles can be rekindled." </value>
         private string noMoveText = LocalizationManager.instance.GetLocalizedValue("no_move_text");     /// <value> Localized text for the phrase " can't move!" </value>
         private string HPText = LocalizationManager.instance.GetLocalizedValue("HP_text");          /// <value> Localized text for the text "HP" </value>
         private string MPText = LocalizationManager.instance.GetLocalizedValue("MP_text");          /// <value> Localized text for the text "MP" </value>
