@@ -8,8 +8,10 @@
 *
 */
 
+using ClassConstants = Constants.ClassConstants;
 using EventManager = Events.EventManager;
 using Items;
+using ItemConstants = Constants.ItemConstants;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using System.Collections;
@@ -54,7 +56,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="newItem"> Item object </param>
         public void PlaceItem(Item newItem) {
-            itemSlotType = "any";
+            itemSlotType = ItemConstants.ANY;
 
             if (newItem != null) {  
                 SetVisible(true);
@@ -124,18 +126,18 @@ namespace PlayerUI {
             t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
             SetTooltipText();
             
-            if (itemSlotSubType != "any") {    // bad way to determine if its a partyMember's equippable slot
+            if (itemSlotSubType != ItemConstants.ANY) {    // bad way to determine if its a partyMember's equippable slot
                 defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
-                if (itemSlotType == "gear") {
+                if (itemSlotType == ItemConstants.GEAR) {
                     PartyManager.instance.EquipGear(newItemDisplay, itemSlotSubType);
                 }
-                if (itemSlotType == "candle") { 
+                if (itemSlotType == ItemConstants.CANDLE) { 
                     PartyManager.instance.EquipCandle(newItemDisplay, itemSlotSubType);
                     CandlesPanel candlesPanel = (CandlesPanel)parentPanel;
                     candlesPanel.SetUsable(itemSlotSubType[0] - '0');
                 }
             }
-            else if (itemSlotType == "candle") {    // for candles, if placed in a non-active slot, update the sprite
+            else if (itemSlotType == ItemConstants.CANDLE) {        // for candles, if placed in a non-active slot, update the sprite
                 newItemDisplay.displayedCandle.SetActive(false);
             }
             
@@ -230,7 +232,7 @@ namespace PlayerUI {
             if (currentItemDisplay != null && isTakeable == true) {
                 bool itemTaken = false;
 
-                if (currentItemDisplay.type == "consumable") {  // consumable items are used on click
+                if (currentItemDisplay.type == ItemConstants.CONSUMABLE) {  // consumable items are used on click
                     string[] effects = currentItemDisplay.GetEffects();
                     int[] amounts = currentItemDisplay.GetValues();
                     for (int i = 0; i < effects.Length; i++) {
@@ -261,13 +263,13 @@ namespace PlayerUI {
                     if (direct == true) {   
                         Panel targetPanel = EventManager.instance.GetTargetPanel(currentItemDisplay.type);
 
-                        if (currentItemDisplay.type == "gear") {
+                        if (currentItemDisplay.type == ItemConstants.GEAR) {
                             GearPanel gearPanel = (GearPanel)targetPanel;
                             if (gearPanel.PlaceItem(currentItemDisplay, direct)) {
                                 itemTaken = true;
                             }
                         }
-                        else if (currentItemDisplay.type == "candle") {
+                        else if (currentItemDisplay.type == ItemConstants.CANDLE) {
                             CandlesPanel candlesPanel = (CandlesPanel)targetPanel;
                             if (candlesPanel.PlaceItem(currentItemDisplay, direct)) {
                                 itemTaken = true;
@@ -289,7 +291,7 @@ namespace PlayerUI {
                     SetTooltipText();
 
                     if (parentPanel.GetPanelName() == PanelConstants.GEARPANEL) {
-                        if (itemSlotSubType == "any") {     // gearPanel updates to have more free spare itemSlots
+                        if (itemSlotSubType == ItemConstants.ANY) {     // gearPanel updates to have more free spare itemSlots
                             GearPanel gearPanel = (GearPanel)parentPanel;
                             gearPanel.TakeItem();
                         }
@@ -300,7 +302,7 @@ namespace PlayerUI {
                     else if (parentPanel.GetPanelName() == PanelConstants.CANDLESPANEL) {
                         CandlesPanel candlesPanel = (CandlesPanel)parentPanel;
                         
-                        if (itemSlotSubType == "any") {     // candlesPanel updates to have more free spare itemSlots
+                        if (itemSlotSubType == ItemConstants.ANY) {     // candlesPanel updates to have more free spare itemSlots
                             candlesPanel.TakeItem();
                         }
                         else  { // item was unequipped from partyMember
@@ -341,11 +343,11 @@ namespace PlayerUI {
         /// <param name="i"> ItemDisplay to check </param>
         /// <returns> True if accepted, false otherwise </returns>
         public bool CheckCorrectItemType(ItemDisplay id) {
-            if (itemSlotType == "any") {
+            if (itemSlotType == ItemConstants.ANY) {
                 return true;
             }
             else if (id.type == itemSlotType && (id.subType == itemSlotSubType || itemSlotSubType == "0" || itemSlotSubType == "1" || itemSlotSubType == "2")) {
-                if (id.className != "any") {
+                if (id.className != ClassConstants.ANY) {
                     if (id.className == PartyManager.instance.GetActivePartyMember().className) {
                         return true;
                     }
@@ -430,7 +432,7 @@ namespace PlayerUI {
             if (currentItemDisplay != null) {
                 string[] basicKeys = currentItemDisplay.GetTooltipBasicKeys();
 
-                if (basicKeys[1] == "consumable") {
+                if (basicKeys[1] == ItemConstants.CONSUMABLE) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
@@ -441,9 +443,9 @@ namespace PlayerUI {
                         t.SetTextActive("value", false);    // don't display the worth text if there is no item
                     }
                 }
-                else if (basicKeys[1] == "gear") {
+                else if (basicKeys[1] == ItemConstants.GEAR) {
                     t.SetKey("title", basicKeys[0] + "_item");
-                    if (currentItemDisplay.className == "any") {
+                    if (currentItemDisplay.className == ClassConstants.ANY) {
                         t.SetKey("subtitle", basicKeys[2] + "_item_sub");
                     }
                     else {
@@ -458,7 +460,7 @@ namespace PlayerUI {
                         t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue() * 0.5f));
                     }
                 }
-                else if (basicKeys[1] == "candle") {
+                else if (basicKeys[1] == ItemConstants.CANDLE) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());

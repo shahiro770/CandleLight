@@ -11,14 +11,12 @@
 *
 */
 
-using Party;
+using ClassConstants = Constants.ClassConstants;
 using General;
-using System.Collections;
-using System.Collections.Generic;
+using Party;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Menus.ClassSelectMenu {
@@ -135,19 +133,19 @@ namespace Menus.ClassSelectMenu {
             classBtss[index].SetColor("normalAlternate");
 
             if (index == 0) {
-                partyComposition[compIndex] = "Warrior";
+                partyComposition[compIndex] = ClassConstants.WARRIOR;
                 compSprites[compIndex].sprite = warriorIcon;
             }
             else if (index == 1) {
-                partyComposition[compIndex] = "Mage";
+                partyComposition[compIndex] = ClassConstants.MAGE;
                 compSprites[compIndex].sprite = mageIcon;
             }
             else if (index == 2) {
-                partyComposition[compIndex] = "Archer";
+                partyComposition[compIndex] = ClassConstants.ARCHER;
                 compSprites[compIndex].sprite = archerIcon;
             }
             else if (index == 3) {
-                partyComposition[compIndex] = "Rogue";
+                partyComposition[compIndex] = ClassConstants.ROGUE;
                 compSprites[compIndex].sprite = rogueIcon;
             }
 
@@ -167,16 +165,16 @@ namespace Menus.ClassSelectMenu {
                 }
             }
 
-            if (partyComposition[index] == "Warrior") {
+            if (partyComposition[index] == ClassConstants.WARRIOR) {
                 correspondingClassIndex = 0;
             }
-            else if (partyComposition[index] == "Mage") {
+            else if (partyComposition[index] == ClassConstants.MAGE) {
                 correspondingClassIndex = 1;
             }
-            else if (partyComposition[index] == "Archer") {
+            else if (partyComposition[index] == ClassConstants.ARCHER) {
                 correspondingClassIndex = 2;
             }
-            else if (partyComposition[index] == "Rogue") {
+            else if (partyComposition[index] == ClassConstants.ROGUE) {
                 correspondingClassIndex = 3;
             }
 

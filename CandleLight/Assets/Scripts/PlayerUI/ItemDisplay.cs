@@ -8,7 +8,9 @@
 *
 */
 
+using ClassConstants = Constants.ClassConstants;
 using Items;
+using ItemConstants = Constants.ItemConstants;
 using Party;
 using System.Collections;
 using UIEffects;
@@ -30,7 +32,7 @@ namespace PlayerUI {
         public Gear displayedGear { get; private set; }             /// <value> Item as gear </value>
         public string type;                 /// <value> Type of item </value>
         public string subType;              /// <value> Subtype of item </value>
-        public string className = "any";    /// <value> Name of class item can be used by </value>
+        public string className = ClassConstants.ANY;    /// <value> Name of class item can be used by </value>
         public bool dragging = false;       /// <value> Flag for if item is currently being dragged </value>    
         
         private Item displayedItem;         /// <value> Item </value>
@@ -47,14 +49,14 @@ namespace PlayerUI {
             this.type = displayedItem.type;
             this.subType = displayedItem.subType;
 
-            if (type == "consumable") {
+            if (type == ItemConstants.CONSUMABLE) {
                 displayedConsumable = (Consumable)displayedItem;
             }
-            else if (type == "gear") {
+            else if (type == ItemConstants.GEAR) {
                 displayedGear = (Gear)displayedItem;
                 className = displayedItem.className;    // consumables will not be class restricted for now
             }
-            else if (type == "candle") {
+            else if (type == ItemConstants.CANDLE) {
                 displayedCandle = (Candle)displayedItem;
                 className = displayedItem.className;
             }
@@ -70,7 +72,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns></returns>
         public string[] GetEffects() {
-            if (displayedItem.type == "consumable") {
+            if (displayedItem.type == ItemConstants.CONSUMABLE) {
                 return displayedConsumable.GetEffects();
             }
             else { //if (displayedItem.type == "gear") {
@@ -91,10 +93,10 @@ namespace PlayerUI {
         /// </summary>
         /// <returns></returns>
         public string[] GetTooltipEffectKeys() {
-            if (displayedItem.type == "consumable") {
+            if (displayedItem.type == ItemConstants.CONSUMABLE) {
                 return displayedConsumable.GetTooltipEffectKeys();
             }
-            else if (displayedItem.type == "gear") {
+            else if (displayedItem.type == ItemConstants.GEAR) {
                 return displayedGear.GetTooltipEffectKeys();
             }
             else { //if (displayedItem.type == "candle") {

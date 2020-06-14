@@ -10,7 +10,6 @@
 * Need to work with attacks that target multiple monsters, and multiple partyMembers
 */
 
-using Candle = Items.Candle;
 using Constants;
 using Characters;
 using EventManager = Events.EventManager;
@@ -109,7 +108,7 @@ namespace Combat {
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath() == false) {
                     partyMembersAlive.Add(pm);
-                    if (pm.className == "Archer") {
+                    if (pm.className == ClassConstants.ARCHER) {
                         if (pm.skills[(int)SkillConstants.archerSkills.VANTAGEPOINT].skillEnabled == true) {
                             pm.AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, null);
                         }

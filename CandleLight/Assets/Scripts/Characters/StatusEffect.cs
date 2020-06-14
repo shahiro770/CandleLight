@@ -7,6 +7,7 @@
 * to a character's stats.
 */
 
+using ClassConstants = Constants.ClassConstants;
 using SkillConstants = Constants.SkillConstants;
 using StatusEffectDisplay = PlayerUI.StatusEffectDisplay;
 using StatusEffectConstants = Constants.StatusEffectConstants;
@@ -93,7 +94,7 @@ namespace Characters {
                 preValue = (int)(afflicted.HP * 0.08f);
 
                 PartyMember pm = afflicted as PartyMember;
-                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
                     value = (int)(preValue * 0.5f);
                 }
                 else {
@@ -119,7 +120,7 @@ namespace Characters {
                 }
 
                 PartyMember pm = afflicted as PartyMember;
-                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
                     value = (int)(preValue * 0.5f) - afflicted.PDEF;
                 }
                 else {
@@ -160,7 +161,7 @@ namespace Characters {
             else if (name == StatusEffectConstants.POISON) { // right now poison damage only needs to update for partyMembers
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null) {
-                    if (pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                    if (pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
                         value = (int)(preValue * 0.5f);
                     }
                     else {  // skill reducing poison damage was toggled off 
@@ -170,7 +171,7 @@ namespace Characters {
             }
             else if (name == StatusEffectConstants.BLEED) {
                 PartyMember pm = afflicted as PartyMember;
-                if (pm != null && pm.className == "Archer" && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
                     value = (int)(preValue * 0.5f) - afflicted.PDEF;
                 }
                 else {

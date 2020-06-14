@@ -9,6 +9,7 @@
 */
 
 using AttackConstants = Constants.AttackConstants;
+using ClassConstants = Constants.ClassConstants;
 using Combat;
 using Items;
 using Party;
@@ -102,25 +103,25 @@ namespace Characters {
                 pmvc.ExciteSkillsTab();
             }
 
-            if (className == "Warrior") {
+            if (className == ClassConstants.WARRIOR) {
                 baseSTR += (int)(LVL * 1.5);
                 baseDEX += (int)(LVL * 1.5);
                 baseINT += (int)(LVL * 1.25);
                 baseLUK += (int)(LVL * 1.25);
             }
-            else if (className == "Mage") {
+            else if (className == ClassConstants.MAGE) {
                 baseSTR += LVL;
                 baseDEX += (int)(LVL * 1.25);
                 baseINT += (int)(LVL * 1.75);
                 baseLUK += (int)(LVL * 1.5);
             }
-            else if (className == "Archer") {
+            else if (className == ClassConstants.ARCHER) {
                 baseSTR += (int)(LVL * 1.25);
                 baseDEX += (int)(LVL * 1.75);
                 baseINT += (int)(LVL * 1.5);
                 baseLUK += LVL;
             }
-            else if (className == "Rogue") {
+            else if (className == ClassConstants.ROGUE) {
                 baseSTR += LVL;
                 baseDEX += (int)(LVL * 1.5);
                 baseINT += (int)(LVL * 1.25);
@@ -331,7 +332,7 @@ namespace Characters {
             }
 
             /* secondary stat changes from skills */
-            if (className == "Mage") {
+            if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
                      critChance = 10;
                 }
@@ -339,7 +340,7 @@ namespace Characters {
                     MPRegen *= 2f;
                 }
             }
-            else if (className == "Rogue") {
+            else if (className == ClassConstants.ROGUE) {
                 if (skills[(int)SkillConstants.rogueSkills.CLOAKED].skillEnabled == true) {
                     int DOGBoost = (int)(DOG * 0.15f);
                     DOG += 15 >= DOGBoost ? 15 : DOGBoost;
@@ -872,7 +873,7 @@ namespace Characters {
                     attackNum++;
                     skills[index].skillEnabled = true;
                     
-                    if (className == "Mage") {
+                    if (className == ClassConstants.MAGE) {
                         if (index == (int)SkillConstants.mageSkills.PYROMANCY == true) {  
                             if (attacks[attackNum].seName == StatusEffectConstants.BURN) {
                                 attacks[attackNum].seChance = attacks[attackNum].baseSeChance << 1;
@@ -887,7 +888,7 @@ namespace Characters {
                 skillPoints--;
                 skills[index].skillEnabled = true;
 
-                if (className == "Mage") {
+                if (className == ClassConstants.MAGE) {
                     if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
                             if (attacks[i].seName == StatusEffectConstants.BURN) {
@@ -899,7 +900,7 @@ namespace Characters {
                         statChange = true; 
                     }
                 }
-                else if (className == "Archer") {
+                else if (className == ClassConstants.ARCHER) {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
                         PartyManager.instance.itemDropMultiplier *= 1.5f;
                     }
@@ -907,7 +908,7 @@ namespace Characters {
                         statChange = true;
                     }
                 }
-                else if (className == "Rogue") {
+                else if (className == ClassConstants.ROGUE) {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
                         PartyManager.instance.WAXDropMultiplier *= 1.5f;
                     }
@@ -958,7 +959,7 @@ namespace Characters {
                 skillPoints++;
                 skills[index].skillEnabled = false;
 
-                if (className == "Mage") {
+                if (className == ClassConstants.MAGE) {
                     if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
                             if (attacks[i].seName == StatusEffectConstants.BURN) {
@@ -970,7 +971,7 @@ namespace Characters {
                         statChange = true;     
                     }
                 }
-                else if (className == "Archer") {
+                else if (className == ClassConstants.ARCHER) {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
                         PartyManager.instance.itemDropMultiplier /= 1.5f;
                     }
@@ -978,7 +979,7 @@ namespace Characters {
                         statChange = true;
                     }
                 }
-                else if (className == "Rogue") {
+                else if (className == ClassConstants.ROGUE) {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
                         PartyManager.instance.WAXDropMultiplier /= 1.5f;
                     }
@@ -1011,7 +1012,7 @@ namespace Characters {
         /// <param name="className"> PartyMember class </param>
         /// <param name="index"> Index of skill </param>
         public void TriggerSkillJustAttacked(string className, int index) {
-            if (className == "Rogue") {
+            if (className == ClassConstants.ROGUE) {
                 if (index == (int)SkillConstants.rogueSkills.AMBUSHER) {
                     AddStatusEffect(StatusEffectConstants.ADVANTAGE, 2, this);
                 }
@@ -1024,7 +1025,7 @@ namespace Characters {
         /// <param name="className"> PartyMember class </param>
         /// <param name="index"> Index of skill </param>
         public void TriggerSkill(string className, int index) {
-            if (className == "Rogue") {
+            if (className == ClassConstants.ROGUE) {
                 if (index == (int)SkillConstants.rogueSkills.AMBUSHER) {
                     AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, this);
                 }

@@ -8,6 +8,7 @@
 *
 */
 
+using ClassConstants = Constants.ClassConstants;
 using Combat;
 using Events;
 using Localization;
@@ -62,18 +63,18 @@ namespace Characters {
         public void Init(PartyMember pm) {
             this.pm = pm;
             activeCandles = new ItemDisplay[3]; // due to object intialization orders, if this isnt dont here, it'll just be null
-            partyMemberSprite = Resources.Load<Sprite>("Sprites/Classes/" + pm.className + "Icon");
+            partyMemberSprite = Resources.Load<Sprite>("Sprites/Classes/" + char.ToUpper(pm.className[0]) + pm.className.Substring(1) + "Icon");
             
-            if (pm.className == "Warrior") {
+            if (pm.className == ClassConstants.WARRIOR) {
                 partyMemberColour = new Color32(189, 29, 0, 255);
             }
-            else if (pm.className == "Mage") {
+            else if (pm.className == ClassConstants.MAGE) {
                 partyMemberColour = new Color32(0, 152, 220, 255);
             }
-            else if (pm.className == "Archer") {
+            else if (pm.className ==  ClassConstants.ARCHER) {
                 partyMemberColour = new Color32(90, 197, 79, 255);
             }
-            else if (pm.className == "Rogue") {
+            else if (pm.className == ClassConstants.ROGUE) {
                 partyMemberColour = new Color32(255, 205, 2, 255);
             }
 

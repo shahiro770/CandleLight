@@ -11,6 +11,7 @@
 */
 
 using AttackConstants = Constants.AttackConstants;
+using ClassConstants = Constants.ClassConstants;
 using Combat;
 using PartyManager = Party.PartyManager;
 using Result = Events.Result;
@@ -371,7 +372,7 @@ namespace Characters {
                 yield return StartCoroutine(LoseHP(damage, a.animationClipName));
 
                 // side effects from partyMember skills
-                if (pmc.className == "Warrior") {
+                if (pmc.className == ClassConstants.WARRIOR) {
                     if (pmc.skills[(int)SkillConstants.warriorSkills.MANABLADE].skillEnabled == true) {
                         if (a.type == AttackConstants.PHYSICAL) {
                             pmc.AddMP((int)(damage * 0.25f));
@@ -388,7 +389,7 @@ namespace Characters {
                         md.UpdateTooltip();
 
                         if (a.seName == StatusEffectConstants.STUN) {
-                            PartyManager.instance.TriggerSkillEnabled("Rogue", (int)SkillConstants.rogueSkills.AMBUSHER, pmc);
+                            PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, pmc);
                         }
                     }
                 }

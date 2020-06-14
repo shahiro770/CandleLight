@@ -469,7 +469,7 @@ namespace Events {
             if (r.specificItemAmount > 0) {
                 for (int i = 0; i < r.itemAmount; i++) {
                     string specificItemName = r.specificItemNames[Random.Range(0, r.specificItemAmount)];
-                    if (r.itemType == "consumable") {
+                    if (r.itemType == ItemConstants.CONSUMABLE) {
                         for (int j = 0; j < consumablesNum; j++) {
                             if (subAreaConsumables[j].nameID == specificItemName) {
                                 items.Add(new Consumable(subAreaConsumables[j]));
@@ -478,7 +478,7 @@ namespace Events {
                             }
                         }
                     }
-                    else if (r.itemType == "gear") {
+                    else if (r.itemType == ItemConstants.GEAR) {
                         for (int j = 0; j < gearNum; j++) {
                             if (subAreaGear[j].nameID == specificItemName) {
                                 items.Add(new Gear(subAreaGear[j]));
@@ -487,7 +487,7 @@ namespace Events {
                             }
                         }
                     }
-                    else if (r.itemType == "candle") {
+                    else if (r.itemType == ItemConstants.CANDLE) {
                         for (int j = 0; j < candleNum; j++) {
                             if (subAreaCandles[j].nameID == specificItemName) {
                                 items.Add(new Candle(subAreaCandles[j]));
@@ -502,15 +502,15 @@ namespace Events {
             }
             else {
                 for (int i = 0; i < r.itemAmount; i++) {
-                    if (r.itemType == "consumable") {
+                    if (r.itemType == ItemConstants.CONSUMABLE) {
                         items.Add(new Consumable(subAreaConsumables[Random.Range(0, consumablesNum)]));
                         ((Consumable)items[i]).RandomizeAmounts(r.itemQuality);
                     }
-                    else if (r.itemType == "gear") {
+                    else if (r.itemType == ItemConstants.GEAR) {
                         items.Add(new Gear(subAreaGear[Random.Range(0, gearNum)]));
                          ((Gear)items[i]).RandomizeAmounts(r.itemQuality);
                     }
-                    else if (r.itemType == "candle") {
+                    else if (r.itemType == ItemConstants.CANDLE) {
                         items.Add(new Candle(subAreaCandles[Random.Range(0, candleNum)]));
                         ((Candle)items[i]).RandomizeAmounts(r.itemQuality);
                     }
@@ -1079,10 +1079,10 @@ namespace Events {
         /// <param name="type"></param>
         /// <returns></returns>
         public Panel GetTargetPanel(string type) {
-            if (type == "gear") {
+            if (type == ItemConstants.GEAR) {
                 return gearPanel;
             } 
-            else if (type == "candle") {
+            else if (type == ItemConstants.CANDLE) {
                 return candlesPanel;
             }  
 
@@ -1133,10 +1133,10 @@ namespace Events {
         /// </summary>
         /// <param name="id"></param>
         public void OpenItemPanel(ItemDisplay id) {
-            if (id.type == "gear") {
+            if (id.type == ItemConstants.GEAR) {
                 itemsTabManager.OpenPanel(0);
             }
-            else if (id.type == "candle") {
+            else if (id.type == ItemConstants.CANDLE) {
                 itemsTabManager.OpenPanel(1);
             }
         }

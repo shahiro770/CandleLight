@@ -811,7 +811,7 @@ namespace Database {
                             values[1] = reader.GetInt32(6);
                             values[2] = reader.GetInt32(8);
 
-                             newItem = new Consumable(nameID, "consumable", subType, effects, values);
+                             newItem = new Consumable(nameID, ItemConstants.CONSUMABLE, subType, effects, values);
                         }
                         else if (type == "Gear") {
                             subType = reader.GetString(2);
@@ -825,7 +825,7 @@ namespace Database {
                             values[1] = reader.GetInt32(7);
                             values[2] = reader.GetInt32(9);
    
-                            newItem = new Gear(nameID, "gear", subType, className, effects, values);
+                            newItem = new Gear(nameID, ItemConstants.GEAR, subType, className, effects, values);
                         }
                         else if (type == "Candles") {
                             Attack a = GetAttack(nameID, false, dbConnection);
@@ -841,7 +841,7 @@ namespace Database {
                             values[1] = reader.GetInt32(7);
                             values[2] = reader.GetInt32(9);
    
-                            newItem = new Candle(nameID, "candle", subType, className, a, effects, values);
+                            newItem = new Candle(nameID, ItemConstants.CANDLE, subType, className, a, effects, values);
                         }
                     }
                     
