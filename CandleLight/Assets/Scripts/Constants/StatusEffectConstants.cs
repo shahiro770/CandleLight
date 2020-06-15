@@ -20,7 +20,7 @@ namespace Constants {
         public const string WEAKNESS = "weakness";    /// <value> Reduces PATK </value>
         public const string ADVANTAGE = "advantage";  /// <value> Gain increased crit chance </value>
         public const string ROOT = "root";     /// <value> DOG is reduced by 50% and takes double damage from burn </value>
-        public const string TRAP = "trap";     /// <value> Can't escape until attacker is killed </value>
+        public const string TRAP = "trap";     /// <value> Attempting to escape is much harder </value>
         public const string REGENERATE = "regenerate";   /// <value> Restoring HP at the end of its turn </value>
         public const string FOCUS = "focus";   /// <value> Restoring MP at the end of its turn </value>
         public const string STUN = "stun";     /// <value> Cannot act on their turn </value>

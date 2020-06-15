@@ -17,7 +17,7 @@ Clean Up: Might be stupid how im setting null type items to load stuff in on par
 Clean Up: Gotta add item constants for stats, gear, consumable, candle, and eventually, key
 Fix: Prevent rekindling with no candles to rekindle
 Fix: Make skill columns require two skill points in the previous column
-
+Fix: Don't make any panels become interactable if a straight combat event (so no blinking)
 
 Clean Up: Have eventManager have a function that disables all panels (So I don't need to do it in every place)
 

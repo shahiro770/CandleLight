@@ -497,6 +497,9 @@
 		{ "key": "cure_title", "value": "Cure" },
 		{ "key": "cure_sub", "value": "Buff" },
 		{ "key": "cure_description", "value": "Debuffs on this character last half as long" },
+		{ "key": "trap_title", "value": "Trap" },
+		{ "key": "trap_sub", "value": "Debuff" },
+		{ "key": "trap_description", "value": "Fleeing from combat is very unlikely" },
 		{ "key": "championHP_title", "value": "Everlasting" },
 		{ "key": "championHP_sub", "value": "Permanent Buff" },
 		{ "key": "championHP_description", "value": "Has HP increased by 66% and recovers 5% of its HP at the end of its turn" },
@@ -575,6 +578,8 @@
 		{ "key": "coma_attack", "value": "Coma" },
 		{ "key": "hobgoblinSlash_attack", "value": "Hobgoblin Slash" },
 		{ "key": "cinderSlash_attack", "value": "Cinder Slash" },
+		{ "key": "wrap_attack", "value": "Wrap" },
+		{ "key": "strangle_attack", "value": "Strangle" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "frost_attack", "value": "Frost" },

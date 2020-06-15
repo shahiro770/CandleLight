@@ -300,6 +300,10 @@ namespace Combat {
         public IEnumerator AttemptFlee() {
             // partyMembers with higher luck will have a better chance at escaping
             int chance = Random.Range(activePartyMember.LVL + (activePartyMember.LUK / 3 * activePartyMember.LVL), 100) - monsters[0].LVL;
+            if (activePartyMember.GetStatusEffect(StatusEffectConstants.TRAP) != -1) {
+                chance += 50;
+            }
+
             List<Monster> monstersToRemove = new List<Monster>();
 
             // wait for all monsters to "despawn"
@@ -525,6 +529,10 @@ namespace Combat {
                     }
                 }
             }
+            else if (monsterAI == "cycler") {
+                activeMonster.lastAttackIndex = (activeMonster.lastAttackIndex + 1) % attackNum;
+                selectedMonsterAttackIndex =  activeMonster.lastAttackIndex;
+            }
 
             return attacks[selectedMonsterAttackIndex];  
         }
@@ -549,7 +557,7 @@ namespace Combat {
                 if (taunter != null) {
                     targetChoice = taunter;
                 }
-                else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt60" || activeMonster.monsterAI == "debuffer") {
+                else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt60" || activeMonster.monsterAI == "debuffer" || activeMonster.monsterAI == "cycler") {
                     targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
                 }
                 else if (activeMonster.monsterAI == "weakHunter") {

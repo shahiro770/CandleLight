@@ -40,6 +40,7 @@ namespace Characters {
         [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
+        [field: SerializeField] public int lastAttackIndex { get; set; } = -1;          /// <value> Index of attack last used (-1 if it hasn't attacked yet) </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
         #region [ Initialization ] Initialization
