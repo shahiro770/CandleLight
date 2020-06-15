@@ -322,9 +322,9 @@ namespace Events {
                 displayStartEvent = false;
             }
 
-            if (currentEvent.type == EventConstants.COMBAT) {
-                PartyManager.instance.RegenParty();
+            PartyManager.instance.RegenParty();
 
+            if (currentEvent.type == EventConstants.COMBAT) {
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
                 monstersToSpawn = currentSubArea.GetMonstersToSpawn();
                 
@@ -346,17 +346,10 @@ namespace Events {
                 }
 
                 statusPanel.DisplayPartyMember(PartyManager.instance.GetFirstPartyMemberAlive().pmvc);
-                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
-                PartyManager.instance.RegenParty();
+                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
-                gearPanel.SetInteractable(true);
-                candlesPanel.SetInteractable(true);
-                skillsPanel.SetInteractable(true);
-                partyPanel.EnableButtons();
-                actionsPanel.SetAllActionsInteractable();
-                itemsTabManager.SetAllButtonsInteractable();
-                utilityTabManager.SetAllButtonsInteractable();
+                SetAllButtonsInteractable(true);
                 SetNavigation();
             }
         }
@@ -394,13 +387,7 @@ namespace Events {
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
-                gearPanel.SetInteractable(true);
-                candlesPanel.SetInteractable(true);
-                skillsPanel.SetInteractable(true);
-                partyPanel.EnableButtons();
-                actionsPanel.SetAllActionsInteractable();
-                itemsTabManager.SetAllButtonsInteractable();
-                utilityTabManager.SetAllButtonsInteractable();
+                SetAllButtonsInteractable(true);
                 SetNavigation();
             }
         }
@@ -443,16 +430,11 @@ namespace Events {
                            
                 gearPanel.SetTakeable(true);
                 candlesPanel.SetTakeable(true);
-                skillsPanel.SetTogglable(true);  
-                
+                skillsPanel.SetTogglable(true);
+
                 actionsPanel.PostCombatActions(rewardsPanel.itemNum);
-                gearPanel.SetInteractable(true);
-                candlesPanel.SetInteractable(true);
-                skillsPanel.SetInteractable(true);
-                actionsPanel.SetAllActionsInteractable();
-                itemsTabManager.SetAllButtonsInteractable();
-                utilityTabManager.SetAllButtonsInteractable();
-                partyPanel.EnableButtons();
+                SetAllButtonsInteractable(true);
+                
             }
         }
 
@@ -864,13 +846,7 @@ namespace Events {
             HideEventDisplays();
             rewardsPanel.SetVisible(false);
             SetToastPanelsVisible(false);
-            actionsPanel.SetAllActionsUninteractableAndFadeOut();
-            partyPanel.DisableButtons();
-            gearPanel.SetInteractable(false);
-            candlesPanel.SetInteractable(false);
-            skillsPanel.SetInteractable(false);
-            itemsTabManager.SetAllButtonsUninteractable();
-            utilityTabManager.SetAllButtonsUninteractable();
+            SetAllButtonsInteractable(false, true);
             UIManager.instance.inShop = false;
             StartCoroutine(PartyManager.instance.TriggerStatuses(false));
             yield return (StartCoroutine(FadeBackgrounds()));
@@ -978,13 +954,7 @@ namespace Events {
         /// </summary>
         /// <returns></returns>
         public IEnumerator DisplayGameOver() {
-            actionsPanel.SetAllActionsUninteractable();
-            partyPanel.DisableButtons();
-            gearPanel.SetInteractable(false);
-            candlesPanel.SetInteractable(false);
-            skillsPanel.SetInteractable(false);
-            itemsTabManager.SetAllButtonsUninteractable();
-            utilityTabManager.SetAllButtonsUninteractable();
+            SetAllButtonsInteractable(false);
             yield return new WaitForSeconds(1.5f);
             GameManager.instance.LoadNextScene("MainMenu");
         }
@@ -1127,6 +1097,37 @@ namespace Events {
         }
 
         #endregion
+
+        /// <summary>
+        /// Sets the interactability of all buttons in all panels
+        /// </summary>
+        /// <param name="value"> True for interactable, false otherwise </param>
+        /// <param name="fadeOut"> True if special fade out animation should play for actionsPanel </param>
+        public void SetAllButtonsInteractable(bool value, bool fadeOut = false) {
+            if (value == true) {
+                gearPanel.SetInteractable(true);
+                candlesPanel.SetInteractable(true);
+                actionsPanel.SetAllActionsInteractable();
+                partyPanel.EnableButtons();
+                skillsPanel.SetInteractable(true);
+                itemsTabManager.SetAllButtonsInteractable();
+                utilityTabManager.SetAllButtonsInteractable();
+            }
+            else {
+                gearPanel.SetInteractable(false);
+                candlesPanel.SetInteractable(false);
+                if (fadeOut == true) {
+                    actionsPanel.SetAllActionsUninteractable();
+                }
+                else {
+                    actionsPanel.SetAllActionsUninteractableAndFadeOut();
+                }
+                partyPanel.DisableButtons();
+                skillsPanel.SetInteractable(false);
+                itemsTabManager.SetAllButtonsUninteractable();
+                utilityTabManager.SetAllButtonsUninteractable();
+            }
+        }
 
         /// <summary>
         /// Opens the respective item panel that an itemDisplay belongs in

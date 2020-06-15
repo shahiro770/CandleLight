@@ -232,7 +232,6 @@ namespace Combat {
         /// <returns> IEnumerator so actions are all taken in order </returns>
         private IEnumerator PMTurn() {
             StartPMTurn();
-            
             while (!pmSelectionFinalized) {    // (PreparePMAttack and SelectMonster) or AttemptFlee
                 yield return null;
             }

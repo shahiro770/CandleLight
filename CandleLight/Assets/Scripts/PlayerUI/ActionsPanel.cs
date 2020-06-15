@@ -259,10 +259,6 @@ namespace PlayerUI {
                     actions[i].SetInteractable(false);  
                 }
             }
-            
-            if (initialSelection == false) {
-                es.SetSelectedGameObject(actions[firstInteractableIndex].b.gameObject);  // make event system select first selectable action
-            }
         }
 
         /// <summary>

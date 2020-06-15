@@ -206,15 +206,13 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="value"></param>
         public void SetInteractable(bool value) {
-            if (isOpen == true) {
-                for (int i = 0;i < spare.Length; i++) {
-                    spare[i].SetInteractable(value);
-                }
-
-                activeCandles[0].SetInteractable(value);
-                activeCandles[1].SetInteractable(value);
-                activeCandles[2].SetInteractable(value);
+            for (int i = 0;i < spare.Length; i++) {
+                spare[i].SetInteractable(value);
             }
+
+            activeCandles[0].SetInteractable(value);
+            activeCandles[1].SetInteractable(value);
+            activeCandles[2].SetInteractable(value);  
         }
 
         /// <summary>
