@@ -10,6 +10,7 @@
 */
 
 using Combat;
+using EventManager = Events.EventManager;
 using General;
 using PlayerUI;
 using System.Collections;
@@ -27,6 +28,7 @@ namespace Characters {
         public Animator burnAnimator;
         public Animator poisonAnimator;
         public Animator bleedAnimator;
+        public Animator regenerateAnimator;
         public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
         public Animator SEAnimator;
         public Bar HPBar;                   /// <value> Monster's health points display </value>
@@ -34,6 +36,7 @@ namespace Characters {
         public ButtonTransitionState bts;   /// <value> Button's visual state controller </value>
         public Canvas monsterCanvas;        /// <value> Monster's personal canvas to display UI elements and minimize repainting </value>
         public DamageText dt;               /// <value> Text display to show how much damage taken by an attack </value>we
+        public EventDescription eventDescription;
         public GameObject SEDisplayPrefab;
         public GameObject SEHolder;
         public RectTransform monsterSpriteHolder;   /// <value> Holds monster's sprite and button, resized to prevent animations from repositioning </value>
@@ -159,7 +162,8 @@ namespace Characters {
         #region [ Section 0 ] Button Interaction
 
         /// <summary>
-        /// Set button's onClick function to the passed in function
+        /// Set button's onClick function to the passed in function.
+        /// Also gets external component references (such as the eventDescription)
         /// </summary>
         /// <param name="smd"> Delegate function only takes in a monster as a parameter </param>
         /// <remark> 
@@ -169,6 +173,7 @@ namespace Characters {
         /// </remark>
         public void AddSMDListener(SelectMonsterDelegate smd) {
             b.onClick.AddListener(() => smd(displayedMonster));
+            eventDescription = EventManager.instance.eventDescription;
         }
 
         /// <summary>
@@ -428,6 +433,13 @@ namespace Characters {
             StartCoroutine(PlayAnimation(bleedAnimator, "statusEffected"));
         }
 
+        /// <summary>
+        /// Plays the regenerate animation
+        /// </summary>
+        public void PlayRegenerateAnimation() {
+            StartCoroutine(PlayAnimation(regenerateAnimator, "statusEffected"));
+        }
+
          /// <summary>
         /// Plays the death animation of a monster
         /// </summary>
@@ -458,14 +470,15 @@ namespace Characters {
         /// <param name="amount"> Positive int amount changed </param>
         /// <param name="isLoss"> True if health is lost, positive if gained </param>
         /// <param name="animationClipName"> Name of animation to play overtop of monster </param>
+        /// <param name="setDescription"> True to set description text on healing, false otherwise </param>
         /// <returns> IEnumerator for animations </returns>
-        public IEnumerator DisplayHPChange(int amount, bool isLoss, string animationClipName) {
+        public IEnumerator DisplayHPChange(int amount, bool isLoss, bool setDescription, string animationClipName) {
             SetEffectsAnimatorClip(animationClipName);
             if (isLoss) {
                 yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
                 dt.ShowDamage(amount);
                 HPBar.SetCurrent(displayedMonster.CHP);
-                if (isCrit) {
+                if (isCrit == true) {
                     yield return (StartCoroutine(PlayTwoAnimations(monsterAnimator, dt.textAnimator, "damagedCrit", "showCritDamage")));
                     isCrit = false;
                 }
@@ -475,7 +488,18 @@ namespace Characters {
                 dt.HideDamage();
             }
             else {
-                 HPBar.SetCurrent(displayedMonster.CHP);
+                if (setDescription == true) {
+                    if (isCrit == true) {
+                        eventDescription.SetMHealCritText(displayedMonster, amount);
+                        isCrit = false;
+                    }
+                    else {
+                        eventDescription.SetMHealText(displayedMonster, amount);
+                    }
+                }
+                HPBar.SetCurrent(displayedMonster.CHP);
+
+                yield return new WaitForSeconds(1f);
             }
         }
 

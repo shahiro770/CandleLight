@@ -227,6 +227,9 @@ namespace Characters {
         /// <param name="a"> Attack object </param>
         /// <returns> The amount of damage taken </returns>
         public int CalculateAttackDamage(Attack a) {
+            if (a.type == AttackConstants.MAGICAL && GetStatusEffect(StatusEffectConstants.SHOCK) != -1) {
+                return (int)(a.attackValue * 1.5f);
+            }
             return a.attackValue;
         }
 

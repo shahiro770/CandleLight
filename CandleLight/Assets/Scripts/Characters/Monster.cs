@@ -274,7 +274,23 @@ namespace Characters {
                 CHP = HP;
             }
 
-            StartCoroutine(md.DisplayHPChange(amount, false, "MplaceHolderEffect"));
+            StartCoroutine(md.DisplayHPChange(amount, false, false, "MplaceHolderEffect"));
+        }
+
+        /// <summary>
+        /// Increase the PartyMember's current health points by a specified amount,
+        /// yielding to the DisplayHPChange animation
+        /// </summary>
+        /// <param name="amount"> Amount of health points to add</param>
+        /// <returns> Yields for animations </returns>
+        public IEnumerator AddHPYield(int amount) {    
+            CHP += amount;
+
+            if (CHP > HP) {
+                CHP = HP;
+            }
+
+            yield return StartCoroutine(md.DisplayHPChange(amount, false, true, "MplaceHolderEffect"));
         }
 
         /// <summary>
@@ -292,12 +308,12 @@ namespace Characters {
                 CHP = 0;
             }
             
-            yield return StartCoroutine(md.DisplayHPChange(amount, true, animationClipName));
+            yield return StartCoroutine(md.DisplayHPChange(amount, true, false, animationClipName));
         }
 
         public IEnumerator TriggerStatuses() {
             int damageTaken = 0;
-            int[] animationsToPlay = new int[] { 0 ,0, 0 }; 
+            int[] animationsToPlay = new int[] { 0 ,0, 0, 0 }; 
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
@@ -317,8 +333,9 @@ namespace Characters {
                     }
                     animationsToPlay[2] = 1;
                 }
-                else if (se.name == StatusEffectConstants.CHAMPIONHP) {
+                else if (se.name == StatusEffectConstants.CHAMPIONHP || se.name == StatusEffectConstants.REGENERATE) {
                     damageTaken -= se.value; 
+                    animationsToPlay[3] = 1;
                 }
 
                 se.UpdateDuration(-1);
@@ -336,12 +353,15 @@ namespace Characters {
             if (animationsToPlay[2] == 1) {
                 md.PlayBleedAnimation();
             }
+            if (animationsToPlay[3] == 1) {
+                md.PlayRegenerateAnimation();
+            }
 
             if (damageTaken > 0) {
                 yield return StartCoroutine(LoseHP(damageTaken, "MplaceHolderEffect"));
             }
             else if (damageTaken < 0) {     
-                AddHP(damageTaken * -1);
+                yield return StartCoroutine(AddHPYield(damageTaken * -1));
             }
 
             RemoveStatusEffects();
@@ -382,17 +402,7 @@ namespace Characters {
                 }
 
                 if (isStatus) {
-                    if (GetStatusEffect(a.seName) == -1) {  // no two statusEffects of the same type can be on at once
-                        StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                        newStatus.SetValue(c, this);
-                        AddStatusEffect(newStatus);
-                        md.AddStatusEffectDisplay(newStatus);
-                        md.UpdateTooltip();
-
-                        if (a.seName == StatusEffectConstants.STUN) {
-                            PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, pmc);
-                        }
-                    }
+                   AddStatusEffect(a.seName, a.seDuration, c);
                 }
                 
                 UpdateStatusEffectValues();
@@ -414,15 +424,7 @@ namespace Characters {
            
             if (attackHit) {
                 yield return StartCoroutine(md.DisplayAttackEffect(a.animationClipName));
-                if (GetStatusEffect(a.seName) == -1) {  // no two tatusEffects of the same type can be on at once
-                    StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                    newStatus.SetValue(c, this);
-                    AddStatusEffect(newStatus);
-                    md.AddStatusEffectDisplay(newStatus);
-                    md.UpdateTooltip();
-
-                    UpdateStatusEffectValues();
-                }
+                AddStatusEffect(a.seName, a.seDuration, c);
             }
             else {
                 yield return StartCoroutine(DodgeAttack(a.animationClipName));
@@ -430,19 +432,29 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Applies a statusEffect to itself
+        /// Handles all logic when a partyMember's attack helps a partyMember (healing, buffs, etc.)
         /// </summary>
-        /// <param name="a"> Attack </param>
-        public void GetStatusEffectedSelf(Attack a) {
-            int index = statusEffects.FindIndex(se => se.name == a.seName);
-             if (index == -1) {  // no two tatusEffects of the same type can be on at once
-                StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                newStatus.SetValue(this, this);
-                AddStatusEffect(newStatus);
-                md.AddStatusEffectDisplay(newStatus);
-                md.UpdateTooltip();
+        /// <param name="a"> Attack targeting this partyMember </param>
+        /// <param name="c"> Character targeting this </param>
+        /// <returns></returns>
+        public IEnumerator GetHelped(Attack a, Character c) {
+            if (a.type == AttackConstants.HEALHP || a.type == AttackConstants.HEALHPSELF) {
+                int healed = CalculateAttackHeal(a);
+                bool isCrit = CalculateAttackCrit(c);
+                bool isStatus = CalculateAttackStatus(a, c);
 
-                UpdateStatusEffectValues();
+                if (isCrit) {
+                    healed = CalculateAttackHealCrit(healed, c);
+                }
+
+                yield return StartCoroutine(AddHPYield(healed));
+
+                if (isStatus && CheckDeath() == false) {
+                    AddStatusEffect(a.seName, a.seDuration, c);
+                }
+            }
+            else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) { // TODO: Make monster's receiving the buff play an animation that is yielded to if its casted by another monster
+                AddStatusEffect(a.seName, a.seDuration, this);
             }
         }
 
@@ -453,6 +465,32 @@ namespace Characters {
         /// <returns></returns>
         public IEnumerator DodgeAttack(string animationClipName) {
             yield return StartCoroutine(md.DisplayAttackDodged(animationClipName));
+        }
+
+        /// <summary>
+        /// Adds a status effect to the monster
+        /// </summary>
+        /// <param name="seName"> Name of the statusEffect </param>
+        /// <param name="seDuration"> Duration of the statusEffect </param>
+        /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
+        public void AddStatusEffect(string seName, int seDuration, Character c) {
+            if (GetStatusEffect(seName) == -1) {  // no two statusEffects of the same type can be on at once
+                StatusEffect newStatus;
+                if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
+                    newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
+                }
+                else {
+                    newStatus = new StatusEffect(seName, seDuration);
+                }
+                newStatus.SetValue(c, this);
+                AddStatusEffect(newStatus);
+                md.AddStatusEffectDisplay(newStatus);
+                md.UpdateTooltip();
+
+                if (seName == StatusEffectConstants.STUN) {
+                    PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);
+                }
+            }
         }
 
         /// <summary>

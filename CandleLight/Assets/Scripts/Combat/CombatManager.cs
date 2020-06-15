@@ -232,11 +232,12 @@ namespace Combat {
         /// <returns> IEnumerator so actions are all taken in order </returns>
         private IEnumerator PMTurn() {
             StartPMTurn();
+            
             while (!pmSelectionFinalized) {    // (PreparePMAttack and SelectMonster) or AttemptFlee
                 yield return null;
             }
             DisableAllButtons();
-            if (selectedAttackPM != null) {
+            if (selectedAttackPM != null || pmNoAction == true) {
                 yield return StartCoroutine(ExecutePMAttack());  
             }
             yield return StartCoroutine(CleanUpPMTurn());
@@ -253,10 +254,16 @@ namespace Combat {
         /// </summary>
         private void StartPMTurn() {
             activePartyMember.SetAttackValues();
-
             DisplayActivePartyMember();
-            EnableAllButtonsInSidePanels();
-            SetMonsterNavigation();
+
+            pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstants.STUN) != -1;
+            if (pmNoAction == true) {
+                pmSelectionFinalized = true;
+            }
+            else {
+                EnableAllButtonsInSidePanels();
+                SetMonsterNavigation();
+            }
         }
 
         /// <summary>
@@ -272,23 +279,16 @@ namespace Combat {
         public void PreparePMAttack(Attack a) {
             selectedAttackPM = a;
 
-            Monster taunter = (Monster)CheckTauntIndex(activePartyMember);
-            pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstants.STUN) != -1;
-            
-            if (pmNoAction) {
-                pmSelectionFinalized = true;
+            // highlight the party if the attack targets the party
+            if (selectedAttackPM.type == AttackConstants.HEALHP || selectedAttackPM.type == AttackConstants.BUFF) {          
+                partyPanel.SetBlinkSelectables(selectedAttackPM, true);
             }
-            else if (taunter != null) {
-                SelectMonster(taunter);
-            }
-            else {  
-                // highlight the party if the attack targets the party
-                if (selectedAttackPM.type == AttackConstants.HEALHP || selectedAttackPM.type == AttackConstants.BUFF) {          
-                    partyPanel.SetBlinkSelectables(selectedAttackPM, true);
+            else {
+                Monster taunter = (Monster)CheckTauntIndex(activePartyMember);  // TODO: Make it so when taunted, player chooses a random attack that can damage a taunter
+                if (taunter != null) {
+                    SelectMonster(taunter);
                 }
-                else {
-                    partyPanel.SetBlinkSelectables(null, false);
-                }
+                partyPanel.SetBlinkSelectables(null, false);
             }
         }
 
@@ -370,7 +370,7 @@ namespace Combat {
         public IEnumerator ExecutePMAttack() {    
             if (pmNoAction == true) {
                 eventDescription.SetNoMoveTextPM(activePartyMember.pmName);
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(1f);
             }
             else {
                 eventDescription.SetKey(selectedAttackPM.nameKey); 
@@ -495,7 +495,8 @@ namespace Combat {
             else if (monsterAI == "lastAt60") {    // only uses last attack after CHP falls below 60%, using it whenever possible if its a selfBuff
                 if (activeMonster.CHP <= (int)(activeMonster.HP * 0.6f)) {
 
-                    if (attacks[attackNum - 1].type == AttackConstants.BUFFSELF && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) == -1) {
+                    if ((attacks[attackNum - 1].type == AttackConstants.BUFFSELF || attacks[attackNum - 1].type == AttackConstants.HEALHPSELF) 
+                    && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) == -1) {
                         selectedMonsterAttackIndex = attackNum - 1;
                     }
                     else if ((attacks[attackNum - 1].type == AttackConstants.PHYSICAL || attacks[attackNum - 1].type == AttackConstants.MAGICAL)) {
@@ -600,9 +601,9 @@ namespace Combat {
                     else if (selectedAttackMonster.type == AttackConstants.DEBUFF) {
                         yield return (StartCoroutine(targetChoice.GetStatusEffected(selectedAttackMonster, activeMonster)));
                     }  
-                    else if (selectedAttackMonster.type == AttackConstants.BUFFSELF) {
-                        activeMonster.GetStatusEffectedSelf(selectedAttackMonster);
-                    }   
+                    else if (selectedAttackMonster.type == AttackConstants.HEALHPSELF || selectedAttackMonster.type == AttackConstants.BUFFSELF) {
+                        yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
+                    }
                 }
             }
         }

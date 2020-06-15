@@ -654,12 +654,7 @@ namespace Characters {
             }
             else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) {
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
-                if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
-                    AddStatusEffect(a.seName, a.seDuration + 1, c); // status effects proc the same turn they show up, so to keep the duration equal between all partyMembers, add 1 if self-casted
-                }
-                else {
-                    AddStatusEffect(a.seName, a.seDuration, c);
-                }
+                AddStatusEffect(a.seName, a.seDuration, c);
             }
         }
 
@@ -679,7 +674,13 @@ namespace Characters {
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {
             if (GetStatusEffect(seName) == -1) {  // no two statusEffects of the same type can be on at once
-                StatusEffect newStatus = new StatusEffect(seName, seDuration);
+                StatusEffect newStatus;
+                if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
+                    newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
+                }
+                else {
+                    newStatus = new StatusEffect(seName, seDuration);
+                }
                 newStatus.SetValue(c, this);
                 AddStatusEffect(newStatus);
                 pmvc.AddStatusEffectDisplay(newStatus);

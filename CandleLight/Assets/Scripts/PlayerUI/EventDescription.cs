@@ -172,6 +172,34 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Changes the displayed text to show that a partyMember was healed by a healing attack
+        /// </summary>
+        /// <param name="pm"> PartyMember that was healed </param>
+        /// <param name="amount"> Amount that was healed for </param>
+        public void SetMHealText(Monster m, int amount) {
+            string healedText = LocalizationManager.instance.GetLocalizedValue(m.monsterSpriteName + "_monster") + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            eventText.SetText(healedText);
+
+            if (this.colour != "normal") {
+                SetColour("normal");
+            }
+        }
+
+        /// <summary>
+        /// Changes the displayed text to show that a partyMember was healed by a healing attack
+        /// </summary>
+        /// <param name="pm"> PartyMember that was healed </param>
+        /// <param name="amount"> Amount that was healed for </param>
+        public void SetMHealCritText(Monster m, int amount) {
+            string healedText = critHealText + " " + LocalizationManager.instance.GetLocalizedValue(m.monsterSpriteName + "_monster") + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            eventText.SetText(healedText);
+
+            if (this.colour != "normal") {
+                SetColour("normal");
+            }
+        }
+
+        /// <summary>
         /// Changes the displayed text to show the cost and effects of an attack action
         /// </summary>
         /// <param name="pm"> partyMember object </param>

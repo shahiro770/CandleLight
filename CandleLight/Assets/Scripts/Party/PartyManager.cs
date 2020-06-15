@@ -449,12 +449,12 @@ namespace Party {
         /// </summary>
         /// <param name="className"> PartyMember's the class </param>
         /// <param name="index"> Index of skill </param>
-        /// <param name="cpm"> Current partyMember that just attacked if in combat </param>
-        public void TriggerSkillEnabled(string className, int index, PartyMember cpm = null) {
+        /// <param name="cpm"> Character that just attacked if in combat </param>
+        public void TriggerSkillEnabled(string className, int index, Character c = null) {
             foreach (PartyMember pm in partyMembersAlive) {
                 if (pm.className == className) {
                     if (pm.skills[(int)index].skillEnabled == true) {
-                        if (pm.ID == cpm.ID) {
+                        if (pm.ID == c.ID) {
                              pm.TriggerSkillJustAttacked(className, index);
                         }
                         else {

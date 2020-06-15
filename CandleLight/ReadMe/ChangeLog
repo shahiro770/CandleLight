@@ -12,13 +12,15 @@ Prevent all effects from a used candle
 Give candles x uses
 Show negative effect
 Add refresh event
-
-Clean Up: Might be stupid how im setting null type items to load stuff in on partyMember
 Clean Up: Gotta add item constants for stats, gear, consumable, candle, and eventually, key
-Fix: Prevent rekindling with no candles to rekindle
-Fix: Make skill columns require two skill points in the previous column
-Fix: Don't make any panels become interactable if a straight combat event (so no blinking)
+Fix: Stunned for player is too fast and lets the player do something
+Clean Up: Remove GetStatusEffectedSelf and replace it with getHelped for monster
+Fix: Make shock take less time
 
+Fix: Prevent rekindling with no candles to rekindle
+Future: Make skill columns require two skill points in the previous column when there's enough skills
+Fix: Don't make any panels become interactable if a straight combat event (so no blinking)
+Clean Up: Might be stupid how im setting null type items to load stuff in on partyMember
 Clean Up: Have eventManager have a function that disables all panels (So I don't need to do it in every place)
 
 

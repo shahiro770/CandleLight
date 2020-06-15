@@ -185,19 +185,11 @@ namespace PlayerUI {
             }
             
             amounts[0] = "";
-            if (se.name == StatusEffectConstants.BURN) {
+            if (se.name == StatusEffectConstants.BURN || se.name == StatusEffectConstants.POISON || se.name == StatusEffectConstants.BLEED) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
             }
-            else if (se.name == StatusEffectConstants.POISON) {
-                textKeys[1] = "damage_description";
-                amounts[1] = se.value.ToString();
-            }
-            else if (se.name == StatusEffectConstants.BLEED) {
-                textKeys[1] = "damage_description";
-                amounts[1] = se.value.ToString();
-            }
-            else if (se.name == StatusEffectConstants.CHAMPIONHP) {
+            else if (se.name == StatusEffectConstants.CHAMPIONHP || se.name == StatusEffectConstants.REGENERATE) {
                 textKeys[1] = "HP_regen_description";
                 amounts[1] = se.value.ToString();
             }
