@@ -259,9 +259,6 @@ namespace Characters {
         /// <param name="isCrit"> Flag for if attack that this character was a crit </param>
         public void SetAttackAmount(int attackAmount, bool isCrit) {
             this.attackAmount = attackAmount;
-            if (isCrit == true) {
-                print("its crit!");
-            }
             this.isCrit = isCrit;
         }
 
