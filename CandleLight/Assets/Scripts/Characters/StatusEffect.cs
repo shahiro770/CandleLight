@@ -50,6 +50,8 @@ namespace Characters {
                 case StatusEffectConstants.ROOT:
                 case StatusEffectConstants.STUN:
                 case StatusEffectConstants.SHOCK:
+                case StatusEffectConstants.TRAP:
+                case StatusEffectConstants.FATALWOUND:
                     isBuff = false;
                     break;
                 case StatusEffectConstants.RAGE:
@@ -58,6 +60,7 @@ namespace Characters {
                 case StatusEffectConstants.GUARD:
                 case StatusEffectConstants.CURE:           
                 case StatusEffectConstants.BOSS:
+                case StatusEffectConstants.MIRACLE:
                 case StatusEffectConstants.CHAMPIONHP:
                 case StatusEffectConstants.CHAMPIONPATK:
                 case StatusEffectConstants.CHAMPIONMATK:
@@ -131,6 +134,10 @@ namespace Characters {
                 preValue = (int)(Mathf.Ceil((float)afflicted.HP * 0.05f));
                 value = preValue;
             }
+            else if (name == StatusEffectConstants.FATALWOUND) {
+                preValue = (int)(afflicted.HP * 0.3f);
+                value = preValue;
+            }
 
             if (value < 0) {
                 value = 0;
@@ -143,6 +150,9 @@ namespace Characters {
         /// <param name="value"> Amount duration is increased/decreased by </param>
         public void UpdateDuration(int value) {
             duration += value;
+            if (duration < 0) {
+                duration = 0;
+            }
             sed.UpdateText();
         }
 

@@ -4,6 +4,7 @@
 * Date: March 17, 2019
 * 
 * The ResultConstants class is used to store the types of results as constants.
+* NOTE: IF THE RESULT AFFECTS ITEMS, MAKE SURE IN Result.cs TO ADD IT TO THE ITEM GENERATING IF STATEMENT
 *
 */
 
@@ -36,5 +37,6 @@ namespace Constants {
         public static readonly string SHOP = "shop";            /// <value> Player can purchase items here </value>
         public static readonly string REKINDLE = "rekindle";    /// <value> All active candle uses are restored </value>
         public static readonly string REKINDLEANDLEAVE = "rekindleAndLeave";    /// <value> All active candle uses are restored and leave the event </value>
+        public static readonly string STATALLANDITEMANDLEAVE = "statAllAndItemAndLeave";    /// <value> Get some stats changes, and item, and  leave the event </value>
     }
 }

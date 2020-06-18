@@ -130,6 +130,9 @@ namespace Items {
                 case "PDEF":
                     WAX += values[0] * 7;
                     break;
+                case "HP":
+                    WAX += values[0] * 2;
+                    break;
                 default:
                     break;
             }

@@ -110,7 +110,7 @@ namespace Characters {
                 baseLUK += (int)(LVL * 1.25);
             }
             else if (className == ClassConstants.MAGE) {
-                baseSTR += LVL;
+                baseSTR += (int)(LVL * 0.75);
                 baseDEX += (int)(LVL * 1.25);
                 baseINT += (int)(LVL * 1.75);
                 baseLUK += (int)(LVL * 1.5);
@@ -372,6 +372,10 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.GUARD) {
                     PDEF += PDEF;
                 }
+                else if (se.name == StatusEffectConstants.MIRACLE) {
+                    PDEF += 9999;
+                    MDEF += 9999;
+                }
             }
             
             if (setCurrent) {
@@ -527,6 +531,9 @@ namespace Characters {
         /// <param name="amount"> Amount of health points lost </param>
         public IEnumerator LoseMP(int amount) {
             CMP -= amount;
+            if (CMP <= 0) {
+                CMP = 0;
+            }
             
             yield return (StartCoroutine(pmvc.DisplayMPChange(true, false)));
         }
@@ -675,7 +682,7 @@ namespace Characters {
         public void AddStatusEffect(string seName, int seDuration, Character c) {
             if (GetStatusEffect(seName) == -1) {  // no two statusEffects of the same type can be on at once
                 StatusEffect newStatus;
-                if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
+                if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
                     newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
                 }
                 else {
@@ -725,6 +732,10 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.FOCUS) {
                     MPchange -= se.value;
                     animationsToPlay[4] = 1;
+                }
+                else if (se.name == StatusEffectConstants.FATALWOUND) {
+                    HPchange += se.value;
+                    animationsToPlay[2] = 1;
                 }
 
                 if (isCure && se.isBuff == false) {

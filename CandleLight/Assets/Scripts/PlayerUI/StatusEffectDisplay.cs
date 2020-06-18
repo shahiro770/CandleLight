@@ -79,7 +79,8 @@ namespace PlayerUI {
                     normalBlock.disabledColor = new Color32(234, 50, 60, 150);
                     durationText.SetColour(new Color32(234, 50, 60, 255));
                     break;
-            
+
+                case StatusEffectConstants.FATALWOUND:
                 case StatusEffectConstants.BLEED:
                     normalBlock.normalColor = new Color32(138, 7, 7, 200);
                     normalBlock.highlightedColor = new Color32(138, 7, 7, 255);
@@ -154,6 +155,7 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(133, 133, 133, 255));
                     break;
                 case StatusEffectConstants.BOSS:
+                case StatusEffectConstants.MIRACLE:
                 case StatusEffectConstants.CHAMPIONHP:
                 case StatusEffectConstants.CHAMPIONPATK:
                 case StatusEffectConstants.CHAMPIONMATK:

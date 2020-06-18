@@ -229,7 +229,7 @@ namespace Party {
             }
             else {
                 for (int i = 0; i < partyMembersAll.Count; i++) {
-                    if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS) {
+                    if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS || type == ResultConstants.STATALLANDITEMANDLEAVE) {
                         if (partyMembersAll[i].CheckDeath() == false) {
                             if (partyMembersAll[i].className == ClassConstants.WARRIOR) {
                                 if (partyMembersAll[i].skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
@@ -289,7 +289,7 @@ namespace Party {
             }
             else {
                 foreach (PartyMember pm in partyMembersAlive) {
-                    pm.LoseMP(amount);
+                    StartCoroutine(pm.LoseMP(amount * -1));
                 }
             }
         } 

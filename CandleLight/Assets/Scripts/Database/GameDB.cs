@@ -290,46 +290,31 @@ namespace Database {
                     int minMonsterNum = 0;
                     int maxMonsterNum = 0;
                     string defaultBGPackName = "";
-                    string[] subAreaEvents = new string[10];
-                    int[] subAreaEventChances = new int[10];
+                    string[] subAreaEvents = null;
+                    int[] subAreaEventChances = null;
                     string[] monsterPool;
                     int[] monsterChances;
                     string[] championBuffs = new string[3];
                     
                     if (reader.Read()) {
-                        subAreaEvents[0] = reader.GetString(2);
-                        subAreaEvents[1] = reader.GetString(4);
-                        subAreaEvents[2] = reader.GetString(6);
-                        subAreaEvents[3] = reader.GetString(8);
-                        subAreaEvents[4] = reader.GetString(10);
-                        subAreaEvents[5] = reader.GetString(12);
-                        subAreaEvents[6] = reader.GetString(14);
-                        subAreaEvents[7] = reader.GetString(16);
-                        subAreaEvents[8] = reader.GetString(18);
-                        subAreaEvents[9] = reader.GetString(20);
-
-                        subAreaEventChances[0] = reader.GetInt32(3);
-                        subAreaEventChances[1] = reader.GetInt32(5);
-                        subAreaEventChances[2] = reader.GetInt32(7);
-                        subAreaEventChances[3] = reader.GetInt32(9);
-                        subAreaEventChances[4] = reader.GetInt32(11);
-                        subAreaEventChances[5] = reader.GetInt32(13);
-                        subAreaEventChances[6] = reader.GetInt32(15);
-                        subAreaEventChances[7] = reader.GetInt32(17);
-                        subAreaEventChances[8] = reader.GetInt32(19);
-                        subAreaEventChances[9] = reader.GetInt32(21);
+                        subAreaEvents = new string[(int)Mathf.Ceil((reader.FieldCount - 7) / 2)];
+                        subAreaEventChances = new int[(int)Mathf.Ceil((reader.FieldCount - 7) / 2)];
+                        for (int i = 0; i < subAreaEvents.Length; i++) {
+                            subAreaEvents[i] = reader.GetString(i * 2 + 2);
+                            subAreaEventChances[i] = reader.GetInt32(i * 2 + 3);
+                        }
 
                         name = reader.GetString(1);
-                        Tuple <string[], int[]> monsterInfo = GetMonsterPool(reader.GetString(22), dbConnection);
+                        Tuple <string[], int[]> monsterInfo = GetMonsterPool(name, dbConnection);
                         monsterPool = monsterInfo.Item1;
                         monsterChances = monsterInfo.Item2;
-                        minMonsterNum = reader.GetInt32(23);
-                        maxMonsterNum = reader.GetInt32(24);
-                        defaultBGPackName = reader.GetString(25);
+                        minMonsterNum = reader.GetInt32(reader.FieldCount - 5);
+                        maxMonsterNum = reader.GetInt32(reader.FieldCount - 4);
+                        defaultBGPackName = name;
                         
-                        championBuffs[0] = reader.GetString(26);
-                        championBuffs[1] = reader.GetString(27);
-                        championBuffs[2] = reader.GetString(28);
+                        championBuffs[0] = reader.GetString(reader.FieldCount - 3);
+                        championBuffs[1] = reader.GetString(reader.FieldCount - 2);
+                        championBuffs[2] = reader.GetString(reader.FieldCount - 1);
 
                         newSubArea = new SubArea(name, areaName, subAreaEvents, subAreaEventChances, monsterPool, monsterChances, minMonsterNum, maxMonsterNum, 
                         defaultBGPackName, championBuffs, dbConnection);
@@ -588,19 +573,13 @@ namespace Database {
                     dbcmd.CommandText = "SELECT * FROM BackgroundPackNames WHERE Name = '" + areaName + "'";
 
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
-                        string[] bgPackNames = new string[10];
+                        string[] bgPackNames = null;
 
                         if (reader.Read()) {
-                            bgPackNames[0] = reader.GetString(2);
-                            bgPackNames[1] = reader.GetString(3);
-                            bgPackNames[2] = reader.GetString(4);
-                            bgPackNames[3] = reader.GetString(5);
-                            bgPackNames[4] = reader.GetString(6);
-                            bgPackNames[5] = reader.GetString(7);
-                            bgPackNames[6] = reader.GetString(8);
-                            bgPackNames[7] = reader.GetString(9);
-                            bgPackNames[8] = reader.GetString(10);
-                            bgPackNames[9] = reader.GetString(11);
+                            bgPackNames = new string[reader.FieldCount - 2];
+                            for (int i = 0; i < bgPackNames.Length; i++) {
+                                bgPackNames[i] = reader.GetString(i + 2);
+                            }
                         }
                         else {
                             Debug.LogError("BackgroundPackNames " + areaName + " does not exist in the DB");

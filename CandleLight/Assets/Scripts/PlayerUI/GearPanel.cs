@@ -49,6 +49,18 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pm"> PartyMember who's equipped gear should be displayed </param>
         public void Init(PartyMember pm) {
+            if (this.pmvc != null) {                // will be null on first open   
+                if (this.pmvc.weapon != null) {
+                    weaponSlot.HideItem();
+                }
+                if (this.pmvc.secondary != null) {
+                    secondarySlot.HideItem();
+                }
+                if (this.pmvc.armour != null) {
+                    armourSlot.HideItem();
+                }
+            }
+
             pmvc = pm.pmvc;
             if (pmvc.weapon != null) {
                 weaponSlot.ShowItem(pmvc.weapon);

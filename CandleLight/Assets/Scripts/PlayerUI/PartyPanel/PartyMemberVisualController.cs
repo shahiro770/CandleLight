@@ -259,6 +259,9 @@ namespace Characters {
         /// <param name="isCrit"> Flag for if attack that this character was a crit </param>
         public void SetAttackAmount(int attackAmount, bool isCrit) {
             this.attackAmount = attackAmount;
+            if (isCrit == true) {
+                print("its crit!");
+            }
             this.isCrit = isCrit;
         }
 
@@ -383,7 +386,7 @@ namespace Characters {
                 statusPanelHPBar.SetCurrent(pm.CHP);  
             }
             if (statsPanelHPBar != null) {
-                statsPanelHPBar.SetCurrent(pm.CHP);
+                statsPanelHPBar.SetCurrentDisplayCurrentOverMax(pm.CHP);
             }
 
             if (EventManager.instance.partyPanel.isOpen) {
@@ -393,6 +396,7 @@ namespace Characters {
                     if (isCrit == true) {
                         eventDescription.SetPMDamageCritText(pm, attackAmount);
                         yield return (StartCoroutine(pmdPartyPanel.PlayCritDamagedAnimation()));
+                        isCrit = false;
                     }
                     else {
                         eventDescription.SetPMDamageText(pm, attackAmount);
@@ -403,8 +407,12 @@ namespace Characters {
                     }
                 }
                 else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
+                    if (attackAmount < 0) { // heals coming from statusEffects are negative values
+                        attackAmount *= -1;
+                    }
                     if (isCrit == true) {
                         eventDescription.SetPMHealCritText(pm, attackAmount);
+                        isCrit = false;
                     }
                     else {
                         eventDescription.SetPMHealText(pm, attackAmount);
@@ -416,14 +424,19 @@ namespace Characters {
                 if (isLoss == true && CombatManager.instance.inCombat == true) {
                     if (isCrit == true) {
                         eventDescription.SetPMDamageCritText(pm, attackAmount);
+                        isCrit = false;
                     }
                     else {
                         eventDescription.SetPMDamageText(pm, attackAmount);
                     }
                 }
                 else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
+                    if (attackAmount < 0) { // heals coming from statusEffects are negative values
+                        attackAmount *= -1;
+                    }
                     if (isCrit == true) {
                         eventDescription.SetPMHealCritText(pm, attackAmount);
+                        isCrit = false;
                     }
                     else {
                         eventDescription.SetPMHealText(pm, attackAmount);
@@ -444,7 +457,7 @@ namespace Characters {
                 statusPanelMPBar.SetCurrent(pm.CMP);  
             }
             if (statsPanelMPBar != null) {
-                statsPanelMPBar.SetCurrent(pm.CMP);
+                statsPanelMPBar.SetCurrentDisplayCurrentOverMax(pm.CMP);
             }
             if (EventManager.instance.partyPanel.isOpen == true) {
                 partyPanelMPBar.SetCurrent(pm.CMP);
@@ -453,6 +466,7 @@ namespace Characters {
             if (isFocusAnim == true) {
                 if (isCrit == true) {
                     eventDescription.SetPMFocusCritText(pm, attackAmount);
+                    isCrit = false;
                 }
                 else {
                     eventDescription.SetPMFocusText(pm, attackAmount);

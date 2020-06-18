@@ -91,7 +91,7 @@ namespace PlayerUI {
                         }            
                     }
                 }
-                else if (sd.skillDisplayEnabled == false && PartyManager.instance.GetActivePartyMember().skillPoints > 0) {
+                else if (sd.skillDisplayEnabled == false && PartyManager.instance.GetActivePartyMember().skillPoints > 0 && sd.skillIndex != -1) {
                     if ((sd.colIndex != 0 && colPoints[sd.colIndex - 1] != 0) || sd.colIndex == 0) {
                         if (PartyManager.instance.EnableSkill(sd.skillIndex)) {
                             sd.skillDisplayEnabled = true;

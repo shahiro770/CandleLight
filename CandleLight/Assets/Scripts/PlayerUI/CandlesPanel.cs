@@ -43,10 +43,29 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Set isOpen to false on disabling so relevant interactions don't happen
+        /// </summary>
+        void OnDisable() {
+            isOpen = false;
+        }
+
+        /// <summary>
         /// Sets the displayed candles of a partyMember
         /// </summary>
         /// <param name="pm"> PartyMember who's equipped gear should be displayed </param>
         public void Init(PartyMember pm) {
+            if (this.pmvc != null) {                // will be null on first open   
+                if (this.pmvc.activeCandles[0] != null) {
+                    activeCandles[0].HideItem();
+                }
+                if (this.pmvc.activeCandles[1] != null) {
+                    activeCandles[1].HideItem();
+                }
+                if (this.pmvc.activeCandles[2] != null) {
+                    activeCandles[2].HideItem();
+                }
+            }
+
             pmvc = pm.pmvc;
             if (pmvc.activeCandles[0] != null) {
                 activeCandles[0].ShowItem(pmvc.activeCandles[0]);
@@ -213,6 +232,10 @@ namespace PlayerUI {
             activeCandles[0].SetInteractable(value);
             activeCandles[1].SetInteractable(value);
             activeCandles[2].SetInteractable(value);  
+
+            useButtons[0].interactable = value;
+            useButtons[1].interactable = value;
+            useButtons[2].interactable = value;
         }
 
         /// <summary>

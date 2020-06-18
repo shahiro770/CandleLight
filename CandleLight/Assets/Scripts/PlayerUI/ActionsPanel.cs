@@ -157,6 +157,7 @@ namespace PlayerUI {
 
             actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, travelInt);
             
+            SetActionsUsable(true);
             SetAllActionsInteractable(false);
             SetInPanelNavigation();
         }
@@ -301,7 +302,7 @@ namespace PlayerUI {
         /// <param name="CHP"> Current HP of partyMember </param>
         /// <param name="CMP"> Current MP of partyMember </param>
         private void CheckAndSetActionsToUnusable(int CHP, int CMP) {
-             for (int i = 0; i < actions.Length - 1; i++) {
+             for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType == "attack") {
                     Attack a = actions[i].a;
                 
@@ -334,7 +335,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="value"> True to show useable, false to show unusable</param>
         public void SetActionsUsable(bool value) {
-            for (int i = 0; i < actions.Length - 1; i++) {
+            for (int i = 0; i < actions.Length; i++) {
                 actions[i].SetUsable(value);
             }
         }

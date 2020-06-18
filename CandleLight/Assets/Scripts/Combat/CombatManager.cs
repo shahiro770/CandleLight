@@ -104,7 +104,7 @@ namespace Combat {
             partyMembersAlive = new List<PartyMember>();
             partyMembers = PartyManager.instance.GetPartyMembers();
             PartyManager.instance.GetChampionChanceAll();
-            countID = partyMembers[partyMembers.Count - 1].ID + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
+            countID = partyMembers.Count + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
             foreach (PartyMember pm in partyMembers) {
                 if (pm.CheckDeath() == false) {
                     partyMembersAlive.Add(pm);
@@ -165,6 +165,7 @@ namespace Combat {
         /// </summary>
         /// <returns> IEnumerator cause animations </returns>
         private IEnumerator DisplayCombatIntro() {
+            actionsPanel.SetActionsUsable(true);
             actionsPanel.SetAllActionsUninteractableAndFadeOut();
             if (partyPanel.isOpen == false) {
                 utilityTabManager.OpenPanel(0);

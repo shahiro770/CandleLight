@@ -19,8 +19,8 @@ namespace Events {
 
     public class SubArea {
 
-        public Event[] events = new Event[10];      /// <value> 10 Events max per subArea </value>
-        public Event[] subEvents = new Event[10];   /// <value> 10 SubEvents max per subArea </value>
+        public Event[] events;                      /// <value> Events in the subArea </value>
+        public Event[] subEvents;                   /// <value> SubEvents in the subArea (events with chance 0) </value>
         public string[] monsterPool;                /// <value> Pool of monsters subArea uses for random combat events </value>
         public string[] championBuffs;              /// <value> List of champion buffs that can occur a monster in this subArea (max 3) </value>
         public int[] monsterChances;                /// <value> Chance for each monster in the subArea to appear (must total to 100) </value>
@@ -44,6 +44,8 @@ namespace Events {
         public SubArea(string name, string areaName, string[] eventNames, int[] eventChances, string[] monsterPool, int[] monsterChances, int minMonsterNum, int maxMonsterNum, 
         string defaultBGPackName, string[] championBuffs, IDbConnection dbConnection) {
             this.name = name;
+            this.events = new Event[eventNames.Length];
+            this.subEvents = new Event[eventNames.Length];
             this.monsterPool = monsterPool;
             this.monsterChances = monsterChances;
             this.minMonsterNum = minMonsterNum;

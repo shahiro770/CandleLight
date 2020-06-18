@@ -346,7 +346,7 @@ namespace PlayerUI {
             if (itemSlotType == ItemConstants.ANY) {
                 return true;
             }
-            else if (id.type == itemSlotType && (id.subType == itemSlotSubType || itemSlotSubType == "0" || itemSlotSubType == "1" || itemSlotSubType == "2")) {
+            else if (id.type == itemSlotType && (id.subType == itemSlotSubType || itemSlotSubType == "0" || itemSlotSubType == "1" || itemSlotSubType == "2" || itemSlotSubType == ItemConstants.ANY)) {
                 if (id.className != ClassConstants.ANY) {
                     if (id.className == PartyManager.instance.GetActivePartyMember().className) {
                         return true;

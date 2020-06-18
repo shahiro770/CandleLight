@@ -58,7 +58,7 @@ namespace Events {
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
         private Event currentEvent;          /// <value> Event being displayed </value>
         private Result currentResult;        /// <value> Result being obtained </value>
-        private BackgroundPack[] bgPacks = new BackgroundPack[10];  /// <value> Background packs loaded in memory </value>
+        private BackgroundPack[] bgPacks;    /// <value> Background packs loaded in memory </value>
         private Consumable[] subAreaConsumables;   /// <value> Consumable items that can be found in the current subArea </value>
         private Gear[] subAreaGear;          /// <value> Gear items that can be found in the current subArea </value>
         private Candle[] subAreaCandles;     /// <value> Candle items that can be found in the current subArea </value>
@@ -80,6 +80,7 @@ namespace Events {
         private int consumablesNum = 0;         /// <value> Number of consumables to be found in the subArea </value>
         private int gearNum = 0;                /// <value> Number of gear to be found in the subArea </value>
         private int candleNum = 0;              /// <value> Number of candles to be found in the subArea </value>
+        private int shopToastIndex = 0;         /// <value> Index for which toastPanel is being used as the shop's wax display </value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
@@ -132,6 +133,7 @@ namespace Events {
         /// </summary>
         public void LoadBackgroundPacks() {
             string[] bgPackNames = GameManager.instance.DB.GetBGPackNames(currentAreaName);
+            bgPacks = new BackgroundPack[bgPackNames.Length];
 
             for (int i = 0; i < bgPackNames.Length; i++) {
                 if (bgPackNames[i] != "none") {
@@ -280,8 +282,16 @@ namespace Events {
         /// </summary>
         public void GetNextMainEvent() {
             subAreaProgress = 0;
-            areaProgress++;
-
+            
+            if (currentSubArea.name == "denGreyWastes") {
+                areaProgress = 6;
+            }
+            else if (currentSubArea.name == "tombsGreyWastes") {
+                areaProgress = 4;
+            }
+            else {
+                areaProgress++;;
+            }
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             if (areaProgress >= currentSubArea.eventNum) {
                 currentEvent = currentSubArea.GetEvent(currentSubArea.eventNum - 1);
@@ -320,6 +330,8 @@ namespace Events {
             else {  // for very first event in an area, there is no need to visually transition (just blit onto screen)
                 eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
                 displayStartEvent = false;
+                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());
+                statusPanel.DisplayPartyMember(PartyManager.instance.GetActivePartyMember().pmvc);
             }
 
             PartyManager.instance.RegenParty();
@@ -345,8 +357,6 @@ namespace Events {
                     HideEventDisplays();
                 }
 
-                statusPanel.DisplayPartyMember(PartyManager.instance.GetFirstPartyMemberAlive().pmvc);
-                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 SetAllButtonsInteractable(true);
@@ -447,7 +457,6 @@ namespace Events {
             r.GenerateResults();
 
             List<Item> items = new List<Item>();
-
             if (r.specificItemAmount > 0) {
                 for (int i = 0; i < r.itemAmount; i++) {
                     string specificItemName = r.specificItemNames[Random.Range(0, r.specificItemAmount)];
@@ -596,7 +605,6 @@ namespace Events {
             }
             else if (currentResult.type == ResultConstants.SUBAREAANDCOMBATANDSUBAREA) {
                 currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                nextSubArea = currentResult.subAreaName1;
                 StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                 LoadSubAreaItems();
                 subAreaProgress = 0;
@@ -631,6 +639,13 @@ namespace Events {
                 ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDLEAVE);
                 actionsPanel.TravelActions();
                 SetNavigation();
+                CheckGameOver();
+            }
+            else if (currentResult.type == ResultConstants.STATALLANDITEMANDLEAVE) {
+                eventDescription.SetKey(currentResult.resultKey);
+                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDITEMANDLEAVE);
+                DisplayResultItems(currentResult);
+                actionsPanel.SetItemActions();         
                 CheckGameOver();
             }
             else if (currentResult.type == ResultConstants.PRECOMBAT) {
@@ -833,7 +848,12 @@ namespace Events {
         public void UpdateWAXAmounts(){
             EventManager.instance.infoPanel.UpdateAmounts();
             if (UIManager.instance.inShop) {
-                EventManager.instance.toastPanel0.UpdateWAXAmount(); 
+                if (shopToastIndex == 0) {
+                    EventManager.instance.toastPanel0.UpdateWAXAmount(); 
+                }
+                else {
+                    EventManager.instance.toastPanel1.UpdateWAXAmount(); 
+                }
             }
         }
 
@@ -1080,9 +1100,11 @@ namespace Events {
         /// </summary>
         public void SetShopNotification() {
             if (toastPanel0.gameObject.activeSelf == true) {
+                shopToastIndex = 1;
                 toastPanel1.SetShopNotification();
             }
             else {
+                shopToastIndex = 0;
                 toastPanel0.SetShopNotification();    
             }
         }
@@ -1117,11 +1139,12 @@ namespace Events {
                 gearPanel.SetInteractable(false);
                 candlesPanel.SetInteractable(false);
                 if (fadeOut == true) {
-                    actionsPanel.SetAllActionsUninteractable();
-                }
-                else {
                     actionsPanel.SetAllActionsUninteractableAndFadeOut();
                 }
+                else {
+                    actionsPanel.SetAllActionsUninteractable();
+                }
+                actionsPanel.SetActionsUsable(true);
                 partyPanel.DisableButtons();
                 skillsPanel.SetInteractable(false);
                 itemsTabManager.SetAllButtonsUninteractable();

@@ -52,6 +52,7 @@ namespace PlayerUI {
             SetWidth(vectorSize.x);
             SetDisplay(true);
         }
+        
 
         /// <summary>
         /// Initializes the max and current amounts of the bar, and displays the current / max as the amount text
@@ -81,6 +82,17 @@ namespace PlayerUI {
         public void SetCurrent(int currentAmount) {
             this.currentAmount = currentAmount;
             SetDisplay();
+        }
+
+        /// <summary>
+        /// Sets the current amounts of points, and displays the current / max as the amount text
+        /// </summary>
+        /// <param name="maxAmount"> Max amount, must be greater than 0 </param>
+        /// <param name="currentAmount"> Current amount </param>
+        /// <param name="vectorSize"> Vector, only width component matters for now </param>
+        public void SetCurrentDisplayCurrentOverMax(int currentAmount) {
+            this.currentAmount = currentAmount;
+            SetDisplayCurrentOverMax(true);
         }
 
         /// <summary>

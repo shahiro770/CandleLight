@@ -4,6 +4,7 @@
 * Date: October 17, 2019
 * 
 * The StatusEffectConstants class is used to store the types statusEffects as constants.
+* IMPORTANT: Make sure to update statusEffect's buff and not buff switch statement when adding more constants 
 *
 */
 
@@ -27,6 +28,8 @@ namespace Constants {
         public const string SHOCK = "shock";   /// <value> Taking bonus damage from magical attacks</value>
         public const string GUARD = "guard";   /// <value> Gains PDEF </value>
         public const string CURE = "cure";     /// <value> Debuffs last half as long </value>
+        public const string MIRACLE = "miracle";     /// <value>  User gains max PDEF and MDEF </value>
+        public const string FATALWOUND = "fatalWound";  /// <value> Game ending debuff </value>
         public const string BOSS = "boss";     /// <value> Makes the enemy stronger against shenanigans </value>
         public const string CHAMPIONHP = "championHP";        /// <value> Bonus HP and HP regen  </value>
         public const string CHAMPIONATK = "championATK";      /// <value> Bonus ATK (used to indicate CHAMPIONPATK or CHAMPIONMATK) </value>

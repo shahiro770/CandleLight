@@ -68,7 +68,7 @@ namespace PlayerUI {
 
         public void Init() {
             skillSpriteRenderer.sprite = lockedSkillSprite;
-            this.skillIndex = -1;           // no skill shown
+            this.skillIndex = -1;           // no skill shown (its locked)
             skillDisplayEnabled = false;
             SetTooltip();
 

@@ -138,6 +138,10 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.GUARD) {
                     PDEF += PDEF;
                 }
+                else if (se.name == StatusEffectConstants.MIRACLE) {
+                    PDEF += 9999;
+                    MDEF += 9999;
+                }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);
                 }

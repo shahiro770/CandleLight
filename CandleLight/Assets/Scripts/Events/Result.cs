@@ -115,7 +115,14 @@ namespace Events {
         /// Generates the values for EXP, HP, MP, and wax that the result will give
         /// </summary>
         public void GenerateResults() {
-            if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT || type == ResultConstants.SHOP) {
+            if (type == ResultConstants.STATALLANDITEMANDLEAVE) {
+                itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 2);
+                EXPAmount = (int)(baseEXPAmount * Random.Range(quantity, quantity + 1));
+                HPAmount = (int)(baseHPAmount * Random.Range(quantity, quantity + 1));
+                MPAmount = (int)(baseMPAmount * Random.Range(quantity, quantity + 1));
+                WAXAmount = (int)(baseWAXAmount * Random.Range(quantity, quantity + 1));
+            }
+            else if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT || type == ResultConstants.SHOP) {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 2);
             }
             else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE) {
