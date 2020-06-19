@@ -38,5 +38,6 @@ namespace Constants {
         public static readonly string REKINDLE = "rekindle";    /// <value> All active candle uses are restored </value>
         public static readonly string REKINDLEANDLEAVE = "rekindleAndLeave";    /// <value> All active candle uses are restored and leave the event </value>
         public static readonly string STATALLANDITEMANDLEAVE = "statAllAndItemAndLeave";    /// <value> Get some stats changes, and item, and  leave the event </value>
+        public static readonly string STATALLANDEVENT = "statAllAndEvent";      /// <value> Get a stat change and move to the next event </value>
     }
 }

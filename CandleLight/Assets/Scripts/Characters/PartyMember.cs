@@ -757,7 +757,7 @@ namespace Characters {
                     yield return StartCoroutine(LoseHP(HPchange));
                 }
                 else if (HPchange < 0) {
-                    pmvc.SetAttackAmount(HPchange, true);
+                    pmvc.SetAttackAmount(HPchange, false);
                     yield return StartCoroutine(AddHPYield(HPchange * -1));
                 }
             }
@@ -1017,29 +1017,14 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Trigger a skill on a partyMember, applying its effects.
-        /// Due to the ordering of the combat loop, if a skill applies an SE to the unit that just acted,
-        /// the duration will be reduced by 1 turn immediately (hence need to extend by one additional turn).
-        /// </summary>
-        /// <param name="className"> PartyMember class </param>
-        /// <param name="index"> Index of skill </param>
-        public void TriggerSkillJustAttacked(string className, int index) {
-            if (className == ClassConstants.ROGUE) {
-                if (index == (int)SkillConstants.rogueSkills.AMBUSHER) {
-                    AddStatusEffect(StatusEffectConstants.ADVANTAGE, 2, this);
-                }
-            }
-        }
-
-        /// <summary>
         /// Trigger a skill on a partyMember, applying its effects
         /// </summary>
         /// <param name="className"> PartyMember class </param>
         /// <param name="index"> Index of skill </param>
-        public void TriggerSkill(string className, int index) {
+        public void TriggerSkill(string className, int index, Character c) {
             if (className == ClassConstants.ROGUE) {
                 if (index == (int)SkillConstants.rogueSkills.AMBUSHER) {
-                    AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, this);
+                    AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, c);
                 }
             }
         }

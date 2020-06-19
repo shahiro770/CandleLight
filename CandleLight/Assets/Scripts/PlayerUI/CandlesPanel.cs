@@ -88,7 +88,9 @@ namespace PlayerUI {
                 activeCandles[2].PlaceItemInstant(pm.activeCandles[2]);
             }
 
-            SetUsables();
+            if (activeCandles[0].b.interactable == true) {  // if the panel is not interactable, don't set the use buttons (which will be set when interactability is true)
+                SetUsables();
+            }
             
             activeCandles[0].SetColour(pmvc.partyMemberColour);
             activeCandles[1].SetColour(pmvc.partyMemberColour);
@@ -233,9 +235,17 @@ namespace PlayerUI {
             activeCandles[1].SetInteractable(value);
             activeCandles[2].SetInteractable(value);  
 
-            useButtons[0].interactable = value;
-            useButtons[1].interactable = value;
-            useButtons[2].interactable = value;
+            if (value == false) {
+                useButtons[0].interactable = value;
+                useTooltips[0].SetVisible(value);
+                useButtons[1].interactable = value;
+                useTooltips[1].SetVisible(value);
+                useButtons[2].interactable = value;
+                useTooltips[2].SetVisible(value);
+            }
+            else {
+                SetUsables();
+            }
         }
 
         /// <summary>

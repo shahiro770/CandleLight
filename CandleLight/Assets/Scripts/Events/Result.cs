@@ -125,7 +125,7 @@ namespace Events {
             else if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT || type == ResultConstants.SHOP) {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 2);
             }
-            else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE) {
+            else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.STATALLANDEVENT) {
                 EXPAmount = (int)(baseEXPAmount * Random.Range(quantity, quantity + 1));
                 HPAmount = (int)(baseHPAmount * Random.Range(quantity, quantity + 1));
                 MPAmount = (int)(baseMPAmount * Random.Range(quantity, quantity + 1));

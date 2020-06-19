@@ -455,7 +455,8 @@ namespace Events {
         /// <returns> List of items </returns>
         public List<Item> GetResultItems(Result r) {
             r.GenerateResults();
-
+            print(r.itemAmount);
+            print(r.specificItemAmount);
             List<Item> items = new List<Item>();
             if (r.specificItemAmount > 0) {
                 for (int i = 0; i < r.itemAmount; i++) {
@@ -647,6 +648,10 @@ namespace Events {
                 DisplayResultItems(currentResult);
                 actionsPanel.SetItemActions();         
                 CheckGameOver();
+            }
+            else if (currentResult.type == ResultConstants.STATALLANDEVENT) {
+                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDEVENT);
+                GetNextEvent();
             }
             else if (currentResult.type == ResultConstants.PRECOMBAT) {
                 eventDescription.FadeOut();

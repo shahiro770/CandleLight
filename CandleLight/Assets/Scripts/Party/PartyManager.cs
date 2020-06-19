@@ -454,12 +454,7 @@ namespace Party {
             foreach (PartyMember pm in partyMembersAlive) {
                 if (pm.className == className) {
                     if (pm.skills[(int)index].skillEnabled == true) {
-                        if (pm.ID == c.ID) {
-                             pm.TriggerSkillJustAttacked(className, index);
-                        }
-                        else {
-                             pm.TriggerSkill(className, index);
-                        }
+                        pm.TriggerSkill(className, index, c);
                     }
                 }
             }

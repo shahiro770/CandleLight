@@ -167,16 +167,14 @@ namespace Items {
         /// </summary>
         /// <param name="value"> true if usable, false otherwise </param>
         public void SetUsable(bool value) {
-            if (isUsable != value) {
-                isUsable = value;
-                if (isUsable == true) {
-                    SetActive(true);
-                }
-                else if (isUsable == false) {
-                    SetActive(false);
-                }
-                id.SetUsable(isUsable);
-            }           
+            isUsable = value;
+            if (isUsable == true) {
+                SetActive(true);
+            }
+            else if (isUsable == false) {
+                SetActive(false);
+            }
+            id.SetUsable(isUsable); 
         }
 
         /// <summary>
