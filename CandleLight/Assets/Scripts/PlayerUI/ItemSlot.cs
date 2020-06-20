@@ -110,6 +110,8 @@ namespace PlayerUI {
             }
             else {
                 defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
+                t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
+                SetTooltipText();
             }
         }
 

@@ -224,6 +224,16 @@ namespace PlayerUI {
                     attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turns";
                 }
             }
+            if (a.scope != "single") {
+                if (a.scope == "adjacent") {
+                    if (a.seName != "none") {
+                        attackString += ".\nHits adjacents";
+                    }
+                    else {
+                        attackString += ". Hits adjacents";
+                    }
+                }
+            }
             
             eventText.SetText(attackString);
 

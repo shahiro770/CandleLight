@@ -63,12 +63,7 @@ namespace Characters {
         /// <returns> Ienumerator so combat doesn't start until all monsters have spawned </returns>
         public IEnumerator Init(Monster displayedMonster) {          
             this.displayedMonster = displayedMonster;
-            // when monster is an adjacent selected by a multi-scoping attack, give it a different button colour
-            ColorBlock monsterAltSelectColorBlock = b.colors;  
-            monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 200);
-            monsterAltSelectColorBlock.highlightedColor = monsterAltSelectColorBlock.normalColor;
-            monsterAltSelectColorBlock.pressedColor = monsterAltSelectColorBlock.normalColor;
-            bts.SetColorBlock("normalAlternate", monsterAltSelectColorBlock);
+            // when monster is an adjacent selected by a multi-scoping attack, give it a different button colou
 
             /* WHEN WORKING WITH WIFI AND/OR WANT TO USE ASSETBUNDLES */
 
@@ -174,6 +169,18 @@ namespace Characters {
         public void AddSMDListener(SelectMonsterDelegate smd) {
             b.onClick.AddListener(() => smd(displayedMonster));
             eventDescription = EventManager.instance.eventDescription;
+        }
+
+        /// <summary>
+        /// Sets the alternate colour block scheme for the monster's selection button
+        /// (used to show this monster is a target of an area of effect attack)
+        /// </summary>
+        public void SetAlternateColourBlock() {
+            ColorBlock monsterAltSelectColorBlock = b.colors;  
+            monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 64);
+            monsterAltSelectColorBlock.highlightedColor = monsterAltSelectColorBlock.normalColor;
+            monsterAltSelectColorBlock.pressedColor = monsterAltSelectColorBlock.normalColor;
+            bts.SetColorBlock("normalAlternate", monsterAltSelectColorBlock);
         }
 
         /// <summary>

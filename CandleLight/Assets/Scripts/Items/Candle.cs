@@ -73,11 +73,6 @@ namespace Items {
             uses = values[1];
             maxUses = uses;
         }
-
-        /// <summary>
-        /// Empty constructor
-        /// </summary>
-        public Candle() : base() {}
         
         /// <summary>
         /// Randomizes the amounts for all effects depending on the items' qualities
@@ -150,9 +145,30 @@ namespace Items {
             return WAX;
         }
 
+        /// <summary>
+        /// Restore a candle's uses
+        /// </summary>
         public void Rekindle() {
             uses = maxUses;
             SetUsable(true);
+        }
+
+        /// <summary>
+        /// Restore a candle's uses to double its maximum (due to candlemancy)
+        /// </summary>
+        public void CandlemancyRekindle() {
+            uses = maxUses * 2;
+            SetUsable(true);
+        }
+
+        public void SetUses(int value) {
+            uses = value;
+            if (value > 0) {
+                SetUsable(true);
+            }
+            else {
+                SetUsable(false);
+            }
         }
 
         public void Use() {

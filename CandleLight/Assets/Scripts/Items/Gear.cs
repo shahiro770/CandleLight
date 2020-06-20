@@ -47,11 +47,6 @@ namespace Items {
         }
 
         /// <summary>
-        /// Empty constructor
-        /// </summary>
-        public Gear() : base() {}
-
-        /// <summary>
         /// Randomizes the amounts for all effects depending on the items' qualities
         /// </summary>
         /// <param name="quality"> String quality of the gear, will make this into a constant soon </param>

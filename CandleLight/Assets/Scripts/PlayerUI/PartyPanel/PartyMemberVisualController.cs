@@ -245,14 +245,6 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Sets a specific candle at an index for if it is usable
-        /// </summary>
-        /// <param name="index"></param>
-        public void SetUsableCandles(int index) {
-            candlesPanel.SetUsable(index);
-        }
-
-        /// <summary>
         /// Sets the damage taken/amount healed and if the attack was a crit
         /// </summary>
         /// <param name="attackAmount"> Amount (damage/heal) from the attack </param>
@@ -377,8 +369,9 @@ namespace Characters {
         /// </summary>
         /// <param name="isLoss"> Flag for if damaged animation should play </param>
         /// <param name="isHealAnim"> Flag for if there is a healing animation that needs to be yielded to </param>
+        /// <param name="isEventDes"> Flag for if there should be yielding at all (otherwise no animations or event description) </param>
         /// <returns> IEnumerator for animations </returns>
-        public IEnumerator DisplayHPChange(bool isLoss, bool isHealAnim = false) {
+        public IEnumerator DisplayHPChange(bool isLoss, bool isHealAnim = false, bool isYield = true) {
             if (statusPanelHPBar != null) {
                 statusPanelHPBar.SetCurrent(pm.CHP);  
             }
@@ -386,7 +379,12 @@ namespace Characters {
                 statsPanelHPBar.SetCurrentDisplayCurrentOverMax(pm.CHP);
             }
 
-            if (EventManager.instance.partyPanel.isOpen) {
+            if (isYield == false) {  // no event description means no yielding or animations (only if an attack uses hp as a cost)
+                if (partyPanel.isOpen) {
+                    partyPanelHPBar.SetCurrent(pm.CHP);
+                }
+            }
+            else if (partyPanel.isOpen) {
                 partyPanelHPBar.SetCurrent(pm.CHP);
                 
                 if (isLoss == true && CombatManager.instance.inCombat == true) {

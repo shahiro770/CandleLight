@@ -5,6 +5,7 @@
 * 
 * The skillsPanel class is used to show a partyMember's skill tree, and handle
 * all interactions that would happen on it.
+* IMPORTANT: Whenever adding skills, you must update Init and UpdateSkillsVisible
 *
 */
 
@@ -112,7 +113,7 @@ namespace PlayerUI {
             if (colPoints[0] > 0 && colPoints[1] == 0) {
                 skillDisplays[3].Init(3, pm.skills[3], pm.pmvc.skillSprites[3], pm.skills[3].skillColour,  pm.pmvc.pmdSkillsPanel);
                 skillDisplays[4].Init(4, pm.skills[4], pm.pmvc.skillSprites[4], pm.skills[4].skillColour,  pm.pmvc.pmdSkillsPanel);
-                //skillDisplays[5].Init();
+                skillDisplays[5].Init(5, pm.skills[5], pm.pmvc.skillSprites[5], pm.skills[5].skillColour,  pm.pmvc.pmdSkillsPanel);
             }
             else if (colPoints[0] == 0) {
                 skillDisplays[3].Init();

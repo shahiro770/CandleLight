@@ -16,14 +16,6 @@ Fix: Make shock take less time
 Clean Up: Make healing effects for monsters consistent with the party
 Fix: Don't make any panels become interactable if a straight combat event (so no blinking)
 Clean Up: Have eventManager have a function that disables all panels (So I don't need to do it in every place)
-
-DONE
-----
-Change: Maybe add stasis animation (just turn green and float up and down)
-Change: Maybe change spinal's fluid to white
-
-CURRENTLY DOING
----------------
 Bug: Miracle candle value -2
 Balance: Nerf Mage's STR growth
 Bug: Didn't default to candles panel
@@ -47,35 +39,36 @@ Bug: Can't place class items in any slots
 Bug: Ancient altar event is kinda broken
 Bug: Selling a candle doesn't remove lit animation
 Bug: Subevents that change backgrounds dont fade in the text
+Change: Maybe add stasis animation (just turn green and float up and down)
+Change: Maybe change spinal's fluid to white
+Feature: strangleHeadsDancing (greyWastesTombs) - A party of strangleHeads just wiggling about, unaware of player's presence
+Feature: spinalArch event (greyWastesTombs) - a gigantic archway made of spinals conglomerating
+Feature: offerring (greyWastesTombs) event - Find an offerring (always a random candle) at an altar
+Feature: branchingPaths event (1st area) - player sees two paths either choice randomly increases or decreases progress)
 
+DONE
+----
+
+
+CURRENTLY DOING
+---------------
+Add AoE skills
+    - monster buttons must show if they're in range
+
+Adding 6th Skills
+Bug: Candles panel use candle button is active postCombat
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: The min/max in bars breaks for 3 digit mins and maxs
 
-
-TOMORROW'S GOALS
+NEAR FUTURE
 ----------------
-Feature: branchingPaths event (1st area) - player sees two paths either choice randomly increases or decreases progress)
-
 Feature: KeyItems Panel (should be significantly easier than the other two)
-Feature: spinalArch event (greyWastesTombs) - a gigantic archway made of spinals conglomerating
-    If player walks through with high int, rewarded with EXP and med quality item
-    Else, take damage, or potentially fight spinals
-    Also have the option to go around, taking less damage
-Feature: strangleHeadsDancing (greyWastesTombs) - A party of strangleHeads just wiggling about, unaware of player's presence
-    Can choose to sneak past, potentially fight (dex check)
-    Inspect for more information
-    Ambush, (str check) can kill them all for a lot of exp, fail and take damage + trap debuff on all partyMembers
 Feature: talkingWraith (greyWasteTombs) - A Lesser Wwraith that talks?!
     Requires quests and items to implement
-Feature: offerring (greyWastesTombs) event - Find an offerring (always a random candle) at an altar
-    Steal with LUK check
-    Fail, and have all MP drained
-
 
 FUTURE
 ------
 Future: Prevent rekindling with no candles to rekindle
-Future: Make skill columns require two skill points in the previous column when there's enough skills
 Clean Up: Might be stupid how im setting null type items to load stuff in on partyMember
 
 

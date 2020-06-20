@@ -89,7 +89,6 @@ namespace PlayerUI {
             }
 
             if (activeCandles[0].b.interactable == true) {  // if the panel is not interactable, don't set the use buttons (which will be set when interactability is true)
-                print("we shouldn't be here");
                 SetUsables();
             }
             
@@ -125,7 +124,9 @@ namespace PlayerUI {
                 activeCandles[2].ShowItem(pmvc.activeCandles[2]);
             }
 
-            SetUsables();
+            if (activeCandles[0].b.interactable == true) {  // if the panel is not interactable, don't set the use buttons (which will be set when interactability is true)
+                SetUsables();
+            }
 
             activeCandles[0].SetColour(pmvc.partyMemberColour);
             activeCandles[1].SetColour(pmvc.partyMemberColour);

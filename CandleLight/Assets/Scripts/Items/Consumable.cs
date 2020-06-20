@@ -44,11 +44,6 @@ namespace Items {
             }
             itemSprite = c.itemSprite;
         }
-
-        /// <summary>
-        /// Empty constructor
-        /// </summary>
-        public Consumable() : base() {}
         
         /// <summary>
         /// Randomizes the amounts for all effects depending on the items' qualities

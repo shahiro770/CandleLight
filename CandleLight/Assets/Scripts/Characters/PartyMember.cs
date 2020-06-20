@@ -38,10 +38,10 @@ namespace Characters {
 
         public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");
         public Skill[] skills = new Skill[12];
-        public Gear weapon = new Gear();        /// <value> Weapon </value>
-        public Gear secondary = new Gear();     /// <value> Secondary </value>
-        public Gear armour = new Gear();        /// <value> Armour </value>
-        public Candle[] activeCandles = new Candle[3] {new Candle(), new Candle(), new Candle()};
+        public Gear weapon = null;        /// <value> Weapon </value>
+        public Gear secondary = null;     /// <value> Secondary </value>
+        public Gear armour = null;        /// <value> Armour </value>
+        public Candle[] activeCandles = new Candle[3];
         
         private int numGear = 3;                /// <value> Max number of gear items a partyMember can have </value>
         private int numCandles = 3;             /// <value> Max number of active candles a partyMember can have </value>
@@ -332,6 +332,11 @@ namespace Characters {
             }
 
             /* secondary stat changes from skills */
+            if (className == ClassConstants.WARRIOR) {
+                if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                    PATK += (int)(PATK * 0.3);
+                }
+            }
             if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
                      critChance = 10;
@@ -524,6 +529,19 @@ namespace Characters {
             yield return (StartCoroutine(pmvc.DisplayHPChange(true)));
         }
 
+        public IEnumerator LoseHPNoYield(int amount) {
+            amount = Mathf.Abs(amount);
+            
+            CHP -= amount;
+
+            if (CHP <= 0) {
+                CHP = 0;
+                PartyManager.instance.RegisterPartyMemberDead(this);
+            }
+
+            yield return StartCoroutine(pmvc.DisplayHPChange(true, false, false));
+        }
+
         /// <summary>
         /// Reduce the PartyMember's current health points by a specified amount.false
         /// IEnumerator is used to make calling function wait for its completion
@@ -549,7 +567,7 @@ namespace Characters {
                 yield return StartCoroutine(LoseMP(cost));
             } 
             else if (costType == "HP") {
-                yield return StartCoroutine(LoseHP(cost));
+                yield return StartCoroutine(LoseHPNoYield(cost));
             }
         }
 
@@ -827,6 +845,11 @@ namespace Characters {
         /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
         public void EquipCandle(Candle c, int index) {
             activeCandles[index] = c;
+            if (className == ClassConstants.MAGE) {
+                if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
+                    c.SetUses(c.uses * 2);
+                }
+            }
             SetAttackValues();          // candle attack values need to be set
 
             if (c.isUsable == true) {   // no need to recalculate stats if the equipped candle is unusable
@@ -842,6 +865,11 @@ namespace Characters {
         /// </summary>
         /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
         public void UnequipCandle(int index) {
+            if (className == ClassConstants.MAGE) {
+                if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
+                    activeCandles[index].SetUses(0);
+                }
+            }
             activeCandles[index] = null;
 
             CalculateStats();
@@ -864,8 +892,13 @@ namespace Characters {
         /// </summary>
         public void Rekindle() {
             foreach(Candle c in activeCandles) {
-                if (c != null && c.a != null) {
-                    c.Rekindle();
+                if (c != null) {
+                    if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
+                        c.CandlemancyRekindle();
+                    }
+                    else {
+                        c.Rekindle();
+                    }
                 }
             }
         }
@@ -884,15 +917,20 @@ namespace Characters {
                     attacks[attackNum] = skills[index].a;
                     attackNum++;
                     skills[index].skillEnabled = true;
-                    
-                    if (className == ClassConstants.MAGE) {
-                        if (index == (int)SkillConstants.mageSkills.PYROMANCY == true) {  
+
+                    if (className == ClassConstants.WARRIOR) {
+                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                            attacks[attackNum].costType = "HP";
+                        }
+                    }
+                    else if (className == ClassConstants.MAGE) {
+                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
                             if (attacks[attackNum].seName == StatusEffectConstants.BURN) {
                                 attacks[attackNum].seChance = attacks[attackNum].baseSeChance << 1;
                             }
                         }
                     }
-
+                    
                     return true;
                 }
             }
@@ -900,7 +938,15 @@ namespace Characters {
                 skillPoints--;
                 skills[index].skillEnabled = true;
 
-                if (className == ClassConstants.MAGE) {
+                if (className == ClassConstants.WARRIOR) {
+                    if (index == (int)SkillConstants.warriorSkills.BLOODSWORN) {
+                        for (int i = 0; i < attackNum; i++) {
+                            attacks[i].costType = "HP";
+                        }
+                        statChange = true;
+                    }
+                }
+                else if (className == ClassConstants.MAGE) {
                     if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
                             if (attacks[i].seName == StatusEffectConstants.BURN) {
@@ -910,6 +956,13 @@ namespace Characters {
                     }
                     else if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
                         statChange = true; 
+                    }
+                    else if (index == (int)SkillConstants.mageSkills.CANDLEMANCY) {
+                        foreach (Candle c in activeCandles) {
+                            if (c != null) {
+                                c.SetUses(c.uses * 2);
+                            }
+                        }
                     }
                 }
                 else if (className == ClassConstants.ARCHER) {
@@ -966,11 +1019,33 @@ namespace Characters {
 
                     return true;
                 }
+                if (className == ClassConstants.WARRIOR) {
+                    if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                        for (int i = 0; i < attackNum; i++) {
+                            attacks[i].costType = "MP";
+                        }
+                    }
+                    statChange = true;
+                }
+                else if (className == ClassConstants.MAGE) {
+                    if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
+                        for (int i = 0; i < attackNum; i++) {
+                            if (attacks[i].seName == StatusEffectConstants.BURN) {
+                                attacks[i].seChance = attacks[i].baseSeChance >> 1;
+                            }
+                        }
+                    }
+                }
             }
             else if (skills[index].type == SkillConstants.PASSIVE) {
                 skillPoints++;
                 skills[index].skillEnabled = false;
 
+                if (className == ClassConstants.WARRIOR) {
+                    if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                        attacks[attackNum].costType = "MP";
+                    }
+                }
                 if (className == ClassConstants.MAGE) {
                     if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
@@ -979,15 +1054,22 @@ namespace Characters {
                             }
                         }
                     }
-                    if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
+                    else if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
                         statChange = true;     
+                    }
+                    else if (index == (int)SkillConstants.mageSkills.CANDLEMANCY) {
+                        foreach (Candle c in activeCandles) {
+                            if (c != null) {
+                                c.SetUses((int)(c.uses * 0.5));     // rounds down by truncating
+                            }
+                        }
                     }
                 }
                 else if (className == ClassConstants.ARCHER) {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
                         PartyManager.instance.itemDropMultiplier /= 1.5f;
                     }
-                    if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                    else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
                         statChange = true;
                     }
                 }
@@ -995,10 +1077,10 @@ namespace Characters {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
                         PartyManager.instance.WAXDropMultiplier /= 1.5f;
                     }
-                    if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
+                    else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
                         statChange = true;
                     }
-                    if (index == (int)SkillConstants.rogueSkills.DEADLY) {
+                    else if (index == (int)SkillConstants.rogueSkills.DEADLY) {
                         statChange = true;
                     }
                 }
@@ -1017,7 +1099,8 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Trigger a skill on a partyMember, applying its effects
+        /// Trigger a skill on a partyMember, applying its effects.
+        /// This function is only called if some condition that isn't as simple as enabling the skill occurs
         /// </summary>
         /// <param name="className"> PartyMember class </param>
         /// <param name="index"> Index of skill </param>

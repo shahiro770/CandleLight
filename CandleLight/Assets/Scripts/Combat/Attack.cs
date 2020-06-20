@@ -16,7 +16,7 @@ namespace Combat {
     public class Attack {
 
         [field: SerializeField] public string animationClipName { get; private set; }   /// <value> Name of animation to be played when used </value>
-        [field: SerializeField] public string costType { get; private set; }    /// <value> Cost type (HP, MP) </value>
+        [field: SerializeField] public string costType { get;  set; }           /// <value> Cost type (HP, MP) </value>
         [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of attack </value>
         [field: SerializeField] public string type { get; private set; }        /// <value> Type of attack </value>

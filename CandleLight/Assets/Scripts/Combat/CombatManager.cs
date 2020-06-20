@@ -151,6 +151,7 @@ namespace Combat {
             monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
             monsterComponent.GetBuffs(championBuffs);
             monsterComponent.md.AddSMDListener(smd);
+            monsterComponent.md.SetAlternateColourBlock();
             monsterComponent.md.SetInteractable(false);
 
             newMonster.transform.SetParent(enemyCanvas.transform, false);
@@ -284,7 +285,7 @@ namespace Combat {
                 partyPanel.SetBlinkSelectables(selectedAttackPM, true);
             }
             else {
-                Monster taunter = (Monster)CheckTauntIndex(activePartyMember);  // TODO: Make it so when taunted, player chooses a random attack that can damage a taunter
+                Monster taunter = (Monster)CheckTauntIndex(activePartyMember);  // TODO: Make it so when taunted, player must choose an attack that can target the taunter (making candles and other attaks unusable)
                 if (taunter != null) {
                     SelectMonster(taunter);
                 }
@@ -389,6 +390,14 @@ namespace Combat {
                     }
                     else if (selectedAttackPM.type == AttackConstants.HEALMPSELF || selectedAttackPM.type == AttackConstants.HEALHPSELF || selectedAttackPM.type == AttackConstants.BUFFSELF) {
                         yield return (StartCoroutine(activePartyMember.GetHelped(selectedAttackPM, activePartyMember)));
+                    }
+                }
+                else if (selectedAttackPM.scope == "adjacent") {
+                    if (selectedAttackPM.type == AttackConstants.PHYSICAL || selectedAttackPM.type == AttackConstants.MAGICAL) {
+                        foreach (Monster m in selectedMonsterAdjacents) {
+                            StartCoroutine(m.GetAttacked(selectedAttackPM, activePartyMember));    
+                        }
+                        yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackPM, activePartyMember)));    
                     }
                 }
             }
@@ -706,8 +715,9 @@ namespace Combat {
                             break;
                         }
                     }
+
                     if (selectedAttackPM.scope == "adjacent") {
-                        if (monsterIndex - 1 > 0) {
+                        if (monsterIndex - 1 >= 0) {
                             selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
                         }
                         if (monsterIndex + 1 < monsters.Count) {
@@ -754,6 +764,57 @@ namespace Combat {
             }
             selectedMonsterAdjacents.Clear();
         }
+
+        /// <summary>
+        /// Displays a dimmed "target UI" over monsters beside the main target for
+        /// attacks that hit more than one monster
+        /// </summary>
+        /// <param name="monsterToSelect"> Monster as the main target </param>
+        public void ShowAttackTargets(Monster monsterToSelect) {
+            if (selectedAttackPM != null) {
+                if (selectedAttackPM.scope == "adjacent") {
+                    int monsterIndex = 0;
+                    for (int i = 0; i < monsters.Count; i++) {
+                        if (monsters[i].ID == monsterToSelect.ID) {
+                            monsterIndex = i;
+                            break;
+                        }
+                    }    
+                    if (monsterIndex - 1 >= 0) {
+                        monsters[monsterIndex - 1].md.SelectMonsterButtonAdjacent();
+                    }
+                    if (monsterIndex + 1 < monsters.Count) {
+                        monsters[monsterIndex + 1].md.SelectMonsterButtonAdjacent();
+                    }    
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reverts the target UI to normal over all monsters besides the main target
+        /// for attacks that hit more than one monster
+        /// </summary>
+        /// <param name="monsterToSelect"> Monster as the main target</param>
+        public void HideAttackTargets(Monster monsterToSelect) {
+                if (selectedAttackPM != null) {
+                    if (selectedAttackPM.scope == "adjacent") {
+                    int monsterIndex = 0;
+                    for (int i = 0; i < monsters.Count; i++) {
+                        if (monsters[i].ID == monsterToSelect.ID) {
+                            monsterIndex = i;
+                            break;
+                        }
+                    }    
+                    if (monsterIndex - 1 >= 0) {
+                        monsters[monsterIndex - 1].md.DeselectMonsterButton();
+                    }
+                    if (monsterIndex + 1 < monsters.Count) {
+                        monsters[monsterIndex + 1].md.DeselectMonsterButton();
+                    }    
+                }
+            }
+        }
+        
 
         /// <summary>
         /// Destroy monster gameObjects
