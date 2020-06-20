@@ -99,7 +99,7 @@ namespace PlayerUI {
                 StartCoroutine(Fade(1));
             }
             else {
-                if (gameObject.activeSelf) {
+                if (gameObject.activeSelf == true) {
                     StartCoroutine(Fade(0));
                 }
             }
