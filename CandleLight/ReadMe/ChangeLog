@@ -45,6 +45,8 @@ Feature: strangleHeadsDancing (greyWastesTombs) - A party of strangleHeads just 
 Feature: spinalArch event (greyWastesTombs) - a gigantic archway made of spinals conglomerating
 Feature: offerring (greyWastesTombs) event - Find an offerring (always a random candle) at an altar
 Feature: branchingPaths event (1st area) - player sees two paths either choice randomly increases or decreases progress)
+Feature: Add 6th skills
+Bug: Candles panel use candle button is active postCombat
 
 DONE
 ----
@@ -52,11 +54,8 @@ DONE
 
 CURRENTLY DOING
 ---------------
-Add AoE skills
-    - monster buttons must show if they're in range
+Fix: Make Spinal's icon slightly darker
 
-Adding 6th Skills
-Bug: Candles panel use candle button is active postCombat
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: The min/max in bars breaks for 3 digit mins and maxs
 

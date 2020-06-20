@@ -1100,7 +1100,7 @@ namespace Events {
         /// <param name="types"> The values the notification is about (HP, MP, EXP, PROG, SE) </param>
         /// <param name="amounts"> The relevant amounts (or status effect name for SEs)</param>
         public void SetNotification(bool[] types, string[] amounts) {
-            if (UIManager.instance.inShop == true) {
+            if (UIManager.instance.inShop == true || toastPanel0.gameObject.activeSelf == true) {
                 toastPanel1.SetNotification(types, amounts);
             }
             else {
