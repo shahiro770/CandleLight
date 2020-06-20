@@ -137,8 +137,8 @@ namespace PlayerUI {
                     candlesPanel.SetUsable(itemSlotSubType[0] - '0');
                 }
             }
-            else if (itemSlotType == ItemConstants.CANDLE) {        // for candles, if placed in a non-active slot, update the sprite
-                newItemDisplay.displayedCandle.SetActive(false);
+            else if (newItemDisplay.type == ItemConstants.CANDLE) {                                                                  // for candles, if placed in a non-active slot, update the sprite
+                newItemDisplay.displayedCandle.SetActive(false);    // for candles, if placed in a non-active slot, update the sprite
             }
             
             if (direct == false) {

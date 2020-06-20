@@ -380,10 +380,20 @@ namespace Events {
             }
             else {
                 if (currentEvent.type == EventConstants.NOTHING) {
-                    eventDescription.SetKey(currentSubArea.GetNothingPrompt());
+                    if (currentEvent.specificBGSprite != -1) {
+                        eventDescription.SetKeyAndFadeIn(currentSubArea.GetNothingPrompt());
+                    }
+                    else {
+                        eventDescription.SetKey(currentSubArea.GetNothingPrompt());
+                    }
                 }
                 else {
-                    eventDescription.SetKey(currentEvent.promptKey);
+                    if (currentEvent.specificBGSprite != -1) {
+                        eventDescription.SetKeyAndFadeIn(currentEvent.promptKey);
+                    }
+                    else {
+                        eventDescription.SetKey(currentEvent.promptKey);
+                    }
                 }
 
                 if (currentEvent.spriteNum > 0){
@@ -455,8 +465,7 @@ namespace Events {
         /// <returns> List of items </returns>
         public List<Item> GetResultItems(Result r) {
             r.GenerateResults();
-            print(r.itemAmount);
-            print(r.specificItemAmount);
+
             List<Item> items = new List<Item>();
             if (r.specificItemAmount > 0) {
                 for (int i = 0; i < r.itemAmount; i++) {

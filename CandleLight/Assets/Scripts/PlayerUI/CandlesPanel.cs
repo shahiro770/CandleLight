@@ -89,6 +89,7 @@ namespace PlayerUI {
             }
 
             if (activeCandles[0].b.interactable == true) {  // if the panel is not interactable, don't set the use buttons (which will be set when interactability is true)
+                print("we shouldn't be here");
                 SetUsables();
             }
             

@@ -44,10 +44,13 @@ Bug: MP isn't decreaseing from altar event
 Bug: isCrit is always set on regen?
 Fix: Make stasis attack be greener longer
 Bug: Can't place class items in any slots
+Bug: Ancient altar event is kinda broken
+Bug: Selling a candle doesn't remove lit animation
+Bug: Subevents that change backgrounds dont fade in the text
 
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: The min/max in bars breaks for 3 digit mins and maxs
-Bug: Ancient altar event is kinda broken
+
 
 TOMORROW'S GOALS
 ----------------
