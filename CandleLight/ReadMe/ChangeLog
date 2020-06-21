@@ -62,8 +62,14 @@ Fix: The min/max in bars breaks for 3 digit mins and maxs
 NEAR FUTURE
 ----------------
 Feature: KeyItems Panel (should be significantly easier than the other two)
+Feature: Quests
 Feature: talkingWraith (greyWasteTombs) - A Lesser Wwraith that talks?!
     Requires quests and items to implement
+Feature: Sound effects and music
+Feature: Tutorial
+Feature: Saving
+Feature: Ending and beginning cutscenes
+
 
 FUTURE
 ------
