@@ -465,6 +465,11 @@
 		{ "key": "RageC0_item", "value": "Challenger Candle" },
 		{ "key": "MiracleC0_item", "value": "Prayer Candle" },
 
+		{ "key": "VerySpecial0_item", "value": "Strange Bottle" },
+		{ "key": "VerySpecial0_item_des", "value": "Inside it is the fabled cure..." },
+		{ "key": "Special0_item", "value": "Fake Wizard's Hat" },
+		{ "key": "Special0_item_des", "value": "It has no magical properties whatsoever." },
+
 		{ "key": "MPC0_use_title", "value": "Calming Vapours" },
 		{ "key": "MPC0_use_des", "value": "Restore half of\nthe user's MP" },
 		{ "key": "HPC0_use_title", "value": "Life's Embers" },
@@ -482,12 +487,15 @@
 		{ "key": "0_item", "value": "Candle" },
 		{ "key": "1_item", "value": "Candle" },
 		{ "key": "2_item", "value": "Candle" },
+		{ "key": "verySpecial_item", "value": "Very Special" },
 
 		{ "key": "weapon_item_sub", "value": "Weapon" },
 		{ "key": "secondary_item_sub", "value": "Secondary" },
 		{ "key": "armour_item_sub", "value": "Armour" },
 		{ "key": "consumable_item_sub", "value": "Consumable" },
 		{ "key": "candle_item_sub", "value": "Candle" },
+		{ "key": "verySpecial_item_sub", "value": "Very Special" },
+		{ "key": "special_item_sub", "value": "Special" },
 
 		{ "key": "weapon_item_sub_default", "value": "Item held to\nattack enemies" },
 		{ "key": "secondary_item_sub_default", "value": "Helmets, shields, trinkets, etc." },
@@ -495,6 +503,7 @@
 		{ "key": "0_item_sub_default", "value": "Provides passive buffs while usable" },
 		{ "key": "1_item_sub_default", "value": "Provides passive buffs while usable" },
 		{ "key": "2_item_sub_default", "value": "Provides passive buffs while usable" },
+		{ "key": "verySpecial_item_sub_default", "value": "Something you can't afford to lose" },
 
 		{ "key": "1_use_sub", "value": "1 Use Remaining" },
 		{ "key": "2_use_sub", "value": "2 Uses Remaining" },
@@ -661,7 +670,7 @@
 		
 		{ "key": "gear_tab", "value": "Gear" },
 		{ "key": "candles_tab", "value": "Candles" },
-		{ "key": "items_tab", "value": "Items" },
+		{ "key": "special_tab", "value": "Special" },
 		{ "key": "party_tab", "value": "Party" },
 		{ "key": "skills_tab", "value": "Skills" },
 		{ "key": "skills_tab_(!)", "value": "Skills(!)" },

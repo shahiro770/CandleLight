@@ -77,9 +77,6 @@ namespace PlayerUI {
                 pmDisplays[i].gameObject.SetActive(true);
                 pmDisplays[i].Init(pms[i].pmvc);
             }
-
-            SetVerticalNavigation();
-            Invoke("SetHorizontalNavigation", 0.01f);   // hack because unity actions don't always OnEnable after everything Awakes
         }
 
         /// <summary>
@@ -119,49 +116,6 @@ namespace PlayerUI {
                 foreach (PartyMemberDisplay pmd in pmDisplays) {
                     pmd.PlaySelectMeAnimation(false);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Sets the horizontal navigation for PartyMemberDisplay to other panels
-        /// </summary>
-        public void SetHorizontalNavigation() {
-            if (actionsPanel.actions[1].IsInteractable()) {
-                foreach(PartyMemberDisplay pmd in pmDisplays) {
-                    pmd.SetNavigation("left", actionsPanel.actions[1].b);
-                }
-            }
-            else if (actionsPanel.actions[0].IsInteractable()) {
-                foreach(PartyMemberDisplay pmd in pmDisplays) {
-                    pmd.SetNavigation("left", actionsPanel.actions[0].b);
-                }
-            }
-            else if (actionsPanel.actions[4].IsInteractable()) {
-                foreach(PartyMemberDisplay pmd in pmDisplays) {
-                    pmd.SetNavigation("left", actionsPanel.actions[4].b);
-                }
-            }
-
-            actionsPanel.SetHorizontalNavigation(this);
-        }
-
-        /// <summary>
-        /// Sets the vertical navigation between PartyMemberDisplays
-        /// </summary>
-        public void SetVerticalNavigation() {
-            if (pmDisplays.Length > 1) {
-                for (int i = 0; i < pmDisplays.Length; i++) {
-                    if (i == 0) {  
-                        pmDisplays[i].SetNavigation("down", pmDisplays[i + 1].b);
-                    }
-                    else if (i == pmDisplays.Length - 1) {
-                        pmDisplays[i].SetNavigation("up", pmDisplays[i - 1].b);
-                    }
-                    else {
-                        pmDisplays[i].SetNavigation("up", pmDisplays[i - 1].b);
-                        pmDisplays[i].SetNavigation("down", pmDisplays[i + 1].b);
-                    }
-                } 
             }
         }
 

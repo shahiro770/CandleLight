@@ -40,6 +40,7 @@ namespace Events {
         public ToastPanel toastPanel1;              /// <value> ToastPanel reference </value>
         public GearPanel gearPanel;                 /// <value> GearPanel reference </value>
         public CandlesPanel candlesPanel;           /// <value> CandlesPanel reference </value>
+        public SpecialPanel specialPanel;           /// <value> SpecialPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> ActionsPanel reference </value>
         public PartyPanel partyPanel;               /// <value> PartyPanel reference </value>
         public SkillsPanel skillsPanel;             /// <value> SkillsPanel reference </value>
@@ -48,6 +49,7 @@ namespace Events {
         public TabManager itemsTabManager;          /// <value> Click on to display other panels with item information </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
         
+        public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
         public float canvasWidth = 960;     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasHeight = 540;    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code</value>
@@ -62,6 +64,7 @@ namespace Events {
         private Consumable[] subAreaConsumables;   /// <value> Consumable items that can be found in the current subArea </value>
         private Gear[] subAreaGear;          /// <value> Gear items that can be found in the current subArea </value>
         private Candle[] subAreaCandles;     /// <value> Candle items that can be found in the current subArea </value>
+        private Special[] subAreaSpecials;   /// <value> Special items that can be found in the current subArea</value>
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, -20, 0);
@@ -80,6 +83,7 @@ namespace Events {
         private int consumablesNum = 0;         /// <value> Number of consumables to be found in the subArea </value>
         private int gearNum = 0;                /// <value> Number of gear to be found in the subArea </value>
         private int candleNum = 0;              /// <value> Number of candles to be found in the subArea </value>
+        private int specialNum = 0;             /// <value> Number of special to be found in the subArea </value>
         private int shopToastIndex = 0;         /// <value> Index for which toastPanel is being used as the shop's wax display </value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
@@ -121,9 +125,11 @@ namespace Events {
             this.currentAreaName = areaName;
             SetAreaMultiplier();
             currentArea = GameManager.instance.DB.GetAreaByName(areaName);
+            currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
 
             LoadBackgroundPacks();
             LoadGeneralInteractions();
+            LoadSubAreaItems();
 
             isReady = true;
         }
@@ -184,7 +190,7 @@ namespace Events {
             subAreaCandles = GameManager.instance.DB.GetCandlesBySubArea(currentSubArea.name);
             candleNum = 0;
 
-            for (int i = 0; i < subAreaGear.Length; i++) {
+            for (int i = 0; i < subAreaCandles.Length; i++) {
                 if (subAreaCandles[i] != null) {
                     candleNum++;
                 }
@@ -195,12 +201,34 @@ namespace Events {
         }
 
         /// <summary>
+        /// Loads specials for the current subArea
+        /// </summary>
+        public void LoadSpecials() {
+            subAreaSpecials = GameManager.instance.DB.GetSpecialsBySubArea(currentSubArea.name);
+            specialNum = 0;
+
+            for (int i = 0; i < subAreaSpecials.Length; i++) {
+                if (subAreaSpecials[i] != null) {
+                    specialNum++;
+                }
+                else {
+                    break;
+                }
+            }
+            print (currentSubArea.name);
+            if (currentSubArea.name == "mainGreyWastes") {
+                strangeBottle = subAreaSpecials[0];
+            }
+        }
+
+        /// <summary>
         /// Loads all items for a subArea
         /// </summary>
         public void LoadSubAreaItems() {
             LoadConsumables();
             LoadGear();
             LoadCandles();
+            LoadSpecials();
         }
 
         /// <summary>
@@ -247,7 +275,6 @@ namespace Events {
         /// Displays the first event in an area (first event of the main subArea)
         /// </summary>
         public void GetStartEvent() {
-            currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             currentEvent = currentSubArea.GetEvent(areaProgress);
 
             StartCoroutine(DisplayEvent());
@@ -360,7 +387,6 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 SetAllButtonsInteractable(true);
-                SetNavigation();
             }
         }
 
@@ -408,12 +434,7 @@ namespace Events {
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 SetAllButtonsInteractable(true);
-                SetNavigation();
             }
-        }
-
-        public void SetNavigation() {
-            partyPanel.SetHorizontalNavigation();   
         }
 
         /// <summary>
@@ -552,7 +573,6 @@ namespace Events {
                 eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.TravelActions();
                 HideEventDisplayItemDisplays();
-                SetNavigation();
             }
             else if (currentResult.type == ResultConstants.TAKEALLITEMS) {
                 TakeAllItems();
@@ -561,12 +581,10 @@ namespace Events {
                 actionsPanel.SetItemActions();
                 eventDescription.SetKey(currentResult.resultKey);
                 DisplayResultItems(currentResult);
-                SetNavigation();
             }
             else if (currentResult.type == ResultConstants.NEWINT) {
                 actionsPanel.AddInteraction(currentResult.newIntName);
                 eventDescription.SetKey(currentResult.resultKey);
-                SetNavigation();
             }
             else if (currentResult.type == ResultConstants.EVENT) {
                 GetNextEvent();
@@ -636,19 +654,16 @@ namespace Events {
             else if (currentResult.type == ResultConstants.STATSINGLE) {
                 eventDescription.SetKey(currentResult.resultKey);
                 ApplyResultStatChangesSingle(currentResult, ResultConstants.STATSINGLE);
-                SetNavigation();
             }
             else if (currentResult.type == ResultConstants.STATALL) {
                 eventDescription.SetKey(currentResult.resultKey);
                 ApplyResultStatChangesAll(currentResult, ResultConstants.STATALL);
-                SetNavigation();
                 CheckGameOver();
             }
             else if (currentResult.type == ResultConstants.STATALLANDLEAVE) {
                 eventDescription.SetKey(currentResult.resultKey);
                 ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDLEAVE);
                 actionsPanel.TravelActions();
-                SetNavigation();
                 CheckGameOver();
             }
             else if (currentResult.type == ResultConstants.STATALLANDITEMANDLEAVE) {
@@ -699,7 +714,6 @@ namespace Events {
 
                 eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.PreCombatActions();
-                SetNavigation();
                 CheckGameOver();
             }
             else if (currentResult.type == ResultConstants.REVIVE) {  
@@ -719,7 +733,6 @@ namespace Events {
 
                     eventDescription.SetKey(currentResult.resultKey); 
                     actionsPanel.TravelActions();
-                    SetNavigation();
                 }
                 else {
                     changeSprite = false;
@@ -853,7 +866,7 @@ namespace Events {
         /// <param name="r"> Result to have its items displayed </param>
         public void DisplayResultItems(Result r) {
             List<Item> items = GetResultItems(r);
-            eventDisplays[0].SetItemDisplays(items);    // will overwrite some action navigation
+            eventDisplays[0].SetItemDisplays(items);
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace PlayerUI {
     public class TabManager : MonoBehaviour {
 
         /* external component references */ 
-        public ActionsPanel actionsPanel;       /// <value> Trigger navigation settting whenever tabs switch </value>
+        public ActionsPanel actionsPanel;       /// <value> actionsPanel reference </value>
         public Button[] tabs = new Button[3];   /// <value> Three tabs per tabManager </value>
         public LocalizedText[] tabTexts = new LocalizedText[3];    /// <value> Text for each tab </value>
         public Panel[] panels = new Panel[3];   /// <value> Panel references </value>

@@ -253,50 +253,7 @@ namespace Characters {
 
         #endregion
 
-        #region [ Section 1 ] Button Navigation
-
-        /// <summary>
-        /// Allow navigation to the monster button
-        /// </summary>
-        /// <param name="direction"> direction input to navigate to b2 </param>
-        /// <param name="b2"> Button to navigate to </param>
-        public void SetNavigation(string direction, Button b2) {
-            Navigation n = b.navigation;
-            
-            if (direction == "up") {
-                n.selectOnUp = b2;
-                b.navigation = n;
-            }
-            else if (direction == "right") {
-                n.selectOnRight = b2;
-                b.navigation = n;
-            }
-            else if (direction == "down") {
-                n.selectOnDown = b2;
-                b.navigation = n;
-            }
-            else if (direction == "left") {
-                n.selectOnLeft = b2;
-                b.navigation = n;
-            }
-
-            b.navigation = n;
-        }
-
-        /// <summary>
-        /// Resets the horizontal navigation of monster's button
-        /// </summary>
-        public void ResetNavigation() {
-             Navigation n = b.navigation;
-             n.selectOnRight = null;
-             n.selectOnLeft = null;
-
-             b.navigation = n;
-        }
-
-        #endregion
-
-        #region [ Section 2 ] Animation
+        #region [ Section 1 ] Animation
 
         /// <summary>
         /// Sets all monster attack clips in monster animator controller.

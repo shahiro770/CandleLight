@@ -66,7 +66,6 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsInteractable();
-            SetInPanelNavigation();
             FadeActions(1);
         }
 
@@ -82,7 +81,6 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsInteractable();
-            SetInPanelNavigation();
         }
 
         /// <summary>
@@ -96,7 +94,6 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsInteractable();
-            SetInPanelNavigation();
         }
 
         /// <summary>
@@ -146,7 +143,6 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsUninteractable();
-            SetInPanelNavigation();
         }
 
         public void SetItemActions() {
@@ -159,7 +155,6 @@ namespace PlayerUI {
             
             SetActionsUsable(true);
             SetAllActionsInteractable(false);
-            SetInPanelNavigation();
         }
 
         /// <summary>
@@ -172,7 +167,6 @@ namespace PlayerUI {
                 if (actions[i].actionType == ActionConstants.NONE) {
                     actions[i].SetAction(ActionConstants.INTERACTION, GameManager.instance.DB.GetInteractionByName(intName));
                     actions[i].SetInteractable(true);
-                    SetInPanelNavigation();
                     break;
                 }
             }
@@ -195,7 +189,6 @@ namespace PlayerUI {
         public void DisplayPartyMember(PartyMember pm) {
             SetCombatActions(pm.attacks);
             SetAllActionsInteractable();
-            SetInPanelNavigation();
             CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
         }
 
@@ -206,9 +199,16 @@ namespace PlayerUI {
         public void SelectAction(Action a) {
             if (UIManager.instance.panelButtonsEnabled == true && a.isUsable == true) {
                 if (a.actionType == ActionConstants.ATTACK) {
-                    a.ShowActionSelected();  // attack actions will show which attack is selected while user decides what to do next
                     selectedAction = a;
-                    AttackActionSelected(a.a);
+                    for (int i = 0; i < actions.Length - 1; i++) {
+                        if (actions[i] == selectedAction) {
+                            actions[i].ShowActionSelected();
+                        }
+                        else if (actions[i].actionType != ActionConstants.NONE) {
+                            actions[i].ShowActionUnselected();  
+                        }
+                    }   
+                    CombatManager.instance.PreparePMAttack(a.a);
                 }
                 else if (a.actionType == ActionConstants.INTERACTION) {
                     if (a.i.isSingleUse) {
@@ -223,24 +223,6 @@ namespace PlayerUI {
                     StartCoroutine(CombatManager.instance.AttemptFlee());
                 }
             }
-        }
-
-        /// <summary>
-        /// Notifies combat manager that player is going to attack, disabling all attack actions, 
-        /// changing button navigation, and changing some button options.
-        /// </summary>
-        /// <param name="a"> Name of action to be taken </param>
-        public void AttackActionSelected(Attack a) {
-            for (int i = 0; i < actions.Length - 1;i++) {
-                if (actions[i] == selectedAction) {
-                    actions[i].ShowActionSelected();
-                }
-                else if (actions[i].actionType != ActionConstants.NONE) {
-                    actions[i].ShowActionUnselected();  
-                }
-            }
-           
-            CombatManager.instance.PreparePMAttack(a);
         }
 
         /// <summary>
@@ -340,160 +322,6 @@ namespace PlayerUI {
             }
         }
 
-        /// <summary>
-        /// Changes the navigation of an action button
-        /// </summary>
-        /// <param name="index"> Index of button [0 - 4] </param>
-        /// <param name="direction"> Direction to be changed (up, down, left, right) </param>
-        /// <param name="b2"> Other button to navigate to </param>
-        public void SetButtonNavigation(int index, string direction, Button b2) {
-            Button b = actions[index].GetComponent<Button>();
-            Navigation n = b.navigation;
-
-            if (direction == "up") {
-                n.selectOnUp = b2;
-                b.navigation = n;
-            }
-            else if (direction == "right") {
-                n.selectOnRight = b2;
-                b.navigation = n;
-            }
-            else if (direction == "down") {
-                n.selectOnDown = b2;
-                b.navigation = n;
-            }
-            else if (direction == "left") {
-                n.selectOnLeft = b2;
-                b.navigation = n;
-            }
-        }
-
-        /// <summary>
-        /// Sets the horizontal navigation to navigate to buttons that are not in the actionsPanel
-        /// </summary>
-        /// <param name="p"> Other panel </param>
-        public void SetHorizontalNavigation(Panel p) {
-            if (p.GetPanelName() == PanelConstants.PARTYPANEL) {
-                if (actions[3].IsInteractable()) {
-                    SetButtonNavigation(3, "right", p.GetNavigatableButton());
-                }
-                else if (actions[2].IsInteractable()) {
-                    SetButtonNavigation(2, "right", p.GetNavigatableButton());
-                }
-                if (actions[1].IsInteractable()) {
-                    SetButtonNavigation(1, "right", p.GetNavigatableButton());
-                }
-                else if (actions[0].IsInteractable()) {
-                    SetButtonNavigation(0, "right", p.GetNavigatableButton());
-                }
-                if (actions[4].IsInteractable()) {
-                    SetButtonNavigation(4, "right", p.GetNavigatableButton());
-                }
-            }
-
-            if (p.GetPanelName() == PanelConstants.GEARPANEL) {
-                if (actions[2].IsInteractable()) {
-                    SetButtonNavigation(2, "left", p.GetNavigatableButton());
-                }
-                if (actions[0].IsInteractable()) {
-                    SetButtonNavigation(0, "left", p.GetNavigatableButton());
-                }
-                if (actions[4].IsInteractable()) {
-                    SetButtonNavigation(4, "left", p.GetNavigatableButton());
-                }
-            }
-        }
-
-        public void SetVerticalNavigation() {
-
-        }
-
-        /// <summary>
-        /// Resets the navigation of the fifth button (flee)
-        /// </summary>
-        private void ResetFifthButtonNavigation() {
-            Button b = actions[4].b;
-            Navigation n = b.navigation;
-
-            n.selectOnUp = actions[2].IsInteractable() ?actions[2].b : actions[0].b;
-            b.navigation = n;
-        }
-
-        /// <summary>
-        /// Sets up the initial navigation of the action buttons to navigate between each other, assuming other panels do not exist.
-        /// If the second, third, or fourth buttons are enabled, they assume buttons above them are enabled.
-        /// </summary>
-        private void SetInPanelNavigation() {
-            for (int i = 0; i < actions.Length; i++) {
-                if (actions[i].IsInteractable()) {
-                    Button b = actions[i].b;
-                    Navigation n = b.navigation;
-                    if (i == 0) {
-                        if (actions[2].IsInteractable()) {
-                            n.selectOnDown = actions[2].b;
-                        }
-                        else if (actions[4].IsInteractable()) {
-                            n.selectOnDown = actions[4].b;
-                        }
-                        else {
-                            n.selectOnDown = null;
-                        }
-
-                        n.selectOnRight = actions[1].IsInteractable() ? actions[1].b : null;
-                        n.selectOnUp = null;
-                        b.navigation = n;
-                    }    
-                    else if (i == 1) {
-                        if (actions[2].IsInteractable()) {
-                            n.selectOnDown = actions[2].b;
-                        } 
-                        if (actions[3].IsInteractable()) {
-                            n.selectOnDown = actions[3].b;
-                        }
-                        else if (actions[4].IsInteractable()) {
-                            n.selectOnDown = actions[4].b;
-                        }
-                        else {
-                            n.selectOnDown = null;
-                        }
-                        b.navigation = n;
-                    }
-                    else if (i == 2) {
-                        if (actions[4].IsInteractable()) {
-                            n.selectOnDown = actions[4].b;
-                        }
-                        else {
-                            n.selectOnDown = null;
-                        }
-                        n.selectOnRight = actions[3].IsInteractable() ? actions[3].b : null;
-                        b.navigation = n;
-                    }
-                    else if (i == 3) {
-                        if (actions[4].IsInteractable()) {
-                            n.selectOnDown = actions[4].b;
-                        }
-                        else {
-                            n.selectOnDown = null;
-                        }
-                        b.navigation = n;
-                    }
-                    else if (i == 4) {
-                        if (actions[2].IsInteractable()) {
-                            n.selectOnUp = actions[2].b;
-                        }
-                        else if (actions[0].IsInteractable()) {
-                            n.selectOnUp = actions[0].b;
-                        }
-                        else {
-                            n.selectOnUp = null;
-                        }
-
-                        b.navigation = n;
-                    }
-                }
-            }             
-        }
-        
         /// <summary>
         /// Fades actions to the target alpha value
         /// </summary>

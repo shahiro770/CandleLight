@@ -72,34 +72,6 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets up the initial navigation of the action buttons.
-        /// Player may have less than 4 action options available, but the fifth button will almost always
-        /// have an option, so navigation between above buttons and the fifth button must be adjusted.
-        /// </summary>
-        /// <remark> In the future, will have to navigate to other UI panels such as items or information </remark>
-        private void SetInitialNavigation() {
-            for (int i = 0; i < itemNum; i++) {
-                Button b = itemSlots[i].b;
-                Navigation n = b.navigation;
-                
-                if (i > 0) {
-                    n.selectOnUp = itemSlots[i - 1].b;
-                }
-                if (i != itemNum - 1) {
-                    n.selectOnDown = itemSlots[i + 1].b;
-                }
-                else {
-                    n.selectOnDown = actionsPanel.GetNavigatableButtonUp();   // actionsPanel's first button will always be active during item taking
-                }
-
-                b.navigation = n;
-            }
-
-            actionsPanel.SetButtonNavigation(0, "up", itemSlots[itemNum - 1].b);      
-            actionsPanel.SetButtonNavigation(1, "up", itemSlots[itemNum - 1].b);             
-        }
-
-        /// <summary>
         /// Makes the eventDisplay visible
         /// </summary>
         /// <param name="value"></param>

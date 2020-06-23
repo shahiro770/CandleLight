@@ -90,7 +90,6 @@ namespace PlayerUI {
         /// <param name="newItem"> Item data </param>
         public void PlaceItemInstant(Item newItem) {
             if (newItem != null) {  
-            
                 if (newItem.type == null) {
                     defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
                 } 
@@ -472,6 +471,11 @@ namespace PlayerUI {
                     else {
                         t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue() * 0.5f));
                     }
+                }
+                else if (basicKeys[1] == ItemConstants.SPECIAL) {
+                    t.SetKey("title", basicKeys[0] + "_item");
+                    t.SetKey("subtitle", basicKeys[2] + "_item_sub");
+                    t.SetKey("description", basicKeys[0] + "_item_des");
                 }
             }
             else {  // if there is no item held

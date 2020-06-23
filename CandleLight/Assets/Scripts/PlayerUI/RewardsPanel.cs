@@ -131,7 +131,6 @@ namespace PlayerUI {
                     yield return null;
                 }
             }
-            SetNavigation();
         }
 
         /// <summary>
@@ -141,8 +140,10 @@ namespace PlayerUI {
         private IEnumerator UpdateEXPBars(List<PartyMember> pms) {
             PartyManager.instance.AddEXP(amountEXP);
 
-            while (!pms[0].doneEXPGaining) {   // wait for bars to finish filling 
-                yield return null;
+            foreach (PartyMember pm in pms) {
+                while (pms[0].doneEXPGaining == false) {
+                    yield return null;
+                }
             }
         }
 
@@ -169,27 +170,6 @@ namespace PlayerUI {
                     itemNum = 0;
                     StartCoroutine(Fade(0));
                 }
-            }
-        }
-
-        public void SetNavigation() {
-            for (int i = 0; i < itemNum; i++) {
-                Button b = itemSlots[i].b;
-                Navigation n = b.navigation;
-
-                if (i > 0) {
-                    n.selectOnLeft = itemSlots[i - 1].b;
-                }
-                if (i != itemSlots.Length - 1) {
-                    n.selectOnRight = itemSlots[i + 1].b;
-                }
-
-                n.selectOnDown = actionsPanel.GetNavigatableButtonUp();
-                b.navigation = n;
-            }
-
-            if (itemNum > 0) {
-                actionsPanel.SetButtonNavigation(4, "up", itemSlots[0].b);      
             }
         }
 
@@ -224,17 +204,6 @@ namespace PlayerUI {
         /// <returns> Name of panel </returns>
         public override string GetPanelName() {
             return PanelConstants.REWARDSPANEL;
-        }
-
-        /// <summary>
-        /// Returns the Button that adjacent panels will navigate to
-        /// </summary>
-        /// <returns> Button to be navigated to </returns>
-        public override Button GetNavigatableButton() {
-            if (itemNum > 0) {
-                return itemSlots[0].b;
-            }
-            return null; // will need to change this later
         }
     }
 }

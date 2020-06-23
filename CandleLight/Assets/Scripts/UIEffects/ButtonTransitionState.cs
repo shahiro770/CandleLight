@@ -49,6 +49,8 @@ namespace UIEffects {
                     pressedBlock =  initial;
                     disabledBlock = initial;
 
+                    highlightedBlock.normalColor = pressedBlock.pressedColor;
+
                     pressedBlock.normalColor = pressedBlock.pressedColor;
                     pressedBlock.highlightedColor = pressedBlock.pressedColor;
                     pressedBlock.disabledColor = pressedBlock.pressedColor;
@@ -107,6 +109,9 @@ namespace UIEffects {
         public void SetColorBlock(string blockType, ColorBlock cb) {
             if (blockType == "normal") {
                 normalBlock = cb;
+            }
+            else if (blockType == "highlighted") {
+                highlightedBlock = cb;
             }
             else if (blockType == "pressed") {
                 pressedBlock = cb;

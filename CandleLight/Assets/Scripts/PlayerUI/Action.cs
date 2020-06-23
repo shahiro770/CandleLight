@@ -54,6 +54,7 @@ namespace PlayerUI {
 
             ColorBlock normalBlock = b.colors; 
             ColorBlock unusableBlock = b.colors;
+            ColorBlock highlightedBlock = b.colors;
             
             unusableBlock.normalColor = new Color32(196, 36, 48, 255);
             unusableBlock.highlightedColor = new Color32(255, 0, 64, 255);
@@ -153,7 +154,7 @@ namespace PlayerUI {
         /// Change button colour to show it is selected after user navigates away from it after selecting
         /// </summary>
         public void ShowActionSelected() {
-            bts.SetColor("pressed");
+            bts.SetColor("highlighted");
         }
 
         /// <summary>

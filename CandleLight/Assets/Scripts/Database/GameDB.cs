@@ -750,7 +750,48 @@ namespace Database {
                             return candleItems;
                         }
                         else {
-                            Debug.LogError("CandletemPool " + subAreaName + " does not exist in the DB");
+                            Debug.LogError("CandleItemPool " + subAreaName + " does not exist in the DB");
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns all of the gear that can be found in a subArea
+        /// </summary>
+        /// <param name="subAreaName"></param>
+        /// <returns></returns>
+        public Special[] GetSpecialsBySubArea (string subAreaName) {
+            using(dbConnection = base.GetConnection()) {
+
+                dbConnection.Open();
+
+                using (IDbCommand dbcmd = dbConnection.CreateCommand()) {
+
+                    dbcmd.CommandText = "SELECT * FROM SpecialItemPools WHERE name = '" + subAreaName + "'";
+
+                    using (IDataReader reader = dbcmd.ExecuteReader()) {
+                        string[] specialNameIDs;
+                        Special[] specialItems;
+
+                        if (reader.Read()) {
+                            specialItems = new Special[reader.FieldCount - 2];    // the names start on index 2
+                            specialNameIDs = new string[reader.FieldCount - 2];    // the names start on index 2
+                            for (int i = 0; i < specialNameIDs.Length; i++) {
+                                specialNameIDs[i] = reader.GetString(i + 2);       // the names start on index 2
+                            }
+
+                            for (int i = 0; i < specialItems.Length; i++) {
+                                if (specialNameIDs[i] != "") {
+                                    specialItems[i] = (Special)GetItemByNameID(specialNameIDs[i], "Specials", dbConnection);
+                                }
+                            }
+                            return specialItems;
+                        }
+                        else {
+                            Debug.LogError("SpecialItemPool " + subAreaName + " does not exist in the DB");
                             return null;
                         }
                     }
@@ -821,6 +862,11 @@ namespace Database {
                             values[2] = reader.GetInt32(9);
    
                             newItem = new Candle(nameID, ItemConstants.CANDLE, subType, className, a, effects, values);
+                        }
+                        else if (type == "Specials") {
+                            subType = reader.GetString(2);
+
+                            newItem = new Special(nameID, ItemConstants.SPECIAL, subType);
                         }
                     }
                     

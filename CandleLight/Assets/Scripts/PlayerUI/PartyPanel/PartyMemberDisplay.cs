@@ -178,34 +178,6 @@ namespace PlayerUI {
         }
         
         /// <summary>
-        /// Sets navigation from PartyMemberDisplay's button to another button
-        /// </summary>
-        /// <param name="direction"> Direction button pressed to navigate </param>
-        /// <param name="b2"> Other button </param>
-        public void SetNavigation(string direction, Button b2) {
-            Navigation n = b.navigation;
-
-            if (direction == "up") {
-                n.selectOnUp = b2;
-                b.navigation = n;
-            }
-            else if (direction == "right") {
-                n.selectOnRight = b2;
-                b.navigation = n;
-            }
-            else if (direction == "down") {
-                n.selectOnDown = b2;
-                b.navigation = n;
-            }
-            else if (direction == "left") {
-                n.selectOnLeft = b2;
-                b.navigation = n;
-            }
-
-            b.navigation = n;
-        }
-
-        /// <summary>
         /// Sets the animation clip (.anim files cause animation and animationClip are two ****ing different things) 
         /// for the effects animator for the "attackedEffect" state. Used to show the animation of a partyMember's attack.
         /// </summary>

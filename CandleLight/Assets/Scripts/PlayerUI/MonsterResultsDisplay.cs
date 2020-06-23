@@ -43,34 +43,6 @@ namespace PlayerUI {
             yield return StartCoroutine(ShrinkFade());
             yield return StartCoroutine(DisplayMultiplierText(quantity));
         }
-        
-        /// <summary>
-        /// Sets navigation to other buttons
-        /// </summary>
-        /// <param name="direction"> Direction being pressed </param>
-        /// <param name="b2"> Other button component </param>
-        public void SetNavigation(string direction, Button b2) {
-            Navigation n = b.navigation;
-
-            if (direction == "up") {
-                n.selectOnUp = b2;
-                b.navigation = n;
-            }
-            else if (direction == "right") {
-                n.selectOnRight = b2;
-                b.navigation = n;
-            }
-            else if (direction == "down") {
-                n.selectOnDown = b2;
-                b.navigation = n;
-            }
-            else if (direction == "left") {
-                n.selectOnLeft = b2;
-                b.navigation = n;
-            }
-
-            b.navigation = n;
-        }
 
         /// <summary>
         /// Shrinks the display from a set size and fades it in at the same time

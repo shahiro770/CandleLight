@@ -40,6 +40,7 @@ namespace Combat {
         public ActionsPanel actionsPanel;           /// <value> actionsPanel reference </value>
         public GearPanel gearPanel;                 /// <value> gearPanel reference </value>
         public CandlesPanel candlesPanel;           /// <value> candlesPanel reference </value>
+        public SpecialPanel specialPanel;           /// <value> SpecialPanel reference </value>
         public PartyPanel partyPanel;               /// <value> partyPanel reference </value>
         public SkillsPanel skillsPanel;             /// <value> skillsPanel reference </value>
         public TabManager itemsTabManager;          /// <value> Click on to display other panels </value>
@@ -135,7 +136,7 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Adds a monster GO to the enemy canvas, initializing its values and setting navigation
+        /// Adds a monster GO to the enemy canvas, initializing its values
         /// </summary>
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
         /// <returns> IEnumerator cause animations </returns>
@@ -263,7 +264,6 @@ namespace Combat {
             }
             else {
                 EnableAllButtonsInSidePanels();
-                SetMonsterNavigation();
             }
         }
 
@@ -901,37 +901,6 @@ namespace Combat {
             foreach (Monster m in monsters) {
                 m.gameObject.SetActive(true);
             }
-        }
-
-        /// <summary>
-        /// Sets the navigation between monster buttons
-        /// </summary>
-        private void SetMonsterNavigation() {
-            foreach (Monster m in monsters) {
-                m.md.ResetNavigation();
-            }
-            foreach(Monster m in monsters) {
-                m.md.SetNavigation("down", actionsPanel.GetActionButton(0));
-            }
-
-            if (monsters.Count > 1) {
-                for (int i = 0; i < monsters.Count; i++) {
-                    if (i == 0) {
-                        monsters[i].md.SetNavigation("right", monsters[i + 1].md.b);
-                    }
-                    else if (i == monsters.Count - 1) {
-                        monsters[i].md.SetNavigation("left", monsters[i - 1].md.b);
-                    }
-                    else {
-                        monsters[i].md.SetNavigation("left", monsters[i - 1].md.b);
-                        monsters[i].md.SetNavigation("right", monsters[i + 1].md.b);
-                    }
-                }
-            }
-            
-            middleMonster = (int)(Mathf.Floor(monsters.Count / 2f));
-            actionsPanel.SetButtonNavigation(0, "up", monsters[middleMonster].md.b);
-            actionsPanel.SetButtonNavigation(1, "up", monsters[middleMonster].md.b);
         }
 
         #endregion

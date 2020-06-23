@@ -167,7 +167,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="value"></param>
         public void SetTakeable(bool value) {
-            for (int i = 0;i < spare.Length; i++) {
+            for (int i = 0; i < spare.Length; i++) {
                 spare[i].SetTakeable(value);
             }
 

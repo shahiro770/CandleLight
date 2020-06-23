@@ -339,7 +339,7 @@ namespace Characters {
             }
             if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
-                     critChance = 10;
+                     critChance += 10;
                 }
                 if (skills[(int)SkillConstants.mageSkills.THIRDEYE].skillEnabled == true) {
                     MPRegen *= 2f;
@@ -653,6 +653,7 @@ namespace Characters {
 
                 if (isStatus && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
+                    UpdateStatusEffectValues();
                 }
             }
             else if (a.type == AttackConstants.HEALMP || a.type == AttackConstants.HEALMPSELF) {
@@ -675,11 +676,13 @@ namespace Characters {
 
                 if (isStatus && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
+                    UpdateStatusEffectValues();
                 }
             }
             else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) {
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
                 AddStatusEffect(a.seName, a.seDuration, c);
+                UpdateStatusEffectValues();
             }
         }
 
@@ -915,7 +918,6 @@ namespace Characters {
                 if (attackNum < maxAttacks) {
                     skillPoints--;
                     attacks[attackNum] = skills[index].a;
-                    attackNum++;
                     skills[index].skillEnabled = true;
 
                     if (className == ClassConstants.WARRIOR) {
@@ -930,6 +932,8 @@ namespace Characters {
                             }
                         }
                     }
+
+                    attackNum++;
                     
                     return true;
                 }
@@ -1004,37 +1008,35 @@ namespace Characters {
                 int attackIndex = -1;
                 if (attackNum > minAttacks) {
                     skillPoints++;
-                    attackNum--;
                     skills[index].skillEnabled = false;
-                    for (int i = 0; i <= attackNum; i++) {   // shift attacks back                    
+                    for (int i = 0; i < attackNum; i++) {   // find the attack that is going to be removed 
                         if (attacks[i].nameKey == skills[index].a.nameKey) {
                             attackIndex = i;
                             break;
                         }
                     }
-                    for (int i = attackIndex; i < attackNum; i++) {
+
+                    // revert changes to an active skill caused by a passive skill
+                    if (className == ClassConstants.WARRIOR) {
+                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                            attacks[attackIndex].costType = "MP";
+                        }
+                    }
+                    else if (className == ClassConstants.MAGE) {
+                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {       
+                            if (attacks[attackIndex].seName == StatusEffectConstants.BURN) {
+                                attacks[attackIndex].seChance = attacks[attackIndex].baseSeChance;
+                            }   
+                        }
+                    }
+
+                    attackNum--;
+                    for (int i = attackIndex; i < attackNum; i++) { // shift attacks back               
                         attacks[i] = attacks[i + 1];
                     }
                     attacks[attackNum] = noneAttack;
 
                     return true;
-                }
-                if (className == ClassConstants.WARRIOR) {
-                    if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
-                        for (int i = 0; i < attackNum; i++) {
-                            attacks[i].costType = "MP";
-                        }
-                    }
-                    statChange = true;
-                }
-                else if (className == ClassConstants.MAGE) {
-                    if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
-                        for (int i = 0; i < attackNum; i++) {
-                            if (attacks[i].seName == StatusEffectConstants.BURN) {
-                                attacks[i].seChance = attacks[i].baseSeChance >> 1;
-                            }
-                        }
-                    }
                 }
             }
             else if (skills[index].type == SkillConstants.PASSIVE) {
@@ -1042,8 +1044,10 @@ namespace Characters {
                 skills[index].skillEnabled = false;
 
                 if (className == ClassConstants.WARRIOR) {
-                    if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
-                        attacks[attackNum].costType = "MP";
+                    if (index == (int)SkillConstants.warriorSkills.BLOODSWORN) {
+                        for (int i = 0; i < attackNum; i++) {
+                            attacks[i].costType = "MP";
+                        }
                     }
                 }
                 if (className == ClassConstants.MAGE) {
