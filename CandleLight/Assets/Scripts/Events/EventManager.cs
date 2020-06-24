@@ -74,7 +74,7 @@ namespace Events {
         private Vector3 pos3d2 = new Vector3(0, -20, 0);
         private Vector3 pos3d3 = new Vector3(275, -20, 0);
 
-        private enum primaryStats { NONE, STR, DEX, INT, LUK };
+        private enum checkIndicators { NONE, STR, DEX, INT, LUK, ITEM, ITEMANDCLEAR };
         private string[] monstersToSpawn;       /// <value> List of monsters to spawn </value>
         private string currentAreaName;         /// <value> Name of current area </value>
         private string nextSubArea = "";        /// <value> Name of next subArea to move to </value>
@@ -215,7 +215,7 @@ namespace Events {
                     break;
                 }
             }
-            print (currentSubArea.name);
+
             if (currentSubArea.name == "mainGreyWastes") {
                 strangeBottle = subAreaSpecials[0];
             }
@@ -517,6 +517,14 @@ namespace Events {
                             }
                         }
                     }
+                    else if (r.itemType == ItemConstants.SPECIAL) {
+                        for (int j = 0; j < specialNum; j++) {
+                            if (subAreaSpecials[j].nameID == specificItemName) {
+                                items.Add(new Special(subAreaSpecials[j]));
+                                break;
+                            }
+                        }
+                    }
                     if (items.Count == 0) {
                         Debug.LogError("Item " + specificItemName + " could not be generated");
                     }
@@ -536,6 +544,9 @@ namespace Events {
                         items.Add(new Candle(subAreaCandles[Random.Range(0, candleNum)]));
                         ((Candle)items[i]).RandomizeAmounts(r.itemQuality);
                     }
+                    else if (r.itemType == ItemConstants.SPECIAL) {
+                        items.Add(new Special(subAreaSpecials[Random.Range(0, specialNum)]));
+                    }
                 }
             }
 
@@ -553,13 +564,23 @@ namespace Events {
         public IEnumerator Interact(Interaction i) {
             bool changeSprite = true; // flag to change the event's sprite to the result's sprite 
 
-            if (i.statToCheck != (int)primaryStats.NONE) {  // events that are statChecks will have a good and bad outcome
-                if (PartyManager.instance.GetPrimaryStatAll(i.statToCheck) + 
-                (int)(PartyManager.instance.GetPrimaryStatAll((int)primaryStats.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
-                    currentResult = i.GetResult(0); // good result
+            if (i.checkIndicator != (int)checkIndicators.NONE) {  // events that are statChecks will have a good and bad outcome
+                if (i.checkIndicator == (int)checkIndicators.ITEMANDCLEAR) {
+                    if (specialPanel.CheckItem(i.itemToCheck, true) == true) {
+                        currentResult = i.GetResult(0); // good result
+                    }
+                    else {
+                        currentResult = i.GetResultStartIndex(1); // bad result(s)
+                    }
                 }
                 else {
-                    currentResult = i.GetResultStartIndex(1); // bad result(s)
+                    if (PartyManager.instance.GetPrimaryStatAll(i.checkIndicator) + 
+                        (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
+                        currentResult = i.GetResult(0); // good result
+                    }
+                    else {
+                        currentResult = i.GetResultStartIndex(1); // bad result(s)
+                    }
                 }
             }
             else {
@@ -739,49 +760,6 @@ namespace Events {
                     eventDescription.SetNoReviveText();
                 }
             }
-            else if (currentResult.type == ResultConstants.PROGRESS) {
-                bool[] changes = new bool[5];
-                string[] amounts = new string[5];
-                currentResult.GenerateResults();
-
-                changes[(int)ToastPanel.toastType.PROGRESS] = true;
-                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.progressAmount.ToString();
-
-                subAreaProgress += currentResult.progressAmount;
-                if (subAreaProgress > 100) {
-                    subAreaProgress = 100;
-                }
-                else if (subAreaProgress < 0) {
-                    subAreaProgress = 0;
-                }
-                if (infoPanel.isOpen == true) {
-                    infoPanel.UpdateAmounts();
-                }
-                SetNotification(changes, amounts);
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.PROGRESSANDLEAVE) {
-                bool[] changes = new bool[5];
-                string[] amounts = new string[5];
-                currentResult.GenerateResults();
-
-                changes[(int)ToastPanel.toastType.PROGRESS] = true;
-                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.progressAmount.ToString();
-
-                subAreaProgress += currentResult.progressAmount;
-                if (subAreaProgress > 100) {
-                    subAreaProgress = 100;
-                }
-                else if (subAreaProgress < 0) {
-                    subAreaProgress = 0;
-                }
-                if (infoPanel.isOpen == true) {
-                    infoPanel.UpdateAmounts();
-                }
-                SetNotification(changes, amounts);
-                eventDescription.SetKey(currentResult.resultKey);
-                actionsPanel.TravelActions();
-            }
             else if (currentResult.type == ResultConstants.SHOP) {
                 UIManager.instance.inShop = true;
 
@@ -801,6 +779,49 @@ namespace Events {
 
                 eventDescription.SetKey(currentResult.resultKey);
                 actionsPanel.TravelActions();
+            }
+            else if (currentResult.type == ResultConstants.QUEST) {
+                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+
+                AddQuest(currentResult.questName);
+                eventDescription.SetKey(currentResult.resultKey);
+            }
+            else if (currentResult.type == ResultConstants.QUESTANDLEAVE) {
+                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+
+                AddQuest(currentResult.questName);
+                eventDescription.SetKey(currentResult.resultKey);
+                actionsPanel.TravelActions();
+            }
+            else if (currentResult.type == ResultConstants.COMBATANDQUESTCONTINUE) {
+                monstersToSpawn = currentResult.GetMonstersToSpawn();
+
+                for (int j = 0; j < monstersToSpawn.Length; j++) {
+                    if (monstersToSpawn[j] == "none") {
+                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    }
+                }
+
+                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                HideEventDisplays();     
+                GetCombatEvent();
+
+                eventDescription.SetKey(currentResult.resultKey);
+            }
+            else if (currentResult.type == ResultConstants.QUESTCOMPLETE) {
+                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                ApplyResultStatChangesAll(currentResult, ResultConstants.QUESTCOMPLETEANDNEWINT);
+
+                CompleteQuest(currentResult.questName);
+                eventDescription.SetKey(currentResult.resultKey);
+            }
+            else if (currentResult.type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
+                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                ApplyResultStatChangesAll(currentResult, ResultConstants.QUESTCOMPLETEANDNEWINT);
+
+                CompleteQuest(currentResult.questName);
+                actionsPanel.AddInteraction(currentResult.newIntName);
+                eventDescription.SetKey(currentResult.resultKey);
             }
             else if (currentResult.type == ResultConstants.END) {
                 GameManager.instance.LoadNextScene("MainMenu");
@@ -832,8 +853,8 @@ namespace Events {
         /// </summary>
         /// <param name="r"> Result containing the stats to be changed </param>
         public void ApplyResultStatChangesAll(Result r, string type) {
-            bool[] changes = new bool[5];
-            string[] amounts = new string[5];
+            bool[] changes = new bool[6];
+            string[] amounts = new string[6];
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
@@ -851,10 +872,29 @@ namespace Events {
                 changes[(int)ToastPanel.toastType.EXP] = true;
                 amounts[(int)ToastPanel.toastType.EXP] = r.EXPAmount.ToString();
             }
+            if (r.progressAmount != 0) {
+                subAreaProgress += currentResult.progressAmount;
+                if (subAreaProgress > 100) {
+                    subAreaProgress = 100;
+                }
+                else if (subAreaProgress < 0) {
+                    subAreaProgress = 0;
+                }
+                if (infoPanel.isOpen == true) {
+                    infoPanel.UpdateAmounts();
+                }
+
+                changes[(int)ToastPanel.toastType.PROGRESS] = true;
+                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.progressAmount.ToString();
+            }
             if (r.seName != "none") {
                 PartyManager.instance.AddSE(r.seName, r.seDuration);
                 changes[(int)ToastPanel.toastType.SE] = true;
                 amounts[(int)ToastPanel.toastType.SE] = r.seName + "_title";
+            }
+            if (r.type == ResultConstants.QUESTCOMPLETE || r.type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
+                changes[(int)ToastPanel.toastType.QUESTCOMPLETE] = true;
+                amounts[(int)ToastPanel.toastType.QUESTCOMPLETE] = r.questName;
             }
 
             SetNotification(changes, amounts);
@@ -882,6 +922,23 @@ namespace Events {
                     EventManager.instance.toastPanel1.UpdateWAXAmount(); 
                 }
             }
+        }
+
+        /// <summary>
+        /// Tell the infoPanel to add a quest
+        /// </summary>
+        /// <param name="questName"></param>
+        public void AddQuest(string questName) {
+            infoPanel.AddQuest(questName);
+            SetQuestNotification(questName);
+        }
+
+        /// <summary>
+        /// Tell the infoPanel to remove a quest
+        /// </summary>
+        /// <param name="questName"></param>
+        public void CompleteQuest(string questName) {
+            infoPanel.CompleteQuest(questName);
         }
 
         /// <summary>
@@ -1102,6 +1159,9 @@ namespace Events {
             else if (type == ItemConstants.CANDLE) {
                 return candlesPanel;
             }  
+            else if (type == ItemConstants.SPECIAL) {
+                return specialPanel;
+            }
 
             Debug.LogError("Panel for an item with type " + type + " does not exist");
             return null;             
@@ -1133,6 +1193,19 @@ namespace Events {
             else {
                 shopToastIndex = 0;
                 toastPanel0.SetShopNotification();    
+            }
+        }
+
+        /// <summary>
+        /// Sets a toastPanel to show a quest has been added
+        /// </summary>
+        /// <param name="questName"></param>
+        public void SetQuestNotification(string questName) {
+            if (toastPanel0.gameObject.activeSelf == true) {
+                toastPanel1.SetQuestNotification(questName);
+            }
+            else {
+                toastPanel0.SetQuestNotification(questName);
             }
         }
 
@@ -1189,6 +1262,9 @@ namespace Events {
             }
             else if (id.type == ItemConstants.CANDLE) {
                 itemsTabManager.OpenPanel(1);
+            }
+            else if (id.type == ItemConstants.SPECIAL) {
+                itemsTabManager.OpenPanel(2);
             }
         }
 

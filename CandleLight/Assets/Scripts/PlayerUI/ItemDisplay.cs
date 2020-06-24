@@ -30,6 +30,7 @@ namespace PlayerUI {
         public Consumable displayedConsumable { get; private set; } /// <value> Item as consumable </value>
         public Candle displayedCandle { get; private set; }         /// <value> Item as candle </value>
         public Gear displayedGear { get; private set; }             /// <value> Item as gear </value>
+        public Special displayedSpecial { get; private set; }       /// <value> Item as special </value>
         public string type;                 /// <value> Type of item </value>
         public string subType;              /// <value> Subtype of item </value>
         public string className = ClassConstants.ANY;    /// <value> Name of class item can be used by </value>
@@ -59,6 +60,9 @@ namespace PlayerUI {
             else if (type == ItemConstants.CANDLE) {
                 displayedCandle = (Candle)displayedItem;
                 className = displayedItem.className;
+            }
+            else if (type == ItemConstants.SPECIAL) {
+                displayedSpecial = (Special)displayedItem;
             }
             itemSprite.sprite = displayedItem.itemSprite;
             itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);

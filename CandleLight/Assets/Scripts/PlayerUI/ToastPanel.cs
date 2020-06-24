@@ -13,49 +13,54 @@ namespace PlayerUI {
         public Image textBackground;        /// <value> Image background for text component </value>
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
 
-        public enum toastType { HP, MP, EXP, SE, PROGRESS };
+        public enum toastType { HP, MP, EXP, SE, PROGRESS, QUESTCOMPLETE };
 
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
 
         public void SetNotification(bool[] types, string[] amounts) {
             int typesCount = 0;
             string titleKey = "";
-            string[] descriptionKeys = new string[]{ "none_label", "none_label", "none_label", "none_label", "none_label" };
-            string[] amountStrings = new string[5];
+            string[] descriptionKeys = new string[]{ "none_label", "none_label", "none_label", "none_label", "none_label", "none_label" };
+            string[] amountStrings = new string[6];
 
             if (types[(int)toastType.HP] == true) {
-                titleKey += "HP_";
+                titleKey = "HP_toast";
                 descriptionKeys[0] = "HP_label";
                 amountStrings[0] = amounts[0];
                 typesCount++;
             }
             if (types[(int)toastType.MP] == true) {
-                titleKey += "MP_";
+                titleKey = "MP_toast";
                 descriptionKeys[1] = "MP_label";
                 amountStrings[1] = amounts[1];
                 typesCount++;
             }
             if (types[(int)toastType.EXP] == true) {
-                titleKey += "EXP_";
+                titleKey = "EXP_toast";
                 descriptionKeys[2] = "EXP_label";
                 amountStrings[2] = amounts[2];
                 typesCount++;
             }
             if (types[(int)toastType.SE] == true) {
-                titleKey += "SE_";
+                titleKey = "SE_toast";
                 descriptionKeys[3] = amounts[3];    // for status effects, just showing the SE name is enough (no fancy descriptors)
                 amountStrings[3] = "";
                 typesCount++;
             }
             if (types[(int)toastType.PROGRESS] == true) {
-                titleKey += "PROG_";
+                titleKey = "PROG_toast";
                 descriptionKeys[4] = "PROG_label";
                 amountStrings[4] = amounts[4] + "%";
                 typesCount++;
             }
+            if (types[(int)toastType.QUESTCOMPLETE] == true) {
+                titleKey = amounts[5] + "_quest_complete_title";     // Completing a quest overrides all possible title keys
+                descriptionKeys[5] = "none_label";
+                amountStrings[5] = "";
+                typesCount++;
+            }
 
-            titleKey += "toast";
-            if (typesCount > 1) {
+            if (typesCount > 1 && types[(int)toastType.QUESTCOMPLETE] == false) {
                 titleText.SetKey("generic_toast");
             }
             else {
@@ -75,6 +80,13 @@ namespace PlayerUI {
             titleText.SetKey("shop_toast");
             descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
             SetVisible(true);
+        }
+
+        public void SetQuestNotification(string questName) {
+            titleText.SetKey("QUEST_toast");
+            descriptionText.SetKey(questName + "_quest_title");
+            SetVisible(true);
+            StartCoroutine(FadeOut());
         }
 
         /// <summary>

@@ -63,6 +63,19 @@ namespace Events {
         }
 
         /// <summary>
+        /// Swaps all events and subevents in all subareas with the specified names.
+        /// This is done as quests may take place over multiple subAreas, hence if a quest is 
+        /// started in one subArea, its next part must be prepared in the next.
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <param name="subEventName"></param>
+        public void SwapEventAndSubEvent(string eventName, string subEventName) {
+            for (int i = 0; i < subAreasNum; i++) {
+                subAreas[i].SwapEventAndSubEvent(eventName, subEventName);
+            }
+        }
+
+        /// <summary>
         /// Returns a Color32 based on the theme colour
         /// </summary>
         /// <returns> Color32 </returns>

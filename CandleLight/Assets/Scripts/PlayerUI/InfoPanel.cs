@@ -19,11 +19,11 @@ namespace PlayerUI {
     public class InfoPanel : Panel {
 
         /* external component reference */
-        public EventManager eventManager;
         public Image WAXImage;
         public Image progressImage;
         public LocalizedText amountTextWAX; /// <value> Display the amount of the WAX the party has earned </value>
         public LocalizedText amountTextPROG; /// <value> Display the progress amount in the current subArea </value>
+        public Quest[] quests;
         public bool isOpen = false;
 
         private Color32 mainTheme;
@@ -43,6 +43,32 @@ namespace PlayerUI {
         /// </summary>
         void OnDisable() {
             isOpen = false;
+        }
+
+        /// <summary>
+        /// Adds a quest to one of the quest displays
+        /// </summary>
+        /// <param name="questName"></param>
+        public void AddQuest(string questName) {
+            for (int i = 0; i < quests.Length; i++) {
+                if (quests[i].questName == "") {
+                    quests[i].SetQuest(questName);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes a specific quest from the quest displays
+        /// </summary>
+        /// <param name="questName"></param>
+        public void CompleteQuest(string questName) {
+            for (int i = 0; i < quests.Length; i++) {
+                if (quests[i].questName == questName) {
+                    quests[i].CompleteQuest();
+                    break;
+                }
+            }
         }
 
         /// <summary>

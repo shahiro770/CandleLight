@@ -28,8 +28,6 @@ namespace Constants {
         public static readonly string TAKEALLITEMS = "takeAllItems";                    /// <value> Take all items available </value>
         public static readonly string SUBAREAANDCOMBAT = "subAreaAndCombat";    /// <value> Move to new subArea, immediately fight specific enemies </value>
         public static readonly string SUBAREAANDCOMBATANDSUBAREA = "subAreaAndCombatAndSubArea";    /// <value> Move to new subArea, immediately fight specific enemies, and then move to another subArea on clearing </value>
-        public static readonly string PROGRESS = "progress";    /// <value> Changes progress amount </value>
-        public static readonly string PROGRESSANDLEAVE = "progressAndLeave";            /// <value> Changes progress amount and then leave the event </value>
         public static readonly string END = "end";              /// <value> Ends the area, returning to the main menu </value>
         public static readonly string REVIVE = "revive";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP </value>
         public static readonly string REVIVEANDLEAVE = "reviveAndLeave";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP and leave </value>
@@ -39,5 +37,11 @@ namespace Constants {
         public static readonly string REKINDLEANDLEAVE = "rekindleAndLeave";    /// <value> All active candle uses are restored and leave the event </value>
         public static readonly string STATALLANDITEMANDLEAVE = "statAllAndItemAndLeave";    /// <value> Get some stats changes, and item, and  leave the event </value>
         public static readonly string STATALLANDEVENT = "statAllAndEvent";      /// <value> Get a stat change and move to the next event </value>
+        public static readonly string QUEST = "quest";          /// <value> Swaps a specific subEvent with the current event in the subArea, and registers a quest </value>
+        public static readonly string QUESTANDLEAVE = "questAndLeave";          /// <value> Swaps a specific subEvent with the current event in the subArea, and registers a quest, and then leave </value>
+        public static readonly string QUESTCONTINUE = "questContinue";          /// <value> Swaps a specific subEvent with the current event in the subArea, continuing a quest </value>
+        public static readonly string COMBATANDQUESTCONTINUE = "combatAndQuestContinue";    /// <value> Combat, and then swaps a specific subEvent with the current event in the subArea, continuing a quest </value>
+        public static readonly string QUESTCOMPLETE = "questComplete";        /// <value> Ends the quest, swapping a specific subEvent the current event in all subAreas, providing stat changes  </value>
+        public static readonly string QUESTCOMPLETEANDNEWINT = "questCompleteAndNewInt";  /// <value> Ends the quest, swapping a specific subEvent the current event in the subArea, providing stat changes and a new interaction </value>
     }
 }

@@ -229,7 +229,8 @@ namespace Party {
             }
             else {
                 for (int i = 0; i < partyMembersAll.Count; i++) {
-                    if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS || type == ResultConstants.STATALLANDITEMANDLEAVE) {
+                    if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS || type == ResultConstants.STATALLANDITEMANDLEAVE
+                        || type == ResultConstants.QUESTCOMPLETE || type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
                         if (partyMembersAll[i].CheckDeath() == false) {
                             if (partyMembersAll[i].className == ClassConstants.WARRIOR) {
                                 if (partyMembersAll[i].skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {

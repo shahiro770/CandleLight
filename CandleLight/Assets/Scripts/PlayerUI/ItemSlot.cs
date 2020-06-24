@@ -276,6 +276,12 @@ namespace PlayerUI {
                                 itemTaken = true;
                             }
                         }
+                        else if (currentItemDisplay.type == ItemConstants.SPECIAL) {
+                            SpecialPanel specialPanel = (SpecialPanel)targetPanel;
+                            if (specialPanel.PlaceItem(currentItemDisplay, direct)) {
+                                itemTaken = true;
+                            }
+                        }
                     }
                     else {
                         UIManager.instance.heldItemDisplay = currentItemDisplay;
@@ -476,6 +482,9 @@ namespace PlayerUI {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[2] + "_item_sub");
                     t.SetKey("description", basicKeys[0] + "_item_des");
+                    if (currentItemDisplay.subType == ItemConstants.SPECIAL) {  // very special items can't be sold, hence no value
+                        t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue()));
+                    }
                 }
             }
             else {  // if there is no item held

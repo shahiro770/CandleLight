@@ -80,6 +80,27 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Checks if a specific item is held within the spare item slots
+        /// </summary>
+        /// <param name="itemName"></param>
+        /// <param name="isClear"> True if the item is to be destroyed after the check </param>
+        /// <returns></returns>
+        public bool CheckItem(string itemName, bool isClear = false) {
+            for (int i = 0; i < spare.Length; i++) {
+                if (spare[i].currentItemDisplay != null) {
+                    if (spare[i].currentItemDisplay.displayedSpecial.nameID == itemName) {
+                        if (isClear == true) {
+                            spare[i].ClearItem();
+                        }
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+
+        /// <summary>
         /// Sets if all of the item slots can have their items taken
         /// </summary>
         /// <param name="value"></param>

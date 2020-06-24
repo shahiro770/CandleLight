@@ -440,7 +440,8 @@ namespace Database {
                     string[] intResultKeys = new string[4];
                     string[] intSprites = new String[4];
                     string resultName = "";
-                    int statToCheck = 0;
+                    string itemToCheck = "";
+                    int checkIndicator = 0;
                     int statThreshold = 0;
                     bool isSingleUse = false;
 
@@ -457,11 +458,11 @@ namespace Database {
                         intSprites[3] = reader.GetString(9);
 
                         isSingleUse = reader.GetBoolean(10);
-                        statToCheck = reader.GetInt32(11);
+                        checkIndicator = reader.GetInt32(11);
                         statThreshold = reader.GetInt32(12);
+                        itemToCheck = reader.GetString(13);
                         
-
-                        newInt = new Interaction(resultName, intResults, intSprites, isSingleUse, statToCheck, statThreshold, dbConnection);
+                        newInt = new Interaction(resultName, intResults, intSprites, isSingleUse, checkIndicator, statThreshold, itemToCheck, dbConnection);
                     }
                     else {
                          Debug.LogError("Interaction " + intName + " does not exist in the DB");
@@ -515,6 +516,7 @@ namespace Database {
                     int seDuration = 0;
                     bool isUnique = false;
                     bool hasPostCombatPrompt = false;
+                    string questName = "";
 
                     if (reader.Read()) {
                         name = reader.GetString(1);
@@ -545,9 +547,11 @@ namespace Database {
                         seName = reader.GetString(26);
                         seDuration = reader.GetInt32(27);
                         hasPostCombatPrompt = reader.GetBoolean(28);
+                        questName = reader.GetString(29);
                         
                         newResult = new Result(name, resultKey, type, isUnique, quantity, scope, resultAmounts, subAreaName0, subAreaName1, subEventName, 
-                        monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality, newIntName, seName, seDuration, hasPostCombatPrompt);
+                        monsterCount, specificMonsterNames, itemType, specificItemNames, itemQuality, newIntName, seName, seDuration, hasPostCombatPrompt,
+                        questName);
                     }
                     else {
                          Debug.LogError("Result " + resultName + " does not exist in the DB");

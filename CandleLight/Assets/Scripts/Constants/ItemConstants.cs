@@ -14,7 +14,8 @@ namespace Constants {
         public static readonly string CONSUMABLE = "consumable";    /// <value> Consumable items are used instantly </value>
         public static readonly string CANDLE = "candle";            /// <value> Candle items provide buffs and debuffs while usable  </value>
         public static readonly string GEAR = "gear";                /// <value> Gear items provide constant buffs </value>
-        public static readonly string SPECIAL = "special";          /// <value> </value>
+        public static readonly string SPECIAL = "special";          /// <value> Quest item for side quests </value>
+        public static readonly string VERYSPECIAL = "verySpecial";  /// <value> Quest item for the main quest </value>
         public static readonly string ANY = "any";                  /// <value> Item slot that can be placed in any slot </value>
         public static readonly string WEAPON = "weapon";            /// <value> Gear item that can only be placed in the weapon slot </value>
         public static readonly string SECONDARY = "secondary";      /// <value> Gear item that can only be placed in the secondary slot </value>

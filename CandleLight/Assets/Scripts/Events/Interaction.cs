@@ -20,8 +20,9 @@ namespace Events {
 
         public string name { get; private set; }        /// <value> Name of interaction </value>
         public string nameKey { get; private set; }     /// <value> Localization of interaction </value>
+        public string itemToCheck { get; private set; } /// <value> Name of special item to check </value>
         public int resultIndex { get; private set; }    /// <value> Index of the result chosen </value>
-        public int statToCheck { get; private set; }    /// <value> Enumerated int stat to check </value>
+        public int checkIndicator { get; private set; } /// <value> Enumerated int indicating the stat or item to check </value>
         public int statThreshold { get; private set; }  /// <value> Threshold the party must pass </value>
         public bool isSingleUse { get; private set; }
 
@@ -40,12 +41,13 @@ namespace Events {
         /// to fetch information to save memory.
         /// </param>
         public Interaction(string name, string[] resultNames, 
-        string[] spriteNames, bool isSingleUse, int statToCheck, int statThreshold, IDbConnection dbConnection) {
+        string[] spriteNames, bool isSingleUse, int checkIndicator, int statThreshold, string itemToCheck, IDbConnection dbConnection) {
             this.name = name;
             this.nameKey = name + "_int";
             this.isSingleUse = isSingleUse;
-            this.statToCheck = statToCheck;
+            this.checkIndicator = checkIndicator;
             this.statThreshold = statThreshold;
+            this.itemToCheck = itemToCheck;
 
             string resultKey;
 

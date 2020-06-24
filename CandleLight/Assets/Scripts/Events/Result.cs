@@ -28,6 +28,7 @@ namespace Events {
         [field: SerializeField] public string[] specificMonsterNames;           /// <value> Names of monsters this event spawns </value>
         [field: SerializeField] public string newIntName;                       /// <value> Name of interaction to load if result has one </value>
         [field: SerializeField] public string seName;                           /// <value> Name of the status effect this result causes </value>
+        [field: SerializeField] public string questName;                        /// <value> Name of the quest this result gives</value>
         [field: SerializeField] public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         [field: SerializeField] public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         [field: SerializeField] public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
@@ -57,7 +58,7 @@ namespace Events {
         /// <param name="changeValues"></param>
         public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] amounts,
         string subAreaName0, string subAreaName1, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality,
-        string newIntName, string seName, int seDuration, bool hasPostCombatPrompt) {
+        string newIntName, string seName, int seDuration, bool hasPostCombatPrompt, string questName) {
             this.name = name;
             this.resultKey = resultKey;
             this.type = type;
@@ -79,6 +80,7 @@ namespace Events {
             this.seName = seName;
             this.seDuration = seDuration;
             this.hasPostCombatPrompt = hasPostCombatPrompt;
+            this.questName = questName;
 
             for (int i = 0; i < specificItemNames.Length; i++) {
                 if (specificItemNames[i] != "none") {
@@ -88,7 +90,7 @@ namespace Events {
 
             this.itemQuality = itemQuality;
             
-            if (quantity == "none") {
+            if (quantity == "none") {   // for items, this leads to exactly one item being generated
                 this.quantity = 0;
             }
             else if (quantity == "low") {
@@ -125,14 +127,12 @@ namespace Events {
             else if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT || type == ResultConstants.SHOP) {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 2);
             }
-            else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.STATALLANDEVENT) {
+            else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE 
+                || type == ResultConstants.STATALLANDEVENT || type == ResultConstants.QUESTCOMPLETE || type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
                 EXPAmount = (int)(baseEXPAmount * Random.Range(quantity, quantity + 1));
                 HPAmount = (int)(baseHPAmount * Random.Range(quantity, quantity + 1));
                 MPAmount = (int)(baseMPAmount * Random.Range(quantity, quantity + 1));
                 WAXAmount = (int)(baseWAXAmount * Random.Range(quantity, quantity + 1));
-            }
-            else if (type == ResultConstants.PROGRESS || type == ResultConstants.PROGRESSANDLEAVE) {
-                progressAmount = (int)(baseProgressAmount * Random.Range(quantity, quantity + 1));
             }
         }
         

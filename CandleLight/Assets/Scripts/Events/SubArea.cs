@@ -142,6 +142,42 @@ namespace Events {
         }
 
         /// <summary>
+        /// Swaps an event and subevent, swapping their positions in the subEvents and events
+        /// lists, as well as chances of occuring
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <param name="subName"></param>
+        public void SwapEventAndSubEvent(string eventName, string subName) {
+            int index0 = -1;
+            int index1 = -1;
+            int tempChance = -1;
+            Event tempEvent;
+
+            for (int i = 0; i < eventNum; i++) {
+                if (events[i].name == eventName) {
+                    index0 = i; 
+                    break;
+                }
+            }
+            for (int i = 0; i < subEventNum; i++) {
+                if (subEvents[i].name == subName) {
+                    index1 = i;
+                    break;
+                }
+            }
+
+            if (index0 != -1 && index1 != -1) {   // only swap if both quest events are present
+                tempEvent = events[index0];
+                tempChance = events[index0].chance;
+
+                events[index0] = subEvents[index1];
+                subEvents[index1] = tempEvent;
+                events[index0].chance  = subEvents[index1].chance;
+                subEvents[index1].chance = tempChance;
+            }
+        }
+
+        /// <summary>
         /// Returns a random event prompt string based on the sub area's name for nothing events
         /// </summary>
         /// <returns> String that is a key text for a prompt in en.json </returns>
