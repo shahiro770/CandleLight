@@ -342,6 +342,7 @@ namespace Events {
             gearPanel.SetTakeable(false);
             candlesPanel.SetTakeable(false);
             skillsPanel.SetTogglable(false);
+            specialPanel.SetTakeable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentSubArea.championBuffs, currentEvent.isLeavePossible));
         }
@@ -471,6 +472,7 @@ namespace Events {
                            
                 gearPanel.SetTakeable(true);
                 candlesPanel.SetTakeable(true);
+                specialPanel.SetTakeable(true);
                 skillsPanel.SetTogglable(true);
 
                 actionsPanel.PostCombatActions(rewardsPanel.itemNum);
@@ -1229,6 +1231,7 @@ namespace Events {
             if (value == true) {
                 gearPanel.SetInteractable(true);
                 candlesPanel.SetInteractable(true);
+                specialPanel.SetInteractable(true);
                 actionsPanel.SetAllActionsInteractable();
                 partyPanel.EnableButtons();
                 skillsPanel.SetInteractable(true);
@@ -1238,6 +1241,7 @@ namespace Events {
             else {
                 gearPanel.SetInteractable(false);
                 candlesPanel.SetInteractable(false);
+                specialPanel.SetInteractable(false);
                 if (fadeOut == true) {
                     actionsPanel.SetAllActionsUninteractableAndFadeOut();
                 }

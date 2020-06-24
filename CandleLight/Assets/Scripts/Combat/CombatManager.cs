@@ -914,6 +914,7 @@ namespace Combat {
             actionsPanel.SetAllActionsUninteractable();
             gearPanel.SetInteractable(false);
             candlesPanel.SetInteractable(false);
+            specialPanel.SetInteractable(false);
             skillsPanel.SetInteractable(false);
             partyPanel.DisableButtons();
             itemsTabManager.SetAllButtonsUninteractable();
@@ -933,6 +934,7 @@ namespace Combat {
             partyPanel.EnableButtons();
             gearPanel.SetInteractable(true);
             candlesPanel.SetInteractable(true);
+            specialPanel.SetInteractable(true);
             skillsPanel.SetInteractable(true);
         }
         
