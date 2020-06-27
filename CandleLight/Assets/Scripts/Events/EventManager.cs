@@ -269,6 +269,28 @@ namespace Events {
 
         #endregion
 
+        #region [section 0] TutorialStuff
+        
+        public void GenerateStartingWeapon() {
+            // Gear startingWeapon = null;
+            // if (className == "warrior") {
+            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("WarriorWeapon-1", "Gear");
+            // }
+            // else if (className == "mage") {
+            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("MageWeapon-1", "Gear");
+            // }
+            // else if (className == "archer") {
+            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("ArcherWeapon-1", "Gear");
+            // }
+            // else if (className == "rogue") {
+            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("RogueWeapon-1", "Gear");
+            // }
+
+            // EquipGear(startingWeapon, "weapon");
+        }
+
+        #endregion
+
         #region [Section 0] EventManagement
 
         /// <summary>

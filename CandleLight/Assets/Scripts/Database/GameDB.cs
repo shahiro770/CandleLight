@@ -882,5 +882,12 @@ namespace Database {
                 }
             }
         }
+
+        public Item GetItemByNameID(string nameID, string type) {
+            using(dbConnection = base.GetConnection()) {
+                dbConnection.Open();
+                return GetItemByNameID(nameID, type, dbConnection);
+            }
+        }
     }
 }

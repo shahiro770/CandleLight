@@ -63,10 +63,8 @@ namespace Characters {
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
             this.className = personalInfo[0];
             this.subClassName = personalInfo[1];
-            this.pmName = GenerateName();
             this.race = personalInfo[3];
             this.skills = skills;
-
             skillPoints = 1;
 
             pmvc.Init(this);
@@ -76,10 +74,17 @@ namespace Characters {
         /// Assigns a random name to this partyMember
         /// </summary>
         /// <param name="id"></param>
-        public string GenerateName() {
-            string[] names = new string[] { "Alan", "Bryony", "Carme", "Dione", "Edith", "Flatyz", "Grace", "Holst", "Iliad", "John", "Kempf", "Lodis", "Madeline", "Nord", "Orvis", "Priscilla", "Qyburn", "Raven", "Seth", "Tao", "Ursula", "Valter", "Wallace", "Xylo", "Yoan", "Zelot" };
+        public void GenerateName(bool gender) {
+            string[] names;
+            if (gender == true) {   // true for male
+                names = new string[] { "Alphonse", "Holst", "Iago", "John", "Kempf", "Lodis", "Nord", "Orvis", "Qyburn", "Raven", "Seth", "Valter", "Wallace", "Xylo", "Yoan", "Zelot" };
+            }
+            else {                  // false for female
+                names = new string[] { "Bryony", "Carme", "Dione", "Edith", "Flatyz", "Grace", "Madeline", "Priscilla", "Tao", "Ursula" };
+            }
             
-            return names[Random.Range(0, names.Length)];
+            
+             this.pmName = names[Random.Range(0, names.Length)];
         }
 
         /// <summary>

@@ -9,22 +9,20 @@ CURRENTLY DOING
 ---------------
 Bug: Not recalculating stats on all status effects
 Bug: The EXP on rewards only cares about the first two partyMembers
-
-Fix itemslot logic for showing defaults (no longer need to check null typed items)
-Keys: How did tristhal break the game off of safeguard?
-Bug: Candlemancy kinda broken 
-Fix: Make it so active skills are greyed out if 4 actives are already selected
-Fix: Make quests update their text between steps
-Fix: The min/max in bars breaks for 3 digit mins and maxs
-Make combat and eventMAnagers disable the special panel when possible
-Revert the pouch sprite back to something simple
-
-NEAR FUTURE
-----------------
 Feature: KeyItems Panel (should be significantly easier than the other two)
 Feature: Quests
 Feature: talkingWraith (greyWasteTombs) - A Lesser Wwraith that talks?!
-    Requires quests and items to implement
+Fix itemslot logic for showing defaults (no longer need to check null typed items)
+Revert the pouch sprite back to something simple
+Make combat and eventMAnagers disable the special panel when possible
+
+Keys: How did tristhal break the game off of safeguard?
+Bug: Candlemancy kinda broken 
+Fix: Make it so active skills are greyed out if 4 actives are already selected
+Fix: The min/max in bars breaks for 3 digit mins and maxs
+
+NEAR FUTURE
+----------------
 Feature: Sound effects and music
 Feature: Tutorial
 Feature: Saving

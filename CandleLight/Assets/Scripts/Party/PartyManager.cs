@@ -64,6 +64,7 @@ namespace Party {
                 GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
                 newMember.transform.SetParent(gameObject.transform, false);
                 newMember.GetComponent<PartyMember>().ID = (ID++);
+                newMember.GetComponent<PartyMember>().GenerateName(GetNumPartyMembers() % 2 == 0);
                 partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
                 partyMembersAll.Add(newMember.GetComponent<PartyMember>());
             }

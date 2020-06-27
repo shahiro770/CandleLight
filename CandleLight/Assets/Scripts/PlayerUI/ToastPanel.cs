@@ -82,6 +82,10 @@ namespace PlayerUI {
             SetVisible(true);
         }
 
+        /// <summary>
+        /// Special notification indicatinga  quest has been taken
+        /// </summary>
+        /// <param name="questName"></param>
         public void SetQuestNotification(string questName) {
             titleText.SetKey("QUEST_toast");
             descriptionText.SetKey(questName + "_quest_title");
