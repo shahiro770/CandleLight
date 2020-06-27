@@ -163,7 +163,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="intName"> Name of the interaction to load </param>
         public void AddInteraction(string intName) {
-            for (int i = 0; i < actions.Length -1; i++) {
+            for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType == ActionConstants.NONE) {
                     actions[i].SetAction(ActionConstants.INTERACTION, GameManager.instance.DB.GetInteractionByName(intName));
                     actions[i].SetInteractable(true);

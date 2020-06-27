@@ -269,7 +269,7 @@ namespace Events {
 
         #endregion
 
-        #region [section 0] TutorialStuff
+        #region [Section 0] TutorialStuff
         
         public void GenerateStartingWeapon() {
             // Gear startingWeapon = null;
@@ -291,7 +291,7 @@ namespace Events {
 
         #endregion
 
-        #region [Section 0] EventManagement
+        #region [Section 1] EventManagement
 
         /// <summary>
         /// Displays the first event in an area (first event of the main subArea)
@@ -332,11 +332,8 @@ namespace Events {
         public void GetNextMainEvent() {
             subAreaProgress = 0;
             
-            if (currentSubArea.name == "denGreyWastes") {
+            if (currentSubArea.name == "tombsGreyWastes") {
                 areaProgress = 6;
-            }
-            else if (currentSubArea.name == "tombsGreyWastes") {
-                areaProgress = 4;
             }
             else {
                 areaProgress++;;
@@ -373,6 +370,8 @@ namespace Events {
         /// Displays the current event to the player
         /// </summary>
         public IEnumerator DisplayEvent() {
+            StartCoroutine(PartyManager.instance.TriggerStatuses(false));
+
             if (displayStartEvent == false) { 
                 nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
                 yield return StartCoroutine(TransitionToNextEvent());
@@ -417,6 +416,9 @@ namespace Events {
         /// Displays the current event to the player, with no visual transitions unless the background image is specified
         /// </summary>
         public IEnumerator DisplaySubEvent() {
+            if (currentSubArea.name == "endGreyWastes") {
+                StartCoroutine(PartyManager.instance.TriggerStatuses(false));
+            }
             if (currentEvent.specificBGSprite != -1) {
                 nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
                 yield return StartCoroutine(TransitionToNextEvent());
@@ -976,7 +978,6 @@ namespace Events {
             SetToastPanelsVisible(false);
             SetAllButtonsInteractable(false, true);
             UIManager.instance.inShop = false;
-            StartCoroutine(PartyManager.instance.TriggerStatuses(false));
             yield return (StartCoroutine(FadeBackgrounds()));
         }
 
@@ -1089,7 +1090,7 @@ namespace Events {
 
         #endregion
 
-        #region [Section 1] EventDisplays
+        #region [Section 2] EventDisplays
 
         /// <summary>
         /// Displays the event sprites in the eventDisplays
