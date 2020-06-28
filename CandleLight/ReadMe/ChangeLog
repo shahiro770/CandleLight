@@ -15,6 +15,7 @@ Feature: talkingWraith (greyWasteTombs) - A Lesser Wwraith that talks?!
 Fix itemslot logic for showing defaults (no longer need to check null typed items)
 Revert the pouch sprite back to something simple
 Make combat and eventMAnagers disable the special panel when possible
+Bug: Added in mi
 
 Feature: Tutorial
     - Make a tutorial greyhide
@@ -27,8 +28,8 @@ Feature: Companionship
 
 Bug: How did tristhal break the game off of safeguard?
 Bug: Candlemancy kinda broken 
+Bug: combat prompt text blinks out instead of fading out
 Bug: Bleeding status effect goes upwards instead of downwards on partymember
-Bug: Status effects continue through subEvents
 Bug: status effects don't display in the statusPanel
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: The min/max in bars breaks for 3 digit mins and maxs

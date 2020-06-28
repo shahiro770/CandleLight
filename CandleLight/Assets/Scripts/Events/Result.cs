@@ -33,7 +33,7 @@ namespace Events {
         [field: SerializeField] public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         [field: SerializeField] public int MPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
         [field: SerializeField] public int WAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
-        [field: SerializeField] public int progressAmount { get; private set; } /// <value> Amount of progress result gives </value>
+        [field: SerializeField] public int PROGAmount { get; private set; }     /// <value> Amount of progress result gives </value>
         [field: SerializeField] public int itemAmount { get; private set; }     /// <value> Amount of items result gives </value>
         [field: SerializeField] public int specificItemAmount { get; private set; } = 0;    /// <value> Amount of specific items result gives </value>
         [field: SerializeField] public int seDuration { get; private set; } = 0;        /// <value> Duration of status effect </value>
@@ -43,7 +43,7 @@ namespace Events {
         [field: SerializeField] public int baseHPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
         [field: SerializeField] public int baseMPAmount { get; private set; }       /// <value> Amount of MP result gives </value>
         [field: SerializeField] public int baseWAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
-        [field: SerializeField] public int baseProgressAmount { get; private set; } /// <value> Amount of progress result gives </value>
+        [field: SerializeField] public int basePROGAmount { get; private set; }     /// <value> Amount of progress result gives </value>
         [field: SerializeField] private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
         [field: SerializeField] private float multiplier;    /// <value> Multiplier on result depending on area </value>
         [field: SerializeField] private int monsterCount;    /// <value> MAx number of monsters this event can spawn </value>
@@ -68,7 +68,7 @@ namespace Events {
             this.baseHPAmount = amounts[1];
             this.baseMPAmount = amounts[2];
             this.baseWAXAmount = amounts[3];
-            this.baseProgressAmount = amounts[4];
+            this.basePROGAmount = amounts[4];
             this.subAreaName0 = subAreaName0;
             this.subAreaName1 = subAreaName1;
             this.subEventName = subEventName;
@@ -123,6 +123,7 @@ namespace Events {
                 HPAmount = (int)(baseHPAmount * Random.Range(quantity, quantity + 1));
                 MPAmount = (int)(baseMPAmount * Random.Range(quantity, quantity + 1));
                 WAXAmount = (int)(baseWAXAmount * Random.Range(quantity, quantity + 1));
+                PROGAmount = (int)(basePROGAmount * Random.Range(quantity, quantity + 1));
             }
             else if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT || type == ResultConstants.SHOP) {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 2);
@@ -133,6 +134,7 @@ namespace Events {
                 HPAmount = (int)(baseHPAmount * Random.Range(quantity, quantity + 1));
                 MPAmount = (int)(baseMPAmount * Random.Range(quantity, quantity + 1));
                 WAXAmount = (int)(baseWAXAmount * Random.Range(quantity, quantity + 1));
+                PROGAmount = (int)(basePROGAmount * Random.Range(quantity, quantity + 1));
             }
         }
         

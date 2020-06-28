@@ -898,8 +898,8 @@ namespace Events {
                 changes[(int)ToastPanel.toastType.EXP] = true;
                 amounts[(int)ToastPanel.toastType.EXP] = r.EXPAmount.ToString();
             }
-            if (r.progressAmount != 0) {
-                subAreaProgress += currentResult.progressAmount;
+            if (r.PROGAmount != 0) {
+                subAreaProgress += currentResult.PROGAmount;
                 if (subAreaProgress > 100) {
                     subAreaProgress = 100;
                 }
@@ -911,7 +911,7 @@ namespace Events {
                 }
 
                 changes[(int)ToastPanel.toastType.PROGRESS] = true;
-                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.progressAmount.ToString();
+                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.PROGAmount.ToString();
             }
             if (r.seName != "none") {
                 PartyManager.instance.AddSE(r.seName, r.seDuration);

@@ -182,7 +182,7 @@ namespace Combat {
                   
             if (eventDescription.HasText()) {
                 yield return new WaitForSeconds(1.5f);   
-                eventDescription.ClearText();    
+                eventDescription.FadeOut();
             }
             else {
                 yield return new WaitForSeconds(0.6f);   
