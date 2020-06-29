@@ -380,11 +380,11 @@ namespace Characters {
             }
 
             if (isYield == false) {  // no event description means no yielding or animations (only if an attack uses hp as a cost)
-                if (partyPanel.isOpen) {
+                if (partyPanel.isOpen == true) {
                     partyPanelHPBar.SetCurrent(pm.CHP);
                 }
             }
-            else if (partyPanel.isOpen) {
+            else if (partyPanel.isOpen == true) {
                 partyPanelHPBar.SetCurrent(pm.CHP);
                 
                 if (isLoss == true && CombatManager.instance.inCombat == true) {

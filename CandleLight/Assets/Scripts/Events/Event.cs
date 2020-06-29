@@ -11,7 +11,6 @@
 using General;
 using System.Data;
 using UnityEngine;
-using Eventconstants = Constants.EventConstants;
 
 namespace Events {
 

@@ -28,6 +28,7 @@ namespace Party {
         /* external component references */
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
 
+        public string storedPartyMember;        /// <value> Classname of the partyMember to add </value>
         public int bonusChampionChance = 0;     /// <value> Chance of encountering champion monsters, summed from all partyMembers </value>
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
@@ -40,6 +41,7 @@ namespace Party {
         private enum primaryStats { NONE, STR, DEX, INT, LUK };                 /// <value> Enumerated primary stats </value>
         private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>
         private int ID = 0;                                                     /// <value> ID number to assign to each pm</value>
+        private bool shouldStore = true;                                        /// <value> Flag for if need to store the next partyMember (tutorial only) </value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -59,17 +61,32 @@ namespace Party {
         /// </summary>   
         /// <param name="className"> Class of the partyMember to be added </param>
         public void AddPartyMember(string className) {
-            if (GetNumPartyMembers() < maxPartyMembers) {
+            if (GameManager.instance.isTutorial == true && GetNumPartyMembers() == 1 && shouldStore == true) { // if in tutorial, the second partyMember joins later
+                storedPartyMember = className;
+                shouldStore = false;
+            }
+            else if (GetNumPartyMembers() < maxPartyMembers) {
                 GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
+                PartyMember pmComponent =  newMember.GetComponent<PartyMember>();
                 GameManager.instance.DB.GetPartyMemberByClass(className, newMember.GetComponent<PartyMember>());
                 newMember.transform.SetParent(gameObject.transform, false);
-                newMember.GetComponent<PartyMember>().ID = (ID++);
-                newMember.GetComponent<PartyMember>().GenerateName(GetNumPartyMembers() % 2 == 0);
+                pmComponent.ID = (ID++);
+                pmComponent.GenerateName(GetNumPartyMembers());
+                if (GameManager.instance.isTutorial == true) {
+                    pmComponent.LVLDown();
+                }
                 partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
                 partyMembersAll.Add(newMember.GetComponent<PartyMember>());
             }
 
             activePartyMember = GetFirstPartyMemberAlive();
+        }
+
+        public void AddStoredPartyMember() {
+            AddPartyMember(storedPartyMember);
+            EventManager.instance.SetPartyMembertNotification(partyMembersAll[1].pmName);
+            EventManager.instance.UpdatePartyMembers();
+            storedPartyMember = null;
         }
 
         /// <summary>
@@ -129,6 +146,10 @@ namespace Party {
         /// <returns> PartyMember that is alive</returns>
         public PartyMember GetFirstPartyMemberAlive() {
             return partyMembersAlive[0];
+        }
+
+        public string GetPartyMemberName(int index) {
+            return partyMembersAll[index].pmName;
         }
 
         /// <summary>

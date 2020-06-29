@@ -15,12 +15,15 @@ Feature: talkingWraith (greyWasteTombs) - A Lesser Wwraith that talks?!
 Fix itemslot logic for showing defaults (no longer need to check null typed items)
 Revert the pouch sprite back to something simple
 Make combat and eventMAnagers disable the special panel when possible
-Bug: Added in mi
+Bug: Added in missing background and made endGreyWastes subArea to simplify code
+Bug: combat prompt text blinks out instead of fading out
+Bug: Bleeding status effect goes upwards instead of downwards on partymember
 
 Feature: Tutorial
     - Make a tutorial greyhide
     - For now just make text prompt tell player what to do next
     - Make it so UI slowly lights up
+    - Make toastpanel say partyMember joined you
     - Set player to level 0 at the start (first fight with greyhide will level them up, allowing them their first skill point)
 Feature: Companionship
     - Make it so partyMembers can talk about recent stuff at none events
@@ -28,11 +31,11 @@ Feature: Companionship
 
 Bug: How did tristhal break the game off of safeguard?
 Bug: Candlemancy kinda broken 
-Bug: combat prompt text blinks out instead of fading out
-Bug: Bleeding status effect goes upwards instead of downwards on partymember
 Bug: status effects don't display in the statusPanel
+Fix: Make eventdescription hide on hover
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: The min/max in bars breaks for 3 digit mins and maxs
+Fix: Make status effects do the fade animation monster displays do
 
 
 NEAR FUTURE

@@ -80,6 +80,17 @@ namespace Localization {
             meshText.text = text;
             textPreset = true;
         }
+        
+        /// <summary>
+        /// Appends a key'd value to some text
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="newKey"></param>
+        public void TextAndAppendKey(string text, string newKey) {
+            key = newKey;
+            meshText.text = text + " " + LocalizationManager.instance.GetLocalizedValue(key);
+            textPreset = true;
+        }
 
         /// <summary>
         /// Appends text to the end of the display text

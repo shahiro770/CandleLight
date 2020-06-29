@@ -83,12 +83,23 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Special notification indicatinga  quest has been taken
+        /// Special notification indicating a quest has been taken
         /// </summary>
         /// <param name="questName"></param>
         public void SetQuestNotification(string questName) {
             titleText.SetKey("QUEST_toast");
             descriptionText.SetKey(questName + "_quest_title");
+            SetVisible(true);
+            StartCoroutine(FadeOut());
+        }
+
+        /// <summary>
+        /// Special notification indicating a partyMember has joined
+        /// </summary>
+        /// <param name="pmName"></param>
+        public void SetPartyMemberNotification(string pmName) {
+            titleText.SetKey("PARTYMEMBER_toast");
+            descriptionText.TextAndAppendKey(pmName, "joined_party");
             SetVisible(true);
             StartCoroutine(FadeOut());
         }

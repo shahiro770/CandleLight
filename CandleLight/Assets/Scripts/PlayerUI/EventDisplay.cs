@@ -72,6 +72,14 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Returns true if this eventDisplay is visible
+        /// </summary>
+        /// <returns></returns>
+        public bool IsVisible() {
+            return imgCanvas.alpha == 1;
+        }
+
+        /// <summary>
         /// Makes the eventDisplay visible
         /// </summary>
         /// <param name="value"></param>

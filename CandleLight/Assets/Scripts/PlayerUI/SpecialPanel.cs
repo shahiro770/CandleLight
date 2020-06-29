@@ -122,6 +122,10 @@ namespace PlayerUI {
             for (int i = 0; i < spare.Length; i++) {
                 spare[i].SetInteractable(value);
             }
+
+            for (int i = 0; i < verySpecials.Length; i++) {
+                verySpecials[i].SetInteractable(value);
+            }
         }
 
         /// <summary>

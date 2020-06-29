@@ -16,7 +16,6 @@ using Party;
 using Skills;
 using SkillConstants = Constants.SkillConstants;
 using System.Collections;
-using System.Collections.Generic;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using UnityEngine;
 
@@ -74,17 +73,13 @@ namespace Characters {
         /// Assigns a random name to this partyMember
         /// </summary>
         /// <param name="id"></param>
-        public void GenerateName(bool gender) {
-            string[] names;
-            if (gender == true) {   // true for male
-                names = new string[] { "Alphonse", "Holst", "Iago", "John", "Kempf", "Lodis", "Nord", "Orvis", "Qyburn", "Raven", "Seth", "Valter", "Wallace", "Xylo", "Yoan", "Zelot" };
+        public void GenerateName(int partyNum) {
+            if (partyNum == 0) {
+                this.pmName = "Holst";
             }
-            else {                  // false for female
-                names = new string[] { "Bryony", "Carme", "Dione", "Edith", "Flatyz", "Grace", "Madeline", "Priscilla", "Tao", "Ursula" };
+            else if (partyNum == 1) {
+                this.pmName = "Flatyz";
             }
-            
-            
-             this.pmName = names[Random.Range(0, names.Length)];
         }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace Characters {
         public int CalcEXPToNextLVL(int LVL) {
             // it takes 4 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
-            return (int)(5 * Mathf.Pow(LVL, 2.21f) + 3 * LVL); 
+            return 2 + (int)(5 * Mathf.Pow(LVL, 2.21f) + LVL); 
         }
 
         /// <summary>
@@ -102,11 +97,9 @@ namespace Characters {
         /// </summary>
         /// <param name="multiplier"> Multiplier because base needed it, won't be used here </param>
         public override void LVLUp(int multiplier = 1) {
-            LVL += 1;
-            if (LVL % 1 == 0) {     // gain a skill point every other level 
-                skillPoints++;
-                pmvc.ExciteSkillsTab();
-            }
+            LVL++; 
+            skillPoints++;
+            pmvc.ExciteSkillsTab();
 
             if (className == ClassConstants.WARRIOR) {
                 baseSTR += (int)(LVL * 1.5);
@@ -134,6 +127,42 @@ namespace Characters {
             }
 
 
+            CalculateStats();
+
+            pmvc.UpdateHPAndMPBars();
+            pmvc.UpdateStats();
+        }
+
+        public void LVLDown() {
+            if (className == ClassConstants.WARRIOR) {
+                baseSTR -= (int)(LVL * 1.5);
+                baseDEX -= (int)(LVL * 1.5);
+                baseINT -= (int)(LVL * 1.25);
+                baseLUK -= (int)(LVL * 1.25);
+            }
+            else if (className == ClassConstants.MAGE) {
+                baseSTR -= (int)(LVL * 0.75);
+                baseDEX -= (int)(LVL * 1.25);
+                baseINT -= (int)(LVL * 1.75);
+                baseLUK -= (int)(LVL * 1.5);
+            }
+            else if (className == ClassConstants.ARCHER) {
+                baseSTR -= (int)(LVL * 1.25);
+                baseDEX -= (int)(LVL * 1.75);
+                baseINT -= (int)(LVL * 1.5);
+                baseLUK -= LVL;
+            }
+            else if (className == ClassConstants.ROGUE) {
+                baseSTR -= LVL;
+                baseDEX -= (int)(LVL * 1.5);
+                baseINT -= (int)(LVL * 1.25);
+                baseLUK -= (int)(LVL * 2.25);
+            }
+
+            LVL--;
+            skillPoints--;
+
+            EXPToNextLVL = CalcEXPToNextLVL(LVL);
             CalculateStats();
 
             pmvc.UpdateHPAndMPBars();

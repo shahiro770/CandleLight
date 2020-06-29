@@ -882,7 +882,13 @@ namespace Database {
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Gets an item by nameID, without passing in a dbConnection
+        /// </summary>
+        /// <param name="nameID"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public Item GetItemByNameID(string nameID, string type) {
             using(dbConnection = base.GetConnection()) {
                 dbConnection.Open();

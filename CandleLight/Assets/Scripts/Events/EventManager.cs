@@ -65,6 +65,7 @@ namespace Events {
         private Gear[] subAreaGear;          /// <value> Gear items that can be found in the current subArea </value>
         private Candle[] subAreaCandles;     /// <value> Candle items that can be found in the current subArea </value>
         private Special[] subAreaSpecials;   /// <value> Special items that can be found in the current subArea</value>
+        private Sprite[] girlSprites = new Sprite[2];   /// <value> Sprites used by the second partyMember </value>
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, -20, 0);
@@ -85,6 +86,7 @@ namespace Events {
         private int candleNum = 0;              /// <value> Number of candles to be found in the subArea </value>
         private int specialNum = 0;             /// <value> Number of special to be found in the subArea </value>
         private int shopToastIndex = 0;         /// <value> Index for which toastPanel is being used as the shop's wax display </value>
+        private int tutorialProg = 0;           /// <value> Current progress through the tutorial </value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
@@ -129,6 +131,7 @@ namespace Events {
 
             LoadBackgroundPacks();
             LoadGeneralInteractions();
+            LoadGirlSprites();
             LoadSubAreaItems();
 
             isReady = true;
@@ -222,6 +225,21 @@ namespace Events {
         }
 
         /// <summary>
+        /// Loads all of the sprites for the travelling companion of the player (the second partyMember).
+        /// Since the girl's sprite is class-based, these need to be loaded right after the class is decided.
+        /// </summary>
+        public void LoadGirlSprites() {
+            if (GameManager.instance.isTutorial == true) {
+                girlSprites[0] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.storedPartyMember + "0");
+                girlSprites[1] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.storedPartyMember + "1");
+            }
+            else {
+                girlSprites[0] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.GetPartyMembers()[1].className + "0");
+                girlSprites[1] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.GetPartyMembers()[1].className + "1");
+            }
+        }
+
+        /// <summary>
         /// Loads all items for a subArea
         /// </summary>
         public void LoadSubAreaItems() {
@@ -238,7 +256,8 @@ namespace Events {
         public void LoadGeneralInteractions() {
             Interaction travelInt = GameManager.instance.DB.GetInteractionByName("travel");
             Interaction fightInt = GameManager.instance.DB.GetInteractionByName("fight");
-            actionsPanel.SetGeneralInteractions(travelInt, fightInt);
+            Interaction tutorialInt = GameManager.instance.DB.GetInteractionByName("loneGreyhide5");
+            actionsPanel.SetGeneralInteractions(travelInt, fightInt, tutorialInt);
         }
 
         /// <summary>
@@ -264,29 +283,106 @@ namespace Events {
             while (isReady == false) {
                 yield return null;
             }
-            GetStartEvent();
+            if (GameManager.instance.isTutorial == true) {
+                StartTutorial();
+            }
+            else {  // skip the tutorial
+                areaProgress = 1;
+                GetStartEvent();
+            }
         }
 
         #endregion
 
         #region [Section 0] TutorialStuff
-        
-        public void GenerateStartingWeapon() {
-            // Gear startingWeapon = null;
-            // if (className == "warrior") {
-            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("WarriorWeapon-1", "Gear");
-            // }
-            // else if (className == "mage") {
-            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("MageWeapon-1", "Gear");
-            // }
-            // else if (className == "archer") {
-            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("ArcherWeapon-1", "Gear");
-            // }
-            // else if (className == "rogue") {
-            //     startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("RogueWeapon-1", "Gear");
-            // }
 
-            // EquipGear(startingWeapon, "weapon");
+        /// <summary>
+        /// Starts the tutorial by disabling most of the game's features
+        /// </summary>
+        public void StartTutorial() {
+            itemsTabManager.SetTabsEmpty();
+            utilityTabManager.SetTabsEmpty();
+            GetStartEventTutorial();
+        }
+
+        /// <summary>
+        /// Gets the first event like GetStartEvent(), hwoever it displays the event with a modified DisplayEvent()
+        /// </summary>
+        public void GetStartEventTutorial() {
+            currentEvent = currentSubArea.GetEvent(areaProgress);
+
+            StartCoroutine(DisplayEvent());
+        }
+
+        /// <summary>
+        /// No differences between subevents and events in the tutorial (allowing for health and mana regeneration)
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator DisplaySubEventTutorial() {
+            yield return StartCoroutine(DisplayEvent());
+        }
+
+        /// <summary>
+        /// Progresses the tutorial, revealing tabs, and temporary tutorial help panels
+        /// </summary>
+        public void ProgressTutorial() {
+            if (tutorialProg == 0) {
+                itemsTabManager.SetButtonInteractableAndName(2);
+                itemsTabManager.ExciteTab(2);
+            }
+            else if (tutorialProg == 1) {
+                utilityTabManager.SetButtonInteractableAndName(0);
+                utilityTabManager.ExciteTab(0);
+            }
+            else if (tutorialProg == 2) {
+                PartyManager.instance.AddStoredPartyMember();
+            }
+            else if (tutorialProg == 3) {
+                List<Item> startingWeapons = new List<Item>();
+                startingWeapons.Add(GenerateStartingWeapon(PartyManager.instance.GetPartyMembers()[0].className));
+                startingWeapons.Add(GenerateStartingWeapon(PartyManager.instance.GetPartyMembers()[1].className));
+                eventDisplays[0].SetItemDisplays(startingWeapons);
+
+                itemsTabManager.SetButtonInteractableAndName(0);
+                itemsTabManager.ExciteTab(0);
+            }
+            else if (tutorialProg == 4) {
+                itemsTabManager.SetButtonInteractableAndName(1);
+                itemsTabManager.ExciteTab(1);
+            }
+            // skills panel is enabled after first combat event
+            else if (tutorialProg == 5) {
+                utilityTabManager.SetButtonInteractableAndName(2);
+                utilityTabManager.ExciteTab(2);
+                AddQuest(currentResult.questName);
+            }
+        }
+        
+        /// <summary>
+        /// Generates the starting weapon for a partyMember with a given class
+        /// </summary>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public Gear GenerateStartingWeapon(string className) {
+            Gear startingWeapon = null;
+            if (className == "warrior") {
+                startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("WarriorWeapon-1", "Gear");
+            }
+            else if (className == "mage") {
+                startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("MageWeapon-1", "Gear");
+            }
+            else if (className == "archer") {
+                startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("ArcherWeapon-1", "Gear");
+            }
+            else if (className == "rogue") {
+                startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("RogueWeapon-1", "Gear");
+            }
+
+            return startingWeapon;
+        }
+        
+        public void EndTutorial() {
+            GameManager.instance.isTutorial = false;
         }
 
         #endregion
@@ -306,7 +402,6 @@ namespace Events {
         /// Gets the next event
         /// </summary>
         public void GetNextEvent() {
-            actionsPanel.SetActionsUsable(true);
             subAreaProgress += currentEvent.progressAmount;
             if (subAreaProgress >= 100) {
                 subAreaProgress = 100;
@@ -333,7 +428,7 @@ namespace Events {
             subAreaProgress = 0;
             
             if (currentSubArea.name == "tombsGreyWastes") {
-                areaProgress = 6;
+                areaProgress = 7;
             }
             else {
                 areaProgress++;;
@@ -499,7 +594,12 @@ namespace Events {
                 specialPanel.SetTakeable(true);
                 skillsPanel.SetTogglable(true);
 
-                actionsPanel.PostCombatActions(rewardsPanel.itemNum);
+                if (GameManager.instance.isTutorial == false) {
+                    actionsPanel.PostCombatActions(rewardsPanel.itemNum);
+                }
+                else {
+                    actionsPanel.PostCombatActionsTutorial();
+                }
                 SetAllButtonsInteractable(true);
                 
             }
@@ -613,40 +713,44 @@ namespace Events {
                 currentResult = i.GetResult();
             }
 
-            if (currentResult.type == ResultConstants.NORESULT) {
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.NORESULTANDLEAVE) {
-                eventDescription.SetKey(currentResult.resultKey);
-                actionsPanel.TravelActions();
-                HideEventDisplayItemDisplays();
-            }
-            else if (currentResult.type == ResultConstants.TAKEALLITEMS) {
-                TakeAllItems();
-            }
-            else if (currentResult.type == ResultConstants.ITEM) {
-                actionsPanel.SetItemActions();
-                eventDescription.SetKey(currentResult.resultKey);
-                DisplayResultItems(currentResult);
-            }
-            else if (currentResult.type == ResultConstants.NEWINT) {
-                actionsPanel.AddInteraction(currentResult.newIntName);
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.EVENT) {
-                GetNextEvent();
-            }
-            else if (currentResult.type == ResultConstants.SUBEVENT) {       
-                currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
-                yield return StartCoroutine(DisplaySubEvent());
-            }
-            else if (currentResult.type == ResultConstants.ITEMWITHSUBEVENT) {  // subEvents do not need result prompts
-                currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
-                yield return StartCoroutine(DisplaySubEvent());
-                DisplayResultItems(currentResult);
-            }
-            else if (currentResult.type == ResultConstants.SUBAREA) {
-                if (currentResult.subAreaName0 != "none") { 
+            switch (currentResult.type) {
+                case ResultConstants.NORESULT:
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.NORESULTANDLEAVE:
+                    eventDescription.SetKey(currentResult.resultKey);
+                    actionsPanel.TravelActions();
+                    HideEventDisplayItemDisplays();
+                    break; 
+                case ResultConstants.TAKEALLITEMS:
+                    TakeAllItems();
+                    break;
+                case ResultConstants.ITEM:
+                    actionsPanel.SetItemActions();
+                    eventDescription.SetKey(currentResult.resultKey);
+                    DisplayResultItems(currentResult);
+                    break;
+                case ResultConstants.NEWINT:
+                    actionsPanel.AddInteraction(currentResult.newIntName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.EVENT:
+                    GetNextEvent();
+                    break;
+                case ResultConstants.SUBEVENT:     
+                    currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
+                    yield return StartCoroutine(DisplaySubEvent());
+                    break;
+                case ResultConstants.ITEMWITHSUBEVENT:  // subEvents do not need result prompts
+                    currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
+                    yield return StartCoroutine(DisplaySubEvent());
+                    DisplayResultItems(currentResult);
+                    break;
+                case ResultConstants.SUBEVENTTUT:
+                    currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
+                    yield return StartCoroutine(DisplaySubEventTutorial());
+                    break;
+                case ResultConstants.SUBAREA:
                     currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
                     StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                     LoadSubAreaItems();
@@ -654,208 +758,233 @@ namespace Events {
                     if (infoPanel.isOpen == true) {
                         infoPanel.UpdateAmounts();
                     }
-                }
-
-                GetNextEvent();
-            }
-            else if (currentResult.type == ResultConstants.SUBAREAANDCOMBAT) {
-                currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
-                LoadSubAreaItems();
-                subAreaProgress = 0;
-                if (infoPanel.isOpen == true) {
-                    infoPanel.UpdateAmounts();
-                }
-
-                monstersToSpawn = currentResult.GetMonstersToSpawn();
-
-                for (int j = 0; j < monstersToSpawn.Length; j++) {
-                    if (monstersToSpawn[j] == "none") {
-                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    
+                    GetNextEvent();
+                    break;
+                case ResultConstants.SUBAREAANDCOMBAT:
+                    currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
+                    StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
+                    LoadSubAreaItems();
+                    subAreaProgress = 0;
+                    if (infoPanel.isOpen == true) {
+                        infoPanel.UpdateAmounts();
                     }
-                }
-                eventDescription.SetKey(currentResult.resultKey);
-                HideEventDisplays();     
-                GetCombatEvent();
-            }
-            else if (currentResult.type == ResultConstants.SUBAREAANDCOMBATANDSUBAREA) {
-                currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
-                LoadSubAreaItems();
-                subAreaProgress = 0;
-                if (infoPanel.isOpen == true) {
-                    infoPanel.UpdateAmounts();
-                }
 
-                monstersToSpawn = currentResult.GetMonstersToSpawn();
+                    monstersToSpawn = currentResult.GetMonstersToSpawn();
 
-                for (int j = 0; j < monstersToSpawn.Length; j++) {
-                    if (monstersToSpawn[j] == "none") {
-                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    for (int j = 0; j < monstersToSpawn.Length; j++) {
+                        if (monstersToSpawn[j] == "none") {
+                            monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                        }
                     }
-                }
-                eventDescription.SetKey(currentResult.resultKey);
-                HideEventDisplays();     
-                GetCombatEvent();
-            }
-            else if (currentResult.type == ResultConstants.STATSINGLE) {
-                eventDescription.SetKey(currentResult.resultKey);
-                ApplyResultStatChangesSingle(currentResult, ResultConstants.STATSINGLE);
-            }
-            else if (currentResult.type == ResultConstants.STATALL) {
-                eventDescription.SetKey(currentResult.resultKey);
-                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALL);
-                CheckGameOver();
-            }
-            else if (currentResult.type == ResultConstants.STATALLANDLEAVE) {
-                eventDescription.SetKey(currentResult.resultKey);
-                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDLEAVE);
-                actionsPanel.TravelActions();
-                CheckGameOver();
-            }
-            else if (currentResult.type == ResultConstants.STATALLANDITEMANDLEAVE) {
-                eventDescription.SetKey(currentResult.resultKey);
-                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDITEMANDLEAVE);
-                DisplayResultItems(currentResult);
-                actionsPanel.SetItemActions();         
-                CheckGameOver();
-            }
-            else if (currentResult.type == ResultConstants.STATALLANDEVENT) {
-                ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDEVENT);
-                GetNextEvent();
-            }
-            else if (currentResult.type == ResultConstants.PRECOMBAT) {
-                eventDescription.FadeOut();
-                HideEventDisplays();
-                
-                actionsPanel.SetAllActionsUninteractable(); // hack
-                GetCombatEvent();
-            }
-            else if (currentResult.type == ResultConstants.COMBAT) {
-                monstersToSpawn = currentResult.GetMonstersToSpawn();
-
-                for (int j = 0; j < monstersToSpawn.Length; j++) {
-                    if (monstersToSpawn[j] == "none") {
-                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    eventDescription.SetKey(currentResult.resultKey);
+                    HideEventDisplays();     
+                    GetCombatEvent();
+                    break;
+                case ResultConstants.SUBAREAANDCOMBATANDSUBAREA:
+                    currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
+                    StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
+                    LoadSubAreaItems();
+                    subAreaProgress = 0;
+                    if (infoPanel.isOpen == true) {
+                        infoPanel.UpdateAmounts();
                     }
-                }
-                eventDescription.SetKey(currentResult.resultKey);
-                HideEventDisplays();     
-                GetCombatEvent();
-            }
-            else if (currentResult.type == ResultConstants.COMBATWITHSIDEEFFECTS) {
-                monstersToSpawn = currentResult.GetMonstersToSpawn();
 
-                for (int j = 0; j < monstersToSpawn.Length; j++) {
-                    if (monstersToSpawn[j] == "none") {
-                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                    monstersToSpawn = currentResult.GetMonstersToSpawn();
+
+                    for (int j = 0; j < monstersToSpawn.Length; j++) {
+                        if (monstersToSpawn[j] == "none") {
+                            monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                        }
                     }
-                }
-
-                if (currentResult.scope == "all") {
-                    ApplyResultStatChangesAll(currentResult, ResultConstants.COMBATWITHSIDEEFFECTS);
-                }
-                else if (currentResult.scope == "single") {
-                    ApplyResultStatChangesSingle(currentResult, ResultConstants.COMBATWITHSIDEEFFECTS);
-                }
-
-                eventDescription.SetKey(currentResult.resultKey);
-                actionsPanel.PreCombatActions();
-                CheckGameOver();
-            }
-            else if (currentResult.type == ResultConstants.REVIVE) {  
-                if (PartyManager.instance.GetNumPartyMembersDead() > 0) {
-                    PartyManager.instance.RevivePartyMembers();
-
-                    eventDescription.SetKey(currentResult.resultKey);   
-                }
-                else {
-                    changeSprite = false;
-                    eventDescription.SetNoReviveText();
-                }
-            }
-            else if (currentResult.type == ResultConstants.REVIVEANDLEAVE) {     
-                if (PartyManager.instance.GetNumPartyMembersDead() > 0) { 
-                    PartyManager.instance.RevivePartyMembers();
-
-                    eventDescription.SetKey(currentResult.resultKey); 
+                    eventDescription.SetKey(currentResult.resultKey);
+                    HideEventDisplays();     
+                    GetCombatEvent();
+                    break;
+                case ResultConstants.STATSINGLE:
+                    eventDescription.SetKey(currentResult.resultKey);
+                    ApplyResultStatChangesSingle(currentResult, ResultConstants.STATSINGLE);
+                    break;
+                case ResultConstants.STATALL:
+                    eventDescription.SetKey(currentResult.resultKey);
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.STATALL);
+                    CheckGameOver();
+                    break;
+                case ResultConstants.STATALLANDLEAVE:
+                    eventDescription.SetKey(currentResult.resultKey);
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDLEAVE);
                     actionsPanel.TravelActions();
+                    CheckGameOver();
+                    break;
+                case ResultConstants.STATALLANDITEMANDLEAVE:
+                    eventDescription.SetKey(currentResult.resultKey);
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDITEMANDLEAVE);
+                    DisplayResultItems(currentResult);
+                    actionsPanel.SetItemActions();         
+                    CheckGameOver();
+                    break;
+                case ResultConstants.STATALLANDEVENT:
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDEVENT);
+                    GetNextEvent();
+                    break;
+                case ResultConstants.PRECOMBAT:
+                    eventDescription.FadeOut();
+                    HideEventDisplays();
+                    
+                    actionsPanel.SetAllActionsUninteractable(); // hack
+                    GetCombatEvent();
+                    break;
+                case ResultConstants.COMBAT:
+                    monstersToSpawn = currentResult.GetMonstersToSpawn();
+
+                    for (int j = 0; j < monstersToSpawn.Length; j++) {
+                        if (monstersToSpawn[j] == "none") {
+                            monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                        }
+                    }
+                    eventDescription.SetKey(currentResult.resultKey);
+                    HideEventDisplays();     
+                    GetCombatEvent();
+                    break;
+                case ResultConstants.COMBATWITHSIDEEFFECTS:
+                    monstersToSpawn = currentResult.GetMonstersToSpawn();
+
+                    for (int j = 0; j < monstersToSpawn.Length; j++) {
+                        if (monstersToSpawn[j] == "none") {
+                            monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                        }
+                    }
+
+                    if (currentResult.scope == "all") {
+                        ApplyResultStatChangesAll(currentResult, ResultConstants.COMBATWITHSIDEEFFECTS);
+                    }
+                    else if (currentResult.scope == "single") {
+                        ApplyResultStatChangesSingle(currentResult, ResultConstants.COMBATWITHSIDEEFFECTS);
+                    }
+
+                    eventDescription.SetKey(currentResult.resultKey);
+                    actionsPanel.PreCombatActions();
+                    CheckGameOver();
+                    break;
+                case ResultConstants.REVIVE:
+                    if (PartyManager.instance.GetNumPartyMembersDead() > 0) {
+                        PartyManager.instance.RevivePartyMembers();
+
+                        eventDescription.SetKey(currentResult.resultKey);   
+                    }
+                    else {
+                        changeSprite = false;
+                        eventDescription.SetNoReviveText();
+                    }
+                    break;
+                case ResultConstants.REVIVEANDLEAVE:   
+                    if (PartyManager.instance.GetNumPartyMembersDead() > 0) { 
+                        PartyManager.instance.RevivePartyMembers();
+
+                        eventDescription.SetKey(currentResult.resultKey); 
+                        actionsPanel.TravelActions();
+                    }
+                    else {
+                        changeSprite = false;
+                        eventDescription.SetNoReviveText();
+                    }
+                    break;
+                case ResultConstants.SHOP:
+                    UIManager.instance.inShop = true;
+
+                    List<Item> items = GetResultItems(currentResult);
+                    eventDisplays[0].SetItemDisplaysShop(items);
+                    SetShopNotification();
+
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.REKINDLE:
+                    PartyManager.instance.Rekindle();
+
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.REKINDLEANDLEAVE:
+                    PartyManager.instance.Rekindle();
+
+                    eventDescription.SetKey(currentResult.resultKey);
+                    actionsPanel.TravelActions();
+                    break;
+                case ResultConstants.QUEST:
+                    currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+
+                    AddQuest(currentResult.questName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.QUESTANDLEAVE:
+                    currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+
+                    AddQuest(currentResult.questName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    actionsPanel.TravelActions();
+                    break;
+                case ResultConstants.COMBATANDQUESTCONTINUE:
+                    monstersToSpawn = currentResult.GetMonstersToSpawn();
+
+                    for (int j = 0; j < monstersToSpawn.Length; j++) {
+                        if (monstersToSpawn[j] == "none") {
+                            monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
+                        }
+                    }
+
+                    currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                    HideEventDisplays();     
+                    GetCombatEvent();
+
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.QUESTCOMPLETE:
+                    currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.QUESTCOMPLETEANDNEWINT);
+
+                    CompleteQuest(currentResult.questName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.QUESTCOMPLETEANDNEWINT:
+                    currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.QUESTCOMPLETEANDNEWINT);
+
+                    CompleteQuest(currentResult.questName);
+                    actionsPanel.AddInteraction(currentResult.newIntName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
+                case ResultConstants.NEWINTANDTUT:
+                    HideEventDisplayItemDisplays();
+                    actionsPanel.AddInteraction(currentResult.newIntName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    ProgressTutorial();
+                    tutorialProg++;
+                    break;
+                case ResultConstants.END:
+                    GameManager.instance.LoadNextScene("MainMenu");
+                    break;
+                case ResultConstants.ENDTUT:
+                    subAreaProgress += 100;
+                    EndTutorial();
+                    GetNextEvent();
+                    break;
+                default:
+                    break;
+            }
+
+            if (i.GetSprite() != null && changeSprite == true) { // assumes only one event display changes during interactions (and only the middle one)
+                if (i.GetSprite().name == "Girl0") {
+                    eventDisplays[0].SetSprite(girlSprites[0]);
+                }
+                else if (i.GetSprite().name == "Girl1") {
+                    eventDisplays[0].SetSprite(girlSprites[1]);
                 }
                 else {
-                    changeSprite = false;
-                    eventDescription.SetNoReviveText();
+                    eventDisplays[0].SetSprite(i.GetSprite());
                 }
-            }
-            else if (currentResult.type == ResultConstants.SHOP) {
-                UIManager.instance.inShop = true;
-
-                List<Item> items = GetResultItems(currentResult);
-                eventDisplays[0].SetItemDisplaysShop(items);
-                SetShopNotification();
-
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.REKINDLE) {
-                PartyManager.instance.Rekindle();
-
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.REKINDLEANDLEAVE) {
-                PartyManager.instance.Rekindle();
-
-                eventDescription.SetKey(currentResult.resultKey);
-                actionsPanel.TravelActions();
-            }
-            else if (currentResult.type == ResultConstants.QUEST) {
-                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
-
-                AddQuest(currentResult.questName);
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.QUESTANDLEAVE) {
-                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
-
-                AddQuest(currentResult.questName);
-                eventDescription.SetKey(currentResult.resultKey);
-                actionsPanel.TravelActions();
-            }
-            else if (currentResult.type == ResultConstants.COMBATANDQUESTCONTINUE) {
-                monstersToSpawn = currentResult.GetMonstersToSpawn();
-
-                for (int j = 0; j < monstersToSpawn.Length; j++) {
-                    if (monstersToSpawn[j] == "none") {
-                        monstersToSpawn[j] = currentSubArea.GetMonsterToSpawn();
-                    }
+                if (eventDisplays[0].IsVisible() == false) {
+                    eventDisplays[0].SetPosition(pos1d1);
+                    eventDisplays[0].SetVisible(true);
                 }
-
-                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
-                HideEventDisplays();     
-                GetCombatEvent();
-
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.QUESTCOMPLETE) {
-                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
-                ApplyResultStatChangesAll(currentResult, ResultConstants.QUESTCOMPLETEANDNEWINT);
-
-                CompleteQuest(currentResult.questName);
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
-                currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
-                ApplyResultStatChangesAll(currentResult, ResultConstants.QUESTCOMPLETEANDNEWINT);
-
-                CompleteQuest(currentResult.questName);
-                actionsPanel.AddInteraction(currentResult.newIntName);
-                eventDescription.SetKey(currentResult.resultKey);
-            }
-            else if (currentResult.type == ResultConstants.END) {
-                GameManager.instance.LoadNextScene("MainMenu");
-            }
-
-            if (i.GetSprite() != null && changeSprite == true) {
-                eventDisplays[0].SetSprite(i.GetSprite());
-                eventDisplays[0].SetPosition(pos1d1);
             }
         }
 
@@ -951,6 +1080,18 @@ namespace Events {
         }
 
         /// <summary>
+        /// Updates the partyPanels and skillsPanels 
+        /// </summary>
+        /// <remark>
+        /// This is used for when a new partyMember is added, as the partyPanel and skillsPanel
+        /// won't immediately add the new pmds unless init() is called.
+        /// </remark>
+        public void UpdatePartyMembers() {
+            partyPanel.Init(PartyManager.instance.GetPartyMembers());
+            skillsPanel.Init();
+        }
+
+        /// <summary>
         /// Tell the infoPanel to add a quest
         /// </summary>
         /// <param name="questName"></param>
@@ -1018,7 +1159,7 @@ namespace Events {
         /// <summary>
         /// Alters all of the background's colour values (r, g, b) to the specified value 
         /// </summary>
-        /// <param name="targetColourValue"> Float between 0f and 1f </param>
+        /// <param name="targetColourValue"> Float between 0f and 1f </param>F
         /// <returns> IEnumerator for smooth animation </returns>
         public IEnumerator AlterBackgroundColor(float targetColourValue) {
             float timeStartedLerping = Time.time;
@@ -1096,37 +1237,40 @@ namespace Events {
         /// Displays the event sprites in the eventDisplays
         /// </summary>
         public void ShowEventDisplays() {
-            if (currentEvent.spriteNum != 0) {
-                if (currentEvent.spriteNum == 1) {
-                    eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
-
-                    eventDisplays[0].SetPosition(pos1d1);
-
-                    eventDisplays[0].SetVisible(true);
-                }
-                else if (currentEvent.spriteNum == 2) {
-                    eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
-                    eventDisplays[1].SetSprite(currentEvent.eventSprites[1]);
-
-                    eventDisplays[0].SetPosition(pos2d1);
-                    eventDisplays[1].SetPosition(pos2d2);
-
-                    eventDisplays[0].SetVisible(true);
-                    eventDisplays[1].SetVisible(true);
+            if (currentEvent.spriteNum == 1) {
+                if (currentEvent.eventSprites[0].name == "Girl0") {
+                    eventDisplays[0].SetSprite(girlSprites[0]);
                 }
                 else {
                     eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
-                    eventDisplays[1].SetSprite(currentEvent.eventSprites[1]);
-                    eventDisplays[2].SetSprite(currentEvent.eventSprites[2]);
-
-                    eventDisplays[0].SetPosition(pos3d1);
-                    eventDisplays[1].SetPosition(pos3d2);
-                    eventDisplays[2].SetPosition(pos3d3);
-
-                    eventDisplays[0].SetVisible(true);
-                    eventDisplays[1].SetVisible(true);
-                    eventDisplays[2].SetVisible(true);
                 }
+
+                eventDisplays[0].SetPosition(pos1d1);
+
+                eventDisplays[0].SetVisible(true);
+            }
+            else if (currentEvent.spriteNum == 2) {
+                eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
+                eventDisplays[1].SetSprite(currentEvent.eventSprites[1]);
+
+                eventDisplays[0].SetPosition(pos2d1);
+                eventDisplays[1].SetPosition(pos2d2);
+
+                eventDisplays[0].SetVisible(true);
+                eventDisplays[1].SetVisible(true);
+            }
+            else {
+                eventDisplays[0].SetSprite(currentEvent.eventSprites[0]);
+                eventDisplays[1].SetSprite(currentEvent.eventSprites[1]);
+                eventDisplays[2].SetSprite(currentEvent.eventSprites[2]);
+
+                eventDisplays[0].SetPosition(pos3d1);
+                eventDisplays[1].SetPosition(pos3d2);
+                eventDisplays[2].SetPosition(pos3d3);
+
+                eventDisplays[0].SetVisible(true);
+                eventDisplays[1].SetVisible(true);
+                eventDisplays[2].SetVisible(true);
             }
         }
 
@@ -1231,6 +1375,19 @@ namespace Events {
             }
             else {
                 toastPanel0.SetQuestNotification(questName);
+            }
+        }
+
+        /// <summary>
+        /// Sets a toastPanel to show a partyMember has joined
+        /// </summary>
+        /// <param name="questName"></param>
+        public void SetPartyMembertNotification(string pmName) {
+            if (toastPanel0.gameObject.activeSelf == true) {
+                toastPanel1.SetPartyMemberNotification(pmName);
+            }
+            else {
+                toastPanel0.SetPartyMemberNotification(pmName);
             }
         }
 

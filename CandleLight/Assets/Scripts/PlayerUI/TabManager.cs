@@ -8,6 +8,7 @@
 *
 */
 
+using GameManager = General.GameManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using UIEffects;
@@ -43,11 +44,13 @@ namespace PlayerUI {
                 btss[i].SetColorBlock("pressed", pressedBlock);
             }
 
-            if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
-                OpenPanel(0);
-            }
-            else {  // left tabManager
-                OpenPanel(0);
+            if (GameManager.instance.isTutorial == false) {                   // panels aren't opened immediatel in the tutorial
+                if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
+                    OpenPanel(0);
+                }
+                else {  // left tabManager
+                    OpenPanel(0);
+                }
             }
         }
 
@@ -68,10 +71,24 @@ namespace PlayerUI {
             }
         }
 
+        /// <summary>
+        /// Sets all tab buttons interactable
+        /// </summary>
         public void SetAllButtonsInteractable() {
-            foreach (Button b in tabs) {
-                b.interactable = true;
+            for (int i = 0; i < tabs.Length; i++) {
+                if (tabTexts[i].key != "empty_tab") {   // prevents tutorial doesn't re-enable everything
+                    tabs[i].interactable = true;
+                }
             }
+        }
+
+        /// <summary>
+        /// Sets a specific tab button interactable
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="value"></param>
+        public void SetButtonInteractable(int index, bool value) {
+            tabs[index].interactable = value;
         }
 
         public void SetAllButtonsUninteractable() {
@@ -85,9 +102,54 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="index"> Index of tab button </param>
         public void ExciteTab(int index) {
+            if (tabTexts[index].key == "empty_tab") {
+                SetButtonInteractableAndName(index);
+            }
             if (tabTexts[index].key.EndsWith("_(!)") == false) {
                 tabTexts[index].SetKey(tabTexts[index].key + "_(!)");
             }
+        }
+
+        /// <summary>
+        /// Hides tab buttons
+        /// </summary>
+        public void SetTabsEmpty() {
+            for (int i = 0; i < tabs.Length; i++) {
+                tabs[i].interactable = false;
+                tabTexts[i].SetKey("empty_tab");
+                panels[i].gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// Gives a tab button a name and makes it interactable (tutorial only)
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetButtonInteractableAndName(int index) {
+            if (panels[0].GetPanelName() == PanelConstants.GEARPANEL) {  // right tabManager
+                if (index == 0) {
+                    tabTexts[index].SetKey("gear_tab");
+                }
+                else if (index == 1) {
+                    tabTexts[index].SetKey("candles_tab");
+                }
+                else if (index == 2) {
+                    tabTexts[index].SetKey("special_tab");
+                }
+            }
+            else {
+                if (index == 0) {
+                    tabTexts[index].SetKey("party_tab");
+                }
+                else if (index == 1) {
+                    tabTexts[index].SetKey("skills_tab");
+                }
+                else if (index == 2) {
+                    tabTexts[index].SetKey("info_tab");
+                }
+            }
+
+            tabs[index].interactable = true;
         }
     }
 }

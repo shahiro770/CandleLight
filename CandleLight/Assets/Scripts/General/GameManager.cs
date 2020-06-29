@@ -24,6 +24,7 @@ namespace General {
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public string areaName { get; set; }            /// <value> Name of area being explored </value>
+        public bool isTutorial = true;                  /// <value> Flag for if the tutorial is enabled </value>
 
         private string activeScene = "";                /// <value> Current scene being displayed </value>
         private string initialScene = "Loading";        /// <value> Scene to begin game with </value>

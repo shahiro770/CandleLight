@@ -33,6 +33,7 @@ namespace PlayerUI {
         private EventSystem es;                     /// <value> eventSystem reference </value>
         private Interaction travelInt;
         private Interaction fightInt;
+        private Interaction tutorialInt;
         private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
 
         /// <summary>
@@ -42,9 +43,10 @@ namespace PlayerUI {
             es = EventSystem.current;
         }
 
-        public void SetGeneralInteractions(Interaction travelInt, Interaction fightInt) {
+        public void SetGeneralInteractions(Interaction travelInt, Interaction fightInt, Interaction tutorialInt) {
             this.travelInt = travelInt;
             this.fightInt = fightInt;
+            this.tutorialInt = tutorialInt;
         }
         
         /// <summary>
@@ -143,6 +145,17 @@ namespace PlayerUI {
 
             SetActionsUsable(true);
             SetAllActionsUninteractable();
+        }
+
+        /// <summary>
+        /// Tutorial only, after ending combat, the player is led to the next specific event
+        /// (Hacky, will need to be replaced if other combat events lead to specific events)
+        /// </summary>
+        public void PostCombatActionsTutorial() {
+            for (int i = 0; i < actions.Length - 1; i++) {
+                actions[i].SetAction(ActionConstants.NONE);
+            }
+            actions[actions.Length - 1].SetAction(ActionConstants.INTERACTION, tutorialInt);
         }
 
         public void SetItemActions() {
