@@ -175,6 +175,9 @@ namespace Combat {
             if (candlesPanel.isOpen == false) {
                 itemsTabManager.OpenPanel(1);
             }
+            if (GameManager.instance.isTutorial == true) {
+                EventManager.instance.SetToastPanelsVisible(false);
+            }
             DisableAllButtons();
             foreach (Monster m in monsters) {
                 StartCoroutine(m.md.PlaySpawnAnimation());
@@ -264,6 +267,9 @@ namespace Combat {
             }
             else {
                 EnableAllButtonsInSidePanels();
+                if (GameManager.instance.isTutorial == true) {
+                    EventManager.instance.ProgressTutorial();
+                }
             }
         }
 
@@ -291,6 +297,10 @@ namespace Combat {
                 }
                 partyPanel.SetBlinkSelectables(null, false);
             }
+
+            if (GameManager.instance.isTutorial == true) {
+                EventManager.instance.ProgressTutorial();
+            }  
         }
 
         /// <summary>
@@ -368,7 +378,10 @@ namespace Combat {
         /// <returns> 
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// </returns>
-        public IEnumerator ExecutePMAttack() {    
+        public IEnumerator ExecutePMAttack() { 
+            if (GameManager.instance.isTutorial == true) {
+                EventManager.instance.ProgressTutorial();
+            } 
             if (pmNoAction == true) {
                 eventDescription.SetNoMoveTextPM(activePartyMember.pmName);
                 yield return new WaitForSeconds(1f);
@@ -440,6 +453,9 @@ namespace Combat {
             pmSelectionFinalized = false;
             pmNoAction = false;
             eventDescription.ClearText();
+            if (GameManager.instance.isTutorial == true) {
+                EventManager.instance.SetToastPanelsVisible(false);
+            }
         }
 
         #endregion
@@ -952,7 +968,7 @@ namespace Combat {
         /// </summary>s
         public void DisplayActivePartyMember() {
             actionsPanel.DisplayPartyMember(activePartyMember);
-            activePartyMember.pmvc.DisplayActivePartyMember();
+            activePartyMember.pmvc.DisplayActivePartyMemberCombat();
         }
 
         #endregion

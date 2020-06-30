@@ -158,9 +158,6 @@ namespace Party {
         /// <param name="pm"></param>
         public void SetActivePartyMember(PartyMember pm) {
             activePartyMember = pm;
-            foreach (PartyMember pms in partyMembersAll) {
-                pms.pmvc.ShowNormal();
-            }
 
             pm.pmvc.DisplayActivePartyMember();
         }

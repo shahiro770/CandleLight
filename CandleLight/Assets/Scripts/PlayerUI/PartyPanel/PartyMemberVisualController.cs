@@ -278,10 +278,12 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Changes all panels to show the stored partyMember's information
+        /// Displays the active partyMember in combat, ignoring checks
+        /// that would make the partyPanel and statusPanel not show the activePartyMember
+        /// when in combat
         /// </summary>
-        public void DisplayActivePartyMember() {
-            if (partyPanel.isOpen) {
+        public void DisplayActivePartyMemberCombat() {
+            if (partyPanel.isOpen == true) {
                 partyPanel.DisplayActivePartyMember(pmdPartyPanel);
             }
             statusPanel.DisplayPartyMember(this);
@@ -295,14 +297,30 @@ namespace Characters {
             if (skillsPanel.isOpen) {
                 skillsPanel.Init();
             }
-
-            pmdSkillsPanel.ShowActive();
-            pmdPartyPanel.ShowActive();      
         }
 
-        public void ShowNormal() {
-            pmdSkillsPanel.ShowNormal();
-            pmdPartyPanel.ShowNormal();
+        /// <summary>
+        /// Changes all panels to show the stored partyMember's information
+        /// </summary>
+        public void DisplayActivePartyMember() {
+            if (partyPanel.isOpen == true) {
+                if (CombatManager.instance.inCombat == false) {
+                    partyPanel.DisplayActivePartyMember(pmdPartyPanel);
+                }
+            }
+            if (CombatManager.instance.inCombat == false) {
+                statusPanel.DisplayPartyMember(this);
+            }
+            if (gearPanel.isOpen) {
+                gearPanel.Init(this);
+            }
+            else if (candlesPanel.isOpen) {
+                candlesPanel.Init(this);
+            }
+
+            if (skillsPanel.isOpen) {
+                skillsPanel.Init();
+            }   
         }
 
         /// <summary>

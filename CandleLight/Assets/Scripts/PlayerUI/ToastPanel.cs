@@ -94,6 +94,16 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Special notification showing a tutorial to help player's understand the game
+        /// </summary>
+        /// <param name="tutorialName"></param>
+        public void SetTutorialNotification(string tutorialName) {
+            titleText.SetKey("TUTORIAL_toast");
+            descriptionText.SetKey(tutorialName + "_tutorial");
+            SetVisible(true);
+        }
+
+        /// <summary>
         /// Special notification indicating a partyMember has joined
         /// </summary>
         /// <param name="pmName"></param>

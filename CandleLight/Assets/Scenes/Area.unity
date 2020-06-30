@@ -14529,6 +14529,7 @@ MonoBehaviour:
   - {fileID: 1294357093}
   - {fileID: 1967146486}
   - {fileID: 1266740566}
+  triggerTutorial: 0
 --- !u!224 &677041052
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23857,6 +23858,7 @@ MonoBehaviour:
   - {fileID: 82578202}
   - {fileID: 144312171}
   - {fileID: 946583272}
+  triggerTutorial: 0
 --- !u!1001 &1105474157
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,11 +10,9 @@
 */
 
 using Characters;
-using Localization;
+using PanelConstants = Constants.PanelConstants;
 using Party;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace PlayerUI {
 
@@ -169,6 +167,10 @@ namespace PlayerUI {
             }
 
             pmd.ShowActive();
+        }
+
+        public override string GetPanelName() {
+            return PanelConstants.SKILLSPANEL;
         }
     }
 }

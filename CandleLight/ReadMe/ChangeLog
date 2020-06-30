@@ -29,6 +29,7 @@ Feature: Companionship
     - Make it so partyMembers can talk about recent stuff at none events
     - Replace "friend" text with name text of companion
 
+Bug: Fix the fraeking toastPanels
 Bug: How did tristhal break the game off of safeguard?
 Bug: Candlemancy kinda broken 
 Bug: status effects don't display in the statusPanel

@@ -8,8 +8,8 @@
 */
 
 using Localization;
+using PanelConstants = Constants.PanelConstants;
 using Party;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Events;
@@ -91,6 +91,10 @@ namespace PlayerUI {
         public void UpdateAmounts() {
             amountTextWAX.SetText(PartyManager.instance.WAX.ToString());
             amountTextPROG.SetText(EventManager.instance.subAreaProgress.ToString() + "%");
+        }
+
+        public override string GetPanelName() {
+            return PanelConstants.INFOPANEL;
         }
     }
 }

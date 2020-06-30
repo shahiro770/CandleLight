@@ -8,13 +8,13 @@
 *
 */
 
+using EventManager = Events.EventManager;
 using GameManager = General.GameManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 namespace PlayerUI {
 
@@ -26,6 +26,7 @@ namespace PlayerUI {
         public LocalizedText[] tabTexts = new LocalizedText[3];    /// <value> Text for each tab </value>
         public Panel[] panels = new Panel[3];   /// <value> Panel references </value>
         public ButtonTransitionState[] btss = new ButtonTransitionState[3]; /// <value> Indicate which tabs are selected </value>
+        public bool triggerTutorial = false;    /// <value> Flag for if the next tab button click will trigger a tutorial notification </value>
 
         private int currentIndex = 0;
 
@@ -68,6 +69,12 @@ namespace PlayerUI {
 
             if (tabTexts[index].key.EndsWith("_(!)")) {
                 tabTexts[index].SetKey(tabTexts[index].key.Substring(0, tabTexts[index].key.Length - 4));
+            }
+
+            if (triggerTutorial == true) {
+                if (EventManager.instance.TutorialTabOnClick(index) == true) {
+                    triggerTutorial = false;
+                }
             }
         }
 
@@ -148,7 +155,7 @@ namespace PlayerUI {
                     tabTexts[index].SetKey("info_tab");
                 }
             }
-
+            triggerTutorial = true;
             tabs[index].interactable = true;
         }
     }

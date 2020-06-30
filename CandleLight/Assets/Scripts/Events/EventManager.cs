@@ -91,6 +91,8 @@ namespace Events {
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
         private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>
+        private bool firstCandle = true;        /// <value> Flag for if the player has encountered their first candle </value> 
+        private bool firstShop = true;          /// <value> Flag for if the player has encountered their first shop </value> 
 
         #region [Initialization] Initialization 
 
@@ -319,6 +321,7 @@ namespace Events {
         /// </summary>
         /// <returns></returns>
         public IEnumerator DisplaySubEventTutorial() {
+            tutorialProg++;
             yield return StartCoroutine(DisplayEvent());
         }
 
@@ -329,10 +332,12 @@ namespace Events {
             if (tutorialProg == 0) {
                 itemsTabManager.SetButtonInteractableAndName(2);
                 itemsTabManager.ExciteTab(2);
+                SetTutorialNotification("special0", 0);   
             }
             else if (tutorialProg == 1) {
                 utilityTabManager.SetButtonInteractableAndName(0);
                 utilityTabManager.ExciteTab(0);
+                SetTutorialNotification("party0", 0);
             }
             else if (tutorialProg == 2) {
                 PartyManager.instance.AddStoredPartyMember();
@@ -345,17 +350,59 @@ namespace Events {
 
                 itemsTabManager.SetButtonInteractableAndName(0);
                 itemsTabManager.ExciteTab(0);
+                SetTutorialNotification("gear0", 0);
+                tutorialProg++;
             }
             else if (tutorialProg == 4) {
                 itemsTabManager.SetButtonInteractableAndName(1);
-                itemsTabManager.ExciteTab(1);
+                tutorialProg++;
+            }
+            else if (tutorialProg == 5) {
+                SetTutorialNotification("combat0", 0);
+                tutorialProg++;
+            }
+            else if (tutorialProg == 6) {
+                SetTutorialNotification("combat1", 0);
+                tutorialProg++;
+            }
+            else if (tutorialProg == 7) {
+                SetTutorialNotification("combat2", 0);
+                tutorialProg++;
+            }
+            else if (tutorialProg == 8 && CombatManager.instance.inCombat == false) {
+                SetTutorialNotification("skills0", 0);
             }
             // skills panel is enabled after first combat event
-            else if (tutorialProg == 5) {
+            else if (tutorialProg == 9) {
                 utilityTabManager.SetButtonInteractableAndName(2);
                 utilityTabManager.ExciteTab(2);
                 AddQuest(currentResult.questName);
             }
+        }
+
+        public bool TutorialTabOnClick(int index) {
+            if (tutorialProg == 0 && itemsTabManager.panels[index].GetPanelName() == PanelConstants.SPECIALPANEL) {
+                SetTutorialNotification("special1", 1);
+                return true;
+            }
+            else if (tutorialProg == 1 && utilityTabManager.panels[index].GetPanelName() == PanelConstants.PARTYPANEL) {
+                SetTutorialNotification("party1", 1);
+                return true;
+            }
+            else if (tutorialProg == 4 && itemsTabManager.panels[index].GetPanelName() == PanelConstants.GEARPANEL) {               // the gear and candles tabs are added in the same event
+                SetTutorialNotification("gear1", 1);
+                return true;
+            }
+            else if (tutorialProg == 8 && utilityTabManager.panels[index].GetPanelName() == PanelConstants.SKILLSPANEL) {
+                SetTutorialNotification("skills1", 1);
+                return true;
+            }
+            else if (tutorialProg == 9 && utilityTabManager.panels[index].GetPanelName() == PanelConstants.INFOPANEL) {
+                SetTutorialNotification("info0", -1);
+                return true;
+            }
+
+            return false;
         }
         
         /// <summary>
@@ -380,8 +427,13 @@ namespace Events {
 
             return startingWeapon;
         }
+
+        public Candle GenerateStartingCandle() {
+            return (Candle)GameManager.instance.DB.GetItemByNameID("HPC0", "Candles");
+        }
         
         public void EndTutorial() {
+            tutorialProg++;             // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
             GameManager.instance.isTutorial = false;
         }
 
@@ -571,7 +623,10 @@ namespace Events {
                 actionsPanel.ClearAllActions();
                 rewardsPanel.SetVisible(true);
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
-                
+                if (GameManager.instance.isTutorial == true) {
+                    SetToastPanelsVisible(false);
+                }
+
                 if (endString == "FLEE") {
                     eventDescription.SetKeyAndFadeIn(currentSubArea.GetPostCombatFleePrompt());
                 }
@@ -599,9 +654,9 @@ namespace Events {
                 }
                 else {
                     actionsPanel.PostCombatActionsTutorial();
+                    ProgressTutorial();
                 }
                 SetAllButtonsInteractable(true);
-                
             }
         }
 
@@ -674,6 +729,11 @@ namespace Events {
                         items.Add(new Special(subAreaSpecials[Random.Range(0, specialNum)]));
                     }
                 }
+            }
+
+            if (GameManager.instance.isTips == true && firstCandle == true && r.itemType == ItemConstants.CANDLE) {
+                firstCandle = false;
+                SetTutorialNotification("candles0");
             }
 
             if (items.Count == 0) {
@@ -897,6 +957,11 @@ namespace Events {
                     SetShopNotification();
 
                     eventDescription.SetKey(currentResult.resultKey);
+
+                    if (GameManager.instance.isTips == true && firstShop == true) {
+                        firstShop = false;
+                        SetTutorialNotification("shop");
+                    }
                     break;
                 case ResultConstants.REKINDLE:
                     PartyManager.instance.Rekindle();
@@ -953,11 +1018,9 @@ namespace Events {
                     eventDescription.SetKey(currentResult.resultKey);
                     break;
                 case ResultConstants.NEWINTANDTUT:
-                    HideEventDisplayItemDisplays();
                     actionsPanel.AddInteraction(currentResult.newIntName);
                     eventDescription.SetKey(currentResult.resultKey);
                     ProgressTutorial();
-                    tutorialProg++;
                     break;
                 case ResultConstants.END:
                     GameManager.instance.LoadNextScene("MainMenu");
@@ -1388,6 +1451,32 @@ namespace Events {
             }
             else {
                 toastPanel0.SetPartyMemberNotification(pmName);
+            }
+        }
+
+        /// <summary>
+        /// Sets a notification panel to display a tutorialNotification, which stay on screen until event transitions,
+        /// or some edge case removes them
+        /// </summary>
+        /// <param name="tutorialName"></param>
+        /// <param name="panelNum"> 
+        /// Some tutorials are tied to tab buttons, only show the relevant tutorial 
+        /// if the corresponding tab is clicked at the right time
+        /// </param>
+        public void SetTutorialNotification(string tutorialName, int panelNum = -1) {
+            if (panelNum == 0) {
+                toastPanel0.SetTutorialNotification(tutorialName);
+            }
+            else if (panelNum == -1) {
+                toastPanel1.SetTutorialNotification(tutorialName);
+            }
+            else {
+                if (toastPanel0.gameObject.activeSelf == true) {
+                    toastPanel1.SetTutorialNotification(tutorialName);
+                }
+                else {
+                    toastPanel0.SetTutorialNotification(tutorialName);
+                }
             }
         }
 
