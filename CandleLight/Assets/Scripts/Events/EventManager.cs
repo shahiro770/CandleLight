@@ -1551,6 +1551,10 @@ namespace Events {
         public void OpenItemPanel(ItemDisplay id) {
             if (id.type == ItemConstants.GEAR) {
                 itemsTabManager.OpenPanel(0);
+                // when taking a gear from a non-inventory slot, default to the first party member that can use it
+                if (PartyManager.instance.IsClassInParty(id.className) == true){    
+                    PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetPartyMemberByClass(id.className));
+                }
             }
             else if (id.type == ItemConstants.CANDLE) {
                 itemsTabManager.OpenPanel(1);

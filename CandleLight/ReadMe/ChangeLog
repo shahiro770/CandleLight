@@ -3,10 +3,6 @@ ChangeLog
 
 DONE
 ----
-
-
-CURRENTLY DOING
----------------
 Bug: Not recalculating stats on all status effects
 Bug: The EXP on rewards only cares about the first two partyMembers
 Feature: KeyItems Panel (should be significantly easier than the other two)
@@ -26,20 +22,24 @@ Feature: Tutorial
     - Make it so UI slowly lights up
     - Make toastpanel say partyMember joined you
     - Set player to level 0 at the start (first fight with greyhide will level them up, allowing them their first skill point)
-
-Feature: Companionship
-    - Make it so partyMembers can talk about recent stuff at none events
-    - Replace "friend" text with name text of companion
 Fix: Make it when tabMAnager !!, they bright white
 Fix: Make eventdescription fade on hover (implemented but not enabled cause buggy)
 Fix: The min/max in bars breaks for 3 digit mins and maxs
+Bug: EventDisplay sizing and HidefromThePack size was wrong
+Fix: Add smart item selection
+
+
+CURRENTLY DOING
+---------------
+Feature: Companionship
+    - Make it so partyMembers can talk about recent stuff at none events
+    - Replace "friend" text with name text of companion
 
 Bug: Candlemancy kinda broken 
 Fix: status effects don't display in the statusPanel
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: Make status effects do the fade animation monster displays do
 Fix: add hover to stats
-Fix: Add smart item selection
 Fix: Add candle usages to the help tip
 Fix: Keep a counter for player's candle inventory
 Fix: Tiny arrow to swap party member

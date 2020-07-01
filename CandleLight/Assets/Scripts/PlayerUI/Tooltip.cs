@@ -166,6 +166,26 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Sets the colour of the specified text
+        /// </summary>
+        /// <param name="textName"></param>
+        /// <param name="newColor"></param>
+        public void SetTextColour(string textName, Color32 newColor) {
+            if (textName == "title") {
+                titleText.SetColour(newColor);
+            }
+            else if (textName == "subtitle") {
+                subtitleText.SetColour(newColor);
+            }
+            else if (textName == "description") {
+                descriptionText.SetColour(newColor);
+            }
+            else if (textName == "value") {
+                valueText.SetColour(newColor);
+            }
+        }
+
+        /// <summary>
         /// Stop displaying and remove all text
         /// </summary>
         public void ClearText() {
@@ -209,6 +229,10 @@ namespace PlayerUI {
         /// </returns>
         private IEnumerator SetPosition() {
             textBackground.color = new Color32(0, 0, 0, 0); // hide the tooltip while position adjustments are being made
+            Color32 titleColour = titleText.meshText.color; // store the prevous colour to set it back to normal after
+            Color32 subtitleColour = subtitleText.meshText.color;
+            Color32 descriptionColour = descriptionText.meshText.color;
+            Color32 valueColour = valueText.meshText.color;
             titleText.SetColour(new Color32(0, 0, 0 ,0));
             subtitleText.SetColour(new Color32(0, 0, 0 ,0));
             descriptionText.SetColour(new Color32(0, 0, 0 ,0));
@@ -250,10 +274,10 @@ namespace PlayerUI {
             gameObject.transform.localPosition = new Vector3(newXPos, newYPos);
 
             textBackground.color = new Color32(255, 255, 255, 255);
-            titleText.SetColour(new Color32(255, 255, 255 , 255));
-            subtitleText.SetColour(new Color32(178, 178, 178 ,255));
-            descriptionText.SetColour(new Color32(255, 255, 255 ,255));
-            valueText.SetColour(new Color32(225, 205 ,2 , 225));
+            titleText.SetColour(titleColour);
+            subtitleText.SetColour(subtitleColour);
+            descriptionText.SetColour(descriptionColour);
+            valueText.SetColour(valueColour);
         }
 
         /// <summary>

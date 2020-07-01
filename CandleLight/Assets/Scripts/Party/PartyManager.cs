@@ -28,6 +28,7 @@ namespace Party {
         /* external component references */
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
 
+        public Color32 unusableColour = new Color32(196, 36, 48, 255);  /// <value> Red colour to indicate unusable, stored here to minimize space </value>
         public string storedPartyMember;        /// <value> Classname of the partyMember to add </value>
         public int bonusChampionChance = 0;     /// <value> Chance of encountering champion monsters, summed from all partyMembers </value>
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
@@ -168,6 +169,21 @@ namespace Party {
         /// <returns> PartyMember </returns>
         public PartyMember GetActivePartyMember() {
             return activePartyMember;
+        }
+
+        /// <summary>
+        /// Returns the first partyMember with the matching className
+        /// </summary>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public PartyMember GetPartyMemberByClass(string className) {
+            foreach (PartyMember pm in partyMembersAll) {
+                if (pm.className == className) {
+                    return pm;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
