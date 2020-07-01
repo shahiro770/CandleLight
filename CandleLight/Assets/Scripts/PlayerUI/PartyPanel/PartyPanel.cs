@@ -33,7 +33,7 @@ namespace PlayerUI {
             Init(PartyManager.instance.GetPartyMembers());
 
             if (actionsPanel.selectedAction != null) {
-                Attack selectedAttack = actionsPanel.selectedAction.a;   
+                Attack selectedAttack = actionsPanel.selectedAction.a;
                 if (selectedAttack != null) {
                     if (selectedAttack.type == AttackConstants.HEALHP) {
                         SetBlinkSelectables(selectedAttack, true);
@@ -108,13 +108,17 @@ namespace PlayerUI {
         /// <param name="value"> True to enable blinking, false to disable </param>
         public void SetBlinkSelectables(Attack a, bool value) {
             if (value == true) {
-                foreach (PartyMemberDisplay pmd in pmDisplays) {
-                    pmd.PlaySelectMeAnimation(true);
+                for (int i = 0;i < pmDisplays.Length; i++) {
+                    if (pmDisplays[i].gameObject.activeSelf == true && PartyManager.instance.CheckDeath(i) == false) {     // TODO: if an attack can target dead partyMembers, use a different function
+                        pmDisplays[i].PlaySelectMeAnimation(true);
+                    }
                 }
             }
             else {
-                foreach (PartyMemberDisplay pmd in pmDisplays) {
-                    pmd.PlaySelectMeAnimation(false);
+                for (int i = 0;i < pmDisplays.Length; i++) {
+                    if (pmDisplays[i].gameObject.activeSelf == true && PartyManager.instance.CheckDeath(i) == false) {     // TODO: if an attack can target dead partyMembers, use a different function
+                        pmDisplays[i].PlaySelectMeAnimation(false);
+                    }
                 }
             }
         }

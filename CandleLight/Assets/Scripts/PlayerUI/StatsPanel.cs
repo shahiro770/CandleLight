@@ -37,10 +37,61 @@ namespace PlayerUI {
         public LocalizedText DOGText;   /// <value> Text displaying DOG </value>
         public LocalizedText CRITText;  /// <value> Text displaying CRIT% </value>
         public LocalizedText NextLVLText;  /// <value> Text displaying EXP to next level </value>
+        public TooltipTextMesh STRtt;   /// <value> </value>
+        public TooltipTextMesh DEXtt;   /// <value> </value>
+        public TooltipTextMesh INTtt;   /// <value> </value>
+        public TooltipTextMesh LUKtt;   /// <value> </value>
+        public TooltipTextMesh PATKtt;  /// <value> </value>
+        public TooltipTextMesh MATKtt;  /// <value> </value>
+        public TooltipTextMesh PDEFtt;  /// <value> </value>
+        public TooltipTextMesh MDEFtt;  /// <value> </value>
+        public TooltipTextMesh ACCtt;   /// <value> </value>
+        public TooltipTextMesh DOGtt;   /// <value> </value>
+        public TooltipTextMesh CRITtt;  /// <value> </value>
+
 
         public PartyMemberVisualController pmvc;    /// <value> pmvc of pm currently being displayed</value>
         private string LVLText = LocalizationManager.instance.GetLocalizedValue("LVL_label");   /// <value> "LVL" </value>
         public bool isOpen = false; /// <value> Flag for if panel is open </value>
+
+        /// <summary>
+        /// Set all of the tooltips on the statsPanel
+        /// </summary>
+        void Start() {
+            STRtt.SetKey("title", "STR_stat_title");
+            STRtt.SetKey("subtitle", "STR_stat_sub");
+            STRtt.SetKey("description", "STR_stat_des");
+            DEXtt.SetKey("title", "DEX_stat_title");
+            DEXtt.SetKey("subtitle", "DEX_stat_sub");
+            DEXtt.SetKey("description", "DEX_stat_des");
+            INTtt.SetKey("title", "INT_stat_title");
+            INTtt.SetKey("subtitle", "INT_stat_sub");
+            INTtt.SetKey("description", "INT_stat_des");
+            LUKtt.SetKey("title", "LUK_stat_title");
+            LUKtt.SetKey("subtitle", "LUK_stat_sub");
+            LUKtt.SetKey("description", "LUK_stat_des");
+            PATKtt.SetKey("title", "PATK_stat_title");
+            PATKtt.SetKey("subtitle", "PATK_stat_sub");
+            PATKtt.SetKey("description", "PATK_stat_des");
+            MATKtt.SetKey("title", "MATK_stat_title");
+            MATKtt.SetKey("subtitle", "MATK_stat_sub");
+            MATKtt.SetKey("description", "MATK_stat_des");
+            PDEFtt.SetKey("title", "PDEF_stat_title");
+            PDEFtt.SetKey("subtitle", "PDEF_stat_sub");
+            PDEFtt.SetKey("description", "PDEF_stat_des");
+            MDEFtt.SetKey("title", "MDEF_stat_title");
+            MDEFtt.SetKey("subtitle", "MDEF_stat_sub");
+            MDEFtt.SetKey("description", "MDEF_stat_des");
+            ACCtt.SetKey("title", "ACC_stat_title");
+            ACCtt.SetKey("subtitle", "ACC_stat_sub");
+            ACCtt.SetKey("description", "ACC_stat_des");
+            DOGtt.SetKey("title", "DOG_stat_title");
+            DOGtt.SetKey("subtitle", "DOG_stat_sub");
+            DOGtt.SetKey("description", "DOG_stat_des");
+            CRITtt.SetKey("title", "CRIT_stat_title");
+            CRITtt.SetKey("subtitle", "CRIT_stat_sub");
+            CRITtt.SetKey("description", "CRIT_stat_des");
+        }
 
         /// <summary>
         /// Update the statsPanel with relevant information and visuals when opened

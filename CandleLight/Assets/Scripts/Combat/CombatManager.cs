@@ -238,7 +238,7 @@ namespace Combat {
         /// <returns> IEnumerator so actions are all taken in order </returns>
         private IEnumerator PMTurn() {
             StartPMTurn();
-            while (!pmSelectionFinalized) {    // (PreparePMAttack and SelectMonster) or AttemptFlee
+            while (!pmSelectionFinalized) {    // (PreparePMAttack and SelectMonster or SelectPartyMember) or AttemptFlee
                 yield return null;
             }
             DisableAllButtons();
@@ -352,10 +352,12 @@ namespace Combat {
         /// </summary>
         /// <param name="pmToSelect"> PartyMember to select </param>
         public void SelectPartyMember(PartyMember pmToSelect) {
-            selectedPartyMember = pmToSelect;
-            partyPanel.SetBlinkSelectables(null, false);
+            if (pmToSelect.CheckDeath() == false) {
+                selectedPartyMember = pmToSelect;
+                partyPanel.SetBlinkSelectables(null, false);
 
-            pmSelectionFinalized = true;
+                pmSelectionFinalized = true;
+            }
         }
 
         /// <summary>
@@ -453,9 +455,6 @@ namespace Combat {
             pmSelectionFinalized = false;
             pmNoAction = false;
             eventDescription.ClearText();
-            if (GameManager.instance.isTutorial == true) {
-                EventManager.instance.SetToastPanelsVisible(false);
-            }
         }
 
         #endregion
@@ -721,33 +720,34 @@ namespace Combat {
             selectedMonster = monsterToSelect;
 
             // Player can freely click on monsters without having an attack selected
-            // Will probably make a UI popup when clicking on monsters with no attack in the future
             if (selectedAttackPM != null) {
-                if (selectedAttackPM.scope != "single") {
-                    int monsterIndex = 0;
-                    for (int i = 0; i < monsters.Count; i++) {
-                        if (monsters[i].ID == monsterToSelect.ID) {
-                            monsterIndex = i;
-                            break;
+                if (selectedAttackPM.type != AttackConstants.HEALHP && selectedAttackPM.type != AttackConstants.BUFF) {
+                    if (selectedAttackPM.scope != "single") {
+                        int monsterIndex = 0;
+                        for (int i = 0; i < monsters.Count; i++) {
+                            if (monsters[i].ID == monsterToSelect.ID) {
+                                monsterIndex = i;
+                                break;
+                            }
                         }
-                    }
 
-                    if (selectedAttackPM.scope == "adjacent") {
-                        if (monsterIndex - 1 >= 0) {
-                            selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
+                        if (selectedAttackPM.scope == "adjacent") {
+                            if (monsterIndex - 1 >= 0) {
+                                selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
+                            }
+                            if (monsterIndex + 1 < monsters.Count) {
+                                selectedMonsterAdjacents.Add(monsters[monsterIndex + 1]);
+                            }
                         }
-                        if (monsterIndex + 1 < monsters.Count) {
-                            selectedMonsterAdjacents.Add(monsters[monsterIndex + 1]);
-                        }
-                    }
 
-                    monsterToSelect.md.SelectMonsterButton();
-                    foreach (Monster m in selectedMonsterAdjacents) {
-                        m.md.SelectMonsterButtonAdjacent();
+                        monsterToSelect.md.SelectMonsterButton();
+                        foreach (Monster m in selectedMonsterAdjacents) {
+                            m.md.SelectMonsterButtonAdjacent();
+                        }
                     }
+                    
+                    pmSelectionFinalized = true;
                 }
-                
-                pmSelectionFinalized = true;
             }
         }
         /// <summary>

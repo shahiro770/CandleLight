@@ -353,7 +353,7 @@ namespace Events {
                 SetTutorialNotification("gear0", 0);
                 tutorialProg++;
             }
-            else if (tutorialProg == 4) {
+            else if (tutorialProg == 4) {   // TODO: This is inconsistent with events that clear items when an interaction is used (like stingerBurrows)
                 itemsTabManager.SetButtonInteractableAndName(1);
                 tutorialProg++;
             }
@@ -408,7 +408,7 @@ namespace Events {
                 SetTutorialNotification("party1", 1);
                 return true;
             }
-            else if (tutorialProg == 4 && tabManager == false && itemsTabManager.panels[index].GetPanelName() == PanelConstants.GEARPANEL) {               // the gear and candles tabs are added in the same event
+            else if ((tutorialProg == 4 || tutorialProg == 5) && tabManager == false && itemsTabManager.panels[index].GetPanelName() == PanelConstants.GEARPANEL) {              
                 SetTutorialNotification("gear1", 1);
                 return true;
             }

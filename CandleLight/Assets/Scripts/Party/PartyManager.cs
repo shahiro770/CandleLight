@@ -187,6 +187,15 @@ namespace Party {
         }
 
         /// <summary>
+        /// Returns false if the partyMember at the index is alive
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool CheckDeath(int index) {
+            return partyMembersAll[index].CheckDeath() == true;
+        }
+
+        /// <summary>
         /// Adds a partyMember to the alive list and removes them from the dead list
         /// </summary>
         /// <param name="pm"> partyMember object </param>
@@ -259,7 +268,7 @@ namespace Party {
         public IEnumerator ChangeHPAll(int amount, string type = "none") {
             if (amount >= 0) {
                 foreach (PartyMember pm in partyMembersAlive) {
-                    pm.AddHP(amount);
+                    pm.AddHPYield(amount);
                 }
             }
             else {
