@@ -195,7 +195,7 @@
 		{ "key": "greyMerchant_event", "value": "Looks like you're not the only human walking these roads today.\nSeems to be trader of some sort." },
 		{ "key": "outpostCandle_event", "value": "A lonely outpost is standing in the distance." },
 		{ "key": "forkedRoad_event", "value": "There's a fork in the road." },
-		{ "key": "theGreyWastes_event", "value": "The Grey Wastes were aptly named. Only fools dare travel these lands. Looks like this is the start of the path." },
+		{ "key": "theGreyWastes_event", "value": "The Grey Wastes were aptly named. Only a fool would travel these lands. Looks like this is the start of the path." },
 		{ "key": "greyWastesPathSplit_event", "value": "The road is divided by mountainous hills. These paths will never cross." },
 		{ "key": "outpostCandleUsed_event", "value": "There's a recently used outpost nearby. Unkindled might be close." },
 		{ "key": "stingerBurrows_event", "value": "Stingers paralyze their prey and store them for later in burrows. There might be something useful. There might be someone home." },

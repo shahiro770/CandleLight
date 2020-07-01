@@ -399,6 +399,20 @@ namespace Party {
         }
 
         /// <summary>
+        /// Returns true if a given class is in the party
+        /// </summary>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public bool IsClassInParty(string className) {
+            foreach (PartyMember pm in partyMembersAll) {
+                if (pm.className == className) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Equips a gear item to the activePartyMember
         /// </summary>
         /// <param name="id"> ItemDisplay </param>

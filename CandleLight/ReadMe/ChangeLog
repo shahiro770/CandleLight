@@ -18,25 +18,35 @@ Make combat and eventMAnagers disable the special panel when possible
 Bug: Added in missing background and made endGreyWastes subArea to simplify code
 Bug: combat prompt text blinks out instead of fading out
 Bug: Bleeding status effect goes upwards instead of downwards on partymember
-
+Bug: Fix the fraeking toastPanels
+Bug: Went from tombsGreyWastes to LargeTomb
 Feature: Tutorial
     - Make a tutorial greyhide
     - For now just make text prompt tell player what to do next
     - Make it so UI slowly lights up
     - Make toastpanel say partyMember joined you
     - Set player to level 0 at the start (first fight with greyhide will level them up, allowing them their first skill point)
+
 Feature: Companionship
     - Make it so partyMembers can talk about recent stuff at none events
     - Replace "friend" text with name text of companion
-
-Bug: Fix the fraeking toastPanels
-Bug: How did tristhal break the game off of safeguard?
-Bug: Candlemancy kinda broken 
-Bug: status effects don't display in the statusPanel
-Fix: Make eventdescription hide on hover
-Fix: Make it so active skills are greyed out if 4 actives are already selected
+Fix: Make it when tabMAnager !!, they bright white
+Fix: Make eventdescription fade on hover (implemented but not enabled cause buggy)
 Fix: The min/max in bars breaks for 3 digit mins and maxs
+
+Bug: Candlemancy kinda broken 
+Fix: status effects don't display in the statusPanel
+Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: Make status effects do the fade animation monster displays do
+Fix: add hover to stats
+Fix: Add smart item selection
+Fix: Add candle usages to the help tip
+Fix: Keep a counter for player's candle inventory
+Fix: Tiny arrow to swap party member
+Fix: Add heal/focus animations on effect
+Bug: Don't let them cast on dead person
+Bug: Don't let party member buff attacks get cast on monsters
+Bug: Combat prompt was weird at the start
 
 
 NEAR FUTURE
@@ -48,8 +58,8 @@ Feature: Ending and beginning cutscenes
 
 FUTURE
 ------
-Future: Prevent rekindling with no candles to rekindle
-Clean Up: Might be stupid how im setting null type items to load stuff in on partyMember
+Future: Add combat order on the side
+Future: Animation skip on click
 
 
 

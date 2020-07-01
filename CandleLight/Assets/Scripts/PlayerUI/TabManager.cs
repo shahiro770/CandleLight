@@ -115,6 +115,7 @@ namespace PlayerUI {
             if (tabTexts[index].key.EndsWith("_(!)") == false) {
                 tabTexts[index].SetKey(tabTexts[index].key + "_(!)");
             }
+            btss[index].SetColor("highlighted");    // draw more attention 
         }
 
         /// <summary>

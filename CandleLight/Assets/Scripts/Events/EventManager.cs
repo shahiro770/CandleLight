@@ -499,7 +499,7 @@ namespace Events {
             subAreaProgress = 0;
             
             if (currentSubArea.name == "tombsGreyWastes") {
-                areaProgress = 7;
+                areaProgress = 6;
             }
             else {
                 areaProgress++;;

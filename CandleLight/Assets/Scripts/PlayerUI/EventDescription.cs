@@ -310,7 +310,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="targetAlpha"> Int 0 or 1 </param>
         /// <returns> IEnumerator for smooth animation </returns>
-        private IEnumerator Fade(int targetAlpha) {
+        public IEnumerator Fade(int targetAlpha) {
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = timeSinceStarted * lerpSpeed;

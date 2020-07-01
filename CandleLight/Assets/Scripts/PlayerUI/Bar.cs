@@ -116,6 +116,7 @@ namespace PlayerUI {
         /// <param name="immediate"></param>
         private void SetDisplayCurrentOverMax(bool immediate = false) {
             text.SetText(currentAmount.ToString() + "/" + maxAmount.ToString());
+            text.ScaleFont();
             fillAmount = currentAmount / maxAmount;
             if (immediate) {
                 frontFill.fillAmount = fillAmount;

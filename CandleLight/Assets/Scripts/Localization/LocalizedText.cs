@@ -119,6 +119,19 @@ namespace Localization {
         }
 
         /// <summary>
+        /// Make the font smaller if text is a little long 
+        /// Only used in bar.cs to deal with long hp and mp bar numbers
+        /// </summary>
+        public void ScaleFont() {
+            if (meshText.text.Length > 6) {
+                meshText.fontSize = 13;
+            }
+            else {
+                meshText.fontSize = 14;
+            }
+        }
+
+        /// <summary>
         /// Sets the colour of the meshText
         /// </summary>
         /// <param name="newColor"> Color32 object (0 to 255 for each param in rgb) </param>
