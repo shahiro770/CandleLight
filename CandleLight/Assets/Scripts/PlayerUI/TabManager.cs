@@ -72,7 +72,7 @@ namespace PlayerUI {
             }
 
             if (triggerTutorial == true) {
-                if (EventManager.instance.TutorialTabOnClick(index) == true) {
+                if (EventManager.instance.TutorialTabOnClick(index, panels[0].GetPanelName() == PanelConstants.PARTYPANEL) == true) {
                     triggerTutorial = false;
                 }
             }

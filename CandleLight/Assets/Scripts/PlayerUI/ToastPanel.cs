@@ -12,6 +12,7 @@ namespace PlayerUI {
         public LocalizedText descriptionText;
         public Image textBackground;        /// <value> Image background for text component </value>
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
+        public LayoutElement le;
 
         public enum toastType { HP, MP, EXP, SE, PROGRESS, QUESTCOMPLETE };
 
@@ -148,6 +149,15 @@ namespace PlayerUI {
         /// <param name="targetAlpha"> Int 0 or 1 </param>
         /// <returns> IEnumerator for smooth animation </returns>
         private IEnumerator Fade(int targetAlpha) {
+            if (targetAlpha == 1) {
+                le.flexibleHeight = 1;  // lets the textbackground expand to fit the text first
+                le.flexibleWidth = 1;
+                yield return new WaitForEndOfFrame();   // wait a frame to update
+                le.preferredHeight = textBackground.rectTransform.sizeDelta.y;  // then size the preferred size of the layout element
+                le.preferredWidth = textBackground.rectTransform.sizeDelta.x;
+                le.flexibleHeight = 0;  // disable the flexibility after  to not squish additional toastPanels
+                le.flexibleWidth = 0;
+            }
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = timeSinceStarted * lerpSpeed;

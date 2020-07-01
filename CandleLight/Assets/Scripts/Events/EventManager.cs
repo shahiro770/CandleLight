@@ -369,35 +369,54 @@ namespace Events {
                 SetTutorialNotification("combat2", 0);
                 tutorialProg++;
             }
-            else if (tutorialProg == 8 && CombatManager.instance.inCombat == false) {
+            else if (tutorialProg == 8) {
+                SetTutorialNotification("combat3", 0);
+                tutorialProg++;
+            }
+            else if (tutorialProg == 9) {
+                SetTutorialNotification("combat4", 0);
+                tutorialProg++;
+            }
+            else if (tutorialProg == 10) {
+                SetTutorialNotification("combat5", 0);
+                tutorialProg++;
+            }
+            else if (tutorialProg == 11 && CombatManager.instance.inCombat == false) {
                 SetTutorialNotification("skills0", 0);
             }
             // skills panel is enabled after first combat event
-            else if (tutorialProg == 9) {
+            else if (tutorialProg == 12) {
                 utilityTabManager.SetButtonInteractableAndName(2);
                 utilityTabManager.ExciteTab(2);
                 AddQuest(currentResult.questName);
             }
         }
 
-        public bool TutorialTabOnClick(int index) {
-            if (tutorialProg == 0 && itemsTabManager.panels[index].GetPanelName() == PanelConstants.SPECIALPANEL) {
+        /// <summary>
+        /// Makes a tutorial pop up when a tab button is clicked.
+        /// This is done to make sure the player isn't overwhelmed by instructions too quickly.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="tabManager"> True means right tabManager, false means left tabManager</param>
+        /// <returns></returns>
+        public bool TutorialTabOnClick(int index, bool tabManager) {
+            if (tutorialProg == 0 && tabManager == false && itemsTabManager.panels[index].GetPanelName() == PanelConstants.SPECIALPANEL) {
                 SetTutorialNotification("special1", 1);
                 return true;
             }
-            else if (tutorialProg == 1 && utilityTabManager.panels[index].GetPanelName() == PanelConstants.PARTYPANEL) {
+            else if (tutorialProg == 1 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.PARTYPANEL) {
                 SetTutorialNotification("party1", 1);
                 return true;
             }
-            else if (tutorialProg == 4 && itemsTabManager.panels[index].GetPanelName() == PanelConstants.GEARPANEL) {               // the gear and candles tabs are added in the same event
+            else if (tutorialProg == 4 && tabManager == false && itemsTabManager.panels[index].GetPanelName() == PanelConstants.GEARPANEL) {               // the gear and candles tabs are added in the same event
                 SetTutorialNotification("gear1", 1);
                 return true;
             }
-            else if (tutorialProg == 8 && utilityTabManager.panels[index].GetPanelName() == PanelConstants.SKILLSPANEL) {
+            else if (tutorialProg == 11 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.SKILLSPANEL) {
                 SetTutorialNotification("skills1", 1);
                 return true;
             }
-            else if (tutorialProg == 9 && utilityTabManager.panels[index].GetPanelName() == PanelConstants.INFOPANEL) {
+            else if (tutorialProg == 12 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.INFOPANEL) {
                 SetTutorialNotification("info0", -1);
                 return true;
             }

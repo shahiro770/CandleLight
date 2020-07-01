@@ -23752,6 +23752,7 @@ MonoBehaviour:
   descriptionText: {fileID: 1817544240}
   textBackground: {fileID: 1839830810}
   textBackgroundCanvas: {fileID: 1839830807}
+  le: {fileID: 1101418321}
 --- !u!223 &1101418320
 Canvas:
   m_ObjectHideFlags: 0
@@ -23789,7 +23790,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: 210
-  m_PreferredHeight: 115
+  m_PreferredHeight: 35
   m_FlexibleWidth: 1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
@@ -42553,11 +42554,11 @@ RectTransform:
   m_Father: {fileID: 1731593848}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 375, y: -45.114998}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 375, y: -91}
   m_SizeDelta: {x: 210, y: 209}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.99999994}
 --- !u!114 &2121452825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42576,7 +42577,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 2
-  m_Spacing: 0
+  m_Spacing: 3
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -43569,6 +43570,7 @@ MonoBehaviour:
   descriptionText: {fileID: 1893132478510218434}
   textBackground: {fileID: 1413160378991278981}
   textBackgroundCanvas: {fileID: 8571726230743828993}
+  le: {fileID: 670490125773742228}
 --- !u!114 &670490125773742228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43584,8 +43586,8 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 46
+  m_PreferredWidth: 0
+  m_PreferredHeight: 0
   m_FlexibleWidth: 1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1

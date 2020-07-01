@@ -241,7 +241,12 @@ namespace Characters {
             MDEF = (int)(INT * 0.15 + LUK * 0.05);
             DOG = (int)(DEX * 0.2 + LUK * 0.1);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
-            critChance = (int)(LUK * 0.1) + baseCritChance;
+            if (LVL != 0) {
+                critChance = (int)(LUK * 0.1) + baseCritChance;
+            }
+            else {
+                critChance = 0; // tutorial prevents crits from the party so all tutorial blurbs can show up
+            }
             critMult = baseCritMult;
             HPRegen = baseHPRegen;
             MPRegen = baseMPRegen;
