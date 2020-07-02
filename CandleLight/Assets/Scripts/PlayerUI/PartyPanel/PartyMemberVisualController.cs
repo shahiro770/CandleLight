@@ -171,6 +171,10 @@ namespace Characters {
             }
         }
 
+        public void SetStatusBar(StatusEffectsBar seBar) {
+            seBar.Init(pm);
+        }
+
         /// <summary>
         /// Sets the EXP bar reference
         /// </summary>

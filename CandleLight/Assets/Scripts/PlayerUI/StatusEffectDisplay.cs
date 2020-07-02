@@ -4,6 +4,8 @@
 * Date: November 10, 2019
 * 
 * The StatusEffectDisplay class displays statusEffects in the UI in a nice square.
+* Uncomment code should statusEffectsBar ever get added back in
+*
 */
 
 using LocalizedText = Localization.LocalizedText;
@@ -25,6 +27,8 @@ namespace PlayerUI {
         public Tooltip t;
 
         private StatusEffect se;     /// <value>  statusEffect being displayed  </value>
+        // private StatusEffectDisplay sedMirroring;   /// <value> Large status effect display in the status bar currently mirroring this one </value>
+        // private StatusEffectDisplay sedOriginal;    /// <value> sed that is being mirrored </value>
         private string[] textKeys = new string[2];  /// <value> Text keys for status effects </value>    
         private string[] amounts = new string[2];   /// <value> Amounts to the displayed in tooltips </value>    
 
@@ -35,9 +39,23 @@ namespace PlayerUI {
             this.se = se;
             gameObject.SetActive(false);
             se.SetDisplay(this);
-            ColorBlock normalBlock = b.colors; 
-
+            SetColour();
             UpdateText();
+            gameObject.SetActive(true);
+            SetTooltip();
+        }
+
+        public void InitMirror(StatusEffectDisplay sed) {
+            this.se = sed.se;
+            gameObject.SetActive(false);
+            SetColour();
+            UpdateText();
+            gameObject.SetActive(true);
+            SetTooltip();
+        }
+
+        public void SetColour() {
+            ColorBlock normalBlock = b.colors; 
 
             switch(se.name) {
                 case StatusEffectConstants.BURN:
@@ -171,8 +189,6 @@ namespace PlayerUI {
 
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColor("normal");
-            gameObject.SetActive(true);
-            SetTooltip();
         }
 
         public void SetTooltip() {
@@ -211,9 +227,15 @@ namespace PlayerUI {
         public void UpdateText() {
             if (se.duration > 9) {
                 durationText.SetText("?");
+                // if (sedMirroring != null) {
+                //     sedMirroring.durationText.SetText("?");
+                // }
             }
             else {
                 durationText.SetText(se.duration.ToString());
+                // if (sedMirroring != null) {
+                //     sedMirroring.durationText.SetText(se.duration.ToString());
+                // }
             }
         }
 
@@ -235,7 +257,29 @@ namespace PlayerUI {
             }
 
             t.SetAmountTextMultiple( "description", textKeys, amounts);
+            
+            // if (sedMirroring != null) {
+            //     sedMirroring.UpdateValue();
+            // }
         }
+
+        // public void MirrorDisplay(StatusEffect se) {
+        //     UnmirrorDisplay();
+        //     InitMirror(se.sed);
+        //     se.sed.sedMirroring = this;  // this sed is now mirroring another
+        //     sedOriginal = se.sed;        // original sed
+        // }
+
+        // public void UnmirrorDisplay() {
+        //     if (sedOriginal != null) {  // will be null if no statusEffects on the current displayed partyMember
+        //         sedOriginal.sedMirroring = null;
+        //     }
+        //     sedOriginal = null;
+        // }
+
+        // public void UmirrorMirroringDisplay() {
+        //     sedMirroring.UnmirrorDisplay();
+        // }
     }
 }
  

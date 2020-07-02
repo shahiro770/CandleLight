@@ -78,6 +78,7 @@ namespace Characters {
         }
 
         public void DestroyDisplay() {
+            //sed.UmirrorMirroringDisplay();
             UnityEngine.GameObject.Destroy(sed.gameObject);
         }
 

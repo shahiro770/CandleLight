@@ -5,7 +5,7 @@
 * 
 * The StatusPanel class is used to display all status bars of a partyMember.
 * This includes the player's HPBar, MPBar, and EffectBar.
-*
+* Uncomment code should statusEffectsBar ever be added in
 */
 
 using Characters;
@@ -16,9 +16,9 @@ namespace PlayerUI {
 
     public class StatusPanel : Panel {
 
-        public Bar HPBar;               /// <value> HPBar of active partyMember </value>
-        public Bar MPBar;               /// <value> MPBar of active partyMember </value>
-        public EffectsBar effectsBar;   /// <value> EffectBar of active partyMember </value>
+        public Bar HPBar;                   /// <value> HPBar of active partyMember </value>
+        public Bar MPBar;                   /// <value> MPBar of active partyMember </value>
+        public StatusEffectsBar seBar;      /// <value> Redundant display of active partyMember's ses </value>
         public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember </value>
 
         /// <summary>
@@ -31,6 +31,7 @@ namespace PlayerUI {
             }
 
             pmvc.SetHPAndMPBar(GetPanelName(), HPBar, MPBar);
+            //pmvc.SetStatusBar(seBar);
             this.pmvc = pmvc;
         }
 
