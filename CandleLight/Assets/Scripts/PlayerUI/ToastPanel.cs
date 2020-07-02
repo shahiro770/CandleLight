@@ -8,6 +8,8 @@ namespace PlayerUI {
 
     public class ToastPanel : MonoBehaviour {
         
+        /* external component references */
+        public Button b;
         public LocalizedText titleText;
         public LocalizedText descriptionText;
         public Image textBackground;        /// <value> Image background for text component </value>
@@ -69,6 +71,7 @@ namespace PlayerUI {
             }
             descriptionText.SetMultipleKeysAndAppend(descriptionKeys, amountStrings);
 
+            b.interactable = false;
             SetVisible(true);
             StartCoroutine(FadeOut());
         }
@@ -80,6 +83,8 @@ namespace PlayerUI {
         public void SetShopNotification() {
             titleText.SetKey("shop_toast");
             descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
+            
+            b.interactable = false;
             SetVisible(true);
         }
 
@@ -90,6 +95,8 @@ namespace PlayerUI {
         public void SetQuestNotification(string questName) {
             titleText.SetKey("QUEST_toast");
             descriptionText.SetKey(questName + "_quest_title");
+
+            b.interactable = false;
             SetVisible(true);
             StartCoroutine(FadeOut());
         }
@@ -101,6 +108,8 @@ namespace PlayerUI {
         public void SetTutorialNotification(string tutorialName) {
             titleText.SetKey("TUTORIAL_toast");
             descriptionText.SetKey(tutorialName + "_tutorial");
+
+            b.interactable = true;
             SetVisible(true);
         }
 
@@ -111,6 +120,8 @@ namespace PlayerUI {
         public void SetPartyMemberNotification(string pmName) {
             titleText.SetKey("PARTYMEMBER_toast");
             descriptionText.TextAndAppendKey(pmName, "joined_party");
+
+            b.interactable = false;
             SetVisible(true);
             StartCoroutine(FadeOut());
         }

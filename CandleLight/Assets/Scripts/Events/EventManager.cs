@@ -91,8 +91,6 @@ namespace Events {
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
         private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>
-        private bool firstCandle = true;        /// <value> Flag for if the player has encountered their first candle </value> 
-        private bool firstShop = true;          /// <value> Flag for if the player has encountered their first shop </value> 
 
         #region [Initialization] Initialization 
 
@@ -651,7 +649,7 @@ namespace Events {
                 actionsPanel.ClearAllActions();
                 rewardsPanel.SetVisible(true);
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
-                if (GameManager.instance.isTutorial == true) {
+                if (GameManager.instance.isTutorial == true || GameManager.instance.isTips == true) {
                     SetToastPanelsVisible(false);
                 }
 
@@ -759,8 +757,8 @@ namespace Events {
                 }
             }
 
-            if (GameManager.instance.isTips == true && firstCandle == true && r.itemType == ItemConstants.CANDLE) {
-                firstCandle = false;
+            if (GameManager.instance.isTips == true && GameManager.instance.firstCandle == true && r.itemType == ItemConstants.CANDLE) {
+                GameManager.instance.firstCandle = false;
                 SetTutorialNotification("candles0");
             }
 
@@ -986,8 +984,8 @@ namespace Events {
 
                     eventDescription.SetKey(currentResult.resultKey);
 
-                    if (GameManager.instance.isTips == true && firstShop == true) {
-                        firstShop = false;
+                    if (GameManager.instance.isTips == true && GameManager.instance.firstShop == true) {
+                        GameManager.instance.firstShop = false;
                         SetTutorialNotification("shop");
                     }
                     break;
@@ -1104,6 +1102,7 @@ namespace Events {
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
+                print("HELLO?");
                 StartCoroutine(PartyManager.instance.ChangeHPAll(r.HPAmount, type));
                 changes[(int)ToastPanel.toastType.HP] = true;
                 amounts[(int)ToastPanel.toastType.HP] = r.HPAmount.ToString();

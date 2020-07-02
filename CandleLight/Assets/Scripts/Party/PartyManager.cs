@@ -8,6 +8,7 @@
 *
 */
 
+using Candle = Items.Candle;
 using ClassConstants = Constants.ClassConstants;
 using Characters;
 using Events;
@@ -488,6 +489,22 @@ namespace Party {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.Rekindle();
             }
+        }
+
+        /// <summary>
+        /// Returns true if the party has someone with a candle equipped, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        public bool IsCandlesEquipped() {
+            foreach(PartyMember pm in partyMembersAlive) {
+                foreach (Candle c in pm.activeCandles) {
+                    if (c != null) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public int GetSkillPoints() {

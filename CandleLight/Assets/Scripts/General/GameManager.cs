@@ -24,6 +24,9 @@ namespace General {
         public string areaName { get; set; }            /// <value> Name of area being explored </value>
         public bool isTutorial = true;                  /// <value> Flag for if the tutorial is enabled (has to be changed from editor) </value>
         public bool isTips = true;                      /// <value> Flag for if helpful tips should show up when possible </value>
+        public bool firstCandle = true;                 /// <value> Flag for if the player hasn't encountered their first candle </value> 
+        public bool firstShop = true;                   /// <value> Flag for if the player hasn't encountered their first shop </value> 
+        public bool firstCandleCombat = true;           /// <value> Flag for if the player hasn't brought a candle into combat for the first time </value>
 
         private string activeScene = "";                /// <value> Current scene being displayed </value>
         private string initialScene = "Loading";        /// <value> Scene to begin game with </value>

@@ -38,15 +38,19 @@ Bug: Don't let party member buff attacks get cast on monsters
 Bug: Tutorial slightly broken if you don't click all buttons
 Fix: add hover to stats
 Bug: Non-tutorial runs don't start with starting gear
+Bug: SED was rendering twice
+Balance: Reduced HP from DEX
+Fix: Tutorial notifications can be closed by clicking on them
 
+Fix: Make a way to halt a fading coroutine should another one start
+Bug: HP is not increasing from outposts
+Bug: Prevent rekindling with no active candles
+Bug: No quest at the start of non tutorial runs
 Bug: Candlemancy kinda broken 
-Fix: status effects don't display in the statusPanel
 Fix: Make it so active skills are greyed out if 4 actives are already selected
-Fix: Make status effects do the fade animation monster displays do
 Fix: Add candle usages to the help tip
 Fix: Keep a counter for player's candle inventory
 Bug: Combat prompt was weird at the start after losing a tutorial run
-
 
 NEAR FUTURE
 ----------------
@@ -56,10 +60,12 @@ Feature: Ending and beginning cutscenes
 
 FUTURE/MAYBE
 ------------
-Fix: Add heal/focus animations on effect
+UI: Make status effects do the fade animation monster displays do
+UI: status effects don't display in the statusPanel
+UI: Add heal/focus animations on effect
 Future: Add combat order on the side
 Future: Animation skip on click
-Fix: Tiny arrow to swap party member
+UI: Tiny arrow to swap party member
 Tutorial: Clicking actions progresses the tutorial, but this might not be the worst thing
 
 

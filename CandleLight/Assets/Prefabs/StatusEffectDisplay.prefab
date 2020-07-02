@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6806169378713360753}
   - component: {fileID: 998330418290671360}
   - component: {fileID: 1696697161983649812}
+  - component: {fileID: 9173158992073267513}
   m_Layer: 5
   m_Name: StatusEffectDisplay
   m_TagString: Untagged
@@ -154,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 029fb3e74588e42dabd8b3cce325bd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectsAnimator: {fileID: 9173158992073267513}
   durationText: {fileID: 8706477442151435188}
   b: {fileID: 3229748672515454985}
   bts: {fileID: 6806169378713360753}
@@ -172,6 +174,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   b: {fileID: 3229748672515454985}
   t: {fileID: 6829711244701561270}
+--- !u!95 &9173158992073267513
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170406270222699413}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2a8dd812a76884a5791c47134b2dccbb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5894893085888343616
 GameObject:
   m_ObjectHideFlags: 0

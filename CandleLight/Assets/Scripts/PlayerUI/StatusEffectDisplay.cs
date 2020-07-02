@@ -11,6 +11,7 @@
 using LocalizedText = Localization.LocalizedText;
 using StatusEffect = Characters.StatusEffect;
 using StatusEffectConstants = Constants.StatusEffectConstants;
+using System.Collections;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ namespace PlayerUI {
     public class StatusEffectDisplay : MonoBehaviour {
 
         /* external component references */
+        public Animator effectsAnimator;
         public LocalizedText durationText;   /// <value> Text displaying the number of turns this SE has left </value>
         public Button b;                    /// <value> Button to hover over to trigger tooltip </value>
         public ButtonTransitionState bts;   /// <value> Button's visual state controller </value>
@@ -42,6 +44,7 @@ namespace PlayerUI {
             SetColour();
             UpdateText();
             gameObject.SetActive(true);
+            // PlaySpawnAnimation();
             SetTooltip();
         }
 
@@ -279,6 +282,19 @@ namespace PlayerUI {
 
         // public void UmirrorMirroringDisplay() {
         //     sedMirroring.UnmirrorDisplay();
+        // }
+
+        // public IEnumerator PlayAnimation(Animator a, string trigger) {
+        //     a.SetTrigger(trigger);
+        //     do {
+        //         print("hello");
+        //         yield return null;    
+        //     } while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+        //     a.ResetTrigger(trigger); // Reset the trigger just in case
+        // }
+
+        // public void PlaySpawnAnimation() {
+        //     StartCoroutine(PlayAnimation(effectsAnimator, "spawn"));
         // }
     }
 }

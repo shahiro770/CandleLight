@@ -233,7 +233,7 @@ namespace Characters {
             }
 
             /* secondary stats */
-            HP = (int)(STR * 2.25 + DEX * 1.5);
+            HP = (int)(STR * 2.25 + DEX * 1.25);
             MP = (int)(INT * 1.25 + LUK * 0.5);
             PATK = (int)(STR * 0.5 + DEX * 0.25);
             MATK = (int)(INT * 0.5 + LUK * 0.25); 

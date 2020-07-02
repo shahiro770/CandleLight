@@ -148,7 +148,6 @@ namespace PlayerUI {
 
         public void AddStatusEffectDisplay(StatusEffect se) {
             GameObject newSED = Instantiate(SEDisplayPrefab);
-            newSED.GetComponent<StatusEffectDisplay>().Init(se);
             StatusEffectDisplay SEDComponent = newSED.GetComponent<StatusEffectDisplay>();
             SEDComponent.Init(se);
             SEDComponent.b.interactable = b.interactable;  // sed will be uninteractable if pmd is uninteractable

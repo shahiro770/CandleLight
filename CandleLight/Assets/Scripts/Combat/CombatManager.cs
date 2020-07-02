@@ -185,10 +185,11 @@ namespace Combat {
                   
             if (eventDescription.HasText()) {
                 yield return new WaitForSeconds(1.5f);   
+                
                 eventDescription.ClearText();    
             }
             else {
-                yield return new WaitForSeconds(0.6f);   
+                yield return new WaitForSeconds(0.3f);   
             }   
         }
 
@@ -269,6 +270,11 @@ namespace Combat {
                 EnableAllButtonsInSidePanels();
                 if (GameManager.instance.isTutorial == true) {
                     EventManager.instance.ProgressTutorial();
+                }
+                if (GameManager.instance.isTips == true && GameManager.instance.firstCandleCombat == true 
+                && PartyManager.instance.IsCandlesEquipped() == true) {
+                    EventManager.instance.SetTutorialNotification("candles1");
+                    GameManager.instance.firstCandleCombat = false;
                 }
             }
         }

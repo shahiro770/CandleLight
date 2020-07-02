@@ -405,7 +405,7 @@ namespace Characters {
                     }
                 }
 
-                if (isStatus) {
+                if (isStatus == true && CheckDeath() == false) {
                    AddStatusEffect(a.seName, a.seDuration, c);
                 }
                 
