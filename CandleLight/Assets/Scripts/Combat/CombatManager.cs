@@ -52,7 +52,7 @@ namespace Combat {
         public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
         private EventSystem es;                                             /// <value> EventSystem reference </value>
-        private List<PartyMember> partyMembers = new List<PartyMember>();   /// <value> List of partyMembers </value>
+        private List<PartyMember> partyMembersAll = new List<PartyMember>();    /// <value> List of partyMembers </value>
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers that are alive </value>
         private PartyMember activePartyMember;                              /// <value> Current partyMember preparing to act </value>
         private PartyMember selectedPartyMember;                            /// <value> Selected partyMember for heal/buff from party </value>
@@ -103,10 +103,10 @@ namespace Combat {
             monsters = new List<Monster>();
             monstersKilled = new List<Monster>();
             partyMembersAlive = new List<PartyMember>();
-            partyMembers = PartyManager.instance.GetPartyMembers();
+            partyMembersAll = PartyManager.instance.GetPartyMembers();
             PartyManager.instance.GetChampionChanceAll();
-            countID = partyMembers.Count + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
-            foreach (PartyMember pm in partyMembers) {
+            countID = partyMembersAll.Count + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
+            foreach (PartyMember pm in partyMembersAll) {
                 if (pm.CheckDeath() == false) {
                     partyMembersAlive.Add(pm);
                     if (pm.className == ClassConstants.ARCHER) {
@@ -185,7 +185,6 @@ namespace Combat {
                   
             if (eventDescription.HasText()) {
                 yield return new WaitForSeconds(1.5f);   
-                
                 eventDescription.ClearText();    
             }
             else {
@@ -444,14 +443,13 @@ namespace Combat {
             }
             DestroyMonsters(monstersToRemove);
 
-            foreach (PartyMember pm in partyMembers) {
+            foreach (PartyMember pm in partyMembersAlive) {
                 if (pm.CheckDeath()) {
                     cq.RemoveCharacter(pm.ID);
                     partyMembersToRemove.Add(pm);
                 }
             }
             foreach (PartyMember pm in partyMembersToRemove) {
-                partyMembers.Remove(pm);
                 partyMembersAlive.Remove(pm);
             }
 
@@ -659,14 +657,13 @@ namespace Combat {
 
             DestroyMonsters(monstersToRemove);
 
-            foreach (PartyMember pm in partyMembers) {
+            foreach (PartyMember pm in partyMembersAlive) {
                 if (pm.CheckDeath()) {
                     cq.RemoveCharacter(pm.ID);
                     partyMembersToRemove.Add(pm);
                 }
             }
             foreach (PartyMember pm in partyMembersToRemove) {
-                partyMembers.Remove(pm);
                 partyMembersAlive.Remove(pm);
             }
 

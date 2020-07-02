@@ -48,7 +48,7 @@ namespace PlayerUI {
         public TooltipTextMesh ACCtt;   /// <value> </value>
         public TooltipTextMesh DOGtt;   /// <value> </value>
         public TooltipTextMesh CRITtt;  /// <value> </value>
-
+        public float labelWidths = 48f; /// <value> Width of all of the labels to set tooltip positions IMPORTANT: Can be set externally</value>
 
         public PartyMemberVisualController pmvc;    /// <value> pmvc of pm currently being displayed</value>
         private string LVLText = LocalizationManager.instance.GetLocalizedValue("LVL_label");   /// <value> "LVL" </value>
@@ -91,6 +91,18 @@ namespace PlayerUI {
             CRITtt.SetKey("title", "CRIT_stat_title");
             CRITtt.SetKey("subtitle", "CRIT_stat_sub");
             CRITtt.SetKey("description", "CRIT_stat_des");
+
+            STRtt.SetImageDisplayBackgroundWidth(labelWidths);
+            DEXtt.SetImageDisplayBackgroundWidth(labelWidths);
+            INTtt.SetImageDisplayBackgroundWidth(labelWidths);
+            LUKtt.SetImageDisplayBackgroundWidth(labelWidths);
+            PATKtt.SetImageDisplayBackgroundWidth(labelWidths);
+            MATKtt.SetImageDisplayBackgroundWidth(labelWidths);
+            PDEFtt.SetImageDisplayBackgroundWidth(labelWidths);
+            MDEFtt.SetImageDisplayBackgroundWidth(labelWidths);
+            ACCtt.SetImageDisplayBackgroundWidth(labelWidths);
+            DOGtt.SetImageDisplayBackgroundWidth(labelWidths);
+            CRITtt.SetImageDisplayBackgroundWidth(labelWidths);
         }
 
         /// <summary>

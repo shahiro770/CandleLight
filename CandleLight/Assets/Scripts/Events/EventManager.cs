@@ -79,6 +79,7 @@ namespace Events {
         private string[] monstersToSpawn;       /// <value> List of monsters to spawn </value>
         private string currentAreaName;         /// <value> Name of current area </value>
         private string nextSubArea = "";        /// <value> Name of next subArea to move to </value>
+        private string mainQuestName = "theOnlyHope";   /// <value> Name of the main quest to add in the event player doesn't do tutorial </value>
         private int bgPackNum = 0;              /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;           /// <value> Area progress increments by 1 for each main event the player completes </value>
         private int consumablesNum = 0;         /// <value> Number of consumables to be found in the subArea </value>
@@ -297,6 +298,7 @@ namespace Events {
             else {  // skip the tutorial
                 areaProgress = 1;
                 EquipPartyStartingGear();
+                AddQuestNoNotification(mainQuestName);  // main story quest (TODO: Make this a constant?)
                 GetStartEvent();
             }
         }
@@ -309,6 +311,7 @@ namespace Events {
         /// Starts the tutorial by disabling most of the game's features
         /// </summary>
         public void StartTutorial() {
+            tutorialProg = 0;
             itemsTabManager.SetTabsEmpty();
             utilityTabManager.SetTabsEmpty();
             GetStartEventTutorial();
@@ -459,8 +462,9 @@ namespace Events {
         }
         
         public void EndTutorial() {
-            tutorialProg++;             // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
-            GameManager.instance.isTutorial = false;
+            subAreaProgress += 100;
+            tutorialProg++;             
+            GameManager.instance.isTutorial = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
         }
 
         #endregion
@@ -503,8 +507,6 @@ namespace Events {
         /// Gets the next event in the subArea "main" of an area
         /// </summary>
         public void GetNextMainEvent() {
-            subAreaProgress = 0;
-            
             if (currentSubArea.name == "tombsGreyWastes") {
                 areaProgress = 6;
             }
@@ -512,12 +514,7 @@ namespace Events {
                 areaProgress++;;
             }
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
-            if (areaProgress >= currentSubArea.eventNum) {
-                currentEvent = currentSubArea.GetEvent(currentSubArea.eventNum - 1);
-            }
-            else {
-                currentEvent = currentSubArea.GetEvent(areaProgress);
-            }
+            currentEvent = currentSubArea.GetEvent(areaProgress);
         }
 
         /// <summary>
@@ -990,15 +987,26 @@ namespace Events {
                     }
                     break;
                 case ResultConstants.REKINDLE:
-                    PartyManager.instance.Rekindle();
-
-                    eventDescription.SetKey(currentResult.resultKey);
+                    if (PartyManager.instance.IsCandlesEquipped() == true) {
+                        PartyManager.instance.Rekindle();
+                        eventDescription.SetKey(currentResult.resultKey);
+                    }
+                    else {
+                        changeSprite = false;
+                        eventDescription.SetNoRekindleText();
+                    }
                     break;
                 case ResultConstants.REKINDLEANDLEAVE:
-                    PartyManager.instance.Rekindle();
+                    if (PartyManager.instance.IsCandlesEquipped() == true) {
+                        PartyManager.instance.Rekindle();
 
-                    eventDescription.SetKey(currentResult.resultKey);
-                    actionsPanel.TravelActions();
+                        eventDescription.SetKey(currentResult.resultKey);
+                        actionsPanel.TravelActions();
+                    }
+                    else {
+                        changeSprite = false;
+                        eventDescription.SetNoRekindleText();
+                    }
                     break;
                 case ResultConstants.QUEST:
                     currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
@@ -1052,7 +1060,6 @@ namespace Events {
                     GameManager.instance.LoadNextScene("MainMenu");
                     break;
                 case ResultConstants.ENDTUT:
-                    subAreaProgress += 100;
                     EndTutorial();
                     GetNextEvent();
                     break;
@@ -1102,7 +1109,6 @@ namespace Events {
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
-                print("HELLO?");
                 StartCoroutine(PartyManager.instance.ChangeHPAll(r.HPAmount, type));
                 changes[(int)ToastPanel.toastType.HP] = true;
                 amounts[(int)ToastPanel.toastType.HP] = r.HPAmount.ToString();
@@ -1188,6 +1194,14 @@ namespace Events {
         public void AddQuest(string questName) {
             infoPanel.AddQuest(questName);
             SetQuestNotification(questName);
+        }
+
+        /// <summary>
+        /// Tells the infoPanel to add a quest, but no notification for the player
+        /// </summary>
+        /// <param name="questName"></param>
+        public void AddQuestNoNotification(string questName) {
+            infoPanel.AddQuest(questName);
         }
 
         /// <summary>

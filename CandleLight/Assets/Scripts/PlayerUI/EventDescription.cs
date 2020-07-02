@@ -272,6 +272,13 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Displays text informing the player they have nothing to rekindle
+        /// </summary>
+        public void SetNoRekindleText() {
+            eventText.SetText(noRekindleText);
+        }
+
+        /// <summary>
         /// Stop displaying and remove all text
         /// </summary>
         public void ClearText() {

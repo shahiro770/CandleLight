@@ -15,6 +15,8 @@ namespace PlayerUI {
 
         public static UIManager instance;             /// <value> Global instance </value>
 
+        public Color32 unusableColour = new Color32(196, 36, 48, 255);  /// <value> Red colour to indicate unusable, stored here to minimize space </value>
+        public Color32 subtitleColour = new Color32(178, 178, 178, 255);  /// <value> Grey colour for subtitles, stored here to minimize space </value>
         public ItemDisplay heldItemDisplay;
         public bool panelButtonsEnabled = true;
         public bool inShop = false;                 /// <value> Flag for if the player is currently in a shop </value>

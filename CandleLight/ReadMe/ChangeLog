@@ -27,12 +27,6 @@ Fix: Make eventdescription fade on hover (implemented but not enabled cause bugg
 Fix: The min/max in bars breaks for 3 digit mins and maxs
 Bug: EventDisplay sizing and HidefromThePack size was wrong
 Fix: Add smart item selection
-
-CURRENTLY DOING
----------------
-Feature: Companionship
-    - Make it so partyMembers can talk about recent stuff at none events
-    - Replace "friend" text with name text of companion
 Bug: Don't let them cast on dead person
 Bug: Don't let party member buff attacks get cast on monsters
 Bug: Tutorial slightly broken if you don't click all buttons
@@ -42,24 +36,40 @@ Bug: SED was rendering twice
 Balance: Reduced HP from DEX
 Fix: Tutorial notifications can be closed by clicking on them
 
-Fix: Make a way to halt a fading coroutine should another one start
+CURRENTLY DOING
+---------------
 Bug: HP is not increasing from outposts
 Bug: Prevent rekindling with no active candles
 Bug: No quest at the start of non tutorial runs
-Bug: Candlemancy kinda broken 
-Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: Add candle usages to the help tip
 Fix: Keep a counter for player's candle inventory
-Bug: Combat prompt was weird at the start after losing a tutorial run
+Bug: Unusable item colour doesn't revert
+Bug: Reposition statsPanel tooltips
+Bug: PartyPanel would rearrange partyMembers if someone died
+Balance: Dodge now scales primarily off of luck, and slightly off of dex
+Bug: Removing a partyMember in partyMembers 
+
+Bug: ToastPanel's don't fade in properly
+Feature: Companionship
+    - Make it so partyMembers can talk about recent stuff at none events
+    - Replace "friend" text with name text of companion
+
+UNVERIFIED
+----------
+Bug: Combat prompt weird
+Bug: Candlemancy kinda bugged but need to figure out why 
 
 NEAR FUTURE
 ----------------
+Fix: Put all loading for everything at the start
 Feature: Sound effects and music
 Feature: Saving
 Feature: Ending and beginning cutscenes
 
 FUTURE/MAYBE
 ------------
+Fix: Make it so active skills are greyed out if 4 actives are already selected
+Fix: Make a way to halt a fading coroutine should another one start
 UI: Make status effects do the fade animation monster displays do
 UI: status effects don't display in the statusPanel
 UI: Add heal/focus animations on effect

@@ -29,7 +29,6 @@ namespace Party {
         /* external component references */
         public GameObject partyMember;          /// <value> partyMember game object to instantiate </value>
 
-        public Color32 unusableColour = new Color32(196, 36, 48, 255);  /// <value> Red colour to indicate unusable, stored here to minimize space </value>
         public string storedPartyMember;        /// <value> Classname of the partyMember to add </value>
         public int bonusChampionChance = 0;     /// <value> Chance of encountering champion monsters, summed from all partyMembers </value>
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
@@ -107,15 +106,7 @@ namespace Party {
         /// </summary>
         /// <returns> List of partyMembers </returns>
         public List<PartyMember> GetPartyMembers() {
-            List<PartyMember> partyMembers = new List<PartyMember>();
-            foreach (PartyMember pm in partyMembersAlive) {
-                partyMembers.Add(pm);
-            }
-            foreach (PartyMember pm in partyMembersDead) {
-                partyMembers.Add(pm);
-            }
-
-            return partyMembers;
+            return partyMembersAll;
         }
 
         /// <summary>
@@ -269,7 +260,7 @@ namespace Party {
         public IEnumerator ChangeHPAll(int amount, string type = "none") {
             if (amount >= 0) {
                 foreach (PartyMember pm in partyMembersAlive) {
-                    pm.AddHPYield(amount);
+                    pm.AddHP(amount);
                 }
             }
             else {

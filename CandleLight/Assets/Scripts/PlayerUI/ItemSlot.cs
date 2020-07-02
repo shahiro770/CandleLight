@@ -448,6 +448,7 @@ namespace PlayerUI {
                 if (basicKeys[1] == ItemConstants.CONSUMABLE) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
+                    t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                     if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
                         t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
@@ -464,7 +465,10 @@ namespace PlayerUI {
                     else {
                         t.SetKeyMultiple("subtitle", new string[2] {currentItemDisplay.className + "_label", basicKeys[2] + "_item_sub"});
                         if (PartyManager.instance.IsClassInParty(currentItemDisplay.className) == false) {
-                            t.SetTextColour("subtitle", PartyManager.instance.unusableColour);
+                            t.SetTextColour("subtitle", UIManager.instance.unusableColour);
+                        }
+                        else {
+                            t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                         }
                     }
                     
@@ -479,6 +483,7 @@ namespace PlayerUI {
                 else if (basicKeys[1] == ItemConstants.CANDLE) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
+                    t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                     if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
                         t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
@@ -490,6 +495,7 @@ namespace PlayerUI {
                 else if (basicKeys[1] == ItemConstants.SPECIAL) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[2] + "_item_sub");
+                    t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                     t.SetKey("description", basicKeys[0] + "_item_des");
                     if (currentItemDisplay.subType == ItemConstants.SPECIAL) {  // very special items can't be sold, hence no value
                         t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue()));
