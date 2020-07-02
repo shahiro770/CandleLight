@@ -344,6 +344,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partyMember: {fileID: 2217478394506290349, guid: 12f8eecac5fd44407a088ea2e2ecc932,
     type: 3}
+  unusableColour:
+    serializedVersion: 2
+    rgba: 4281345220
+  storedPartyMember: 
   bonusChampionChance: 0
   itemDropMultiplier: 1
   WAXDropMultiplier: 1
@@ -422,6 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030266b89db8b4f47a7da2b2b670ef47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTutorial: 0
+  isTips: 1
 --- !u!4 &1827646565
 Transform:
   m_ObjectHideFlags: 0

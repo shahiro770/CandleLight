@@ -52,7 +52,8 @@ namespace PlayerUI {
 
         /// <summary>
         /// Initializes the itemSlot with an item, creating an itemDisplay
-        /// Only used for item creation on eventDisplays, hence the itemSlot type can be defaulted to "any"
+        /// Only used for item creation on eventDisplays, hence the itemSlot type can be defaulted to "any",
+        /// reverting "shop" type itemSlots 
         /// </summary>
         /// <param name="newItem"> Item object </param>
         public void PlaceItem(Item newItem) {
@@ -61,24 +62,22 @@ namespace PlayerUI {
             if (newItem != null) {  
                 SetVisible(true);
             
-                if (newItem.type == null) { // show the default sprite if nothing is in the slot (assuming there is a default sprite)
-                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255); //not this one
-                } 
-                else {
-                    GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
-                    currentItemDisplay = newItemDisplay.GetComponent<ItemDisplay>();
-                    currentItemDisplay.Init(newItem);
-                    currentItemDisplay.parentSlot = this;
+                GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
+                currentItemDisplay = newItemDisplay.GetComponent<ItemDisplay>();
+                currentItemDisplay.Init(newItem);
+                currentItemDisplay.parentSlot = this;
 
-                    newItemDisplay.transform.SetParent(this.transform, false);
-                    // hide the defaultSprite if it shows
-                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
-                }       
+                newItemDisplay.transform.SetParent(this.transform, false);
+                // hide the defaultSprite if it shows
+                defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
+                    
 
                 t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
                 SetTooltipText();     
             }
             else {
+                // show the default sprite if nothing is in the slot (assuming there is a default sprite)
+                defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255); 
                 SetVisible(true);
             }
         }
@@ -90,22 +89,29 @@ namespace PlayerUI {
         /// <param name="newItem"> Item data </param>
         public void PlaceItemInstant(Item newItem) {
             if (newItem != null) {  
-                if (newItem.type == null) {
-                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);
-                } 
-                else {
-                    GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
-                    currentItemDisplay = newItemDisplay.GetComponent<ItemDisplay>();
-                    currentItemDisplay.Init(newItem);
-                    currentItemDisplay.parentSlot = this;
+                GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
+                currentItemDisplay = newItemDisplay.GetComponent<ItemDisplay>();
+                currentItemDisplay.Init(newItem);
+                currentItemDisplay.parentSlot = this;
 
-                    newItemDisplay.transform.SetParent(this.transform, false);
-                    // hide the defaultSprite if it shows
-                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
-                }       
+                newItemDisplay.transform.SetParent(this.transform, false);
+                // hide the defaultSprite if it shows
+                defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);    
 
                 t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
                 SetTooltipText();
+
+                if (itemSlotSubType != ItemConstants.ANY) {    // bad way to determine if its a partyMember's equippable slot
+                    defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);
+                    if (itemSlotType == ItemConstants.GEAR) {
+                        PartyManager.instance.EquipGear(newItemDisplay.GetComponent<ItemDisplay>(), itemSlotSubType);
+                    }
+                    if (itemSlotType == ItemConstants.CANDLE) { 
+                        PartyManager.instance.EquipCandle(newItemDisplay.GetComponent<ItemDisplay>(), itemSlotSubType);
+                        CandlesPanel candlesPanel = (CandlesPanel)parentPanel;
+                        candlesPanel.SetUsable(itemSlotSubType[0] - '0');
+                    }
+                }
             }
             else {
                 defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 255);

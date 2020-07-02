@@ -288,10 +288,10 @@ namespace Characters {
             }
             statusPanel.DisplayPartyMember(this);
             if (gearPanel.isOpen) {
-                gearPanel.Init(this);
+                gearPanel.Init(pm);
             }
             else if (candlesPanel.isOpen) {
-                candlesPanel.Init(this);
+                candlesPanel.Init(pm);
             }
 
             if (skillsPanel.isOpen) {
@@ -312,10 +312,10 @@ namespace Characters {
                 statusPanel.DisplayPartyMember(this);
             }
             if (gearPanel.isOpen) {
-                gearPanel.Init(this);
+                gearPanel.Init(pm);
             }
             else if (candlesPanel.isOpen) {
-                candlesPanel.Init(this);
+                candlesPanel.Init(pm);
             }
 
             if (skillsPanel.isOpen) {

@@ -275,6 +275,14 @@ namespace Events {
         }
 
         /// <summary>
+        /// Equips the party with starting weapons
+        /// </summary>
+        public void EquipPartyStartingGear() {
+            PartyManager.instance.GetPartyMembers()[0].EquipGear(GenerateStartingWeapon(PartyManager.instance.GetPartyMembers()[0].className), ItemConstants.WEAPON);
+            PartyManager.instance.GetPartyMembers()[1].EquipGear(GenerateStartingWeapon(PartyManager.instance.GetPartyMembers()[1].className), ItemConstants.WEAPON);
+        }
+
+        /// <summary>
         /// Waits until the area is done being loaded before starting the player's
         /// adventure with their first event in the area.
         /// </summary>
@@ -290,6 +298,7 @@ namespace Events {
             }
             else {  // skip the tutorial
                 areaProgress = 1;
+                EquipPartyStartingGear();
                 GetStartEvent();
             }
         }

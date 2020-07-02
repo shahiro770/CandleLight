@@ -98,42 +98,6 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets the displayed candles of a partyMember, using a pmvc instead of a pm
-        /// </summary>
-        /// <param name="pmvc"></param>
-        public void Init(PartyMemberVisualController pmvc) {
-            if (this.pmvc.activeCandles[0] != null) {
-                activeCandles[0].HideItem();
-            }
-            if (this.pmvc.activeCandles[1] != null) {
-                activeCandles[1].HideItem();
-            }
-            if (this.pmvc.activeCandles[2] != null) {
-                activeCandles[2].HideItem();
-            }
-            
-            this.pmvc = pmvc;
-
-            if (pmvc.activeCandles[0] != null) {
-                activeCandles[0].ShowItem(pmvc.activeCandles[0]);
-            }
-            if (pmvc.activeCandles[1] != null) {
-                activeCandles[1].ShowItem(pmvc.activeCandles[1]);
-            }
-            if (pmvc.activeCandles[2] != null) {
-                activeCandles[2].ShowItem(pmvc.activeCandles[2]);
-            }
-
-            if (activeCandles[0].b.interactable == true) {  // if the panel is not interactable, don't set the use buttons (which will be set when interactability is true)
-                SetUsables();
-            }
-
-            activeCandles[0].SetColour(pmvc.partyMemberColour);
-            activeCandles[1].SetColour(pmvc.partyMemberColour);
-            activeCandles[2].SetColour(pmvc.partyMemberColour);
-        }
-
-        /// <summary>
         /// Places an item in a spare itemSlot
         /// </summary>
         /// <param name="id"> ItemDisplay </param>

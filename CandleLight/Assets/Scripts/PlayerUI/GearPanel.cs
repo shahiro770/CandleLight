@@ -89,38 +89,6 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Sets the displayed weapon, secondary, and armour of a partyMember
-        /// </summary>
-        /// <param name="pmvc"> PartyMemberVisualController of partyMember to display </param>
-        public void Init(PartyMemberVisualController pmvc) {
-            if (this.pmvc.weapon != null) {
-                weaponSlot.HideItem();
-            }
-            if (this.pmvc.secondary != null) {
-                secondarySlot.HideItem();
-            }
-            if (this.pmvc.armour != null) {
-                armourSlot.HideItem();
-            }
-            
-            this.pmvc = pmvc;
-
-            if (pmvc.weapon != null) {
-                weaponSlot.ShowItem(pmvc.weapon);
-            }
-            if (pmvc.secondary != null) {
-                secondarySlot.ShowItem(pmvc.secondary);
-            }
-            if (pmvc.armour != null) {
-                armourSlot.ShowItem(pmvc.armour);
-            }
-
-            weaponSlot.SetColour(pmvc.partyMemberColour);
-            secondarySlot.SetColour(pmvc.partyMemberColour);
-            armourSlot.SetColour(pmvc.partyMemberColour);
-        }
-
-        /// <summary>
         /// Places an item in a spare itemSlot
         /// </summary>
         /// <param name="id"> ItemDisplay </param>

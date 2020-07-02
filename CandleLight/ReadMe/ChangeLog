@@ -37,6 +37,7 @@ Bug: Don't let them cast on dead person
 Bug: Don't let party member buff attacks get cast on monsters
 Bug: Tutorial slightly broken if you don't click all buttons
 Fix: add hover to stats
+Bug: Non-tutorial runs don't start with starting gear
 
 Bug: Candlemancy kinda broken 
 Fix: status effects don't display in the statusPanel
@@ -46,7 +47,7 @@ Fix: Add candle usages to the help tip
 Fix: Keep a counter for player's candle inventory
 Fix: Tiny arrow to swap party member
 Bug: Combat prompt was weird at the start
-Bug: Non-tutorial runs don't start with starting gear
+
 
 NEAR FUTURE
 ----------------
