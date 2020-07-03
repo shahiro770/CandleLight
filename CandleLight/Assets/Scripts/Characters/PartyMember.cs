@@ -78,7 +78,7 @@ namespace Characters {
                 this.pmName = "Holst";
             }
             else if (partyNum == 1) {
-                this.pmName = "Flatyz";
+                this.pmName = "Flaytz";
             }
         }
 

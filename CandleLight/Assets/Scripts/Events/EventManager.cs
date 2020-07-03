@@ -88,6 +88,7 @@ namespace Events {
         private int specialNum = 0;             /// <value> Number of special to be found in the subArea </value>
         private int shopToastIndex = 0;         /// <value> Index for which toastPanel is being used as the shop's wax display </value>
         private int tutorialProg = 0;           /// <value> Current progress through the tutorial </value>
+        private int noCombatCount = 0;          /// <value> Counter for how long the player has gone without a combat event </value>
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
@@ -462,9 +463,9 @@ namespace Events {
         }
         
         public void EndTutorial() {
-            subAreaProgress += 100;
             tutorialProg++;             
             GameManager.instance.isTutorial = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
+            subAreaProgress += 100;
         }
 
         #endregion
@@ -494,6 +495,7 @@ namespace Events {
 
             if (subAreaProgress == 100) {
                 GetNextMainEvent();
+                subAreaProgress = 0;
             }
             else {
                 GetNextSubAreaEvent();
@@ -513,6 +515,7 @@ namespace Events {
             else {
                 areaProgress++;;
             }
+            noCombatCount = 0;
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             currentEvent = currentSubArea.GetEvent(areaProgress);
         }
@@ -522,12 +525,19 @@ namespace Events {
         /// </summary>
         public void GetNextSubAreaEvent() {
             currentEvent = currentSubArea.GetEvent();
+            if (noCombatCount == 5 && currentEvent.type != EventConstants.COMBAT) {
+                int forcedCombatChance = Random.Range(0, 100);
+                if (forcedCombatChance < 50) { 
+                    currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);
+                }
+            }
         }
 
         /// <summary>
         /// Switches gameplay from exploring into turn-based combat with random monsters
         /// </summary>
         public void GetCombatEvent() {
+            noCombatCount = 0;
             gearPanel.SetTakeable(false);
             candlesPanel.SetTakeable(false);
             skillsPanel.SetTogglable(false);
@@ -576,6 +586,7 @@ namespace Events {
                     HideEventDisplays();
                 }
 
+                noCombatCount++;
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 SetAllButtonsInteractable(true);

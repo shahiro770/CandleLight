@@ -48,6 +48,8 @@ Bug: Reposition statsPanel tooltips
 Bug: PartyPanel would rearrange partyMembers if someone died
 Balance: Dodge now scales primarily off of luck, and slightly off of dex
 Bug: Removing a partyMember in partyMembers 
+Feature: Extremely high chance of combat if combat doesn't happen for a while
+Bug: Tutorial is covered by monster
 
 Bug: ToastPanel's don't fade in properly
 Feature: Companionship
