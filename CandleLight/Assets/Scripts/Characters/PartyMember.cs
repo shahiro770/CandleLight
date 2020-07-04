@@ -33,7 +33,7 @@ namespace Characters {
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public int skillPoints;
-        public bool doneEXPGaining { get; private set; } = false;   /// <value> Total experience points to reach next level </value>
+        public bool doneEXPGaining { get; private set; } = true;   /// <value> Total experience points to reach next level </value>
 
         public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");
         public Skill[] skills = new Skill[12];
@@ -427,6 +427,12 @@ namespace Characters {
                 CMP = MP;
             }
 
+            if (HP <= 0) {
+                HP = 1;
+            }
+            if (MP <= 0) {
+                MP = 0;
+            }
             if (CHP > HP) {
                 CHP = HP;
             }

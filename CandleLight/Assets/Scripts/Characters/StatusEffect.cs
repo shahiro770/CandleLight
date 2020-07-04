@@ -56,6 +56,7 @@ namespace Characters {
                     break;
                 case StatusEffectConstants.RAGE:
                 case StatusEffectConstants.ADVANTAGE:
+                case StatusEffectConstants.VAMPIRE:
                 case StatusEffectConstants.REGENERATE:
                 case StatusEffectConstants.GUARD:
                 case StatusEffectConstants.CURE:           

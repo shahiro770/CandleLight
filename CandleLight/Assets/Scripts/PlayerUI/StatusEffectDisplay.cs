@@ -102,6 +102,7 @@ namespace PlayerUI {
                     break;
 
                 case StatusEffectConstants.FATALWOUND:
+                case StatusEffectConstants.VAMPIRE:
                 case StatusEffectConstants.BLEED:
                     normalBlock.normalColor = new Color32(138, 7, 7, 200);
                     normalBlock.highlightedColor = new Color32(138, 7, 7, 255);

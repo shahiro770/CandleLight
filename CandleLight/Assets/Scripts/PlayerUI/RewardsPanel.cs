@@ -141,7 +141,7 @@ namespace PlayerUI {
             PartyManager.instance.AddEXP(amountEXP);
 
             foreach (PartyMember pm in pms) {
-                while (pms[0].doneEXPGaining == false) {
+                while (pm.doneEXPGaining == false) {
                     yield return null;
                 }
             }

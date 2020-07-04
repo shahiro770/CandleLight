@@ -123,7 +123,11 @@ namespace Items {
                     WAX += values[0] * 8;
                     break;
                 case "PDEF":
+                case "MDEF":
                     WAX += values[0] * 7;
+                    break;
+                case "CRITCHANCE":
+                    WAX += values[0] * 4;
                     break;
                 case "HP":
                     WAX += values[0] * 2;

@@ -116,6 +116,7 @@ namespace Characters {
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             critChance = (int)(LUK * 0.1) + baseCritChance;
             critMult = baseCritMult;
+            bleedPlus = false;
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
@@ -141,6 +142,9 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.MIRACLE) {
                     PDEF += 9999;
                     MDEF += 9999;
+                }
+                else if (se.name == StatusEffectConstants.VAMPIRE) {
+                    bleedPlus = true;
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);

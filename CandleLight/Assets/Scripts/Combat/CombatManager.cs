@@ -420,6 +420,13 @@ namespace Combat {
                         yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackPM, activePartyMember)));    
                     }
                 }
+                else if (selectedAttackPM.scope == "allEnemies") {
+                    if (selectedAttackPM.type == AttackConstants.DEBUFF) {
+                        foreach (Monster m in monsters) {
+                            StartCoroutine(m.GetStatusEffected(selectedAttackPM, activePartyMember)); 
+                        }
+                    }
+                }
             }
         }
 
@@ -607,7 +614,7 @@ namespace Combat {
                 }
                 else if (activeMonster.monsterAI == "bleedHunter") {
                     for (int i = 0; i < partyMembersAlive.Count; i++) {
-                        if (partyMembersAlive[i].GetStatusEffect("bleed") != -1) {
+                        if (partyMembersAlive[i].GetStatusEffect(StatusEffectConstants.BLEED) != -1) {
                             targetChoice = partyMembersAlive[i];
                             break;
                         }
