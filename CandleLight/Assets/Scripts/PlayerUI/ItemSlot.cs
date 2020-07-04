@@ -464,7 +464,7 @@ namespace PlayerUI {
                     }
                     else {
                         t.SetKeyMultiple("subtitle", new string[2] {currentItemDisplay.className + "_label", basicKeys[2] + "_item_sub"});
-                        if (PartyManager.instance.IsClassInParty(currentItemDisplay.className) == false) {
+                        if (currentItemDisplay.className != ClassConstants.ANY && PartyManager.instance.IsClassInParty(currentItemDisplay.className) == false) {
                             t.SetTextColour("subtitle", UIManager.instance.unusableColour);
                         }
                         else {

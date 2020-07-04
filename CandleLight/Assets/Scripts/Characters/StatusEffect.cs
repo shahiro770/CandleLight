@@ -92,7 +92,13 @@ namespace Characters {
             
             if (name == StatusEffectConstants.BURN) {
                 preValue = (int)(afflicter.MATK * 0.3f);
-                value = preValue - afflicted.MDEF;
+
+                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                    value = (int)(preValue * 0.5f) - afflicted.MDEF;
+                }
+                else { 
+                    value = preValue - afflicted.MDEF;
+                }
             }
             else if (name == StatusEffectConstants.POISON) {
                 preValue = (int)(afflicted.HP * 0.08f);
@@ -128,7 +134,12 @@ namespace Characters {
                     value = (int)(preValue * 0.5f) - afflicted.PDEF;
                 }
                 else {
-                    value = preValue - afflicted.PDEF;;
+                    if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                        value = (int)(preValue * 0.5f) - afflicted.PDEF;
+                    }
+                    else { 
+                        value = preValue - afflicted.PDEF;
+                    }
                 }
             }
             else if (name == StatusEffectConstants.CHAMPIONHP || name == StatusEffectConstants.REGENERATE) {

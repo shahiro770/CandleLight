@@ -53,7 +53,9 @@ Feature: Extremely high chance of combat if combat doesn't happen for a while
 Bug: Tutorial is covered by monster
 Feature: Companionship
     - Make it so partyMembers can talk about recent stuff at none events
-    - Replace "friend" text with name text of companion
+Bug: Red text on generic weapon
+
+Bug: Player went to grab item, game froze, first partyMember dead
 
 VERIFICATION NEEDED
 -------------------
