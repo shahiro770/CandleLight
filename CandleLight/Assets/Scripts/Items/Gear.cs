@@ -132,6 +132,7 @@ namespace Items {
                         break;
                     case "BLEEDPLUS":
                     case "MPREGENDOUBLE":
+                    case "HPREGENDOUBLE":
                         WAX += 10;
                         break;
                     default:

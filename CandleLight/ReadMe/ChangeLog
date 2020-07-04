@@ -35,6 +35,7 @@ Bug: Non-tutorial runs don't start with starting gear
 Bug: SED was rendering twice
 Balance: Reduced HP from DEX
 Fix: Tutorial notifications can be closed by clicking on them
+Feature: Click to close a tutorial toastPanel
 
 CURRENTLY DOING
 ---------------
@@ -50,16 +51,15 @@ Balance: Dodge now scales primarily off of luck, and slightly off of dex
 Bug: Removing a partyMember in partyMembers 
 Feature: Extremely high chance of combat if combat doesn't happen for a while
 Bug: Tutorial is covered by monster
-
-Bug: ToastPanel's don't fade in properly
 Feature: Companionship
     - Make it so partyMembers can talk about recent stuff at none events
     - Replace "friend" text with name text of companion
 
-UNVERIFIED
-----------
-Bug: Combat prompt weird
+VERIFICATION NEEDED
+-------------------
+Bug: Combat prompt weird on loss
 Bug: Candlemancy kinda bugged but need to figure out why 
+Bug: ToastPanel's don't fade in properly all the time  (don't know whats cuasing this)
 
 NEAR FUTURE
 ----------------
