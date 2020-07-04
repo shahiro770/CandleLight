@@ -542,7 +542,7 @@
 		{ "key": "nothingPathNormal2_0_res", "value": "\"That statue? It wasn't described in the books.\nMaybe it was an ancient relic from before The Kindling?\"" },
 		{ "key": "nothingPathNormal3_0_res", "value": "\"Figured I'd lighten the mood with a joke or two. Didn't think you'd forget your sense of humour. Not that you had one to begin with.\"" },
 		{ "key": "nothingPathNormal4_0_res", "value": "\"Its just been goblins and stray greyhides.\nWe haven't run into anything dangerous like a hobgoblin.\"" },
-		{ "key": "nothingPathNormal4_1_res", "value": "\"Whatever attacked us left us alive. Thats not something Unkindled usually do.\"" },
+		{ "key": "nothingPathNormal4_1_res", "value": "\"Whatever attacked us left us alive.\nThats not something Unkindled usually do.\"" },
 		{ "key": "nothingPathNormalHard0_0_res", "value": "\"I really am not cut out for this.\"" },
 		{ "key": "nothingPathNormalHard0_1_res", "value": "\"I'd hate to be a merchant working for Lord Asphod.\"" },
 		{ "key": "nothingPathNormalHard0_2_res", "value": "\"Try not to talk too much.\nMost Unkindled have poor eye sight but amazing hearing.\"" },
