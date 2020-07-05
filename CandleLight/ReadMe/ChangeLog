@@ -36,9 +36,6 @@ Bug: SED was rendering twice
 Balance: Reduced HP from DEX
 Fix: Tutorial notifications can be closed by clicking on them
 Feature: Click to close a tutorial toastPanel
-
-CURRENTLY DOING
----------------
 Bug: HP is not increasing from outposts
 Bug: Prevent rekindling with no active candles
 Bug: No quest at the start of non tutorial runs
@@ -54,9 +51,23 @@ Bug: Tutorial is covered by monster
 Feature: Companionship
     - Make it so partyMembers can talk about recent stuff at none events
 Bug: Red text on generic weapon
-
 Bug: Player went to grab item, game froze, first partyMember dead
 Fix: Add bloodfrenzy buff
+
+CURRENTLY DOING
+---------------
+Strange red colouring on selection
+Fix: Put 1 and 2 in gearPanel
+Fix: Total number of skills
+Fix: Make colour border
+Fix: Tooltip for consumables are used instantly
+Bug: Prevent candle uses when dead
+Bug: Take All breaks
+Bug: red text
+Bug: help sheet
+
+Bug:Shopkeeper's wax display did not show up if two toast notifications were present
+Speed Runner Tester: Jeffrey Zhao
 
 VERIFICATION NEEDED
 -------------------

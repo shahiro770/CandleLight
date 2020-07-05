@@ -18,6 +18,7 @@ public class StatCalculator : MonoBehaviour{
         // GetStats("goblin", 5, 3, 1, 1, 1, 4);
         // GetStats("greyhide", 0, 7, 1, 3, 1, 4);
         // GetStats("stinger", 13, 5, 4, 4, 3, 4);
+        GetStats("floatingArm",7, 4, 12, 6, 2, 3);
         GetStats("vampireBat", 3, 9, 5, 4 , 2, 4);
         GetStats("wraith", 4, 6, 13,	2, 2, 4);
         GetStats("stranglehead", 11,	7,	0,	5, 2, 4);

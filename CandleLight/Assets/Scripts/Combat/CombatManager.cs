@@ -422,9 +422,10 @@ namespace Combat {
                 }
                 else if (selectedAttackPM.scope == "allEnemies") {
                     if (selectedAttackPM.type == AttackConstants.DEBUFF) {
-                        foreach (Monster m in monsters) {
-                            StartCoroutine(m.GetStatusEffected(selectedAttackPM, activePartyMember)); 
+                        for (int i = 1; i < monsters.Count; i++) {
+                            StartCoroutine(monsters[i].GetStatusEffected(selectedAttackPM, activePartyMember)); 
                         }
+                        yield return (StartCoroutine(monsters[0].GetStatusEffected(selectedAttackPM, activePartyMember)));
                     }
                 }
             }
