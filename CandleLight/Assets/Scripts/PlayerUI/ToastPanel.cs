@@ -18,6 +18,8 @@ namespace PlayerUI {
 
         public enum toastType { HP, MP, EXP, SE, PROGRESS, QUESTCOMPLETE };
 
+        private Coroutine fader;            /// <value> Store the coroutine responsible for visibility to stop it if notification changes suddenly </value>
+        private Coroutine fadeOuter;        /// <value> Store the coroutine responsible for fading out to stop it if notification changes suddenly </value>
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
 
         public void SetNotification(bool[] types, string[] amounts) {
@@ -73,7 +75,7 @@ namespace PlayerUI {
 
             b.interactable = false;
             SetVisible(true);
-            StartCoroutine(FadeOut());
+            fadeOuter = StartCoroutine(FadeOut());
         }
 
         /// <summary>
@@ -85,6 +87,9 @@ namespace PlayerUI {
             descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
             
             b.interactable = false;
+            if (fadeOuter != null) {
+                StopCoroutine(fadeOuter);
+            }
             SetVisible(true);
         }
 
@@ -98,7 +103,7 @@ namespace PlayerUI {
 
             b.interactable = false;
             SetVisible(true);
-            StartCoroutine(FadeOut());
+            fadeOuter = StartCoroutine(FadeOut());
         }
 
         /// <summary>
@@ -110,6 +115,9 @@ namespace PlayerUI {
             descriptionText.SetKey(tutorialName + "_tutorial");
 
             b.interactable = true;
+            if (fadeOuter != null) {
+                StopCoroutine(fadeOuter);
+            }
             SetVisible(true);
         }
 
@@ -123,7 +131,7 @@ namespace PlayerUI {
 
             b.interactable = false;
             SetVisible(true);
-            StartCoroutine(FadeOut());
+            fadeOuter = StartCoroutine(FadeOut());
         }
 
         /// <summary>
@@ -145,11 +153,17 @@ namespace PlayerUI {
         public void SetVisible(bool value) {
             if (value == true) {
                 gameObject.SetActive(true);
-                StartCoroutine(Fade(1));
+                if (fader != null) {
+                    StopCoroutine(fader);
+                }
+                fader = StartCoroutine(Fade(1));
             }
             else {
                 if (gameObject.activeSelf == true) {
-                    StartCoroutine(Fade(0));
+                    if (fader != null) {
+                        StopCoroutine(fader);
+                    }
+                    fader = StartCoroutine(Fade(0));
                 }
             }
         }

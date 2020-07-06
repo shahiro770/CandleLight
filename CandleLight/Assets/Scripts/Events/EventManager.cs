@@ -765,6 +765,10 @@ namespace Events {
                 }
             }
 
+            if (GameManager.instance.isTips == true && GameManager.instance.firstConsumable == true && r.itemType == ItemConstants.CONSUMABLE) {
+                GameManager.instance.firstConsumable = false;
+                SetTutorialNotification("consumable");
+            }
             if (GameManager.instance.isTips == true && GameManager.instance.firstCandle == true && r.itemType == ItemConstants.CANDLE) {
                 GameManager.instance.firstCandle = false;
                 SetTutorialNotification("candles0");
@@ -1470,14 +1474,8 @@ namespace Events {
         /// Used primarily for shops so player doesn't have to tab back and forth between panels
         /// </summary>
         public void SetShopNotification() {
-            if (toastPanel0.gameObject.activeSelf == true) {
-                shopToastIndex = 1;
-                toastPanel1.SetShopNotification();
-            }
-            else {
-                shopToastIndex = 0;
-                toastPanel0.SetShopNotification();    
-            }
+            toastPanel0.SetShopNotification();    
+            shopToastIndex = 0;
         }
 
         /// <summary>
