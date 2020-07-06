@@ -15,6 +15,7 @@ namespace PlayerUI {
         public Image textBackground;        /// <value> Image background for text component </value>
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         public LayoutElement le;
+        public SpriteRenderer toastSprite;
 
         public enum toastType { HP, MP, EXP, SE, PROGRESS, QUESTCOMPLETE };
 
@@ -187,12 +188,16 @@ namespace PlayerUI {
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = timeSinceStarted * lerpSpeed;
             float prevAlpha = textBackgroundCanvas.alpha;
+            float newAlpha;
 
             while (textBackgroundCanvas.alpha != targetAlpha) {
                 timeSinceStarted = Time.time - timeStartedLerping;
                 percentageComplete = timeSinceStarted * lerpSpeed;
 
-                textBackgroundCanvas.alpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+                newAlpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+
+                textBackgroundCanvas.alpha = newAlpha;
+                toastSprite.color = new Color(255, 255, 255, newAlpha);
 
                 yield return new WaitForEndOfFrame();
             }

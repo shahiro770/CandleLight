@@ -68,15 +68,21 @@ Bug: ToastPanel's don't fade in properly all the time  (don't know whats cuasing
 CURRENTLY DOING
 ---------------
 Strange red colouring for some items
+Make buffs and debuffs refresh
+Class select now easier to read
+Make advantage status effect better
+Add bonus PDEF and MDEF to monsters (negative for wraiths cause their MDEF shouldn't be high)
+Balance: Nerfed Bash, Taunt now costs 2 less MP
 
+Add toast notification flame
+Make quest completed notification seperate from normal completition
 Speed Runner Tester: Jeffrey Zhao
 
 VERIFICATION NEEDED
 -------------------
 Bug: Candlemancy kinda bugged but need to figure out why 
 
-Make buffs and debuffs refresh
-Make advantage status effect better
+
 
 NEAR FUTURE
 ----------------

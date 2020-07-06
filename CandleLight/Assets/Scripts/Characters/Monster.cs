@@ -37,6 +37,8 @@ namespace Characters {
         [field: SerializeField] public int multiplier { get; private set; }             /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
         [field: SerializeField] public int minLVL { get; private set; }                 /// <value> Minimum power level monster can spawn at </param>
         [field: SerializeField] public int maxLVL { get; private set; }                 /// <value> Maximum power level monster can spawn at </param>
+        [field: SerializeField] public int bonusPDEF { get; private set; }              /// <value> Bonus PDEF added to the monster's stats </value>
+        [field: SerializeField] public int bonusMDEF { get; private set; }              /// <value> Bonus MDEF added to the monster's stats </value>
         [field: SerializeField] public int EXP { get; private set; }                    /// <value> EXP monster gives on defeat </value>
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
@@ -64,13 +66,15 @@ namespace Characters {
         /// <param name="dropChance"> Chance of monster dropping something </param>
         /// <param name="monsterReward"> Result from monster dying </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
-        string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, Attack[] attacks,
+        string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, int bonusPDEF, int bonusMDEF, Attack[] attacks,
         int dropChance, Result monsterReward, int championChance) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterDisplayName = monsterDisplayName;
             this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
+            this.bonusPDEF = bonusPDEF;
+            this.bonusMDEF = bonusMDEF;
             this.monsterReward = monsterReward;
             this.championChance = championChance;
 
@@ -110,8 +114,8 @@ namespace Characters {
             MP = (int)(INT * 1.25 + LUK * 0.5);
             PATK = (int)(STR * 0.65 + DEX * 0.35);  // monsters have better primary scaling on PATK and MATK than players
             MATK = (int)(INT * 0.65 + LUK * 0.35);
-            PDEF = (int)(STR * 0.1 + DEX * 0.05);
-            MDEF = (int)(INT * 0.15 + LUK * 0.05);
+            PDEF = (int)(STR * 0.1 + DEX * 0.05) + bonusPDEF;
+            MDEF = (int)(INT * 0.15 + LUK * 0.05) + bonusMDEF;
             DOG = (int)(DEX * 0.2 + LUK * 0.1);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             critChance = (int)(LUK * 0.1) + baseCritChance;

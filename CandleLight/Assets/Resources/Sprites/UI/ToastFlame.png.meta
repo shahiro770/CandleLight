@@ -1,15 +1,11 @@
 fileFormatVersion: 2
-guid: f28af48c134ff4cf7bb507bfe482279a
+guid: 890336dd8299e49f8aebf68bfa6a4d90
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Advantage_0
-    21300002: Advantage_1
-    21300004: Advantage_2
-    21300006: Advantage_3
-    21300008: Advantage_4
-    21300010: Advantage_5
-    21300012: Advantage_6
-    21300014: Advantage_7
+    21300000: ToastFlame_0
+    21300002: ToastFlame_1
+    21300004: ToastFlame_2
+    21300006: ToastFlame_3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -103,13 +99,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Advantage_0
+      name: ToastFlame_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 350
-        width: 180
-        height: 50
+        y: 24
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,19 +113,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8b00cc7bedcf47f0be16ca41cff9952
+      spriteID: f3c6f25ead546409a80a42d24eb51dda
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Advantage_1
+      name: ToastFlame_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 300
-        width: 180
-        height: 50
+        x: 24
+        y: 24
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,119 +133,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af0c0dadda3b141f7bfb7d5c2bbcb869
+      spriteID: 99f6b98c04f344feab87623b31f729ba
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Advantage_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 250
-        width: 180
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1eb8b01b3b044403e86174d7085f552f
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Advantage_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 200
-        width: 180
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ae63a2e4d7bc4658883ce14d6fb6add
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Advantage_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 150
-        width: 180
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 83ce0ab2664354eea8a3ab8c3a1bd496
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Advantage_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 100
-        width: 180
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c11cb797f1bd64473aafa4bc7c52f8ff
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Advantage_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 50
-        width: 180
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e8f20c46f05dc4b30a768799fdc861b4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Advantage_7
+      name: ToastFlame_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 180
-        height: 50
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,7 +153,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05d13c44367ab48d5a0578d6459173fb
+      spriteID: b8bba960e9d6d474b91cb14895426f01
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ToastFlame_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6a27302ae92d4f97822ec009bc95ed7
       vertices: []
       indices: 
       edges: []

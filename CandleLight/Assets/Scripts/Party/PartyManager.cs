@@ -408,11 +408,24 @@ namespace Party {
             return sum;
         }
 
-        public void GetChampionChanceAll() {
+        public void SetBonusChampionChance() {
             bonusChampionChance = 0;
             foreach (PartyMember pm in partyMembersAlive) {
                 bonusChampionChance += pm.championChance;
             }
+        }
+
+        /// <summary>
+        /// Gets the number of unused skill points of all partyMember
+        /// </summary>
+        /// <returns></returns>
+        public int GetSkillPointsAll() {
+            int skillPointsTot = 0;
+            foreach(PartyMember pm in partyMembersAll) {
+                skillPointsTot += pm.skillPoints;
+            }
+
+            return skillPointsTot;
         }
 
         /// <summary>

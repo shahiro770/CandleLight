@@ -104,7 +104,7 @@ namespace Combat {
             monstersKilled = new List<Monster>();
             partyMembersAlive = new List<PartyMember>();
             partyMembersAll = PartyManager.instance.GetPartyMembers();
-            PartyManager.instance.GetChampionChanceAll();
+            PartyManager.instance.SetBonusChampionChance();
             countID = partyMembersAll.Count + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
             foreach (PartyMember pm in partyMembersAll) {
                 if (pm.CheckDeath() == false) {

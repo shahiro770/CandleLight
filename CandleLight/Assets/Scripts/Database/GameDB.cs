@@ -56,6 +56,8 @@ namespace Database {
                         int dropChance = 0;
                         int championChance = 0;
                         int[] stats = {};
+                        int bonusPDEF = 0;
+                        int bonusMDEF = 0;
                         Attack[] attacks = new Attack[4];
                         Result monsterReward = null;
 
@@ -70,21 +72,23 @@ namespace Database {
                             HP = reader.GetInt32(8); 
                             MP = reader.GetInt32(9);
                             stats = new int[] { reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12), reader.GetInt32(13) };
+                            bonusPDEF = reader.GetInt32(14);
+                            bonusMDEF = reader.GetInt32(15);
 
                             for (int i = 0; i < maxAttacks; i++) {
-                                string attackName = reader.GetString(14 + i);
+                                string attackName = reader.GetString(16 + i);
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
-                            dropChance = reader.GetInt32(18);
-                            monsterReward = GetResultByName(reader.GetString(19), "", dbConnection);      
-                            championChance = reader.GetInt32(20);               
+                            dropChance = reader.GetInt32(20);
+                            monsterReward = GetResultByName(reader.GetString(21), "", dbConnection);      
+                            championChance = reader.GetInt32(22);               
                         }
                         else {
                             Debug.LogError("Monster " + monsterName + " does not exist in the DB");
                         }
 
                         monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
-                        monsterSize, monsterAI, multiplier, HP, MP, stats, attacks, dropChance, monsterReward, championChance)); 
+                        monsterSize, monsterAI, multiplier, HP, MP, stats, bonusPDEF, bonusMDEF, attacks, dropChance, monsterReward, championChance)); 
                     }
                 }
             }          
