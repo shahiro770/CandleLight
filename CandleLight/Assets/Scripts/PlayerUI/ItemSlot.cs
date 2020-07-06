@@ -144,8 +144,20 @@ namespace PlayerUI {
                     candlesPanel.SetUsable(itemSlotSubType[0] - '0');
                 }
             }
-            else if (newItemDisplay.type == ItemConstants.CANDLE) {                                                                  // for candles, if placed in a non-active slot, update the sprite
+            else if (parentPanel.GetPanelName() == PanelConstants.GEARPANEL && direct == false) {                                                        
+                GearPanel gearPanel = (GearPanel)parentPanel;
+                gearPanel.PlaceItem();    
+            }
+            else if (newItemDisplay.type == ItemConstants.CANDLE) {  
                 newItemDisplay.displayedCandle.SetActive(false);    // for candles, if placed in a non-active slot, update the sprite
+                if (parentPanel.GetPanelName() == PanelConstants.CANDLESPANEL && direct == false) {
+                    CandlesPanel candlesPanel = (CandlesPanel)parentPanel;
+                    candlesPanel.PlaceItem();
+                }
+            }
+            else if (parentPanel.GetPanelName() == PanelConstants.SPECIALPANEL && direct == false) {
+                SpecialPanel specialPanel = (SpecialPanel)parentPanel;
+                specialPanel.PlaceItem();
             }
             
             if (direct == false) {

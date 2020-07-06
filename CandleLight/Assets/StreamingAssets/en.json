@@ -169,14 +169,14 @@
 		{ "key": "lostTombsGreyWastes_theWraithWizardCombat_post_combat_event_0", "value": "The hat looks like a child's toy; the staff was the real source of power.\nA shame it was destroyed in the fight." },
 		{ "key": "lostTombsGreyWastes_theWraithWizardCombat_post_combat_event_1", "value": "That creature may have been a wizard in a past life.\nProbably the second time it died from arrogance." },
 		{ "key": "lostTombsGreyWastes_theWraithWizardCombat_post_combat_event_2", "value": "The hat's worthless, but perhaps the gratitude won't be." },
-		{ "key": "lostTombsGreyWastes_theWraithWizardCombat_post_combat_event_3", "value": "\"Thankfully it was just a lesser wraith.\"" },
+		{ "key": "lostTombsGreyWastes_theWraithWizardCombat_post_combat_event_3", "value": "Flaytz is relieved. \"Thankfully it was just a lesser wraith.\"" },
 		{ "key": "lostTombsGreyWastes_flee_success_0", "value": "Every tomb is a potential hiding spot. For both you and the Unkindled." },
 		{ "key": "lostTombsGreyWastes_flee_success_1", "value": "A strong wind knocks them back. You take the chance to run." },
 		{ "key": "lostTombsGreyWastes_flee_success_2", "value": "You just need to hold out a little longer." },
-		{ "key": "lostTombsGreyWastes_flee_success_3", "value": "Cowardice? No, if you die now Umaria will fall." },
+		{ "key": "lostTombsGreyWastes_flee_success_3", "value": "Cowardice? No, if you die Umaria will fall." },
 
-		{ "key": "largeTombGreyWastes_post_combat_event_0", "value": "\"It won't be lonely anymore.\"" },
-		{ "key": "largeTombGreyWastes_post_combat_event_1", "value": "When another lesser wraith tries to remember its past,\nit'll take this one's place." },
+		{ "key": "largeTombGreyWastes_post_combat_event_0", "value": "\"It won't be lonely anymore.\" Flaytz's voice is weak." },
+		{ "key": "largeTombGreyWastes_post_combat_event_1", "value": "\"When another lesser wraith tries to remember its past,\nit'll take this one's place.\"" },
 		{ "key": "largeTombGreyWastes_post_combat_event_2", "value": "Now its as lifeless as a doll." },
 		{ "key": "largeTombGreyWastes_post_combat_event_3", "value": "Your friends...will you see them again?" },
 

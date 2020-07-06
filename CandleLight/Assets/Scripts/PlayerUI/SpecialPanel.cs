@@ -73,6 +73,13 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Increases the number of spare item slots full upon an item being placed
+        /// </summary>
+        public void PlaceItem() {
+            numSpareFull++;
+        }
+
+        /// <summary>
         /// Decreases the number of spare item slots full upon an item being taken
         /// </summary>
         public void TakeItem() {
