@@ -53,9 +53,6 @@ Feature: Companionship
 Bug: Red text on generic weapon
 Bug: Player went to grab item, game froze, first partyMember dead
 Fix: Add bloodfrenzy buff
-
-CURRENTLY DOING
----------------
 Strange red colouring on selection
 Fix: Put 1 and 2 in gearPanel
 Fix: Total number of skills
@@ -65,15 +62,21 @@ Bug: Prevent candle uses when dead
 Bug: Take All breaks
 Bug: red text
 Bug: help sheet
-
 Bug:Shopkeeper's wax display did not show up if two toast notifications were present
+Bug: ToastPanel's don't fade in properly all the time  (don't know whats cuasing this)
+
+CURRENTLY DOING
+---------------
+Strange red colouring for some items
+
 Speed Runner Tester: Jeffrey Zhao
 
 VERIFICATION NEEDED
 -------------------
-Bug: Combat prompt weird on loss
 Bug: Candlemancy kinda bugged but need to figure out why 
-Bug: ToastPanel's don't fade in properly all the time  (don't know whats cuasing this)
+
+Make buffs and debuffs refresh
+Make advantage status effect better
 
 NEAR FUTURE
 ----------------
@@ -81,6 +84,7 @@ Fix: Put all loading for everything at the start
 Feature: Sound effects and music
 Feature: Saving
 Feature: Ending and beginning cutscenes
+Feature: Gameover screen
 
 FUTURE/MAYBE
 ------------

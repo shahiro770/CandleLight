@@ -643,8 +643,6 @@ namespace Characters {
                 if (isStatus && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
                 }
-
-                UpdateStatusEffectValues();
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
@@ -662,14 +660,8 @@ namespace Characters {
             bool attackHit = CalculateAttackHit(c);
            
             if (attackHit) {
-                if (GetStatusEffect(a.seName) == -1) {  // no two tatusEffects of the same type can be on at once
-                    StatusEffect newStatus = new StatusEffect(a.seName, a.seDuration);
-                    newStatus.SetValue(c, this);
-                    AddStatusEffect(newStatus);
-                    pmvc.AddStatusEffectDisplay(newStatus);
+                AddStatusEffect(a.seName, a.seDuration, c);
 
-                    UpdateStatusEffectValues();
-                }
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
@@ -698,7 +690,6 @@ namespace Characters {
 
                 if (isStatus && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
-                    UpdateStatusEffectValues();
                 }
             }
             else if (a.type == AttackConstants.HEALMP || a.type == AttackConstants.HEALMPSELF) {
@@ -721,13 +712,11 @@ namespace Characters {
 
                 if (isStatus && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
-                    UpdateStatusEffectValues();
                 }
             }
             else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) {
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
                 AddStatusEffect(a.seName, a.seDuration, c);
-                UpdateStatusEffectValues();
             }
         }
 
@@ -745,19 +734,25 @@ namespace Characters {
         /// <param name="seName"> Name of the statusEffect </param>
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
-        public void AddStatusEffect(string seName, int seDuration, Character c) {
-            if (GetStatusEffect(seName) == -1) {  // no two statusEffects of the same type can be on at once
-                StatusEffect newStatus;
-                if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
-                    newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
-                }
-                else {
-                    newStatus = new StatusEffect(seName, seDuration);
-                }
-                newStatus.SetValue(c, this);
-                AddStatusEffect(newStatus);
-                pmvc.AddStatusEffectDisplay(newStatus);
+        public void AddStatusEffect(string seName, int seDuration, Character c) {   
+            int existingIndex = GetStatusEffect(seName);
+            if (existingIndex != -1) {  // reapply the status effect if its already applied
+                seToRemove.Add(statusEffects[existingIndex]);
+                RemoveStatusEffectsNoCalculate();   // will be recalculating anyways on AddStatusEffect
             }
+
+            StatusEffect newStatus;
+            if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
+                newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
+            }
+            else {
+                newStatus = new StatusEffect(seName, seDuration);
+            }
+            newStatus.SetValue(c, this);
+            AddStatusEffect(newStatus);
+            pmvc.AddStatusEffectDisplay(newStatus);
+
+            UpdateStatusEffectValues();
         }
 
         /// <summary>

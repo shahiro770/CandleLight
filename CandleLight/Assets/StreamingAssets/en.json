@@ -634,6 +634,8 @@
 
 		{ "key": "none_label", "value": "None" },
 		{ "key": "empty_label", "value": "" },
+		{ "key": "1_label", "value": "1" },
+		{ "key": "2_label", "value": "2" },
 		{ "key": "HP_label", "value": "HP" },
 		{ "key": "MP_label", "value": "MP" },
 		{ "key": "LVL_label", "value": "LVL" },

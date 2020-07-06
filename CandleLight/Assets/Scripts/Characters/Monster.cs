@@ -412,8 +412,6 @@ namespace Characters {
                 if (isStatus == true && CheckDeath() == false) {
                    AddStatusEffect(a.seName, a.seDuration, c);
                 }
-                
-                UpdateStatusEffectValues();
             }
             else {
                 yield return StartCoroutine(DodgeAttack(a.animationClipName));
@@ -451,13 +449,13 @@ namespace Characters {
                 bool isCrit = CalculateAttackCrit(c);
                 bool isStatus = CalculateAttackStatus(a, c);
 
-                if (isCrit) {
+                if (isCrit == true) {
                     healed = CalculateAttackHealCrit(healed, c);
                 }
 
                 yield return StartCoroutine(AddHPYield(healed));
 
-                if (isStatus && CheckDeath() == false) {
+                if (isStatus == true && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
                 }
             }
@@ -482,22 +480,28 @@ namespace Characters {
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {
-            if (GetStatusEffect(seName) == -1) {  // no two statusEffects of the same type can be on at once
-                StatusEffect newStatus;
-                if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
-                    newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
-                }
-                else {
-                    newStatus = new StatusEffect(seName, seDuration);
-                }
-                newStatus.SetValue(c, this);
-                AddStatusEffect(newStatus);
-                md.AddStatusEffectDisplay(newStatus);
-                md.UpdateTooltip();
+            int existingIndex = GetStatusEffect(seName);
+            if (existingIndex != -1) {  // reapply the status effect if its already applied
+                seToRemove.Add(statusEffects[existingIndex]);
+                RemoveStatusEffectsNoCalculate();   // will be recalculating anyways on AddStatusEffect
+            }
 
-                if (seName == StatusEffectConstants.STUN) {
-                    PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);
-                }
+            StatusEffect newStatus;
+            if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
+                newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
+            }
+            else {
+                newStatus = new StatusEffect(seName, seDuration);
+            }
+            newStatus.SetValue(c, this);
+            AddStatusEffect(newStatus);
+            md.AddStatusEffectDisplay(newStatus);
+            md.UpdateTooltip();
+
+            UpdateStatusEffectValues();
+
+            if (seName == StatusEffectConstants.STUN) {
+                PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);
             }
         }
 

@@ -333,7 +333,7 @@ namespace Characters {
         /// Removes all status effects in the seToRemove list, undoing their effects
         /// </summary>
         /// <remarks>
-        /// As a side effect, due to triggerStatusEffects always being called at the end of most
+        /// As a side effect, due to triggerStatuses always being called at the end of most
         /// stat relevant actions (such as at the end of a combat turn, or transitioning between events),
         /// this forces a stat recalculation for a character, meaning stat changes from candles 
         /// are removed at the end of a turn after a candle is made unusable during combat.
@@ -345,6 +345,17 @@ namespace Characters {
             }
             seToRemove.Clear();
             CalculateStats();   // TODO: Convert all status effects to ints instead of strings
+        }
+
+        /// <summary>
+        /// Removes all status effects in the seToRemove list, but doesn't recalculate stats
+        /// </summary>
+        public void RemoveStatusEffectsNoCalculate() {
+            foreach (StatusEffect se in seToRemove) {
+                se.DestroyDisplay();
+                statusEffects.Remove(se);
+            }
+            seToRemove.Clear();
         }
 
         /// <summary>
