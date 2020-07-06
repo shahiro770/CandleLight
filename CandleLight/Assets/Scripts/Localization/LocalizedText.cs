@@ -103,6 +103,16 @@ namespace Localization {
         }
 
         /// <summary>
+        /// Appends text to the end of the display text
+        /// </summary>
+        /// <param name="text"> String to append </param>
+        public void SetKeyAndAppendNoSpace(string newKey, string text) {
+            key = newKey;
+            meshText.text = LocalizationManager.instance.GetLocalizedValue(key) + text;
+            textPreset = true;
+        }
+
+        /// <summary>
         /// Sets the text and display text to null
         /// </summary>
         public void Clear() {

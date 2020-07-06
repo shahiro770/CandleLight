@@ -416,19 +416,6 @@ namespace Party {
         }
 
         /// <summary>
-        /// Gets the number of unused skill points of all partyMember
-        /// </summary>
-        /// <returns></returns>
-        public int GetSkillPointsAll() {
-            int skillPointsTot = 0;
-            foreach(PartyMember pm in partyMembersAll) {
-                skillPointsTot += pm.skillPoints;
-            }
-
-            return skillPointsTot;
-        }
-
-        /// <summary>
         /// Returns true if a given class is in the party
         /// </summary>
         /// <param name="className"></param>
@@ -513,6 +500,19 @@ namespace Party {
 
         public int GetSkillPoints() {
             return activePartyMember.skillPoints;
+        }
+
+        /// <summary>
+        /// Gets the number of unused skill points of all partyMember
+        /// </summary>
+        /// <returns></returns>
+        public int GetSkillPointsAll() {
+            int skillPointsTot = 0;
+            foreach(PartyMember pm in partyMembersAll) {
+                skillPointsTot += pm.skillPoints;
+            }
+
+            return skillPointsTot;
         }
 
         public bool EnableSkill(int index) {

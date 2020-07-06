@@ -43,6 +43,7 @@ namespace Characters {
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
         [field: SerializeField] public int lastAttackIndex { get; set; } = -1;          /// <value> Index of attack last used (-1 if it hasn't attacked yet) </value>
+        [field: SerializeField] public bool isChampion { get; private set; }            /// <value> Flag for when monsterDisplay is done setting properties </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
         #region [ Initialization ] Initialization
@@ -228,15 +229,15 @@ namespace Characters {
         /// </summary>
         /// <param name="championBuffs"> List of championBuffs that can be applied in the subArea (assumed length 3) </param>
         public void GetChampionBuff(string[] championBuffs) {
-            bool isChampion = Random.Range(0, 100) < (championChance + PartyManager.instance.bonusChampionChance);
+            isChampion = Random.Range(0, 100) < (championChance + PartyManager.instance.bonusChampionChance);
 
-            if (isChampion) {
+            if (isChampion == true) {
                 multiplier += 1;
                 this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier);  
                 monsterReward.UpgradeResult();
                 dropChance = 100;
 
-                string championBuff = championBuffs[Random.Range(0, 3)];    // three champion buffs per subArea
+                string championBuff = championBuffs[Random.Range(0, championBuffs.Length)];
                 StatusEffect newStatus;
                 switch (championBuff) {
                     case StatusEffectConstants.CHAMPIONATK:

@@ -144,6 +144,8 @@ namespace PlayerUI {
             else {
                 skillPointsText.SetColour(new Color(141, 141, 141, 255));
             }
+
+            pmvc.UpdateSkillsTab();
         }
 
         public void AddStatusEffectDisplay(StatusEffect se) {

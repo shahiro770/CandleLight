@@ -275,6 +275,15 @@ namespace Combat {
                     EventManager.instance.SetTutorialNotification("candles1");
                     GameManager.instance.firstCandleCombat = false;
                 }
+                if (GameManager.instance.isTips == true && GameManager.instance.firstChampion == true) {
+                    foreach(Monster m in monsters) {
+                        if (m.isChampion == true) {
+                            EventManager.instance.SetTutorialNotification("champion");
+                            GameManager.instance.firstChampion = false;
+                            break;
+                        }
+                    }
+                }
             }
         }
 

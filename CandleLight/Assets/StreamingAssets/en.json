@@ -67,6 +67,7 @@
 		{ "key": "candles1_tutorial", "value": "Candles have abilities that can be used in combat, but effects are lost when fully used" },
 		{ "key": "shop_tutorial", "value": "Items can sold at shops by dragging them to the shopkeeper's inventory" },
 		{ "key": "consumable_tutorial", "value": "Consumable items are used immediately when taken, usually affecting everyone alive" },
+		{ "key": "champion_tutorial", "value": "Enemies may spawn with powerful champion buffs, making them stronger with better loot" },
 
 		{ "key": "tutorial_post_combat_event_0", "value": "Fighting is something you'll never forget." },
 		{ "key": "tutorial_post_combat_event_1", "value": "\"No time to celebrate. Let's keep going.\"" },
@@ -710,7 +711,7 @@
 		{ "key": "DOG_stat_des", "value": "Reduces accuracy of attacks on this character" },
 		{ "key": "CRIT_stat_title", "value": "Critical Chance" },
 		{ "key": "CRIT_stat_sub", "value": "Secondary Stat" },
-		{ "key": "CRIT_stat_des", "value": "Percentage chance of doing extra damage" },
+		{ "key": "CRIT_stat_des", "value": "Percentage chance of doing 50% more damage" },
 
 		{ "key": "WAX0_item", "value": "Wax Coins" },
 		{ "key": "WAX1_item", "value": "Old Tokens" },

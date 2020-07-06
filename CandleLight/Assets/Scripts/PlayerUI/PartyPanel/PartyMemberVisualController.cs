@@ -543,10 +543,15 @@ namespace Characters {
         }
 
         public void ExciteSkillsTab() {
-            utilityTabManager.ExciteTab(1); // skills tab index
+            utilityTabManager.ShowSkillPointsInTab(1);  // 1 is skills tab index
+            utilityTabManager.HighlightTab(1);          // Only on leveling up should the tab be highlighted (if player chooses not to spec, its on them after clicking)
             if (skillsPanel.isOpen) {
                 pmdSkillsPanel.UpdateSkillPointsText(pm.skillPoints);
             }
+        }
+
+        public void UpdateSkillsTab() {
+            utilityTabManager.ShowSkillPointsInTab(1); // 1 is skills tab index
         }
     }
 }

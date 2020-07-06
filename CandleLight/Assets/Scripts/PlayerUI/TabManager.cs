@@ -12,6 +12,7 @@ using EventManager = Events.EventManager;
 using GameManager = General.GameManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
+using PartyManager = Party.PartyManager;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,6 +49,8 @@ namespace PlayerUI {
             if (GameManager.instance.isTutorial == false) {                   // panels aren't opened immediatel in the tutorial
                 if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                     OpenPanel(0);
+                    ShowSkillPointsInTab(1);
+                    HighlightTab(1);
                 }
                 else {  // left tabManager
                     OpenPanel(0);
@@ -68,7 +71,7 @@ namespace PlayerUI {
             btss[currentIndex].SetColor("pressed");
 
             if (tabTexts[index].key.EndsWith("_(!)")) {
-                tabTexts[index].SetKey(tabTexts[index].key.Substring(0, tabTexts[index].key.Length - 4));
+                tabTexts[index].SetKey(tabTexts[index].key.Substring(0, tabTexts[index].key.Length - 4)); 
             }
 
             if (triggerTutorial == true) {
@@ -105,6 +108,14 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Highlights a specific tab
+        /// </summary>
+        /// <param name="index"></param>
+        public void HighlightTab(int index) {
+            btss[index].SetColor("highlighted"); 
+        }
+
+        /// <summary>
         /// Excites a tab at the index, giving it !!!!!!!!!
         /// </summary>
         /// <param name="index"> Index of tab button </param>
@@ -116,6 +127,24 @@ namespace PlayerUI {
                 tabTexts[index].SetKey(tabTexts[index].key + "_(!)");
             }
             btss[index].SetColor("highlighted");    // draw more attention 
+        }
+
+        /// <summary>
+        /// Show the total number of unspect skill points in a tab
+        /// </summary>
+        /// <param name="index"></param>
+        public void ShowSkillPointsInTab(int index) {
+            if (tabTexts[index].key == "empty_tab") {   // tabs may be empty during the tutorial
+                SetButtonInteractableAndName(index);
+            }
+
+            int sp = PartyManager.instance.GetSkillPointsAll();
+            if (sp > 0) {
+                tabTexts[index].SetKeyAndAppendNoSpace(tabTexts[index].key, "(" + sp +  ")");
+            }
+            else {
+                tabTexts[index].SetKey(tabTexts[index].key);
+            }
         }
 
         /// <summary>

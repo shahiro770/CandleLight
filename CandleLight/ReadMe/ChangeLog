@@ -73,9 +73,9 @@ Class select now easier to read
 Make advantage status effect better
 Add bonus PDEF and MDEF to monsters (negative for wraiths cause their MDEF shouldn't be high)
 Balance: Nerfed Bash, Taunt now costs 2 less MP
-
+Added tutorial for champion and consumables
 Add toast notification flame
-Make quest completed notification seperate from normal completition
+
 Speed Runner Tester: Jeffrey Zhao
 
 VERIFICATION NEEDED
@@ -94,6 +94,7 @@ Feature: Gameover screen
 
 FUTURE/MAYBE
 ------------
+UI: Make quest completed notification seperate from normal completition
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: Make a way to halt a fading coroutine should another one start
 UI: Make status effects do the fade animation monster displays do
