@@ -35,6 +35,15 @@ namespace PlayerUI {
         private string lockedKeySub = "locked_skill_sub";
         private string lockedKeyDes = "locked_skill_des";
 
+        /// <summary>
+        /// Initialize a skillDisplay, displaying the skill's icon and preparing the possible colourings
+        /// for if the skill is enabled or not.
+        /// </summary>
+        /// <param name="skillIndex"></param>
+        /// <param name="displayedSkill"></param>
+        /// <param name="skillSprite"></param>
+        /// <param name="skillColour"></param>
+        /// <param name="pmd"></param>
         public void Init(int skillIndex, Skill displayedSkill, Sprite skillSprite, Color skillColour, PartyMemberDisplay pmd) {
             skillSpriteRenderer.sprite = skillSprite;
             this.skillColour = skillColour;
@@ -66,6 +75,10 @@ namespace PlayerUI {
             }
         }
 
+        /// <summary>
+        /// Initialize the skill display with a lock on it, showing the skill can not be
+        /// enabled even if the player has skill points for it
+        /// </summary>
         public void Init() {
             skillSpriteRenderer.sprite = lockedSkillSprite;
             this.skillIndex = -1;           // no skill shown (its locked)
@@ -95,7 +108,7 @@ namespace PlayerUI {
                 bts.SetColor("normal");   
             }
             else {
-                normalBlock.normalColor = new Color32(141, 141, 141, 150);
+                normalBlock.normalColor = new Color32(141, 141, 141, 255);
                 normalBlock.highlightedColor = new Color32(255, 255, 255, 200);
                 normalBlock.pressedColor = new Color32(255, 255, 255, 255);
                 normalBlock.disabledColor = new Color32(61, 61, 61, 255);

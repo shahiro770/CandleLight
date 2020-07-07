@@ -1437,6 +1437,9 @@ namespace Events {
             }
         }
 
+        /// <summary>
+        /// Updates the usability of the takeAll button
+        /// </summary>
         public void UpdateTakeAll() {
             if (eventDisplays[0].itemNum > 0) {
                 actionsPanel.UpdateTakeAll(eventDisplays[0].numSpareFull);

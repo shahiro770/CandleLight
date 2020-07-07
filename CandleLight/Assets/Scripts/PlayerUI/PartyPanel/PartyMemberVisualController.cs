@@ -287,18 +287,18 @@ namespace Characters {
         /// when in combat
         /// </summary>
         public void DisplayActivePartyMemberCombat() {
-            if (partyPanel.isOpen == true) {
-                partyPanel.DisplayActivePartyMember(pmdPartyPanel);
-            }
+            partyPanel.DisplayActivePartyMember(pmdPartyPanel);
+            skillsPanel.DisplayActivePartyMember(pmdSkillsPanel);
             statusPanel.DisplayPartyMember(this);
-            if (gearPanel.isOpen) {
+            
+            if (gearPanel.isOpen == true) {
                 gearPanel.Init(pm);
             }
-            else if (candlesPanel.isOpen) {
+            else if (candlesPanel.isOpen == true) {
                 candlesPanel.Init(pm);
             }
 
-            if (skillsPanel.isOpen) {
+            if (skillsPanel.isOpen == true) {
                 skillsPanel.Init();
             }
         }
@@ -307,24 +307,21 @@ namespace Characters {
         /// Changes all panels to show the stored partyMember's information
         /// </summary>
         public void DisplayActivePartyMember() {
-            if (partyPanel.isOpen == true) {
-                if (CombatManager.instance.inCombat == false) {
-                    partyPanel.DisplayActivePartyMember(pmdPartyPanel);
-                }
-            }
             if (CombatManager.instance.inCombat == false) {
+                partyPanel.DisplayActivePartyMember(pmdPartyPanel);
+                skillsPanel.DisplayActivePartyMember(pmdSkillsPanel);
                 statusPanel.DisplayPartyMember(this);
             }
-            if (gearPanel.isOpen) {
+
+            if (gearPanel.isOpen == true) {
                 gearPanel.Init(pm);
             }
-            else if (candlesPanel.isOpen) {
+            else if (candlesPanel.isOpen == true) {
                 candlesPanel.Init(pm);
             }
-
-            if (skillsPanel.isOpen) {
+            if (skillsPanel.isOpen == true) {
                 skillsPanel.Init();
-            }   
+            }
         }
 
         /// <summary>
@@ -551,7 +548,9 @@ namespace Characters {
         }
 
         public void UpdateSkillsTab() {
-            utilityTabManager.ShowSkillPointsInTab(1); // 1 is skills tab index
+            if (utilityTabManager != null) {
+                utilityTabManager.ShowSkillPointsInTab(1); // 1 is skills tab index
+            }
         }
     }
 }

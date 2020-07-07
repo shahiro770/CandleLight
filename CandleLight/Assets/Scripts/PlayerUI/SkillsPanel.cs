@@ -24,11 +24,17 @@ namespace PlayerUI {
         public int[] colPoints = new int[] { 0, 0, 0, 0 };
         public bool isOpen;             /// <value> Flag for if this panel is open (true if open, false otherwise) </value>
 
+        private bool initializing = true;
         private bool isTogglable = true;
 
         public void OnEnable() {
             isOpen = true;
             Init();
+
+            if (initializing == true) {     // initialize to set pmd references for pmvc, implies skillsPanel is initially open 
+                initializing = false;
+                gameObject.SetActive(false);
+            }
         }
 
         public void OnDisable() {
@@ -40,8 +46,10 @@ namespace PlayerUI {
             PartyMember pm = PartyManager.instance.GetActivePartyMember();
             colPoints = new int[] { 0, 0, 0, 0 };
 
-            for (int i = 0; i < pmDisplays.Length;i++) {
-                pmDisplays[i].gameObject.SetActive(false);
+            if (initializing == true) {
+                for (int i = 0; i < pmDisplays.Length;i++) {
+                    pmDisplays[i].gameObject.SetActive(false);
+                }
             }
     
             for (int i = 0; i < pms.Count; i++) {

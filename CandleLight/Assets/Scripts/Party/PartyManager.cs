@@ -146,12 +146,11 @@ namespace Party {
         }
 
         /// <summary>
-        /// Sets the active partyMember, and displays it
+        /// Sets the active partyMember
         /// </summary>
         /// <param name="pm"></param>
         public void SetActivePartyMember(PartyMember pm) {
             activePartyMember = pm;
-
             pm.pmvc.DisplayActivePartyMember();
         }
 
