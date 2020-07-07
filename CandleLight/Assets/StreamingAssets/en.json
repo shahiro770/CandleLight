@@ -66,7 +66,7 @@
 		{ "key": "candles0_tutorial", "value": "Candles can be equipped just like equipment, providing effects\nwhile usable" },
 		{ "key": "candles1_tutorial", "value": "Candles have abilities that can be used in combat, but effects are lost when fully used" },
 		{ "key": "shop_tutorial", "value": "Items can sold at shops by dragging them to the shopkeeper's inventory" },
-		{ "key": "consumable_tutorial", "value": "Consumable items are used immediately when taken, usually affecting everyone alive" },
+		{ "key": "consumable_tutorial", "value": "Consumables are used immediately when taken, affecting everyone alive" },
 		{ "key": "champion_tutorial", "value": "Enemies may spawn with powerful champion buffs, making them stronger with better loot" },
 
 		{ "key": "tutorial_post_combat_event_0", "value": "Fighting is something you'll never forget." },
