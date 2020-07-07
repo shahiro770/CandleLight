@@ -17,6 +17,22 @@ namespace PlayerUI {
 
     public class Panel : MonoBehaviour {
 
+        public int numSpareFull = 0; /// <value> Number of spare itemSlots with items in them (panels that use this property have a max) </value>
+
+        /// <summary>
+        /// Increases number of numSpareFull
+        /// </summary>
+        public virtual void PlaceItem() {
+            numSpareFull++;
+        }
+
+        /// <summary>
+        /// Decreases number of numSpareFull
+        /// </summary>
+        public virtual void TakeItem() {
+            numSpareFull--;
+        }
+
         /// <summary>
         /// Returns the name of this panel
         /// </summary>

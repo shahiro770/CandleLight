@@ -24,7 +24,6 @@ namespace PlayerUI {
         public ItemSlot[] spare = new ItemSlot[9];  /// <value> Item slots as equipment inventory </value>
         public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember </value>
 
-        public int numSpareFull = 0;    /// <value> Number of spare itemSlots with items in them (max 9) </value>
         public bool isOpen;             /// <value> Flag for if this panel is open (true if open, false otherwise) </value>
 
         private int maxSpare = 9;       /// <value> Max number of spare itemSlots </value>
@@ -95,8 +94,6 @@ namespace PlayerUI {
         /// <returns> True if possible, false otherwise </returns>
         public bool PlaceItem(ItemDisplay id, bool direct = false) {
             if (maxSpare > numSpareFull) {
-                numSpareFull++;
-
                 for (int i = 0;i < spare.Length; i++) {
                     if (spare[i].currentItemDisplay == null) {
                         spare[i].PlaceItem(id, direct);
@@ -108,20 +105,6 @@ namespace PlayerUI {
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Increases the number of spare item slots full upon an item being placed
-        /// </summary>
-        public void PlaceItem() {
-            numSpareFull++;
-        }
-
-        /// <summary>
-        /// Decreases the number of spare item slots full upon an item being taken
-        /// </summary>
-        public void TakeItem() {
-            numSpareFull--;
         }
 
         /// <summary>

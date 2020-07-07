@@ -206,6 +206,22 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Updates the take all button's usability
+        /// Fails if the first action is not of type TAKEALL 
+        /// </summary>
+        /// <param name="numItemsTakeable"></param>
+        public void UpdateTakeAll(int numSpareFull) {
+            if (actions[0].actionType == ActionConstants.TAKEALL) {
+                if (numSpareFull > 0) {
+                    actions[0].SetUsable(true);
+                }
+                else {
+                    actions[0].SetUsable(false);
+                }
+            }
+        }
+
+        /// <summary>
         /// Calls the releveant method depending on the type of action selected
         /// </summary>
         /// <param name="a"> Name of action to be taken </param>
@@ -298,7 +314,7 @@ namespace PlayerUI {
         /// <param name="CMP"> Current MP of partyMember </param>
         private void CheckAndSetActionsToUnusable(int CHP, int CMP) {
              for (int i = 0; i < actions.Length; i++) {
-                if (actions[i].actionType == "attack") {
+                if (actions[i].actionType == ActionConstants.ATTACK) {
                     Attack a = actions[i].a;
                 
                     if (a.costType == "MP") {

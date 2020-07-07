@@ -85,10 +85,11 @@ namespace PlayerUI {
         /// <summary>
         /// Initializes the item slot with a new item, creating an item display
         /// Used for the gearPanel to instantly show partyMember's equipped items when switching between partyMembers
+        /// TODO: When loading is enabled, placeItemInstant will have to update numSparefull, or there must be a method that does so
         /// </summary>
         /// <param name="newItem"> Item data </param>
         public void PlaceItemInstant(Item newItem) {
-            if (newItem != null) {  
+            if (newItem != null) {
                 GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
                 currentItemDisplay = newItemDisplay.GetComponent<ItemDisplay>();
                 currentItemDisplay.Init(newItem);
@@ -144,21 +145,15 @@ namespace PlayerUI {
                     candlesPanel.SetUsable(itemSlotSubType[0] - '0');
                 }
             }
-            else if (parentPanel.GetPanelName() == PanelConstants.GEARPANEL && direct == false) {                                                        
-                GearPanel gearPanel = (GearPanel)parentPanel;
-                gearPanel.PlaceItem();    
-            }
             else if (newItemDisplay.type == ItemConstants.CANDLE) {  
                 newItemDisplay.displayedCandle.SetActive(false);    // for candles, if placed in a non-active slot, update the sprite
-                if (parentPanel.GetPanelName() == PanelConstants.CANDLESPANEL && direct == false) {
-                    CandlesPanel candlesPanel = (CandlesPanel)parentPanel;
-                    candlesPanel.PlaceItem();
-                }
             }
-            else if (parentPanel.GetPanelName() == PanelConstants.SPECIALPANEL && direct == false) {
-                SpecialPanel specialPanel = (SpecialPanel)parentPanel;
-                specialPanel.PlaceItem();
+
+            parentPanel.PlaceItem();
+            if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY || parentPanel.GetPanelName() == PanelConstants.REWARDSPANEL) {  // item is being placed in an eventDisplay or rewardsPanel
+                EventManager.instance.UpdateTakeAll();
             }
+
             
             if (direct == false) {
                 t.SetVisible(true);
@@ -335,8 +330,20 @@ namespace PlayerUI {
                             candlesPanel.SetUsable(itemSlotSubType[0] - '0');
                         }
                     }
+                    else if (parentPanel.GetPanelName() == PanelConstants.SPECIALPANEL) {
+                        SpecialPanel specialPanel = (SpecialPanel)parentPanel;
+                        if (itemSlotSubType == ItemConstants.ANY) {     // specialPanel updates to have more free spare itemSlots
+                            specialPanel.TakeItem();
+                        }
+                    }
                     else if (UIManager.instance.heldItemDisplay != null) {
                         EventManager.instance.OpenItemPanel(UIManager.instance.heldItemDisplay);
+                        parentPanel.TakeItem();
+                        EventManager.instance.UpdateTakeAll();
+                    }
+                    else {
+                        parentPanel.TakeItem();
+                        EventManager.instance.UpdateTakeAll();
                     }
                 }
             }

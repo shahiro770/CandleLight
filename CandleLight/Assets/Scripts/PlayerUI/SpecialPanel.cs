@@ -18,7 +18,6 @@ namespace PlayerUI {
         public ItemSlot[] verySpecials;                       /// <value> very special item slots </value>
         public ItemSlot[] spare;                             /// <value> special item slots </value>
 
-         public int numSpareFull = 0;    /// <value> Number of spare itemSlots with items in them (max 9) </value>
         public bool isOpen;             /// <value> Flag for if this panel is open (true if open, false otherwise) </value>
 
         private int maxSpare = 9;       /// <value> Max number of spare itemSlots </value>
@@ -70,20 +69,6 @@ namespace PlayerUI {
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Increases the number of spare item slots full upon an item being placed
-        /// </summary>
-        public void PlaceItem() {
-            numSpareFull++;
-        }
-
-        /// <summary>
-        /// Decreases the number of spare item slots full upon an item being taken
-        /// </summary>
-        public void TakeItem() {
-            numSpareFull--;
         }
 
         /// <summary>

@@ -57,6 +57,7 @@ namespace PlayerUI {
                 itemSlots[i].gameObject.SetActive(false);
             }
             itemNum = 0;
+            numSpareFull = 0;
 
 
             for (int i = 0; i < pms.Count; i++) {
@@ -128,6 +129,7 @@ namespace PlayerUI {
                     itemSlots[itemNum].SetVisible(true);
                     itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItems(monstersKilled[i].monsterReward)[0]); // will only get one item
                     itemNum++;
+                    numSpareFull++;
                     yield return null;
                 }
             }
@@ -150,6 +152,9 @@ namespace PlayerUI {
         public void TakeAllItems() {
             for (int i = 0; i < itemNum; i++) {
                 itemSlots[i].TakeItem(true);
+                if (itemSlots[i].currentItemDisplay == null) {
+                    numSpareFull--;
+                }
             }
         }
 

@@ -44,6 +44,7 @@ namespace PlayerUI {
         /// <param name="items"></param>
         public void SetItemDisplays(List<Item> items) {
             this.itemNum = items.Count > itemSlots.Length ? itemSlots.Length : items.Count;
+            this.numSpareFull = this.itemNum;
 
             for (int i = 0; i < itemNum; i++) {
                 itemSlots[i].PlaceItem(items[i]);

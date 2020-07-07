@@ -1429,9 +1429,20 @@ namespace Events {
         public void TakeAllItems() {
             if (eventDisplays[0].itemNum > 0) {
                 eventDisplays[0].TakeAllItems();
+                actionsPanel.UpdateTakeAll(eventDisplays[0].numSpareFull);
             }
             else if (rewardsPanel.itemNum > 0) {
                 rewardsPanel.TakeAllItems();
+                actionsPanel.UpdateTakeAll(rewardsPanel.numSpareFull);
+            }
+        }
+
+        public void UpdateTakeAll() {
+            if (eventDisplays[0].itemNum > 0) {
+                actionsPanel.UpdateTakeAll(eventDisplays[0].numSpareFull);
+            }
+            else if (rewardsPanel.itemNum > 0) {
+                actionsPanel.UpdateTakeAll(rewardsPanel.numSpareFull);
             }
         }
 
