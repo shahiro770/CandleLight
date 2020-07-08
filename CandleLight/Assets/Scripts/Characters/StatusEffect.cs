@@ -167,7 +167,7 @@ namespace Characters {
                 value = preValue;
             }
             else if (name == StatusEffectConstants.FATALWOUND) {
-                preValue = (int)(afflicted.HP * 0.3f);
+                preValue = (int)(afflicted.HP * 0.2f);
                 value = preValue;
             }
 

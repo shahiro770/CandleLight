@@ -75,6 +75,11 @@ Add bonus PDEF and MDEF to monsters (negative for wraiths cause their MDEF shoul
 Balance: Nerfed Bash, Taunt now costs 2 less MP
 Added tutorial for champion and consumables
 Add toast notification flame
+Updated several sprites for background stuff
+Tweaked ending bleed damage to increase sense of false hope
+Added 7th skills
+
+Bug: Placing items in equipped slots increments spare
 
 Speed Runner Tester: Jeffrey Zhao
 

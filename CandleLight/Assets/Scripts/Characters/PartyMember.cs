@@ -567,19 +567,18 @@ namespace Characters {
             // some sources such as results will use negative numbers to indicate loss
             amount = Mathf.Abs(amount);
 
-            // side effects from partyMember skills
+            // side effects from partyMember skills may alter calculations
+            bool skillAltered = false;
             if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
                     if (CMP > 0) {
+                        skillAltered = true;
                         CHP -= (int)Mathf.Ceil(amount * 0.75f);
                         StartCoroutine(LoseMP((int)Mathf.Floor(amount * 0.25f)));  
                     }
-                    else {
-                        CHP -= amount;
-                    }
                 }
             }
-            else {
+            if (skillAltered == false) {
                  CHP -= amount;
             }
 

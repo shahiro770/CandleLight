@@ -145,11 +145,13 @@ namespace PlayerUI {
                     candlesPanel.SetUsable(itemSlotSubType[0] - '0');
                 }
             }
-            else if (newItemDisplay.type == ItemConstants.CANDLE) {  
-                newItemDisplay.displayedCandle.SetActive(false);    // for candles, if placed in a non-active slot, update the sprite
+            else {
+                if (newItemDisplay.type == ItemConstants.CANDLE) {  
+                    newItemDisplay.displayedCandle.SetActive(false);    // for candles, if placed in a non-active slot, update the sprite
+                }
+                parentPanel.PlaceItem();
             }
-
-            parentPanel.PlaceItem();
+   
             if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY || parentPanel.GetPanelName() == PanelConstants.REWARDSPANEL) {  // item is being placed in an eventDisplay or rewardsPanel
                 EventManager.instance.UpdateTakeAll();
             }
