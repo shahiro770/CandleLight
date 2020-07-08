@@ -53,12 +53,13 @@ namespace Characters {
         protected float baseHPRegen = 0.06f;                                /// <value> Base percentage of max MP recovered between events </value>
         protected float baseMPRegen = 0.12f;                                /// <value> Base percentage of max HP recovered between events </value>
         protected float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
+        protected float tempACCBonus = 0.05f;                              /// <value> % of base ACC tempACC increments by </value>
         protected int minAttacks = 1;
         protected int maxAttacks = 4;
         protected int maxStatusEffects = 10;                                /// <value> Max number of status effects that can be on a character </value>
         protected int baseCritChance = 5;                                   /// <value> Base chance of an attack doing critMultiplier* damage </value>
         protected int defaultACC = 95;                                      /// <value> Base accuracy rating </value>
-
+       
         /// <summary>
         /// Initializes character properties
         /// </summary>
@@ -202,7 +203,7 @@ namespace Characters {
                 c.tempACC = 0;
             }
             else {
-                c.tempACC += (int)(4 + c.tempACC);  
+                c.tempACC += (int)(c.ACC * tempACCBonus + c.tempACC);  
             }
 
             return attackHit;            

@@ -19,10 +19,11 @@ namespace Skills {
     public class Skill {
         
         public string name;
-        public string type;
-        public string parentSkill;
+        public int type;
+        public int upgradeSkill;
 
         public Attack a;
+        public Attack storedAttack;   /// <value> Store attack being replaced </value>
         public Color skillColour;
 
         public string titleKey;
@@ -30,9 +31,10 @@ namespace Skills {
         public string desKey;
         public bool skillEnabled;
         
-        public Skill(string name, string type, Attack a, Color skillColour) {
+        public Skill(string name, int type, int upgradeSkill, Attack a, Color skillColour) {
             this.name = name;
             this.type = type;
+            this.upgradeSkill = upgradeSkill;
             this.a = a;
             this.skillColour = skillColour;
 

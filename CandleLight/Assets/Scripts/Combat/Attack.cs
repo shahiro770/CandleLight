@@ -8,6 +8,7 @@
 *
 */
 
+using StatusEffectConstants = Constants.StatusEffectConstants;
 using UnityEngine;
 
 namespace Combat {
@@ -23,6 +24,7 @@ namespace Combat {
         [field: SerializeField] public string costFormula { get; private set; }       /// <value> Formula for calculating cost to use attack </value>      
         [field: SerializeField] public string damageFormula { get; private set; }     /// <value> Formula for calculating damage dealt by attack </value>
         [field: SerializeField] public string scope { get; private set; }       /// <value> String describing the number of targets the attack affects </value>
+        [field: SerializeField] public string displaySeName { get; private set; }   /// <value> String for the seName in event description (TODO: Localize this) </value>
         [field: SerializeField] public string seName { get; private set; }      /// <value> Status effect of attack </value>
         [field: SerializeField] public int seDuration { get; private set; }     /// <value> Number of turns status effect lasts </value>       
         [field: SerializeField] public int baseSeChance { get; private set; }   /// <value> Base chance of status effect occurring </value>
@@ -46,6 +48,12 @@ namespace Combat {
             this.type = type;
             this.damageFormula = damageFormula;
             this.seName = seName;
+            if (seName == StatusEffectConstants.RBW) {
+                displaySeName = "root, bleed, or weakness";
+            }
+            else {
+                displaySeName = seName;
+            }
             this.seDuration = seDuration;
             this.baseSeChance = seChance;
             this.seChance = seChance;

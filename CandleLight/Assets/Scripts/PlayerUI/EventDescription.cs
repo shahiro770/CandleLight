@@ -218,10 +218,10 @@ namespace PlayerUI {
 
             if (a.seName != "none") {
                 if (a.seDuration == 1) {
-                    attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turn";
+                    attackString += ". " + a.seChance + "% chance to " + a.displaySeName + " for " + a.seDuration  + " turn";
                 }
                 else {
-                    attackString += ". " + a.seChance + "% chance to " + a.seName + " for " + a.seDuration  + " turns";
+                    attackString += ". " + a.seChance + "% chance to " + a.displaySeName + " for " + a.seDuration  + " turns";
                 }
             }
             if (a.scope != "single") {

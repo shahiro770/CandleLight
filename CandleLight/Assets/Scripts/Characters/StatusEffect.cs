@@ -37,7 +37,26 @@ namespace Characters {
         /// Constructor to initialize statusEffect's properties
         /// </summary>
         public StatusEffect(string name, int duration) {
-            this.name = name;
+            if (name == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
+                int index = Random.Range(0, 3);
+                switch(index) {
+                    case 0:
+                        this.name = StatusEffectConstants.BLEED;
+                        break;
+                    case 1:
+                        this.name = StatusEffectConstants.WEAKNESS;
+                        break;
+                    case 2:
+                        this.name = StatusEffectConstants.ROOT;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else {
+                this.name = name;
+            }
+            
             this.duration = duration;
             
              switch(name) {

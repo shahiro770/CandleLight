@@ -11,14 +11,15 @@ namespace Constants {
 
     public static class SkillConstants {
 
-        public static readonly string ACTIVE = "active";
-        public static readonly string PASSIVE = "passive";
-        public static readonly string UPGRADE = "upgrade";
+        public static readonly int PASSIVE = 0;
+        public static readonly int ACTIVE = 1;
+        public static readonly int UPGRADE = 2;
 
         // if skill indexing changes, the order of these values might change
-        public enum warriorSkills { FIRESLASH, TAUNT, STEADFAST, MANABLADE, SAFEGUARD, BLOODSWORN };
-        public enum mageSkills { THIRDEYE, FROST, PYROMANCY, CRITICALMAGIC, HEAL, CANDLEMANCY };   
-        public enum archerSkills { VANTAGEPOINT, SCAVENGER, POISONARROW, SURVIVALIST, ELVENGIFT, VOLLEY };
-        public enum rogueSkills { FAEDUST, CLOAKED, WAXTHIEF, AMBUSHER, DEADLY, THUNDEREDGE };
+        // -2 and -1 are first and second starting skills respectively
+        public enum warriorSkills { SLASH = -2, BASH, FIRESLASH, TAUNT, STEADFAST, MANABLADE, SAFEGUARD, BLOODSWORN, VAMPIRICMAIL };
+        public enum mageSkills { WHACK = -2, FIREBALL, THIRDEYE, FROST, PYROMANCY, CRITICALMAGIC, HEAL, CANDLEMANCY, MANASHIELD };   
+        public enum archerSkills { ARROW = -2, ENROOT, VANTAGEPOINT, SCAVENGER, POISONARROW, SURVIVALIST, ELVENGIFT, VOLLEY, CURSEDROOTS };
+        public enum rogueSkills { STAB = -2, LACERATE, FAEDUST, CLOAKED, WAXTHIEF, AMBUSHER, DEADLY, THUNDEREDGE, KILLERINSTINCT };
     }
 }

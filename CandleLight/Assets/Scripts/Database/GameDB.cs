@@ -155,22 +155,19 @@ namespace Database {
                     
                     Skill[] skills = new Skill[12];
 
-                    for (int i = 0; i < 6; i++) {   // TEMPORARY
+                    for (int i = 0; i < 7; i++) {   // TEMPORARY
                         if (reader.Read()) {
                             string skillName = reader.GetString(1);
-                            string attackType = "";
+                            int type = reader.GetInt32(3);
+                            int upgradeSkill = reader.GetInt32(4); 
                             Attack a = null;
-                            Color skillColor = new Color32(reader.GetByte(4), reader.GetByte(5), reader.GetByte(6), 255);
+                            Color skillColor = new Color32(reader.GetByte(5), reader.GetByte(6), reader.GetByte(7), 255);
 
-                            if (reader.GetBoolean(3) == true) {
+                            if (type == 1 || type == 2) {
                                 a = GetAttack(skillName, false, dbConnection);
-                                attackType = SkillConstants.ACTIVE;
-                            }
-                            else {
-                                attackType = SkillConstants.PASSIVE;
                             }
 
-                            skills[i] = new Skill(skillName, attackType, a, skillColor);
+                            skills[i] = new Skill(skillName, type, upgradeSkill, a, skillColor);
                         }
                         else {
                             Debug.LogError("Skills for class " + name + " does not exist in the DB");

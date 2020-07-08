@@ -70,7 +70,7 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Assigns a random name to this partyMember
+        /// Assigns a name to this partyMember (these are locked due to story)
         /// </summary>
         /// <param name="id"></param>
         public void GenerateName(int partyNum) {
@@ -392,6 +392,9 @@ namespace Characters {
                 if (skills[(int)SkillConstants.rogueSkills.DEADLY].skillEnabled == true) {
                     PATK += 5;
                 }
+                if (skills[(int)SkillConstants.rogueSkills.KILLERINSTINCT].skillEnabled == true) {
+                    critMult += 0.5f;
+                }
             }
 
             /* secondary stat changes from status effects */
@@ -563,8 +566,22 @@ namespace Characters {
         public IEnumerator LoseHP(int amount) {
             // some sources such as results will use negative numbers to indicate loss
             amount = Mathf.Abs(amount);
-            
-            CHP -= amount;
+
+            // side effects from partyMember skills
+            if (className == ClassConstants.MAGE) {
+                if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
+                    if (CMP > 0) {
+                        CHP -= (int)Mathf.Ceil(amount * 0.75f);
+                        StartCoroutine(LoseMP((int)Mathf.Floor(amount * 0.25f)));  
+                    }
+                    else {
+                        CHP -= amount;
+                    }
+                }
+            }
+            else {
+                 CHP -= amount;
+            }
 
             if (CHP <= 0) {
                 CHP = 0;
@@ -620,6 +637,7 @@ namespace Characters {
         /// Handles all logic and visuals for when this partyMember is attacked
         /// </summary>
         /// <param name="a"> Attack used </param>
+        /// <param name="c"> Character attacking this </param>
         /// <returns></returns>
         public IEnumerator GetAttacked(Attack a, Character c) {
             bool attackHit = CalculateAttackHit(c);
@@ -643,6 +661,15 @@ namespace Characters {
                 if (isStatus && CheckDeath() == false) {
                     AddStatusEffect(a.seName, a.seDuration, c);
                 }
+                // side effects from partyMember skills
+                if (className == ClassConstants.WARRIOR) {
+                    if (skills[(int)SkillConstants.warriorSkills.VAMPIRICMAIL].skillEnabled == true) {
+                        if (Random.Range(0, 100) < 50) {
+                            Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
+                            cm.AddStatusEffect(StatusEffectConstants.BLEED, 2, this); 
+                        }
+                    }
+                }
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
@@ -662,6 +689,15 @@ namespace Characters {
             if (attackHit) {
                 AddStatusEffect(a.seName, a.seDuration, c);
 
+                // side effects from partyMember skills
+                if (className == ClassConstants.WARRIOR) {
+                    if (skills[(int)SkillConstants.warriorSkills.VAMPIRICMAIL].skillEnabled == true) {
+                        if (Random.Range(0, 100) < 50) {
+                            Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
+                            cm.AddStatusEffect(StatusEffectConstants.BLEED, 2, this); 
+                        }
+                    }
+                }
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
@@ -952,8 +988,8 @@ namespace Characters {
         /// <param name="index"></param>
         /// <returns></returns>
         public bool EnableSkill(int index) {
+            int replacedSkillIndex = 0;
             bool statChange = false;
-
             if (skills[index].type == SkillConstants.ACTIVE) {
                 if (attackNum < maxAttacks) {
                     skillPoints--;
@@ -1013,7 +1049,7 @@ namespace Characters {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
                         PartyManager.instance.itemDropMultiplier *= 1.5f;
                     }
-                    if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                    else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
                         statChange = true;
                     }
                 }
@@ -1021,10 +1057,13 @@ namespace Characters {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
                         PartyManager.instance.WAXDropMultiplier *= 1.5f;
                     }
-                    if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
+                    else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
                         statChange = true;
                     }
-                    if (index == (int)SkillConstants.rogueSkills.DEADLY) {
+                    else if (index == (int)SkillConstants.rogueSkills.DEADLY) {
+                        statChange = true;
+                    }
+                    else if (index == (int)SkillConstants.rogueSkills.KILLERINSTINCT) {
                         statChange = true;
                     }
                 }
@@ -1037,11 +1076,41 @@ namespace Characters {
 
                 return true;
             }
+            else if (skills[index].type == SkillConstants.UPGRADE) {
+                if (skills[index].upgradeSkill == -2 || skills[index].upgradeSkill == -1) { // replacing the first or second attack
+                    replacedSkillIndex = 2 + skills[index].upgradeSkill;
+                    skillPoints--;
+                    skills[index].storedAttack = attacks[2 + skills[index].upgradeSkill];   // store the original attack
+                    attacks[replacedSkillIndex] = skills[index].a;              // replace the attack
+                    skills[index].skillEnabled = true;
+
+                    if (className == ClassConstants.WARRIOR) {
+                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                            attacks[replacedSkillIndex].costType = "HP";
+                            skills[index].storedAttack.costType = "MP";     // revert any skill changes to the original attack 
+                        }
+                    }
+                    else if (className == ClassConstants.MAGE) {
+                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
+                            if (attacks[replacedSkillIndex].seName == StatusEffectConstants.BURN) {
+                                attacks[replacedSkillIndex].seChance = skills[replacedSkillIndex].storedAttack.baseSeChance << 1;
+                                skills[index].storedAttack.seChance = skills[index].storedAttack.baseSeChance >> 1;     // revert any skill changes to the original attack
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+                else if (skills[skills[index].upgradeSkill].skillEnabled == true) { // TODO: Make logic to check if previous skill is enabled
+                    return true;
+                }
+            }
 
             return false;
         }
 
         public bool DisableSkill(int index) {
+            int replacedSkillIndex = 0;
             bool statChange = false;
            
             if (skills[index].type == SkillConstants.ACTIVE) {
@@ -1127,6 +1196,9 @@ namespace Characters {
                     else if (index == (int)SkillConstants.rogueSkills.DEADLY) {
                         statChange = true;
                     }
+                    else if (index == (int)SkillConstants.rogueSkills.KILLERINSTINCT) {
+                        statChange = true;
+                    }
                 }
 
 
@@ -1137,6 +1209,33 @@ namespace Characters {
                 }
 
                 return true;
+            }
+            else if (skills[index].type == SkillConstants.UPGRADE) {
+                if (skills[index].upgradeSkill == -2 || skills[index].upgradeSkill == -1) {  // replacing the first or second attack
+                    skillPoints++;
+                    replacedSkillIndex = 2 + skills[index].upgradeSkill;
+                    attacks[replacedSkillIndex] = skills[index].storedAttack;
+                    skills[index].storedAttack = null;   
+                    skills[index].skillEnabled = false;
+
+                    if (className == ClassConstants.WARRIOR) {
+                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                            attacks[replacedSkillIndex].costType = "HP";
+                        }
+                    }
+                    else if (className == ClassConstants.MAGE) {
+                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
+                            if (attacks[replacedSkillIndex].seName == StatusEffectConstants.BURN) {
+                                attacks[replacedSkillIndex].seChance = attacks[replacedSkillIndex].baseSeChance << 1;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+                else if (skills[skills[index].upgradeSkill].skillEnabled == true) { // TODO: Make logic to check if previous skill is enabled
+                    return true;
+                }
             }
 
             return false;
