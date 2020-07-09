@@ -134,12 +134,11 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="index"></param>
         public void ShowSkillPointsInTab(int index) {
-            if (tabTexts[index].key == "empty_tab") {   // tabs may be empty during the tutorial
-                SetButtonInteractableAndName(index);
-            }
-
             int sp = PartyManager.instance.GetSkillPointsAll();
             if (sp > 0) {
+                if (tabTexts[index].key == "empty_tab") {   // tabs may be empty during the tutorial, also prevents text from showing up when a partyMember is added during the tutorial
+                    SetButtonInteractableAndName(index);
+                }
                 tabTexts[index].SetKeyAndAppendNoSpace(tabTexts[index].key, "(" + sp +  ")");
             }
             else {

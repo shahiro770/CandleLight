@@ -98,14 +98,14 @@ namespace PlayerUI {
                         break;
                     } 
                 }
+                amountEXP += monstersKilled[i].EXP;
+                amountWAX += (int)(monstersKilled[i].WAX * PartyManager.instance.WAXDropMultiplier);
             }
 
             for (int i = 0; i < monstersToDisplay.Length; i++) {
                 if (monsterCounts[i] > 0) {
                     monsterResultDisplays[i].gameObject.SetActive(true);
                     yield return (StartCoroutine(monsterResultDisplays[i].Init(monstersToDisplay[i], monsterCounts[i])));
-                    amountEXP += monstersToDisplay[i].EXP * monsterCounts[i];
-                    amountWAX += (int)(monstersToDisplay[i].WAX * monsterCounts[i] * PartyManager.instance.WAXDropMultiplier);
                 }
             }
 

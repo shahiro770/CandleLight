@@ -485,6 +485,22 @@ namespace Characters {
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {
+            if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
+                int index = Random.Range(0, 3);
+                switch(index) {
+                    case 0:
+                        seName = StatusEffectConstants.BLEED;
+                        break;
+                    case 1:
+                        seName = StatusEffectConstants.WEAKNESS;
+                        break;
+                    case 2:
+                        seName = StatusEffectConstants.ROOT;
+                        break;
+                    default:
+                        break;
+                }
+            }
             int existingIndex = GetStatusEffect(seName);
             if (existingIndex != -1) {  // reapply the status effect if its already applied
                 seToRemove.Add(statusEffects[existingIndex]);

@@ -485,12 +485,12 @@ namespace PlayerUI {
                     }
                     else {
                         t.SetKeyMultiple("subtitle", new string[2] {currentItemDisplay.className + "_label", basicKeys[2] + "_item_sub"});
-                        if (currentItemDisplay.className != ClassConstants.ANY && PartyManager.instance.IsClassInParty(currentItemDisplay.className) == false) {
-                            t.SetTextColour("subtitle", UIManager.instance.unusableColour);
-                        }
-                        else {
-                            t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
-                        }
+                    }
+                    if (currentItemDisplay.className != ClassConstants.ANY && PartyManager.instance.IsClassInParty(currentItemDisplay.className) == false) {
+                        t.SetTextColour("subtitle", UIManager.instance.unusableColour);
+                    }
+                    else {
+                        t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                     }
                     
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());

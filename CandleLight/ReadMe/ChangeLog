@@ -64,9 +64,6 @@ Bug: red text
 Bug: help sheet
 Bug:Shopkeeper's wax display did not show up if two toast notifications were present
 Bug: ToastPanel's don't fade in properly all the time  (don't know whats cuasing this)
-
-CURRENTLY DOING
----------------
 Strange red colouring for some items
 Make buffs and debuffs refresh
 Class select now easier to read
@@ -78,8 +75,15 @@ Add toast notification flame
 Updated several sprites for background stuff
 Tweaked ending bleed damage to increase sense of false hope
 Added 7th skills
-
+Feature: Added more split raods events and doll pouch
+Bug: EXP calculation for champion monstesr mixed with normal version is wrong
 Bug: Placing items in equipped slots increments spare
+
+CURRENTLY DOING
+---------------
+
+
+Bug: Item displays for eventDisplays is off
 
 Speed Runner Tester: Jeffrey Zhao
 

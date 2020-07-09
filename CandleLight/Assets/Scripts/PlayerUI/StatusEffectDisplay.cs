@@ -288,7 +288,6 @@ namespace PlayerUI {
         // public IEnumerator PlayAnimation(Animator a, string trigger) {
         //     a.SetTrigger(trigger);
         //     do {
-        //         print("hello");
         //         yield return null;    
         //     } while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
         //     a.ResetTrigger(trigger); // Reset the trigger just in case
