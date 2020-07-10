@@ -48,14 +48,14 @@ namespace PlayerUI {
             SetTooltip();
         }
 
-        public void InitMirror(StatusEffectDisplay sed) {
-            this.se = sed.se;
-            gameObject.SetActive(false);
-            SetColour();
-            UpdateText();
-            gameObject.SetActive(true);
-            SetTooltip();
-        }
+        // public void InitMirror(StatusEffectDisplay sed) {
+        //     this.se = sed.se;
+        //     gameObject.SetActive(false);
+        //     SetColour();
+        //     UpdateText();
+        //     gameObject.SetActive(true);
+        //     SetTooltip();
+        // }
 
         public void SetColour() {
             ColorBlock normalBlock = b.colors; 
