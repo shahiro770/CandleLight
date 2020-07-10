@@ -762,8 +762,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -857,7 +857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoInitialize: 1
+  autoInitialize: 0
 --- !u!1 &82578199
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,8 +916,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 144312172}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -4065,8 +4065,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 946583273}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -16889,8 +16889,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 2098523429}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -16984,7 +16984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoInitialize: 1
+  autoInitialize: 0
 --- !u!1 &750913400
 GameObject:
   m_ObjectHideFlags: 0
@@ -21347,8 +21347,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -23368,8 +23368,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 1626114940}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -23463,7 +23463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoInitialize: 1
+  autoInitialize: 0
 --- !u!1 &1016602173
 GameObject:
   m_ObjectHideFlags: 0
@@ -27618,8 +27618,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -28977,8 +28977,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 1967146484}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -33388,8 +33388,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -33483,7 +33483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoInitialize: 1
+  autoInitialize: 0
 --- !u!1001 &1630399311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43373,8 +43373,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 1266740567}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -45258,8 +45258,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.39215687}
+    m_HighlightedColor: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
     m_ColorMultiplier: 1
@@ -45353,7 +45353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaf2def6daa94e9480e85fa191a084d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoInitialize: 1
+  autoInitialize: 0
 --- !u!1001 &2103014617
 PrefabInstance:
   m_ObjectHideFlags: 0

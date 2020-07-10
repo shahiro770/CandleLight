@@ -65,8 +65,8 @@ namespace PlayerUI {
                 bts.SetColor("normal");   
             }
             else {
-                normalBlock.normalColor = new Color32(141, 141, 141, 255);
-                normalBlock.highlightedColor = new Color32(255, 255, 255, 200);
+                normalBlock.normalColor = new Color32(255, 255, 255, 100);
+                normalBlock.highlightedColor = new Color32(141, 141, 141, 255);
                 normalBlock.pressedColor = new Color32(255, 255, 255, 255);
                 normalBlock.disabledColor = new Color32(61, 61, 61, 255);
                 skillSpriteRenderer.color = new Color32(133, 133, 133, 255);
@@ -108,8 +108,8 @@ namespace PlayerUI {
                 bts.SetColor("normal");   
             }
             else {
-                normalBlock.normalColor = new Color32(141, 141, 141, 255);
-                normalBlock.highlightedColor = new Color32(255, 255, 255, 200);
+                normalBlock.normalColor = new Color32(255, 255, 255, 100);
+                normalBlock.highlightedColor = new Color32(141, 141, 141, 255);
                 normalBlock.pressedColor = new Color32(255, 255, 255, 255);
                 normalBlock.disabledColor = new Color32(61, 61, 61, 255);
                 skillSpriteRenderer.color = new Color32(133, 133, 133, 255);

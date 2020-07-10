@@ -119,6 +119,9 @@ namespace UIEffects {
             else if (blockType == "normalAlternate") {
                 normalAlternateBlock = cb;
             }
+            else if (blockType == "disabled") {
+                disabledBlock = cb;
+            }
             else {
                 Debug.LogError("Invalid button block type");
             }

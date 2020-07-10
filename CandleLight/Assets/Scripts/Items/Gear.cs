@@ -104,7 +104,7 @@ namespace Items {
         /// </summary>
         /// <returns></returns>
         public override int GetWAXValue() {
-            int WAX = 0;
+            int WAX = 1;
 
             for (int i = 0; i < effects.Length; i++) {
                 switch(effects[i]) {

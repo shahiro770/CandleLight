@@ -33,7 +33,7 @@ namespace Items {
         /// </summary>
         /// <returns></returns>
         public override int GetWAXValue() {
-            return 0;
+            return 1;
         }
     }
 }

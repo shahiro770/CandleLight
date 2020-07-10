@@ -81,9 +81,13 @@ Bug: Placing items in equipped slots increments spare
 
 CURRENTLY DOING
 ---------------
-
-
 Bug: Item displays for eventDisplays is off
+Fix: Make zero gold items worth one
+Bug: Recolour skills when leveling up
+
+Bug: If encounter is possible on rekindle event, don't allow
+Fix: Shift click to sell
+Fix: Popup warning for trying to unassign a skill that can't be unassigned
 
 Speed Runner Tester: Jeffrey Zhao
 

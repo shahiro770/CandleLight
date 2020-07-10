@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030266b89db8b4f47a7da2b2b670ef47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTutorial: 1
+  isTutorial: 0
   isTips: 1
   firstConsumable: 1
   firstCandle: 1
@@ -536,6 +536,13 @@ MonoBehaviour:
   subtitleColour:
     serializedVersion: 2
     rgba: 4289901234
+  orangeBlock:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
   heldItemDisplay: {fileID: 0}
   panelButtonsEnabled: 1
   inShop: 0

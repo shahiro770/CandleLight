@@ -55,14 +55,23 @@ namespace PlayerUI {
             ColorBlock normalBlock = b.colors; 
             ColorBlock unusableBlock = b.colors;
             ColorBlock highlightedBlock = b.colors;
+            ColorBlock disabledBlock = b.colors;
             
             unusableBlock.normalColor = new Color32(196, 36, 48, 255);
             unusableBlock.highlightedColor = new Color32(255, 0, 64, 255);
             unusableBlock.pressedColor = new Color32(120, 36, 48, 255);
             unusableBlock.disabledColor = new Color32(120, 36, 48, 255);
 
+            disabledBlock.normalColor = disabledBlock.disabledColor;
+            disabledBlock.highlightedColor = disabledBlock.disabledColor;
+            disabledBlock.pressedColor = disabledBlock.disabledColor;
+
+            highlightedBlock.normalColor = normalBlock.pressedColor;
+
             bts.SetColorBlock("normal", normalBlock);
             bts.SetColorBlock("normalAlternate", unusableBlock);
+            bts.SetColorBlock("highlighted", highlightedBlock);
+            bts.SetColorBlock("disabled", disabledBlock);
         }
 
         /// <summary>

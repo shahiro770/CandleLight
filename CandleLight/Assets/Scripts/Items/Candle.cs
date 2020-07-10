@@ -112,7 +112,7 @@ namespace Items {
         /// </summary>
         /// <returns></returns>
         public override int GetWAXValue() {
-            int WAX = 0;
+            int WAX = 1;
     
             switch(effects[0]) {
                 case "MPREGENDOUBLE":

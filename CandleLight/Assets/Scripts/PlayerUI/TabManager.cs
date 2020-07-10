@@ -49,6 +49,7 @@ namespace PlayerUI {
             if (GameManager.instance.isTutorial == false) {                   // panels aren't opened immediatel in the tutorial
                 if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                     OpenPanel(0);
+                    btss[1].SetColorBlock("normalAlternate", UIManager.instance.orangeBlock);
                     ShowSkillPointsInTab(1);
                     HighlightTab(1);
                 }
@@ -73,8 +74,7 @@ namespace PlayerUI {
             if (tabTexts[index].key.EndsWith("_(!)")) {
                 tabTexts[index].SetKey(tabTexts[index].key.Substring(0, tabTexts[index].key.Length - 4)); 
             }
-
-            if (triggerTutorial == true) {
+            if (triggerTutorial == true) {  // for certain conditions, prevent another tutorial from popping up when clicked
                 if (EventManager.instance.TutorialTabOnClick(index, panels[0].GetPanelName() == PanelConstants.PARTYPANEL) == true) {
                     triggerTutorial = false;
                 }
@@ -112,7 +112,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="index"></param>
         public void HighlightTab(int index) {
-            btss[index].SetColor("highlighted"); 
+            btss[index].SetColor("normalAlternate"); 
         }
 
         /// <summary>
