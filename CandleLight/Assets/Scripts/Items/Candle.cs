@@ -53,6 +53,7 @@ namespace Items {
             isUsable = true;
             uses = values[1];
             maxUses = uses;
+            CalculateWAXValue();
         }
 
         /// <summary>
@@ -72,47 +73,15 @@ namespace Items {
             isUsable = c.isUsable;
             uses = values[1];
             maxUses = uses;
-        }
-        
-        /// <summary>
-        /// Randomizes the amounts for all effects depending on the items' qualities
-        /// </summary>
-        /// <param name="quality"></param>
-        public void RandomizeAmounts(string quality) {
-            float multiplier;
-            int effectIndex = Random.Range(0, effectsNum);
-
-            if (quality == "low") {
-                multiplier = 0.5f;
-            }
-            else if (quality == "med") {
-                multiplier = 1f;
-            }
-            else if (quality == "high") {
-                multiplier = 1.5f;
-            }
-            else {      // perfect quality, can only be achieved under rare circumstances
-                multiplier = 2f;
-            }
-
-            for (int i = 0; i < effects.Length; i++) {
-                if (i == effectIndex && effectsNum > 1 && quality == "med" ) {         // medium quality will have at most 2 random effects
-                    effects[i] = "none";
-                }   
-                else if (i != effectIndex && quality == "low") {    // low quality will have 1 random effect
-                    effects[i] = "none";
-                }
-
-                values[i] =  Random.Range((int)(Mathf.Max(1, values[i] * multiplier)), (int)(values[i] * (1 + multiplier)));
-            }
+            CalculateWAXValue();
         }
 
         /// <summary>
         /// Returns how much an item is worth
         /// </summary>
         /// <returns></returns>
-        public override int GetWAXValue() {
-            int WAX = 1;
+        public override void CalculateWAXValue() {
+            int WAX = 0;
     
             switch(effects[0]) {
                 case "MPREGENDOUBLE":
@@ -146,7 +115,7 @@ namespace Items {
                     break;
             }
 
-            return WAX;
+            WAXvalue = WAX;
         }
 
         /// <summary>

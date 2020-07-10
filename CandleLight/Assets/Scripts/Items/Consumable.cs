@@ -76,13 +76,15 @@ namespace Items {
 
                 values[i] =  Random.Range((int)(Mathf.Max(1, values[i] * multiplier)), (int)(values[i] * (1 + multiplier)));
             }
+
+            CalculateWAXValue();
         }
 
         /// <summary>
         /// Returns how much an item is worth
         /// </summary>
         /// <returns></returns>
-        public override int GetWAXValue() {
+        public override void CalculateWAXValue() {
             int WAX = 0;
 
             for (int i = 0; i < effects.Length; i++) {
@@ -103,7 +105,7 @@ namespace Items {
                 }
             }
 
-            return WAX;
+            WAXvalue = WAX;
         }
 
         /// <summary>

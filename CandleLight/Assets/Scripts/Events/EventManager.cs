@@ -454,7 +454,8 @@ namespace Events {
             else if (className == "rogue") {
                 startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("RogueWeapon-1", "Gear");
             }
-
+            startingWeapon.CalculateWAXValue();
+            
             return startingWeapon;
         }
 
@@ -757,7 +758,6 @@ namespace Events {
                     }
                     else if (r.itemType == ItemConstants.CANDLE) {
                         items.Add(new Candle(subAreaCandles[Random.Range(0, candleNum)]));
-                        ((Candle)items[i]).RandomizeAmounts(r.itemQuality);
                     }
                     else if (r.itemType == ItemConstants.SPECIAL) {
                         items.Add(new Special(subAreaSpecials[Random.Range(0, specialNum)]));

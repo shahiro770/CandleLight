@@ -434,7 +434,7 @@ namespace PlayerUI {
                 }
 
                 // selling
-                PartyManager.instance.AddWAX((int)(newItemDisplay.GetWAXValue() * 0.5f));
+                PartyManager.instance.AddWAX(newItemDisplay.GetWAXValue());
 
                 return true;
             }
@@ -448,9 +448,9 @@ namespace PlayerUI {
                     return false;
                 }
                 else {  // trading
-                    if ((int)(PartyManager.instance.WAX + newItemDisplay.GetWAXValue() * 0.5f) - currentItemDisplay.GetWAXValue() >= 0) {
-                        PartyManager.instance.AddWAX((int)(newItemDisplay.GetWAXValue() * 0.5f));
-                        PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValue());
+                    if ((PartyManager.instance.WAX + newItemDisplay.GetWAXValue()) - currentItemDisplay.GetWAXValueShop() >= 0) {
+                        PartyManager.instance.AddWAX(newItemDisplay.GetWAXValue());
+                        PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValueShop());
                         return true;
                     }
 
@@ -472,7 +472,7 @@ namespace PlayerUI {
                     t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                     if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
-                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
+                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValueShop());
                     }
                     else {
                         t.SetTextActive("value", false);    // don't display the worth text if there is no item
@@ -495,10 +495,10 @@ namespace PlayerUI {
                     
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                     if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
-                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
+                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValueShop());
                     }
                     else {
-                        t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue() * 0.5f));
+                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
                     }
                 }
                 else if (basicKeys[1] == ItemConstants.CANDLE) {
@@ -507,10 +507,10 @@ namespace PlayerUI {
                     t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                     if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
-                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
+                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValueShop());
                     }
                     else {
-                        t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue() * 0.5f));
+                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
                     }
                 }
                 else if (basicKeys[1] == ItemConstants.SPECIAL) {
@@ -519,7 +519,7 @@ namespace PlayerUI {
                     t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
                     t.SetKey("description", basicKeys[0] + "_item_des");
                     if (currentItemDisplay.subType == ItemConstants.SPECIAL) {  // very special items can't be sold, hence no value
-                        t.SetAmountText("value", "WAX_label", (int)(currentItemDisplay.GetWAXValue()));
+                        t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());
                     }
                 }
             }

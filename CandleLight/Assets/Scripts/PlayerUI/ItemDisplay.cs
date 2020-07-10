@@ -129,7 +129,11 @@ namespace PlayerUI {
         /// </summary>
         /// <returns></returns>
         public int GetWAXValue() {
-            return displayedItem.GetWAXValue();
+            return Mathf.Max((int)(displayedItem.WAXvalue * 0.5f), 1);
+        }
+
+        public int GetWAXValueShop() {
+            return displayedItem.WAXvalue;
         }
 
         /// <summary>
@@ -137,7 +141,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns></returns>
         public string GetWAXValueAsString() {
-            return displayedItem.GetWAXValue().ToString();
+            return displayedItem.WAXvalue.ToString();
         }
 
         /// <summary>

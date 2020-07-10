@@ -32,8 +32,8 @@ namespace Items {
         /// Returns how much an item is worth
         /// </summary>
         /// <returns></returns>
-        public override int GetWAXValue() {
-            return 1;
+        public override void CalculateWAXValue() {
+            WAXvalue = 1;
         }
     }
 }

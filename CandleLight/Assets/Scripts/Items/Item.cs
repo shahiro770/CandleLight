@@ -23,9 +23,10 @@ namespace Items {
         public string className = ClassConsants.ANY;    /// <value> Class that can use this item </value>
 
         public Sprite itemSprite;  /// <value> Item's sprite </value>
-        public string[] effects = new string[3];    /// <value> List of effects </value>
-        public int[] values = new int[3];           /// <value> List of values associated with effects </value>
-        public int effectsNum = 0;                  /// <value> Number of effects </value>
+        public string[] effects = new string[3];            /// <value> List of effects </value>
+        public int[] values = new int[3];                   /// <value> List of values associated with effects </value>
+        public int effectsNum = 0;                          /// <value> Number of effects </value>
+        public int WAXvalue { get; protected set; } = 0;    /// <value> WAX value of item </value>       
 
         /// <summary>
         /// Sets image to display a given sprite
@@ -64,8 +65,8 @@ namespace Items {
         /// Returns how much an item is worth
         /// </summary>
         /// <returns></returns>
-        public virtual int GetWAXValue() {
-            return -1;
+        public virtual void CalculateWAXValue() {
+            return;
         }
 
         /// <summary>
