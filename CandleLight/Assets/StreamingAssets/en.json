@@ -49,9 +49,9 @@
 		{ "key": "generic_toast", "value": "Condition Changed" },
 
 		{ "key": "special0_tutorial", "value": "Click on the Special tab to see important items" },
-		{ "key": "special1_tutorial", "value": "Items in the\n\"Very Special\" slots cannot be moved" },
-		{ "key": "party0_tutorial", "value": "Click on the Party tab to see your party's health and mana" },
-		{ "key": "party1_tutorial", "value": "Click on a party member's icon for\nmore details" },
+		{ "key": "special1_tutorial", "value": "Items in the \"Very Special\" slots cannot be moved" },
+		{ "key": "party0_tutorial", "value": "Click on the Party tab to see your party's\nhealth and mana" },
+		{ "key": "party1_tutorial", "value": "Click on a party member's icon for more details" },
 		{ "key": "gear0_tutorial", "value": "To equip gear, click the item, and then click the matching slot" },
 		{ "key": "gear1_tutorial", "value": "To equip a different party member, click their icon in the Party tab" },
 		{ "key": "combat0_tutorial", "value": "Select an attack" },

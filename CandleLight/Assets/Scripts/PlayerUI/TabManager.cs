@@ -45,11 +45,13 @@ namespace PlayerUI {
             for (int i = 0; i < btss.Length; i++) { //(ButtonTransitionState bts in btss) {
                 btss[i].SetColorBlock("pressed", pressedBlock);
             }
-
+            if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {
+                btss[1].SetColorBlock("normalAlternate", UIManager.instance.orangeBlock);
+            }
+        
             if (GameManager.instance.isTutorial == false) {                   // panels aren't opened immediatel in the tutorial
                 if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                     OpenPanel(0);
-                    btss[1].SetColorBlock("normalAlternate", UIManager.instance.orangeBlock);
                     ShowSkillPointsInTab(1);
                     HighlightTab(1);
                 }

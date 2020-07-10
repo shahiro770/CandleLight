@@ -57,8 +57,8 @@ namespace Menus.ClassSelectMenu {
             sbEnabledBlock.highlightedColor = new Color32(133, 133, 133, 255);
             sbEnabledBlock.pressedColor = new Color32(255, 255, 255, 255);
 
-            btsPressedBlock.normalColor = new Color32(255, 255, 255, 100);
-            btsPressedBlock.highlightedColor = new Color32(133, 133, 133, 255);
+            btsPressedBlock.normalColor = new Color32(255, 255, 255, 255);
+            btsPressedBlock.highlightedColor = new Color32(255, 255, 255, 255);
             btsPressedBlock.pressedColor = new Color32(255, 255, 255, 255);
             btsPressedBlock.disabledColor = new Color32(61, 61, 61, 255);
             
