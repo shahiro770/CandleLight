@@ -95,7 +95,8 @@ Speed Runner Tester: Jeffrey Zhao
 VERIFICATION NEEDED
 -------------------
 Bug: Candlemancy kinda bugged but need to figure out why 
-
+Bug: Is it a UI glitch if all highlighted tabs during tutorials due to ! become normal coloure dupon clicking on tab?
+    I.e. assume the player noticed?
 
 
 NEAR FUTURE
@@ -123,3 +124,62 @@ Tutorial: Clicking actions progresses the tutorial, but this might not be the wo
 
 
 
+After expanding my beta tester team, I was able to get a lot more refined input, and after some serious discussion with my senior beta testers, I decided to spend an update polishing up several features in the game rather than rushing to the end. This update includes many quality of life features that are sure to make the experience more intuitive for players.
+
+### Major Additions
+- Tutorial
+  - In order to ease the learning curve the game has at the start, on any initial run of the game will have the player go through a small tutorial, with notifications explaining various features
+  - The tutorial also gives a lot of context for the story of the game, adding some emotional weight to the gameplay
+  - In order to overwhelm the player with all of the game's features at the start, on first encountering something unintuitive (how consumables are used, champion monsters, candles), the game will also show helpful tips to explain them
+- Special Items
+  - These are items that while cannot be used in combat, are required for the story and quests
+  - Very special items cannot be interacted with, whereas a special item can ignored when found (consequences may vary)
+- Quests
+  - These are unique events that when accepted, will cause a different event to appear (this may lead to several events in a "quest chain")
+  - Quests may carry over to different subareas, giving the player a solid chance to see all of the events in a quest chain
+  - There is only one quest in the game at the moment, requiring the player to find a special hat
+
+### Quality of Life Changes
+- UI related
+  - Button colouring has been changed to have more visual feedback when clicked and hovered (I'm experimenting a bit, so any feedback for this choice in particular is appreciated"
+  - A 0 and a 1 have been added to the party selection screen for a better visual understanding that the player is picking two different party members
+  - Notifications now have an orange flame animation to draw more attention
+  - Some sprites (such as the used outpost candle and lost pouch) were cleaned up to match the game's aesthetic
+  - Tabs  for panels (gear, candles, party, etc.) now light up when necessary
+  - Clicking a class item defaults to the first party member that can equip it
+  - Player stats can now be hovered over to know what they do
+  - Take all button now turns red if there's nothing to take
+  - Skills tab turns orange upon leveling up, to draw maximum attention
+  - Skills tab now shows number of unused skill points in the party
+  - If an item cannot be used by anyone in the party, it 
+- Gameplay
+  - Player can't rekindle if they have no active candles
+  - Shop keepers at the start of the game now sell cheaper items (that the player can actually afford)
+  - Being afflicted with the same status effect will overwrite the previous one's (this may be tweaked in the future, but for now this implementation is more intuitive, with both  positives and negatives)
+
+### Minor Additions
+
+### Balance Changes
+
+### Bug Fixes
+- Fixed event image sizing (it was 2 pixels too small for 99% of events)
+- HP bars no longer get funky if the minimum and maximum values go over 3 digits
+- Fixed bug where player casting a buff on a dead person crashed the game
+- Fixed bug where player casting a buff on a monster essentially froze the game
+- Status effect displays are no longer rendered twice
+- Fixed weird item overlapping when trying to take all result items while inventory was supposedly full
+- Stopped party panel from rearranging party members when first party member died
+
+### Known Bugs
+- Quality of life features that still have to be added
+  - Make most tooltips interact-able, even when the attached body isn't (e.g. status effects should be able to be seen even when the monster can't be interacted with)
+  - Shift click to sell
+  - A warning notification if the player is doing something that doesn't make intuitive sense immediately (trying to un-spec a skill that is enabling the following column, trying to spec into 4 active skills)
+  -  
+
+The game will be completed within 1 more patch, with maybe a follow up if there's any serious bugs or things I forgot to add. Features left to add include:
+- Music and sound effects
+- Saving
+- Options
+
+Hope to see this game on Unblockedgames.com soon, as Kongregate has officially stopped accepting games because they failed to prepare for the death of flash. Massive thanks to everyone who's input contributed to this update! Take care!
