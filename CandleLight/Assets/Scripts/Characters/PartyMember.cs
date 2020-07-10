@@ -373,7 +373,7 @@ namespace Characters {
             /* secondary stat changes from skills */
             if (className == ClassConstants.WARRIOR) {
                 if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
-                    PATK += (int)(PATK * 0.3);
+                    PATK += (int)(PATK * 0.3f);
                 }
             }
             if (className == ClassConstants.MAGE) {

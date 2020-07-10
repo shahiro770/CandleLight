@@ -88,6 +88,7 @@ Bug: Recolour skills when leveling up
 Bug: If encounter is possible on rekindle event, don't allow
 Fix: Shift click to sell
 Fix: Popup warning for trying to unassign a skill that can't be unassigned
+Fix: Make status effect displays hoverable
 
 Speed Runner Tester: Jeffrey Zhao
 

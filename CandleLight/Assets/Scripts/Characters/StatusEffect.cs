@@ -198,8 +198,11 @@ namespace Characters {
                 if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
                     value = (int)(preValue * 0.5f) - afflicted.PDEF;
                 }
+                else if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {  // if not a partyMember, bleed damage can also be halved from being a boss
+                    value = (int)(preValue * 0.5f) - afflicted.PDEF;
+                }
                 else {
-                    value = preValue - afflicted.PDEF;;
+                    value = preValue - afflicted.PDEF;
                 }
             }
 
