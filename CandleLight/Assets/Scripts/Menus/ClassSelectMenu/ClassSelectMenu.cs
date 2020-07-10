@@ -53,19 +53,14 @@ namespace Menus.ClassSelectMenu {
             ColorBlock sbEnabledBlock = selectButton.colors; 
             ColorBlock btsPressedBlock = selectButton.colors;   // arbitrary, just need a color block
             ColorBlock btsNormalBlock = selectButton.colors;    // arbitrary, just need a color block
-            sbEnabledBlock.normalColor = new Color32(215, 215, 215, 255);
-            sbEnabledBlock.highlightedColor = new Color32(255, 255, 255, 255);
-            sbEnabledBlock.pressedColor = sbEnabledBlock.highlightedColor;
+            sbEnabledBlock.normalColor = new Color32(255, 255, 255, 100);
+            sbEnabledBlock.highlightedColor = new Color32(133, 133, 133, 255);
+            sbEnabledBlock.pressedColor = new Color32(255, 255, 255, 255);
 
-            btsPressedBlock.normalColor = new Color32(141, 141, 141, 255);
-            btsPressedBlock.highlightedColor = new Color32(255, 255, 255, 200);
+            btsPressedBlock.normalColor = new Color32(255, 255, 255, 100);
+            btsPressedBlock.highlightedColor = new Color32(133, 133, 133, 255);
             btsPressedBlock.pressedColor = new Color32(255, 255, 255, 255);
             btsPressedBlock.disabledColor = new Color32(61, 61, 61, 255);
-
-            btsPressedBlock.normalColor = new Color32(255, 255, 255, 255);
-            btsPressedBlock.highlightedColor = new Color32(255, 255, 255, 200);
-            btsPressedBlock.pressedColor = new Color32(255, 255, 255, 255);
-            btsPressedBlock.disabledColor = new Color32(255, 255, 255, 255);
             
             foreach(ButtonTransitionState bts in compBtss) {
                 bts.SetColorBlock("normal", btsNormalBlock);

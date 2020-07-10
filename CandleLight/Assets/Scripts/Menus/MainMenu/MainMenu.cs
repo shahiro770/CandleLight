@@ -19,29 +19,7 @@ namespace Menus.MainMenu {
 
     public class MainMenu : MonoBehaviour {
         
-        public Button firstToSelect;    /// <value> First button to select on enabling </value>
         private EventSystem es;         /// <value> eventSystem reference </value>
-
-        /// <summary>
-        /// Enable the main menu to be viewed and used by the player
-        /// </summary> 
-        void OnEnable() {
-            StartCoroutine(InitEs());
-        }
-
-        /// <summary>
-        /// EventSystem doesn't enable on time in OnEnable. Have to wait for it to be enabled
-        /// before user can reliably navigate UI.
-        /// </summary>
-        /// <returns> Yields until event system is enabled </returns>
-        private IEnumerator InitEs() {
-            while (es == null) {
-                es = EventSystem.current; 
-                yield return null;
-            }
-            es.SetSelectedGameObject(firstToSelect.gameObject); 
-            firstToSelect.OnSelect(null);   // hack to ensure first button to select is visibly selected
-        }
 
         /// <summary>
         /// Quits the application
