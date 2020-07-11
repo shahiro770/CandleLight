@@ -9,6 +9,7 @@
 */
 
 using ActionConstants = Constants.ActionConstants;
+using Audio;
 using Characters;
 using Combat;
 using Events;
@@ -252,6 +253,8 @@ namespace PlayerUI {
                     StartCoroutine(CombatManager.instance.AttemptFlee());
                 }
             }
+
+            AudioManager.instance.Play("click");
         }
 
         /// <summary>
