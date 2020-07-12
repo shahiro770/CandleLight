@@ -65,7 +65,7 @@ namespace Characters {
             this.subClassName = personalInfo[1];
             this.race = personalInfo[3];
             this.skills = skills;
-            skillPoints = 1;
+            skillPoints = 4;
 
             pmvc.Init(this);
         }
@@ -670,6 +670,18 @@ namespace Characters {
                         }
                     }
                 }
+                else if (className == ClassConstants.MAGE) {
+                    if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
+                        int burnChance = 33;
+                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
+                            burnChance *= 2;
+                        }
+                        if (Random.Range(0, 100) < burnChance) {
+                            Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
+                            cm.AddStatusEffect(StatusEffectConstants.BURN, 3, this); 
+                        }
+                    }
+                }
             }
             else {
                 yield return StartCoroutine(DodgeAttack());
@@ -695,6 +707,18 @@ namespace Characters {
                         if (Random.Range(0, 100) < 50) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
                             cm.AddStatusEffect(StatusEffectConstants.BLEED, 2, this); 
+                        }
+                    }
+                }
+                else if (className == ClassConstants.MAGE) {
+                    if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
+                        int burnChance = 33;
+                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
+                            burnChance *= 2;
+                        }
+                        if (Random.Range(0, 100) < burnChance) {
+                            Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
+                            cm.AddStatusEffect(StatusEffectConstants.BURN, 3, this); 
                         }
                     }
                 }
