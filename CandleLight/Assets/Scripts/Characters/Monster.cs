@@ -326,7 +326,7 @@ namespace Characters {
 
         public IEnumerator TriggerStatuses() {
             int damageTaken = 0;
-            int[] animationsToPlay = new int[] { 0 ,0, 0, 0 }; 
+            int[] animationsToPlay = new int[] { 0 ,0, 0, 0, 0 }; 
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
@@ -346,9 +346,13 @@ namespace Characters {
                     }
                     animationsToPlay[2] = 1;
                 }
+                else if (se.name == StatusEffectConstants.FROSTBITE) {
+                    damageTaken += se.value;
+                    animationsToPlay[3] = 1;
+                }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP || se.name == StatusEffectConstants.REGENERATE) {
                     damageTaken -= se.value; 
-                    animationsToPlay[3] = 1;
+                    animationsToPlay[4] = 1;
                 }
 
                 se.UpdateDuration(-1);
@@ -367,6 +371,9 @@ namespace Characters {
                 md.PlayBleedAnimation();
             }
             if (animationsToPlay[3] == 1) {
+                md.PlayFrostbiteAnimation();
+            }
+            if (animationsToPlay[4] == 1) {
                 md.PlayRegenerateAnimation();
             }
 

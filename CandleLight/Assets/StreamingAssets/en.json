@@ -34,6 +34,7 @@
 		{ "key": "was_healed_for_text", "value": "was healed for" },
 		{ "key": "restored_text", "value": "restored" },
 		{ "key": "joined_party", "value": "joined you" },
+		{ "key": "summon_text", "value": "summon a" },
 		{ "key": "none_event", "value": "" },
 
 		{ "key": "shop_toast", "value": "Your WAX" },
@@ -984,7 +985,7 @@
 		{ "key": "taunt_description", "value": "Has PATK increased by 50% and must attack the caster when it can" },
 		{ "key": "freeze_title", "value": "Freeze" },
 		{ "key": "freeze_sub", "value": "Debuff" },
-		{ "key": "freeze_description", "value": "Has DOG, ACC, and PDEF reduced by 30%" },
+		{ "key": "freeze_description", "value": "Has DOG, ACC, and PDEF reduced by 30% and takes double damage from frostbite" },
 		{ "key": "rage_title", "value": "Rage" },
 		{ "key": "rage_sub", "value": "Buff" },
 		{ "key": "rage_description", "value": "Has PATK increased\nby 50%" },
@@ -1028,6 +1029,12 @@
 		{ "key": "vampire_title", "value": "Vampire" },
 		{ "key": "vampire_sub", "value": "Buff" },
 		{ "key": "vampire_description", "value": "Has Bleed Plus (increased bleed damage)" },
+		{ "key": "frostbite_title", "value": "Frostbite" },
+		{ "key": "frostbite_sub", "value": "Debuff" },
+		{ "key": "frostbite_description", "value": "Taking 30% of caster's MATK as magic damage at the end of its turn" },
+		{ "key": "familiar_title", "value": "Summoned Familiar" },
+		{ "key": "familiar_sub", "value": "Permanent Buff" },
+		{ "key": "familiar_description", "value": "Dies when its summoner dies and ceases to exist at the end of combat" },
 		{ "key": "championHP_title", "value": "Everlasting" },
 		{ "key": "championHP_sub", "value": "Permanent Buff" },
 		{ "key": "championHP_description", "value": "Has HP increased by 66% and recovers 5% of its HP at the end of its turn" },
@@ -1144,6 +1151,8 @@
 		{ "key": "cursedRoots_attack", "value": "C. Roots" },
 		{ "key": "timelessBlade_attack", "value": "T. Blade" },
 		{ "key": "frostGolem_attack", "value": "F. Golem" },
+		{ "key": "frostGolem_attack_des", "value": "frost golem" },
+		{ "key": "shatter_attack", "value": "Shatter" },
 		{ "key": "angelsMercy_attack", "value": "A. Mercy" },
 		{ "key": "none_attack", "value": ""}
 	]

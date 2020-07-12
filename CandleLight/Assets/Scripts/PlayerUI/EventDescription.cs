@@ -44,6 +44,7 @@ namespace PlayerUI {
         private string healText = LocalizationManager.instance.GetLocalizedValue("heal_text");      /// <value> Localized text for the text "heal" </value>
         private string wasHealedForText = LocalizationManager.instance.GetLocalizedValue("was_healed_for_text");     /// <value> Localized text for the text "HP" </value>
         private string restoredText = LocalizationManager.instance.GetLocalizedValue("restored_text");     /// <value> Localized text for the text "restored" </value>
+        private string summonText = LocalizationManager.instance.GetLocalizedValue("summon_text");  /// <value> Localized text for the text "summon a" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
@@ -211,6 +212,9 @@ namespace PlayerUI {
             }
             else if (a.type == AttackConstants.HEALHP) {
                 attackString = a.costValue + " " + a.costType + " " + healText + " " + a.attackValue + " " + HPText; 
+            }
+            else if (a.type == AttackConstants.SUMMON) {
+                attackString = a.costValue + " " + a.costType + " " + summonText + " " + LocalizationManager.instance.GetLocalizedValue(a.nameKey + "_des");
             }
             else {  // physical or magical attack
                 attackString = a.costValue + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;

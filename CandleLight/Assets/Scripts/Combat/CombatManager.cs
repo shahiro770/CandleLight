@@ -289,15 +289,9 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Moves selection to the left most monster, and preventing all actions except for the
-        /// bottom-most action (undo) to be selected
+        /// On clicking an attack, handles any additional logic that is required
         /// </summary>
         /// <param name="a"> Attack to be executed </param>
-        /// <remark> 
-        /// Will have to disable other player panel's in the future and make monster selection
-        /// more logical (e.g. selecting the last selected monster after the first attack, or
-        /// selecting the middle most monster by default)
-        /// </remark>
         public void PreparePMAttack(Attack a) {
             selectedAttackPM = a;
 
@@ -305,8 +299,11 @@ namespace Combat {
             if (selectedAttackPM.type == AttackConstants.HEALHP || selectedAttackPM.type == AttackConstants.BUFF) {          
                 partyPanel.SetBlinkSelectables(selectedAttackPM, true);
             }
+            else if (selectedAttackPM.type == AttackConstants.SUMMON) {
+                pmSelectionFinalized = true;
+            }
             else {
-                Monster taunter = (Monster)CheckTauntIndex(activePartyMember);  // TODO: Make it so when taunted, player must choose an attack that can target the taunter (making candles and other attaks unusable)
+                Monster taunter = (Monster)CheckTauntIndex(activePartyMember);  // TODO: Make it so when taunted, player must choose an attack that can target the taunter (making candles and other attacks unusable)
                 if (taunter != null) {
                     SelectMonster(taunter);
                 }
@@ -420,6 +417,26 @@ namespace Combat {
                     }
                     else if (selectedAttackPM.type == AttackConstants.HEALMPSELF || selectedAttackPM.type == AttackConstants.HEALHPSELF || selectedAttackPM.type == AttackConstants.BUFFSELF) {
                         yield return (StartCoroutine(activePartyMember.GetHelped(selectedAttackPM, activePartyMember)));
+                    }
+                    else if (selectedAttackPM.type == AttackConstants.SUMMON) {
+                        if (activePartyMember.summon == null) {     // initial summon
+                            PartyManager.instance.AddPartyMemberSummon(activePartyMember, selectedAttackPM.name, countID++);
+                            cq.AddCharacterAndResort(activePartyMember.summon);
+                            partyMembersAlive.Add(activePartyMember.summon);
+                            yield return (StartCoroutine(activePartyMember.summon.GetSummoned(selectedAttackPM, false)));
+                        }
+                        else {
+                            if (activePartyMember.summon.CheckDeath() == true) {    // revive
+                                PartyManager.instance.RestoreSummon(activePartyMember.summon);
+                                cq.AddCharacterAndResort(activePartyMember.summon);
+                                partyMembersAlive.Add(activePartyMember.summon);
+                            }
+                            else {  // full heal and purge
+                                PartyManager.instance.RestoreSummon(activePartyMember.summon);
+                            }
+                            yield return (StartCoroutine(activePartyMember.summon.GetSummoned(selectedAttackPM, true)));
+                        }
+                        
                     }
                 }
                 else if (selectedAttackPM.scope == "adjacent") {
@@ -727,11 +744,22 @@ namespace Combat {
             if (isFleeSuccessful) {
                 endString = "FLEE";
             }
+            else if (cq.CheckPartyDefeated()) {
+                endString = "DEFEAT";
+            }
             else if (cq.CheckMonstersDefeated()) {
                 endString = "VICTORY";
             }
-            else if (cq.CheckPartyDefeated()) {
-                endString = "DEFEAT";
+
+            List<PartyMember> summonsToRemove = new List<PartyMember>();
+            foreach (PartyMember pm in partyMembersAll) {
+                if (pm.summoner != null) {
+                    summonsToRemove.Add(pm);
+                    pm.summoner.summon = null;
+                }
+            }
+            foreach (PartyMember pm in summonsToRemove) {
+                PartyManager.instance.RemovePartyMember(pm);
             }
 
             StartCoroutine(EventManager.instance.DisplayPostCombat(endString));

@@ -68,7 +68,7 @@ namespace Characters {
             if (pm.className == ClassConstants.WARRIOR) {
                 partyMemberColour = new Color32(189, 29, 0, 255);
             }
-            else if (pm.className == ClassConstants.MAGE) {
+            else if (pm.className == ClassConstants.MAGE || pm.className == ClassConstants.FROSTGOLEM) {
                 partyMemberColour = new Color32(0, 152, 220, 255);
             }
             else if (pm.className ==  ClassConstants.ARCHER) {
@@ -515,6 +515,35 @@ namespace Characters {
             if (EventManager.instance.partyPanel.isOpen == true) {
                 EventManager.instance.partyPanel.SetStatsPanel(false);  // if outside of combat, statsPanel might be open during animations
                 yield return (StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName)));
+            }
+            else {
+                yield return new WaitForSeconds(0.75f);
+            }
+        }
+
+        /// <summary>
+        /// Play the animation for the initial summoning of a summoned partyMember
+        /// </summary>
+        /// <param name="animationClipName"></param>
+        /// <returns></returns>
+        public IEnumerator DisplaySummon(string animationClipName) {
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName));
+                yield return (StartCoroutine(pmdPartyPanel.PlaySpawnAnimation()));  
+            }
+            else {
+                yield return new WaitForSeconds(0.75f);
+            }
+        }
+
+        /// <summary>
+        /// Play the animation for restoring a summoned partyMember (which is just DisplaySummon with n fade)
+        /// </summary>
+        /// <param name="animationClipName"></param>
+        /// <returns></returns>
+        public IEnumerator DisplaySummonRestored(string animationClipName) {
+            if (EventManager.instance.partyPanel.isOpen == true) {
+                yield return StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName));
             }
             else {
                 yield return new WaitForSeconds(0.75f);

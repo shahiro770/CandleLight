@@ -3,87 +3,15 @@ ChangeLog
 
 DONE
 ----
-Bug: Not recalculating stats on all status effects
-Bug: The EXP on rewards only cares about the first two partyMembers
-Feature: KeyItems Panel (should be significantly easier than the other two)
-Feature: Quests
-Feature: talkingWraith (greyWasteTombs) - A Lesser Wwraith that talks?!
-Fix itemslot logic for showing defaults (no longer need to check null typed items)
-Revert the pouch sprite back to something simple
-Make combat and eventMAnagers disable the special panel when possible
-Bug: Added in missing background and made endGreyWastes subArea to simplify code
-Bug: combat prompt text blinks out instead of fading out
-Bug: Bleeding status effect goes upwards instead of downwards on partymember
-Bug: Fix the fraeking toastPanels
-Bug: Went from tombsGreyWastes to LargeTomb
-Feature: Tutorial
-    - Make a tutorial greyhide
-    - For now just make text prompt tell player what to do next
-    - Make it so UI slowly lights up
-    - Make toastpanel say partyMember joined you
-    - Set player to level 0 at the start (first fight with greyhide will level them up, allowing them their first skill point)
-Fix: Make it when tabMAnager !!, they bright white
-Fix: Make eventdescription fade on hover (implemented but not enabled cause buggy)
-Fix: The min/max in bars breaks for 3 digit mins and maxs
-Bug: EventDisplay sizing and HidefromThePack size was wrong
-Fix: Add smart item selection
-Bug: Don't let them cast on dead person
-Bug: Don't let party member buff attacks get cast on monsters
-Bug: Tutorial slightly broken if you don't click all buttons
-Fix: add hover to stats
-Bug: Non-tutorial runs don't start with starting gear
-Bug: SED was rendering twice
-Balance: Reduced HP from DEX
-Fix: Tutorial notifications can be closed by clicking on them
-Feature: Click to close a tutorial toastPanel
-Bug: HP is not increasing from outposts
-Bug: Prevent rekindling with no active candles
-Bug: No quest at the start of non tutorial runs
-Fix: Add candle usages to the help tip
-Fix: Keep a counter for player's candle inventory
-Bug: Unusable item colour doesn't revert
-Bug: Reposition statsPanel tooltips
-Bug: PartyPanel would rearrange partyMembers if someone died
-Balance: Dodge now scales primarily off of luck, and slightly off of dex
-Bug: Removing a partyMember in partyMembers 
-Feature: Extremely high chance of combat if combat doesn't happen for a while
-Bug: Tutorial is covered by monster
-Feature: Companionship
-    - Make it so partyMembers can talk about recent stuff at none events
-Bug: Red text on generic weapon
-Bug: Player went to grab item, game froze, first partyMember dead
-Fix: Add bloodfrenzy buff
-Strange red colouring on selection
-Fix: Put 1 and 2 in gearPanel
-Fix: Total number of skills
-Fix: Make colour border
-Fix: Tooltip for consumables are used instantly
-Bug: Prevent candle uses when dead
-Bug: Take All breaks
-Bug: red text
-Bug: help sheet
-Bug:Shopkeeper's wax display did not show up if two toast notifications were present
-Bug: ToastPanel's don't fade in properly all the time  (don't know whats cuasing this)
-Strange red colouring for some items
-Make buffs and debuffs refresh
-Class select now easier to read
-Make advantage status effect better
-Add bonus PDEF and MDEF to monsters (negative for wraiths cause their MDEF shouldn't be high)
-Balance: Nerfed Bash, Taunt now costs 2 less MP
-Added tutorial for champion and consumables
-Add toast notification flame
-Updated several sprites for background stuff
-Tweaked ending bleed damage to increase sense of false hope
-Added 7th skills
-Feature: Added more split raods events and doll pouch
-Bug: EXP calculation for champion monstesr mixed with normal version is wrong
-Bug: Placing items in equipped slots increments spare
+
 
 CURRENTLY DOING
 ---------------
-Bug: Item displays for eventDisplays is off
-Fix: Make zero gold items worth one
-Bug: Recolour skills when leveling up
+Bug: Quest items might still be worth 0
+Got audio set up
+Fixed bug with gameOBjects not being destroyed
+
+Bug: If both party and monsters are wiped out, game doesn't game over
 
 Bug: If encounter is possible on rekindle event, don't allow
 Fix: Shift click to sell
@@ -124,62 +52,3 @@ Tutorial: Clicking actions progresses the tutorial, but this might not be the wo
 
 
 
-After expanding my beta tester team, I was able to get a lot more refined input, and after some serious discussion with my senior beta testers, I decided to spend an update polishing up several features in the game rather than rushing to the end. This update includes many quality of life features that are sure to make the experience more intuitive for players.
-
-### Major Additions
-- Tutorial
-  - In order to ease the learning curve the game has at the start, on any initial run of the game will have the player go through a small tutorial, with notifications explaining various features
-  - The tutorial also gives a lot of context for the story of the game, adding some emotional weight to the gameplay
-  - In order to overwhelm the player with all of the game's features at the start, on first encountering something unintuitive (how consumables are used, champion monsters, candles), the game will also show helpful tips to explain them
-- Special Items
-  - These are items that while cannot be used in combat, are required for the story and quests
-  - Very special items cannot be interacted with, whereas a special item can ignored when found (consequences may vary)
-- Quests
-  - These are unique events that when accepted, will cause a different event to appear (this may lead to several events in a "quest chain")
-  - Quests may carry over to different subareas, giving the player a solid chance to see all of the events in a quest chain
-  - There is only one quest in the game at the moment, requiring the player to find a special hat
-
-### Quality of Life Changes
-- UI related
-  - Button colouring has been changed to have more visual feedback when clicked and hovered (I'm experimenting a bit, so any feedback for this choice in particular is appreciated"
-  - A 0 and a 1 have been added to the party selection screen for a better visual understanding that the player is picking two different party members
-  - Notifications now have an orange flame animation to draw more attention
-  - Some sprites (such as the used outpost candle and lost pouch) were cleaned up to match the game's aesthetic
-  - Tabs  for panels (gear, candles, party, etc.) now light up when necessary
-  - Clicking a class item defaults to the first party member that can equip it
-  - Player stats can now be hovered over to know what they do
-  - Take all button now turns red if there's nothing to take
-  - Skills tab turns orange upon leveling up, to draw maximum attention
-  - Skills tab now shows number of unused skill points in the party
-  - If an item cannot be used by anyone in the party, it 
-- Gameplay
-  - Player can't rekindle if they have no active candles
-  - Shop keepers at the start of the game now sell cheaper items (that the player can actually afford)
-  - Being afflicted with the same status effect will overwrite the previous one's (this may be tweaked in the future, but for now this implementation is more intuitive, with both  positives and negatives)
-
-### Minor Additions
-
-### Balance Changes
-
-### Bug Fixes
-- Fixed event image sizing (it was 2 pixels too small for 99% of events)
-- HP bars no longer get funky if the minimum and maximum values go over 3 digits
-- Fixed bug where player casting a buff on a dead person crashed the game
-- Fixed bug where player casting a buff on a monster essentially froze the game
-- Status effect displays are no longer rendered twice
-- Fixed weird item overlapping when trying to take all result items while inventory was supposedly full
-- Stopped party panel from rearranging party members when first party member died
-
-### Known Bugs
-- Quality of life features that still have to be added
-  - Make most tooltips interact-able, even when the attached body isn't (e.g. status effects should be able to be seen even when the monster can't be interacted with)
-  - Shift click to sell
-  - A warning notification if the player is doing something that doesn't make intuitive sense immediately (trying to un-spec a skill that is enabling the following column, trying to spec into 4 active skills)
-  -  
-
-The game will be completed within 1 more patch, with maybe a follow up if there's any serious bugs or things I forgot to add. Features left to add include:
-- Music and sound effects
-- Saving
-- Options
-
-Hope to see this game on Unblockedgames.com soon, as Kongregate has officially stopped accepting games because they failed to prepare for the death of flash. Massive thanks to everyone who's input contributed to this update! Take care!

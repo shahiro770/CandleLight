@@ -33,9 +33,11 @@ namespace Characters {
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public int skillPoints { get; set; }        
-        public int turnCounter { get; set; }
+        public int turnCounter { get; set; }        /// <value> Counter for number of turns this partyMember has taken </value>
         public bool doneEXPGaining { get; private set; } = true;   /// <value> Total experience points to reach next level </value>
-
+        
+        public PartyMember summon = null;       /// <value> Summoned familiar of this partyMember </value>
+        public PartyMember summoner = null;     /// <value> PartyMember that summoned this </value>
         public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");
         public Skill[] skills = new Skill[12];
         public Gear weapon = null;        /// <value> Weapon </value>
@@ -448,6 +450,84 @@ namespace Characters {
             }
         }
 
+        #region [ Section 0 ] Summoned Partymember Logic
+        
+        /// <summary>
+        /// Initialize the partyMember, specifically for summon
+        /// </summary>
+        /// <param name="pm"></param>
+        /// <param name="summoner"></param>
+        public void InitSummon(PartyMember pm, PartyMember summoner) {
+            base.Init(pm.LVL, pm.CHP, pm.CMP, new int[] { pm.STR, pm.DEX, pm.INT, pm.LUK }, pm.attacks);
+            this.EXP = 0;
+            this.className = pm.className;
+            this.subClassName = pm.subClassName;
+            this.race = pm.race;
+            this.skills = pm.skills;
+            summoner.summon = this;
+            this.summoner = summoner;
+            GenerateSummonName(className);
+            LVLUpSummon(summoner);
+            pmvc.Init(this);
+        }
+
+        /// <summary>
+        /// Assigns a name to this partyMember assuming its a summon (slightly random)
+        /// </summary>
+        /// <param name="id"></param>
+        public void GenerateSummonName(string className) {
+            if (className == "frostGolem") {
+                string[] names = new string[] { "Frosty", "Chilly", "Krysthal", "Snowball", "Flurry", "Jack" }; // shout out to tristhal
+                this.pmName = names[Random.Range(0, names.Length)];
+            }
+        }
+
+        /// <summary>
+        /// Adds the summoned familiar buff (doesn't do anything besides a visual indicator)
+        /// </summary>
+        public void GetSummonBuff() {
+            StatusEffect newStatus = new StatusEffect(StatusEffectConstants.FAMILIAR, 999);
+            AddStatusEffectPermanent(newStatus);
+            pmvc.AddStatusEffectDisplay(newStatus);
+        }
+
+        /// <summary>
+        /// LVL up the summon to the summoner's level and add a portion of their stats
+        /// </summary>
+        /// <param name="summoner"></param>
+        public void LVLUpSummon(PartyMember summoner) {
+            for (int i = 1; i < summoner.LVL; i++) {
+                base.LVLUp();
+            }      
+            this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
+            skillPoints = 0;
+
+            // summons get part of the summoner's stats
+            baseSTR += (int)(summoner.STR * 0.25f); 
+            baseDEX += (int)(summoner.DEX * 0.25f);
+            baseINT += (int)(summoner.INT * 0.25f);
+            baseLUK += (int)(summoner.LUK * 0.25f);
+            CalculateStats(true);
+        }
+
+        /// <summary>
+        /// Handles animations for the summon's "summoning" (do a fade in if its the initial summon, otherwise just particle
+        /// animation on restore)
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="isRestore"></param>
+        /// <returns></returns>
+        public IEnumerator GetSummoned(Attack a, bool isRestore) {
+            if (isRestore == true) {
+                yield return StartCoroutine(pmvc.DisplaySummonRestored(a.animationClipName));
+            }
+            else {
+                yield return StartCoroutine(pmvc.DisplaySummon(a.animationClipName));
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Set each attack's attack value, including canddle attacks
         /// </summary>
@@ -586,6 +666,9 @@ namespace Characters {
             if (CHP <= 0) {
                 CHP = 0;
                 PartyManager.instance.RegisterPartyMemberDead(this);
+                if (summon != null) {
+                    StartCoroutine(summon.LoseHPNoYield(summon.CHP));
+                }
             }
 
             yield return (StartCoroutine(pmvc.DisplayHPChange(true)));

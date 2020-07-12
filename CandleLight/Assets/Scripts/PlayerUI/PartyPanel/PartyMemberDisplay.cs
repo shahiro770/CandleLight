@@ -245,6 +245,18 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Plays the animation for when a partyMember "spawns" (i.e. only for summons)
+        /// </summary>
+        /// <returns> Waits for animation to finish playing </returns>
+        public IEnumerator PlaySpawnAnimation() {
+            pmDisplayAnimator.SetTrigger("spawn");
+            do {
+                yield return null;    
+            } while (pmDisplayAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            pmDisplayAnimator.ResetTrigger("spawn");
+        }
+
+        /// <summary>
         /// Plays the blinking animation indicating s
         /// </summary>
         /// <param name="value"> True to start blinking, false to stop </param>

@@ -46,6 +46,7 @@ namespace Characters {
                 case StatusEffectConstants.POISON:
                 case StatusEffectConstants.TAUNT:
                 case StatusEffectConstants.FREEZE:
+                case StatusEffectConstants.FROSTBITE:
                 case StatusEffectConstants.BLEED:
                 case StatusEffectConstants.WEAKNESS:
                 case StatusEffectConstants.ROOT:
@@ -61,8 +62,9 @@ namespace Characters {
                 case StatusEffectConstants.REGENERATE:
                 case StatusEffectConstants.GUARD:
                 case StatusEffectConstants.CURE:           
-                case StatusEffectConstants.BOSS:
                 case StatusEffectConstants.MIRACLE:
+                case StatusEffectConstants.BOSS:
+                case StatusEffectConstants.FAMILIAR:
                 case StatusEffectConstants.CHAMPIONHP:
                 case StatusEffectConstants.CHAMPIONPATK:
                 case StatusEffectConstants.CHAMPIONMATK:
@@ -92,7 +94,7 @@ namespace Characters {
         public void SetValue(Character afflicter, Character afflicted) {
             this.afflicted = afflicted;
             
-            if (name == StatusEffectConstants.BURN) {
+            if (name == StatusEffectConstants.BURN || name == StatusEffectConstants.FROSTBITE) {
                 preValue = (int)(afflicter.MATK * 0.3f);
 
                 if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
@@ -177,6 +179,14 @@ namespace Characters {
             if (name == StatusEffectConstants.BURN) {
                 if (afflicted.GetStatusEffect(StatusEffectConstants.ROOT) != -1){
                      value = preValue * 2 - afflicted.MDEF ;
+                }
+                else {
+                    value = preValue - afflicted.MDEF;
+                }
+            }
+            else if (name == StatusEffectConstants.FROSTBITE) {
+                if (afflicted.GetStatusEffect(StatusEffectConstants.FREEZE) != -1){
+                    value = preValue * 2 - afflicted.MDEF ;
                 }
                 else {
                     value = preValue - afflicted.MDEF;

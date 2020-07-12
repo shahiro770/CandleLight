@@ -135,6 +135,7 @@ namespace Events {
             LoadGeneralInteractions();
             LoadGirlSprites();
             LoadSubAreaItems();
+            PartyManager.instance.LoadSummons();
 
             isReady = true;
         }

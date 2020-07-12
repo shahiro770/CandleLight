@@ -21,5 +21,6 @@ namespace Constants {
         public static readonly string HEALHPSELF = "healHPSelf";    /// <value> Attack that restores HP, but can only target the user </value> 
         public static readonly string HEALMP = "healMP";      /// <value> Attack that restore MP to someone on the same side as caster </value>
         public static readonly string HEALMPSELF = "healMPSelf";    /// <value> Attack that restores MP, but can only target the user </value> 
+        public static readonly string SUMMON = "summon";      /// <value> Adds a temporary party member to combat (limit one per partyMember) </value>
     }
 }

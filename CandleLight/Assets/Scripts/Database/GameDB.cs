@@ -170,7 +170,7 @@ namespace Database {
                             skills[i] = new Skill(skillName, type, upgradeSkill, a, skillColor);
                         }
                         else {
-                            Debug.LogError("Skills for class " + name + " does not exist in the DB");
+                            break; // no warning as some classes have no skills (such as summons)
                         }
                     }
 

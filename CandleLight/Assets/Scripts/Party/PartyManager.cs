@@ -38,8 +38,10 @@ namespace Party {
         private List<PartyMember> partyMembersAll = new List <PartyMember>();
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
+        private List<PartyMember> summons = new List<PartyMember>();            /// <value> List of summons loaded </value>
         private PartyMember activePartyMember = null;
         private enum primaryStats { NONE, STR, DEX, INT, LUK };                 /// <value> Enumerated primary stats </value>
+        private string[] summonNames = new string[] { ClassConstants.FROSTGOLEM };  /// <value> Name of all possible summons </value>
         private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>
         private int ID = 0;                                                     /// <value> ID number to assign to each pm</value>
         private bool shouldStore = true;                                        /// <value> Flag for if need to store the next partyMember (tutorial only) </value>
@@ -76,8 +78,8 @@ namespace Party {
                 if (GameManager.instance.isTutorial == true) {
                     pmComponent.LVLDown();
                 }
-                partyMembersAlive.Add(newMember.GetComponent<PartyMember>());
-                partyMembersAll.Add(newMember.GetComponent<PartyMember>());
+                partyMembersAlive.Add(pmComponent);
+                partyMembersAll.Add(pmComponent);
             }
 
             activePartyMember = GetFirstPartyMemberAlive();
@@ -91,14 +93,66 @@ namespace Party {
         }
 
         /// <summary>
+        /// Load the summoned partyMembers (so they don't need to be fetched from the database at runtime)
+        /// </summary>
+        public void LoadSummons() {
+            foreach (string summonName in summonNames) {
+                GameObject summon = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
+                PartyMember pmComponent =  summon.GetComponent<PartyMember>();
+                GameManager.instance.DB.GetPartyMemberByClass(summonName, summon.GetComponent<PartyMember>());
+                summon.gameObject.transform.SetParent(gameObject.transform, false);
+                summons.Add(pmComponent);
+            }
+        }
+
+        /// <summary>
+        /// Adds a loaded summon to the party
+        /// </summary>
+        /// <param name="summoner"> PartyMember summoning this </param>
+        /// <param name="className"> Class of the summon (which is the unique ID) </param>
+        /// <param name="ID"> Unique ID to be assigned to this summon </param>
+        public void AddPartyMemberSummon(PartyMember summoner, string className, int ID) {
+            GameObject clone = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
+            PartyMember summon = clone.GetComponent<PartyMember>();
+            summon.gameObject.transform.SetParent(gameObject.transform, false);
+            summon.ID = ID;
+            summon.InitSummon(summons.Find(s => s.className == className), summoner);
+            
+            partyMembersAlive.Add(summon);
+            partyMembersAll.Add(summon);
+            EventManager.instance.UpdatePartyMembers();
+            summon.GetSummonBuff();     // have to add the buff AFTER the summon's pmvc is initted (so all visual components can be used)
+        }
+        
+        /// <summary>
+        /// Remove a partyMember from the party
+        /// </summary>
+        /// <param name="pm"> partyMember to remove </param>
+        public void RemovePartyMember(PartyMember pm) {
+            pm.RemoveAllStatusEffects();
+            partyMembersAll.Remove(pm);
+            partyMembersAlive.Remove(pm);
+            partyMembersDead.Remove(pm);
+            EventManager.instance.UpdatePartyMembers();
+            Destroy(pm.gameObject);
+        }
+
+        /// <summary>
         /// Removes all partyMembers from PartyMembers list
         /// </summary>
         public void ResetGame() {
             WAX = 0;
             ID = 0;
+            for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
+                Destroy(partyMembersAll[i].gameObject); 
+            }
+            for (int i = summons.Count - 1; i >= 0; i--) {  // temporary until summons are just loaded at the start
+                Destroy(summons[i].gameObject);
+            }
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
+            summons.Clear();
         }
         
         /// <summary>
@@ -344,13 +398,29 @@ namespace Party {
         /// </summary>
         public void RevivePartyMembers() {
             foreach (PartyMember pm in partyMembersDead) {
-                pm.AddHP((int)(pm.HP * 0.34));
-                pm.AddMP((int)(pm.MP * 0.34));
+                pm.AddHP((int)(pm.HP * 0.34f));
+                pm.AddMP((int)(pm.MP * 0.34f));
             }
             foreach(PartyMember pm in partyMembersDead) {
                 partyMembersAlive.Add(pm);
             }
             partyMembersDead.Clear();
+        }
+
+        /// <summary>
+        /// Similar to a revive, except for summons, it always restore the summon
+        /// to full health and mana, purging status effects, and may be used while the summon
+        /// is alive (hence not always needing to register the partyMember alive again)
+        /// </summary>
+        /// <param name="summon"></param>
+        public void RestoreSummon(PartyMember summon) {
+            if (summon.CheckDeath() == true) {
+                RegisterPartyMemberAlive(summon);
+            }
+            summon.AddHP((int)(summon.HP));
+            summon.AddMP((int)(summon.MP));  
+            summon.RemoveAllStatusEffects();   
+            summon.GetSummonBuff();
         }
 
         /// <summary>

@@ -28,6 +28,7 @@ namespace Characters {
         public Animator burnAnimator;
         public Animator poisonAnimator;
         public Animator bleedAnimator;
+        public Animator frostbiteAnimator;
         public Animator regenerateAnimator;
         public Animator monsterAnimator;    /// <value> Animator for monster's sprite </value>
         public Animator SEAnimator;
@@ -395,6 +396,13 @@ namespace Characters {
         /// </summary>
         public void PlayBleedAnimation() {
             StartCoroutine(PlayAnimation(bleedAnimator, "statusEffected"));
+        }
+
+        /// <summary>
+        /// Plays the frostbite animation
+        /// </summary>
+        public void PlayFrostbiteAnimation() {
+            StartCoroutine(PlayAnimation(frostbiteAnimator, "statusEffected"));
         }
 
         /// <summary>

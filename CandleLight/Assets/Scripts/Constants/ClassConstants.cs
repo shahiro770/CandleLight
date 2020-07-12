@@ -13,6 +13,7 @@ namespace Constants {
 
         public static readonly string WARRIOR = "warrior";
         public static readonly string MAGE = "mage";
+        public static readonly string FROSTGOLEM = "frostGolem";
         public static readonly string ARCHER = "archer";
         public static readonly string ROGUE = "rogue";
         public static readonly string ANY = "any";

@@ -85,6 +85,7 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(133, 133, 133, 255));
                     break;
 
+                case StatusEffectConstants.FROSTBITE:
                 case StatusEffectConstants.FREEZE:
                     normalBlock.normalColor = new Color32(0, 152, 220, 200);
                     normalBlock.highlightedColor = new Color32(0, 152, 220, 255);
@@ -176,8 +177,9 @@ namespace PlayerUI {
                     normalBlock.disabledColor = new Color32(133, 133, 133, 150);
                     durationText.SetColour(new Color32(133, 133, 133, 255));
                     break;
-                case StatusEffectConstants.BOSS:
                 case StatusEffectConstants.MIRACLE:
+                case StatusEffectConstants.BOSS:
+                case StatusEffectConstants.FAMILIAR:
                 case StatusEffectConstants.CHAMPIONHP:
                 case StatusEffectConstants.CHAMPIONPATK:
                 case StatusEffectConstants.CHAMPIONMATK:
@@ -207,7 +209,8 @@ namespace PlayerUI {
             }
             
             amounts[0] = "";
-            if (se.name == StatusEffectConstants.BURN || se.name == StatusEffectConstants.POISON || se.name == StatusEffectConstants.BLEED) {
+            if (se.name == StatusEffectConstants.BURN || se.name == StatusEffectConstants.POISON || se.name == StatusEffectConstants.BLEED 
+            || se.name == StatusEffectConstants.FROSTBITE || se.name == StatusEffectConstants.FATALWOUND) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
             }
@@ -247,7 +250,7 @@ namespace PlayerUI {
         /// Update the values in the status effect tooltip
         /// </summary>
         public void UpdateValue() {
-            if (se.name == StatusEffectConstants.BURN) {
+            if (se.name == StatusEffectConstants.BURN || se.name == StatusEffectConstants.FROSTBITE) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
             }
