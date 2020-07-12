@@ -508,7 +508,7 @@ namespace Characters {
             }
 
             StatusEffect newStatus;
-            if (c.ID == this.ID && CombatManager.instance.inCombat == true) {
+            if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
                 newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
             }
             else {

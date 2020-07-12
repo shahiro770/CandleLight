@@ -32,7 +32,8 @@ namespace Characters {
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
-        public int skillPoints;
+        public int skillPoints { get; set; }        
+        public int turnCounter { get; set; }
         public bool doneEXPGaining { get; private set; } = true;   /// <value> Total experience points to reach next level </value>
 
         public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");

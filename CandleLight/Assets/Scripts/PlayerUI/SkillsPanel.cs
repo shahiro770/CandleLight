@@ -122,8 +122,8 @@ namespace PlayerUI {
             }
             if (colPoints[1] > 0 && colPoints[2] == 0) {
                 skillDisplays[6].Init(6, pm.skills[6], pm.pmvc.skillSprites[6], pm.skills[6].skillColour,  pm.pmvc.pmdSkillsPanel);
-                skillDisplays[7].Init();
-                skillDisplays[8].Init();
+                skillDisplays[7].Init(7, pm.skills[7], pm.pmvc.skillSprites[7], pm.skills[7].skillColour,  pm.pmvc.pmdSkillsPanel);
+                skillDisplays[8].Init(8, pm.skills[8], pm.pmvc.skillSprites[8], pm.skills[8].skillColour,  pm.pmvc.pmdSkillsPanel);
             }
             else if (colPoints[1] == 0) {
                 skillDisplays[6].Init();

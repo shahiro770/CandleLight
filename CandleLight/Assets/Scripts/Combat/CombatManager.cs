@@ -109,6 +109,7 @@ namespace Combat {
             foreach (PartyMember pm in partyMembersAll) {
                 if (pm.CheckDeath() == false) {
                     partyMembersAlive.Add(pm);
+                    pm.turnCounter = 0;
                     if (pm.className == ClassConstants.ARCHER) {
                         if (pm.skills[(int)SkillConstants.archerSkills.VANTAGEPOINT].skillEnabled == true) {
                             pm.AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, null);
@@ -468,6 +469,17 @@ namespace Combat {
             }
             foreach (PartyMember pm in partyMembersToRemove) {
                 partyMembersAlive.Remove(pm);
+            }
+
+            if (activePartyMember.CheckDeath() == false) {
+                activePartyMember.turnCounter++;
+                if (activePartyMember.turnCounter % 4 == 0 && activePartyMember.className == ClassConstants.WARRIOR) {
+                    if (activePartyMember.skills[(int)SkillConstants.warriorSkills.THUNDEROUSANGER].skillEnabled == true) {
+                        foreach (Monster m in monsters) {
+                            m.AddStatusEffect(StatusEffectConstants.SHOCK, 2, null);
+                        }
+                    }
+                }
             }
 
             DeselectMonsters();

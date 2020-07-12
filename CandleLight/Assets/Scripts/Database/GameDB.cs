@@ -155,7 +155,7 @@ namespace Database {
                     
                     Skill[] skills = new Skill[12];
 
-                    for (int i = 0; i < 7; i++) {   // TEMPORARY
+                    for (int i = 0; i < 9; i++) {   // 9 skills per party member for now
                         if (reader.Read()) {
                             string skillName = reader.GetString(1);
                             int type = reader.GetInt32(3);
