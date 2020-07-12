@@ -94,22 +94,36 @@ namespace Characters {
         public void SetValue(Character afflicter, Character afflicted) {
             this.afflicted = afflicted;
             
-            if (name == StatusEffectConstants.BURN || name == StatusEffectConstants.FROSTBITE) {
+            if (name == StatusEffectConstants.BURN) {
                 preValue = (int)(afflicter.MATK * 0.3f);
+                value = preValue;
 
                 if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
-                    value = (int)(preValue * 0.5f) - afflicted.MDEF;
+                    value = (int)(value * 0.5f);
                 }
-                else { 
-                    value = preValue - afflicted.MDEF;
+                if (afflicted.GetStatusEffect(StatusEffectConstants.ROOT) != -1){
+                    value *= 2;
                 }
+                value -= afflicted.MDEF;
+            }
+            if (name == StatusEffectConstants.FROSTBITE) {
+                preValue = (int)(afflicter.MATK * 0.3f);
+                value = preValue;
+
+                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                    value = (int)(value * 0.5f);
+                }
+                if (afflicted.GetStatusEffect(StatusEffectConstants.FREEZE) != -1){
+                    value *= 2;
+                }
+                value -= afflicted.MDEF;
             }
             else if (name == StatusEffectConstants.POISON) {
                 preValue = (int)(afflicted.HP * 0.08f);
 
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
-                    value = (int)(preValue * 0.5f);
+                    value = 0;
                 }
                 else {
                     if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
@@ -135,7 +149,7 @@ namespace Characters {
 
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
-                    value = (int)(preValue * 0.5f) - afflicted.PDEF;
+                    value = 0;
                 }
                 else {
                     if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
@@ -177,26 +191,32 @@ namespace Characters {
         /// </summary>
         public void UpdateValue() {
             if (name == StatusEffectConstants.BURN) {
+                value = preValue;
+
+                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                    value = (int)(value * 0.5f);
+                }
                 if (afflicted.GetStatusEffect(StatusEffectConstants.ROOT) != -1){
-                     value = preValue * 2 - afflicted.MDEF ;
+                    value *= 2;
                 }
-                else {
-                    value = preValue - afflicted.MDEF;
-                }
+                value -= afflicted.MDEF;
             }
-            else if (name == StatusEffectConstants.FROSTBITE) {
+            if (name == StatusEffectConstants.FROSTBITE) {
+                value = preValue;
+
+                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                    value = (int)(value * 0.5f);
+                }
                 if (afflicted.GetStatusEffect(StatusEffectConstants.FREEZE) != -1){
-                    value = preValue * 2 - afflicted.MDEF ;
+                    value *= 2;
                 }
-                else {
-                    value = preValue - afflicted.MDEF;
-                }
+                value -= afflicted.MDEF;
             }
             else if (name == StatusEffectConstants.POISON) { // right now poison damage only needs to update for partyMembers
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null) {
                     if (pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
-                        value = (int)(preValue * 0.5f);
+                        value = 0;
                     }
                     else {  // skill reducing poison damage was toggled off 
                         value = preValue;
@@ -206,7 +226,7 @@ namespace Characters {
             else if (name == StatusEffectConstants.BLEED) {
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
-                    value = (int)(preValue * 0.5f) - afflicted.PDEF;
+                    value = 0;
                 }
                 else if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {  // if not a partyMember, bleed damage can also be halved from being a boss
                     value = (int)(preValue * 0.5f) - afflicted.PDEF;

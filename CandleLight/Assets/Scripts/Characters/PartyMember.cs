@@ -235,6 +235,16 @@ namespace Characters {
                 }
             }
 
+            /* primary stat changes from skills */
+            if (className == ClassConstants.ARCHER) {
+                if (skills[(int)SkillConstants.archerSkills.BLOOMINGFORTUNE].skillEnabled == true) {
+                    LUK *= 2;
+                }
+                if (skills[(int)SkillConstants.archerSkills.FLEETFOOTED].skillEnabled == true) {
+                    DEX += 5;
+                }
+            }
+
             /* secondary stats */
             HP = (int)(STR * 2.25 + DEX * 1.25);
             MP = (int)(INT * 1.25 + LUK * 0.5);
@@ -379,7 +389,7 @@ namespace Characters {
                     PATK += (int)(PATK * 0.3f);
                 }
             }
-            if (className == ClassConstants.MAGE) {
+            else if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
                      critChance += 10;
                 }
@@ -389,8 +399,8 @@ namespace Characters {
             }
             else if (className == ClassConstants.ROGUE) {
                 if (skills[(int)SkillConstants.rogueSkills.CLOAKED].skillEnabled == true) {
-                    int DOGBoost = (int)(DOG * 0.15f);
-                    DOG += 15 >= DOGBoost ? 15 : DOGBoost;
+                    //int DOGBoost = (int)(DOG * 0.15f); // or 15% (whichever is greater) will be implemented if the game gets dlc
+                    DOG += 15; //>= DOGBoost ? 15 : DOGBoost;
                 }
                 if (skills[(int)SkillConstants.rogueSkills.DEADLY].skillEnabled == true) {
                     PATK += 5;
@@ -1159,6 +1169,12 @@ namespace Characters {
                     else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
                         statChange = true;
                     }
+                    else if (index == (int)(SkillConstants.archerSkills.BLOOMINGFORTUNE)) {
+                        statChange = true;
+                    }
+                    else if (index == (int)(SkillConstants.archerSkills.FLEETFOOTED)) {
+                        statChange = true;
+                    }
                 }
                 else if (className == ClassConstants.ROGUE) {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
@@ -1178,6 +1194,7 @@ namespace Characters {
                 if (statChange == true) {
                     CalculateStats();
                     UpdateStatusEffectValues();
+                    pmvc.UpdateHPAndMPBars();
                     pmvc.UpdateStats();
                 }
 
@@ -1290,6 +1307,12 @@ namespace Characters {
                         PartyManager.instance.itemDropMultiplier /= 1.5f;
                     }
                     else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                        statChange = true;
+                    }
+                    else if (index == (int)(SkillConstants.archerSkills.BLOOMINGFORTUNE)) {
+                        statChange = true;
+                    }
+                    else if (index == (int)(SkillConstants.archerSkills.FLEETFOOTED)) {
                         statChange = true;
                     }
                 }

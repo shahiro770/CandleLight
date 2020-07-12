@@ -131,7 +131,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pmvc"></param>
         public void Init(PartyMemberVisualController pmvc) {
-            if (this.pmvc) {
+            if (this.pmvc != null) {
                 this.pmvc.UnsetEXPBar(PanelConstants.STATSPANEL);
                 this.pmvc.UnsetHPAndMPBar(PanelConstants.STATSPANEL);
             }

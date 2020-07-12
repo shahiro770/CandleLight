@@ -10,8 +10,9 @@ CURRENTLY DOING
 Bug: Quest items might still be worth 0
 Got audio set up
 Fixed bug with gameOBjects not being destroyed
-
+Added frostbite
 Bug: If both party and monsters are wiped out, game doesn't game over
+Bug: Stats aren't updating immediately on skill changes
 
 Bug: If encounter is possible on rekindle event, don't allow
 Fix: Shift click to sell
