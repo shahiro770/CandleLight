@@ -119,7 +119,7 @@ namespace Characters {
                 value -= afflicted.MDEF;
             }
             else if (name == StatusEffectConstants.POISON) {
-                preValue = (int)(afflicted.HP * 0.08f);
+                preValue = (int)(afflicted.HP * 0.1f);
 
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
@@ -165,7 +165,7 @@ namespace Characters {
                 value = preValue;
             }
             else if (name == StatusEffectConstants.FATALWOUND) {
-                preValue = (int)(afflicted.HP * 0.2f);
+                preValue = (int)(afflicted.HP * 0.33f);
                 value = preValue;
             }
 

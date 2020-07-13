@@ -510,16 +510,24 @@ namespace Characters {
         /// <param name="summoner"></param>
         public void LVLUpSummon(PartyMember summoner) {
             for (int i = 1; i < summoner.LVL; i++) {
-                base.LVLUp();
+                LVL += 1;
+                baseSTR += (int)(LVL * 0.3 + baseSTR * 0.3);
+                STR = baseSTR;
+                baseDEX += (int)(LVL * 0.3 + baseDEX * 0.3);
+                DEX = baseDEX;
+                baseINT += (int)(LVL * 0.3 + baseINT * 0.3);
+                INT = baseINT;
+                baseLUK += (int)(LVL * 0.3 + baseLUK * 0.3);
+                LUK = baseLUK;
             }      
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
             skillPoints = 0;
 
             // summons get part of the summoner's stats
-            baseSTR += (int)(summoner.STR * 0.25f); 
-            baseDEX += (int)(summoner.DEX * 0.25f);
-            baseINT += (int)(summoner.INT * 0.25f);
-            baseLUK += (int)(summoner.LUK * 0.25f);
+            baseSTR += (int)(summoner.STR * 0.33f); 
+            baseDEX += (int)(summoner.DEX * 0.33f);
+            baseINT += (int)(summoner.INT * 0.33f);
+            baseLUK += (int)(summoner.LUK * 0.33f);
             CalculateStats(true);
         }
 
@@ -1082,8 +1090,10 @@ namespace Characters {
         /// </summary>
         /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
         public void UseCandle(int index) {
-            StartCoroutine(GetHelped(activeCandles[index].a, this));
-            activeCandles[index].Use(); 
+            if (activeCandles[index].a.type != AttackConstants.DEBUFF) {    // don't let the player waste charges of WeaknessC0 or similar candles meant only for combat
+                StartCoroutine(GetHelped(activeCandles[index].a, this));
+                activeCandles[index].Use(); 
+            }
         }
 
         /// <summary>
@@ -1200,7 +1210,7 @@ namespace Characters {
                     }
                     else if (index == (int)SkillConstants.rogueSkills.RITUALDAGGERS) {
                         for (int i = 0; i < attackNum; i++) {
-                            attacks[i].costFormula += " * 2";
+                            attacks[i].costFormula += " * 1.5";
                         }
                         statChange = true;
                     }
@@ -1352,8 +1362,8 @@ namespace Characters {
                     }
                     else if (index == (int)SkillConstants.rogueSkills.RITUALDAGGERS) {  
                         statChange = true;   
-                        for (int i = 0; i < attackNum; i++) { // all strings will be at least length 4 due to the appended characters
-                            attacks[i].costFormula = attacks[i].costFormula.Remove(attacks[i].costFormula.Length - 4, 4);
+                        for (int i = 0; i < attackNum; i++) { // all strings will be at least length 6 due to the appended characters
+                            attacks[i].costFormula = attacks[i].costFormula.Remove(attacks[i].costFormula.Length - 6, 6);
                         }
                         statChange = true;
                     }

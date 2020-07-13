@@ -260,9 +260,18 @@ namespace Combat {
         /// </summary>
         private void StartPMTurn() {
             activePartyMember.SetAttackValues();
+            activePartyMember.turnCounter++;
             DisplayActivePartyMember();
 
             pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstants.STUN) != -1;
+            if (activePartyMember.turnCounter % 3 == 0 && activePartyMember.className == ClassConstants.WARRIOR) {
+                if (activePartyMember.skills[(int)SkillConstants.warriorSkills.THUNDEROUSANGER].skillEnabled == true) {
+                    foreach (Monster m in monsters) {
+                        m.AddStatusEffect(StatusEffectConstants.SHOCK, 1, null);
+                    }
+                }
+            }
+
             if (pmNoAction == true) {
                 pmSelectionFinalized = true;
             }
@@ -494,17 +503,6 @@ namespace Combat {
                 partyMembersAlive.Remove(pm);
             }
 
-            if (activePartyMember.CheckDeath() == false) {
-                activePartyMember.turnCounter++;
-                if (activePartyMember.turnCounter % 4 == 0 && activePartyMember.className == ClassConstants.WARRIOR) {
-                    if (activePartyMember.skills[(int)SkillConstants.warriorSkills.THUNDEROUSANGER].skillEnabled == true) {
-                        foreach (Monster m in monsters) {
-                            m.AddStatusEffect(StatusEffectConstants.SHOCK, 2, null);
-                        }
-                    }
-                }
-            }
-
             DeselectMonsters();
             selectedPartyMember = null;
             selectedAttackPM = null;
@@ -575,8 +573,8 @@ namespace Combat {
             else if (monsterAI == "lastAt60") {    // only uses last attack after CHP falls below 60%, using it whenever possible if its a selfBuff
                 if (activeMonster.CHP <= (int)(activeMonster.HP * 0.6f)) {
 
-                    if ((attacks[attackNum - 1].type == AttackConstants.BUFFSELF || attacks[attackNum - 1].type == AttackConstants.HEALHPSELF) 
-                    && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) == -1) {
+                    if ((attacks[attackNum - 1].type == AttackConstants.BUFFSELF || attacks[attackNum - 1].type == AttackConstants.HEALHPSELF
+                    || attacks[attackNum - 1].type == AttackConstants.BUFF) && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) == -1) {
                         selectedMonsterAttackIndex = attackNum - 1;
                     }
                     else if ((attacks[attackNum - 1].type == AttackConstants.PHYSICAL || attacks[attackNum - 1].type == AttackConstants.MAGICAL)) {
@@ -683,6 +681,14 @@ namespace Combat {
                     }  
                     else if (selectedAttackMonster.type == AttackConstants.HEALHPSELF || selectedAttackMonster.type == AttackConstants.BUFFSELF) {
                         yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
+                    }
+                }
+                else if (selectedAttackMonster.scope == "allAllies") {
+                    if (selectedAttackMonster.type == AttackConstants.BUFF) {
+                        for (int i = 1; i < monsters.Count; i++) {
+                            StartCoroutine(monsters[i].GetHelped(selectedAttackMonster, activeMonster)); 
+                        }
+                        yield return (StartCoroutine(monsters[0].GetHelped(selectedAttackMonster, activeMonster)));
                     }
                 }
             }

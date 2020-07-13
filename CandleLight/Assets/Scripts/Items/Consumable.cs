@@ -100,7 +100,7 @@ namespace Items {
                         break;
                     case "regenerate":
                     case "cure":
-                        WAX += values[i] * 2;
+                        WAX += values[i];
                         break;
                     case "poison":
                         WAX -= values[i] * 5;

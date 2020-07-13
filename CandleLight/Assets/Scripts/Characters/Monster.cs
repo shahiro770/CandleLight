@@ -450,9 +450,9 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Handles all logic when a partyMember's attack helps a partyMember (healing, buffs, etc.)
+        /// Handles all logic when a monster's attack helps a monster (healing, buffs, etc.)
         /// </summary>
-        /// <param name="a"> Attack targeting this partyMember </param>
+        /// <param name="a"> Attack targeting this monster </param>
         /// <param name="c"> Character targeting this </param>
         /// <returns></returns>
         public IEnumerator GetHelped(Attack a, Character c) {
@@ -472,7 +472,7 @@ namespace Characters {
                 }
             }
             else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) { // TODO: Make monster's receiving the buff play an animation that is yielded to if its casted by another monster
-                AddStatusEffect(a.seName, a.seDuration, this);
+                AddStatusEffect(a.seName, a.seDuration, c);
             }
         }
 

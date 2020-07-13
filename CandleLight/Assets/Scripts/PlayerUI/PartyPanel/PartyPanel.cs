@@ -99,6 +99,9 @@ namespace PlayerUI {
             }
 
             pmd.ShowActive();
+            if (statsPanel.isOpen == true) {
+                statsPanel.OnEnable();
+            }
         }
 
         /// <summary>

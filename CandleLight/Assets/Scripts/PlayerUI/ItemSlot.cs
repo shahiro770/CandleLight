@@ -234,7 +234,7 @@ namespace PlayerUI {
                         }
                     }
                 }
-                else if (currentItemDisplay != null) {
+                else if (currentItemDisplay != null) {           
                     TakeItem();
                 }
             }

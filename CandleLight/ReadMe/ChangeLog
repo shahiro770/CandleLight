@@ -15,7 +15,14 @@ Bug: If both party and monsters are wiped out, game doesn't game over
 Bug: Stats aren't updating immediately on skill changes
 Fixed se calculations for burn 
 Buffed archer's survivalist
+UI: Tiny arrow to swap party member
+Bug: Den greywastes a little buggy
+Balance: Buffed poison damage
+Bug: Fixed logic with monster's buffing each other
+Balanced: Buffed the greyhide alpha and wraith
+Bug: Skills panel not updating once summoned party member leaves
 
+Bug: Statspanel not updating when swapping between party Members
 Bug: If encounter is possible on rekindle event, don't allow
 Fix: Shift click to sell
 Fix: Popup warning for trying to unassign a skill that can't be unassigned
@@ -48,7 +55,6 @@ UI: status effects don't display in the statusPanel
 UI: Add heal/focus animations on effect
 Future: Add combat order on the side
 Future: Animation skip on click
-UI: Tiny arrow to swap party member
 Tutorial: Clicking actions progresses the tutorial, but this might not be the worst thing
 
 

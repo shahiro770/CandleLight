@@ -108,7 +108,7 @@ namespace PlayerUI {
         /// <summary>
         /// Update the statsPanel with relevant information and visuals when opened
         /// </summary>
-        void OnEnable() {
+        public void OnEnable() {
             isOpen = true;
             Init(PartyManager.instance.GetActivePartyMember().pmvc);
         }

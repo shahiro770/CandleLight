@@ -46,11 +46,9 @@ namespace PlayerUI {
             PartyMember pm = PartyManager.instance.GetActivePartyMember();
             colPoints = new int[] { 0, 0, 0, 0 };
 
-            if (initializing == true) {
-                for (int i = 0; i < pmDisplays.Length;i++) {
-                    pmDisplays[i].gameObject.SetActive(false);
-                }
-            }
+            for (int i = 0; i < pmDisplays.Length;i++) {
+                pmDisplays[i].gameObject.SetActive(false);
+            }    
     
             for (int i = 0; i < pms.Count; i++) {
                 int x = i;          // unity loses track of loop variable, so copying somehow fixes this
