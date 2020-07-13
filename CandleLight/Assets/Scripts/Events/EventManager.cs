@@ -1451,6 +1451,15 @@ namespace Events {
         }
 
         /// <summary>
+        /// Updates the WAX values of any consumable items displayed in event displays
+        /// </summary>
+        public void UpdateWAXValues() {
+            if (eventDisplays[0].itemNum > 0) {
+                eventDisplays[0].UpdateWAXValues();
+            }
+        }
+
+        /// <summary>
         /// Returns the panel that the item is going towards
         /// </summary>
         /// <param name="type"></param>

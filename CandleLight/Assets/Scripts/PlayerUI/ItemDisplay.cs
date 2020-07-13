@@ -52,6 +52,7 @@ namespace PlayerUI {
 
             if (type == ItemConstants.CONSUMABLE) {
                 displayedConsumable = (Consumable)displayedItem;
+                displayedConsumable.UpdateWAXValue(PartyManager.instance.WAXDropMultiplier);
             }
             else if (type == ItemConstants.GEAR) {
                 displayedGear = (Gear)displayedItem;
@@ -125,15 +126,26 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Returns how much the itemDisplay's item is worth
+        /// Returns how much the displayed item is worth to a shop (sell price)
         /// </summary>
         /// <returns></returns>
         public int GetWAXValue() {
             return Mathf.Max((int)(displayedItem.WAXvalue * 0.5f), 1);
         }
 
+        /// <summary>
+        /// Returns how much the displayed item is worth (buy price)
+        /// </summary>
+        /// <returns></returns>
         public int GetWAXValueShop() {
             return displayedItem.WAXvalue;
+        }
+        
+        /// <summary>
+        /// Update WAX effect value assuming the item is a consumable, as it may outright grant wax
+        /// </summary>
+        public void UpdateWAXValueConsumable() {
+            displayedConsumable.UpdateWAXValue(PartyManager.instance.WAXDropMultiplier);
         }
 
         /// <summary>

@@ -14,6 +14,8 @@ namespace Items {
 
     public class Consumable : Item {
 
+        int WAXpreValue = 0;    /// <value> WAX effect value before any multipliers </value>
+
         /// <summary>
         /// Consumable item constructor
         /// </summary>
@@ -75,6 +77,9 @@ namespace Items {
                 }
 
                 values[i] =  Random.Range((int)(Mathf.Max(1, values[i] * multiplier)), (int)(values[i] * (1 + multiplier)));
+                if (effects[i] == "WAX") {      // store the consumable WAX value, as it can be modified by skills and other multipliers
+                    WAXpreValue = values[i];
+                }
             }
 
             CalculateWAXValue();
@@ -106,6 +111,19 @@ namespace Items {
             }
 
             WAXvalue = WAX;
+        }
+
+        /// <summary>
+        /// Multiplies the WAX effect value by a given multiplier
+        /// </summary>
+        /// <param name="multiplier"></param>
+        public void UpdateWAXValue(float multiplier) {
+            for (int i = 0; i < effects.Length; i++) {
+                if (effects[i] == "WAX") {
+                    values[i] = (int)(WAXpreValue * multiplier);    
+                    break;  // assume an item can only have one WAX effect
+                }
+            }
         }
 
         /// <summary>

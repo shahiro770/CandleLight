@@ -360,6 +360,13 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Tell the eventManager to update any eventDisplays due to the multiplier on WAX changing
+        /// </summary>
+        public void UpdateWAXValues() {
+            EventManager.instance.UpdateWAXValues();
+        }
+
+        /// <summary>
         /// Sets the max and current amounts of an EXP bar.
         /// If the current amount  equals the max amount, set the current amount to 0
         /// </summary>

@@ -52,6 +52,15 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Updates the WAX effect value of all items (checks if this is possible internally)
+        /// </summary>
+        public void UpdateWAXValues() {
+            for (int i = 0; i < itemNum; i++) {
+                itemSlots[i].UpdateWAXValue();
+            }
+        }
+
+        /// <summary>
         /// Initializes the item displays, showing items that can be purchased, with extra ones for selling
         /// </summary>
         /// <param name="items"></param>

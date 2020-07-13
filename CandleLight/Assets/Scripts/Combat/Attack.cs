@@ -21,7 +21,7 @@ namespace Combat {
         [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
         [field: SerializeField] public string name { get; private set; }        /// <value> Name of attack </value>
         [field: SerializeField] public string type { get; private set; }        /// <value> Type of attack </value>
-        [field: SerializeField] public string costFormula { get; private set; }       /// <value> Formula for calculating cost to use attack </value>      
+        [field: SerializeField] public string costFormula { get; set; }         /// <value> Formula for calculating cost to use attack </value>      
         [field: SerializeField] public string damageFormula { get; private set; }     /// <value> Formula for calculating damage dealt by attack </value>
         [field: SerializeField] public string scope { get; private set; }       /// <value> String describing the number of targets the attack affects </value>
         [field: SerializeField] public string displaySeName { get; private set; }   /// <value> String for the seName in event description (TODO: Localize this) </value>

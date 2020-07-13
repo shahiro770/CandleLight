@@ -408,6 +408,9 @@ namespace Characters {
                 if (skills[(int)SkillConstants.rogueSkills.KILLERINSTINCT].skillEnabled == true) {
                     critMult += 0.5f;
                 }
+                if (skills[(int)SkillConstants.rogueSkills.RITUALDAGGERS].skillEnabled == true) {
+                    MATK *= 2;
+                }
             }
 
             /* secondary stat changes from status effects */
@@ -1125,6 +1128,11 @@ namespace Characters {
                             }
                         }
                     }
+                    else if (className == ClassConstants.ROGUE) {
+                        if (skills[(int)SkillConstants.rogueSkills.RITUALDAGGERS].skillEnabled == true) {
+                            attacks[attackNum].costFormula += " * 2";
+                        }
+                    }
 
                     attackNum++;
                     
@@ -1179,6 +1187,7 @@ namespace Characters {
                 else if (className == ClassConstants.ROGUE) {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
                         PartyManager.instance.WAXDropMultiplier *= 1.5f;
+                        pmvc.UpdateWAXValues();
                     }
                     else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
                         statChange = true;
@@ -1187,6 +1196,12 @@ namespace Characters {
                         statChange = true;
                     }
                     else if (index == (int)SkillConstants.rogueSkills.KILLERINSTINCT) {
+                        statChange = true;
+                    }
+                    else if (index == (int)SkillConstants.rogueSkills.RITUALDAGGERS) {
+                        for (int i = 0; i < attackNum; i++) {
+                            attacks[i].costFormula += " * 2";
+                        }
                         statChange = true;
                     }
                 }
@@ -1262,6 +1277,11 @@ namespace Characters {
                             }   
                         }
                     }
+                    else if (className == ClassConstants.ROGUE) {
+                        if (skills[(int)SkillConstants.rogueSkills.RITUALDAGGERS].skillEnabled == true) {
+                            attacks[attackIndex].costFormula =  attacks[attackIndex].costFormula.Remove(attacks[attackIndex].costFormula.Length - 4, 4);
+                        }
+                    }
 
                     attackNum--;
                     for (int i = attackIndex; i < attackNum; i++) { // shift attacks back               
@@ -1319,6 +1339,7 @@ namespace Characters {
                 else if (className == ClassConstants.ROGUE) {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
                         PartyManager.instance.WAXDropMultiplier /= 1.5f;
+                        pmvc.UpdateWAXValues();
                     }
                     else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
                         statChange = true;
@@ -1327,6 +1348,13 @@ namespace Characters {
                         statChange = true;
                     }
                     else if (index == (int)SkillConstants.rogueSkills.KILLERINSTINCT) {
+                        statChange = true;
+                    }
+                    else if (index == (int)SkillConstants.rogueSkills.RITUALDAGGERS) {  
+                        statChange = true;   
+                        for (int i = 0; i < attackNum; i++) { // all strings will be at least length 4 due to the appended characters
+                            attacks[i].costFormula = attacks[i].costFormula.Remove(attacks[i].costFormula.Length - 4, 4);
+                        }
                         statChange = true;
                     }
                 }
