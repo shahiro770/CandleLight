@@ -63,6 +63,8 @@
 		{ "key": "combat5_tutorial", "value": "Survive the encounter" },
 		{ "key": "skills0_tutorial", "value": "Click on the Skill tab, and then click a skill icon to enable it." },
 		{ "key": "skills1_tutorial", "value": "Click on an enabled skill to disable it and refund the skill point." },
+		{ "key": "skills2_tutorial", "value": "You cannot disable a skill if its the only skill enabling the next column" },
+		{ "key": "skills3_tutorial", "value": "You cannot have more than 2 active skills enabled" },
 		{ "key": "info0_tutorial", "value": "The Info tab shows you the progress you've made through an area" },
 		{ "key": "candles0_tutorial", "value": "Candles can be equipped just like equipment, providing effects\nwhile usable" },
 		{ "key": "candles1_tutorial", "value": "Candles have abilities that can be used in combat, but effects are lost when\nfully used" },

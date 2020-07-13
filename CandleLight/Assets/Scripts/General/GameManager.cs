@@ -29,6 +29,8 @@ namespace General {
         public bool firstShop = true;                   /// <value> Flag for if the player hasn't encountered their first shop </value> 
         public bool firstCandleCombat = true;           /// <value> Flag for if the player hasn't brought a candle into combat for the first time </value>
         public bool firstChampion = true;               /// <value> Flag for if the player hasn't encountered their first champion monster </value>
+        public bool firstFailedSkillDisable = true;     /// <value> Flag for if the player fails to disable a skill (due to it being required to enable a column) </value>
+        public bool firstFailedSkillEnable = true;      /// <value> Flag for if the player fails to enable a skill (due to have too many active skills) </value>
 
         private string activeScene = "";                /// <value> Current scene being displayed </value>
         private string initialScene = "Loading";        /// <value> Scene to begin game with </value>

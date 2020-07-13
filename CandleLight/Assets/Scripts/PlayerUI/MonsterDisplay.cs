@@ -210,13 +210,18 @@ namespace Characters {
         /// Sets the interactivity of the monster's button and statusEffectDisplays
         /// </summary>
         /// <param name="value"> Enable interactivity on true and disable on false </param>
-        public void SetInteractable(bool value) {
+        public void SetInteractable(bool value, bool SEDvalue) {
             b.gameObject.SetActive(value);
             t.SetVisible(false);
 
             foreach (StatusEffectDisplay SED in SEHolder.GetComponentsInChildren<StatusEffectDisplay>()) {
-                SED.b.interactable = value;
-                SED.t.SetVisible(false);    
+                SED.b.interactable = SEDvalue;
+                if (SED.t.gameObject.activeSelf == true) {
+                    SED.t.SetVisible(SEDvalue);
+                }
+                else {
+                    SED.t.SetVisible(false);
+                }  
             }
 
             if (value == false) {

@@ -131,7 +131,7 @@ namespace PlayerUI {
         /// </summary>
         public void EnableButtons() {
             for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
-                pmDisplays[i].SetInteractable(true);
+                pmDisplays[i].SetInteractable(true, true);
             }
         }
 
@@ -141,7 +141,7 @@ namespace PlayerUI {
         /// </summary>
         public void DisableButtons() {
             for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
-                pmDisplays[i].SetInteractable(false);
+                pmDisplays[i].SetInteractable(false, true);
                 pmDisplays[i].ShowNormal();
             }
             SetBlinkSelectables(null, false);

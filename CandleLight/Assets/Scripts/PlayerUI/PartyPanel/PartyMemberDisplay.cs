@@ -80,7 +80,7 @@ namespace PlayerUI {
             LVLBackground.color = pmvc.partyMemberColour;
             
             pmvc.SetPartyMemberDisplayRewardsPanel(this, PanelConstants.REWARDSPANEL, EXPBar, LVLText);
-            SetInteractable(false);
+            SetInteractable(false, true);
         }
         
         /// <summary>
@@ -372,13 +372,18 @@ namespace PlayerUI {
         /// Sets the interactivity of the partyMemberDisplay's button and statusEffectsDisplays
         /// </summary>
         /// <param name="value"> Enable interactivity on true and disable on false </param>
-        public void SetInteractable(bool value) {
+        public void SetInteractable(bool value, bool SEDvalue) {
             b.interactable = value;
 
             if (SEHolder != null) {     // partyMemberDisplay in rewards panel will have no SEHolder
                 foreach (StatusEffectDisplay SED in SEHolder.GetComponentsInChildren<StatusEffectDisplay>()) {
-                    SED.b.interactable = value;
-                    SED.t.SetVisible(false);
+                    SED.b.interactable = SEDvalue;
+                    if (SED.t.gameObject.activeSelf == true) {
+                        SED.t.SetVisible(SEDvalue);
+                    }
+                    else {
+                        SED.t.SetVisible(false);
+                    }
                 }
             }
         }

@@ -154,7 +154,7 @@ namespace Combat {
             monsterComponent.GetBuffs(championBuffs);
             monsterComponent.md.AddSMDListener(smd);
             monsterComponent.md.SetAlternateColourBlock();
-            monsterComponent.md.SetInteractable(false);
+            monsterComponent.md.SetInteractable(false, false);
 
             newMonster.transform.SetParent(enemyCanvas.transform, false);
             monsters.Add(monsterComponent);
@@ -345,7 +345,7 @@ namespace Combat {
             }
 
             // wait for all monsters to "despawn"
-            DisableAllButtons();
+            DisableAllButtonsFlee();
             eventDescription.ClearText();
             for (int i = 0; i < monsters.Count - 1; i++) {  
                 StartCoroutine(monsters[i].md.PlayDeathAnimation());
@@ -920,16 +920,25 @@ namespace Combat {
         /// </summary>
         public void EnableAllMonsterSelection() {
             foreach (Monster m in monsters) {
-                m.md.SetInteractable(true);
+                m.md.SetInteractable(true, true);
             }
         }
 
         /// <summary>
-        /// Disables all interaction of monsters
+        /// Disables all interaction of monsters, except for their status effects
         /// </summary>
         public void DisableAllMonsterSelection() {
             foreach (Monster m in monsters) {
-                m.md.SetInteractable(false);
+                m.md.SetInteractable(false, true);
+            }
+        }  
+
+        /// <summary>
+        /// Disables all interaction of monsters, including their status effects (only used when trying to flee)
+        /// </summary>
+        public void DisableAllMonsterSelectionFlee() {
+            foreach (Monster m in monsters) {
+                m.md.SetInteractable(false, false);
             }
         }  
 
@@ -1009,6 +1018,19 @@ namespace Combat {
             utilityTabManager.SetAllButtonsUninteractable();
             DeselectMonstersVisually();
             DisableAllMonsterSelection();
+        }
+
+        public void DisableAllButtonsFlee() {
+            actionsPanel.SetAllActionsUninteractable();
+            gearPanel.SetInteractable(false);
+            candlesPanel.SetInteractable(false);
+            specialPanel.SetInteractable(false);
+            skillsPanel.SetInteractable(false);
+            partyPanel.DisableButtons();
+            itemsTabManager.SetAllButtonsUninteractable();
+            utilityTabManager.SetAllButtonsUninteractable();
+            DeselectMonstersVisually();
+            DisableAllMonsterSelectionFlee();
         }
 
         /// <summary>

@@ -92,7 +92,9 @@ namespace Events {
         private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
         private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
+        private bool isNextEventMain = false;   /// <value> Flag for if the next even is a main event </value>
         private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>
+        private bool noShopInSubArea = true;    /// <value> Flag for if player hasn't found a shop in the subArea </value>
 
         #region [Initialization] Initialization 
 
@@ -488,16 +490,21 @@ namespace Events {
         /// </summary>
         public void GetNextEvent() {
             subAreaProgress += currentEvent.progressAmount;
+
+            if (isNextEventMain == true) {  // don't reset progress to 0 until after player leaves the current main event
+                subAreaProgress = 0;
+                isNextEventMain = false;
+            }
             if (subAreaProgress >= 100) {
                 subAreaProgress = 100;
+                isNextEventMain = true;
             }
             if (infoPanel.isOpen) {
                 infoPanel.UpdateAmounts();
             }
 
-            if (subAreaProgress == 100) {
+            if (isNextEventMain == true) {
                 GetNextMainEvent();
-                subAreaProgress = 0;
             }
             else {
                 GetNextSubAreaEvent();
@@ -658,7 +665,7 @@ namespace Events {
                 StartCoroutine(AlterBackgroundColor(1f));
                 actionsPanel.ClearAllActions();
                 rewardsPanel.SetVisible(true);
-                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
+                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());   // prevents summoned partyMembers's inventories from appearing post combat
                 if (GameManager.instance.isTutorial == true || GameManager.instance.isTips == true) {
                     SetToastPanelsVisible(false);
                 }

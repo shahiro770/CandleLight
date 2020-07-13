@@ -10,6 +10,8 @@
 */
 
 using Characters;
+using EventManager = Events.EventManager;
+using GameManager = General.GameManager;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using System.Collections.Generic;
@@ -89,6 +91,10 @@ namespace PlayerUI {
                             sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }            
                     }
+                    else if (GameManager.instance.isTips == true && GameManager.instance.firstFailedSkillDisable == true) {
+                        GameManager.instance.firstFailedSkillDisable = false;
+                        EventManager.instance.SetTutorialNotification("skills2");     
+                    }
                 }
                 else if (sd.skillDisplayEnabled == false && PartyManager.instance.GetActivePartyMember().skillPoints > 0 && sd.skillIndex != -1) {
                     if ((sd.colIndex != 0 && colPoints[sd.colIndex - 1] != 0) || sd.colIndex == 0) {
@@ -100,7 +106,11 @@ namespace PlayerUI {
                             UpdateSkillsVisible();
                             sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }
-                    }     
+                        else if (GameManager.instance.isTips == true && GameManager.instance.firstFailedSkillEnable == true) {
+                            GameManager.instance.firstFailedSkillEnable = false;
+                            EventManager.instance.SetTutorialNotification("skills3");    
+                        }
+                    }
                 }
             }
         }
@@ -153,7 +163,7 @@ namespace PlayerUI {
                 skillDisplays[i].SetInteractable(value);
             }
             for (int i = 0; i < pmDisplays.Length; i++) {
-                pmDisplays[i].SetInteractable(value);
+                pmDisplays[i].SetInteractable(value, value);
             }
         }
 

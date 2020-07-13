@@ -4,7 +4,6 @@ ChangeLog
 DONE
 ----
 
-
 CURRENTLY DOING
 ---------------
 Bug: Quest items might still be worth 0
@@ -21,12 +20,15 @@ Balance: Buffed poison damage
 Bug: Fixed logic with monster's buffing each other
 Balanced: Buffed the greyhide alpha and wraith
 Bug: Skills panel not updating once summoned party member leaves
-
 Bug: Statspanel not updating when swapping between party Members
-Bug: If encounter is possible on rekindle event, don't allow
-Fix: Shift click to sell
-Fix: Popup warning for trying to unassign a skill that can't be unassigned
+Balance: Magical leaves cost less
 Fix: Make status effect displays hoverable
+Balance: HP/MP should be percentage on level up
+Bug: Gearpanel not set to non=active partyMember
+Bug: Prog goes from 100 to 0 when tabbing away
+Fix: Popup warning for trying to unassign a skill that can't be unassigned
+
+Fix: Shift click to sell
 
 Speed Runner Tester: Jeffrey Zhao
 
@@ -56,6 +58,7 @@ UI: Add heal/focus animations on effect
 Future: Add combat order on the side
 Future: Animation skip on click
 Tutorial: Clicking actions progresses the tutorial, but this might not be the worst thing
+Bug: If encounter is possible on rekindle event, don't allow
 
 
 

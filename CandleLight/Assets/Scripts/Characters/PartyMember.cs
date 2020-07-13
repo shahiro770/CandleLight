@@ -166,7 +166,11 @@ namespace Characters {
             skillPoints--;
 
             EXPToNextLVL = CalcEXPToNextLVL(LVL);
+            float HPpercent = CHP / HP;
+            float MPpercent = CMP / MP;
             CalculateStats();
+            CHP = (int) (HP * HPpercent);
+            CMP = (int) (MP * MPpercent);
 
             pmvc.UpdateHPAndMPBars();
             pmvc.UpdateStats();
