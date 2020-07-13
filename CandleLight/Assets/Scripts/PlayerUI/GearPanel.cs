@@ -22,6 +22,9 @@ namespace PlayerUI {
         public ItemSlot secondarySlot;  /// <value> Secondary item slot </value>
         public ItemSlot armourSlot;     /// <value> Armour item slot </value>
         public ItemSlot[] spare = new ItemSlot[9];  /// <value> Item slots as equipment inventory </value>
+        public Button upButton;
+        public Button downButton;
+
         public PartyMemberVisualController pmvc = null;     /// <value> Controller for all visuals related to partyMember </value>
 
         public bool isOpen;             /// <value> Flag for if this panel is open (true if open, false otherwise) </value>
@@ -133,6 +136,8 @@ namespace PlayerUI {
             weaponSlot.SetInteractable(value);
             secondarySlot.SetInteractable(value);
             armourSlot.SetInteractable(value);    
+            upButton.interactable = value;
+            downButton.interactable = value;
         }
 
         /// <summary>

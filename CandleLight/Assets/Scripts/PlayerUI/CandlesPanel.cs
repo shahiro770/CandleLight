@@ -24,6 +24,8 @@ namespace PlayerUI {
         public ItemSlot[] activeCandles;                    /// <value> active candle item slots </value>
         public ItemSlot[] spare;                            /// <value> spare candle item slots </value>
         public Button[] useButtons;                         /// <value> Buttons clicked to use candles </value>
+        public Button upButton;
+        public Button downButton;
         public ButtonTransitionState[] useButtonbtss;       /// <value> Use button btss </value>
         public Tooltip[] useTooltips;                       /// <value> Use button tooltips </value>
 
@@ -192,6 +194,8 @@ namespace PlayerUI {
             activeCandles[0].SetInteractable(value);
             activeCandles[1].SetInteractable(value);
             activeCandles[2].SetInteractable(value);  
+            upButton.interactable = value;
+            downButton.interactable = value;
 
             if (value == false) {
                 useButtons[0].interactable = value;

@@ -199,6 +199,18 @@ namespace Party {
             return partyMembersAll[index].pmName;
         }
 
+        public void RotatePartyMember(int amount) {
+            int index = partyMembersAll.FindIndex(p => activePartyMember.ID == p.ID);
+            index += amount;
+             if (index == partyMembersAll.Count) {
+                index = 0;
+            }
+            else if (index < 0) {
+                index = partyMembersAll.Count - 1;
+            }
+            SetActivePartyMember(partyMembersAll[index]);
+        }
+
         /// <summary>
         /// Sets the active partyMember
         /// </summary>

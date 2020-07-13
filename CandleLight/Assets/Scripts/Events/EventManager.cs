@@ -1620,6 +1620,15 @@ namespace Events {
         }
 
         /// <summary>
+        /// Calls the partyManager's rotation method to display 
+        /// another partyMember (via arrow buttons)
+        /// </summary>
+        /// <param name="amount"></param>
+        public void RotatePartyMember(int amount) {
+            PartyManager.instance.RotatePartyMember(amount);
+        }
+
+        /// <summary>
         /// Returns a Color32 based on the theme colour of the current area
         /// </summary>
         /// <returns> Color32 </returns>
