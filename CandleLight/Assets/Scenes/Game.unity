@@ -473,13 +473,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030266b89db8b4f47a7da2b2b670ef47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTutorial: 1
+  isTutorial: 0
   isTips: 1
   firstConsumable: 1
   firstCandle: 1
   firstShop: 1
   firstCandleCombat: 1
   firstChampion: 1
+  firstFailedSkillDisable: 1
+  firstFailedSkillEnable: 1
 --- !u!4 &1827646565
 Transform:
   m_ObjectHideFlags: 0

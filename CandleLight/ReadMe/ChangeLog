@@ -13,7 +13,8 @@ Added frostbite
 Bug: If both party and monsters are wiped out, game doesn't game over
 Bug: Stats aren't updating immediately on skill changes
 Fixed se calculations for burn 
-Buffed archer's survivalist
+Balance: Buffed archer's survivalist
+Balance: Buffed rogue's wax thief
 UI: Tiny arrow to swap party member
 Bug: Den greywastes a little buggy
 Balance: Buffed poison damage
@@ -27,6 +28,7 @@ Balance: HP/MP should be percentage on level up
 Bug: Gearpanel not set to non=active partyMember
 Bug: Prog goes from 100 to 0 when tabbing away
 Fix: Popup warning for trying to unassign a skill that can't be unassigned
+Balance: Tweaked some event progress values
 
 Fix: Shift click to sell
 

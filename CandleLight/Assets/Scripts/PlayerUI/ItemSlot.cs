@@ -234,8 +234,13 @@ namespace PlayerUI {
                         }
                     }
                 }
-                else if (currentItemDisplay != null) {           
-                    TakeItem();
+                else if (currentItemDisplay != null) {     
+                    if (UIManager.instance.inShop == true && Input.GetButton("Shift") == true) {    // shift click sell
+                        TakeItem(true);    
+                    }
+                    else {
+                        TakeItem();
+                    }
                 }
             }
        }
@@ -279,7 +284,14 @@ namespace PlayerUI {
                     if (direct == true) {   
                         Panel targetPanel = EventManager.instance.GetTargetPanel(currentItemDisplay.type);
 
-                        if (currentItemDisplay.type == ItemConstants.GEAR) {
+                        if (targetPanel == parentPanel) {   // selling from a panel via shift click
+                            EventDisplay ed = EventManager.instance.TryPlaceItem();
+                            if (ed != null) {
+                                ed.SellItem(currentItemDisplay);
+                                itemTaken = true;
+                            }
+                        }
+                        else if (currentItemDisplay.type == ItemConstants.GEAR) {
                             GearPanel gearPanel = (GearPanel)targetPanel;
                             if (gearPanel.PlaceItem(currentItemDisplay, direct)) {
                                 itemTaken = true;
@@ -440,7 +452,7 @@ namespace PlayerUI {
             }
             else {
                 if (newItemDisplay == null) {   // buying
-                    if (PartyManager.instance.WAX - currentItemDisplay.GetWAXValue() >= 0) {
+                    if (PartyManager.instance.WAX - currentItemDisplay.GetWAXValueShop() >= 0) {
                         PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValue());
                         return true;
                     }

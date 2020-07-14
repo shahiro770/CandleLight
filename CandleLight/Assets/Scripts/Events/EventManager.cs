@@ -1458,6 +1458,19 @@ namespace Events {
         }
 
         /// <summary>
+        /// Returns the event display if it can have an item placed in an available
+        /// item slot, null otherwise
+        /// </summary>
+        /// <returns></returns>
+        public EventDisplay TryPlaceItem() {
+            if (eventDisplays[0].numSpareFull < eventDisplays[0].itemSlots.Length) {
+                return eventDisplays[0];
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Updates the WAX values of any consumable items displayed in event displays
         /// </summary>
         public void UpdateWAXValues() {

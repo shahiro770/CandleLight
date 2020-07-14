@@ -13,7 +13,6 @@ using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PlayerUI {
 
@@ -48,6 +47,21 @@ namespace PlayerUI {
 
             for (int i = 0; i < itemNum; i++) {
                 itemSlots[i].PlaceItem(items[i]);
+            }
+        }
+
+        /// <summary>
+        /// Called when player tries to sell an item via shift click
+        /// </summary>
+        /// <param name="id"></param>
+        public void SellItem(ItemDisplay id) {
+            for (int i = 0; i < itemSlots.Length ; i++) {
+                if (itemSlots[i].currentItemDisplay == null) {
+                    if (itemSlots[i].TryShopTransaction(id) == true) {
+                        itemSlots[i].PlaceItem(id);
+                        break;
+                    }
+                }
             }
         }
 
