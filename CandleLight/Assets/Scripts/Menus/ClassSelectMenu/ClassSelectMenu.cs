@@ -32,8 +32,14 @@ namespace Menus.ClassSelectMenu {
         public ButtonTransitionState[] compBtss;    /// <value> List of all composition buttons </value>
         public ClassInfo classInfo;                 /// <value> Displays information of a class </value>
         public SpriteRenderer[] compSprites;        /// <value> Sprites currently visible in the composition buttons </value>
+        public ParticleSystem ps;
 
         private EventSystem es;                     /// <value> eventSystem reference </value>
+        private Color defaultColour = new Color32(230, 126, 34, 255);
+        private Color warriorColour = new Color32(189, 29, 0, 255);
+        private Color mageColour = new Color32(0, 152, 220, 255);
+        private Color archerColour = new Color32(90, 197, 79, 255);
+        private Color rogueColour = new Color32(255, 205, 2, 255);
         private Sprite warriorIcon;
         private Sprite mageIcon;
         private Sprite archerIcon;
@@ -57,10 +63,10 @@ namespace Menus.ClassSelectMenu {
             sbEnabledBlock.highlightedColor = new Color32(133, 133, 133, 255);
             sbEnabledBlock.pressedColor = new Color32(255, 255, 255, 255);
 
-            btsPressedBlock.normalColor = new Color32(255, 255, 255, 255);
+            btsPressedBlock.normalColor = new Color32(255, 255, 255, 255);     
             btsPressedBlock.highlightedColor = new Color32(255, 255, 255, 255);
-            btsPressedBlock.pressedColor = new Color32(255, 255, 255, 255);
-            btsPressedBlock.disabledColor = new Color32(61, 61, 61, 255);
+            btsPressedBlock.pressedColor = new Color32(255, 255, 255, 255);     
+            btsPressedBlock.disabledColor = new Color32(61, 61, 61, 255);       
             
             foreach(ButtonTransitionState bts in compBtss) {
                 bts.SetColorBlock("normal", btsNormalBlock);
@@ -105,6 +111,13 @@ namespace Menus.ClassSelectMenu {
             }
         }
 
+        void OnDisable() {
+            var main = ps.main;
+            var colorOverLifetime = ps.colorOverLifetime;
+            main.startColor = defaultColour;
+            colorOverLifetime.color = defaultColour;
+        }
+
         /// <summary>
         /// Visually show that a class has been selected.
         /// Changes a class button's sprite state to pressed and enables the select button.
@@ -112,6 +125,8 @@ namespace Menus.ClassSelectMenu {
         /// </summary> 
         /// <param name="cb"> Class button to change appearance of </param>
         public void SelectClassButton(int index) {
+            var main = ps.main;
+            var colorOverLifetime = ps.colorOverLifetime;
             if (partyComposition[compIndex] == "") {
                 numPartyMembers++;
             }
@@ -130,25 +145,35 @@ namespace Menus.ClassSelectMenu {
             if (index == 0) {
                 partyComposition[compIndex] = ClassConstants.WARRIOR;
                 compSprites[compIndex].sprite = warriorIcon;
+                main.startColor = warriorColour;
+                colorOverLifetime.color = warriorColour;
             }
             else if (index == 1) {
                 partyComposition[compIndex] = ClassConstants.MAGE;
                 compSprites[compIndex].sprite = mageIcon;
+                main.startColor = mageColour;
+                colorOverLifetime.color = mageColour;
             }
             else if (index == 2) {
                 partyComposition[compIndex] = ClassConstants.ARCHER;
                 compSprites[compIndex].sprite = archerIcon;
+                main.startColor = archerColour;
+                colorOverLifetime.color = archerColour;
             }
             else if (index == 3) {
                 partyComposition[compIndex] = ClassConstants.ROGUE;
                 compSprites[compIndex].sprite = rogueIcon;
+                main.startColor = rogueColour;
+                colorOverLifetime.color = rogueColour;
             }
-
+            
             classInfo.SetClassInfo(partyComposition[compIndex]);
             SetSelectButtonEnabled(numPartyMembers >= 2);
         }
 
         public void SelectCompositionButton(int index) {
+            var main = ps.main;
+            var colorOverLifetime = ps.colorOverLifetime;
             int correspondingClassIndex = -1;
             for (int i = 0; i < compBtss.Length; i++) {
                 if (i == index) {
@@ -162,15 +187,23 @@ namespace Menus.ClassSelectMenu {
 
             if (partyComposition[index] == ClassConstants.WARRIOR) {
                 correspondingClassIndex = 0;
+                main.startColor = warriorColour;
+                colorOverLifetime.color = warriorColour;
             }
             else if (partyComposition[index] == ClassConstants.MAGE) {
                 correspondingClassIndex = 1;
+                main.startColor = mageColour;
+                colorOverLifetime.color = mageColour;
             }
             else if (partyComposition[index] == ClassConstants.ARCHER) {
                 correspondingClassIndex = 2;
+                main.startColor = archerColour;
+                colorOverLifetime.color = archerColour;
             }
             else if (partyComposition[index] == ClassConstants.ROGUE) {
                 correspondingClassIndex = 3;
+                main.startColor = rogueColour;
+                colorOverLifetime.color = rogueColour;
             }
 
             for (int i = 0; i < classBtss.Length; i++) {
