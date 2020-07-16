@@ -453,7 +453,7 @@ namespace PlayerUI {
             else {
                 if (newItemDisplay == null) {   // buying
                     if (PartyManager.instance.WAX - currentItemDisplay.GetWAXValueShop() >= 0) {
-                        PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValue());
+                        PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValueShop());
                         return true;
                     }
                     
@@ -476,7 +476,7 @@ namespace PlayerUI {
         /// </summary>
         public void UpdateWAXValue() {
             // prevents needless tooltip setting if the item could never have a WAX effect to update
-            if (currentItemDisplay.displayedConsumable != null) {   
+            if (currentItemDisplay != null && currentItemDisplay.displayedConsumable != null) {   
                 currentItemDisplay.UpdateWAXValueConsumable();
                 SetTooltipText();
             }

@@ -29,8 +29,14 @@ Bug: Gearpanel not set to non=active partyMember
 Bug: Prog goes from 100 to 0 when tabbing away
 Fix: Popup warning for trying to unassign a skill that can't be unassigned
 Balance: Tweaked some event progress values
-
 Fix: Shift click to sell
+Bug: Item slot tries to modify wax value after being taken for wax thief
+Bug: Buy prices are wrong
+Fix: Special1 name missing
+Bug: Tooltip shows on shift sell
+Bug: Seds come in not interactable on pmd
+Fix: Sprite for greyhide needs to be centered
+Bug: Text for bat event is bad
 
 Speed Runner Tester: Jeffrey Zhao
 
@@ -39,7 +45,6 @@ VERIFICATION NEEDED
 Bug: Candlemancy kinda bugged but need to figure out why 
 Bug: Is it a UI glitch if all highlighted tabs during tutorials due to ! become normal coloure dupon clicking on tab?
     I.e. assume the player noticed?
-
 
 NEAR FUTURE
 ----------------

@@ -151,7 +151,7 @@ namespace PlayerUI {
             GameObject newSED = Instantiate(SEDisplayPrefab);
             StatusEffectDisplay SEDComponent = newSED.GetComponent<StatusEffectDisplay>();
             SEDComponent.Init(se);
-            SEDComponent.b.interactable = b.interactable;  // sed will be uninteractable if pmd is uninteractable
+            SEDComponent.b.interactable = true;
 
             newSED.transform.SetParent(SEHolder.transform, false);
         }

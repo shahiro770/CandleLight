@@ -39,6 +39,7 @@ namespace Constants {
         public const string STATALLANDITEMANDLEAVE = "statAllAndItemAndLeave";    /// <value> Get some stats changes, and item, and  leave the event </value>
         public const string STATALLANDEVENT = "statAllAndEvent";      /// <value> Get a stat change and move to the next event </value>
         public const string QUEST = "quest";          /// <value> Swaps a specific subEvent with the current event in the subArea, and registers a quest </value>
+        public const string QUESTANDITEM = "questAndItem";          /// <value> Swaps a specific subEvent with the current event in the subArea, and registers a quest, and receive an item </value>
         public const string QUESTANDLEAVE = "questAndLeave";          /// <value> Swaps a specific subEvent with the current event in the subArea, and registers a quest, and then leave </value>
         public const string QUESTCONTINUE = "questContinue";          /// <value> Swaps a specific subEvent with the current event in the subArea, continuing a quest </value>
         public const string COMBATANDQUESTCONTINUE = "combatAndQuestContinue";    /// <value> Combat, and then swaps a specific subEvent with the current event in the subArea, continuing a quest </value>

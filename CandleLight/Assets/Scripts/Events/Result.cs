@@ -125,7 +125,7 @@ namespace Events {
                 WAXAmount = (int)(baseWAXAmount * Random.Range(quantity, quantity + 1));
                 PROGAmount = (int)(basePROGAmount * Random.Range(quantity, quantity + 1));
             }
-            else if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT || type == ResultConstants.SHOP) {
+            else if (type == ResultConstants.ITEM || type == ResultConstants.ITEMWITHSUBEVENT || type == ResultConstants.SHOP || type == ResultConstants.QUESTANDITEM) {
                 itemAmount = (int)Random.Range(Mathf.Max(quantity, 1), quantity + 2);
             }
             else if (type == ResultConstants.COMBATWITHSIDEEFFECTS|| type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE 

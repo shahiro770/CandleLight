@@ -58,7 +58,7 @@ namespace PlayerUI {
             for (int i = 0; i < itemSlots.Length ; i++) {
                 if (itemSlots[i].currentItemDisplay == null) {
                     if (itemSlots[i].TryShopTransaction(id) == true) {
-                        itemSlots[i].PlaceItem(id);
+                        itemSlots[i].PlaceItem(id, true);
                         break;
                     }
                 }

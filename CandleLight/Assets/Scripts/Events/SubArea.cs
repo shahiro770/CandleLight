@@ -10,8 +10,6 @@
 */
 
 using General;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
@@ -123,6 +121,16 @@ namespace Events {
         /// <returns> An event </returns>
         public Event GetEvent(int index) {
             return events[index];
+        }
+
+        public Event GetEventByType(string type) {
+            for (int i = 0; i < eventNum; i++) {
+                if (events[i].type == type) {
+                    return events[i];
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

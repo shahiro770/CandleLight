@@ -525,6 +525,7 @@ namespace Events {
                 areaProgress++;;
             }
             noCombatCount = 0;
+            noShopInSubArea = true;
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             currentEvent = currentSubArea.GetEvent(areaProgress);
         }
@@ -596,6 +597,9 @@ namespace Events {
                 }
 
                 noCombatCount++;
+                if (currentEvent.type == EventConstants.SHOP) {
+                    noShopInSubArea = false;
+                }
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 SetAllButtonsInteractable(true);
@@ -644,8 +648,9 @@ namespace Events {
                     HideEventDisplays();
                 }
 
-                statusPanel.DisplayPartyMember(PartyManager.instance.GetFirstPartyMemberAlive().pmvc);
-                PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetActivePartyMember());
+                if (currentEvent.type == EventConstants.SHOP) {
+                    noShopInSubArea = false;
+                }
                 actionsPanel.Init(currentEvent.isLeavePossible);
                 actionsPanel.SetInteractionActions(currentEvent.interactions);
                 SetAllButtonsInteractable(true);
@@ -1043,6 +1048,14 @@ namespace Events {
                     AddQuest(currentResult.questName);
                     eventDescription.SetKey(currentResult.resultKey);
                     actionsPanel.TravelActions();
+                    break;
+                case ResultConstants.QUESTANDITEM:
+                    DisplayResultItems(currentResult);
+                    currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+
+                    AddQuest(currentResult.questName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    actionsPanel.SetItemActions();
                     break;
                 case ResultConstants.COMBATANDQUESTCONTINUE:
                     monstersToSpawn = currentResult.GetMonstersToSpawn();
