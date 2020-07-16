@@ -33,6 +33,8 @@ namespace Events {
         public Canvas eventCanvas;                  /// <value> Canvas holding all other canvases </value>
         public CanvasGroup eventBGCanvas;           /// <value> Current event's background sprite alpha controller </value>
         public CanvasGroup nextEventBGCanvas;       /// <value> Next event's background sprite alpha controller </value>
+        public ParticleSystem ps;                   /// <value> Particle system reference </value>
+        public WindZone wz;                         /// <value> Wind zone reference </value>
         public Image eventBackground;               /// <value> Image background for current event </value>
         public Image nextEventBackground;           /// <value> Image background for next event </value>
         public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
@@ -297,10 +299,12 @@ namespace Events {
                 yield return null;
             }
             if (GameManager.instance.isTutorial == true) {
+                AlterParticleSystem();
                 StartTutorial();
             }
             else {  // skip the tutorial
                 areaProgress = 1;
+                AlterParticleSystem();
                 EquipPartyStartingGear();
                 AddQuestNoNotification(mainQuestName);  // main story quest (TODO: Make this a constant?)
                 GetStartEvent();
@@ -528,6 +532,7 @@ namespace Events {
             noShopInSubArea = true;
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             currentEvent = currentSubArea.GetEvent(areaProgress);
+            AlterParticleSystem();
         }
 
         /// <summary>
@@ -1321,6 +1326,48 @@ namespace Events {
                 eventBackground.color = newColor;
 
                 yield return new WaitForEndOfFrame();
+            }
+        }
+
+        public void AlterParticleSystem() {
+            var main = ps.main;
+            var emission = ps.emission;
+            switch (areaProgress) {
+                case 0:
+                    emission.rateOverTime = 0;
+                    wz.windMain = 0;
+                    main.simulationSpeed = 0;
+                    break;
+                case 1:
+                    emission.rateOverTime = 2;
+                    wz.windMain = 10;
+                    main.simulationSpeed = 0.1f;
+                    break;
+                case 2:
+                    emission.rateOverTime = 4;
+                    wz.windMain = 15;
+                    main.simulationSpeed = 0.25f;
+                    break;
+                case 3:
+                case 6:
+                    emission.rateOverTime = 30;
+                    wz.windMain = 40;
+                    main.simulationSpeed = 0.5f;
+                    break;
+                case 4:
+                case 7:
+                    emission.rateOverTime = 4;
+                    wz.windMain = 5;
+                    main.simulationSpeed = 0.25f;
+                    break;
+                case 5:
+                case 8:
+                    emission.rateOverTime = 0;
+                    wz.windMain = 0;
+                    main.simulationSpeed = 0;
+                    break;
+                default: 
+                    break;
             }
         }
 

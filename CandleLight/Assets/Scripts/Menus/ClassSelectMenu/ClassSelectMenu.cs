@@ -114,7 +114,7 @@ namespace Menus.ClassSelectMenu {
         void OnDisable() {
             var main = ps.main;
             var colorOverLifetime = ps.colorOverLifetime;
-            main.startColor = defaultColour;
+            //main.startColor = defaultColour;
             colorOverLifetime.color = defaultColour;
         }
 
@@ -145,25 +145,25 @@ namespace Menus.ClassSelectMenu {
             if (index == 0) {
                 partyComposition[compIndex] = ClassConstants.WARRIOR;
                 compSprites[compIndex].sprite = warriorIcon;
-                main.startColor = warriorColour;
+                //main.startColor = warriorColour;
                 colorOverLifetime.color = warriorColour;
             }
             else if (index == 1) {
                 partyComposition[compIndex] = ClassConstants.MAGE;
                 compSprites[compIndex].sprite = mageIcon;
-                main.startColor = mageColour;
+                //main.startColor = mageColour;
                 colorOverLifetime.color = mageColour;
             }
             else if (index == 2) {
                 partyComposition[compIndex] = ClassConstants.ARCHER;
                 compSprites[compIndex].sprite = archerIcon;
-                main.startColor = archerColour;
+                //main.startColor = archerColour;
                 colorOverLifetime.color = archerColour;
             }
             else if (index == 3) {
                 partyComposition[compIndex] = ClassConstants.ROGUE;
                 compSprites[compIndex].sprite = rogueIcon;
-                main.startColor = rogueColour;
+                //main.startColor = rogueColour;
                 colorOverLifetime.color = rogueColour;
             }
             
@@ -187,22 +187,22 @@ namespace Menus.ClassSelectMenu {
 
             if (partyComposition[index] == ClassConstants.WARRIOR) {
                 correspondingClassIndex = 0;
-                main.startColor = warriorColour;
+                //main.startColor = warriorColour;
                 colorOverLifetime.color = warriorColour;
             }
             else if (partyComposition[index] == ClassConstants.MAGE) {
                 correspondingClassIndex = 1;
-                main.startColor = mageColour;
+                //main.startColor = mageColour;
                 colorOverLifetime.color = mageColour;
             }
             else if (partyComposition[index] == ClassConstants.ARCHER) {
                 correspondingClassIndex = 2;
-                main.startColor = archerColour;
+                //main.startColor = archerColour;
                 colorOverLifetime.color = archerColour;
             }
             else if (partyComposition[index] == ClassConstants.ROGUE) {
                 correspondingClassIndex = 3;
-                main.startColor = rogueColour;
+                //main.startColor = rogueColour;
                 colorOverLifetime.color = rogueColour;
             }
 
