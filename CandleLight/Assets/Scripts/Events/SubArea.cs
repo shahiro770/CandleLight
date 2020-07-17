@@ -123,6 +123,11 @@ namespace Events {
             return events[index];
         }
 
+        /// <summary>
+        /// Returns the first event with the matching event type, null otherwise
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public Event GetEventByType(string type) {
             for (int i = 0; i < eventNum; i++) {
                 if (events[i].type == type) {

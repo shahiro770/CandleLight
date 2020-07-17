@@ -129,8 +129,12 @@ namespace Characters {
                 baseLUK += (int)(LVL * 2.25);
             }
 
-
+            float HPpercent =  (float)CHP / HP;
+            float MPpercent = (float)CMP / MP;
             CalculateStats();
+            print(HPpercent);
+            CHP = (int) (HP * HPpercent);
+            CMP = (int) (MP * MPpercent);
 
             pmvc.UpdateHPAndMPBars();
             pmvc.UpdateStats();
@@ -166,11 +170,7 @@ namespace Characters {
             skillPoints--;
 
             EXPToNextLVL = CalcEXPToNextLVL(LVL);
-            float HPpercent = CHP / HP;
-            float MPpercent = CMP / MP;
             CalculateStats();
-            CHP = (int) (HP * HPpercent);
-            CMP = (int) (MP * MPpercent);
 
             pmvc.UpdateHPAndMPBars();
             pmvc.UpdateStats();

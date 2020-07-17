@@ -9,7 +9,7 @@
 *
 */
 
-using EventManager = Events.EventManager;
+using GameManager = General.GameManager;
 using Localization;
 using System.Collections;
 using TMPro;
@@ -37,9 +37,9 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="width"> Width of the image this tooltip is for </param>
         public void SetImageDisplayBackgroundWidth(float width) {
-            rootCanvasWidthHalved = EventManager.instance.canvasWidth * 0.5f;
-            rootCanvasHeightHalved = EventManager.instance.canvasHeight * 0.5f;
-            canvasScaleFactor = EventManager.instance.canvasScaleFactor;
+            rootCanvasWidthHalved = GameManager.instance.canvasWidth * 0.5f;
+            rootCanvasHeightHalved = GameManager.instance.canvasHeight * 0.5f;
+            canvasScaleFactor = GameManager.instance.canvasScaleFactor;
             imageDisplayBackgroundWidthHalved = width * 0.5f;
         }
 

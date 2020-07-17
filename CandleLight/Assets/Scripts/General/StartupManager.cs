@@ -28,7 +28,8 @@ namespace Localization {
         /// </returns>
         private IEnumerator Start () {
             LocalizationManager.instance.LoadLocalizedText("en.json");
-            while (!LocalizationManager.instance.isReady || !AssetBundleManager.instance.isReady) {
+            StartCoroutine(DataManager.instance.LoadArea(GameManager.instance.areaName));
+            while (LocalizationManager.instance.isReady == false || DataManager.instance.isReady == false) {
                 yield return null;
             }
             

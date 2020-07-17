@@ -19,10 +19,10 @@ namespace Events {
     public class Area {
 
         public string name { get; private set; }        /// <value> Name of the area </value>  
+        public int subAreasNum  { get; private set; }= 0;   /// <value> Amount of subAreas </value>
 
         private SubArea[] subAreas = new SubArea[10];   /// <value> Max SubArea amount is 10 </value>    
         private string themeColour;                     /// <value> Name of the colour used to accent UIs while in area </value>
-        private int subAreasNum = 0;                    /// <value> Amount of subAreas </value>
 
         /// <summary>
         /// Constructor
@@ -60,6 +60,29 @@ namespace Events {
 
            Debug.LogError("SubArea " + name + " does not exist");
            return null;
+        }
+
+        /// <summary>
+        /// Returns the index of a given subArea's name 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public int GetSubAreaIndex(string name) {
+            for (int i = 0; i < subAreas.Length; i++) {
+                if (subAreas[i].name == name) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// subAreas[0] will always be main
+        /// </summary>
+        /// <returns> A SubArea </returns>
+        public SubArea GetSubArea(int index) {
+            return (subAreas[index]);
         }
 
         /// <summary>

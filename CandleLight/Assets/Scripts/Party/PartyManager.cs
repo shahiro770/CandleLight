@@ -146,13 +146,9 @@ namespace Party {
             for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
                 Destroy(partyMembersAll[i].gameObject); 
             }
-            for (int i = summons.Count - 1; i >= 0; i--) {  // temporary until summons are just loaded at the start
-                Destroy(summons[i].gameObject);
-            }
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
-            summons.Clear();
         }
         
         /// <summary>

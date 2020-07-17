@@ -45,7 +45,6 @@ namespace Events {
         [field: SerializeField] public int baseWAXAmount { get; private set; }      /// <value> Amount of WAX result gives </value>
         [field: SerializeField] public int basePROGAmount { get; private set; }     /// <value> Amount of progress result gives </value>
         [field: SerializeField] private float quantity;      /// <value> Quantity of result 0.5, 1, 2 (low, medium, high) </value>
-        [field: SerializeField] private float multiplier;    /// <value> Multiplier on result depending on area </value>
         [field: SerializeField] private int monsterCount;    /// <value> MAx number of monsters this event can spawn </value>
         [field: SerializeField] private bool isUnique;       /// <value> true if result can only occur once per dungeon, false otherwise </value>
         
@@ -102,15 +101,6 @@ namespace Events {
             else if (quantity == "high") {
                 this.quantity = 2;
             }
-
-            SetEventMultiplier();
-        }
-
-        /// <summary>
-        /// Sets the multiplier for the results
-        /// </summary>
-        public void SetEventMultiplier() {
-            multiplier = EventManager.instance.areaMultiplier;
         }
 
         /// <summary>

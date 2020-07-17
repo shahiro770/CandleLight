@@ -37,6 +37,9 @@ Bug: Tooltip shows on shift sell
 Bug: Seds come in not interactable on pmd
 Fix: Sprite for greyhide needs to be centered
 Bug: Text for bat event is bad
+Fix: Put all loading for everything at the start
+Feature: Added particle effects
+Balance: Forced combat chance increased from 50 to 66
 
 Speed Runner Tester: Jeffrey Zhao
 
@@ -48,7 +51,7 @@ Bug: Is it a UI glitch if all highlighted tabs during tutorials due to ! become 
 
 NEAR FUTURE
 ----------------
-Fix: Put all loading for everything at the start
+
 Feature: Sound effects and music
 Feature: Saving
 Feature: Ending and beginning cutscenes

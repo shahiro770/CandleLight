@@ -21,7 +21,10 @@ namespace General {
 
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
-        public string areaName { get; set; }            /// <value> Name of area being explored </value>
+        public string areaName = "GreyWastes";          /// <value> Name of area being explored </value>
+        public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
+        public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
+        public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code</value>
         public bool isTutorial = true;                  /// <value> Flag for if the tutorial is enabled (has to be changed from editor) </value>
         public bool isTips = true;                      /// <value> Flag for if helpful tips should show up when possible </value>
         public bool firstConsumable = true;             /// <value> Flag for if the player hasn't encountered their first consumable </value>
@@ -70,11 +73,10 @@ namespace General {
         /// </summary> 
         /// <param name="monsterNames"> Names of the monsters to be instantiated </param>
         /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
-        public void LoadAreaScene(string areaName) {
+        public void LoadAreaScene() {
             SceneManager.UnloadSceneAsync(activeScene);
             SceneManager.LoadScene(areaScene, LoadSceneMode.Additive);
             activeScene = areaScene;
-            this.areaName = areaName;
         }
     }
 }

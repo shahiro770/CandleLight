@@ -264,7 +264,7 @@ namespace Menus.ClassSelectMenu {
                     PartyManager.instance.AddPartyMember(pm);
                 }
 
-                GameManager.instance.LoadAreaScene("GreyWastes");
+                GameManager.instance.LoadAreaScene();
             }
         }
     }

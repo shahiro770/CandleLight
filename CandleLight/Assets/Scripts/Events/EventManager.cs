@@ -52,10 +52,6 @@ namespace Events {
         public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
         
         public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
-        public float canvasWidth = 960;     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
-        public float canvasHeight = 540;    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
-        public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code</value>
-        public float areaMultiplier { get; private set; }       /// <value> Multiplier to results for events in the area </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
 
         private Area currentArea;            /// <value> Area to select subAreas from </value>
@@ -63,6 +59,10 @@ namespace Events {
         private Event currentEvent;          /// <value> Event being displayed </value>
         private Result currentResult;        /// <value> Result being obtained </value>
         private BackgroundPack[] bgPacks;    /// <value> Background packs loaded in memory </value>
+        private Consumable[][] areaConsumables;   /// <value> Consumable items that can be found in the current area </value>
+        private Gear[][] areaGear;          /// <value> Gear items that can be found in the current area </value>
+        private Candle[][] areaCandles;     /// <value> Candle items that can be found in the current area </value>
+        private Special[][] areaSpecials;   /// <value> Special items that can be found in the current area</value>
         private Consumable[] subAreaConsumables;   /// <value> Consumable items that can be found in the current subArea </value>
         private Gear[] subAreaGear;          /// <value> Gear items that can be found in the current subArea </value>
         private Candle[] subAreaCandles;     /// <value> Candle items that can be found in the current subArea </value>
@@ -131,15 +131,18 @@ namespace Events {
         /// <param name="areaName"> Name of area to load </param>
         public void LoadArea(string areaName) {
             this.currentAreaName = areaName;
-            SetAreaMultiplier();
-            currentArea = GameManager.instance.DB.GetAreaByName(areaName);
+            currentArea = DataManager.instance.currentArea;
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
 
             LoadBackgroundPacks();
             LoadGeneralInteractions();
             LoadGirlSprites();
+
+            areaConsumables = DataManager.instance.areaConsumables;
+            areaGear = DataManager.instance.areaGear;
+            areaCandles = DataManager.instance.areaCandles;
+            areaSpecials = DataManager.instance.areaSpecials;
             LoadSubAreaItems();
-            PartyManager.instance.LoadSummons();
 
             isReady = true;
         }
@@ -148,12 +151,10 @@ namespace Events {
         /// Load backgroundPacks for the current area
         /// </summary>
         public void LoadBackgroundPacks() {
-            string[] bgPackNames = GameManager.instance.DB.GetBGPackNames(currentAreaName);
-            bgPacks = new BackgroundPack[bgPackNames.Length];
+            bgPacks = DataManager.instance.bgPacks;
 
-            for (int i = 0; i < bgPackNames.Length; i++) {
-                if (bgPackNames[i] != "none") {
-                    bgPacks[i] = GameManager.instance.DB.GetBGPack(currentAreaName, bgPackNames[i]);
+            for (int i = 0; i < bgPacks.Length; i++) {
+                if (bgPacks[i] != null) {
                     bgPackNum++;
                 }
             }
@@ -162,8 +163,8 @@ namespace Events {
         /// <summary>
         /// Loads consumables for the current subArea
         /// </summary>
-        public void LoadConsumables() {
-            subAreaConsumables = GameManager.instance.DB.GetConsumablesBySubArea(currentSubArea.name);
+        public void LoadSubConsumables(int index) {
+            subAreaConsumables = areaConsumables[index];
             consumablesNum = 0;
 
             for (int i = 0; i < subAreaConsumables.Length; i++) {
@@ -179,8 +180,8 @@ namespace Events {
         /// <summary>
         /// Loads gear for the current subArea
         /// </summary>
-        public void LoadGear() {
-            subAreaGear = GameManager.instance.DB.GetGearBySubArea(currentSubArea.name);
+        public void LoadSubGear(int index) {
+            subAreaGear = areaGear[index];
             gearNum = 0;
 
             for (int i = 0; i < subAreaGear.Length; i++) {
@@ -196,8 +197,8 @@ namespace Events {
         /// <summary>
         /// Loads candles for the current subArea
         /// </summary>
-        public void LoadCandles() {
-            subAreaCandles = GameManager.instance.DB.GetCandlesBySubArea(currentSubArea.name);
+        public void LoadSubCandles(int index) {
+            subAreaCandles = areaCandles[index];
             candleNum = 0;
 
             for (int i = 0; i < subAreaCandles.Length; i++) {
@@ -213,8 +214,8 @@ namespace Events {
         /// <summary>
         /// Loads specials for the current subArea
         /// </summary>
-        public void LoadSpecials() {
-            subAreaSpecials = GameManager.instance.DB.GetSpecialsBySubArea(currentSubArea.name);
+        public void LoadSubSpecials(int index) {
+            subAreaSpecials = areaSpecials[index];
             specialNum = 0;
 
             for (int i = 0; i < subAreaSpecials.Length; i++) {
@@ -247,36 +248,26 @@ namespace Events {
         }
 
         /// <summary>
-        /// Loads all items for a subArea
-        /// </summary>
-        public void LoadSubAreaItems() {
-            LoadConsumables();
-            LoadGear();
-            LoadCandles();
-            LoadSpecials();
-        }
-
-        /// <summary>
         /// Load general interactions that many events might use
         /// TODO: find a better place to put this
         /// </summary>
         public void LoadGeneralInteractions() {
-            Interaction travelInt = GameManager.instance.DB.GetInteractionByName("travel");
-            Interaction fightInt = GameManager.instance.DB.GetInteractionByName("fight");
-            Interaction tutorialInt = GameManager.instance.DB.GetInteractionByName("loneGreyhide5");
+            Interaction travelInt = DataManager.instance.travelInt;
+            Interaction fightInt =DataManager.instance.fightInt;
+            Interaction tutorialInt = DataManager.instance.tutorialInt;
             actionsPanel.SetGeneralInteractions(travelInt, fightInt, tutorialInt);
         }
 
         /// <summary>
-        /// Sets a multiplier for results from events in the area
-        /// (i.e. gold results get increased in later areas)
+        /// Loads all items for a subArea
         /// </summary>
-        private void SetAreaMultiplier() {
-            switch(currentAreaName) {
-                case "GreyWastes":
-                    areaMultiplier = 1.0f;
-                    break;
-            }
+        public void LoadSubAreaItems() {
+            int subAreaIndex = currentArea.GetSubAreaIndex(currentSubArea.name);
+
+            LoadSubConsumables(subAreaIndex);
+            LoadSubGear(subAreaIndex);
+            LoadSubCandles(subAreaIndex);
+            LoadSubSpecials(subAreaIndex);
         }
 
         /// <summary>
@@ -542,7 +533,7 @@ namespace Events {
             currentEvent = currentSubArea.GetEvent();
             if (noCombatCount == 5 && currentEvent.type != EventConstants.COMBAT) {
                 int forcedCombatChance = Random.Range(0, 100);
-                if (forcedCombatChance < 50) { 
+                if (forcedCombatChance < 66) { 
                     currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);
                 }
             }
@@ -868,7 +859,6 @@ namespace Events {
                     break;
                 case ResultConstants.SUBAREA:
                     currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                    StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                     LoadSubAreaItems();
                     subAreaProgress = 0; 
                     if (infoPanel.isOpen == true) {
@@ -879,7 +869,6 @@ namespace Events {
                     break;
                 case ResultConstants.SUBAREAANDCOMBAT:
                     currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                    StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                     LoadSubAreaItems();
                     subAreaProgress = 0;
                     if (infoPanel.isOpen == true) {
@@ -899,7 +888,6 @@ namespace Events {
                     break;
                 case ResultConstants.SUBAREAANDCOMBATANDSUBAREA:
                     currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                    StartCoroutine(DataManager.instance.LoadMonsterDisplays(currentSubArea.monsterPool));
                     LoadSubAreaItems();
                     subAreaProgress = 0;
                     if (infoPanel.isOpen == true) {
