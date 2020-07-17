@@ -1339,12 +1339,12 @@ namespace Events {
                     main.simulationSpeed = 0;
                     break;
                 case 1:
-                    emission.rateOverTime = 2;
-                    wz.windMain = 10;
-                    main.simulationSpeed = 0.1f;
+                    emission.rateOverTime = 0;
+                    wz.windMain = 0;
+                    main.simulationSpeed = 0;
                     break;
                 case 2:
-                    emission.rateOverTime = 4;
+                    emission.rateOverTime = 6;
                     wz.windMain = 15;
                     main.simulationSpeed = 0.25f;
                     break;
@@ -1356,7 +1356,7 @@ namespace Events {
                     break;
                 case 4:
                 case 7:
-                    emission.rateOverTime = 4;
+                    emission.rateOverTime = 6;
                     wz.windMain = 5;
                     main.simulationSpeed = 0.25f;
                     break;
