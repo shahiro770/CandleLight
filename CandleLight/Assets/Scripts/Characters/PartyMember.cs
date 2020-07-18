@@ -1094,7 +1094,7 @@ namespace Characters {
         /// </summary>
         /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
         public void UseCandle(int index) {
-            if (activeCandles[index].a.type != AttackConstants.DEBUFF) {    // don't let the player waste charges of WeaknessC0 or similar candles meant only for combat
+            if (activeCandles[index].a.type != AttackConstants.DEBUFF && CheckDeath() == false) {    // don't let the player waste charges of WeaknessC0 or similar candles meant only for combat
                 StartCoroutine(GetHelped(activeCandles[index].a, this));
                 activeCandles[index].Use(); 
             }
