@@ -17,7 +17,7 @@ namespace PlayerUI {
         public LayoutElement le;
         public SpriteRenderer toastSprite;
 
-        public enum toastType { HP, MP, EXP, SE, PROGRESS, QUESTCOMPLETE };
+        public enum toastType { HP, MP, EXP, WAX, SE, PROGRESS, QUESTCOMPLETE };
 
         private Coroutine fader;            /// <value> Store the coroutine responsible for visibility to stop it if notification changes suddenly </value>
         private Coroutine fadeOuter;        /// <value> Store the coroutine responsible for fading out to stop it if notification changes suddenly </value>
@@ -26,8 +26,8 @@ namespace PlayerUI {
         public void SetNotification(bool[] types, string[] amounts) {
             int typesCount = 0;
             string titleKey = "";
-            string[] descriptionKeys = new string[]{ "none_label", "none_label", "none_label", "none_label", "none_label", "none_label" };
-            string[] amountStrings = new string[6];
+            string[] descriptionKeys = new string[]{ "none_label", "none_label", "none_label", "none_label", "none_label", "none_label", "none_label" };
+            string[] amountStrings = new string[7];
 
             if (types[(int)toastType.HP] == true) {
                 titleKey = "HP_toast";
@@ -47,22 +47,28 @@ namespace PlayerUI {
                 amountStrings[2] = amounts[2];
                 typesCount++;
             }
+            if (types[(int)toastType.WAX] == true) {
+                titleKey = "WAX_toast";
+                descriptionKeys[3] = "WAX_label";
+                amountStrings[3] = amounts[3];
+                typesCount++;
+            }
             if (types[(int)toastType.SE] == true) {
                 titleKey = "SE_toast";
-                descriptionKeys[3] = amounts[3];    // for status effects, just showing the SE name is enough (no fancy descriptors)
-                amountStrings[3] = "";
+                descriptionKeys[4] = amounts[4];    // for status effects, just showing the SE name is enough (no fancy descriptors)
+                amountStrings[4] = "";
                 typesCount++;
             }
             if (types[(int)toastType.PROGRESS] == true) {
                 titleKey = "PROG_toast";
-                descriptionKeys[4] = "PROG_label";
-                amountStrings[4] = amounts[4] + "%";
+                descriptionKeys[5] = "PROG_label";
+                amountStrings[5] = amounts[5] + "%";
                 typesCount++;
             }
             if (types[(int)toastType.QUESTCOMPLETE] == true) {
-                titleKey = amounts[5] + "_quest_complete_title";     // Completing a quest overrides all possible title keys
-                descriptionKeys[5] = "none_label";
-                amountStrings[5] = "";
+                titleKey = amounts[6] + "_quest_complete_title";     // Completing a quest overrides all possible title keys
+                descriptionKeys[6] = "none_label";
+                amountStrings[6] = "";
                 typesCount++;
             }
 

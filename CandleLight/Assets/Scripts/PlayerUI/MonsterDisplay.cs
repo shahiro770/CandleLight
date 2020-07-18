@@ -512,7 +512,7 @@ namespace Characters {
             GameObject newSED = Instantiate(SEDisplayPrefab);
             StatusEffectDisplay SEDComponent = newSED.GetComponent<StatusEffectDisplay>();
             SEDComponent.Init(se);
-            SEDComponent.b.interactable = b.gameObject.activeSelf;  // sed will be uninteractable if md is uninteractable
+            SEDComponent.b.interactable = true; 
 
             SEDComponent.transform.SetParent(SEHolder.transform, false);
         }

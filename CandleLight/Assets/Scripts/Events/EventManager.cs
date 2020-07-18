@@ -77,7 +77,7 @@ namespace Events {
         private Vector3 pos3d2 = new Vector3(0, -20, 0);
         private Vector3 pos3d3 = new Vector3(275, -20, 0);
 
-        private enum checkIndicators { NONE, STR, DEX, INT, LUK, ITEM, ITEMANDCLEAR };
+        private enum checkIndicators { NONE, STR, DEX, INT, LUK, ITEM, ITEMANDCLEAR, WAX };
         private string[] monstersToSpawn;       /// <value> List of monsters to spawn </value>
         private string currentAreaName;         /// <value> Name of current area </value>
         private string nextSubArea = "";        /// <value> Name of next subArea to move to </value>
@@ -813,6 +813,14 @@ namespace Events {
                         currentResult = i.GetResultStartIndex(1); // bad result(s)
                     }
                 }
+                else if (i.checkIndicator == (int)checkIndicators.WAX) {
+                    if (PartyManager.instance.WAX >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
+                        currentResult = i.GetResult(0); // good result
+                    }
+                    else {
+                        currentResult = i.GetResultStartIndex(1); // bad result(s)
+                    }
+                }
                 else {
                     if (PartyManager.instance.GetPrimaryStatAll(i.checkIndicator) + 
                         (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
@@ -1140,8 +1148,8 @@ namespace Events {
         /// </summary>
         /// <param name="r"> Result containing the stats to be changed </param>
         public void ApplyResultStatChangesAll(Result r, string type) {
-            bool[] changes = new bool[6];
-            string[] amounts = new string[6];
+            bool[] changes = new bool[7];
+            string[] amounts = new string[7];
             r.GenerateResults();
 
             if (r.HPAmount != 0) {
@@ -1158,6 +1166,16 @@ namespace Events {
                 PartyManager.instance.AddEXP(r.EXPAmount);
                 changes[(int)ToastPanel.toastType.EXP] = true;
                 amounts[(int)ToastPanel.toastType.EXP] = r.EXPAmount.ToString();
+            }
+            if (r.WAXAmount != 0) {
+                if (r.WAXAmount >= 0) {
+                    PartyManager.instance.AddWAX(r.WAXAmount);
+                }
+                else {
+                    PartyManager.instance.LoseWAX(r.WAXAmount * -1);
+                }
+                changes[(int)ToastPanel.toastType.WAX] = true;
+                amounts[(int)ToastPanel.toastType.WAX] = r.WAXAmount.ToString();
             }
             if (r.PROGAmount != 0) {
                 subAreaProgress += currentResult.PROGAmount;
