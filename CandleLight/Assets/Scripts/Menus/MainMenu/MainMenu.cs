@@ -13,6 +13,16 @@ using UnityEngine;
 namespace Menus.MainMenu {
 
     public class MainMenu : MonoBehaviour {
+        
+        public ParticleSystem ps;
+
+        private Color defaultColour = new Color32(230, 126, 34, 255);
+
+        void OnEnable() {
+            var main = ps.main;
+            var colorOverLifetime = ps.colorOverLifetime;
+            colorOverLifetime.color = defaultColour;
+        }
 
         /// <summary>
         /// Quits the application
