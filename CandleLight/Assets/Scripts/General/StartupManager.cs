@@ -11,9 +11,8 @@
 using AssetManagers;
 using General;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Localization {
 
@@ -32,8 +31,8 @@ namespace Localization {
             while (LocalizationManager.instance.isReady == false || DataManager.instance.isReady == false) {
                 yield return null;
             }
-            
-            GameManager.instance.LoadNextScene("MainMenu");
+
+            GameManager.instance.StartLoadNextScene("MainMenu");
         }
     }
 }

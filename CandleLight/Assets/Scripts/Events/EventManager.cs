@@ -1086,7 +1086,7 @@ namespace Events {
                     ProgressTutorial();
                     break;
                 case ResultConstants.END:
-                    GameManager.instance.LoadNextScene("MainMenu");
+                    GameManager.instance.StartLoadNextScene("MainMenu");
                     break;
                 case ResultConstants.ENDTUT:
                     EndTutorial();
@@ -1401,7 +1401,7 @@ namespace Events {
         public IEnumerator DisplayGameOver() {
             SetAllButtonsInteractable(false);
             yield return new WaitForSeconds(1.5f);
-            GameManager.instance.LoadNextScene("MainMenu");
+            GameManager.instance.StartLoadNextScene("MainMenu");
         }
 
         #endregion

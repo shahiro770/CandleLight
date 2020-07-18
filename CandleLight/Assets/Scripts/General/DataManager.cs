@@ -3,15 +3,15 @@
 * Author: Shahir Chowdhury
 * Date: June 1, 2019
 * 
-* The DataManager class is used to preload in data from downloaded asset bundles.
-* For now it only preloads monsters.
+* The DataManager class is used to load in data so all
+* loading of database stuff happens at the start
 *
 */
 
-using Items;
-using Party;
 using Characters;
 using Events;
+using Items;
+using Party;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -8,18 +8,11 @@
 *
 */
 
-using General;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Menus.MainMenu {
 
     public class MainMenu : MonoBehaviour {
-        
-        private EventSystem es;         /// <value> eventSystem reference </value>
 
         /// <summary>
         /// Quits the application

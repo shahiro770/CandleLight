@@ -9,15 +9,20 @@
 */
 
 using Database;
+using System.Collections; 
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 namespace General {
 
     public class GameManager : MonoBehaviour {
 
         public static GameManager instance;             /// <value> Global instance </value>
+        
+        /* external comp refs */
+        public GameObject LoadingScreen;
+        public Image loadingBarFill; 
 
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
@@ -35,8 +40,7 @@ namespace General {
         public bool firstFailedSkillDisable = true;     /// <value> Flag for if the player fails to disable a skill (due to it being required to enable a column) </value>
         public bool firstFailedSkillEnable = true;      /// <value> Flag for if the player fails to enable a skill (due to have too many active skills) </value>
 
-        private string activeScene = "";                /// <value> Current scene being displayed </value>
-        private string initialScene = "Loading";        /// <value> Scene to begin game with </value>
+        private string activeScene = "Game";            /// <value> Current scene being displayed </value>
         private string areaScene = "Area";              /// <value> Name of area scene </value>
 
         /// <summary>
@@ -52,31 +56,37 @@ namespace General {
             }
             
             mainCamera = Camera.main;                   // store reference to camera for other game objects to obtain
-            activeScene = initialScene;
-            SceneManager.LoadScene(activeScene, LoadSceneMode.Additive);
             DB = new GameDB();
+        }
+
+        /// <summary>
+        /// Start to load the next scene (start the coroutine here to not interrupt any loading)
+        /// </summary>
+        /// <param name="sceneName"></param>
+        public void StartLoadNextScene(string sceneName) {
+            StartCoroutine(LoadNextScene(sceneName));
         }
 
         /// <summary>
         /// Additively load next scene and unload previous scene
         /// </summary> 
         /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
-        public void LoadNextScene(string sceneName) {
-            SceneManager.UnloadSceneAsync(activeScene);
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        public IEnumerator LoadNextScene(string sceneName) {   
+            LoadingScreen.SetActive(true);
+            if (activeScene != "Game") {
+                SceneManager.UnloadSceneAsync(activeScene);
+            }
+
+            AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            while (loadOp.isDone == false) {
+                loadingBarFill.fillAmount = Mathf.Clamp01(loadOp.progress / 0.9f);
+                yield return null;
+            } 
+
+            LoadingScreen.SetActive(false);
+            
             Resources.UnloadUnusedAssets();
             activeScene = sceneName;
-        }
-
-        /// <summary>
-        /// Additively loads combat scene and unload previous scene
-        /// </summary> 
-        /// <param name="monsterNames"> Names of the monsters to be instantiated </param>
-        /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
-        public void LoadAreaScene() {
-            SceneManager.UnloadSceneAsync(activeScene);
-            SceneManager.LoadScene(areaScene, LoadSceneMode.Additive);
-            activeScene = areaScene;
         }
     }
 }
