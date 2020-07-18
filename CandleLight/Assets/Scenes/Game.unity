@@ -205,7 +205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17016714}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4860}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 54, y: 54, z: 54}
   m_Children: []
   m_Father: {fileID: 168779447}
@@ -474,8 +474,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 432015609
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &168779447
 RectTransform:
@@ -485,7 +485,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168779442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.018518519, y: 0.018518519, z: 0.018518519}
   m_Children:
   - {fileID: 1030556619}
@@ -994,7 +994,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030266b89db8b4f47a7da2b2b670ef47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstAudioListener: {fileID: 588038759}
   LoadingScreen: {fileID: 168779442}
   loadingBarFill: {fileID: 236172586}
   areaName: GreyWastes
@@ -1053,7 +1052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2adb00d7ecf4fca969d17bb9624533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingBarFill: {fileID: 236172586}
 --- !u!4 &1890215182
 Transform:
   m_ObjectHideFlags: 0
