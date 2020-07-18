@@ -384,7 +384,10 @@ namespace Characters {
                 yield return StartCoroutine(AddHPYield(damageTaken * -1));
             }
 
-            RemoveStatusEffects();
+            if (seToRemove.Count > 0) {
+                RemoveStatusEffects();
+                md.UpdateTooltip();
+            }
         }
 
         /// <summary>
@@ -524,9 +527,9 @@ namespace Characters {
             newStatus.SetValue(c, this);
             AddStatusEffect(newStatus);
             md.AddStatusEffectDisplay(newStatus);
-            md.UpdateTooltip();
 
             UpdateStatusEffectValues();
+            md.UpdateTooltip();         // update the tooltip last in case a status effect changes PDEF or MDEF when combined with another
 
             if (seName == StatusEffectConstants.STUN) {
                 PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);

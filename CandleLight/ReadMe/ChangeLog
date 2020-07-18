@@ -3,9 +3,6 @@ ChangeLog
 
 DONE
 ----
-
-CURRENTLY DOING
----------------
 Bug: Quest items might still be worth 0
 Got audio set up
 Fixed bug with gameOBjects not being destroyed
@@ -41,6 +38,12 @@ Fix: Put all loading for everything at the start
 Feature: Added particle effects
 Balance: Forced combat chance increased from 50 to 66
 Balance: Lost Doll can now give double HP regen
+Feature: Added tombToll event
+
+
+CURRENTLY DOING
+---------------
+Feature: Add animation speed changing
 
 Speed Runner Tester: Jeffrey Zhao
 

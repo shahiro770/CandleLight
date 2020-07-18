@@ -7,6 +7,7 @@
 *
 */
 
+using GameManager = General.GameManager;
 using Localization;
 using System.Collections;
 using UnityEngine;
@@ -132,10 +133,10 @@ namespace PlayerUI {
         /// <returns></returns>
         private IEnumerator Fill() {
             if (Mathf.Abs(fillAmount - frontFill.fillAmount) * 100 > 75) {
-                lerpSpeed = lerpSpeedFast;
+                lerpSpeed = lerpSpeedFast * GameManager.instance.animationSpeed;
             }
             else {
-                lerpSpeed = lerpSpeedSlow;
+                lerpSpeed = lerpSpeedSlow * GameManager.instance.animationSpeed;
             }
 
             float timeStartedLerping = Time.time;

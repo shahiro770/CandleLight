@@ -535,7 +535,7 @@ namespace Events {
                 noShopInSubArea = false;
                 currentEvent = currentSubArea.GetEventByType(EventConstants.SHOP);  
             }
-            else if (currentEvent == null) {    // will go here by default, or if a forced shop event returns null because the subArea has no shop
+            if (currentEvent == null) {    // will go here by default, or if a forced shop event returns null because the subArea has no shop
                 currentEvent = currentSubArea.GetEvent();
                 if (noCombatCount == 5 && currentEvent.type != EventConstants.COMBAT) {
                     int forcedCombatChance = Random.Range(0, 100);

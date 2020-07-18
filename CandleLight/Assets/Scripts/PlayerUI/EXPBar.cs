@@ -8,9 +8,9 @@
 */
 
 using Characters;
+using GameManager = General.GameManager;
 using Localization;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -115,12 +115,12 @@ namespace PlayerUI {
         private IEnumerator Fill() {
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
-            float percentageComplete = timeSinceStarted * lerpSpeed;
+            float percentageComplete = timeSinceStarted * GameManager.instance.animationSpeed;
             float prevFill = frontFill.fillAmount;
 
             while (frontFill.fillAmount != fillAmount) {
                 timeSinceStarted = Time.time - timeStartedLerping;
-                percentageComplete = timeSinceStarted * lerpSpeed;
+                percentageComplete = timeSinceStarted * GameManager.instance.animationSpeed;
                 
                 frontFill.fillAmount = Mathf.Lerp(prevFill, fillAmount, percentageComplete);
                 EXPText.SetText(((int)(frontFill.fillAmount * 100)).ToString() + "%");

@@ -9,7 +9,7 @@
 */
 
 using Characters;
-using CombatManager = Combat.CombatManager;
+using GameManager = General.GameManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using System.Collections;
@@ -213,6 +213,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayDamagedAnimation() {
+            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
             pmDisplayAnimator.SetTrigger("damaged");
             do {
                 yield return null;    
@@ -225,6 +226,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayCritDamagedAnimation() {
+            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
             pmDisplayAnimator.SetTrigger("damagedCrit");
             do {
                 yield return null;    
@@ -237,6 +239,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayDodgedAnimation() {
+            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
             pmDisplayAnimator.SetTrigger("dodged");
             do {
                 yield return null;    
@@ -249,6 +252,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlaySpawnAnimation() {
+            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
             pmDisplayAnimator.SetTrigger("spawn");
             do {
                 yield return null;    
@@ -278,6 +282,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayEffectAnimation(string animationClipName) {
+            pmEffectsAnimator.speed = GameManager.instance.animationSpeed;
             SetEffectsAnimatorClip(animationClipName);
             pmEffectsAnimator.SetTrigger("statusEffected");
             do {
@@ -286,64 +291,13 @@ namespace PlayerUI {
             pmEffectsAnimator.ResetTrigger("statusEffected");
         }
 
-        /// <summary>
-        /// Plays the burn animation
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator PlayBurnAnimation() {
-            pmBurnAnimator.SetTrigger("statusEffected");
+        public IEnumerator PlaySEAnimation(Animator animator) {
+            animator.speed = GameManager.instance.animationSpeed;
+            animator.SetTrigger("statusEffected");
             do {
                 yield return null;    
-            } while (pmBurnAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            pmBurnAnimator.ResetTrigger("statusEffected");
-        }
-
-        /// <summary>
-        /// Plays the poison animation
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator PlayPoisonAnimation() {
-            pmPoisonAnimator.SetTrigger("statusEffected");
-            do {
-                yield return null;    
-            } while (pmPoisonAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            pmPoisonAnimator.ResetTrigger("statusEffected");
-        }
-
-        /// <summary>
-        /// Plays the bleed animation
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator PlayBleedAnimation() {
-            pmBleedAnimator.SetTrigger("statusEffected");
-            do {
-                yield return null;    
-            } while (pmBleedAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            pmBleedAnimator.ResetTrigger("statusEffected");
-        }
-
-        /// <summary>
-        /// Plays the regenerate animation
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator PlayRegenerateAnimation() {
-            pmRegenerateAnimator.SetTrigger("statusEffected");
-            do {
-                yield return null;    
-            } while (pmRegenerateAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            pmRegenerateAnimator.ResetTrigger("statusEffected");
-        }
-
-        /// <summary>
-        /// Plays the focus animation
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator PlayFocusAnimation() {
-            pmFocusAnimator.SetTrigger("statusEffected");
-            do {
-                yield return null;    
-            } while (pmFocusAnimator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
-            pmFocusAnimator.ResetTrigger("statusEffected");
+            } while (animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            animator.ResetTrigger("statusEffected");
         }
 
         /// <summary>
@@ -352,19 +306,19 @@ namespace PlayerUI {
         /// <param name="animationsToPlay"></param>
         public void PlayCleanUpStatusEffectAnimations(int[] animationsToPlay) {
             if (animationsToPlay[0] == 1) {
-                StartCoroutine(PlayBurnAnimation());
+                StartCoroutine(PlaySEAnimation(pmBurnAnimator));
             }
             if (animationsToPlay[1] == 1) {
-                StartCoroutine(PlayPoisonAnimation());
+                StartCoroutine(PlaySEAnimation(pmPoisonAnimator));
             }
             if (animationsToPlay[2] == 1) {
-                StartCoroutine(PlayBleedAnimation());
+                StartCoroutine(PlaySEAnimation(pmBleedAnimator));
             }
             if (animationsToPlay[3] == 1) {
-                StartCoroutine(PlayRegenerateAnimation());
+                StartCoroutine(PlaySEAnimation(pmRegenerateAnimator));
             }
             if (animationsToPlay[4] == 1) {
-                StartCoroutine(PlayFocusAnimation());
+                StartCoroutine(PlaySEAnimation(pmFocusAnimator));
             }
         }
 

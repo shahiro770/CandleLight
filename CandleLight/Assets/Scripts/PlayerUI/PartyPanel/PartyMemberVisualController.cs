@@ -11,12 +11,12 @@
 using ClassConstants = Constants.ClassConstants;
 using Combat;
 using Events;
+using GameManager = General.GameManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using PlayerUI;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Characters {
@@ -424,7 +424,7 @@ namespace Characters {
                         yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
                     }
                     if (pm.CHP == 0) {
-                        yield return new WaitForSeconds(0.5f);
+                        yield return new WaitForSeconds(0.5f / GameManager.instance.animationSpeed);
                     }
                 }
                 else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
@@ -438,7 +438,7 @@ namespace Characters {
                     else {
                         eventDescription.SetPMHealText(pm, attackAmount);
                     }
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
                 }
             }
             else {
@@ -463,7 +463,7 @@ namespace Characters {
                         eventDescription.SetPMHealText(pm, attackAmount);
                     }
                 }
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
             }
         }
 
@@ -493,7 +493,7 @@ namespace Characters {
                     eventDescription.SetPMFocusText(pm, attackAmount);
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
             }
 
             yield break;
@@ -509,7 +509,7 @@ namespace Characters {
                 yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
             }
             else {
-                yield return new WaitForSeconds(0.75f);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
             }
         }
 
@@ -524,7 +524,7 @@ namespace Characters {
                 yield return (StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName)));
             }
             else {
-                yield return new WaitForSeconds(0.75f);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
             }
         }
 
@@ -539,7 +539,7 @@ namespace Characters {
                 yield return (StartCoroutine(pmdPartyPanel.PlaySpawnAnimation()));  
             }
             else {
-                yield return new WaitForSeconds(0.75f);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
             }
         }
 
@@ -553,7 +553,7 @@ namespace Characters {
                 yield return StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName));
             }
             else {
-                yield return new WaitForSeconds(0.75f);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
             }
         }
 
