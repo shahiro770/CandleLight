@@ -132,7 +132,7 @@ namespace Characters {
             float HPpercent =  (float)CHP / HP;
             float MPpercent = (float)CMP / MP;
             CalculateStats();
-            print(HPpercent);
+
             CHP = (int) (HP * HPpercent);
             CMP = (int) (MP * MPpercent);
 
@@ -1106,7 +1106,7 @@ namespace Characters {
         public void Rekindle() {
             foreach(Candle c in activeCandles) {
                 if (c != null) {
-                    if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
+                    if (className == ClassConstants.MAGE && skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
                         c.CandlemancyRekindle();
                     }
                     else {

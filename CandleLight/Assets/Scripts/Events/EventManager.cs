@@ -1376,8 +1376,8 @@ namespace Events {
                 case 5:
                 case 8:
                     emission.rateOverTime = 0;
-                    wz.windMain = 0;
-                    main.simulationSpeed = 0;
+                    wz.windMain = 5;
+                    main.simulationSpeed = 0.25f;
                     break;
                 default: 
                     break;
