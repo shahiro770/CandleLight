@@ -530,11 +530,18 @@ namespace Events {
         /// Gets the next random event in the current subArea
         /// </summary>
         public void GetNextSubAreaEvent() {
-            currentEvent = currentSubArea.GetEvent();
-            if (noCombatCount == 5 && currentEvent.type != EventConstants.COMBAT) {
-                int forcedCombatChance = Random.Range(0, 100);
-                if (forcedCombatChance < 66) { 
-                    currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);
+            currentEvent = null;
+            if (noShopInSubArea == true && subAreaProgress >= 85){  // guarantee the player a shop at the end of the subArea if they haven't encountered one yet
+                noShopInSubArea = false;
+                currentEvent = currentSubArea.GetEventByType(EventConstants.SHOP);  
+            }
+            else if (currentEvent == null) {    // will go here by default, or if a forced shop event returns null because the subArea has no shop
+                currentEvent = currentSubArea.GetEvent();
+                if (noCombatCount == 5 && currentEvent.type != EventConstants.COMBAT) {
+                    int forcedCombatChance = Random.Range(0, 100);
+                    if (forcedCombatChance < 66) { 
+                        currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);
+                    }
                 }
             }
         }

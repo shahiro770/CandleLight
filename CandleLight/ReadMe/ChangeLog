@@ -40,6 +40,7 @@ Bug: Text for bat event is bad
 Fix: Put all loading for everything at the start
 Feature: Added particle effects
 Balance: Forced combat chance increased from 50 to 66
+Balance: Lost Doll can now give double HP regen
 
 Speed Runner Tester: Jeffrey Zhao
 
