@@ -38,8 +38,12 @@ Fix: Put all loading for everything at the start
 Feature: Added particle effects
 Balance: Forced combat chance increased from 50 to 66
 Balance: Lost Doll can now give double HP regen
+Balance: Fire Slash costs less
 Feature: Added tombToll event
+Balance: Bosses are now guaranteed a champion buff if the player hits level 5
 
+Balance: Tweak the bat event's EXP rewards 
+Bug: Not sure if injured greyhide is getting swapped instead of ringedGreyhide
 
 CURRENTLY DOING
 ---------------

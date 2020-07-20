@@ -220,6 +220,10 @@ namespace Characters {
                 StatusEffect newStatus = new StatusEffect(StatusEffectConstants.BOSS, 999);
                 AddStatusEffectPermanent(newStatus);
                 md.AddStatusEffectDisplay(newStatus);
+
+                if (PartyManager.instance.GetHighestPartyMemberLVL() >= 5) {    // champion for bosses is guaranteed if the player somehow becomes overpowered beyond all belief
+                    championChance = 100;   
+                }
             }
         }
 

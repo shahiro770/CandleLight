@@ -42,6 +42,7 @@ namespace Constants {
         public const string QUESTANDITEM = "questAndItem";          /// <value> Swaps a specific subEvent with the current event in the subArea, and registers a quest, and receive an item </value>
         public const string QUESTANDLEAVE = "questAndLeave";          /// <value> Swaps a specific subEvent with the current event in the subArea, and registers a quest, and then leave </value>
         public const string QUESTCONTINUE = "questContinue";          /// <value> Swaps a specific subEvent with the current event in the subArea, continuing a quest </value>
+        public const string QUESTCONTINUEANDNEWINT = "questContinueAndNewInt";    /// <value> Swaps a specific subEvent with the current event in the subArea, continuing a quest and adding a new int </value>
         public const string COMBATANDQUESTCONTINUE = "combatAndQuestContinue";    /// <value> Combat, and then swaps a specific subEvent with the current event in the subArea, continuing a quest </value>
         public const string QUESTCOMPLETE = "questComplete";        /// <value> Ends the quest, swapping a specific subEvent the current event in all subAreas, providing stat changes  </value>
         public const string QUESTCOMPLETEANDNEWINT = "questCompleteAndNewInt";  /// <value> Ends the quest, swapping a specific subEvent the current event in the subArea, providing stat changes and a new interaction </value>

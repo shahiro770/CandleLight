@@ -239,6 +239,17 @@ namespace Party {
             return null;
         }
 
+        public int GetHighestPartyMemberLVL() {
+            int max = 0;
+            foreach (PartyMember pm in partyMembersAll) {
+                if (pm.LVL > max) {
+                    max = pm.LVL;
+                }
+            }
+
+            return max;
+        }
+
         /// <summary>
         /// Returns false if the partyMember at the index is alive
         /// </summary>

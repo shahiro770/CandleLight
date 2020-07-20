@@ -1065,6 +1065,12 @@ namespace Events {
                     eventDescription.SetKey(currentResult.resultKey);
                     actionsPanel.SetItemActions();
                     break;
+                case ResultConstants.QUESTCONTINUEANDNEWINT:
+                    currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                    
+                    actionsPanel.AddInteraction(currentResult.newIntName);
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
                 case ResultConstants.COMBATANDQUESTCONTINUE:
                     monstersToSpawn = currentResult.GetMonstersToSpawn();
 

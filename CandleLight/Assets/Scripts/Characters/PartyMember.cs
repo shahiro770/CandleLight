@@ -772,7 +772,7 @@ namespace Characters {
                 // side effects from partyMember skills
                 if (className == ClassConstants.WARRIOR) {
                     if (skills[(int)SkillConstants.warriorSkills.VAMPIRICMAIL].skillEnabled == true) {
-                        if (Random.Range(0, 100) < 50) {
+                        if (Random.Range(0, 100) < 30) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
                             cm.AddStatusEffect(StatusEffectConstants.BLEED, 2, this); 
                         }
@@ -780,7 +780,7 @@ namespace Characters {
                 }
                 else if (className == ClassConstants.MAGE) {
                     if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
-                        int burnChance = 33;
+                        int burnChance = 30;
                         if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
                             burnChance *= 2;
                         }
