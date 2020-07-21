@@ -73,7 +73,7 @@ namespace PlayerUI {
                     }
                 } 
                 else {
-                    skillDisplays[i].Init();
+                    skillDisplays[i].Init(-2);
                 }
             }
         }
@@ -139,14 +139,14 @@ namespace PlayerUI {
                 skillDisplays[8].Init();
             }
             if (colPoints[2] > 0 && colPoints[3] == 0) {
-                skillDisplays[9].Init();
-                skillDisplays[10].Init();
-                skillDisplays[11].Init();
+                skillDisplays[9].Init(-2);
+                skillDisplays[10].Init(-2);
+                skillDisplays[11].Init(-2);
             } 
             else if (colPoints[2] == 0) {
-                skillDisplays[9].Init();
-                skillDisplays[10].Init();
-                skillDisplays[11].Init();
+                skillDisplays[9].Init(-2);
+                skillDisplays[10].Init(-2);
+                skillDisplays[11].Init(-2);
             }
         }
 

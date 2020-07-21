@@ -31,9 +31,12 @@ namespace PlayerUI {
 
         private Color lockedSkillColour = new Color(255, 255, 255, 255);
         private Skill displayedSkill;
-        private string lockedKeyTitle = "locked_skill_title";
-        private string lockedKeySub = "locked_skill_sub";
-        private string lockedKeyDes = "locked_skill_des";
+        private string lockedTitle = "locked_skill_title";
+        private string lockedSub = "locked_skill_sub";
+        private string lockedDes = "locked_skill_des";
+        private string dlcTitle = "dlc_skill_title";
+        private string dlcSub = "dlc_skill_sub";
+        private string dlcDes = "dlc_skill_des";
 
         /// <summary>
         /// Initialize a skillDisplay, displaying the skill's icon and preparing the possible colourings
@@ -81,7 +84,27 @@ namespace PlayerUI {
         /// </summary>
         public void Init() {
             skillSpriteRenderer.sprite = lockedSkillSprite;
-            this.skillIndex = -1;           // no skill shown (its locked)
+            skillIndex = -1;           // no skill shown (its locked)
+            skillDisplayEnabled = false;
+            SetTooltip();
+
+            ColorBlock normalBlock = b.colors; 
+            normalBlock.highlightedColor = lockedSkillColour;
+            normalBlock.pressedColor = lockedSkillColour;
+            normalBlock.disabledColor = new Color32(61, 61, 61, 255);
+            bts.SetColorBlock("normal", normalBlock);
+            bts.SetColor("normal");
+            SetColour(skillDisplayEnabled);
+        }
+
+        /// <summary>
+        /// Initialize the skill display with a lock on it, but do this so the tooltip is slightly different
+        /// to indicate DLC will add the later skills in
+        /// </summary>
+        /// <param name="skillIndex"></param>
+        public void Init(int skillIndex) {
+            skillSpriteRenderer.sprite = lockedSkillSprite;
+            this.skillIndex = skillIndex;           // no skill shown (its locked)
             skillDisplayEnabled = false;
             SetTooltip();
 
@@ -125,15 +148,20 @@ namespace PlayerUI {
             RectTransform buttonRect = b.GetComponent<RectTransform>();
             t.SetImageDisplayBackgroundWidth(buttonRect.sizeDelta.x);
 
-            if (skillIndex != -1) {
+            if (skillIndex > -1) {
                 t.SetKey("title", displayedSkill.titleKey);
                 t.SetKey("subtitle", displayedSkill.subKey);
                 t.SetKey("description", displayedSkill.desKey);
             }
-            else {
-                t.SetKey("title", lockedKeyTitle);
-                t.SetKey("subtitle", lockedKeySub);
-                t.SetKey("description", lockedKeyDes);
+            else if (skillIndex == -1) {
+                t.SetKey("title", lockedTitle);
+                t.SetKey("subtitle", lockedSub);
+                t.SetKey("description", lockedDes);
+            }
+            else if (skillIndex == -2) {
+                t.SetKey("title", dlcTitle);
+                t.SetKey("subtitle", dlcSub);
+                t.SetKey("description", dlcDes);
             }
         }
 

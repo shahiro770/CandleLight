@@ -1189,7 +1189,7 @@ MonoBehaviour:
   canvasWidth: 960
   canvasHeight: 540
   canvasScaleFactor: 53.999992
-  animationSpeed: 1
+  animationSpeed: 2
   isTutorial: 0
   isTips: 1
   firstConsumable: 1

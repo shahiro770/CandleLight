@@ -239,6 +239,10 @@ namespace Party {
             return null;
         }
 
+        /// <summary>
+        /// Returns the highest LVL a partyMember has obtained
+        /// </summary>
+        /// <returns></returns>
         public int GetHighestPartyMemberLVL() {
             int max = 0;
             foreach (PartyMember pm in partyMembersAll) {

@@ -41,13 +41,29 @@ Balance: Lost Doll can now give double HP regen
 Balance: Fire Slash costs less
 Feature: Added tombToll event
 Balance: Bosses are now guaranteed a champion buff if the player hits level 5
+Balance: Greyhides can now appear at LVL 4 in the desert area
 
-Balance: Tweak the bat event's EXP rewards 
-Bug: Not sure if injured greyhide is getting swapped instead of ringedGreyhide
 
 CURRENTLY DOING
 ---------------
+Bug: Not sure if injured greyhide is getting swapped instead of ringedGreyhide
 Feature: Add animation speed changing
+Balance: Made first shop events even cheaper
+Balance: bleedplus nerfed to 60%
+Balance: VampireBats have been buffed to be tankier, faster, and hit harder
+Bug: Full tutorial tooltip doesn't register to close it
+Balance: Buffed mana shield to give 2 MDEF
+Balance: Buffed thunder Edge shock chance to 75%
+Balance: MP from LUK is now 0.65 (up from 0.5)
+
+Balance: Tweak the bat event's EXP rewards 
+Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
+Balance: Make it so every 4 turns, alpha will try and summon more greyhides
+Fix: Make last 3 skills show that they will only be availalbe in a future update
+Fix: Make stinger sting turn them poison green before attacking
+Fix: Give bosses a unique death animation (blink three times before dying)
+Fix: Give Greyhides a howl move in later areas that lets them give a random enemy advantage (But only if they don't have advantage themselves)
+
 
 Speed Runner Tester: Jeffrey Zhao
 
@@ -59,7 +75,7 @@ Bug: Is it a UI glitch if all highlighted tabs during tutorials due to ! become 
 
 NEAR FUTURE
 ----------------
-
+Feature: Add
 Feature: Sound effects and music
 Feature: Saving
 Feature: Ending and beginning cutscenes
@@ -74,7 +90,6 @@ UI: Make status effects do the fade animation monster displays do
 UI: status effects don't display in the statusPanel
 UI: Add heal/focus animations on effect
 Future: Add combat order on the side
-Future: Animation skip on click
 Tutorial: Clicking actions progresses the tutorial, but this might not be the worst thing
 Bug: If encounter is possible on rekindle event, don't allow
 

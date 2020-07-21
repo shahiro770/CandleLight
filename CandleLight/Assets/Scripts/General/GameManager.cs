@@ -48,7 +48,7 @@ namespace General {
         private string activeScene = "Game";            /// <value> Current scene being displayed </value>
         private string areaScene = "Area";              /// <value> Name of area scene </value>
         private float lerpSpeed = 2f;                   /// <value> Speed at which loading screen fades </value>
-        private int tipNum = 10;                        /// <value> (10 tips) </value>
+        private int tipNum = 11;                        /// <value> (11 tips) </value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -82,6 +82,7 @@ namespace General {
         /// <remark> In future, will need to call respective data saving functions after scene changes </remark>
         public IEnumerator LoadNextScene(string sceneName) {   
             SetTipText();
+            loadingBarFill.fillAmount = 0;
             yield return StartCoroutine(FadeLoadingScreen(1));
             if (activeScene != "Game") {
                 SceneManager.UnloadSceneAsync(activeScene);

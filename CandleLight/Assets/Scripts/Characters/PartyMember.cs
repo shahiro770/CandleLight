@@ -251,7 +251,7 @@ namespace Characters {
 
             /* secondary stats */
             HP = (int)(STR * 2.25 + DEX * 1.25);
-            MP = (int)(INT * 1.25 + LUK * 0.5);
+            MP = (int)(INT * 1.25 + LUK * 0.65);
             PATK = (int)(STR * 0.5 + DEX * 0.25);
             MATK = (int)(INT * 0.5 + LUK * 0.25); 
             PDEF = (int)(STR * 0.1 + DEX * 0.05);
@@ -399,6 +399,9 @@ namespace Characters {
                 }
                 if (skills[(int)SkillConstants.mageSkills.THIRDEYE].skillEnabled == true) {
                     MPRegen *= 2f;
+                }
+                if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
+                    MDEF += 2;
                 }
             }
             else if (className == ClassConstants.ROGUE) {
