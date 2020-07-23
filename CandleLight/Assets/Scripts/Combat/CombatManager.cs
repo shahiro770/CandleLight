@@ -63,6 +63,7 @@ namespace Combat {
         private CharacterQueue cq = new CharacterQueue();                   /// <value> Queue for attacking order in combat </value>
         private Attack selectedAttackMonster = null;/// <value> Attack selected by monster </value>
         private Attack selectedAttackPM = null;     /// <value> Attack selected by partyMember </value>
+        private string[] championBuffs;             /// <value> List of buffs monsters can be spawn with </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
         private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
@@ -104,6 +105,7 @@ namespace Combat {
             monstersKilled = new List<Monster>();
             partyMembersAlive = new List<PartyMember>();
             partyMembersAll = PartyManager.instance.GetPartyMembers();
+            this.championBuffs = championBuffs;
             PartyManager.instance.SetBonusChampionChance();
             countID = partyMembersAll.Count + 1;  // monsters will be assigned unique ID numbers, incrementing off of the last partymember's ID
             foreach (PartyMember pm in partyMembersAll) {
@@ -119,7 +121,7 @@ namespace Combat {
             }
 
             foreach (string monsterName in monsterNames) {
-                yield return StartCoroutine(AddMonster(monsterName, championBuffs));
+                yield return StartCoroutine(AddMonster(monsterName));
             }
             ArrangeMonsters();
             
@@ -142,7 +144,7 @@ namespace Combat {
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
         /// <returns> IEnumerator cause animations </returns>
         /// <remark> Assumes there will always be an action at button 0 </remark>
-        private IEnumerator AddMonster(string monsterName, string[] championBuffs) {
+        private IEnumerator AddMonster(string monsterName) {
             GameObject newMonster = Instantiate(DataManager.instance.GetLoadedMonsterDisplay(monsterName));
             newMonster.SetActive(true); // monster game object must be active to manipulate its components
             
@@ -150,6 +152,7 @@ namespace Combat {
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             
             monsterComponent.ID = countID++;
+            monsterComponent.turnCounter = 0;
             monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
             monsterComponent.GetBuffs(championBuffs);
             monsterComponent.md.AddSMDListener(smd);
@@ -435,7 +438,7 @@ namespace Combat {
                     }
                     else if (selectedAttackPM.type == AttackConstants.SUMMON) {
                         if (activePartyMember.summon == null) {     // initial summon
-                            PartyManager.instance.AddPartyMemberSummon(activePartyMember, selectedAttackPM.name, countID++);
+                            PartyManager.instance.AddPartyMemberSummon(activePartyMember, selectedAttackPM.seName, countID++);
                             cq.AddCharacterAndResort(activePartyMember.summon);
                             partyMembersAlive.Add(activePartyMember.summon);
                             yield return (StartCoroutine(activePartyMember.summon.GetSummoned(selectedAttackPM, false)));
@@ -537,6 +540,7 @@ namespace Combat {
         /// <returns> Yields to allow monster attack animation to play </returns>
         private void StartMonsterTurn() {
             DisableAllButtons();
+            activeMonster.turnCounter++;
             activeMonster.SetAttackValues();
         }
 
@@ -570,7 +574,7 @@ namespace Combat {
                     selectedMonsterAttackIndex = Random.Range(0, attackNum - 1);
                 }
             }
-            else if (monsterAI == "lastAt60") {    // only uses last attack after CHP falls below 60%, using it whenever possible if its a selfBuff
+            else if (monsterAI == "lastAt60" || monsterAI == "weakHunterLastAt60") {    // only uses last attack after CHP falls below 60%, using it whenever possible if its a selfBuff
                 if (activeMonster.CHP <= (int)(activeMonster.HP * 0.6f)) {
 
                     if ((attacks[attackNum - 1].type == AttackConstants.BUFFSELF || attacks[attackNum - 1].type == AttackConstants.HEALHPSELF
@@ -636,10 +640,11 @@ namespace Combat {
                 if (taunter != null) {
                     targetChoice = taunter;
                 }
-                else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt60" || activeMonster.monsterAI == "debuffer" || activeMonster.monsterAI == "cycler") {
+                else if (activeMonster.monsterAI == "random" || activeMonster.monsterAI == "lastAt60"
+                || activeMonster.monsterAI == "debuffer" || activeMonster.monsterAI == "cycler") {
                     targetChoice = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
                 }
-                else if (activeMonster.monsterAI == "weakHunter") {
+                else if (activeMonster.monsterAI == "weakHunter" || activeMonster.monsterAI == "weakHunterLastAt60") {
                     int weakest = 0;
                     int weakestHitChance = Random.Range(0, 100);
 
@@ -690,6 +695,21 @@ namespace Combat {
                         }
                         yield return (StartCoroutine(monsters[0].GetHelped(selectedAttackMonster, activeMonster)));
                     }
+                }
+                else if (selectedAttackMonster.scope == "selfAndRandomAlly") {
+                    if (monsters.Count > 1) {   // if there is another monster, target them as well
+                        int target = Random.Range(0, monsters.Count);
+                        if (monsters[target].ID == activeMonster.ID) {  // if target self, pick right, or left if no monster right
+                            if (target < monsters.Count - 1) { 
+                                target++;
+                            }
+                            else {
+                                target--;
+                            }
+                        }
+                        StartCoroutine(monsters[target].GetHelped(selectedAttackMonster, activeMonster));       
+                    }
+                    yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
                 }
             }
         }

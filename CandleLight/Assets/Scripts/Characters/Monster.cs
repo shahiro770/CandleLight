@@ -192,7 +192,7 @@ namespace Characters {
         /// Sets the monster's level between its minimum level and maximum level
         /// </summary>
         public void MultipleLVLUp(int subAreaProgress) {
-            if (subAreaProgress < 35) { // prevent stronger monsters from appearing at the start of the area
+            if (subAreaProgress < 35) { // prevent stronger monsters from appearing at the start of the area (note this affects boss fights)
                 base.MultipleLVLUp(minLVL, Mathf.Max(minLVL, maxLVL - 1), this.multiplier);  
             }
             else {

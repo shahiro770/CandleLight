@@ -42,10 +42,6 @@ Balance: Fire Slash costs less
 Feature: Added tombToll event
 Balance: Bosses are now guaranteed a champion buff if the player hits level 5
 Balance: Greyhides can now appear at LVL 4 in the desert area
-
-
-CURRENTLY DOING
----------------
 Bug: Not sure if injured greyhide is getting swapped instead of ringedGreyhide
 Feature: Add animation speed changing
 Balance: Made first shop events even cheaper
@@ -55,12 +51,17 @@ Bug: Full tutorial tooltip doesn't register to close it
 Balance: Buffed mana shield to give 2 MDEF
 Balance: Buffed thunder Edge shock chance to 75%
 Balance: MP from LUK is now 0.65 (up from 0.5)
+Fix: Make last 3 skills show that they will only be availalbe in a future update
+Balance: Poison damage increased to 10%
+Bug: Candlemancy kinda bugged but need to figure out why 
+Fix: Make stinger sting turn them poison green before attacking
 
+CURRENTLY DOING
+---------------
 Balance: Tweak the bat event's EXP rewards 
 Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
 Balance: Make it so every 4 turns, alpha will try and summon more greyhides
-Fix: Make last 3 skills show that they will only be availalbe in a future update
-Fix: Make stinger sting turn them poison green before attacking
+
 Fix: Give bosses a unique death animation (blink three times before dying)
 Fix: Give Greyhides a howl move in later areas that lets them give a random enemy advantage (But only if they don't have advantage themselves)
 
@@ -69,13 +70,12 @@ Speed Runner Tester: Jeffrey Zhao
 
 VERIFICATION NEEDED
 -------------------
-Bug: Candlemancy kinda bugged but need to figure out why 
 Bug: Is it a UI glitch if all highlighted tabs during tutorials due to ! become normal coloure dupon clicking on tab?
     I.e. assume the player noticed?
 
 NEAR FUTURE
 ----------------
-Feature: Add
+Feature: Add achievements
 Feature: Sound effects and music
 Feature: Saving
 Feature: Ending and beginning cutscenes

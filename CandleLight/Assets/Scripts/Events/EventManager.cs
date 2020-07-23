@@ -82,6 +82,8 @@ namespace Events {
         private string currentAreaName;         /// <value> Name of current area </value>
         private string nextSubArea = "";        /// <value> Name of next subArea to move to </value>
         private string mainQuestName = "theOnlyHope";   /// <value> Name of the main quest to add in the event player doesn't do tutorial </value>
+        private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
+        private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private int bgPackNum = 0;              /// <value> Number of backgroundPacks </value>
         private int areaProgress = 0;           /// <value> Area progress increments by 1 for each main event the player completes </value>
         private int consumablesNum = 0;         /// <value> Number of consumables to be found in the subArea </value>
@@ -91,8 +93,6 @@ namespace Events {
         private int shopToastIndex = 0;         /// <value> Index for which toastPanel is being used as the shop's wax display </value>
         private int tutorialProg = 0;           /// <value> Current progress through the tutorial </value>
         private int noCombatCount = 0;          /// <value> Counter for how long the player has gone without a combat event </value>
-        private float alphaLerpSpeed = 0.75f;   /// <value> Speed at which backgrounds fade in and out </value>
-        private float colourLerpSpeed = 4f;     /// <value> Speed at which backgrounds change colour (for dimming) </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
         private bool isNextEventMain = false;   /// <value> Flag for if the next even is a main event </value>
         private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>

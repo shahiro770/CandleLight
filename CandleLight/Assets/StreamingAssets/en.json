@@ -1250,6 +1250,7 @@
 		{ "key": "smack_attack", "value": "Smack" },
 		{ "key": "rockFall_attack", "value": "Rock Fall" },
 		{ "key": "defensiveFormation_attack", "value": "Defensive Formation" },
+		{ "key": "howl_attack", "value": "Howl" },
 
 		{ "key": "fireball_attack", "value": "Fireball" },
 		{ "key": "frost_attack", "value": "Frost" },

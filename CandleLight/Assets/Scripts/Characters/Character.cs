@@ -44,6 +44,7 @@ namespace Characters {
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
         [field: SerializeField] public int attackNum { get; set; } = 0;   /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public int championChance { get; set; }   /// <value> Additional percentage chance of a champion monster spawning for PartyMembers, or base chance for Monsters </value>
+        [field: SerializeField] public int turnCounter { get; set; }      /// <value> Counter for number of turns this character has taken in a new instance of combat </value>
         [field: SerializeField] public float critMult { get; set; }       /// <value> Critical damage multiplier </value>
         [field: SerializeField] public bool bleedPlus { get; set; } = false;    /// <value> Flag for if this character can inflict stronger bleeds </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>

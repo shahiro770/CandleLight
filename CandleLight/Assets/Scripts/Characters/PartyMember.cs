@@ -33,7 +33,6 @@ namespace Characters {
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
         public int skillPoints { get; set; }        
-        public int turnCounter { get; set; }        /// <value> Counter for number of turns this partyMember has taken </value>
         public bool doneEXPGaining { get; private set; } = true;   /// <value> Total experience points to reach next level </value>
         
         public PartyMember summon = null;       /// <value> Summoned familiar of this partyMember </value>
@@ -251,11 +250,11 @@ namespace Characters {
 
             /* secondary stats */
             HP = (int)(STR * 2.25 + DEX * 1.25);
-            MP = (int)(INT * 1.25 + LUK * 0.65);
+            MP = (int)(INT * 1.5 + LUK * 0.75);
             PATK = (int)(STR * 0.5 + DEX * 0.25);
             MATK = (int)(INT * 0.5 + LUK * 0.25); 
             PDEF = (int)(STR * 0.1 + DEX * 0.05);
-            MDEF = (int)(INT * 0.15 + LUK * 0.05);
+            MDEF = (int)(INT * 0.2 + LUK * 0.1);
             DOG = (int)(LUK * 0.2 + DEX * 0.1);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             if (LVL != 0) {
