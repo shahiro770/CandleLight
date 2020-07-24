@@ -23,6 +23,8 @@ namespace Menus.OptionsMenu {
         public ButtonTransitionState tutorialNo;
         public ButtonTransitionState tipsYes;
         public ButtonTransitionState tipsNo;
+        public ButtonTransitionState as1;
+        public ButtonTransitionState as2;
 
         public TooltipTextMesh effectstt;           /// <value> sound effects text tooltip </value>
         public TooltipTextMesh musictt;             /// <value> music text tooltip </value>
@@ -32,6 +34,7 @@ namespace Menus.OptionsMenu {
         public TooltipTextMesh timertt;             /// <value> timer text tooltip </value>
 
         private float labelWidths = 180f;
+        private float labelWidthsBig = 250f;
         private ColorBlock optionEnabled = new ColorBlock();
 
         void Awake() {
@@ -49,14 +52,21 @@ namespace Menus.OptionsMenu {
             tipsNo.SetColorBlock("normal", b.colors);
             tipsYes.SetColorBlock("normalAlternate", optionEnabled);
             tipsNo.SetColorBlock("normalAlternate", optionEnabled);
+            as1.SetColorBlock("normal", b.colors);
+            as2.SetColorBlock("normal", b.colors);
+            as1.SetColorBlock("normalAlternate", optionEnabled);
+            as2.SetColorBlock("normalAlternate", optionEnabled);
 
             tutorialtt.SetKey("title", "tutorial_title");
             tutorialtt.SetKey("subtitle", "tutorial_des");
             tipstt.SetKey("title", "tips_title");
             tipstt.SetKey("subtitle", "tips_des");
+            animationSpeedtt.SetKey("title", "as_title");
+            animationSpeedtt.SetKey("subtitle", "as_des");
 
             tutorialtt.SetImageDisplayBackgroundWidth(labelWidths);
             tipstt.SetImageDisplayBackgroundWidth(labelWidths);
+            animationSpeedtt.SetImageDisplayBackgroundWidth(labelWidthsBig);
         }
 
         void OnEnable() {
@@ -76,6 +86,15 @@ namespace Menus.OptionsMenu {
             else {
                 tipsYes.SetColor("normal");
                 tipsNo.SetColor("normalAlternate");
+            }
+
+            if (GameManager.instance.animationSpeed == 1f) {
+                as1.SetColor("normalAlternate");
+                as2.SetColor("normal");
+            }
+            else {
+                as1.SetColor("normal");
+                as2.SetColor("normalAlternate");
             }
         }
 
@@ -102,6 +121,19 @@ namespace Menus.OptionsMenu {
             else {
                 tipsYes.SetColor("normal");
                 tipsNo.SetColor("normalAlternate");
+            }
+        }
+
+        public void SetAnimationSpeed(float value) {
+            GameManager.instance.animationSpeed = value;
+
+            if (value == 1f) {
+                as1.SetColor("normalAlternate");
+                as2.SetColor("normal");
+            }
+            else {
+                as1.SetColor("normal");
+                as2.SetColor("normalAlternate");
             }
         }
     }
