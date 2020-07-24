@@ -188,11 +188,11 @@ namespace Combat {
             }
                   
             if (eventDescription.HasText()) {
-                yield return new WaitForSeconds(1.5f);   
+                yield return new WaitForSeconds(1.5f / GameManager.instance.animationSpeed);   
                 eventDescription.ClearText();    
             }
             else {
-                yield return new WaitForSeconds(0.3f);   
+                yield return new WaitForSeconds(0.3f / GameManager.instance.animationSpeed);   
             }   
         }
 

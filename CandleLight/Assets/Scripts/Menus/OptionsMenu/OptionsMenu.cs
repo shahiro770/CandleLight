@@ -21,6 +21,8 @@ namespace Menus.OptionsMenu {
         public Button b;
         public ButtonTransitionState tutorialYes;
         public ButtonTransitionState tutorialNo;
+        public ButtonTransitionState tipsYes;
+        public ButtonTransitionState tipsNo;
 
         public TooltipTextMesh effectstt;           /// <value> sound effects text tooltip </value>
         public TooltipTextMesh musictt;             /// <value> music text tooltip </value>
@@ -43,11 +45,18 @@ namespace Menus.OptionsMenu {
             tutorialNo.SetColorBlock("normal", b.colors);
             tutorialYes.SetColorBlock("normalAlternate", optionEnabled);
             tutorialNo.SetColorBlock("normalAlternate", optionEnabled);
+            tipsYes.SetColorBlock("normal", b.colors);
+            tipsNo.SetColorBlock("normal", b.colors);
+            tipsYes.SetColorBlock("normalAlternate", optionEnabled);
+            tipsNo.SetColorBlock("normalAlternate", optionEnabled);
 
             tutorialtt.SetKey("title", "tutorial_title");
             tutorialtt.SetKey("subtitle", "tutorial_des");
+            tipstt.SetKey("title", "tips_title");
+            tipstt.SetKey("subtitle", "tips_des");
 
             tutorialtt.SetImageDisplayBackgroundWidth(labelWidths);
+            tipstt.SetImageDisplayBackgroundWidth(labelWidths);
         }
 
         void OnEnable() {
@@ -58,6 +67,15 @@ namespace Menus.OptionsMenu {
             else {
                 tutorialYes.SetColor("normal");
                 tutorialNo.SetColor("normalAlternate");
+            }
+
+            if (GameManager.instance.isTips == true) {
+                tipsYes.SetColor("normalAlternate");
+                tipsNo.SetColor("normal");
+            }
+            else {
+                tipsYes.SetColor("normal");
+                tipsNo.SetColor("normalAlternate");
             }
         }
 
@@ -71,6 +89,19 @@ namespace Menus.OptionsMenu {
             else {
                 tutorialYes.SetColor("normal");
                 tutorialNo.SetColor("normalAlternate");
+            }
+        }
+
+        public void SetTips(bool value) {
+            GameManager.instance.isTips = value;
+
+            if (value == true) {
+                tipsYes.SetColor("normalAlternate");
+                tipsNo.SetColor("normal");
+            }
+            else {
+                tipsYes.SetColor("normal");
+                tipsNo.SetColor("normalAlternate");
             }
         }
     }
