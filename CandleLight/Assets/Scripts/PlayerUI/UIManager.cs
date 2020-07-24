@@ -20,6 +20,7 @@ namespace PlayerUI {
         public Color32 subtitleColour = new Color32(178, 178, 178, 255);  /// <value> Grey colour for subtitles, stored here to minimize space </value>
         public ColorBlock orangeBlock = new ColorBlock();
         public ItemDisplay heldItemDisplay;
+        public bool isTimer = false;                /// <value> Flag for if there is a timer in the top left of the screen </value>
         public bool panelButtonsEnabled = true;
         public bool inShop = false;                 /// <value> Flag for if the player is currently in a shop </value>
 

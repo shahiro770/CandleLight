@@ -50,7 +50,8 @@ namespace Events {
         public InfoPanel infoPanel;                 /// <value> InfoPanel reference </value>
         public TabManager itemsTabManager;          /// <value> Click on to display other panels with item information </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
-        
+        public Timer timer;                         /// <value> Timer reference </value>
+
         public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
 
@@ -289,6 +290,9 @@ namespace Events {
             while (isReady == false) {
                 yield return null;
             }
+            timer.ResetTimer();
+            timer.StartTimer(true);
+            timer.SetVisible(UIManager.instance.isTimer);
             if (GameManager.instance.isTutorial == true) {
                 AlterParticleSystem();
                 StartTutorial();

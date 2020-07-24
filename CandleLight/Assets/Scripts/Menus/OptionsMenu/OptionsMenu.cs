@@ -25,6 +25,8 @@ namespace Menus.OptionsMenu {
         public ButtonTransitionState tipsNo;
         public ButtonTransitionState as1;
         public ButtonTransitionState as2;
+        public ButtonTransitionState timerYes;
+        public ButtonTransitionState timerNo;
 
         public TooltipTextMesh effectstt;           /// <value> sound effects text tooltip </value>
         public TooltipTextMesh musictt;             /// <value> music text tooltip </value>
@@ -34,7 +36,7 @@ namespace Menus.OptionsMenu {
         public TooltipTextMesh timertt;             /// <value> timer text tooltip </value>
 
         private float labelWidths = 180f;
-        private float labelWidthsBig = 250f;
+        private float labelWidthsBig = 230f;
         private ColorBlock optionEnabled = new ColorBlock();
 
         void Awake() {
@@ -56,6 +58,10 @@ namespace Menus.OptionsMenu {
             as2.SetColorBlock("normal", b.colors);
             as1.SetColorBlock("normalAlternate", optionEnabled);
             as2.SetColorBlock("normalAlternate", optionEnabled);
+            timerYes.SetColorBlock("normal", b.colors);
+            timerNo.SetColorBlock("normal", b.colors);
+            timerYes.SetColorBlock("normalAlternate", optionEnabled);
+            timerNo.SetColorBlock("normalAlternate", optionEnabled);
 
             tutorialtt.SetKey("title", "tutorial_title");
             tutorialtt.SetKey("subtitle", "tutorial_des");
@@ -63,10 +69,13 @@ namespace Menus.OptionsMenu {
             tipstt.SetKey("subtitle", "tips_des");
             animationSpeedtt.SetKey("title", "as_title");
             animationSpeedtt.SetKey("subtitle", "as_des");
+            timertt.SetKey("title", "timer_title");
+            timertt.SetKey("subtitle", "timer_des");
 
             tutorialtt.SetImageDisplayBackgroundWidth(labelWidths);
             tipstt.SetImageDisplayBackgroundWidth(labelWidths);
             animationSpeedtt.SetImageDisplayBackgroundWidth(labelWidthsBig);
+            timertt.SetImageDisplayBackgroundWidth(labelWidths);
         }
 
         void OnEnable() {
@@ -95,6 +104,15 @@ namespace Menus.OptionsMenu {
             else {
                 as1.SetColor("normal");
                 as2.SetColor("normalAlternate");
+            }
+
+            if (UIManager.instance.isTimer == true) {
+                timerYes.SetColor("normalAlternate");
+                timerNo.SetColor("normal");
+            }
+            else {
+                timerYes.SetColor("normal");
+                timerNo.SetColor("normalAlternate");
             }
         }
 
@@ -134,6 +152,19 @@ namespace Menus.OptionsMenu {
             else {
                 as1.SetColor("normal");
                 as2.SetColor("normalAlternate");
+            }
+        }
+
+        public void SetTimer(bool value) {
+            UIManager.instance.isTimer = value;
+
+            if (UIManager.instance.isTimer == true) {
+                timerYes.SetColor("normalAlternate");
+                timerNo.SetColor("normal");
+            }
+            else {
+                timerYes.SetColor("normal");
+                timerNo.SetColor("normalAlternate");
             }
         }
     }

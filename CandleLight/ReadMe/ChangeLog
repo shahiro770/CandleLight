@@ -58,13 +58,13 @@ Fix: Make stinger sting turn them poison green before attacking
 
 CURRENTLY DOING
 ---------------
-Balance: Tweak the bat event's EXP rewards 
-Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
-Balance: Make it so every 4 turns, alpha will try and summon more greyhides
-
-Fix: Give bosses a unique death animation (blink three times before dying)
 Fix: Give Greyhides a howl move in later areas that lets them give a random enemy advantage (But only if they don't have advantage themselves)
 
+Feature: Add options
+Fix: Give bosses a unique death animation (blink three times before dying)
+Balance: Tweak the bat event's EXP rewards 
+Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
+Feature: Gameover screen
 
 Speed Runner Tester: Jeffrey Zhao
 
@@ -79,7 +79,6 @@ Feature: Add achievements
 Feature: Sound effects and music
 Feature: Saving
 Feature: Ending and beginning cutscenes
-Feature: Gameover screen
 
 FUTURE/MAYBE
 ------------

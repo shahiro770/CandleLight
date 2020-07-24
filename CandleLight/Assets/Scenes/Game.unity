@@ -1356,5 +1356,6 @@ MonoBehaviour:
     m_ColorMultiplier: 0
     m_FadeDuration: 0
   heldItemDisplay: {fileID: 0}
+  isTimer: 0
   panelButtonsEnabled: 1
   inShop: 0

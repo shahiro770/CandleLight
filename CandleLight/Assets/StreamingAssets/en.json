@@ -29,9 +29,11 @@
 		{ "key": "as_title", "value": "Animation Speed" },
 		{ "key": "as_des", "value": "Speed at which combat animations play" },
 		{ "key": "timer_title", "value": "Timer" },
-		{ "key": "timer_des", "value": "Place a timer on the top left of the screen" },
+		{ "key": "timer_des", "value": "Display a timer on the bottom left of the screen" },
 		{ "key": "yes_button", "value": "Yes" },
 		{ "key": "no_button", "value": "No" },
+		{ "key": "1x_button", "value": "1x" },
+		{ "key": "2x_button", "value": "2x" },
 
 		{ "key": "0_ach_title", "value": "Now Who's the Alpha?" },
 		{ "key": "0_ach_des", "value": "Slay the pack leader" },
