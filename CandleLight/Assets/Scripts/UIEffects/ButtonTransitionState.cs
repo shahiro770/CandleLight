@@ -41,7 +41,7 @@ namespace UIEffects {
             b = GetComponent<Button>();
             i = GetComponent<Image>();
 
-            if (autoInitialize) {
+            if (autoInitialize == true) {
                 if (b.transition == Selectable.Transition.ColorTint) {
                     ColorBlock initial = b.colors;
                     normalBlock = initial;

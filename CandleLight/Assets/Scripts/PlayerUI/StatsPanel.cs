@@ -48,7 +48,7 @@ namespace PlayerUI {
         public TooltipTextMesh ACCtt;   /// <value> </value>
         public TooltipTextMesh DOGtt;   /// <value> </value>
         public TooltipTextMesh CRITtt;  /// <value> </value>
-        public float labelWidths = 48f; /// <value> Width of all of the labels to set tooltip positions IMPORTANT: Can be set externally</value>
+        public float labelWidths = 48f; /// <value> Width of all of the labels to set tooltip positions IMPORTANT: Can be set externally </value>
 
         public PartyMemberVisualController pmvc;    /// <value> pmvc of pm currently being displayed</value>
         private string LVLText = LocalizationManager.instance.GetLocalizedValue("LVL_label");   /// <value> "LVL" </value>
