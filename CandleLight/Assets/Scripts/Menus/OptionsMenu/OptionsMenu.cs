@@ -6,18 +6,18 @@
 * The OptionsMenu class is used to modify aspects of the game.
 */
 
+using Audio;
 using General;
-using Localization;
 using PlayerUI;
 using UIEffects;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Menus.OptionsMenu {
 
     public class OptionsMenu : MonoBehaviour {
 
+        /* external component references */
         public Button b;
         public ButtonTransitionState tutorialYes;
         public ButtonTransitionState tutorialNo;
@@ -27,13 +27,16 @@ namespace Menus.OptionsMenu {
         public ButtonTransitionState as2;
         public ButtonTransitionState timerYes;
         public ButtonTransitionState timerNo;
-
-        public TooltipTextMesh effectstt;           /// <value> sound effects text tooltip </value>
-        public TooltipTextMesh musictt;             /// <value> music text tooltip </value>
+        public Slider bgmSlider;
+        public Slider sfxSlider;
+        public CanvasGroup cg;
+        public TooltipTextMesh sfxtt;               /// <value> sound effects text tooltip </value>
+        public TooltipTextMesh bgmtt;               /// <value> music text tooltip </value>
         public TooltipTextMesh tutorialtt;          /// <value> tutorial text tooltip </value>
         public TooltipTextMesh tipstt;              /// <value> tips text tooltip </value>
         public TooltipTextMesh animationSpeedtt;    /// <value> animation speed text tooltip </value>
         public TooltipTextMesh timertt;             /// <value> timer text tooltip </value>
+        public Timer timer;                         /// <value> Timer reference </value>
 
         private float labelWidths = 180f;
         private float labelWidthsBig = 230f;
@@ -46,7 +49,7 @@ namespace Menus.OptionsMenu {
             optionEnabled.disabledColor = new Color32(61 ,61, 61, 255);
             optionEnabled.colorMultiplier = 1;
 
-            tutorialYes.SetColorBlock("normal", b.colors);
+            tutorialYes.SetColorBlock("normal", b.colors);  // for some reason this is all bugged, so need to set the normal colour block
             tutorialNo.SetColorBlock("normal", b.colors);
             tutorialYes.SetColorBlock("normalAlternate", optionEnabled);
             tutorialNo.SetColorBlock("normalAlternate", optionEnabled);
@@ -63,6 +66,10 @@ namespace Menus.OptionsMenu {
             timerYes.SetColorBlock("normalAlternate", optionEnabled);
             timerNo.SetColorBlock("normalAlternate", optionEnabled);
 
+            bgmtt.SetKey("title", "bgm_title");
+            bgmtt.SetKey("subtitle", "bgm_des");
+            sfxtt.SetKey("title", "sfx_title");
+            sfxtt.SetKey("subtitle", "sfx_des");
             tutorialtt.SetKey("title", "tutorial_title");
             tutorialtt.SetKey("subtitle", "tutorial_des");
             tipstt.SetKey("title", "tips_title");
@@ -71,7 +78,9 @@ namespace Menus.OptionsMenu {
             animationSpeedtt.SetKey("subtitle", "as_des");
             timertt.SetKey("title", "timer_title");
             timertt.SetKey("subtitle", "timer_des");
-
+            
+            bgmtt.SetImageDisplayBackgroundWidth(labelWidthsBig);
+            sfxtt.SetImageDisplayBackgroundWidth(labelWidths);
             tutorialtt.SetImageDisplayBackgroundWidth(labelWidths);
             tipstt.SetImageDisplayBackgroundWidth(labelWidths);
             animationSpeedtt.SetImageDisplayBackgroundWidth(labelWidthsBig);
@@ -114,6 +123,9 @@ namespace Menus.OptionsMenu {
                 timerYes.SetColor("normal");
                 timerNo.SetColor("normalAlternate");
             }
+
+            bgmSlider.value = AudioManager.instance.bgmVolume;
+            sfxSlider.value = AudioManager.instance.sfxVolume;
         }
 
         public void SetTutorial(bool value) {
@@ -157,6 +169,9 @@ namespace Menus.OptionsMenu {
 
         public void SetTimer(bool value) {
             UIManager.instance.isTimer = value;
+            if (timer != null) {
+                timer.SetVisible(value);
+            }
 
             if (UIManager.instance.isTimer == true) {
                 timerYes.SetColor("normalAlternate");
@@ -166,6 +181,14 @@ namespace Menus.OptionsMenu {
                 timerYes.SetColor("normal");
                 timerNo.SetColor("normalAlternate");
             }
+        }
+
+        public void SetBgmVolume(float value) {
+            AudioManager.instance.bgmVolume = value;
+        }
+
+        public void SetSfxVolume(float value) {
+            AudioManager.instance.sfxVolume = value;
         }
     }
 }

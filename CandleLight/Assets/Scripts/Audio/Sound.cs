@@ -18,5 +18,6 @@ namespace Audio {
         [Range (0.1f, 3f)]
         public float pitch;
         public bool loop;
+        public bool type;   /// <value> false for sfx, true for bgm </value>
     }
 }

@@ -9,6 +9,8 @@ namespace Audio {
         public static AudioManager instance;    /// <value> Singleton </value>
 
         public Sound[] sounds;
+        public float bgmVolume = 1f;
+        public float sfxVolume = 1f;
 
         void Awake() {
             if (instance == null) {
@@ -35,6 +37,12 @@ namespace Audio {
                 Debug.LogError("Sound " + soundName + " does not exist");
             }
             else {
+                if (s.type == false) {
+                    s.source.volume = sfxVolume;
+                }
+                else {
+                    s.source.volume = bgmVolume;
+                }
                 s.source.Play();
             }
         }

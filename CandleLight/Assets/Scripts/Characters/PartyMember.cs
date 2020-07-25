@@ -254,7 +254,7 @@ namespace Characters {
             PATK = (int)(STR * 0.5 + DEX * 0.25);
             MATK = (int)(INT * 0.5 + LUK * 0.25); 
             PDEF = (int)(STR * 0.1 + DEX * 0.05);
-            MDEF = (int)(INT * 0.2 + LUK * 0.1);
+            MDEF = (int)(INT * 0.1 + LUK * 0.05);
             DOG = (int)(LUK * 0.2 + DEX * 0.1);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             if (LVL != 0) {

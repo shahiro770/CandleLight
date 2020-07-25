@@ -13,6 +13,7 @@ using CombatManager = Combat.CombatManager;
 using Constants;
 using General;
 using Items;
+using Menus.OptionsMenu;
 using Party;
 using PlayerUI;
 using System.Collections;
@@ -33,7 +34,8 @@ namespace Events {
         public Canvas eventCanvas;                  /// <value> Canvas holding all other canvases </value>
         public CanvasGroup eventBGCanvas;           /// <value> Current event's background sprite alpha controller </value>
         public CanvasGroup nextEventBGCanvas;       /// <value> Next event's background sprite alpha controller </value>
-        public ParticleSystem ps;                   /// <value> Particle system reference </value>
+        public ParticleSystem ps0;                  /// <value> Particle system reference </value>
+        public ParticleSystem ps1;                  /// <value> Particle system reference </value>
         public WindZone wz;                         /// <value> Wind zone reference </value>
         public Image eventBackground;               /// <value> Image background for current event </value>
         public Image nextEventBackground;           /// <value> Image background for next event </value>
@@ -51,6 +53,7 @@ namespace Events {
         public TabManager itemsTabManager;          /// <value> Click on to display other panels with item information </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
         public Timer timer;                         /// <value> Timer reference </value>
+        public OptionsMenu optionsMenu;
 
         public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
@@ -121,6 +124,22 @@ namespace Events {
         /// </summary>
         void Start() {
             StartCoroutine(StartArea(GameManager.instance.areaName));
+        }
+
+        /// <summary>
+        /// Only used to check keyboard input for pausing the game
+        /// </summary>
+        void Update() {
+            if (Input.GetButtonDown("Cancel") == true && (GameManager.instance.loadingScreen.activeSelf == false)) {            // escape key pressed
+                if (optionsMenu.gameObject.activeSelf == false) {
+                    SetPauseMenu(true);
+                    return;
+                }
+                else {
+                    SetPauseMenu(false);
+                    return;
+                }
+            }
         }
 
         /// <summary>
@@ -789,7 +808,7 @@ namespace Events {
                 GameManager.instance.firstConsumable = false;
                 SetTutorialNotification("consumable");
             }
-            if (GameManager.instance.isTips == true && GameManager.instance.firstCandle == true && r.itemType == ItemConstants.CANDLE) {
+            else if (GameManager.instance.isTips == true && GameManager.instance.firstCandle == true && r.itemType == ItemConstants.CANDLE) {
                 GameManager.instance.firstCandle = false;
                 SetTutorialNotification("candles0");
             }
@@ -1111,7 +1130,7 @@ namespace Events {
                     ProgressTutorial();
                     break;
                 case ResultConstants.END:
-                    GameManager.instance.StartLoadNextScene("MainMenu");
+                    EndRun();
                     break;
                 case ResultConstants.ENDTUT:
                     EndTutorial();
@@ -1353,8 +1372,8 @@ namespace Events {
         }
 
         public void AlterParticleSystem() {
-            var main = ps.main;
-            var emission = ps.emission;
+            var main = ps0.main;
+            var emission = ps0.emission;
             switch (areaProgress) {
                 case 0:
                     emission.rateOverTime = 0;
@@ -1370,18 +1389,24 @@ namespace Events {
                     emission.rateOverTime = 6;
                     wz.windMain = 15;
                     main.simulationSpeed = 0.25f;
+                    main.startLifetime = 3;
+                    main.startLifetime = 3f;
                     break;
                 case 3:
                 case 6:
                     emission.rateOverTime = 30;
-                    wz.windMain = 40;
+                    wz.windMain = 60;
                     main.simulationSpeed = 0.5f;
+                    main.startLifetime = 1.25f;
+                    ps1.gameObject.SetActive(true);
                     break;
                 case 4:
                 case 7:
                     emission.rateOverTime = 6;
                     wz.windMain = 15;
                     main.simulationSpeed = 0.25f;
+                    main.startLifetime = 3f;
+                    ps1.gameObject.SetActive(false);
                     break;
                 case 5:
                 case 8:
@@ -1436,7 +1461,7 @@ namespace Events {
         public IEnumerator DisplayGameOver() {
             SetAllButtonsInteractable(false);
             yield return new WaitForSeconds(1.5f);
-            GameManager.instance.StartLoadNextScene("MainMenu");
+            EndRun();
         }
 
         #endregion
@@ -1700,6 +1725,31 @@ namespace Events {
                 itemsTabManager.SetAllButtonsUninteractable();
                 utilityTabManager.SetAllButtonsUninteractable();
             }
+        }
+
+        /// <summary>
+        /// True to turn on the pause menu, false otherwise
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetPauseMenu(bool value) {
+            if (value == true) {
+                Time.timeScale = 0;
+                optionsMenu.gameObject.SetActive(true);
+            
+            }
+            else {
+                Time.timeScale = 1;
+                optionsMenu.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// Ends the run, returning to the main menu
+        /// </summary>
+        public void EndRun() {
+            optionsMenu.cg.interactable = false;
+            Time.timeScale = 1;
+            GameManager.instance.StartLoadNextScene("MainMenu");
         }
 
         /// <summary>
