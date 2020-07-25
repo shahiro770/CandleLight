@@ -1062,7 +1062,7 @@
 		{ "key": "poisonArrow_skill_des", "value": "Physical attack with a high chance to poison" },
 		{ "key": "survivalist_skill_title", "value": "Survivalist" },
 		{ "key": "survivalist_skill_sub", "value": "Passive" },
-		{ "key": "survivalist_skill_des", "value": "Damage from poison and bleed is reduced by 100%" },	
+		{ "key": "survivalist_skill_des", "value": "Increase PDEF by 1, and damage from poison and bleed is reduced by 100%" },	
 		{ "key": "elvenGift_skill_title", "value": "Elven Gift" },
 		{ "key": "elvenGift_skill_sub", "value": "Active" },
 		{ "key": "elvenGift_skill_des", "value": "Restore HP to a party member and cure them" },		

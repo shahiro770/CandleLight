@@ -313,6 +313,7 @@ namespace Events {
             timer.StartTimer(true);
             timer.SetVisible(UIManager.instance.isTimer);
             if (GameManager.instance.isTutorial == true) {
+                areaProgress = 0;
                 AlterParticleSystem();
                 StartTutorial();
             }
@@ -1372,47 +1373,50 @@ namespace Events {
         }
 
         public void AlterParticleSystem() {
-            var main = ps0.main;
-            var emission = ps0.emission;
+            var main0 = ps0.main;
+            var emission0 = ps0.emission;
+            var main1 = ps1.main;
+            var emission1 = ps1.emission;
             switch (areaProgress) {
                 case 0:
-                    emission.rateOverTime = 0;
                     wz.windMain = 0;
-                    main.simulationSpeed = 0;
+                    emission0.rateOverTime = 0;
+                    emission1.rateOverTime = 0;
                     break;
                 case 1:
-                    emission.rateOverTime = 0;
                     wz.windMain = 0;
-                    main.simulationSpeed = 0;
+                    emission0.rateOverTime = 0;
+                    emission1.rateOverTime = 0;
                     break;
                 case 2:
-                    emission.rateOverTime = 6;
                     wz.windMain = 15;
-                    main.simulationSpeed = 0.25f;
-                    main.startLifetime = 3;
-                    main.startLifetime = 3f;
+                    emission0.rateOverTime = 6;
+                    emission1.rateOverTime = 0;
+                    main0.startLifetime = 3f;
                     break;
                 case 3:
                 case 6:
-                    emission.rateOverTime = 30;
-                    wz.windMain = 60;
-                    main.simulationSpeed = 0.5f;
-                    main.startLifetime = 1.25f;
-                    ps1.gameObject.SetActive(true);
+                    wz.windMain = 80;
+                    emission0.rateOverTime = 60;
+                    emission1.rateOverTime = 8;
+                    main0.startLifetime = 1.25f;
+                    main1.startLifetime = 1.25f;
                     break;
                 case 4:
                 case 7:
-                    emission.rateOverTime = 6;
-                    wz.windMain = 15;
-                    main.simulationSpeed = 0.25f;
-                    main.startLifetime = 3f;
-                    ps1.gameObject.SetActive(false);
+                    wz.windMain = 120;
+                    emission0.rateOverTime = 80;
+                    emission1.rateOverTime = 10;
+                    main0.startLifetime = 1f;
+                    main1.startLifetime = 1f;
                     break;
                 case 5:
                 case 8:
-                    emission.rateOverTime = 0;
                     wz.windMain = 15;
-                    main.simulationSpeed = 0.25f;
+                    emission0.rateOverTime = 6;
+                    emission1.rateOverTime = 0;
+                    main0.startLifetime = 3f;
+                    main1.startLifetime = 3f;
                     break;
                 default: 
                     break;

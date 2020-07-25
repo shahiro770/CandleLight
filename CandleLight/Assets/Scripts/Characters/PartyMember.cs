@@ -91,7 +91,7 @@ namespace Characters {
         public int CalcEXPToNextLVL(int LVL) {
             // it takes 4 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
-            return 2 + (int)(5 * Mathf.Pow(LVL, 2.21f) + LVL); 
+            return 2 + (int)(6 * Mathf.Pow(LVL, 2.21f) + LVL); 
         }
 
         /// <summary>
@@ -401,6 +401,11 @@ namespace Characters {
                 }
                 if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
                     MDEF += 2;
+                }
+            }
+            else if (className == ClassConstants.ARCHER) {
+                if (skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                    PDEF += 1;
                 }
             }
             else if (className == ClassConstants.ROGUE) {

@@ -56,15 +56,17 @@ Balance: Poison damage increased to 10%
 Bug: Candlemancy kinda bugged but need to figure out why 
 Fix: Make stinger sting turn them poison green before attacking
 Balance: Nerfed MDEF again
+Balance: Give Greyhides a howl move in later areas that lets them give a random enemy advantage (But only if they don't have advantage themselves)
+Feature: Add options
+Fix: Give bosses a unique death animation (blink three times before dying)
+Balance: Buff some enemies
+Bug: Boss death animation doesn't apply same to bar and sed (should fix that)
+Balance: Takes more EXP to level up
 
 CURRENTLY DOING
 ---------------
-Fix: Give Greyhides a howl move in later areas that lets them give a random enemy advantage (But only if they don't have advantage themselves)
 
-Feature: Add options
-Fix: Give bosses a unique death animation (blink three times before dying)
-Balance: Tweak the bat event's EXP rewards 
-Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
+Balance: Tweak the bat event's EXP rewards, and probably weak all enemy's EXP and DEX
 Feature: Gameover screen
 
 Speed Runner Tester: Jeffrey Zhao
@@ -83,6 +85,7 @@ Feature: Ending and beginning cutscenes
 
 FUTURE/MAYBE
 ------------
+Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
 UI: Make quest completed notification seperate from normal completition
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 Fix: Make a way to halt a fading coroutine should another one start

@@ -425,9 +425,16 @@ namespace Characters {
         /// </summary>
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlayDeathAnimation() {
-            StartCoroutine(PlayAnimation(SEAnimator, "death"));
-            StartCoroutine(PlayAnimation(HPBar.barAnimator, "death"));
-            yield return (StartCoroutine(PlayAnimation(monsterAnimator, "death")));
+            if (displayedMonster.multiplier >= 3) {
+                StartCoroutine(PlayAnimation(SEAnimator, "bossDeath"));
+                StartCoroutine(PlayAnimation(HPBar.barAnimator, "bossDeath"));
+                yield return (StartCoroutine(PlayAnimation(monsterAnimator, "bossDeath")));
+            }
+            else {
+                StartCoroutine(PlayAnimation(SEAnimator, "death"));
+                StartCoroutine(PlayAnimation(HPBar.barAnimator, "death"));
+                yield return (StartCoroutine(PlayAnimation(monsterAnimator, "death")));
+            }
         }
 
         /// <summary>

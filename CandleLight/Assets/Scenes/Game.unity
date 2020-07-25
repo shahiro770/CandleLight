@@ -417,7 +417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &168779443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,7 +931,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2792f4f8fea9a4a5cadcde2914bd7d5d, type: 3}
     source: {fileID: 0}
     volume: 0
-    pitch: 0.1
+    pitch: 1
     loop: 0
     type: 0
   bgmVolume: 1

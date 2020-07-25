@@ -975,7 +975,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.25
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1028,7 +1028,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1725,7 +1725,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 60
+      scalar: 80
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -21976,7 +21976,7 @@ WindZone:
   m_Enabled: 1
   m_Mode: 1
   m_Radius: 10
-  m_WindMain: 80
+  m_WindMain: 120
   m_WindTurbulence: 5
   m_WindPulseMagnitude: 0.5
   m_WindPulseFrequency: 0.01
@@ -27476,7 +27476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &823344493
 Transform:
   m_ObjectHideFlags: 0
@@ -27636,7 +27636,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1.25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -27689,7 +27689,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 15
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -28267,7 +28267,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 2.5
+      value: 2.638256
       mode: 0
       spread: 0.1
       speed:
@@ -28386,7 +28386,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -28547,7 +28547,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 0
-      repeatInterval: 0.25
+      repeatInterval: 0.01
       probability: 1
   SizeModule:
     enabled: 0
