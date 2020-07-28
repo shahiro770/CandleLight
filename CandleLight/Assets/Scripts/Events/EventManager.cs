@@ -9,6 +9,7 @@
 *
 */
 
+using Characters;
 using CombatManager = Combat.CombatManager;
 using Constants;
 using General;
@@ -1575,7 +1576,7 @@ namespace Events {
         /// </summary>
         /// <returns></returns>
         public EventDisplay TryPlaceItem() {
-            if (eventDisplays[0].numSpareFull < eventDisplays[0].itemNum) {
+            if (eventDisplays[0].numSpareFull < eventDisplays[0].itemSlots.Length) {
                 return eventDisplays[0];
             }
 
@@ -1764,8 +1765,9 @@ namespace Events {
             if (id.type == ItemConstants.GEAR) {
                 itemsTabManager.OpenPanel(0);
                 // when taking a gear from a non-inventory slot, default to the first party member that can use it
-                if (PartyManager.instance.IsClassInParty(id.className) == true){    
-                    PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetPartyMemberByClass(id.className));
+                PartyMember pm = PartyManager.instance.GetAvailablePartyMember(id);
+                if (pm != null){    
+                    PartyManager.instance.SetActivePartyMember(pm);
                 }
             }
             else if (id.type == ItemConstants.CANDLE) {

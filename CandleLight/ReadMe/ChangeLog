@@ -63,23 +63,25 @@ Balance: Buff some enemies
 Bug: Boss death animation doesn't apply same to bar and sed (should fix that)
 Balance: Takes more EXP to level up
 
-CURRENTLY DOING
----------------
+JUST FINISHED
+-------------
 Bug: Pause Menu Doesn't BLOCK RAYCASTS
 Bug: Options menu in game has no tooltips
-Bug: Shift clicking to sell on full items breaks it
 Big Fix: Make all animations have the right sampling when played at 1x speed (to make sfx timing clean)
 UI: Change flame UI colour for WAX display
-
+Bug: Sound effect delayed for button click
+Bug: Animation sync for status effects was wrong
 UI: Swap for empty slots
-Fix: Drag to item should also work
+Bug: Shift clicking to sell on full items breaks it
+UI: Update a oil vial sprite 
+
+COOKING
+-------
 Bug: Make sprites for second particle effect further right
 Bug: pixel effect is too much for dirt storm (and it doesn't go over everything)
 Fix: Particle Changes
     - Have some go in and front of text
     - Have some shrink and grow
-QOL: Have skills panel swap to active party member with skill points unspecced
-Bug: Sound effect delayed for button click
 Balance: Tweak the bat event's EXP rewards, and probably tweak all enemy's EXP and DEX
 Feature: Gameover screen
 
@@ -92,6 +94,8 @@ Feature: Ending cutscenes
 
 FUTURE/MAYBE
 ------------
+QOL: Have skills panel swap to active party member with skill points unspecced
+Fix: Drag to item should also work
 Feature: Make click on bag (AND BAG ONLY) do something
 Feature: Saving
 Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)

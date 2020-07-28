@@ -14,6 +14,7 @@ using Characters;
 using Events;
 using General;
 using PlayerUI;
+using ItemConstants = Constants.ItemConstants;
 using SkillConstants = Constants.SkillConstants;
 using ResultConstants = Constants.ResultConstants;
 using System.Collections;
@@ -225,13 +226,26 @@ namespace Party {
         }
 
         /// <summary>
-        /// Returns the first partyMember with the matching className
+        /// Returns the first partyMember with an item item slot that can equip the gear
         /// </summary>
         /// <param name="className"></param>
         /// <returns></returns>
-        public PartyMember GetPartyMemberByClass(string className) {
+        public PartyMember GetAvailablePartyMember(ItemDisplay id) {
             foreach (PartyMember pm in partyMembersAll) {
-                if (pm.className == className) {
+                if (pm.className == id.className || id.className == ItemConstants.ANY) {    // find the first party member that can equip the item with nothing equipped
+                    if (id.subType == ItemConstants.WEAPON && pm.weapon == null) {
+                        return pm;
+                    }
+                    else if (id.subType == ItemConstants.SECONDARY && pm.secondary == null) {
+                        return pm;
+                    }
+                    else if (id.subType == ItemConstants.ARMOUR && pm.armour == null) {
+                        return pm;
+                    }
+                }
+            }
+            foreach (PartyMember pm in partyMembersAll) {   // find the first party member that can equip the item otherwise
+                if (pm.className == id.className) {
                     return pm;
                 }
             }

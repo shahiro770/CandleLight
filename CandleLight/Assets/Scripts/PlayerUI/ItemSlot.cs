@@ -22,7 +22,7 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
+    public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
         /* external component references */
         public Panel parentPanel;           /// <value> Reference to the panel that contains this itemSlot </value>
@@ -647,18 +647,6 @@ namespace PlayerUI {
         public void OnPointerExit(PointerEventData pointerEventData) {
             if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
                 t.SetVisible(false);
-            }
-        }
-
-        public void OnSelect(BaseEventData baseEventData) {
-            if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
-                t.SetVisible(true);
-            }
-        }
-
-        public void OnDeselect(BaseEventData baseEventData) {
-            if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
-                this.t.SetVisible(false);
             }
         }
     }
