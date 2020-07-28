@@ -7,6 +7,8 @@
 * a Monster class and handle visual interactions.
 * It is always attached to a Monster gameObject.
 *
+* IMPORTANT: Best way to animate is to set the animator sampling to 60, finish the animation, then set it to 45
+*
 */
 
 using Combat;
@@ -461,7 +463,7 @@ namespace Characters {
         /// <returns> IEnumerator for animations </returns>
         public IEnumerator DisplayHPChange(int amount, bool isLoss, bool setDescription, string animationClipName) {
             SetEffectsAnimatorClip(animationClipName);
-            if (isLoss) {
+            if (isLoss) { 
                 yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
                 dt.ShowDamage(amount);
                 HPBar.SetCurrent(displayedMonster.CHP);

@@ -382,7 +382,7 @@ namespace Characters {
             }
 
             if (damageTaken > 0) {
-                yield return StartCoroutine(LoseHP(damageTaken, "MplaceHolderEffect"));
+                yield return StartCoroutine(LoseHP(damageTaken, "MplaceHolderEffect")); // IMPORTANT: This placeholder must be as long as for all se animations
             }
             else if (damageTaken < 0) {     
                 yield return StartCoroutine(AddHPYield(damageTaken * -1));

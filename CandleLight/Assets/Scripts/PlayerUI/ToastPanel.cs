@@ -9,6 +9,7 @@ namespace PlayerUI {
     public class ToastPanel : MonoBehaviour {
         
         /* external component references */
+        public Animator flameAnimator;
         public Button b;
         public LocalizedText titleText;
         public LocalizedText descriptionText;
@@ -92,12 +93,13 @@ namespace PlayerUI {
         public void SetShopNotification() {
             titleText.SetKey("shop_toast");
             descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
-            
+
             b.interactable = false;
             if (fadeOuter != null) {
                 StopCoroutine(fadeOuter);
             }
             SetVisible(true);
+            flameAnimator.SetTrigger("shop");   // shops have a different flame colour
         }
 
         /// <summary>
@@ -209,6 +211,8 @@ namespace PlayerUI {
             }
 
             if (targetAlpha == 0) {
+                flameAnimator.SetTrigger("normal");
+                flameAnimator.ResetTrigger("normal");   // reset the trigger, because otherwise animator will swap back immediately on repeat triggers
                 gameObject.SetActive(false);
             }
         }

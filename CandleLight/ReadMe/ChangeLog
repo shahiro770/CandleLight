@@ -65,26 +65,35 @@ Balance: Takes more EXP to level up
 
 CURRENTLY DOING
 ---------------
+Bug: Pause Menu Doesn't BLOCK RAYCASTS
+Bug: Options menu in game has no tooltips
+Bug: Shift clicking to sell on full items breaks it
+Big Fix: Make all animations have the right sampling when played at 1x speed (to make sfx timing clean)
+UI: Change flame UI colour for WAX display
 
-Balance: Tweak the bat event's EXP rewards, and probably weak all enemy's EXP and DEX
+UI: Swap for empty slots
+Fix: Drag to item should also work
+Bug: Make sprites for second particle effect further right
+Bug: pixel effect is too much for dirt storm (and it doesn't go over everything)
+Fix: Particle Changes
+    - Have some go in and front of text
+    - Have some shrink and grow
+QOL: Have skills panel swap to active party member with skill points unspecced
+Bug: Sound effect delayed for button click
+Balance: Tweak the bat event's EXP rewards, and probably tweak all enemy's EXP and DEX
 Feature: Gameover screen
-
-Speed Runner Tester: Jeffrey Zhao
-
-VERIFICATION NEEDED
--------------------
-Bug: Is it a UI glitch if all highlighted tabs during tutorials due to ! become normal coloure dupon clicking on tab?
-    I.e. assume the player noticed?
 
 NEAR FUTURE
 ----------------
+Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
 Feature: Sound effects and music
-Feature: Saving
-Feature: Ending and beginning cutscenes
+Feature: Ending cutscenes
 
 FUTURE/MAYBE
 ------------
+Feature: Make click on bag (AND BAG ONLY) do something
+Feature: Saving
 Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
 UI: Make quest completed notification seperate from normal completition
 Fix: Make it so active skills are greyed out if 4 actives are already selected

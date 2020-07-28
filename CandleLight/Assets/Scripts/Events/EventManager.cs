@@ -1575,7 +1575,7 @@ namespace Events {
         /// </summary>
         /// <returns></returns>
         public EventDisplay TryPlaceItem() {
-            if (eventDisplays[0].numSpareFull < eventDisplays[0].itemSlots.Length) {
+            if (eventDisplays[0].numSpareFull < eventDisplays[0].itemNum) {
                 return eventDisplays[0];
             }
 
