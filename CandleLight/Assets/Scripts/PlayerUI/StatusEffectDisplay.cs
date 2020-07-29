@@ -11,7 +11,6 @@
 using LocalizedText = Localization.LocalizedText;
 using StatusEffect = Characters.StatusEffect;
 using StatusEffectConstants = Constants.StatusEffectConstants;
-using System.Collections;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;

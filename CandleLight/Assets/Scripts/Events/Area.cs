@@ -22,12 +22,13 @@ namespace Events {
         public int subAreasNum  { get; private set; }= 0;   /// <value> Amount of subAreas </value>
 
         private SubArea[] subAreas = new SubArea[10];   /// <value> Max SubArea amount is 10 </value>    
+        private Sprite[] subAreaCards = new Sprite[10]; /// <value> Sprites depicting the subArea's core message </value>
         private string themeColour;                     /// <value> Name of the colour used to accent UIs while in area </value>
-
+       
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="areaName"> Name of the area </param>
+        /// <param name="name"> Name of the area </param>
         /// <param name="subAreaNames"> Names of each subArea in the area </param>
         /// <param name="themeColour"> Colour to theme the UI with while this area is being explored </param>
         /// <param name="dbConnection"> 
@@ -42,6 +43,7 @@ namespace Events {
                 string subAreaName = subAreaNames[i];
                 if (subAreaName != "none") {
                     subAreas[i] = GameManager.instance.DB.GetSubAreaByAreaName(subAreaName, name, dbConnection);
+                    subAreaCards[i] = Resources.Load<Sprite>("Sprites/SubAreas/" + name + "/" + i);
                     subAreasNum++;
                 }
             }
@@ -83,6 +85,10 @@ namespace Events {
         /// <returns> A SubArea </returns>
         public SubArea GetSubArea(int index) {
             return (subAreas[index]);
+        }
+
+        public Sprite GetSubAreaCard(int index) {
+            return subAreaCards[index];
         }
 
         /// <summary>

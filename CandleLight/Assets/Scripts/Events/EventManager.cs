@@ -290,6 +290,8 @@ namespace Events {
             LoadSubGear(subAreaIndex);
             LoadSubCandles(subAreaIndex);
             LoadSubSpecials(subAreaIndex);
+
+            infoPanel.UpdateSubAreaCard(currentArea.GetSubAreaCard(subAreaIndex), currentArea.name + subAreaIndex);
         }
 
         /// <summary>
@@ -539,7 +541,7 @@ namespace Events {
         /// Gets the next event in the subArea "main" of an area
         /// </summary>
         public void GetNextMainEvent() {
-            if (currentSubArea.name == "tombsGreyWastes") {
+            if (currentSubArea.name == "tombsGreyWastes") { // hack to deal with the path splitting TODO: Find a better way
                 areaProgress = 6;
             }
             else {
@@ -550,6 +552,7 @@ namespace Events {
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             currentEvent = currentSubArea.GetEvent(areaProgress);
             AlterParticleSystem();
+            infoPanel.UpdateSubAreaCard(currentArea.GetSubAreaCard(0), currentArea.name + "0");
         }
 
         /// <summary>
@@ -563,7 +566,7 @@ namespace Events {
             }
             if (currentEvent == null) {    // will go here by default, or if a forced shop event returns null because the subArea has no shop
                 currentEvent = currentSubArea.GetEvent();
-                if (noCombatCount == 5 && currentEvent.type != EventConstants.COMBAT) {
+                if (noCombatCount >= 5 && currentEvent.type != EventConstants.COMBAT) {
                     int forcedCombatChance = Random.Range(0, 100);
                     if (forcedCombatChance < 66) { 
                         currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);

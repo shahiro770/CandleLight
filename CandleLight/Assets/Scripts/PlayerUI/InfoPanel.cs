@@ -19,8 +19,10 @@ namespace PlayerUI {
     public class InfoPanel : Panel {
 
         /* external component reference */
+        public SpriteRenderer subAreaCard;
         public Image WAXImage;
         public Image progressImage;
+        public LocalizedText subAreaName;
         public LocalizedText amountTextWAX; /// <value> Display the amount of the WAX the party has earned </value>
         public LocalizedText amountTextPROG; /// <value> Display the progress amount in the current subArea </value>
         public Quest[] quests;
@@ -91,6 +93,16 @@ namespace PlayerUI {
         public void UpdateAmounts() {
             amountTextWAX.SetText(PartyManager.instance.WAX.ToString());
             amountTextPROG.SetText(EventManager.instance.subAreaProgress.ToString() + "%");
+        }
+
+        /// <summary>
+        /// Updates the subArea card and title
+        /// </summary>
+        /// <param name="subAreaCardSprite"></param>
+        /// <param name="cardName"></param>
+        public void UpdateSubAreaCard(Sprite subAreaCardSprite, string cardName) {
+            subAreaCard.sprite = subAreaCardSprite;
+            subAreaName.SetKey(cardName);
         }
 
         public override string GetPanelName() {
