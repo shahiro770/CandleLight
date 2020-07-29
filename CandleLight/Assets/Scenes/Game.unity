@@ -417,7 +417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &168779443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,7 +1193,7 @@ MonoBehaviour:
   canvasHeight: 540
   canvasScaleFactor: 53.999992
   animationSpeed: 1
-  isTutorial: 1
+  isTutorial: 0
   isTips: 1
   firstConsumable: 1
   firstCandle: 1

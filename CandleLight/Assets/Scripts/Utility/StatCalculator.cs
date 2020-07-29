@@ -59,7 +59,7 @@ public class StatCalculator : MonoBehaviour{
         // GetStats("stinger", 13, 5, 4, 4, 3, 4);
         // GetStats("FloatingArm",7, 4, 12, 6, 2, 3);
         GetStats("VampireBat", 3, 11, 5, 4 , 2, 4);
-        // GetStats("Lesser Wraith", 4, 6, 13,	2, 2, 4);
+        GetStats("Lesser Wraith", 3, 8, 13,	2, 2, 4);
         // GetStats("Stranglehead", 11,	7,	0,	5, 2, 4);
         // GetStats("Spinal", 9,	2,	11,	5, 2, 4);
     }

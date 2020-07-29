@@ -438,7 +438,7 @@ namespace Combat {
                     }
                     else if (selectedAttackPM.type == AttackConstants.SUMMON) {
                         if (activePartyMember.summon == null) {     // initial summon
-                            PartyManager.instance.AddPartyMemberSummon(activePartyMember, selectedAttackPM.seName, countID++);
+                            PartyManager.instance.AddPartyMemberSummon(activePartyMember, selectedAttackPM.name, countID++);
                             cq.AddCharacterAndResort(activePartyMember.summon);
                             partyMembersAlive.Add(activePartyMember.summon);
                             yield return (StartCoroutine(activePartyMember.summon.GetSummoned(selectedAttackPM, false)));

@@ -113,8 +113,8 @@ namespace Characters {
         protected override void CalculateStats(bool setCurrent = false) {
             HP = (int)(STR * 2.25 + DEX * 1.5);
             MP = (int)(INT * 1.25 + LUK * 0.5);
-            PATK = (int)(STR * 0.65 + DEX * 0.35);  // monsters have better primary scaling on PATK and MATK than players
-            MATK = (int)(INT * 0.65 + LUK * 0.35);
+            PATK = (int)(STR * 0.7 + DEX * 0.4);  // monsters have better primary scaling on PATK and MATK than players
+            MATK = (int)(INT * 0.7 + LUK * 0.4);
             PDEF = (int)(STR * 0.1 + DEX * 0.05) + bonusPDEF;
             MDEF = (int)(INT * 0.15 + LUK * 0.05) + bonusMDEF;
             DOG = (int)(DEX * 0.2 + LUK * 0.1);

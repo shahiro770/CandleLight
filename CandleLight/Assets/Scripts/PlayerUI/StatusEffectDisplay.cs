@@ -77,14 +77,6 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(92, 138, 57, 255));
                     break;
 
-                case StatusEffectConstants.TAUNT:
-                    normalBlock.normalColor = new Color32(133, 133, 133, 200);
-                    normalBlock.highlightedColor = new Color32(133, 133, 133, 255);
-                    normalBlock.pressedColor = new Color32(133, 133, 133, 255);
-                    normalBlock.disabledColor = new Color32(133, 133, 133, 150);
-                    durationText.SetColour(new Color32(133, 133, 133, 255));
-                    break;
-
                 case StatusEffectConstants.FROSTBITE:
                 case StatusEffectConstants.FREEZE:
                     normalBlock.normalColor = new Color32(0, 152, 220, 200);
@@ -93,7 +85,7 @@ namespace PlayerUI {
                     normalBlock.disabledColor = new Color32(0, 152, 220, 150);
                     durationText.SetColour(new Color32(0, 152, 220, 255));
                     break;
-            
+                case StatusEffectConstants.TAUNT:
                 case StatusEffectConstants.RAGE:
                     normalBlock.normalColor = new Color32(234, 50, 60, 200);
                     normalBlock.highlightedColor = new Color32(234, 50, 60, 255);

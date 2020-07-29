@@ -37,7 +37,8 @@ namespace Events {
         public CanvasGroup nextEventBGCanvas;       /// <value> Next event's background sprite alpha controller </value>
         public ParticleSystem ps0;                  /// <value> Particle system reference </value>
         public ParticleSystem ps1;                  /// <value> Particle system reference </value>
-        public WindZone wz;                         /// <value> Wind zone reference </value>
+        public WindZone wz0;                         /// <value> Wind zone reference </value>
+        public WindZone wz1;                         /// <value> Wind zone reference </value>
         public Image eventBackground;               /// <value> Image background for current event </value>
         public Image nextEventBackground;           /// <value> Image background for next event </value>
         public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
@@ -1346,6 +1347,37 @@ namespace Events {
         }
 
         /// <summary>
+        /// Fade ps1's particles to specified alpha value
+        /// </summary>
+        /// <param name="targetAlpha"></param>
+        /// <returns></returns>
+        public IEnumerator FadeParticles(int targetAlpha) {
+            float timeStartedLerping = Time.time;
+            float timeSinceStarted = Time.time - timeStartedLerping;
+            float percentageComplete = timeSinceStarted * alphaLerpSpeed;
+
+            var main1 = ps1.main;
+            var startColor = main1.startColor;
+            var colorMax = main1.startColor.colorMax;
+            var colorMin = main1.startColor.colorMin;
+
+            float prevAlpha = main1.startColor.colorMin.a;
+            float alphaValue = main1.startColor.colorMin.a;
+
+             while (alphaValue != targetAlpha) {
+                timeSinceStarted = Time.time - timeStartedLerping;
+                percentageComplete = timeSinceStarted * alphaLerpSpeed;
+
+                alphaValue = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+
+                startColor.colorMax = new Color(colorMax.r, colorMax.g, colorMax.b, alphaValue);
+                startColor.colorMin =  new Color(colorMin.r, colorMin.g, colorMin.b, alphaValue);
+                main1.startColor = startColor;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
+        /// <summary>
         /// Alters all of the background's colour values (r, g, b) to the specified value 
         /// </summary>
         /// <param name="targetColourValue"> Float between 0f and 1f </param>F
@@ -1380,44 +1412,49 @@ namespace Events {
             var emission1 = ps1.emission;
             switch (areaProgress) {
                 case 0:
-                    wz.windMain = 0;
+                    wz0.windMain = 0;
                     emission0.rateOverTime = 0;
                     emission1.rateOverTime = 0;
                     break;
                 case 1:
-                    wz.windMain = 0;
+                    wz0.windMain = 0;
                     emission0.rateOverTime = 0;
                     emission1.rateOverTime = 0;
                     break;
                 case 2:
-                    wz.windMain = 15;
+                    wz0.windMain = 15;
                     emission0.rateOverTime = 6;
-                    emission1.rateOverTime = 0;
+                    emission1.rateOverTime = 10; // get it started so when the fade effect happens later, the sprite is active
                     main0.startLifetime = 3f;
                     break;
                 case 3:
                 case 6:
-                    wz.windMain = 80;
+                    wz0.windMain = 80;
+                    wz1.windMain = 80;
                     emission0.rateOverTime = 60;
-                    emission1.rateOverTime = 8;
+                    emission1.rateOverTime = 10;
                     main0.startLifetime = 1.25f;
                     main1.startLifetime = 1.25f;
+                    StartCoroutine(FadeParticles(1));
                     break;
                 case 4:
                 case 7:
-                    wz.windMain = 120;
+                    wz0.windMain = 120;
+                    wz1.windMain = 120;
                     emission0.rateOverTime = 80;
-                    emission1.rateOverTime = 10;
-                    main0.startLifetime = 1f;
-                    main1.startLifetime = 1f;
+                    emission1.rateOverTime = 15;
+                    main0.startLifetime = 1.25f;
+                    main1.startLifetime = 1.25f;
                     break;
                 case 5:
                 case 8:
-                    wz.windMain = 15;
+                    wz0.windMain = 15;
+                    wz1.windMain = 0;
                     emission0.rateOverTime = 6;
-                    emission1.rateOverTime = 0;
+                    emission1.rateOverTime = 10;
                     main0.startLifetime = 3f;
                     main1.startLifetime = 3f;
+                    StartCoroutine(FadeParticles(0));
                     break;
                 default: 
                     break;
