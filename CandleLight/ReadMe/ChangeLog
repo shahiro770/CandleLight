@@ -62,9 +62,6 @@ Fix: Give bosses a unique death animation (blink three times before dying)
 Balance: Buff some enemies
 Bug: Boss death animation doesn't apply same to bar and sed (should fix that)
 Balance: Takes more EXP to level up
-
-JUST FINISHED
--------------
 Bug: Pause Menu Doesn't BLOCK RAYCASTS
 Bug: Options menu in game has no tooltips
 Big Fix: Make all animations have the right sampling when played at 1x speed (to make sfx timing clean)
@@ -75,21 +72,23 @@ UI: Swap for empty slots
 Bug: Shift clicking to sell on full items breaks it
 UI: Update a oil vial sprite 
 Balance: Buffed monster damage again
-
 Fix: Particle Changes
     - Have some go in and front of text
     - Have some shrink and grow
-
-COOKING
--------
 Bug: Make sprites for second part fect further right
 Bug: pixel effect is too much for dirt storm (and it doesn't go over everything)
 Bug: Recolour taunt se
 Bug: Frost golem text is bugged
 Bug: Pause menu freezes emitter
+Balance: Tweak the bat event's EXP rewards, and probably tweak some enemy's DEX (e.g. wraiths are now faster)
+
+JUST FINISHED
+-------------
+
+COOKING
+-------
 
 Feature: Add glow to some stuff
-Balance: Tweak the bat event's EXP rewards, and probably tweak all enemy's EXP and DEX
 Feature: Gameover screen
 
 NEAR FUTURE
