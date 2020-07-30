@@ -5,7 +5,6 @@
 * 
 * The EventManager class manages the current scenarios (events) 
 * the player will encounter based on the area they are in. 
-* TODO: Bug with partyMembers having status effects after dying (should be cleared)
 *
 */
 
@@ -19,6 +18,7 @@ using Party;
 using PlayerUI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -1786,6 +1786,18 @@ namespace Events {
                 Time.timeScale = 1;
                 optionsMenu.gameObject.SetActive(false);
             }
+        }
+
+        public void RestartRun() {
+            optionsMenu.cg.interactable = false;
+            Time.timeScale = 1;
+
+            string[] partyComposition = PartyManager.instance.GetPartyMembers().Select(x => x.className).ToArray();
+            PartyManager.instance.ResetGame();
+            foreach (string pm in partyComposition) {
+                PartyManager.instance.AddPartyMember(pm);
+            }
+            GameManager.instance.StartLoadNextScene("Area");
         }
 
         /// <summary>

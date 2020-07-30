@@ -84,10 +84,12 @@ Balance: Tweak the bat event's EXP rewards, and probably tweak some enemy's DEX 
 
 JUST FINISHED
 -------------
+Balance: Monsters now drop a little more WAX at higher levels
+Feature: Restart button added to options menu
 
 COOKING
 -------
-
+Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
 Feature: Gameover screen
 

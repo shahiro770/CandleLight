@@ -200,9 +200,8 @@ namespace Characters {
             }
             // it takes 5 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
-            // + LVL - 1 is meant to ease the grind in early levels
             this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier);  
-            this.WAX = LVL * this.multiplier;   
+            this.WAX = (int)(Mathf.Pow(LVL, 1.65f)) * this.multiplier;   
 
             md.SetTooltip();
             md.SetHealthBar();

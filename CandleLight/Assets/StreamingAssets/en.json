@@ -34,6 +34,8 @@
 		{ "key": "no_button", "value": "No" },
 		{ "key": "1x_button", "value": "1x" },
 		{ "key": "2x_button", "value": "2x" },
+		{ "key": "end_run_button", "value": "End Run" },
+		{ "key": "restart_button", "value": "Restart" },
 
 		{ "key": "0_ach_title", "value": "Now Who's the Alpha?" },
 		{ "key": "0_ach_des", "value": "Slay the pack leader" },
@@ -153,7 +155,7 @@
 		{ "key": "GreyWastes5", "value": "Wraith's Way" },
 		{ "key": "GreyWastes6", "value": "Graveyard" },
 		{ "key": "GreyWastes7", "value": "Beckoning Tomb" },
-		{ "key": "GreyWastes8", "value": "Umaria Outskirts" },
+		{ "key": "GreyWastes8", "value": "Cognac Crossing" },
 		{ "key": "GreyWastes9", "value": "Black Pond" },
 
 		{ "key": "tutorial_post_combat_event_0", "value": "Fighting is something you'll never forget." },
