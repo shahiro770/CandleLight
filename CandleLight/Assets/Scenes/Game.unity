@@ -1193,7 +1193,10 @@ MonoBehaviour:
   canvasHeight: 540
   canvasScaleFactor: 53.999992
   animationSpeed: 1
-  isTutorial: 1
+  monstersKilled: 0
+  WAXobtained: 0
+  totalEvents: 0
+  isTutorial: 0
   isTips: 1
   firstConsumable: 1
   firstCandle: 1

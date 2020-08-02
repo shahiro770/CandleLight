@@ -35,10 +35,9 @@ namespace General {
         public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code </value>
         public float animationSpeed = 1f;               /// <value> Value that alters the speed of animations </value>
-        public int monstersKilled = 0;                  /// <value>  </value>
-        public int WAXobtained = 0;                     /// <value>  </value>
-        public int eventsInteracted = 0;                /// <value>  </value>
-        public int gearFound = 0;                       /// <value>  </value>
+        public int monstersKilled = 0;                  /// <value> Number of monsters killed </value>
+        public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
+        public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public bool isTutorial = true;                  /// <value> Flag for if the tutorial is enabled (has to be changed from editor) </value>
         public bool isTips = true;                      /// <value> Flag for if helpful tips should show up when possible </value>
         public bool firstConsumable = true;             /// <value> Flag for if the player hasn't encountered their first consumable </value>

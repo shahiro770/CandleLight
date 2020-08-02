@@ -14,6 +14,7 @@ using Constants;
 using General;
 using Items;
 using Menus.OptionsMenu;
+using Menus.GameOverMenu;
 using Party;
 using PlayerUI;
 using System.Collections;
@@ -55,7 +56,8 @@ namespace Events {
         public TabManager itemsTabManager;          /// <value> Click on to display other panels with item information </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
         public Timer timer;                         /// <value> Timer reference </value>
-        public OptionsMenu optionsMenu;
+        public OptionsMenu optionsMenu;             /// <value> OptionsMenu reference </value>
+        public GameOverMenu gameOverMenu;           /// <value> gameOverMenu reference </value>
 
         public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
@@ -74,6 +76,7 @@ namespace Events {
         private Candle[] subAreaCandles;     /// <value> Candle items that can be found in the current subArea </value>
         private Special[] subAreaSpecials;   /// <value> Special items that can be found in the current subArea</value>
         private Sprite[] girlSprites = new Sprite[2];   /// <value> Sprites used by the second partyMember </value>
+        private List<int> midPoints = new List<int>();  /// <value> List of progress bar midpoints passed (which are just the index of each subArea according to the area </value>
 
         /* eventDisplay coordinates */
         private Vector3 pos1d1 = new Vector3(0, -20, 0);
@@ -132,7 +135,7 @@ namespace Events {
         /// Only used to check keyboard input for pausing the game
         /// </summary>
         void Update() {
-            if (Input.GetButtonDown("Cancel") == true && (GameManager.instance.loadingScreen.activeSelf == false)) {            // escape key pressed
+            if (Input.GetButtonDown("Cancel") == true && GameManager.instance.loadingScreen.activeSelf == false && gameOverMenu.gameObject.activeSelf == false) {            // escape key pressed
                 if (optionsMenu.gameObject.activeSelf == false) {
                     SetPauseMenu(true);
                     return;
@@ -147,8 +150,6 @@ namespace Events {
         /// <summary>
         /// Loads an Area from the database, waiting until all of subAreas, events,
         /// interactions, and results have been loaded before saying the area is ready.
-        /// TODO: Need to move this up to the GameManager, so that area scene doesn't start
-        /// until after this area is loaded.
         /// </summary>
         /// <param name="areaName"> Name of area to load </param>
         public void LoadArea(string areaName) {
@@ -167,6 +168,20 @@ namespace Events {
             LoadSubAreaItems();
 
             isReady = true;
+        }
+
+        /// <summary>
+        /// Reset game properties that are not tied to the partyManager
+        /// </summary>
+        public void ResetGame() {
+            GameManager.instance.monstersKilled = 0;
+            GameManager.instance.WAXobtained = 0;
+            GameManager.instance.totalEvents = 0;
+            midPoints.Clear();
+
+            timer.ResetTimer();
+            timer.StartTimer(true);
+            timer.SetVisible(UIManager.instance.isTimer);
         }
         
         /// <summary>
@@ -309,13 +324,11 @@ namespace Events {
         /// <param name="areaName"> Name of area </param>
         /// <returns> Yields to wait for area to load </returns>
         public IEnumerator StartArea(string areaName) {
+            ResetGame();
             LoadArea(areaName);
             while (isReady == false) {
                 yield return null;
             }
-            timer.ResetTimer();
-            timer.StartTimer(true);
-            timer.SetVisible(UIManager.instance.isTimer);
             if (GameManager.instance.isTutorial == true) {
                 areaProgress = 0;
                 AlterParticleSystem();
@@ -513,6 +526,7 @@ namespace Events {
         /// </summary>
         public void GetNextEvent() {
             subAreaProgress += currentEvent.progressAmount;
+            GameManager.instance.totalEvents += 1;
 
             if (isNextEventMain == true) {  // don't reset progress to 0 until after player leaves the current main event
                 subAreaProgress = 0;
@@ -644,6 +658,7 @@ namespace Events {
         public IEnumerator DisplaySubEvent() {
             if (currentSubArea.name == "endGreyWastes") {
                 StartCoroutine(PartyManager.instance.TriggerStatuses(false));
+                subAreaProgress += currentEvent.progressAmount;
             }
             if (currentEvent.specificBGSprite != -1) {
                 nextEventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
@@ -696,7 +711,7 @@ namespace Events {
         /// <param name="endString"> String constant explaining how combat ended </param>
         public IEnumerator DisplayPostCombat(string endString) {
             if (endString == "DEFEAT") {
-                StartCoroutine(DisplayGameOver());
+                StartCoroutine(DisplayGameOver(false));
             }
             else {
                 StartCoroutine(AlterBackgroundColor(1f));
@@ -720,6 +735,7 @@ namespace Events {
                 }
 
                 yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
+                GameManager.instance.monstersKilled += combatManager.monstersKilled.Count;
                 if (infoPanel.isOpen) {
                     infoPanel.UpdateAmounts();
                 }
@@ -902,22 +918,12 @@ namespace Events {
                     yield return StartCoroutine(DisplaySubEventTutorial());
                     break;
                 case ResultConstants.SUBAREA:
-                    currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                    LoadSubAreaItems();
-                    subAreaProgress = 0; 
-                    if (infoPanel.isOpen == true) {
-                        infoPanel.UpdateAmounts();
-                    }
+                    SetSubArea(currentResult.subAreaName0);
                     
                     GetNextEvent();
                     break;
                 case ResultConstants.SUBAREAANDCOMBAT:
-                    currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                    LoadSubAreaItems();
-                    subAreaProgress = 0;
-                    if (infoPanel.isOpen == true) {
-                        infoPanel.UpdateAmounts();
-                    }
+                    SetSubArea(currentResult.subAreaName0);
 
                     monstersToSpawn = currentResult.GetMonstersToSpawn();
 
@@ -931,12 +937,7 @@ namespace Events {
                     GetCombatEvent();
                     break;
                 case ResultConstants.SUBAREAANDCOMBATANDSUBAREA:
-                    currentSubArea = currentArea.GetSubArea(currentResult.subAreaName0);
-                    LoadSubAreaItems();
-                    subAreaProgress = 0;
-                    if (infoPanel.isOpen == true) {
-                        infoPanel.UpdateAmounts();
-                    }
+                    SetSubArea(currentResult.subAreaName0);
 
                     monstersToSpawn = currentResult.GetMonstersToSpawn();
 
@@ -1136,7 +1137,8 @@ namespace Events {
                     ProgressTutorial();
                     break;
                 case ResultConstants.END:
-                    EndRun();
+                    subAreaProgress = 100;
+                    StartCoroutine(DisplayGameOver(true));
                     break;
                 case ResultConstants.ENDTUT:
                     EndTutorial();
@@ -1247,6 +1249,20 @@ namespace Events {
         public void DisplayResultItems(Result r) {
             List<Item> items = GetResultItems(r);
             eventDisplays[0].SetItemDisplays(items);
+        }
+
+        /// <summary>
+        /// Sets the currentSubArea
+        /// </summary>
+        /// <param name="subAreaName"></param>
+        public void SetSubArea(string subAreaName) {
+            currentSubArea = currentArea.GetSubArea(subAreaName);
+            UpdateMidPoints();
+            LoadSubAreaItems();
+            subAreaProgress = 0;
+            if (infoPanel.isOpen == true) {
+                infoPanel.UpdateAmounts();
+            }
         }
 
         /// <summary>
@@ -1491,11 +1507,23 @@ namespace Events {
         }
 
         /// <summary>
-        /// Checks if the game is over (only due to partyMembers all being dead for now)
+        /// Checks if the game is over due all partyMembers dying outside of combat
         /// </summary>
         public void CheckGameOver() {
             if (PartyManager.instance.GetNumPartyMembersAlive() == 0) {
-                StartCoroutine(DisplayGameOver());
+                StartCoroutine(DisplayGameOver(false));
+            }
+        }
+
+        /// <summary>
+        /// Updates the midpoints passed (i.e. indexes of subAreas visited in between the first and last subAreas)
+        /// </summary>
+        public void UpdateMidPoints() {
+            if (currentAreaName == "GreyWastes") {
+                int subAreaIndex = currentArea.GetSubAreaIndex(currentResult.subAreaName0);
+                if (subAreaIndex >= 2 && subAreaIndex <= 7) {
+                    midPoints.Add(subAreaIndex);
+                }
             }
         }
 
@@ -1503,10 +1531,20 @@ namespace Events {
         /// Makes everything uninteractable and brings the player to the main menu
         /// </summary>
         /// <returns></returns>
-        public IEnumerator DisplayGameOver() {
-            SetAllButtonsInteractable(false);
-            yield return new WaitForSeconds(1.5f);
-            EndRun();
+        public IEnumerator DisplayGameOver(bool isWin) {
+            if (isWin == false) {
+                SetAllButtonsInteractable(false);
+                yield return new WaitForSeconds(1f);    // DRAMATIC PAUSE
+            }
+
+            if (currentAreaName == "GreyWastes") {
+                int numMidPointsMissing = 3 - midPoints.Count;  // each area has a set number of midPoints that can be passed (3 for GreyWastes)
+                for (int i = 0; i < numMidPointsMissing; i++) {
+                    midPoints.Add(-1);
+                }
+            }
+            gameOverMenu.Init(isWin, midPoints, subAreaProgress);
+            gameOverMenu.SetVisible(true);
         }
 
         #endregion

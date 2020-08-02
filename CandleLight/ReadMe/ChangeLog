@@ -86,12 +86,16 @@ JUST FINISHED
 -------------
 Balance: Monsters now drop a little more WAX at higher levels
 Feature: Restart button added to options menu
+Bug: Progress no increase in last area
 
 COOKING
 -------
+Fix: Check everything that is lerping to make sure its not lerping to infinity
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
 Feature: Gameover screen
+Review: See where resetting game code stuff is and put most of the stuff in one place
+Review: Put sub area swapping code in one place
 
 NEAR FUTURE
 ----------------
@@ -99,6 +103,7 @@ Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
 Feature: Sound effects and music
 Feature: Ending cutscenes
+Fix: ENUM EVERYTHING
 
 FUTURE/MAYBE
 ------------

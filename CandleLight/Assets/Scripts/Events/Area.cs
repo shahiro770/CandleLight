@@ -127,7 +127,7 @@ namespace Events {
                 case "grey":
                     return new Color32(180, 180, 180, 255);
                 default:
-                    return new Color32(133, 133, 133, 255);
+                    return new Color32(180, 180, 180, 255);
             }
         }
     }

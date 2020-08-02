@@ -36,7 +36,7 @@ namespace Party {
         public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
         public float WAXDropMultiplier = 1f;    /// <value> Current multiplier on WAX drop amounts from enemies </value>
 
-        private List<PartyMember> partyMembersAll = new List <PartyMember>();
+        private List<PartyMember> partyMembersAll = new List <PartyMember>();   /// <value> List containing all partyMembers (alive and dead) </value>
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private List<PartyMember> summons = new List<PartyMember>();            /// <value> List of summons loaded </value>
@@ -466,6 +466,7 @@ namespace Party {
         /// <param name="amount"> Positive int to increase by </param>
         public void AddWAX(int amount) {
             WAX += amount;
+            GameManager.instance.WAXobtained += amount;
             EventManager.instance.UpdateWAXAmounts();
         }
 
