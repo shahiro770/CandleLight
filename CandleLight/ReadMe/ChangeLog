@@ -87,20 +87,22 @@ JUST FINISHED
 Balance: Monsters now drop a little more WAX at higher levels
 Feature: Restart button added to options menu
 Bug: Progress no increase in last area
+Feature: Gameover screen
+Review: See where resetting game code stuff is and put most of the stuff in one place
+Review: Put sub area changing code in one place
 
 COOKING
 -------
 Fix: Check everything that is lerping to make sure its not lerping to infinity
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
-Feature: Gameover screen
-Review: See where resetting game code stuff is and put most of the stuff in one place
-Review: Put sub area swapping code in one place
+Feature: Saving and Loading
 
 NEAR FUTURE
 ----------------
 Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
+Feature: Add high scores
 Feature: Sound effects and music
 Feature: Ending cutscenes
 Fix: ENUM EVERYTHING
@@ -110,7 +112,6 @@ FUTURE/MAYBE
 QOL: Have skills panel swap to active party member with skill points unspecced
 Fix: Drag to item should also work
 Feature: Make click on bag (AND BAG ONLY) do something
-Feature: Saving
 Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
 UI: Make quest completed notification seperate from normal completition
 Fix: Make it so active skills are greyed out if 4 actives are already selected

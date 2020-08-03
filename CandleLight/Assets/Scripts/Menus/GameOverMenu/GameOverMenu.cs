@@ -25,6 +25,7 @@ namespace Menus.GameOverMenu {
         public LocalizedText monstersAmount;
         public LocalizedText WAXAmount;
         public LocalizedText eventsAmount;
+        public LocalizedText timeAmount;
         public LocalizedText scoreTitle;
         public LocalizedText scoreAmount;
         public ProgressBarIcon[] pbis;          /// <value> List of progress bar icons (TODO: Make a pool of these) </value>
@@ -40,7 +41,7 @@ namespace Menus.GameOverMenu {
         /// <param name="isWin"> true if game was won (player reached last subArea), false otherwise </param>
         /// <param name="midPoints"> List of subArea indexes that were visited </param>
         /// <param name="subAreaProg"> Current subArea's progress</param>
-        public void Init(bool isWin, List<int> midPoints, int subAreaProg) {
+        public void Init(bool isWin, List<int> midPoints, int subAreaProg, string timeString) {
             gameObject.SetActive(true);
             this.isWin = isWin;
 
@@ -73,6 +74,7 @@ namespace Menus.GameOverMenu {
             monstersAmount.SetText(GameManager.instance.monstersKilled.ToString());
             WAXAmount.SetText(GameManager.instance.WAXobtained.ToString());
             eventsAmount.SetText(GameManager.instance.totalEvents.ToString());
+            timeAmount.SetText(timeString);
             scoreAmount.SetText(CalculateScore().ToString());
         }
         

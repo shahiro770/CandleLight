@@ -57,5 +57,9 @@ namespace PlayerUI {
                 yield return null;
             }
         }
+
+        public string GetTime() {
+            return timeCounter.ToString(@"hh\:mm\:ss\.ff");
+        }
     }
 }

@@ -1355,7 +1355,6 @@ namespace Events {
                 eventBGCanvas.alpha = 1 - alphaValue;
                 nextEventBGCanvas.alpha = alphaValue;
                 eventBackground.rectTransform.sizeDelta = new Vector2(eventBGWidthValue, eventBGHeightValue);
-
                 yield return new WaitForEndOfFrame();
             }
 
@@ -1419,7 +1418,6 @@ namespace Events {
                 newColor.b = newColorValue;
 
                 eventBackground.color = newColor;
-
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -1507,7 +1505,7 @@ namespace Events {
         }
 
         /// <summary>
-        /// Checks if the game is over due all partyMembers dying outside of combat
+        /// Checks if the game is over due to all partyMembers dying outside of combat
         /// </summary>
         public void CheckGameOver() {
             if (PartyManager.instance.GetNumPartyMembersAlive() == 0) {
@@ -1532,9 +1530,10 @@ namespace Events {
         /// </summary>
         /// <returns></returns>
         public IEnumerator DisplayGameOver(bool isWin) {
+            timer.StartTimer(false);;
             if (isWin == false) {
                 SetAllButtonsInteractable(false);
-                yield return new WaitForSeconds(1f);    // DRAMATIC PAUSE
+                yield return new WaitForSeconds(1f);    // DRAMATIC PAUSE ON DEATH
             }
 
             if (currentAreaName == "GreyWastes") {
@@ -1543,7 +1542,7 @@ namespace Events {
                     midPoints.Add(-1);
                 }
             }
-            gameOverMenu.Init(isWin, midPoints, subAreaProgress);
+            gameOverMenu.Init(isWin, midPoints, subAreaProgress, timer.GetTime());
             gameOverMenu.SetVisible(true);
         }
 
