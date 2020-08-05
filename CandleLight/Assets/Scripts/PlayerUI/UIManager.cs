@@ -18,6 +18,8 @@ namespace PlayerUI {
 
         public Color32 unusableColour = new Color32(196, 36, 48, 255);  /// <value> Red colour to indicate unusable, stored here to minimize space </value>
         public Color32 subtitleColour = new Color32(178, 178, 178, 255);  /// <value> Grey colour for subtitles, stored here to minimize space </value>
+        public string unusableColourString = "#C42430";
+        public string subtitleColourString = "#B2B2B2";
         public ColorBlock orangeBlock = new ColorBlock();
         public ItemDisplay heldItemDisplay;
         public bool isTimer = false;                /// <value> Flag for if there is a timer in the top left of the screen </value>

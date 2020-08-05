@@ -155,6 +155,7 @@ namespace Events {
         public void LoadArea(string areaName) {
             this.currentAreaName = areaName;
             currentArea = DataManager.instance.currentArea;
+            currentArea.ResetSubAreas();
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
 
             LoadBackgroundPacks();
@@ -1192,12 +1193,22 @@ namespace Events {
             if (r.HPAmount != 0) {
                 StartCoroutine(PartyManager.instance.ChangeHPAll(r.HPAmount, type));
                 changes[(int)ToastPanel.toastType.HP] = true;
-                amounts[(int)ToastPanel.toastType.HP] = r.HPAmount.ToString();
+                if (r.HPAmount > 0) {
+                    amounts[(int)ToastPanel.toastType.HP] = "+" + r.HPAmount.ToString();
+                }
+                else {
+                    amounts[(int)ToastPanel.toastType.HP] = r.HPAmount.ToString();
+                }
             }
             if (r.MPAmount != 0) {
                 PartyManager.instance.ChangeMPAll(r.MPAmount, type);
                 changes[(int)ToastPanel.toastType.MP] = true;
-                amounts[(int)ToastPanel.toastType.MP] = r.MPAmount.ToString();
+                if (r.MPAmount > 0) {
+                    amounts[(int)ToastPanel.toastType.MP] = "+" + r.MPAmount.ToString();
+                }
+                else {
+                    amounts[(int)ToastPanel.toastType.MP] = r.MPAmount.ToString();
+                }
             }
             if (r.EXPAmount != 0) {
                 PartyManager.instance.AddEXP(r.EXPAmount);
@@ -1207,12 +1218,14 @@ namespace Events {
             if (r.WAXAmount != 0) {
                 if (r.WAXAmount >= 0) {
                     PartyManager.instance.AddWAX(r.WAXAmount);
+                    amounts[(int)ToastPanel.toastType.WAX] = "+" + r.WAXAmount.ToString();
                 }
                 else {
                     PartyManager.instance.LoseWAX(r.WAXAmount * -1);
+                    amounts[(int)ToastPanel.toastType.WAX] = r.WAXAmount.ToString();
                 }
                 changes[(int)ToastPanel.toastType.WAX] = true;
-                amounts[(int)ToastPanel.toastType.WAX] = r.WAXAmount.ToString();
+                
             }
             if (r.PROGAmount != 0) {
                 subAreaProgress += currentResult.PROGAmount;
@@ -1227,12 +1240,18 @@ namespace Events {
                 }
 
                 changes[(int)ToastPanel.toastType.PROGRESS] = true;
-                amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.PROGAmount.ToString();
+                if (r.PROGAmount > 0) {
+                    amounts[(int)ToastPanel.toastType.PROGRESS] = "+" + currentResult.PROGAmount.ToString();
+                }
+                else {
+                    amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.PROGAmount.ToString();
+                }
+                
             }
             if (r.seName != "none") {
                 PartyManager.instance.AddSE(r.seName, r.seDuration);
                 changes[(int)ToastPanel.toastType.SE] = true;
-                amounts[(int)ToastPanel.toastType.SE] = r.seName + "_title";
+                amounts[(int)ToastPanel.toastType.SE] = r.seName + "_coloured";
             }
             if (r.type == ResultConstants.QUESTCOMPLETE || r.type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
                 changes[(int)ToastPanel.toastType.QUESTCOMPLETE] = true;

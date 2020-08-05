@@ -695,7 +695,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -945,6 +945,8 @@ MonoBehaviour:
   pmBurnAnimator: {fileID: 0}
   pmBleedAnimator: {fileID: 0}
   pmPoisonAnimator: {fileID: 0}
+  pmRegenerateAnimator: {fileID: 0}
+  pmFocusAnimator: {fileID: 0}
   LVLBackground: {fileID: 6740048580339209391}
   HPBar: {fileID: 0}
   MPBar: {fileID: 0}

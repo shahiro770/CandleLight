@@ -142,11 +142,20 @@ namespace Localization {
         }
 
         /// <summary>
-        /// Sets the colour of the meshText
+        /// Sets the colour of the meshText.
+        /// Only use this when alpha needs to be changed.
         /// </summary>
         /// <param name="newColor"> Color32 object (0 to 255 for each param in rgb) </param>
-        public void SetColour(Color32 newColor) {
-            meshText.color = newColor;
+        public void SetColour(Color32 newColour) {
+            meshText.color = newColour;
+        }
+
+        /// <summary>
+        /// Sets the colour of the meshText, with just the hex value.
+        /// </summary>
+        /// <param name="newColor"> Hex string froc olour </param>
+        public void SetColour(string newColour) {
+            meshText.text = "<color=" + newColour + ">" + meshText.text + "</color>";
         }
     }
 }

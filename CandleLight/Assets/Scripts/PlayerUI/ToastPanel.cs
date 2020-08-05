@@ -32,14 +32,14 @@ namespace PlayerUI {
 
             if (types[(int)toastType.HP] == true) {
                 titleKey = "HP_toast";
-                descriptionKeys[0] = "HP_label";
-                amountStrings[0] = amounts[0];
+                descriptionKeys[0] = "HP_label_coloured";
+                amountStrings[0] = "<color=#EA323C>" + amounts[0] + "</color>";
                 typesCount++;
             }
             if (types[(int)toastType.MP] == true) {
                 titleKey = "MP_toast";
-                descriptionKeys[1] = "MP_label";
-                amountStrings[1] = amounts[1];
+                descriptionKeys[1] = "MP_label_coloured";
+                amountStrings[1] = "<color=#410FFF>" + amounts[1] + "</color>";
                 typesCount++;
             }
             if (types[(int)toastType.EXP] == true) {
@@ -50,13 +50,13 @@ namespace PlayerUI {
             }
             if (types[(int)toastType.WAX] == true) {
                 titleKey = "WAX_toast";
-                descriptionKeys[3] = "WAX_label";
-                amountStrings[3] = amounts[3];
+                descriptionKeys[3] = "WAX_label_coloured";
+                amountStrings[3] = "<color=#FFCD02>" + amounts[3] + "</color>";
                 typesCount++;
             }
             if (types[(int)toastType.SE] == true) {
                 titleKey = "SE_toast";
-                descriptionKeys[4] = amounts[4];    // for status effects, just showing the SE name is enough (no fancy descriptors)
+                descriptionKeys[4] = amounts[4] + "_coloured";    // for status effects, just showing the SE name is enough (no fancy descriptors)
                 amountStrings[4] = "";
                 typesCount++;
             }

@@ -207,25 +207,33 @@ namespace PlayerUI {
         /// <param name="amount"> Positive int amount </param>
         public void SetAttackText(Attack a, bool isUsable) {
             string attackString;
+            string costString;
+            if (a.costType == "MP") {
+                costString = "<color=#410FFF>" + a.costValue + " " + a.costType + "</color>";
+            }
+            else {
+                costString = "<color=#EA323C>" + a.costValue + " " + a.costType + "</color>";
+            }
+
             if (a.type == AttackConstants.BUFF || a.type == AttackConstants.DEBUFF) {   
-                attackString = a.costValue + " " + a.costType;
+                attackString = costString;
             }
             else if (a.type == AttackConstants.HEALHP) {
-                attackString = a.costValue + " " + a.costType + " " + healText + " " + a.attackValue + " " + HPText; 
+                attackString = costString + " " + healText + " " + a.attackValue + " <color=#EA323C>" + HPText + "</color>"; 
             }
             else if (a.type == AttackConstants.SUMMON) {
-                attackString = a.costValue + " " + a.costType + " " + summonText + " " + LocalizationManager.instance.GetLocalizedValue(a.nameKey + "_des");
+                attackString = costString + " " + summonText + " " + LocalizationManager.instance.GetLocalizedValue(a.nameKey + "_des");
             }
             else {  // physical or magical attack
-                attackString = a.costValue + " " + a.costType + " " + a.attackValue + " " + a.type + " " + damageText;
+                attackString = costString + " " + a.attackValue + " " + a.type + " " + damageText;
             }
 
             if (a.seName != "none") {
                 if (a.seDuration == 1) {
-                    attackString += ". " + a.seChance + "% chance to " + a.displaySeName + " for " + a.seDuration  + " turn";
+                    attackString += ". " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turn";
                 }
                 else {
-                    attackString += ". " + a.seChance + "% chance to " + a.displaySeName + " for " + a.seDuration  + " turns";
+                    attackString += ". " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turns";
                 }
             }
             if (a.scope != "single") {

@@ -37,7 +37,7 @@ namespace Characters {
         
         public PartyMember summon = null;       /// <value> Summoned familiar of this partyMember </value>
         public PartyMember summoner = null;     /// <value> PartyMember that summoned this </value>
-        public Attack noneAttack = new Attack("none", "physical", "0", "none", 0, 0, "MP", "0", "single", "none");
+        public Attack noneAttack = new Attack("none", "physical", "0", null, 0, 0, "MP", "0", "single", "none");
         public Skill[] skills = new Skill[12];
         public Gear weapon = null;        /// <value> Weapon </value>
         public Gear secondary = null;     /// <value> Secondary </value>

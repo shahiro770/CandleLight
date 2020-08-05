@@ -17,6 +17,8 @@ namespace Events {
 
     public class SubArea {
 
+        public Event[] originalEvents;              /// <value> Events unmodified </value>
+        public Event[] originalSubEvents;           /// <value> Subevents unmodified </value>
         public Event[] events;                      /// <value> Events in the subArea </value>
         public Event[] subEvents;                   /// <value> SubEvents in the subArea (events with chance 0) </value>
         public string[] monsterPool;                /// <value> Pool of monsters subArea uses for random combat events </value>
@@ -42,7 +44,9 @@ namespace Events {
         public SubArea(string name, string areaName, string[] eventNames, int[] eventChances, string[] monsterPool, int[] monsterChances, int minMonsterNum, int maxMonsterNum, 
         string defaultBGPackName, string[] championBuffs, IDbConnection dbConnection) {
             this.name = name;
+            this.originalEvents = new Event[eventNames.Length];
             this.events = new Event[eventNames.Length];
+            this.originalSubEvents = new Event[eventNames.Length];
             this.subEvents = new Event[eventNames.Length];
             this.monsterPool = monsterPool;
             this.monsterChances = monsterChances;
@@ -59,10 +63,12 @@ namespace Events {
                     
                     if (newEvent.chance != 0) {
                         events[eventNum] = newEvent;
+                        originalEvents[eventNum] = newEvent;
                         eventNum++;
                     }
                     else {
                         subEvents[subEventNum] = newEvent;
+                        originalSubEvents[subEventNum] = newEvent;
                         subEventNum++;
                     }   
                 }
@@ -187,6 +193,18 @@ namespace Events {
                 subEvents[index1] = tempEvent;
                 events[index0].chance  = subEvents[index1].chance;
                 subEvents[index1].chance = tempChance;
+            }
+        }
+
+        /// <summary>
+        /// Resets all subEvents and events (undoing swapping due to quests)
+        /// </summary>
+        public void ResetEvents() {
+            for (int i = 0; i < events.Length; i++) {
+                events[i] = originalEvents[i];
+            }
+            for (int i = 0; i < subEvents.Length; i++) {
+                subEvents[i] = originalSubEvents[i];
             }
         }
 

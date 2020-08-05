@@ -492,7 +492,7 @@ namespace PlayerUI {
                 if (basicKeys[1] == ItemConstants.CONSUMABLE) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
-                    t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
+                    t.SetColour("subtitle", UIManager.instance.subtitleColourString);
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                     if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
                         t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValueShop());
@@ -510,10 +510,10 @@ namespace PlayerUI {
                         t.SetKeyMultiple("subtitle", new string[2] {currentItemDisplay.className + "_label", basicKeys[2] + "_item_sub"});
                     }
                     if (currentItemDisplay.className != ClassConstants.ANY && PartyManager.instance.IsClassInParty(currentItemDisplay.className) == false) {
-                        t.SetTextColour("subtitle", UIManager.instance.unusableColour);
+                        t.SetColour("subtitle", UIManager.instance.unusableColour);
                     }
                     else {
-                        t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
+                        t.SetColour("subtitle", UIManager.instance.subtitleColourString);
                     }
                     
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
@@ -527,7 +527,7 @@ namespace PlayerUI {
                 else if (basicKeys[1] == ItemConstants.CANDLE) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[1] + "_item_sub");
-                    t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
+                    t.SetColour("subtitle", UIManager.instance.subtitleColourString);
                     t.SetAmountTextMultiple("description", currentItemDisplay.GetTooltipEffectKeys(), currentItemDisplay.GetValuesAsStrings());
                     if (parentPanel.GetPanelName() == PanelConstants.EVENTDISPLAY && UIManager.instance.inShop == true) {
                         t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValueShop());
@@ -539,7 +539,7 @@ namespace PlayerUI {
                 else if (basicKeys[1] == ItemConstants.SPECIAL) {
                     t.SetKey("title", basicKeys[0] + "_item");
                     t.SetKey("subtitle", basicKeys[2] + "_item_sub");
-                    t.SetTextColour("subtitle", UIManager.instance.subtitleColour);
+                    t.SetColour("subtitle", UIManager.instance.subtitleColourString);
                     t.SetKey("description", basicKeys[0] + "_item_des");
                     if (currentItemDisplay.subType == ItemConstants.SPECIAL) {  // very special items can't be sold, hence no value
                         t.SetAmountText("value", "WAX_label", currentItemDisplay.GetWAXValue());

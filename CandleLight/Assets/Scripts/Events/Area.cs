@@ -105,6 +105,15 @@ namespace Events {
         }
 
         /// <summary>
+        /// Resets all subAreas to their original event pools
+        /// </summary>
+        public void ResetSubAreas() {
+            for (int i = 0; i < subAreasNum; i++) {
+                subAreas[i].ResetEvents();
+            }
+        }
+
+        /// <summary>
         /// Returns a Color32 based on the theme colour
         /// </summary>
         /// <returns> Color32 </returns>

@@ -170,7 +170,27 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="textName"></param>
         /// <param name="newColor"></param>
-        public void SetTextColour(string textName, Color32 newColor) {
+        public void SetColour(string textName, Color32 newColor) {
+            if (textName == "title") {
+                titleText.SetColour(newColor);
+            }
+            else if (textName == "subtitle") {
+                subtitleText.SetColour(newColor);
+            }
+            else if (textName == "description") {
+                descriptionText.SetColour(newColor);
+            }
+            else if (textName == "value") {
+                valueText.SetColour(newColor);
+            }
+        }
+
+        /// <summary>
+        /// Sets the colour of the specified text
+        /// </summary>
+        /// <param name="textName"></param>
+        /// <param name="newColor"></param>
+        public void SetColour(string textName, string newColor) {
             if (textName == "title") {
                 titleText.SetColour(newColor);
             }

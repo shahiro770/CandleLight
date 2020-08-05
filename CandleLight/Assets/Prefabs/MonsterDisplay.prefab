@@ -1496,9 +1496,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1147721805
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: c692ee4f24a464bc39c51bf7c440c4a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1641,6 +1641,7 @@ MonoBehaviour:
   <critChance>k__BackingField: 0
   <attackNum>k__BackingField: 0
   <championChance>k__BackingField: 0
+  <turnCounter>k__BackingField: 0
   <critMult>k__BackingField: 0
   <bleedPlus>k__BackingField: 0
   <attacks>k__BackingField: []
@@ -1676,7 +1677,6 @@ MonoBehaviour:
     <baseWAXAmount>k__BackingField: 0
     <basePROGAmount>k__BackingField: 0
     quantity: 0
-    multiplier: 0
     monsterCount: 0
     isUnique: 0
   <monsterArea>k__BackingField: 

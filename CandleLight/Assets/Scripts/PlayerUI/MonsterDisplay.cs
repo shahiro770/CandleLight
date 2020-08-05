@@ -422,12 +422,12 @@ namespace Characters {
             StartCoroutine(PlayAnimation(regenerateAnimator, "statusEffected"));
         }
 
-         /// <summary>
+        /// <summary>
         /// Plays the death animation of a monster
         /// </summary>
         /// <returns> IEnumerator, waiting for the animation to finish </returns>
         public IEnumerator PlayDeathAnimation() {
-            if (displayedMonster.multiplier >= 3) {
+            if (displayedMonster.multiplier >= 4) {
                 StartCoroutine(PlayAnimation(SEAnimator, "bossDeath"));
                 StartCoroutine(PlayAnimation(HPBar.barAnimator, "bossDeath"));
                 yield return (StartCoroutine(PlayAnimation(monsterAnimator, "bossDeath")));

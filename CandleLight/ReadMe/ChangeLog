@@ -85,21 +85,33 @@ Balance: Tweak the bat event's EXP rewards, and probably tweak some enemy's DEX 
 JUST FINISHED
 -------------
 Balance: Monsters now drop a little more WAX at higher levels
+Balance: Nerfed monsters again cause too strong
 Feature: Restart button added to options menu
 Bug: Progress no increase in last area
 Feature: Gameover screen
 Review: See where resetting game code stuff is and put most of the stuff in one place
 Review: Put sub area changing code in one place
+Fix: Check everything that is lerping to make sure its not lerping to infinity
+Bug: Quests on new runs doesn't reset in the same game
+CRITICAL BUG: Game doesn't do anything when an actino is selected
+Bug: Make item displays go over everything
+UI: Make buttons in options menu have the same relative click rect
+UI: Added + to positive effects in toast panels
+UI: Colour code keywords
 
 COOKING
 -------
-Fix: Check everything that is lerping to make sure its not lerping to infinity
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
 Feature: Saving and Loading
+QOL: Prevent shop in the first 5 events
+QOL: Holding shift while over an attack reveals formula
+Feature: Add a candle getting event or item drop to the doll pouch on the right
+Feature: Add a shop to the right side's final area
 
 NEAR FUTURE
 ----------------
+Feature: Add CandleMan event and some source of candles on the right (maybe add one to the doll pouch)
 Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
 Feature: Add high scores
@@ -109,6 +121,7 @@ Fix: ENUM EVERYTHING
 
 FUTURE/MAYBE
 ------------
+UI: Red colour wax if player can't afford
 QOL: Have skills panel swap to active party member with skill points unspecced
 Fix: Drag to item should also work
 Feature: Make click on bag (AND BAG ONLY) do something
