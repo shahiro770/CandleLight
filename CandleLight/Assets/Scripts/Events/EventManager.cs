@@ -132,9 +132,10 @@ namespace Events {
         }
 
         /// <summary>
-        /// Only used to check keyboard input for pausing the game
+        /// Only used to check keyboard input
         /// </summary>
         void Update() {
+            // Only pause if the game isn't loading or over
             if (Input.GetButtonDown("Cancel") == true && GameManager.instance.loadingScreen.activeSelf == false && gameOverMenu.gameObject.activeSelf == false) {            // escape key pressed
                 if (optionsMenu.gameObject.activeSelf == false) {
                     SetPauseMenu(true);
@@ -144,6 +145,16 @@ namespace Events {
                     SetPauseMenu(false);
                     return;
                 }
+            }
+            // Swap to formula text if combat text is currently visible
+            if (Input.GetButtonDown("Shift") == true && eventDescription.displayedAttack != null) {
+                eventDescription.SetFormulaText();
+                return; 
+            }
+            // Swap back to attack text on shift button up
+            if (Input.GetButtonUp("Shift") == true && eventDescription.displayedAttack != null) {
+                eventDescription.SetAttackText(eventDescription.displayedAttack);
+                return;
             }
         }
 
@@ -584,9 +595,12 @@ namespace Events {
                 if (noCombatCount >= 5 && currentEvent.type != EventConstants.COMBAT) {
                     int forcedCombatChance = Random.Range(0, 100);
                     if (forcedCombatChance < 66) { 
-                        currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);
+                        currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);    //TODO: Make a function that 
                     }
                 }
+                else if (subAreaProgress < 35 && currentEvent.type == EventConstants.SHOP) {    // reroll to reduce odds of a shop while subAreaProgress is still less than 20
+                    currentEvent = currentSubArea.GetEvent();
+                } 
             }
         }
 
@@ -1251,7 +1265,7 @@ namespace Events {
             if (r.seName != "none") {
                 PartyManager.instance.AddSE(r.seName, r.seDuration);
                 changes[(int)ToastPanel.toastType.SE] = true;
-                amounts[(int)ToastPanel.toastType.SE] = r.seName + "_coloured";
+                amounts[(int)ToastPanel.toastType.SE] = r.seName + "_title";
             }
             if (r.type == ResultConstants.QUESTCOMPLETE || r.type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
                 changes[(int)ToastPanel.toastType.QUESTCOMPLETE] = true;

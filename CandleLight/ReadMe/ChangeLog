@@ -81,9 +81,6 @@ Bug: Recolour taunt se
 Bug: Frost golem text is bugged
 Bug: Pause menu freezes emitter
 Balance: Tweak the bat event's EXP rewards, and probably tweak some enemy's DEX (e.g. wraiths are now faster)
-
-JUST FINISHED
--------------
 Balance: Monsters now drop a little more WAX at higher levels
 Balance: Nerfed monsters again cause too strong
 Feature: Restart button added to options menu
@@ -98,15 +95,21 @@ Bug: Make item displays go over everything
 UI: Make buttons in options menu have the same relative click rect
 UI: Added + to positive effects in toast panels
 UI: Colour code keywords
+QOL: Prevent shop in the first 5 events
+QOL: Holding shift while over an attack reveals formula
+Bug: SEs from events not being written properly
+
+JUST FINISHED
+-------------
+Feature: Add a candle getting event or item drop to the doll pouch on the right
+Bug: Broke x and * glyphs
+Feature: Give a way to escape wraithWizard quest event
 
 COOKING
 -------
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
 Feature: Saving and Loading
-QOL: Prevent shop in the first 5 events
-QOL: Holding shift while over an attack reveals formula
-Feature: Add a candle getting event or item drop to the doll pouch on the right
 Feature: Add a shop to the right side's final area
 
 NEAR FUTURE
@@ -118,6 +121,8 @@ Feature: Add high scores
 Feature: Sound effects and music
 Feature: Ending cutscenes
 Fix: ENUM EVERYTHING
+Balance: Reevaluate all interaction thresholds
+Bug: Options menu tooltips need to be repositioned
 
 FUTURE/MAYBE
 ------------

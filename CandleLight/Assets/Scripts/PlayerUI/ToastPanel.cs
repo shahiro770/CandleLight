@@ -39,7 +39,7 @@ namespace PlayerUI {
             if (types[(int)toastType.MP] == true) {
                 titleKey = "MP_toast";
                 descriptionKeys[1] = "MP_label_coloured";
-                amountStrings[1] = "<color=#410FFF>" + amounts[1] + "</color>";
+                amountStrings[1] = "<color=#502BFF>" + amounts[1] + "</color>";
                 typesCount++;
             }
             if (types[(int)toastType.EXP] == true) {
@@ -56,7 +56,7 @@ namespace PlayerUI {
             }
             if (types[(int)toastType.SE] == true) {
                 titleKey = "SE_toast";
-                descriptionKeys[4] = amounts[4] + "_coloured";    // for status effects, just showing the SE name is enough (no fancy descriptors)
+                descriptionKeys[4] = amounts[4];    // for status effects, just showing the SE name is enough (no fancy descriptors)
                 amountStrings[4] = "";
                 typesCount++;
             }
@@ -92,7 +92,7 @@ namespace PlayerUI {
         /// </summary>
         public void SetShopNotification() {
             titleText.SetKey("shop_toast");
-            descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
+            descriptionText.SetKeyAndAppend("WAX_label_coloured", "<color=#FFCD02>" + PartyManager.instance.WAX.ToString() + "</color>");
 
             b.interactable = false;
             if (fadeOuter != null) {

@@ -280,6 +280,7 @@ namespace Combat {
             }
             else {
                 EnableAllButtonsInSidePanels();
+                eventDescription.ClearText();
                 if (GameManager.instance.isTutorial == true) {
                     EventManager.instance.ProgressTutorial();
                 }
@@ -511,7 +512,6 @@ namespace Combat {
             selectedAttackPM = null;
             pmSelectionFinalized = false;
             pmNoAction = false;
-            eventDescription.ClearText();
         }
 
         #endregion
@@ -747,7 +747,6 @@ namespace Combat {
 
             selectedAttackMonster = null;
             mNoAction = false;
-            eventDescription.ClearText();
         }
 
         /// <summary>

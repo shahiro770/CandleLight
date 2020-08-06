@@ -12,7 +12,6 @@ using ActionConstants = Constants.ActionConstants;
 using Combat;
 using Events;
 using Localization;
-using EventDescription = PlayerUI.EventDescription;
 using System.Collections;
 using TMPro;
 using UIEffects;
@@ -22,7 +21,7 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class Action : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
+    public class Action : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
         /* external component references */
         public ActionsPanel actionsPanel;
@@ -232,7 +231,12 @@ namespace PlayerUI {
 
         public void OnPointerEnter(PointerEventData pointerEventData) {
             if (b.interactable && a != null) {
-                eventDescription.SetAttackText(a, isUsable);
+                if (Input.GetButton("Shift") == true) {
+                    eventDescription.SetFormulaText(isUsable, a);
+                }
+                else { 
+                    eventDescription.SetAttackText(a, isUsable);
+                }
             }
         }
 
@@ -240,28 +244,16 @@ namespace PlayerUI {
         public void OnPointerExit(PointerEventData pointerEventData) {
             if (b.interactable && a != null) {
                 if (actionsPanel.selectedAction != null) {
-                    eventDescription.SetAttackText(actionsPanel.selectedAction.a, actionsPanel.selectedAction.isUsable);
+                    if (Input.GetButton("Shift") == true) {
+                        eventDescription.SetFormulaText(actionsPanel.selectedAction.isUsable, actionsPanel.selectedAction.a);
+                    }
+                    else {
+                        eventDescription.SetAttackText(actionsPanel.selectedAction.a, actionsPanel.selectedAction.isUsable);
+                    }
                 }
                 else {
                     eventDescription.ClearText();
-                }  
-            }
-        }
-
-        public void OnSelect(BaseEventData baseEventData) {
-            if (b.interactable && a != null) {
-                eventDescription.SetAttackText(a, isUsable);
-            }
-        }
-
-        //Detect when Cursor leaves the GameObject
-        public void OnDeselect(BaseEventData baseEventData) {
-            if (b.interactable && a != null) {
-                if (actionsPanel.selectedAction != null) {
-                    eventDescription.SetAttackText(actionsPanel.selectedAction.a, actionsPanel.selectedAction.isUsable);
-                }
-                else {
-                    eventDescription.ClearText();
+                    eventDescription.displayedAttack = null;
                 }  
             }
         }

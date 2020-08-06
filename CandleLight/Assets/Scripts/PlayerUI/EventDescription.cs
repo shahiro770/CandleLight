@@ -25,6 +25,8 @@ namespace PlayerUI {
         public Image textBackground;        /// <value> Image background for text component </value>
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         
+        public Attack displayedAttack;      /// <value> Attack information currently being displayed </value>
+        
         private Color32 normalColour = new Color32(255, 255, 255, 255);             /// <value> White </value>
         private Color32 normalColourHalfAlpha = new Color32(255, 255, 255, 128);    /// <value> White half alpha to appear darker </value>
         private Color32 unusableColour = new Color32(196, 36, 48, 255);             /// <value> Red colour to indicate unusable attack </value>
@@ -48,6 +50,13 @@ namespace PlayerUI {
         private string colour = "normal";   /// <value> Current colour state </value>
 
         /// <summary>
+        /// Awake to set displayedattack to null (so unity doesn't do its fake null setting)
+        /// </summary>
+        void Awake() {
+            displayedAttack = null;
+        }
+
+        /// <summary>
         /// Changes the displayed text
         /// </summary>
         /// <param name="textKey"> Localized key for text to display </param>
@@ -57,6 +66,7 @@ namespace PlayerUI {
             }
             textBackgroundCanvas.alpha = 1;
             eventText.SetKey(textKey);
+            displayedAttack = null;
         }
 
         /// <summary>
@@ -69,6 +79,7 @@ namespace PlayerUI {
             }
             eventText.SetKey(textKey);
             StartCoroutine(Fade(1));
+            displayedAttack = null;
         }
         
         /// <summary>
@@ -84,8 +95,9 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageText(PartyMember pm, int amount) {
-            string damagedText = pm.pmName + " " + lostText + " " + amount.ToString() + " " + HPText;
+            string damagedText = pm.pmName + " " + lostText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
             eventText.SetText(damagedText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
@@ -98,8 +110,9 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageCritText(PartyMember pm, int amount) {
-            string damagedText = critHitText + " " + pm.pmName + " " + lostText + " " + amount.ToString() + " " + HPText;
+            string damagedText = critHitText + " " + pm.pmName + " " + lostText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
             eventText.SetText(damagedText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
@@ -113,6 +126,7 @@ namespace PlayerUI {
         public void SetPMDodgeText(PartyMember pm) {
             string dodgedString = pm.pmName + " " + dodgedText;
             eventText.SetText(dodgedString);
+            displayedAttack = null;
             textBackgroundCanvas.alpha = 1;
         }
 
@@ -122,8 +136,9 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember that was healed </param>
         /// <param name="amount"> Amount that was healed for </param>
         public void SetPMHealText(PartyMember pm, int amount) {
-            string healedText = pm.pmName + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            string healedText = pm.pmName + " " + wasHealedForText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
             eventText.SetText(healedText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
@@ -136,8 +151,9 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember that was healed </param>
         /// <param name="amount"> Amount that was healed for </param>
         public void SetPMHealCritText(PartyMember pm, int amount) {
-            string healedText = critHealText + " " + pm.pmName + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            string healedText = critHealText + " " + pm.pmName + " " + wasHealedForText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
             eventText.SetText(healedText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
@@ -150,8 +166,9 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember that was focus'd </param>
         /// <param name="amount"> Amount of MP recovered </param>
         public void SetPMFocusText(PartyMember pm, int amount) {
-            string focusText = pm.pmName + " " + restoredText + " " + amount.ToString() + " " + MPText;
+            string focusText = pm.pmName + " " + restoredText + " <color=#502BFF>" + amount.ToString() + " " + MPText;
             eventText.SetText(focusText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
@@ -164,8 +181,9 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember that was healed </param>
         /// <param name="amount"> Amount of MP recovered </param>
         public void SetPMFocusCritText(PartyMember pm, int amount) {
-            string focusText = critHealText + " " + pm.pmName + " " + restoredText + " " + amount.ToString() + " " + MPText;
+            string focusText = critHealText + " " + pm.pmName + " " + restoredText + " <color=#502BFF>" + amount.ToString() + " " + MPText;
             eventText.SetText(focusText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
@@ -178,8 +196,9 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember that was healed </param>
         /// <param name="amount"> Amount that was healed for </param>
         public void SetMHealText(Monster m, int amount) {
-            string healedText = LocalizationManager.instance.GetLocalizedValue(m.monsterSpriteName + "_monster") + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            string healedText = LocalizationManager.instance.GetLocalizedValue(m.monsterSpriteName + "_monster") + " " + wasHealedForText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
             eventText.SetText(healedText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
@@ -192,24 +211,42 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember that was healed </param>
         /// <param name="amount"> Amount that was healed for </param>
         public void SetMHealCritText(Monster m, int amount) {
-            string healedText = critHealText + " " + LocalizationManager.instance.GetLocalizedValue(m.monsterSpriteName + "_monster") + " " + wasHealedForText + " " + amount.ToString() + " " + HPText;
+            string healedText = critHealText + " " + LocalizationManager.instance.GetLocalizedValue(m.monsterSpriteName + "_monster") + " " + wasHealedForText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
             eventText.SetText(healedText);
+            displayedAttack = null;
 
             if (this.colour != "normal") {
                 SetColour("normal");
             }
         }
-
+    
         /// <summary>
         /// Changes the displayed text to show the cost and effects of an attack action
         /// </summary>
         /// <param name="pm"> partyMember object </param>
-        /// <param name="amount"> Positive int amount </param>
+        /// <param name="isUsable"> True if usable, false otherwise </param>
         public void SetAttackText(Attack a, bool isUsable) {
+           SetAttackText(a);
+
+            if (!isUsable) {
+                SetColour("unusable");
+            }
+            else {
+                SetColour("normal");
+            }
+            textBackgroundCanvas.alpha = 1;
+        }
+
+        /// <summary>
+        /// Sets the attack text, but maintains the original usability colouring
+        /// (Only used when swapping between formulaText and attackText, as usability doesn't change betwene those)
+        /// </summary>
+        /// <param name="a"></param>
+        public void SetAttackText(Attack a) {
             string attackString;
             string costString;
             if (a.costType == "MP") {
-                costString = "<color=#410FFF>" + a.costValue + " " + a.costType + "</color>";
+                costString = "<color=#502BFF>" + a.costValue + " " + a.costType + "</color>";
             }
             else {
                 costString = "<color=#EA323C>" + a.costValue + " " + a.costType + "</color>";
@@ -247,7 +284,17 @@ namespace PlayerUI {
                 }
             }
             
+            displayedAttack = a;
             eventText.SetText(attackString);
+        }
+
+        /// <summary>
+        /// Sets formula text for an attack
+        /// </summary>
+        /// <param name="isUsable"> True if usable, false otherwise </param>
+        /// <param name="a"> Attack to set formula text to, but may be null if it can be assumed an attack is already being displayed </param>
+        public void SetFormulaText(bool isUsable, Attack a = null) {
+            SetFormulaText(a);
 
             if (!isUsable) {
                 SetColour("unusable");
@@ -259,12 +306,65 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Sets formula text, but doesn't change usability colouring
+        /// </summary>
+        /// <param name="a"> Attack to set formula text to, but may be null if it can be assumed an attack is already being displayed </param>
+        public void SetFormulaText(Attack a = null) {
+            if (a != null) {
+                displayedAttack = a;
+            }
+            string formulaString;
+
+            if (displayedAttack.costType == "MP") {
+                formulaString = "<color=#502BFF>" + displayedAttack.costFormula + " " + displayedAttack.costType + "</color>";
+            }
+            else {
+                formulaString = "<color=#EA323C>" + displayedAttack.costFormula + " " + displayedAttack.costType + "</color>";
+            }
+
+            if (displayedAttack.type == AttackConstants.BUFF || displayedAttack.type == AttackConstants.DEBUFF) {   
+
+            }
+            else if (displayedAttack.type == AttackConstants.HEALHP) {
+                formulaString += " " + healText + " " + displayedAttack.damageFormula + " <color=#EA323C>" + HPText + "</color>"; 
+            }
+            else if (displayedAttack.type == AttackConstants.SUMMON) {
+                formulaString += " " + summonText + " " + LocalizationManager.instance.GetLocalizedValue(displayedAttack.nameKey + "_des");
+            }
+            else {  // physical or magical attack
+                formulaString += " " + displayedAttack.damageFormula + " " + displayedAttack.type + " " + damageText;
+            }
+                
+            if (displayedAttack.seName != "none") {
+                if (displayedAttack.seDuration == 1) {
+                    formulaString += ". " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turn";
+                }
+                else {
+                    formulaString += ". " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turns";
+                }
+            }
+            if (displayedAttack.scope != "single") {
+                if (displayedAttack.scope == "adjacent") {
+                    if (displayedAttack.seName != "none") {
+                        formulaString += ".\nHits adjacents";
+                    }
+                    else {
+                        formulaString += ". Hits adjacents";
+                    }
+                }
+            }
+
+            eventText.SetText(formulaString);
+        }
+
+        /// <summary>
         /// Displays text informing the player a partyMember can't do anything on their combat turn
         /// </summary>
         /// <param name="cname"></param>
         public void SetNoMoveTextPM(string pmname) {
             eventText.SetText(pmname + " " + noMoveText);
             textBackgroundCanvas.alpha = 1;
+            displayedAttack = null;
         }
 
         /// <summary>
@@ -274,6 +374,7 @@ namespace PlayerUI {
         public void SetNoMoveTextM(string mname) {
             eventText.SetText(LocalizationManager.instance.GetLocalizedValue(mname + "_monster") + " " + noMoveText);
             textBackgroundCanvas.alpha = 1;
+            displayedAttack = null;
         }
 
         /// <summary>

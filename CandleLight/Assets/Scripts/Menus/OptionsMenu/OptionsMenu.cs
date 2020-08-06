@@ -80,7 +80,7 @@ namespace Menus.OptionsMenu {
             timertt.SetKey("subtitle", "timer_des");
             
             bgmtt.SetImageDisplayBackgroundWidth(labelWidthsBig);
-            sfxtt.SetImageDisplayBackgroundWidth(labelWidths);
+            sfxtt.SetImageDisplayBackgroundWidth(labelWidthsBig);
             tutorialtt.SetImageDisplayBackgroundWidth(labelWidths);
             tipstt.SetImageDisplayBackgroundWidth(labelWidths);
             animationSpeedtt.SetImageDisplayBackgroundWidth(labelWidthsBig);

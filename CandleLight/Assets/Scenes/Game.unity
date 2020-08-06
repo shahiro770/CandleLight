@@ -373,7 +373,7 @@ SpriteRenderer:
   m_SortingLayerID: -1147721805
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ff36f797108954eeda40bea55cc70a83, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d15a64b5b80e6454b96a60136464c16e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1053,7 +1053,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tip: People <color=#ff0000ff>die</color> when they are killed'
+  m_text: 'Tip: People <color=#EA323C>die</color> when they are killed'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
