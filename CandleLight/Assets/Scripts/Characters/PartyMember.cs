@@ -1190,6 +1190,9 @@ namespace Characters {
                             }
                         }
                     }
+                    else if (index == (int)SkillConstants.mageSkills.MANASHIELD) {
+                        statChange = true;
+                    }
                 }
                 else if (className == ClassConstants.ARCHER) {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
@@ -1341,6 +1344,9 @@ namespace Characters {
                                 c.SetUses((int)(c.uses * 0.5));     // rounds down by truncating
                             }
                         }
+                    }
+                    else if (index == (int)SkillConstants.mageSkills.MANASHIELD) {
+                        statChange = true;
                     }
                 }
                 else if (className == ClassConstants.ARCHER) {

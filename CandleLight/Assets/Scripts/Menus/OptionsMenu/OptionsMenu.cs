@@ -184,7 +184,7 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetBgmVolume(float value) {
-            AudioManager.instance.bgmVolume = value;
+            AudioManager.instance.ChangeBGMVolume(value);
         }
 
         public void SetSfxVolume(float value) {

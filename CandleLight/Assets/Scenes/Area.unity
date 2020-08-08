@@ -5945,6 +5945,22 @@ MonoBehaviour:
   eventText: {fileID: 398869703}
   textBackground: {fileID: 586102149}
   textBackgroundCanvas: {fileID: 586102151}
+  displayedAttack:
+    <animationClipName>k__BackingField: 
+    <costType>k__BackingField: 
+    <nameKey>k__BackingField: 
+    <name>k__BackingField: 
+    <type>k__BackingField: 
+    <costFormula>k__BackingField: 
+    <damageFormula>k__BackingField: 
+    <scope>k__BackingField: 
+    <seNameKey>k__BackingField: 
+    <seName>k__BackingField: 
+    <seDuration>k__BackingField: 0
+    <baseSeChance>k__BackingField: 0
+    <seChance>k__BackingField: 0
+    attackValue: 0
+    costValue: 0
 --- !u!222 &95653652
 CanvasRenderer:
   m_ObjectHideFlags: 2
@@ -7868,9 +7884,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1147721805
-  m_SortingLayer: 3
-  m_SortingOrder: 3
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 77d75632257e3415992e97af857ef29f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -19542,9 +19558,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1147721805
-  m_SortingLayer: 3
-  m_SortingOrder: 3
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 77d75632257e3415992e97af857ef29f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -23616,8 +23632,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 2061592957
-  m_SortingOrder: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!225 &685122652
 CanvasGroup:
@@ -37782,8 +37798,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1147721805
-  m_SortingOrder: 2
+  m_SortingLayerID: 0
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!1 &1026220729
 GameObject:
@@ -39748,8 +39764,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1147721805
-  m_SortingOrder: 2
+  m_SortingLayerID: 0
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &1101418321
 MonoBehaviour:
@@ -55696,8 +55712,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 2061592957
-  m_SortingOrder: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!1 &1782737868
 GameObject:
@@ -70632,8 +70648,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1147721805
-  m_SortingOrder: 2
+  m_SortingLayerID: 0
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!224 &6313104772387981929
 RectTransform:

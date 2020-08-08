@@ -104,6 +104,8 @@ JUST FINISHED
 Feature: Add a candle getting event or item drop to the doll pouch on the right
 Bug: Broke x and * glyphs
 Feature: Give a way to escape wraithWizard quest event
+UI: Make taunt icon smile
+Feature: Add the first BGM
 
 COOKING
 -------
@@ -111,6 +113,7 @@ Feature: Add another particle effect maker for the ending area (flame particles 
 Feature: Add glow to some stuff
 Feature: Saving and Loading
 Feature: Add a shop to the right side's final area
+
 
 NEAR FUTURE
 ----------------
@@ -121,6 +124,8 @@ Feature: Add high scores
 Feature: Sound effects and music
 Feature: Ending cutscenes
 Fix: ENUM EVERYTHING
+UI: Make monsterIcons have correct pixel sizing (rn its jank)
+UI: Redo sprites for creatures that are 192 x 192
 Balance: Reevaluate all interaction thresholds
 Bug: Options menu tooltips need to be repositioned
 

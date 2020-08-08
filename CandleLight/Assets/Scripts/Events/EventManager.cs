@@ -8,6 +8,7 @@
 *
 */
 
+using Audio;
 using Characters;
 using CombatManager = Combat.CombatManager;
 using Constants;
@@ -86,7 +87,7 @@ namespace Events {
         private Vector3 pos3d2 = new Vector3(0, -20, 0);
         private Vector3 pos3d3 = new Vector3(275, -20, 0);
 
-        private enum checkIndicators { NONE, STR, DEX, INT, LUK, ITEM, ITEMANDCLEAR, WAX };
+        private enum checkIndicators { NONE, STR, DEX, INT, LUK, ITEM, ITEMANDCLEAR, WAX, PASTITEM };
         private string[] monstersToSpawn;       /// <value> List of monsters to spawn </value>
         private string currentAreaName;         /// <value> Name of current area </value>
         private string nextSubArea = "";        /// <value> Name of next subArea to move to </value>
@@ -881,6 +882,14 @@ namespace Events {
                         currentResult = i.GetResultStartIndex(1); // bad result(s)
                     }
                 }
+                else if (i.checkIndicator == (int)checkIndicators.PASTITEM) {
+                    if (GameManager.instance.pastItem != null) {
+                        currentResult = i.GetResult(0); // event related to a past item if it exists
+                    }
+                    else {
+                        currentResult = i.GetResultStartIndex(1);  
+                    }
+                }
                 else {
                     if (PartyManager.instance.GetPrimaryStatAll(i.checkIndicator) + 
                         (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
@@ -912,6 +921,10 @@ namespace Events {
                     eventDescription.SetKey(currentResult.resultKey);
                     DisplayResultItems(currentResult);
                     break;
+                case ResultConstants.PASTITEM:
+                    DisplayPastItems();
+                    eventDescription.SetKey(currentResult.resultKey);
+                    break;
                 case ResultConstants.NEWINT:
                     actionsPanel.AddInteraction(currentResult.newIntName);
                     eventDescription.SetKey(currentResult.resultKey);
@@ -927,6 +940,11 @@ namespace Events {
                     currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
                     yield return StartCoroutine(DisplaySubEvent());
                     DisplayResultItems(currentResult);
+                    break;
+                case ResultConstants.PASTITEMANDSUBEVENT:  // subEvents do not need result prompts
+                    currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
+                    yield return StartCoroutine(DisplaySubEvent());
+                    DisplayPastItems();
                     break;
                 case ResultConstants.SUBEVENTTUT:
                     currentEvent = currentSubArea.GetSubEvent(currentResult.subEventName);
@@ -1159,6 +1177,10 @@ namespace Events {
                     EndTutorial();
                     GetNextEvent();
                     break;
+                case ResultConstants.STORESHOPITEMNEXTEVENT:
+                    GameManager.instance.pastItem = eventDisplays[0].GetRandomItem();
+                    GetNextEvent();
+                    break;    
                 default:
                     break;
             }
@@ -1285,11 +1307,21 @@ namespace Events {
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void DisplayPastItems() {
+            List<Item> pastItems = new List<Item>();
+            pastItems.Add(GameManager.instance.pastItem);
+            eventDisplays[0].SetItemDisplays(pastItems);
+        }
+
+        /// <summary>
         /// Sets the currentSubArea
         /// </summary>
         /// <param name="subAreaName"></param>
         public void SetSubArea(string subAreaName) {
             currentSubArea = currentArea.GetSubArea(subAreaName);
+            PlaySubAreaBGM();
             UpdateMidPoints();
             LoadSubAreaItems();
             subAreaProgress = 0;
@@ -1512,6 +1544,15 @@ namespace Events {
         }
 
         /// <summary>
+        /// Plays the subArea BGM (respective to areaProgress)
+        /// </summary>
+        public void PlaySubAreaBGM() {
+            if (areaProgress == 1) {
+                AudioManager.instance.ChangeBGM(currentSubArea.name);
+            }
+        }
+
+        /// <summary>
         /// Returns a random sprite from a backgroundPack
         /// </summary>
         /// <param name="bgPackName"> Name of backgroundPack to load from </param>
@@ -1566,7 +1607,7 @@ namespace Events {
             timer.StartTimer(false);;
             if (isWin == false) {
                 SetAllButtonsInteractable(false);
-                yield return new WaitForSeconds(1f);    // DRAMATIC PAUSE ON DEATH
+                yield return new WaitForSeconds(2f);    // DRAMATIC PAUSE ON DEATH
             }
 
             if (currentAreaName == "GreyWastes") {

@@ -8,6 +8,7 @@
 *
 */
 
+using Items;
 using Database;
 using Localization;
 using System.Collections; 
@@ -30,6 +31,7 @@ namespace General {
 
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
+        public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored </value>
         public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
@@ -38,6 +40,7 @@ namespace General {
         public int monstersKilled = 0;                  /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
+        public int editorAreaProgress = 1;              /// <value> Use this to change the areaProgress at runtime </value>
         public bool isTutorial = true;                  /// <value> Flag for if the tutorial is enabled (has to be changed from editor) </value>
         public bool isTips = true;                      /// <value> Flag for if helpful tips should show up when possible </value>
         public bool firstConsumable = true;             /// <value> Flag for if the player hasn't encountered their first consumable </value>

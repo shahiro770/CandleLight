@@ -162,7 +162,7 @@ namespace Menus.GameOverMenu {
             int currMidPoint = 1;
 
             if (frontFill.fillAmount != fillAmount) {      
-                while (timeSinceStarted < 3) {  // lerping is approaching infinity so stop after 3 seconds         
+                while (timeSinceStarted < 2) {  // lerping is approaching infinity so stop after 3 seconds         
                     timeSinceStarted = Time.time - timeStartedLerping;
                     percentageComplete = Time.deltaTime * lerpSpeed;
 

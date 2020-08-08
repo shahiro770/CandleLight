@@ -8,6 +8,7 @@ namespace Audio {
 
         public static AudioManager instance;    /// <value> Singleton </value>
 
+        public Sound currentBGM;
         public Sound[] sounds;
         public float bgmVolume = 1f;
         public float sfxVolume = 1f;
@@ -42,8 +43,31 @@ namespace Audio {
                 }
                 else {
                     s.source.volume = bgmVolume;
+                    currentBGM = s;
                 }
                 s.source.Play();
+            }
+        }
+
+        /// <summary>
+        /// Change the BGM
+        /// </summary>
+        /// <param name="soundName"></param>
+        public void ChangeBGM(string soundName) {
+            if (currentBGM.source != null) {
+                currentBGM.source.Stop();
+            }
+            Play(soundName);
+        }
+
+        /// <summary>
+        /// Change the BGM's volume
+        /// </summary>
+        /// <param name="volume"></param>
+        public void ChangeBGMVolume(float volume) {
+            bgmVolume = volume;
+            if (currentBGM.source != null) {
+                currentBGM.source.volume = volume;
             }
         }
     }

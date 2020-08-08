@@ -49,6 +49,9 @@ namespace Constants {
         public const string NEWINTANDTUT = "newIntAndTut";    /// <value> Adds a new interaction, and progresses the tutorial, and in one hacky edge case, adds a quest </value>
         public const string SUBEVENTTUT = "subEventTut";      /// <value> Tutorial subevents don't behave normally </value>
         public const string ITEMANDNEWINTTUT = "itemAndNewIntTut";  /// <value> Progresses the tutorial, gives the player items, and a new interaction </value>
-        public const string ENDTUT = "endTut";         /// <value> Ends the tutorial </value>
+        public const string ENDTUT = "endTut";          /// <value> Ends the tutorial </value>
+        public const string STORESHOPITEMNEXTEVENT = "storeShopItemNextEvent";  /// <value> Store a random item in the shop for the next run </value>
+        public const string PASTITEM = "pastItem";      /// <value> Receieve an item from a past run </value>
+        public const string PASTITEMANDSUBEVENT = "pastItemWithSubEvent";       /// <value> Receieve an item from a past run with a subEvent right after </value>
     }
 }

@@ -13,10 +13,7 @@ using Items;
 using ItemConstants = Constants.ItemConstants;
 using Party;
 using System.Collections;
-using UIEffects;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace PlayerUI {
 
@@ -80,8 +77,11 @@ namespace PlayerUI {
             if (displayedItem.type == ItemConstants.CONSUMABLE) {
                 return displayedConsumable.GetEffects();
             }
-            else { //if (displayedItem.type == "gear") {
+            else if (displayedItem.type == ItemConstants.GEAR) {
                 return displayedGear.GetEffects();
+            }
+            else { //if (displayedItem.type == "gear") {
+                return displayedCandle.GetEffects();
             }    
         }
 

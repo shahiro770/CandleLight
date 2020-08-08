@@ -65,6 +65,9 @@ namespace PlayerUI {
         public void SetInteractionActions(Interaction[] interactions) { 
             for (int i = 0; i < interactions.Length; i++) {
                 actions[i].SetAction(ActionConstants.INTERACTION, interactions[i]);
+                if (interactions[i].name == "takeAll") {
+                    actions[i].SetAction(ActionConstants.TAKEALL);
+                }
             }
 
             SetActionsUsable(true);

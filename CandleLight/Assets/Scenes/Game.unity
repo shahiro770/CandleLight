@@ -316,7 +316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &163661465
 Animator:
   serializedVersion: 3
@@ -381,7 +381,7 @@ SpriteRenderer:
   m_Size: {x: 128, y: 128}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &163661467
@@ -417,7 +417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &168779443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,6 +926,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03ba31a235fc4cd98e94e371c906e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentBGM:
+    name: 
+    clip: {fileID: 0}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    type: 0
   sounds:
   - name: click
     clip: {fileID: 8300000, guid: 998c798c4282a424b9d40fbd9a1e70a4, type: 3}
@@ -934,6 +942,13 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     type: 0
+  - name: pathNormalGreyWastes
+    clip: {fileID: 8300000, guid: bc63a640ee66743bfaf61369b5a7dfa3, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 1
+    loop: 1
+    type: 1
   bgmVolume: 1
   sfxVolume: 1
 --- !u!1 &1495799579
@@ -1196,7 +1211,8 @@ MonoBehaviour:
   monstersKilled: 0
   WAXobtained: 0
   totalEvents: 0
-  isTutorial: 0
+  editorAreaProgress: 1
+  isTutorial: 1
   isTips: 1
   firstConsumable: 1
   firstCandle: 1

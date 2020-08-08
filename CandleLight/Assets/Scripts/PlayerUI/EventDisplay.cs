@@ -9,6 +9,7 @@
 */
 
 using Items;
+using ItemConstants = Constants.ItemConstants;
 using PanelConstants = Constants.PanelConstants;
 using System.Collections;
 using System.Collections.Generic;
@@ -92,6 +93,38 @@ namespace PlayerUI {
         public void TakeAllItems() {
             for (int i = 0; i < itemNum; i++) {
                 itemSlots[i].TakeItem(true);
+            }
+        }
+
+        /// <summary>
+        /// Returns a random item currently displayed by the eventDisplay
+        /// </summary>
+        /// <returns> An item if possible, null otherwise </returns>
+        public Item GetRandomItem() {
+            List<ItemDisplay> ids = new List<ItemDisplay>();
+            foreach (ItemSlot i in itemSlots) {
+                if (i.currentItemDisplay != null) {
+                    ids.Add(i.currentItemDisplay);
+                }
+            }
+
+            if (ids.Count != 0) {
+                ItemDisplay id = ids[Random.Range(0, ids.Count)];
+                if (id.type == ItemConstants.CONSUMABLE) {
+                    return id.displayedConsumable;
+                }
+                if (id.type == ItemConstants.GEAR) {
+                    return id.displayedGear;
+                }
+                else if (id.type == ItemConstants.CANDLE) {
+                    return id.displayedCandle;
+                }
+                else {  // Special
+                    return id.displayedSpecial;
+                }
+            }
+            else {
+                return null;
             }
         }
 
