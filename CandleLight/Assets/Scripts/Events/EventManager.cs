@@ -287,7 +287,7 @@ namespace Events {
         /// Since the girl's sprite is class-based, these need to be loaded right after the class is decided.
         /// </summary>
         public void LoadGirlSprites() {
-            if (GameManager.instance.isTutorial == true) {
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 girlSprites[0] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.storedPartyMember + "0");
                 girlSprites[1] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.storedPartyMember + "1");
             }
@@ -342,7 +342,7 @@ namespace Events {
             while (isReady == false) {
                 yield return null;
             }
-            if (GameManager.instance.isTutorial == true) {
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 areaProgress = 0;
                 AlterParticleSystem();
                 StartTutorial();
@@ -517,7 +517,7 @@ namespace Events {
         
         public void EndTutorial() {
             tutorialProg++;             
-            GameManager.instance.isTutorial = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
+            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
             subAreaProgress += 100;
         }
 
@@ -734,7 +734,8 @@ namespace Events {
                 actionsPanel.ClearAllActions();
                 rewardsPanel.SetVisible(true);
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());   // prevents summoned partyMembers's inventories from appearing post combat
-                if (GameManager.instance.isTutorial == true || GameManager.instance.isTips == true) {
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true || 
+                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true) {
                     SetToastPanelsVisible(false);
                 }
 
@@ -761,7 +762,7 @@ namespace Events {
                 specialPanel.SetTakeable(true);
                 skillsPanel.SetTogglable(true);
 
-                if (GameManager.instance.isTutorial == false) {
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {
                     actionsPanel.PostCombatActions(rewardsPanel.itemNum);
                 }
                 else {
@@ -842,12 +843,14 @@ namespace Events {
                 }
             }
 
-            if (GameManager.instance.isTips == true && GameManager.instance.firstConsumable == true && r.itemType == ItemConstants.CONSUMABLE) {
-                GameManager.instance.firstConsumable = false;
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
+            && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstConsumable] == true && r.itemType == ItemConstants.CONSUMABLE) {
+                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstConsumable] = false;
                 SetTutorialNotification("consumable");
             }
-            else if (GameManager.instance.isTips == true && GameManager.instance.firstCandle == true && r.itemType == ItemConstants.CANDLE) {
-                GameManager.instance.firstCandle = false;
+            else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true  
+            && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandle] == true && r.itemType == ItemConstants.CANDLE) {
+                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandle] = false;
                 SetTutorialNotification("candles0");
             }
 
@@ -1080,8 +1083,9 @@ namespace Events {
 
                     eventDescription.SetKey(currentResult.resultKey);
 
-                    if (GameManager.instance.isTips == true && GameManager.instance.firstShop == true) {
-                        GameManager.instance.firstShop = false;
+                    if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
+                    && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstShop] == true) {
+                        GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstShop] = false;
                         SetTutorialNotification("shop");
                     }
                     break;

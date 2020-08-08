@@ -19,6 +19,7 @@ using SkillConstants = Constants.SkillConstants;
 using ResultConstants = Constants.ResultConstants;
 using System.Collections;
 using System.Collections.Generic;
+using TutorialConstants = Constants.TutorialConstants;
 using UnityEngine;
 
 namespace Party {
@@ -65,7 +66,7 @@ namespace Party {
         /// </summary>   
         /// <param name="className"> Class of the partyMember to be added </param>
         public void AddPartyMember(string className) {
-            if (GameManager.instance.isTutorial == true && GetNumPartyMembers() == 1 && shouldStore == true) { // if in tutorial, the second partyMember joins later
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true && GetNumPartyMembers() == 1 && shouldStore == true) { // if in tutorial, the second partyMember joins later
                 storedPartyMember = className;
                 shouldStore = false;
             }
@@ -76,7 +77,7 @@ namespace Party {
                 newMember.transform.SetParent(gameObject.transform, false);
                 pmComponent.ID = (ID++);
                 pmComponent.GenerateName(GetNumPartyMembers());
-                if (GameManager.instance.isTutorial == true) {
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                     pmComponent.LVLDown();
                 }
                 partyMembersAlive.Add(pmComponent);

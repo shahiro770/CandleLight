@@ -17,7 +17,7 @@ using UnityEngine;
 
 namespace PlayerUI {
 
-    public class ItemDisplay : MonoBehaviour {//, IDragHandler, IEndDragHandler {
+    public class ItemDisplay : MonoBehaviour {
 
         /* external component references */
         public CanvasGroup imgCanvas;       /// <value> Image alpha </value>

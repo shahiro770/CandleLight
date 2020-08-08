@@ -179,7 +179,7 @@ namespace Combat {
             if (candlesPanel.isOpen == false) {
                 itemsTabManager.OpenPanel(1);
             }
-            if (GameManager.instance.isTutorial == true) {
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 EventManager.instance.SetToastPanelsVisible(false);
             }
             DisableAllButtons();
@@ -281,19 +281,19 @@ namespace Combat {
             else {
                 EnableAllButtonsInSidePanels();
                 eventDescription.ClearText();
-                if (GameManager.instance.isTutorial == true) {
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                     EventManager.instance.ProgressTutorial();
                 }
-                if (GameManager.instance.isTips == true && GameManager.instance.firstCandleCombat == true 
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandleCombat]  == true 
                 && PartyManager.instance.IsCandlesEquipped() == true) {
                     EventManager.instance.SetTutorialNotification("candles1");
-                    GameManager.instance.firstCandleCombat = false;
+                    GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandleCombat] = false;
                 }
-                if (GameManager.instance.isTips == true && GameManager.instance.firstChampion == true) {
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips]  == true && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstChampion] == true) {
                     foreach(Monster m in monsters) {
                         if (m.isChampion == true) {
                             EventManager.instance.SetTutorialNotification("champion");
-                            GameManager.instance.firstChampion = false;
+                            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstChampion] = false;
                             break;
                         }
                     }
@@ -323,7 +323,7 @@ namespace Combat {
                 partyPanel.SetBlinkSelectables(null, false);
             }
 
-            if (GameManager.instance.isTutorial == true) {
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 EventManager.instance.ProgressTutorial();
             }  
         }
@@ -412,7 +412,7 @@ namespace Combat {
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// </returns>
         public IEnumerator ExecutePMAttack() { 
-            if (GameManager.instance.isTutorial == true) {
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 EventManager.instance.ProgressTutorial();
             } 
             if (pmNoAction == true) {

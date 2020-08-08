@@ -256,7 +256,7 @@ namespace PlayerUI {
                 attackString = costString;
             }
             else if (a.type == AttackConstants.HEALHP) {
-                attackString = costString + " " + healText + " " + a.attackValue + " <color=#EA323C>" + HPText + "</color>"; 
+                attackString = costString + " " + healText + " " + a.attackValue + " " + HPText; 
             }
             else if (a.type == AttackConstants.SUMMON) {
                 attackString = costString + " " + summonText + " " + LocalizationManager.instance.GetLocalizedValue(a.nameKey + "_des");
@@ -326,7 +326,7 @@ namespace PlayerUI {
 
             }
             else if (displayedAttack.type == AttackConstants.HEALHP) {
-                formulaString += " " + healText + " " + displayedAttack.damageFormula + " <color=#EA323C>" + HPText + "</color>"; 
+                formulaString += " " + healText + " " + displayedAttack.damageFormula + HPText; 
             }
             else if (displayedAttack.type == AttackConstants.SUMMON) {
                 formulaString += " " + summonText + " " + LocalizationManager.instance.GetLocalizedValue(displayedAttack.nameKey + "_des");

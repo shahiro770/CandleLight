@@ -15,6 +15,7 @@ using GameManager = General.GameManager;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using System.Collections.Generic;
+using TutorialConstants = Constants.TutorialConstants;
 
 namespace PlayerUI {
 
@@ -91,8 +92,9 @@ namespace PlayerUI {
                             sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }            
                     }
-                    else if (GameManager.instance.isTips == true && GameManager.instance.firstFailedSkillDisable == true) {
-                        GameManager.instance.firstFailedSkillDisable = false;
+                    else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
+                    && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillDisable] == true) {
+                        GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillDisable] = false;
                         EventManager.instance.SetTutorialNotification("skills2");     
                     }
                 }
@@ -106,8 +108,9 @@ namespace PlayerUI {
                             UpdateSkillsVisible();
                             sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }
-                        else if (GameManager.instance.isTips == true && GameManager.instance.firstFailedSkillEnable == true) {
-                            GameManager.instance.firstFailedSkillEnable = false;
+                        else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
+                        && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillEnable] == true) {
+                            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillEnable] = false;
                             EventManager.instance.SetTutorialNotification("skills3");    
                         }
                     }

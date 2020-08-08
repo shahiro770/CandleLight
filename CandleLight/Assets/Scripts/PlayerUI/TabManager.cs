@@ -13,6 +13,7 @@ using GameManager = General.GameManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using PartyManager = Party.PartyManager;
+using TutorialConstants = Constants.TutorialConstants;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,7 +50,7 @@ namespace PlayerUI {
                 btss[1].SetColorBlock("normalAlternate", UIManager.instance.orangeBlock);
             }
         
-            if (GameManager.instance.isTutorial == false) {                   // panels aren't opened immediatel in the tutorial
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {                   // panels aren't opened immediatel in the tutorial
                 if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                     OpenPanel(0);
                     ShowSkillPointsInTab(1);

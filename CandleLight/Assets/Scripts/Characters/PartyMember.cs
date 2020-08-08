@@ -71,6 +71,19 @@ namespace Characters {
             pmvc.Init(this);
         }
 
+        public void Init(PartyMember pm) {
+            base.Init(pm.LVL, pm.CHP, pm.CMP, new int[] { pm.STR, pm.DEX, pm.INT, pm.LUK }, pm.attacks);
+            this.EXP = pm.EXP;
+            this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
+            this.className = pm.className;
+            this.subClassName = pm.subClassName;
+            this.race = pm.race;
+            this.skills = pm.skills;
+            this.skillPoints = pm.skillPoints;
+
+            pmvc.Init(this);
+        }
+
         /// <summary>
         /// Assigns a name to this partyMember (these are locked due to story)
         /// </summary>

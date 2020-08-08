@@ -9,6 +9,7 @@
 using Audio;
 using General;
 using PlayerUI;
+using TutorialConstants = Constants.TutorialConstants;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -88,7 +89,7 @@ namespace Menus.OptionsMenu {
         }
 
         void OnEnable() {
-            if (GameManager.instance.isTutorial == true) {
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 tutorialYes.SetColor("normalAlternate");
                 tutorialNo.SetColor("normal");
             }
@@ -97,7 +98,7 @@ namespace Menus.OptionsMenu {
                 tutorialNo.SetColor("normalAlternate");
             }
 
-            if (GameManager.instance.isTips == true) {
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true) {
                 tipsYes.SetColor("normalAlternate");
                 tipsNo.SetColor("normal");
             }
@@ -129,7 +130,7 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetTutorial(bool value) {
-            GameManager.instance.isTutorial = value;
+            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = value;
 
             if (value == true) {
                 tutorialYes.SetColor("normalAlternate");
@@ -142,7 +143,7 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetTips(bool value) {
-            GameManager.instance.isTips = value;
+            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] = value;
 
             if (value == true) {
                 tipsYes.SetColor("normalAlternate");

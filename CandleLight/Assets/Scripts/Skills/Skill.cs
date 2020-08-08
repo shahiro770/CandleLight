@@ -16,6 +16,7 @@ using UnityEngine;
 
 namespace Skills {
 
+    [System.Serializable]
     public class Skill {
         
         public string name;

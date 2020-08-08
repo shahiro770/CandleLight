@@ -106,14 +106,14 @@ Bug: Broke x and * glyphs
 Feature: Give a way to escape wraithWizard quest event
 UI: Make taunt icon smile
 Feature: Add the first BGM
+Feature: Add a shop to the right side's final area
+Bug: Make final pop time faster on game complete screen
 
 COOKING
 -------
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
 Feature: Saving and Loading
-Feature: Add a shop to the right side's final area
-
 
 NEAR FUTURE
 ----------------

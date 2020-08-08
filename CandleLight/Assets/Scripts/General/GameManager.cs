@@ -8,10 +8,15 @@
 *
 */
 
+using Constants;
+using System.Linq;
 using Items;
 using Database;
 using Localization;
 using System.Collections; 
+using System.Collections.Generic; 
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -41,20 +46,12 @@ namespace General {
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public int editorAreaProgress = 1;              /// <value> Use this to change the areaProgress at runtime </value>
-        public bool isTutorial = true;                  /// <value> Flag for if the tutorial is enabled (has to be changed from editor) </value>
-        public bool isTips = true;                      /// <value> Flag for if helpful tips should show up when possible </value>
-        public bool firstConsumable = true;             /// <value> Flag for if the player hasn't encountered their first consumable </value>
-        public bool firstCandle = true;                 /// <value> Flag for if the player hasn't encountered their first candle </value> 
-        public bool firstShop = true;                   /// <value> Flag for if the player hasn't encountered their first shop </value> 
-        public bool firstCandleCombat = true;           /// <value> Flag for if the player hasn't brought a candle into combat for the first time </value>
-        public bool firstChampion = true;               /// <value> Flag for if the player hasn't encountered their first champion monster </value>
-        public bool firstFailedSkillDisable = true;     /// <value> Flag for if the player fails to disable a skill (due to it being required to enable a column) </value>
-        public bool firstFailedSkillEnable = true;      /// <value> Flag for if the player fails to enable a skill (due to have too many active skills) </value>
+        public bool[] tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
 
         private string activeScene = "Game";            /// <value> Current scene being displayed </value>
         private string areaScene = "Area";              /// <value> Name of area scene </value>
         private float lerpSpeed = 2f;                   /// <value> Speed at which loading screen fades </value>
-        private int tipNum = 11;                        /// <value> (11 tips) </value>
+        private int tipNum = 11;                        /// <value> (11 loading screen tips) </value>
 
         /// <summary>
         /// Awake to instantiate singleton
@@ -109,6 +106,14 @@ namespace General {
         private void SetTipText() {
             tipText.SetKey("tip" + Random.Range(0, tipNum) + "_des");
         }
+
+        // public void SaveGame() {
+        //     BinaryFormatter formatter  = new BinaryFormatter();
+        //     string path = Application.persistentDataPath + "/save.cndl";
+        //     FileStream s = new FileStream(path, FileMode.Create);
+
+
+        // }
 
         /// <summary>
         /// Changes the alpha of the loading screen to the target value, and sets a random tip
