@@ -243,7 +243,7 @@
 		{ "key": "tombsGreyWastes_combat_event_1", "value": "Undead or alive, they're all the same." },
 		{ "key": "tombsGreyWastes_combat_event_2", "value": "\"We don't have time for this.\"" },
 		{ "key": "tombsGreyWastes_combat_event_3", "value": "This nightmare won't end." },
-		{ "key": "tombsGreyWastes_post_combat_event_0", "value": "No one will be offerring a burial for these things." },
+		{ "key": "tombsGreyWastes_post_combat_event_0", "value": "No one will be offering a burial for these things." },
 		{ "key": "tombsGreyWastes_post_combat_event_1", "value": "You won't be joining the dead. Not yet." },
 		{ "key": "tombsGreyWastes_post_combat_event_2", "value": "\"Their gods cursed them. That's why I don't believe in one.\"" },
 		{ "key": "tombsGreyWastes_post_combat_event_3", "value": "When will this nightmare end?" },
