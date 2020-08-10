@@ -8,6 +8,7 @@
 */
 
 using EventManager = Events.EventManager;
+using Items;
 using PanelConstants = Constants.PanelConstants;
 
 namespace PlayerUI {
@@ -90,6 +91,21 @@ namespace PlayerUI {
             }
             
             return false;
+        }
+
+        /// <summary>
+        /// Returns special data for saving
+        /// </summary>
+        /// <returns></returns>
+        public ItemData[] GetSpareSpecialData() {
+            ItemData[] spareSpecials = new ItemData[spare.Length];
+            for (int i = 0; i < spareSpecials.Length; i++) {  
+                if (spare[i].currentItemDisplay != null) {
+                    spareSpecials[i] = spare[i].currentItemDisplay.displayedSpecial.GetItemData();
+                }
+            }
+
+            return spareSpecials;
         }
 
         /// <summary>

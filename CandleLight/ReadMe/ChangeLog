@@ -98,9 +98,6 @@ UI: Colour code keywords
 QOL: Prevent shop in the first 5 events
 QOL: Holding shift while over an attack reveals formula
 Bug: SEs from events not being written properly
-
-JUST FINISHED
--------------
 Feature: Add a candle getting event or item drop to the doll pouch on the right
 Bug: Broke x and * glyphs
 Feature: Give a way to escape wraithWizard quest event
@@ -109,11 +106,16 @@ Feature: Add the first BGM
 Feature: Add a shop to the right side's final area
 Bug: Make final pop time faster on game complete screen
 
+JUST FINISHED
+-------------
+
 COOKING
 -------
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
 Feature: Saving and Loading
+UI: Slowdown some animations
+Bug: Swapping between pms on the left doesn't swap highlights for skills
 
 NEAR FUTURE
 ----------------

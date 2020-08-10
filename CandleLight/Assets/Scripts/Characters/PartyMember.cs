@@ -32,7 +32,7 @@ namespace Characters {
         public string race { get; set; }            /// <value> Human, Lizardman, Undead, etc. </value>
         public int EXP { get; set; }                /// <value> Current amount of experience points </value>
         public int EXPToNextLVL { get; set; }       /// <value> Total experience points to reach next level </value>
-        public int skillPoints { get; set; }        
+        public int skillPoints { get; set; }        /// <value> Skillpoints currently avialable </value>
         public bool doneEXPGaining { get; private set; } = true;   /// <value> Total experience points to reach next level </value>
         
         public PartyMember summon = null;       /// <value> Summoned familiar of this partyMember </value>

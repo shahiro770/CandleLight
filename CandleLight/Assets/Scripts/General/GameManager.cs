@@ -8,14 +8,14 @@
 *
 */
 
+
 using Constants;
-using System.Linq;
-using Items;
 using Database;
+using Items;
 using Localization;
 using System.Collections; 
-using System.Collections.Generic; 
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,7 +33,7 @@ namespace General {
         public Image loadingBarFill; 
         public LocalizedText tipText;
         public SpriteRenderer loadingFlameSpriteRenderer;
-
+        
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
@@ -107,13 +107,18 @@ namespace General {
             tipText.SetKey("tip" + Random.Range(0, tipNum) + "_des");
         }
 
-        // public void SaveGame() {
-        //     BinaryFormatter formatter  = new BinaryFormatter();
-        //     string path = Application.persistentDataPath + "/save.cndl";
-        //     FileStream s = new FileStream(path, FileMode.Create);
+        /// <summary>
+        /// Saves the game's data
+        /// </summary>
+        /// <param name="data"></param>
+        public void SaveGame(SaveData data) {
+            BinaryFormatter formatter  = new BinaryFormatter();
+            string path = Application.persistentDataPath + "/save.cndl";
+            FileStream s = new FileStream(path, FileMode.Create);
 
-
-        // }
+            formatter.Serialize(s, data);
+            s.Close();
+        }
 
         /// <summary>
         /// Changes the alpha of the loading screen to the target value, and sets a random tip

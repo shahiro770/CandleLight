@@ -51,10 +51,24 @@ namespace PlayerUI {
         /// Adds a quest to one of the quest displays
         /// </summary>
         /// <param name="questName"></param>
-        public void AddQuest(string questName) {
+        public void AddQuest(string questName, string startEvent, string currentEvent) {
             for (int i = 0; i < quests.Length; i++) {
                 if (quests[i].questName == "") {
-                    quests[i].SetQuest(questName);
+                    quests[i].SetQuest(questName, startEvent, currentEvent);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the respective quest with what the next event will be
+        /// </summary>
+        /// <param name="questName"></param>
+        /// <param name="nextEvent"></param>
+        public void UpdateQuest(string questName, string nextEvent) {
+            foreach (Quest q in quests) {
+                if (q.questName == questName) {
+                    q.UpdateQuestProgress(nextEvent);
                     break;
                 }
             }

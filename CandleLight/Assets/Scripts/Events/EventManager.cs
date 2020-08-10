@@ -351,7 +351,7 @@ namespace Events {
                 areaProgress = 1;
                 AlterParticleSystem();
                 EquipPartyStartingGear();
-                AddQuestNoNotification(mainQuestName);  // main story quest (TODO: Make this a constant?)
+                AddQuestNoNotification(mainQuestName, "", "");  // main story quest (TODO: Make this a constant?)
                 GetStartEvent();
             }
         }
@@ -451,7 +451,7 @@ namespace Events {
             else if (tutorialProg == 12) {
                 utilityTabManager.SetButtonInteractableAndName(2);
                 utilityTabManager.ExciteTab(2);
-                AddQuest(currentResult.questName);
+                AddQuest(currentResult.questName, "", "");
             }
         }
 
@@ -554,6 +554,7 @@ namespace Events {
             }
 
             if (isNextEventMain == true) {
+                SaveGame();
                 GetNextMainEvent();
             }
             else {
@@ -1114,13 +1115,13 @@ namespace Events {
                 case ResultConstants.QUEST:
                     currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
 
-                    AddQuest(currentResult.questName);
+                    AddQuest(currentResult.questName, currentEvent.name, currentResult.subEventName);
                     eventDescription.SetKey(currentResult.resultKey);
                     break;
                 case ResultConstants.QUESTANDLEAVE:
                     currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
 
-                    AddQuest(currentResult.questName);
+                    AddQuest(currentResult.questName, currentEvent.name, currentResult.subEventName);
                     eventDescription.SetKey(currentResult.resultKey);
                     actionsPanel.TravelActions();
                     break;
@@ -1128,12 +1129,13 @@ namespace Events {
                     DisplayResultItems(currentResult);
                     currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
 
-                    AddQuest(currentResult.questName);
+                    AddQuest(currentResult.questName, currentEvent.name, currentResult.subEventName);
                     eventDescription.SetKey(currentResult.resultKey);
                     actionsPanel.SetItemActions();
                     break;
                 case ResultConstants.QUESTCONTINUEANDNEWINT:
                     currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                    UpdateQuest(currentResult.questName, currentResult.subEventName);
                     
                     actionsPanel.AddInteraction(currentResult.newIntName);
                     eventDescription.SetKey(currentResult.resultKey);
@@ -1148,6 +1150,7 @@ namespace Events {
                     }
 
                     currentArea.SwapEventAndSubEvent(currentEvent.name, currentResult.subEventName);
+                    UpdateQuest(currentResult.questName, currentResult.subEventName);
                     HideEventDisplays();     
                     GetCombatEvent();
 
@@ -1365,8 +1368,8 @@ namespace Events {
         /// Tell the infoPanel to add a quest
         /// </summary>
         /// <param name="questName"></param>
-        public void AddQuest(string questName) {
-            infoPanel.AddQuest(questName);
+        public void AddQuest(string questName, string startEvent, string nextEvent) {
+            infoPanel.AddQuest(questName, startEvent, nextEvent);
             SetQuestNotification(questName);
         }
 
@@ -1374,8 +1377,12 @@ namespace Events {
         /// Tells the infoPanel to add a quest, but no notification for the player
         /// </summary>
         /// <param name="questName"></param>
-        public void AddQuestNoNotification(string questName) {
-            infoPanel.AddQuest(questName);
+        public void AddQuestNoNotification(string questName, string startEvent, string nextEvent) {
+            infoPanel.AddQuest(questName, startEvent, nextEvent);
+        }
+
+        public void UpdateQuest(string questName, string nextEvent) {
+            infoPanel.UpdateQuest(questName, nextEvent);
         }
 
         /// <summary>
@@ -1952,6 +1959,11 @@ namespace Events {
         /// <param name="amount"></param>
         public void RotatePartyMember(int amount) {
             PartyManager.instance.RotatePartyMember(amount);
+        }
+
+        public void SaveGame() {
+            SaveData data = new SaveData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), infoPanel.quests);
+            GameManager.instance.SaveGame(data);
         }
 
         /// <summary>

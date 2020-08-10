@@ -23,6 +23,8 @@ namespace PlayerUI {
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
 
         public string questName = "";
+        public string startEvent = "";
+        public string nextEvent = "";
 
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
 
@@ -31,8 +33,10 @@ namespace PlayerUI {
         /// an informative prompt, before making it visible
         /// </summary>
         /// <param name="questName"></param>
-        public void SetQuest(string questName) {
+        public void SetQuest(string questName, string startEvent, string nextEvent) {
             this.questName = questName;
+            this.startEvent = startEvent;
+            this.nextEvent = nextEvent;
 
             titleText.SetKey(questName + "_quest_title");
             subtitleText.SetKey(questName + "_quest_sub");
@@ -41,12 +45,24 @@ namespace PlayerUI {
             SetVisible(true);
         }
 
+        public void UpdateQuestProgress(string nextEvent) {
+            this.nextEvent = nextEvent;
+        }
+
         /// <summary>
         /// Clear the quest, making it invisible
         /// </summary>
         public void CompleteQuest() {
             questName = "";
             SetVisible(false);
+        }
+
+        /// <summary>
+        /// Returns important data about this quest
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetQuestData() {
+            return new string[] { questName, startEvent, nextEvent };
         }
 
         /// <summary>

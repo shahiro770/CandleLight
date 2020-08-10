@@ -8,6 +8,7 @@
 */
 
 using Characters;
+using Items;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using UnityEngine.UI;
@@ -108,6 +109,21 @@ namespace PlayerUI {
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Returns gear data for saving
+        /// </summary>
+        /// <returns></returns>
+        public ItemData[] GetSpareGearData() {
+            ItemData[] spareGear = new ItemData[spare.Length];
+            for (int i = 0; i < spareGear.Length; i++) {  
+                if (spare[i].currentItemDisplay != null) {
+                    spareGear[i] = spare[i].currentItemDisplay.displayedGear.GetItemData();
+                }
+            }
+
+            return spareGear;
         }
 
         /// <summary>

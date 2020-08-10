@@ -676,5 +676,18 @@ namespace Party {
                 }
             }
         }
+
+        /// <summary>
+        /// Returns partyMember data for saving
+        /// </summary>
+        /// <returns></returns>
+        public PartyMemberData[] GetPartyMemberDatas() {
+            PartyMemberData[] partyMemberDatas = new PartyMemberData[partyMembersAll.Count];
+            for (int i = 0; i < partyMemberDatas.Length; i++) {
+                partyMemberDatas[i] = new PartyMemberData(partyMembersAll[i]);
+            }
+
+            return partyMemberDatas;
+        }
     }
 }

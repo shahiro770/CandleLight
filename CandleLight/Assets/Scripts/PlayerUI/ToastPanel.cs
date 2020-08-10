@@ -148,7 +148,7 @@ namespace PlayerUI {
         /// Assumes the notification is a shop notification
         /// </summary>
         public void UpdateWAXAmount() {
-            descriptionText.SetKeyAndAppend("WAX_label", PartyManager.instance.WAX.ToString());
+            descriptionText.SetKeyAndAppend("WAX_label_coloured", "<color=#FFCD02>" + PartyManager.instance.WAX.ToString() + "</color>");
         }
 
         public IEnumerator FadeOut() {

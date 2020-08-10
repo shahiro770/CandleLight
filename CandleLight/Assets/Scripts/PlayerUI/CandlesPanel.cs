@@ -10,6 +10,7 @@
 
 using Characters;
 using CombatManager = Combat.CombatManager;
+using Items;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using UIEffects;
@@ -118,6 +119,17 @@ namespace PlayerUI {
             }
 
             return false;
+        }
+
+        public ItemData[] GetSpareCandleData() {
+            ItemData[] spareCandles = new ItemData[spare.Length];
+            for (int i = 0; i < spareCandles.Length; i++) {  
+                if (spare[i].currentItemDisplay != null) {
+                    spareCandles[i] = spare[i].currentItemDisplay.displayedCandle.GetItemData();
+                }
+            }
+
+            return spareCandles;
         }
 
         /// <summary>

@@ -7,7 +7,7 @@
 *
 */
 
-using ClassConsants = Constants.ClassConstants;
+using ClassConstants = Constants.ClassConstants;
 using ItemDisplay = PlayerUI.ItemDisplay;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ namespace Items {
         public string nameID;                           /// <value> Name of item </value>
         public string type { get; private set; }        /// <value> Type of item (consumable, weapon, secondary, armor) </value>
         public string subType { get; private set; }     /// <value> SubType of item (varies depending on type) </value>
-        public string className = ClassConsants.ANY;    /// <value> Class that can use this item </value>
+        public string className = ClassConstants.ANY;    /// <value> Class that can use this item </value>
 
         public Sprite itemSprite;  /// <value> Item's sprite </value>
         public string[] effects = new string[3];            /// <value> List of effects </value>
@@ -111,5 +111,13 @@ namespace Items {
         /// </summary>
         /// <param name="s"></param>
         public virtual void SetSprite(Sprite s) {}
+        
+        /// <summary>
+        /// Returns item data for saving
+        /// </summary>
+        /// <returns></returns>
+        public ItemData GetItemData() {
+            return new ItemData(this);
+        }
     }
 }

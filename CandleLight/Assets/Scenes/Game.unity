@@ -316,7 +316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &163661465
 Animator:
   serializedVersion: 3
@@ -949,7 +949,7 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     type: 1
-  bgmVolume: 1
+  bgmVolume: 0.75
   sfxVolume: 1
 --- !u!1 &1495799579
 GameObject:
@@ -967,7 +967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1495799580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1212,15 +1212,7 @@ MonoBehaviour:
   WAXobtained: 0
   totalEvents: 0
   editorAreaProgress: 1
-  isTutorial: 1
-  isTips: 1
-  firstConsumable: 1
-  firstCandle: 1
-  firstShop: 1
-  firstCandleCombat: 1
-  firstChampion: 1
-  firstFailedSkillDisable: 1
-  firstFailedSkillEnable: 1
+  tutorialTriggers: 010101010101010101
 --- !u!4 &1827646565
 Transform:
   m_ObjectHideFlags: 0
