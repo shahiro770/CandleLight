@@ -99,8 +99,10 @@ namespace Events {
         /// <param name="eventName"></param>
         /// <param name="subEventName"></param>
         public void SwapEventAndSubEvent(string eventName, string subEventName) {
-            for (int i = 0; i < subAreasNum; i++) {
-                subAreas[i].SwapEventAndSubEvent(eventName, subEventName);
+            if (eventName != "" ){      // hack to swapping for quests with no swapping (such as the main quest)
+                for (int i = 0; i < subAreasNum; i++) {
+                    subAreas[i].SwapEventAndSubEvent(eventName, subEventName);
+                }
             }
         }
 

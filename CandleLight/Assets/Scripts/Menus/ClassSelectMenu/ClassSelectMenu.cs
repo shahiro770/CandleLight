@@ -244,7 +244,7 @@ namespace Menus.ClassSelectMenu {
         /// <remark> TODO: World map scene still has to be made </remark>
         public void BeginGame() {
             if (selectButtonEnabled) {
-                PartyManager.instance.ResetGame();
+                GameManager.instance.DeleteSaveData();
                 foreach (string pm in partyComposition) {
                     PartyManager.instance.AddPartyMember(pm);
                 }

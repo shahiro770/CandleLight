@@ -161,13 +161,12 @@ namespace Database {
                             int type = reader.GetInt32(3);
                             int upgradeSkill = reader.GetInt32(4); 
                             Attack a = null;
-                            Color skillColor = new Color32(reader.GetByte(5), reader.GetByte(6), reader.GetByte(7), 255);
 
-                            if (type == 1 || type == 2) {
+                            if (type == 1 || type == 2) {   // type 1 is active, type 2 is upgrade for an active, so there's an attack associated
                                 a = GetAttack(skillName, false, dbConnection);
                             }
 
-                            skills[i] = new Skill(skillName, type, upgradeSkill, a, skillColor);
+                            skills[i] = new Skill(skillName, type, upgradeSkill, a, reader.GetByte(5), reader.GetByte(6), reader.GetByte(7), 255);
                         }
                         else {
                             break; // no warning as some classes have no skills (such as summons)

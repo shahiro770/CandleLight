@@ -30,6 +30,19 @@ namespace Items {
         }
 
         /// <summary>
+        /// Data constructor
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public Gear(ItemData i) : base(i.nameID, i.type, i.subType) {
+            this.className = i.className;
+            this.effects = i.effects;
+            this.effectsNum = i.effectsNum;
+            this.values = i.values;
+            itemSprite = Resources.Load<Sprite>("Sprites/Items/Gear/" + nameID);
+        }
+
+        /// <summary>
         /// Copy constructor
         /// </summary>
         public Gear(Gear g) : base(g.nameID, g.type, g.subType) {

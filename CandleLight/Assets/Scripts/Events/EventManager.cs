@@ -323,11 +323,18 @@ namespace Events {
         }
 
         /// <summary>
-        /// Equips the party with starting weapons
+        /// Equips the party with starting weapons if starting without a tutorial, or save data gear and candles.
         /// </summary>
-        public void EquipPartyStartingGear() {
-            PartyManager.instance.GetPartyMembers()[0].EquipGear(GenerateStartingWeapon(PartyManager.instance.GetPartyMembers()[0].className), ItemConstants.WEAPON);
-            PartyManager.instance.GetPartyMembers()[1].EquipGear(GenerateStartingWeapon(PartyManager.instance.GetPartyMembers()[1].className), ItemConstants.WEAPON);
+        public void EquipPartyItems() {
+            List<PartyMember> pms = PartyManager.instance.GetPartyMembers();
+            for (int i = 0; i < pms.Count; i++) {
+                if (GameManager.instance.data == null) {
+                    pms[i].EquipGear(GenerateStartingWeapon(pms[i].className), ItemConstants.WEAPON);
+                }
+                else {
+                    pms[i].EquipLoadedItems(GameManager.instance.data.partyMemberDatas[i]);
+                }
+            }
         }
 
         /// <summary>
@@ -337,12 +344,46 @@ namespace Events {
         /// <param name="areaName"> Name of area </param>
         /// <returns> Yields to wait for area to load </returns>
         public IEnumerator StartArea(string areaName) {
-            ResetGame();
+            if (GameManager.instance.data == null) {
+                ResetGame();
+            }
+            else {  
+                GameManager.instance.monstersKilled = GameManager.instance.data.monstersKilled;
+                GameManager.instance.WAXobtained = GameManager.instance.data.WAXobtained;
+                GameManager.instance.totalEvents = GameManager.instance.data.totalEvents;
+                midPoints = GameManager.instance.data.midPoints;
+
+                timer.SetElapseTimed(GameManager.instance.data.elapsedTime);
+                timer.StartTimer(true);
+                timer.SetVisible(UIManager.instance.isTimer);
+            }
+
             LoadArea(areaName);
             while (isReady == false) {
                 yield return null;
             }
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+
+            if (GameManager.instance.data != null) {
+                areaProgress = GameManager.instance.data.areaProgress;
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+                    AlterParticleSystem();
+                    StartTutorial();
+                }
+                else {
+                    gearPanel.LoadData(GameManager.instance.data.spareGear);
+                    candlesPanel.LoadData(GameManager.instance.data.spareCandles);
+                    specialPanel.LoadData(GameManager.instance.data.spareSpecials);
+                    infoPanel.LoadData(GameManager.instance.data.questData);
+                    EquipPartyItems();
+                    foreach (Quest q in infoPanel.quests) {
+                        currentArea.SwapEventAndSubEvent(q.startEvent, q.nextEvent);
+                    }
+
+                    AlterParticleSystem();
+                    GetStartEvent();
+                }
+            }
+            else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 areaProgress = 0;
                 AlterParticleSystem();
                 StartTutorial();
@@ -350,7 +391,7 @@ namespace Events {
             else {  // skip the tutorial
                 areaProgress = 1;
                 AlterParticleSystem();
-                EquipPartyStartingGear();
+                EquipPartyItems();
                 AddQuestNoNotification(mainQuestName, "", "");  // main story quest (TODO: Make this a constant?)
                 GetStartEvent();
             }
@@ -375,7 +416,7 @@ namespace Events {
         /// </summary>
         public void GetStartEventTutorial() {
             currentEvent = currentSubArea.GetEvent(areaProgress);
-
+            SaveGame();
             StartCoroutine(DisplayEvent());
         }
 
@@ -506,7 +547,6 @@ namespace Events {
             else if (className == "rogue") {
                 startingWeapon = (Gear)GameManager.instance.DB.GetItemByNameID("RogueWeapon-1", "Gear");
             }
-            startingWeapon.CalculateWAXValue();
             
             return startingWeapon;
         }
@@ -530,7 +570,7 @@ namespace Events {
         /// </summary>
         public void GetStartEvent() {
             currentEvent = currentSubArea.GetEvent(areaProgress);
-
+            SaveGame();
             StartCoroutine(DisplayEvent());
         }
 
@@ -554,7 +594,6 @@ namespace Events {
             }
 
             if (isNextEventMain == true) {
-                SaveGame();
                 GetNextMainEvent();
             }
             else {
@@ -581,6 +620,7 @@ namespace Events {
             currentEvent = currentSubArea.GetEvent(areaProgress);
             AlterParticleSystem();
             infoPanel.UpdateSubAreaCard(currentArea.GetSubAreaCard(0), currentArea.name + "0");
+            SaveGame();
         }
 
         /// <summary>
@@ -1615,6 +1655,7 @@ namespace Events {
         /// </summary>
         /// <returns></returns>
         public IEnumerator DisplayGameOver(bool isWin) {
+            GameManager.instance.DeleteSaveData();
             timer.StartTimer(false);;
             if (isWin == false) {
                 SetAllButtonsInteractable(false);
@@ -1911,10 +1952,10 @@ namespace Events {
         }
 
         public void RestartRun() {
+            GameManager.instance.DeleteSaveData();
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
-
-            string[] partyComposition = PartyManager.instance.GetPartyMembers().Select(x => x.className).ToArray();
+            string[] partyComposition = PartyManager.instance.GetPartyComposition();
             PartyManager.instance.ResetGame();
             foreach (string pm in partyComposition) {
                 PartyManager.instance.AddPartyMember(pm);
@@ -1928,6 +1969,7 @@ namespace Events {
         public void EndRun() {
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
+            PartyManager.instance.ResetGame();
             GameManager.instance.StartLoadNextScene("MainMenu");
         }
 
@@ -1961,8 +2003,24 @@ namespace Events {
             PartyManager.instance.RotatePartyMember(amount);
         }
 
+        /// <summary>
+        /// Save all data relevant to continuing a playthrough at a later time
+        /// </summary>
         public void SaveGame() {
-            SaveData data = new SaveData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), infoPanel.quests);
+            ItemData pastItemData = null;
+            if (GameManager.instance.pastItem != null) {
+                if (GameManager.instance.pastItem.type == ItemConstants.CANDLE) {
+                    pastItemData = ((Candle)GameManager.instance.pastItem).GetItemData();
+                }
+                else {
+                    pastItemData = GameManager.instance.pastItem.GetItemData();
+                }
+            }
+
+            SaveData data = new SaveData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
+            gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
+            infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.monstersKilled,
+            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, pastItemData, timer.GetElapsedTime(), midPoints);
             GameManager.instance.SaveGame(data);
         }
 

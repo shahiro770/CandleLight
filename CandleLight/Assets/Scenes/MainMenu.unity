@@ -10721,6 +10721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps: {fileID: 737737005}
+  continueButton: {fileID: 1441400809}
 --- !u!222 &1096479831
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12913,20 +12914,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 925562035}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1096479827}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1096479829}
+        m_MethodName: ContinueGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

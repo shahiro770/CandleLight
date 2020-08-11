@@ -52483,7 +52483,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'End Run
+  m_text: 'Main Menu
 
 '
   m_isRightToLeft: 0
@@ -52555,7 +52555,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1635029621}
-    characterCount: 8
+    characterCount: 10
     spriteCount: 0
     spaceCount: 2
     wordCount: 2
@@ -52598,7 +52598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: end_run_button
+  key: main_menu_button
   meshText: {fileID: 1635029621}
   textPreset: 0
 --- !u!1 &1637168822
@@ -59252,7 +59252,7 @@ GameObject:
   - component: {fileID: 1889182666}
   - component: {fileID: 1889182665}
   m_Layer: 5
-  m_Name: EndButton
+  m_Name: MainMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59275,8 +59275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 345, y: -230}
-  m_SizeDelta: {x: 210, y: 60}
+  m_AnchoredPosition: {x: 330, y: -230}
+  m_SizeDelta: {x: 260, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1889182665
 MonoBehaviour:

@@ -69,7 +69,7 @@ namespace Characters {
         /// <param name="MP"> Max mana points </param>
         /// <param name="stats"> baseSTR, baseDEX, baseINT, and baseLUK </param>
         /// <param name="attacks"> List of known attacks (length 4) </param>
-        public virtual void Init(int LVL, int HP, int MP, int[] stats, Attack[] attacks) {
+        public virtual void Init(int LVL, int[] stats, Attack[] attacks) {
             this.LVL = LVL;
             this.baseSTR = stats[0];
             STR = baseSTR;

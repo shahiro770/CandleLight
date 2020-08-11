@@ -92,13 +92,14 @@ namespace PlayerUI {
             if (newItem != null) {
                 GameObject newItemDisplay = Instantiate(itemDisplayPrefab);
                 currentItemDisplay = newItemDisplay.GetComponent<ItemDisplay>();
-                currentItemDisplay.Init(newItem);
+                currentItemDisplay.InitInstant(newItem);
                 currentItemDisplay.parentSlot = this;
 
                 newItemDisplay.transform.SetParent(this.transform, false);
                 // hide the defaultSprite if it shows
                 defaultSpriteRenderer.color = new Color(defaultSpriteRenderer.color.r, defaultSpriteRenderer.color.g, defaultSpriteRenderer.color.b, 0);    
 
+                newItem.CalculateWAXValue();
                 t.SetImageDisplayBackgroundWidth(imgBackground.rectTransform.sizeDelta.x);
                 SetTooltipText();
 
@@ -617,7 +618,7 @@ namespace PlayerUI {
             float prevAlpha = imgCanvas.alpha;
             float newAlpha;
             
-            if (currentItemDisplay != null) {
+            if (currentItemDisplay != null && targetAlpha == 0) {
                 currentItemDisplay.SetVisible(false);
             }
             while (imgCanvas.alpha != targetAlpha) {

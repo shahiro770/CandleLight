@@ -74,5 +74,15 @@ namespace Party {
                 }
             }
         }
+
+        /// <summary>
+        /// PartyMember data constructor for when the player is in the tutorial
+        /// (Contiuning the game from the tutorial will not have saved the second partyMember
+        /// as it they aren't in the party at the start)
+        /// </summary>
+        /// <param name="className"></param>
+        public PartyMemberData(string className) {
+            this.className = className;
+        }
     }
 }

@@ -29,6 +29,15 @@ namespace Items {
         }
 
         /// <summary>
+        /// Data constructor
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public Special(ItemData i) : base(i.nameID, i.type, i.subType) {
+            itemSprite = Resources.Load<Sprite>("Sprites/Items/Special/" + nameID);
+        }
+
+        /// <summary>
         /// Returns how much an item is worth
         /// </summary>
         /// <returns></returns>

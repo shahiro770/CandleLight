@@ -88,6 +88,31 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Return all quest data
+        /// </summary>
+        /// <returns></returns>
+        public string[][] GetData() {
+            string[][] questData = new string[quests.Length][];
+            for (int i = 0; i < this.quests.Length; i++) {
+                questData[i] = quests[i].GetQuestData();
+            }
+
+            return questData;
+        }
+
+        /// <summary>
+        /// Load all quest data
+        /// </summary>
+        /// <param name="questData"></param>
+        public void LoadData(string[][] questData) {
+            for (int i = 0; i < questData.Length; i++) {
+                if (questData[i][0] != "") {
+                    AddQuest(questData[i][0], questData[i][1], questData[i][2]);
+                }
+            }
+        }
+
+        /// <summary>
         /// Colours the buttons that are themed by the area
         /// TODO: This fails if the eventManager doesn't have the area (which it doesn't while loading)
         /// Will need the area to be loaded in a higher state such as gameManager for this to work 

@@ -34,12 +34,11 @@
 		{ "key": "no_button", "value": "No" },
 		{ "key": "1x_button", "value": "1x" },
 		{ "key": "2x_button", "value": "2x" },
-		{ "key": "end_run_button", "value": "End Run" },
 		{ "key": "restart_button", "value": "Restart" },
 
 		{ "key": "game_over_title", "value": "Game Over" },
 		{ "key": "game_completed_title", "value": "Game Completed" },
-		{ "key": "game_over_des", "value": "Holst and Flaytz died in a wasteland,\nunable to transport the cure.\nSydra fell four days later." },
+		{ "key": "game_over_des", "value": "Holst and Flaytz died in a wasteland,\n.\nSydra fell four days later." },
 		{ "key": "game_completed_des", "value": "Holst and Flaytz delivered the cure, allowing Sydra to withstand the plague.\nAt least for now." },
 		{ "key": "enemies_killed_title", "value": "Enemies Killed:" },
 		{ "key": "WAX_obtained_title", "value": "WAX Obtained:" },

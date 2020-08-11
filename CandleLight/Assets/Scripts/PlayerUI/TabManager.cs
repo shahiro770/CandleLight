@@ -53,8 +53,10 @@ namespace PlayerUI {
             if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {                   // panels aren't opened immediatel in the tutorial
                 if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                     OpenPanel(0);
-                    ShowSkillPointsInTab(1);
-                    HighlightTab(1);
+                    if (PartyManager.instance.GetSkillPointsAll() > 0) {    // only excite if there are skill points unspent (which may not be the case on continue)
+                        ShowSkillPointsInTab(1);
+                        HighlightTab(1);
+                    }
                 }
                 else {  // left tabManager
                     OpenPanel(0);

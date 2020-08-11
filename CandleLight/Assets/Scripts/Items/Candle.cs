@@ -21,8 +21,7 @@ namespace Items {
         public Attack a;
         public bool isUsable;
         public int uses = 0;
-
-        private int maxUses = 0;
+        public int maxUses = 0;
 
         /// <summary>
         /// Candle item constructor
@@ -74,6 +73,31 @@ namespace Items {
             uses = values[1];
             maxUses = uses;
             CalculateWAXValue();
+        }
+
+        /// <summary>
+        /// Data constructor
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public Candle(ItemData i) : base (i.nameID, i.type, i.subType) {
+            className = i.className;
+            effects = i.effects;
+            values = i.values;
+            a = i.a;
+
+            itemSprite = Resources.Load<Sprite>("Sprites/Items/Candles/" + nameID);
+            activeSprite = Resources.Load<Sprite>("Sprites/Items/Candles/" + nameID + "Active");
+            usedSprite = Resources.Load<Sprite>("Sprites/Items/Candles/" + nameID + "Used");
+
+            uses = i.uses;
+            maxUses = i.maxUses;
+            if (i.uses > 0) {
+                isUsable = true;
+            }
+            else {
+                isUsable = false;
+            }
         }
 
         /// <summary>
@@ -222,6 +246,14 @@ namespace Items {
             }
 
             return effectKeys;
+        }
+
+        /// <summary>
+        /// Returns itemData that is specific for candles
+        /// </summary>
+        /// <returns></returns>
+        public override ItemData GetItemData() {
+            return new ItemData(this);
         }
     }
 }

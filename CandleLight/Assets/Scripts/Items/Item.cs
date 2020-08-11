@@ -116,7 +116,7 @@ namespace Items {
         /// Returns item data for saving
         /// </summary>
         /// <returns></returns>
-        public ItemData GetItemData() {
+        public virtual ItemData GetItemData() {
             return new ItemData(this);
         }
     }

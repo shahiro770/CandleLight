@@ -9,9 +9,6 @@
 */
 
 using Attack = Combat.Attack;
-using SkillConstants = Constants.SkillConstants;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Skills {
@@ -37,16 +34,16 @@ namespace Skills {
         public string desKey;
         public bool skillEnabled;
         
-        public Skill(string name, int type, int upgradeSkill, Attack a, Color skillColour) {
+        public Skill(string name, int type, int upgradeSkill, Attack a, float skillR, float skillG, float skillB, float skillA) {
             this.name = name;
             this.type = type;
             this.upgradeSkill = upgradeSkill;
             this.a = a;
-            this.skillColour = skillColour;
             this.skillR = skillColour.r;
             this.skillG = skillColour.g;
             this.skillB = skillColour.b;
             this.skillA = skillColour.a;
+            skillColour = new Color(skillR, skillG, skillB, skillA);
 
             titleKey = name + "_skill_title";
             subKey = name + "_skill_sub";
@@ -54,17 +51,11 @@ namespace Skills {
             skillEnabled = false;
         }
 
-        public Skill(string name, int type, int upgradeSkill, Attack a, float skillR, float skillG, float skillB, float skillA, bool skillEnabled) {
-            this.name = name;
-            this.type = type;
-            this.upgradeSkill = upgradeSkill;
-            this.a = a;
-            this.skillColour = new Color(skillR, skillG, skillB, skillA);
-
-            titleKey = name + "_skill_title";
-            subKey = name + "_skill_sub";
-            desKey = name + "_skill_des";
-            this.skillEnabled = skillEnabled;
+        /// <summary>
+        /// Sets the skill colour using the saved float values
+        /// </summary>
+        public void InitColour() {
+            skillColour = new Color(skillR, skillG, skillB, skillA);
         }
     }
 }

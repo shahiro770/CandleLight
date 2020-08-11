@@ -13,6 +13,7 @@ using Constants;
 using Database;
 using Items;
 using Localization;
+using Party;
 using System.Collections; 
 using System.IO;
 using System.Linq;
@@ -37,7 +38,8 @@ namespace General {
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
-        public string areaName = "GreyWastes";          /// <value> Name of area being explored </value>
+        public SaveData data;                           /// <value> Data that was loaded from a save file</value>
+        public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
         public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code </value>
@@ -45,7 +47,6 @@ namespace General {
         public int monstersKilled = 0;                  /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
-        public int editorAreaProgress = 1;              /// <value> Use this to change the areaProgress at runtime </value>
         public bool[] tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
 
         private string activeScene = "Game";            /// <value> Current scene being displayed </value>
@@ -69,6 +70,7 @@ namespace General {
             
             mainCamera = Camera.main;                   // store reference to camera for other game objects to obtain
             DB = new GameDB();
+            data = null;
         }
 
         /// <summary>
@@ -118,6 +120,49 @@ namespace General {
 
             formatter.Serialize(s, data);
             s.Close();
+        }
+
+        /// <summary>
+        /// Load game data, to continue where the player left off
+        /// </summary>
+        public void LoadGame() {
+            string path = Application.persistentDataPath + "/save.cndl";
+            if (File.Exists(path)) {
+                BinaryFormatter formatter  = new BinaryFormatter();
+                FileStream s = new FileStream(path, FileMode.Open);
+
+                data = formatter.Deserialize(s) as SaveData;
+                s.Close();
+
+                tutorialTriggers = data.tutorialTriggers;
+                
+                if (data.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {
+                    PartyManager.instance.LoadData(data);
+                }
+                // If in the tutorial, game is effecitvely a restart with tutorial on
+                else if (areaName == "GreyWastes") {
+                    PartyManager.instance.ResetGame();
+                    foreach (PartyMemberData pmData in data.partyMemberDatas) {
+                        print(pmData.className);
+                        PartyManager.instance.AddPartyMember(pmData.className);
+                    }
+                }
+                StartLoadNextScene("area");
+            }
+            else {
+                Debug.LogError("No save data found");
+            }
+        }
+        
+        /// <summary>
+        /// Delete run-specific save data
+        /// </summary>
+        public void DeleteSaveData() {
+            string path = Application.persistentDataPath + "/save.cndl";
+            if (File.Exists(path)) {
+                File.Delete(path);
+            }
+            data = null;
         }
 
         /// <summary>

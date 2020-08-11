@@ -417,7 +417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &168779443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,14 +791,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barAnimator: {fileID: 0}
-  frontFill: {fileID: 236172586}
+  frontFill: {fileID: 0}
   text: {fileID: 0}
   <maxAmount>k__BackingField: 0
   <currentAmount>k__BackingField: 0
-  lerpSpeed: 2.5
+  lerpSpeed: 0
   lerpSpeedFast: 7
   lerpSpeedSlow: 3.5
-  fillAmount: 100
+  fillAmount: 0
 --- !u!114 &1070164199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,17 +939,17 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 998c798c4282a424b9d40fbd9a1e70a4, type: 3}
     source: {fileID: 0}
     volume: 0
-    pitch: 1
+    pitch: 0
     loop: 0
     type: 0
   - name: pathNormalGreyWastes
-    clip: {fileID: 8300000, guid: bc63a640ee66743bfaf61369b5a7dfa3, type: 3}
+    clip: {fileID: 8300000, guid: 9e80fd43fdac9442fa0481d8b2717573, type: 3}
     source: {fileID: 0}
     volume: 0
-    pitch: 1
-    loop: 1
-    type: 1
-  bgmVolume: 0.75
+    pitch: 0
+    loop: 0
+    type: 0
+  bgmVolume: 1
   sfxVolume: 1
 --- !u!1 &1495799579
 GameObject:
@@ -1203,6 +1203,44 @@ MonoBehaviour:
   loadingBarFill: {fileID: 236172586}
   tipText: {fileID: 1566310744}
   loadingFlameSpriteRenderer: {fileID: 17016716}
+  data:
+    partyMemberDatas: []
+    spareGear: []
+    spareCandles: []
+    spareSpecials: []
+    pastItem:
+      nameID: 
+      className: 
+      effects: []
+      values: 
+      effectsNum: 0
+      a:
+        <animationClipName>k__BackingField: 
+        <costType>k__BackingField: 
+        <nameKey>k__BackingField: 
+        <name>k__BackingField: 
+        <type>k__BackingField: 
+        <costFormula>k__BackingField: 
+        <damageFormula>k__BackingField: 
+        <scope>k__BackingField: 
+        <seNameKey>k__BackingField: 
+        <seName>k__BackingField: 
+        <seDuration>k__BackingField: 0
+        <baseSeChance>k__BackingField: 0
+        <seChance>k__BackingField: 0
+        attackValue: 0
+        costValue: 0
+      uses: 0
+      maxUses: 0
+    midPoints: 
+    tutorialTriggers: 
+    elapsedTime: 0
+    WAX: 0
+    subAreaProgress: 0
+    areaProgress: 0
+    monstersKilled: 0
+    WAXobtained: 0
+    totalEvents: 0
   areaName: GreyWastes
   canvasWidth: 960
   canvasHeight: 540
@@ -1211,7 +1249,6 @@ MonoBehaviour:
   monstersKilled: 0
   WAXobtained: 0
   totalEvents: 0
-  editorAreaProgress: 1
   tutorialTriggers: 010101010101010101
 --- !u!4 &1827646565
 Transform:

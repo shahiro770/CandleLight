@@ -61,5 +61,13 @@ namespace PlayerUI {
         public string GetTime() {
             return timeCounter.ToString(@"hh\:mm\:ss\.ff");
         }
+        
+        public float GetElapsedTime() {
+            return elapsedTime;
+        }
+
+        public void SetElapseTimed(float t) {
+            elapsedTime = t;
+        }
     }
 }

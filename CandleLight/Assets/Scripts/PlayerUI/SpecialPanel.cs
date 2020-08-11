@@ -109,6 +109,19 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Load saved item data into spare slots
+        /// </summary>
+        /// <param name="specialData"></param>
+        public void LoadData(ItemData[] specialData) {
+            for (int i = 0; i < specialData.Length; i++) {  
+                if (specialData[i] != null) {
+                    Special s = new Special(specialData[i]);
+                    spare[i].PlaceItemInstant(s);
+                }
+            }
+        }
+
+        /// <summary>
         /// Sets if all of the item slots can have their items taken
         /// </summary>
         /// <param name="value"></param>

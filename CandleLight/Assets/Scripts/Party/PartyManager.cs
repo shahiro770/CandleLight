@@ -87,6 +87,25 @@ namespace Party {
             activePartyMember = GetFirstPartyMemberAlive();
         }
 
+        /// <summary>
+        /// Adds a partyMember to the list of partyMembers using saved data
+        /// </summary>   
+        /// <param name="className"> Class of the partyMember to be added </param>
+        public void AddPartyMember(PartyMemberData pmData) {
+            if (GetNumPartyMembers() < maxPartyMembers) {
+                GameObject newMember = Instantiate(partyMember, new Vector3(0f,0f,0f), Quaternion.identity);
+                PartyMember pmComponent =  newMember.GetComponent<PartyMember>();
+                pmComponent.Init(pmData);
+                newMember.transform.SetParent(gameObject.transform, false);
+                pmComponent.ID = (ID++);
+                pmComponent.GenerateName(GetNumPartyMembers());
+                partyMembersAlive.Add(pmComponent);
+                partyMembersAll.Add(pmComponent);
+            }
+
+            activePartyMember = GetFirstPartyMemberAlive();
+        }
+
         public void AddStoredPartyMember() {
             AddPartyMember(storedPartyMember);
             EventManager.instance.SetPartyMembertNotification(partyMembersAll[1].pmName);
@@ -143,6 +162,7 @@ namespace Party {
         /// Removes all partyMembers from PartyMembers list
         /// </summary>
         public void ResetGame() {
+            shouldStore = true;
             WAX = 0;
             ID = 0;
             for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
@@ -151,6 +171,25 @@ namespace Party {
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
+        }
+
+        /// <summary>
+        /// Load partymanager specific values from saveData
+        /// </summary>
+        /// <param name="data"></param>
+        public void LoadData(SaveData data) {
+            WAX = data.WAX;
+            ID = 0;
+            for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
+                Destroy(partyMembersAll[i].gameObject); 
+            }
+            partyMembersAll.Clear();
+            partyMembersAlive.Clear();
+            partyMembersDead.Clear();
+
+            foreach (PartyMemberData pmData in data.partyMemberDatas) {
+                PartyManager.instance.AddPartyMember(pmData);
+            }
         }
         
         /// <summary>
@@ -682,12 +721,50 @@ namespace Party {
         /// </summary>
         /// <returns></returns>
         public PartyMemberData[] GetPartyMemberDatas() {
-            PartyMemberData[] partyMemberDatas = new PartyMemberData[partyMembersAll.Count];
-            for (int i = 0; i < partyMemberDatas.Length; i++) {
-                partyMemberDatas[i] = new PartyMemberData(partyMembersAll[i]);
+            PartyMemberData[] partyMemberDatas;
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) { 
+                partyMemberDatas = new PartyMemberData[partyMembersAll.Count + 1];
+
+                for (int i = 0; i < partyMemberDatas.Length - 1; i++) {
+                    partyMemberDatas[i] = new PartyMemberData(partyMembersAll[i]);
+                }
+                // if in tutorial, the second partyMember joins later, hence the initial save doesn't save their className (which is all that is needed for tutorial purposes)
+                partyMemberDatas[partyMemberDatas.Length - 1] = new PartyMemberData(storedPartyMember);
+            }
+            else {
+                partyMemberDatas = new PartyMemberData[partyMembersAll.Count];
+
+                for (int i = 0; i < partyMemberDatas.Length; i++) {
+                    partyMemberDatas[i] = new PartyMemberData(partyMembersAll[i]);
+                }
             }
 
             return partyMemberDatas;
+        }
+
+        /// <summary>
+        /// Get all the class names of partyMembers
+        /// This is only used if the player tries to restart the tutorial segment
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetPartyComposition() {
+            string[] partyComposition;
+
+            // if in tutorial, the second partyMember joins later, so need to use storedPartyMember if that partyMember hasn't joined yet
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true && storedPartyMember != null) { 
+                partyComposition = new string[partyMembersAll.Count + 1];
+                partyComposition[0] = partyMembersAll[0].className;
+                partyComposition[1] = storedPartyMember;
+            }
+            else {
+                partyComposition = new string[partyMembersAll.Count];
+
+                for (int i = 0; i < PartyManager.instance.GetPartyMembers().Count - 1; i++) {
+                   partyComposition[i] = partyMembersAll[i].className;
+                }
+            }
+
+            return partyComposition;
         }
     }
 }

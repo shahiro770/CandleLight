@@ -114,8 +114,15 @@ COOKING
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Feature: Add glow to some stuff
 Feature: Saving and Loading
+    X CalculateWAXValue is broken on load
+    X Items in stored slots are alpha 0 on load
+    X Candles have no uses on load
+    X Orange colour on skillsTab on load
+    Main
+    X Record time keeper item in save data
+    Need seperate save for global stats
+    Add save tutorial to inform when game saves
 UI: Slowdown some animations
-Bug: Swapping between pms on the left doesn't swap highlights for skills
 
 NEAR FUTURE
 ----------------
@@ -128,12 +135,13 @@ Feature: Ending cutscenes
 Fix: ENUM EVERYTHING
 UI: Make monsterIcons have correct pixel sizing (rn its jank)
 UI: Redo sprites for creatures that are 192 x 192
+UI: Make custom colouring for same class partyMembers
 Balance: Reevaluate all interaction thresholds
-Bug: Options menu tooltips need to be repositioned
 
 FUTURE/MAYBE
 ------------
 UI: Red colour wax if player can't afford
+Bug: Options menu tooltips need to be repositioned
 QOL: Have skills panel swap to active party member with skill points unspecced
 Fix: Drag to item should also work
 Feature: Make click on bag (AND BAG ONLY) do something

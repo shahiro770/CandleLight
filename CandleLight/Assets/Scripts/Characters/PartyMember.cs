@@ -58,7 +58,7 @@ namespace Characters {
         /// <param name="stats"> STR, INT, DEX, LUK </param>
         /// <param name="attacks"> Array of known attacks (length 4)</param>
         public void Init(string[] personalInfo, int LVL, int EXP, int CHP, int CMP, int[] stats, Attack[] attacks, Skill[] skills) {
-            base.Init(LVL, CHP, CMP, stats, attacks);
+            base.Init(LVL, stats, attacks);
             CalculateStats(true);
             this.EXP = EXP;
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
@@ -71,17 +71,50 @@ namespace Characters {
             pmvc.Init(this);
         }
 
-        public void Init(PartyMember pm) {
-            base.Init(pm.LVL, pm.CHP, pm.CMP, new int[] { pm.STR, pm.DEX, pm.INT, pm.LUK }, pm.attacks);
-            this.EXP = pm.EXP;
+        /// <summary>
+        /// Initialize a partyMember using saved data
+        /// </summary>
+        /// <param name="pmData"></param>
+        public void Init(PartyMemberData pmData) {
+            base.Init(pmData.LVL, new int[] { pmData.baseSTR, pmData.baseDEX, pmData.baseINT, pmData.baseLUK }, pmData.attacks);
+            this.CHP = pmData.CHP;
+            this.CMP = pmData.CMP;
+            this.EXP = pmData.EXP;
             this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
-            this.className = pm.className;
-            this.subClassName = pm.subClassName;
-            this.race = pm.race;
-            this.skills = pm.skills;
-            this.skillPoints = pm.skillPoints;
+            this.className = pmData.className;
+            this.subClassName = pmData.subClassName;
+            this.race = pmData.race;
+            this.skills = pmData.skills;
+            foreach (Skill s in skills) {   // can't serialize colours, so need to create colour from float values saved in skills
+                if (s != null) {
+                    s.InitColour();
+                }
+            }
+            this.skillPoints = pmData.skillPoints;
 
             pmvc.Init(this);
+        }
+
+        /// <summary>
+        /// Equip a partyMember's gear and candles using saved data
+        /// </summary>
+        /// <param name="pmData"></param>
+        public void EquipLoadedItems(PartyMemberData pmData) {
+            if (pmData.equippedGear[0] != null) {
+                EquipGear(new Gear(pmData.equippedGear[0]), "weapon");
+            }
+            if (pmData.equippedGear[1] != null) {
+                EquipGear(new Gear(pmData.equippedGear[1]), "secondary");
+            }
+            if (pmData.equippedGear[2] != null) {
+                EquipGear(new Gear(pmData.equippedGear[2]), "armour");
+            }
+
+            for (int i = 0; i < pmData.equippedCandles.Length; i++) {
+                if (pmData.equippedCandles[i] != null) {
+                    EquipCandle(new Candle(pmData.equippedCandles[i]), i);
+                }
+            }
         }
 
         /// <summary>
@@ -495,7 +528,7 @@ namespace Characters {
         /// <param name="pm"></param>
         /// <param name="summoner"></param>
         public void InitSummon(PartyMember pm, PartyMember summoner) {
-            base.Init(pm.LVL, pm.CHP, pm.CMP, new int[] { pm.STR, pm.DEX, pm.INT, pm.LUK }, pm.attacks);
+            base.Init(pm.LVL, new int[] { pm.STR, pm.DEX, pm.INT, pm.LUK }, pm.attacks);
             this.EXP = 0;
             this.className = pm.className;
             this.subClassName = pm.subClassName;

@@ -121,6 +121,10 @@ namespace PlayerUI {
             return false;
         }
 
+        /// <summary>
+        /// Returns candle data for saving
+        /// </summary>
+        /// <returns></returns>
         public ItemData[] GetSpareCandleData() {
             ItemData[] spareCandles = new ItemData[spare.Length];
             for (int i = 0; i < spareCandles.Length; i++) {  
@@ -130,6 +134,19 @@ namespace PlayerUI {
             }
 
             return spareCandles;
+        }
+
+        /// <summary>
+        /// Load invento save data into spare slots
+        /// </summary>
+        /// <param name="candleData"></param>
+        public void LoadData(ItemData[] candleData) {
+            for (int i = 0; i < candleData.Length; i++) {  
+                if (candleData[i] != null) {
+                    Candle c = new Candle(candleData[i]);
+                    spare[i].PlaceItemInstant(c);
+                }
+            }
         }
 
         /// <summary>

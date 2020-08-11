@@ -63,10 +63,43 @@ namespace PlayerUI {
                 displayedSpecial = (Special)displayedItem;
             }
             itemSprite.sprite = displayedItem.itemSprite;
-            itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255);
-            
+            // itemSprite.color = new Color(itemSprite.color.r, itemSprite.color.g, itemSprite.color.b, 255); I have no clue why this is here
+
             gameObject.SetActive(true);
             SetVisible(true);
+        }
+
+        /// <summary>
+        /// Initialize the itemDisplay to show an item placed into the item slot instantly (no special fade effects)
+        /// </summary>
+        /// <param name="displayedItem"> Item to display </param>
+        /// <param name="startSlot"></param>
+        public void InitInstant(Item displayedItem) {
+            displayedItem.id = this;
+            this.displayedItem = displayedItem;
+            this.type = displayedItem.type;
+            this.subType = displayedItem.subType;
+
+            if (type == ItemConstants.CONSUMABLE) {
+                displayedConsumable = (Consumable)displayedItem;
+                displayedConsumable.UpdateWAXValue(PartyManager.instance.WAXDropMultiplier);
+            }
+            else if (type == ItemConstants.GEAR) {
+                displayedGear = (Gear)displayedItem;
+                className = displayedItem.className;    // consumables will not be class restricted for now
+            }
+            else if (type == ItemConstants.CANDLE) {
+                displayedCandle = (Candle)displayedItem;
+                className = displayedItem.className;
+            }
+            else if (type == ItemConstants.SPECIAL) {
+                displayedSpecial = (Special)displayedItem;
+            }
+            itemSprite.sprite = displayedItem.itemSprite;
+
+            gameObject.SetActive(true);
+            imgCanvas.alpha = 1f;
+            itemSprite.color = new Color(1f, 1f, 1f, 1f);
         }
 
         /// <summary>
