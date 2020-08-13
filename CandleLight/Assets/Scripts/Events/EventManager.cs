@@ -416,7 +416,6 @@ namespace Events {
         /// </summary>
         public void GetStartEventTutorial() {
             currentEvent = currentSubArea.GetEvent(areaProgress);
-            SaveGame();
             StartCoroutine(DisplayEvent());
         }
 
@@ -521,7 +520,7 @@ namespace Events {
                 return true;
             }
             else if (tutorialProg == 12 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.INFOPANEL) {
-                SetTutorialNotification("info0", -1);
+                SetTutorialNotification("info0");
                 return true;
             }
 
@@ -677,6 +676,11 @@ namespace Events {
             }
 
             PartyManager.instance.RegenParty();
+            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
+            && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] == true
+            && areaProgress == 2) {
+                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] = false;
+            }
 
             if (currentEvent.type == EventConstants.COMBAT) {
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
@@ -1578,11 +1582,12 @@ namespace Events {
                     emission1.rateOverTime = 15;
                     main0.startLifetime = 1.25f;
                     main1.startLifetime = 1.25f;
+                    StartCoroutine(FadeParticles(1));
                     break;
                 case 5:
                 case 8:
                     wz0.windMain = 15;
-                    wz1.windMain = 0;
+                    wz1.windMain = 80;
                     emission0.rateOverTime = 6;
                     emission1.rateOverTime = 10;
                     main0.startLifetime = 3f;
@@ -1668,7 +1673,8 @@ namespace Events {
                     midPoints.Add(-1);
                 }
             }
-            gameOverMenu.Init(isWin, midPoints, subAreaProgress, timer.GetTime());
+
+            gameOverMenu.Init(isWin, midPoints, currentArea.name + currentArea.GetSubAreaIndex(currentSubArea.name), subAreaProgress, timer.GetTime());
             gameOverMenu.SetVisible(true);
         }
 

@@ -20,7 +20,8 @@ namespace Constants {
             firstCandleCombat,  /// <value> Flag for if the player hasn't brought a candle into combat for the first time </value>
             firstChampion,      /// <value> Flag for if the player hasn't encountered their first champion monster </value>
             firstFailedSkillDisable,    /// <value> Flag for if the player fails to disable a skill (due to it being required to enable a column) </value>
-            firstFailedSkillEnable      /// <value> Flag for if the player fails to enable a skill (due to have too many active skills) </value>
+            firstFailedSkillEnable,     /// <value> Flag for if the player fails to enable a skill (due to have too many active skills) </value>
+            thirdPivotalMomentreached   /// <value> Flag for if player reached the third pivotal moment (path split between hill country and wraithsway) for the first time</value>
         };
     }
 }

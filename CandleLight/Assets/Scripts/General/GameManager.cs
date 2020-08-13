@@ -5,6 +5,7 @@
 * 
 * The GameManager class is used as the overarching manager for scenes and other manager objects
 * It is held within the Game scene where it can always be accessed globally.
+* IMPORTANT: Need to change tutorialTriggers in editor as well if they're modified (its reatrded cause they need to be serialized)
 *
 */
 
@@ -143,7 +144,6 @@ namespace General {
                 else if (areaName == "GreyWastes") {
                     PartyManager.instance.ResetGame();
                     foreach (PartyMemberData pmData in data.partyMemberDatas) {
-                        print(pmData.className);
                         PartyManager.instance.AddPartyMember(pmData.className);
                     }
                 }

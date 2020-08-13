@@ -7988,8 +7988,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Holst and Flaytz die in a wasteland,\nunable to transport the cure.\nUmaria
-    fell a day later.
+  m_text: You and Flaytz died in a wasteland,\nunable to transport the cure.\nSydra
+    fell four days later.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
@@ -8028,7 +8028,7 @@ MonoBehaviour:
   m_textAlignment: 514
   m_characterSpacing: 10
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 7
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -8059,7 +8059,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 134487653}
-    characterCount: 91
+    characterCount: 93
     spriteCount: 0
     spaceCount: 16
     wordCount: 17

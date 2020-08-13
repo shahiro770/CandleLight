@@ -24,26 +24,26 @@ namespace Skills {
         public Attack storedAttack;     /// <value> Store attack being replaced </value>
         [System.NonSerialized] public Color skillColour;
 
-        public float skillR;            /// <value> Colour componnets are stored like this for serialization</value>
-        public float skillG;
-        public float skillB;
-        public float skillA;
+        public byte skillR;            /// <value> Colour componnets are stored like this for serialization</value>
+        public byte skillG;
+        public byte skillB;
+        public byte skillA;
 
         public string titleKey;
         public string subKey; 
         public string desKey;
         public bool skillEnabled;
         
-        public Skill(string name, int type, int upgradeSkill, Attack a, float skillR, float skillG, float skillB, float skillA) {
+        public Skill(string name, int type, int upgradeSkill, Attack a, byte skillR, byte skillG, byte skillB, byte skillA) {
             this.name = name;
             this.type = type;
             this.upgradeSkill = upgradeSkill;
             this.a = a;
-            this.skillR = skillColour.r;
-            this.skillG = skillColour.g;
-            this.skillB = skillColour.b;
-            this.skillA = skillColour.a;
-            skillColour = new Color(skillR, skillG, skillB, skillA);
+            this.skillR = skillR;
+            this.skillG = skillG;
+            this.skillB = skillB;
+            this.skillA = skillA;
+            skillColour = new Color32(skillR, skillG, skillB, skillA);
 
             titleKey = name + "_skill_title";
             subKey = name + "_skill_sub";
@@ -55,7 +55,7 @@ namespace Skills {
         /// Sets the skill colour using the saved float values
         /// </summary>
         public void InitColour() {
-            skillColour = new Color(skillR, skillG, skillB, skillA);
+            skillColour = new Color32(skillR, skillG, skillB, skillA);
         }
     }
 }

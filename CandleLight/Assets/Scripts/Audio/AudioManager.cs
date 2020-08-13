@@ -43,6 +43,7 @@ namespace Audio {
                 }
                 else {
                     s.source.volume = bgmVolume;
+                    s.source.loop = true;
                     currentBGM = s;
                 }
                 s.source.Play();

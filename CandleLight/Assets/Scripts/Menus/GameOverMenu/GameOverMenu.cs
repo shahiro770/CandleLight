@@ -41,7 +41,7 @@ namespace Menus.GameOverMenu {
         /// <param name="isWin"> true if game was won (player reached last subArea), false otherwise </param>
         /// <param name="midPoints"> List of subArea indexes that were visited </param>
         /// <param name="subAreaProg"> Current subArea's progress</param>
-        public void Init(bool isWin, List<int> midPoints, int subAreaProg, string timeString) {
+        public void Init(bool isWin, List<int> midPoints, string cardName, int subAreaProg, string timeString) {
             gameObject.SetActive(true);
             this.isWin = isWin;
 
@@ -52,7 +52,7 @@ namespace Menus.GameOverMenu {
             }
             else {
                 gameOverTitle.SetKey("game_over_title");
-                gameOverDes.SetKey("game_over_des");
+                gameOverDes.SetKey("game_over_" + cardName);
                 scoreTitle.SetKey("score_title");
             }
 

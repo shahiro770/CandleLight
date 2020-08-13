@@ -105,6 +105,7 @@ UI: Make taunt icon smile
 Feature: Add the first BGM
 Feature: Add a shop to the right side's final area
 Bug: Make final pop time faster on game complete screen
+Feature: Add CandleMan event and some source of candles on the right (maybe add one to the doll pouch)
 
 JUST FINISHED
 -------------
@@ -118,7 +119,6 @@ Feature: Saving and Loading
     X Items in stored slots are alpha 0 on load
     X Candles have no uses on load
     X Orange colour on skillsTab on load
-    Main
     X Record time keeper item in save data
     Need seperate save for global stats
     Add save tutorial to inform when game saves
@@ -126,7 +126,6 @@ UI: Slowdown some animations
 
 NEAR FUTURE
 ----------------
-Feature: Add CandleMan event and some source of candles on the right (maybe add one to the doll pouch)
 Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
 Feature: Add high scores
@@ -135,8 +134,10 @@ Feature: Ending cutscenes
 Fix: ENUM EVERYTHING
 UI: Make monsterIcons have correct pixel sizing (rn its jank)
 UI: Redo sprites for creatures that are 192 x 192
+UI: Redo fireball, bash, and slash sprites
 UI: Make custom colouring for same class partyMembers
 Balance: Reevaluate all interaction thresholds
+Bug: Tooltip dies
 
 FUTURE/MAYBE
 ------------

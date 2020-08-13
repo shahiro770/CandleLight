@@ -99,11 +99,22 @@ namespace Party {
                 newMember.transform.SetParent(gameObject.transform, false);
                 pmComponent.ID = (ID++);
                 pmComponent.GenerateName(GetNumPartyMembers());
-                partyMembersAlive.Add(pmComponent);
+                if (pmComponent.CHP == 0) {
+                    partyMembersDead.Add(pmComponent);
+                }
+                else {
+                    partyMembersAlive.Add(pmComponent);
+                    
+                }
                 partyMembersAll.Add(pmComponent);
             }
 
-            activePartyMember = GetFirstPartyMemberAlive();
+            if (partyMembersAlive.Count == 0) {
+                activePartyMember = partyMembersAll[0];
+            }
+            else {
+                activePartyMember = GetFirstPartyMemberAlive();
+            }
         }
 
         public void AddStoredPartyMember() {
@@ -722,21 +733,10 @@ namespace Party {
         /// <returns></returns>
         public PartyMemberData[] GetPartyMemberDatas() {
             PartyMemberData[] partyMemberDatas;
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) { 
-                partyMemberDatas = new PartyMemberData[partyMembersAll.Count + 1];
+            partyMemberDatas = new PartyMemberData[partyMembersAll.Count];
 
-                for (int i = 0; i < partyMemberDatas.Length - 1; i++) {
-                    partyMemberDatas[i] = new PartyMemberData(partyMembersAll[i]);
-                }
-                // if in tutorial, the second partyMember joins later, hence the initial save doesn't save their className (which is all that is needed for tutorial purposes)
-                partyMemberDatas[partyMemberDatas.Length - 1] = new PartyMemberData(storedPartyMember);
-            }
-            else {
-                partyMemberDatas = new PartyMemberData[partyMembersAll.Count];
-
-                for (int i = 0; i < partyMemberDatas.Length; i++) {
-                    partyMemberDatas[i] = new PartyMemberData(partyMembersAll[i]);
-                }
+            for (int i = 0; i < partyMemberDatas.Length; i++) {
+                partyMemberDatas[i] = new PartyMemberData(partyMembersAll[i]);
             }
 
             return partyMemberDatas;
@@ -759,7 +759,7 @@ namespace Party {
             else {
                 partyComposition = new string[partyMembersAll.Count];
 
-                for (int i = 0; i < PartyManager.instance.GetPartyMembers().Count - 1; i++) {
+                for (int i = 0; i < PartyManager.instance.GetPartyMembers().Count; i++) {
                    partyComposition[i] = partyMembersAll[i].className;
                 }
             }

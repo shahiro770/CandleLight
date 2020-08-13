@@ -939,16 +939,16 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 998c798c4282a424b9d40fbd9a1e70a4, type: 3}
     source: {fileID: 0}
     volume: 0
-    pitch: 0
+    pitch: 1
     loop: 0
     type: 0
   - name: pathNormalGreyWastes
-    clip: {fileID: 8300000, guid: 9e80fd43fdac9442fa0481d8b2717573, type: 3}
+    clip: {fileID: 8300000, guid: 04e26d165fceb427cb571a019415d6d0, type: 3}
     source: {fileID: 0}
     volume: 0
-    pitch: 0
+    pitch: 1
     loop: 0
-    type: 0
+    type: 1
   bgmVolume: 1
   sfxVolume: 1
 --- !u!1 &1495799579
@@ -1249,7 +1249,7 @@ MonoBehaviour:
   monstersKilled: 0
   WAXobtained: 0
   totalEvents: 0
-  tutorialTriggers: 010101010101010101
+  tutorialTriggers: 01010101010101010101
 --- !u!4 &1827646565
 Transform:
   m_ObjectHideFlags: 0
