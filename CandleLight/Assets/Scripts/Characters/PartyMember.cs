@@ -496,6 +496,9 @@ namespace Characters {
                     PDEF += 9999;
                     MDEF += 9999;
                 }
+                else if (se.name == StatusEffectConstants.BARRIER) {
+                    MDEF += MDEF;
+                }
             }
             
             if (setCurrent) {
@@ -987,7 +990,7 @@ namespace Characters {
         public IEnumerator TriggerStatuses(bool inCombat) {
             int HPchange = 0;   // negative means HP gained
             int MPchange = 0;   // negative means MP gained
-            int[] animationsToPlay = new int[] { 0 ,0, 0, 0, 0 }; 
+            int[] animationsToPlay = new int[] { 0 ,0, 0, 0, 0, 0 }; 
             bool isCure = GetStatusEffect(StatusEffectConstants.CURE) != -1;
 
             foreach (StatusEffect se in statusEffects) {
@@ -1018,6 +1021,10 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.FATALWOUND) {
                     HPchange += se.value;
                     animationsToPlay[2] = 1;
+                }
+                else if (se.name == StatusEffectConstants.FROSTBITE) {
+                    HPchange -= se.value;
+                    animationsToPlay[5] = 1;
                 }
 
                 if (isCure && se.isBuff == false) {
@@ -1484,6 +1491,14 @@ namespace Characters {
                     AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, c);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns true if the pmvc is no longer animating anything
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDoneAnimating() {
+            return pmvc.isAnimating == false;
         }
 
         /// <summary>

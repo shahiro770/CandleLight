@@ -26,7 +26,7 @@ namespace PlayerUI {
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         
         public Attack displayedAttack;      /// <value> Attack information currently being displayed </value>
-        
+
         private Color32 normalColour = new Color32(255, 255, 255, 255);             /// <value> White </value>
         private Color32 normalColourHalfAlpha = new Color32(255, 255, 255, 128);    /// <value> White half alpha to appear darker </value>
         private Color32 unusableColour = new Color32(196, 36, 48, 255);             /// <value> Red colour to indicate unusable attack </value>
@@ -48,12 +48,17 @@ namespace PlayerUI {
         private string restoredText = LocalizationManager.instance.GetLocalizedValue("restored_text");     /// <value> Localized text for the text "restored" </value>
         private string summonText = LocalizationManager.instance.GetLocalizedValue("summon_text");  /// <value> Localized text for the text "summon a" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
+        private bool appendMode = false;     /// <value> true to append </value>
 
         /// <summary>
         /// Awake to set displayedattack to null (so unity doesn't do its fake null setting)
         /// </summary>
         void Awake() {
             displayedAttack = null;
+        }
+
+        public void SetAppendMode(bool value) {
+            appendMode = value;
         }
 
         /// <summary>
@@ -95,8 +100,13 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageText(PartyMember pm, int amount) {
-            string damagedText = pm.pmName + " " + lostText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
-            eventText.SetText(damagedText);
+            string damagedText = pm.pmName + " " + lostText + " <color=#EA323C>" + amount.ToString() + " " + HPText + "</color>";
+            if (appendMode == false) { 
+                eventText.SetText(damagedText);
+            }
+            else {
+                eventText.AppendText("\n" + damagedText);
+            }
             displayedAttack = null;
 
             if (this.colour != "normal") {
@@ -110,8 +120,13 @@ namespace PlayerUI {
         /// <param name="pm"> partyMember object </param>
         /// <param name="amount"> Positive int amount </param>
         public void SetPMDamageCritText(PartyMember pm, int amount) {
-            string damagedText = critHitText + " " + pm.pmName + " " + lostText + " <color=#EA323C>" + amount.ToString() + " " + HPText;
-            eventText.SetText(damagedText);
+            string damagedText = critHitText + " " + pm.pmName + " " + lostText + " <color=#EA323C>" + amount.ToString() + " " + HPText + "</color>";
+            if (appendMode == false) { 
+                eventText.SetText(damagedText);
+            }
+            else {
+                eventText.AppendText("\n" + damagedText);
+            }
             displayedAttack = null;
 
             if (this.colour != "normal") {
@@ -125,7 +140,12 @@ namespace PlayerUI {
         /// <param name="pm"> PartyMember that dodged the attack </param>
         public void SetPMDodgeText(PartyMember pm) {
             string dodgedString = pm.pmName + " " + dodgedText;
-            eventText.SetText(dodgedString);
+            if (appendMode == false) { 
+                eventText.SetText(dodgedString);
+            }
+            else {
+                eventText.AppendText("\n" + dodgedString);
+            }
             displayedAttack = null;
             textBackgroundCanvas.alpha = 1;
         }
@@ -326,7 +346,7 @@ namespace PlayerUI {
 
             }
             else if (displayedAttack.type == AttackConstants.HEALHP) {
-                formulaString += " " + healText + " " + displayedAttack.damageFormula + HPText; 
+                formulaString += " " + healText + " " + displayedAttack.damageFormula + " " + HPText; 
             }
             else if (displayedAttack.type == AttackConstants.SUMMON) {
                 formulaString += " " + summonText + " " + LocalizationManager.instance.GetLocalizedValue(displayedAttack.nameKey + "_des");

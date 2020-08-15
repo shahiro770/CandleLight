@@ -80,6 +80,15 @@ namespace Localization {
             meshText.text = text;
             textPreset = true;
         }
+
+        /// <summary>
+        /// Appends the inputted value
+        /// </summary>
+        /// <param name="text"> String to display </param>
+        public void AppendText(string text) {
+            meshText.text += text;
+            textPreset = true;
+        }
         
         /// <summary>
         /// Appends a key'd value to some text

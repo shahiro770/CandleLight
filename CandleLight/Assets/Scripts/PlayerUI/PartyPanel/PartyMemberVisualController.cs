@@ -51,11 +51,12 @@ namespace Characters {
         public Sprite partyMemberSprite { get; private set; }   /// <value> Icon sprite of the partyMember </value>
         public Sprite[] skillSprites = new Sprite[12];
         public Color32 partyMemberColour { get; private set; }  /// <value> Theme colour of partyMember </value>
-        
+        public bool isAnimating = false;   /// <value> Flag for if this pmvc's pmd is still in an animation </value>
+
         private PartyMember pm;         /// <value> PartyMember object visual controller is referring to </value>
         private int attackAmount = 0;   /// <value> Amount of damage taken/ healed to display via the eventDescription </value>
         private bool isCrit = false;    /// <value> Flag for if eventDescription will mention the attack dealt a critical hit/heal </value>
-
+        
         /// <summary>
         /// Initializes with basic information using a given partyMember
         /// </summary>
@@ -398,6 +399,7 @@ namespace Characters {
         /// <param name="isEventDes"> Flag for if there should be yielding at all (otherwise no animations or event description) </param>
         /// <returns> IEnumerator for animations </returns>
         public IEnumerator DisplayHPChange(bool isLoss, bool isHealAnim = false, bool isYield = true) {
+            isAnimating = true;
             if (statusPanelHPBar != null) {
                 statusPanelHPBar.SetCurrent(pm.CHP);  
             }
@@ -465,6 +467,7 @@ namespace Characters {
                 }
                 yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
             }
+            isAnimating = false;
         }
 
         /// <summary>
@@ -505,12 +508,14 @@ namespace Characters {
         /// <returns> IEnumerator cause animations </returns>
         public IEnumerator DisplayAttackDodged() {
             eventDescription.SetPMDodgeText(pm);
+            isAnimating = true;
             if (EventManager.instance.partyPanel.isOpen == true) {
                 yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
             }
             else {
                 yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
             }
+            isAnimating = false;
         }
 
         /// <summary>

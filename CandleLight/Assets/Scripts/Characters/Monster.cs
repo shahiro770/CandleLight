@@ -151,6 +151,9 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.VAMPIRE) {
                     bleedPlus = true;
                 }
+                else if (se.name == StatusEffectConstants.BARRIER) {
+                    MDEF += MDEF;
+                }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);
                 }

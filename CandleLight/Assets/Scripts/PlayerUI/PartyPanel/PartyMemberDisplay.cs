@@ -30,6 +30,7 @@ namespace PlayerUI {
         public Animator pmPoisonAnimator;   /// <value> Animator for poison </value>
         public Animator pmRegenerateAnimator;   /// <value> Animator for poison </value>
         public Animator pmFocusAnimator;        /// <value> Animator for focus </value>
+        public Animator pmFrostBiteAnimator;    /// <value> Animator for frostbite </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
         public Bar MPBar;               /// <value> Visual for mana points </value>
@@ -319,6 +320,9 @@ namespace PlayerUI {
             }
             if (animationsToPlay[4] == 1) {
                 StartCoroutine(PlaySEAnimation(pmFocusAnimator));
+            }
+            if (animationsToPlay[5] == 1) {
+                StartCoroutine(PlaySEAnimation(pmFrostBiteAnimator));
             }
         }
 

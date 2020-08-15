@@ -1664,7 +1664,7 @@ namespace Events {
             timer.StartTimer(false);;
             if (isWin == false) {
                 SetAllButtonsInteractable(false);
-                yield return new WaitForSeconds(2f);    // DRAMATIC PAUSE ON DEATH
+                yield return new WaitForSeconds(1f);    // DRAMATIC PAUSE ON DEATH
             }
 
             if (currentAreaName == "GreyWastes") {

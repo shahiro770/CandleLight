@@ -711,6 +711,21 @@ namespace Combat {
                     }
                     yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
                 }
+                else if (selectedAttackMonster.scope == "allEnemies") {
+                    for (int i = 0; i < partyMembersAlive.Count; i++) {
+                        if (i == 1) {
+                            eventDescription.SetAppendMode(true);
+                        }
+                        StartCoroutine(partyMembersAlive[i].GetAttacked(selectedAttackMonster, activeMonster)); 
+                    }
+                    
+                    foreach (PartyMember pm in partyMembersAlive) {
+                        while (pm.IsDoneAnimating() == false) {
+                            yield return null;
+                        }
+                    }
+                    eventDescription.SetAppendMode(false);
+                } 
             }
         }
 

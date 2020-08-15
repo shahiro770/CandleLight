@@ -109,11 +109,7 @@ Feature: Add CandleMan event and some source of candles on the right (maybe add 
 
 JUST FINISHED
 -------------
-
-COOKING
--------
-Feature: Add another particle effect maker for the ending area (flame particles rising up)
-Feature: Add glow to some stuff
+Item: Added shield item
 Feature: Saving and Loading
     X CalculateWAXValue is broken on load
     X Items in stored slots are alpha 0 on load
@@ -122,10 +118,16 @@ Feature: Saving and Loading
     X Record time keeper item in save data
     Need seperate save for global stats
     Add save tutorial to inform when game saves
+
+COOKING
+-------
+Feature: Add glow to some stuff
 UI: Slowdown some animations
+Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
 
 NEAR FUTURE
 ----------------
+Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
 Feature: Add high scores
