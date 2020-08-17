@@ -557,6 +557,14 @@ namespace Characters {
         #endregion
 
         /// <summary>
+        /// Returns true if the pmvc is no longer animating anything
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDoneAnimating() {
+            return md.isAnimating == false;
+        }
+
+        /// <summary>
         /// Logs primary stat information for debugging
         /// </summary>
         public override void LogPrimaryStats() {

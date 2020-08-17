@@ -96,7 +96,13 @@ namespace Characters {
             this.afflicted = afflicted;
             
             if (name == StatusEffectConstants.BURN) {
-                preValue = (int)(afflicter.MATK * 0.3f);
+                 if (afflicter.burnPlus == true) {
+                    plus = true;
+                    preValue = (int)(afflicter.MATK * 0.5f);
+                }
+                else {
+                    preValue = (int)(afflicter.MATK * 0.3f);
+                }
                 value = preValue;
 
                 if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
@@ -120,7 +126,13 @@ namespace Characters {
                 value -= afflicted.MDEF;
             }
             else if (name == StatusEffectConstants.POISON) {
-                preValue = (int)(afflicted.HP * 0.1f);
+                if (afflicter.poisonPlus == true) {
+                    plus = true;
+                    preValue = (int)(afflicted.HP * 0.15f);
+                }
+                else {
+                    preValue = (int)(afflicted.HP * 0.1f);
+                }
 
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {

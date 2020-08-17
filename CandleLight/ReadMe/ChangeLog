@@ -118,12 +118,23 @@ Feature: Saving and Loading
     X Record time keeper item in save data
     Need seperate save for global stats
     Add save tutorial to inform when game saves
+Added wastesWanderer
+Changed dirtstorm result
+Added flipped fork road to first area
+Bug: Debuff all does not yield on miss
+Feature: Added giantSpider
+Feature: Added WastesWanderer
+Feature: Added webbedArch event
+Feature: Added custom death messages
 
 COOKING
 -------
 Feature: Add glow to some stuff
 UI: Slowdown some animations
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
+Feature: Highscores and achievements
+Feature: Added game save data (so stuff like options and pastItem won't get reset on new games)
+Fix bug where midpoints don't pop cause 0.4999999
 
 NEAR FUTURE
 ----------------
@@ -140,6 +151,8 @@ UI: Redo fireball, bash, and slash sprites
 UI: Make custom colouring for same class partyMembers
 Balance: Reevaluate all interaction thresholds
 Bug: Tooltip dies
+
+Balance: Buff final boss monsters some
 
 FUTURE/MAYBE
 ------------

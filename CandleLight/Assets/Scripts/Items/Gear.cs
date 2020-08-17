@@ -145,6 +145,8 @@ namespace Items {
                     case "CRITMULT":
                         WAX += values[i] * 100;
                         break;
+                    case "BURNPLUS":
+                    case "POISONPLUS":
                     case "BLEEDPLUS":
                     case "MPREGENDOUBLE":
                     case "HPREGENDOUBLE":

@@ -313,6 +313,8 @@ namespace Characters {
             HPRegen = baseHPRegen;
             MPRegen = baseMPRegen;
             championChance = 0;
+            burnPlus = false;
+            poisonPlus = false;
             bleedPlus = false;
 
             /* secondary stats changes from gear */
@@ -366,6 +368,12 @@ namespace Characters {
                             case "HPREGENDOUBLE":
                                 HPRegen *= 2f;
                                 break;
+                            case "BURNPLUS":
+                                burnPlus = true;
+                                break;
+                            case "POISONPLUS":
+                                poisonPlus = true;
+                                break;
                             case "BLEEDPLUS":
                                 bleedPlus = true;
                                 break;
@@ -415,6 +423,12 @@ namespace Characters {
                             break;
                         case "HPREGENDOUBLE":
                             HPRegen *= 2f;
+                            break;
+                        case "BURNPLUS":
+                            burnPlus = true;
+                            break;
+                        case "POISONPLUS":
+                            poisonPlus = true;
                             break;
                         case "BLEEDPLUS":
                             bleedPlus = true;

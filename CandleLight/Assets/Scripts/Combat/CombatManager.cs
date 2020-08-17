@@ -463,15 +463,26 @@ namespace Combat {
                         foreach (Monster m in selectedMonsterAdjacents) {
                             StartCoroutine(m.GetAttacked(selectedAttackPM, activePartyMember));    
                         }
-                        yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackPM, activePartyMember)));    
+                        StartCoroutine(selectedMonster.GetAttacked(selectedAttackPM, activePartyMember));    
+                    
+                        foreach (Monster m in monsters) {           // this will include monsters not being attacked, but the cost is negligible
+                            while (m.IsDoneAnimating() == false) {
+                                yield return null;
+                            }
+                        }
                     }
                 }
                 else if (selectedAttackPM.scope == "allEnemies") {
                     if (selectedAttackPM.type == AttackConstants.DEBUFF) {
-                        for (int i = 1; i < monsters.Count; i++) {
+                        for (int i = 0; i < monsters.Count; i++) {
                             StartCoroutine(monsters[i].GetStatusEffected(selectedAttackPM, activePartyMember)); 
                         }
-                        yield return (StartCoroutine(monsters[0].GetStatusEffected(selectedAttackPM, activePartyMember)));
+                    }
+
+                    foreach (Monster m in monsters) {
+                        while (m.IsDoneAnimating() == false) {
+                            yield return null;
+                        }
                     }
                 }
             }
@@ -615,6 +626,12 @@ namespace Combat {
             else if (monsterAI == "cycler") {
                 activeMonster.lastAttackIndex = (activeMonster.lastAttackIndex + 1) % attackNum;
                 selectedMonsterAttackIndex =  activeMonster.lastAttackIndex;
+            }
+
+            if (activeMonster.attacks[selectedMonsterAttackIndex].type == AttackConstants.DEBUFF) {
+                if (pm.GetStatusEffect(activeMonster.attacks[selectedMonsterAttackIndex].seName) != -1) {
+                    selectedMonsterAttackIndex = (selectedMonsterAttackIndex + 1) % activeMonster.attackNum;
+                }
             }
 
             return attacks[selectedMonsterAttackIndex];  

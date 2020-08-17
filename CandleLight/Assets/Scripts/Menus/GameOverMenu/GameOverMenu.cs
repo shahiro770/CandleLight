@@ -166,7 +166,7 @@ namespace Menus.GameOverMenu {
                     timeSinceStarted = Time.time - timeStartedLerping;
                     percentageComplete = Time.deltaTime * lerpSpeed;
 
-                    frontFill.fillAmount = Mathf.Lerp(frontFill.fillAmount, fillAmount, percentageComplete);
+                    frontFill.fillAmount = Mathf.Lerp(frontFill.fillAmount, fillAmount, percentageComplete); // NOTE THIS IS BUGGED (if you die at 0% progress, the number is wrong)
                     if (frontFill.fillAmount >= midPointBarSeg * currMidPoint) {
                         pbis[currMidPoint].PlayAnimation("pop");
                         currMidPoint++;

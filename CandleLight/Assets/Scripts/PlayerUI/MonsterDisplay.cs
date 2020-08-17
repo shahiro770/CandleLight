@@ -48,7 +48,8 @@ namespace Characters {
         
         [field: SerializeField] public Vector2 vectorSize { get; private set; }         /// <value> Size of monster's sprite </value>
         [field: SerializeField] public float spriteWidth { get; private set; }          /// <value> Width of sprite rect transform </value>
-        
+        [field: SerializeField] public bool isAnimating = false;                        /// <value> Flag for if the monsterDisplay is still in an animation </value>
+
         [field: SerializeField] private Vector2 buttonVectorSize;       /// <value> Size of monster's sprite </value>
         [field: SerializeField] private Monster displayedMonster;       /// <value> </value>
         [field: SerializeField] private float healthBarHeight = 18;     /// <value> Default width of a monster's health bar </value>
@@ -462,6 +463,7 @@ namespace Characters {
         /// <param name="setDescription"> True to set description text on healing, false otherwise </param>
         /// <returns> IEnumerator for animations </returns>
         public IEnumerator DisplayHPChange(int amount, bool isLoss, bool setDescription, string animationClipName) {
+            isAnimating = true;
             SetEffectsAnimatorClip(animationClipName);
             if (isLoss) { 
                 yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
@@ -490,6 +492,7 @@ namespace Characters {
 
                 yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
             }
+            isAnimating = false;
         }
 
         /// <summary>
@@ -509,11 +512,13 @@ namespace Characters {
         /// <param name="animationClipName"> Name of animation to play overtop of monster </param>
         /// <returns> IEnumerator for animations</returns>
         public IEnumerator DisplayAttackDodged(string animationClipName) {
+            isAnimating = true;
             SetEffectsAnimatorClip(animationClipName);
             yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
             dt.ShowDodged();
             yield return (StartCoroutine(PlayAnimation(dt.textAnimator, "showDamage")));
             dt.HideDamage();
+            isAnimating = false;
         }
 
         /// <summary>
