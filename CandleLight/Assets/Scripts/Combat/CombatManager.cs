@@ -6,8 +6,6 @@
 * The CombatManager class is used to manage all classes during the combat scene.
 * PartyMembers, monsters, actions, and turn ordering are all managed in the combat manager.
 *
-* TODO:
-* Need to work with attacks that target multiple monsters, and multiple partyMembers
 */
 
 using Constants;

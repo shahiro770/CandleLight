@@ -114,7 +114,7 @@ namespace Characters {
                 value -= afflicted.MDEF;
             }
             if (name == StatusEffectConstants.FROSTBITE) {
-                preValue = (int)(afflicter.MATK * 0.3f);
+                preValue = (int)(afflicter.PATK * 0.3f);
                 value = preValue;
 
                 if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {

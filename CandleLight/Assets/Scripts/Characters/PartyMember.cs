@@ -842,7 +842,7 @@ namespace Characters {
                 // side effects from partyMember skills
                 if (className == ClassConstants.WARRIOR) {
                     if (skills[(int)SkillConstants.warriorSkills.VAMPIRICMAIL].skillEnabled == true) {
-                        if (Random.Range(0, 100) < 30) {
+                        if (Random.Range(0, 100) < 35) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
                             cm.AddStatusEffect(StatusEffectConstants.BLEED, 2, this); 
                         }
@@ -1148,11 +1148,11 @@ namespace Characters {
         /// <summary>
         /// Unequips a candle, changing stats
         /// </summary>
-        /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
+        /// <param name="index"> Unequips a candle from one of the active candle slots (0, 1, or 2) </param>
         public void UnequipCandle(int index) {
             if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
-                    activeCandles[index].SetUses(0);
+                    activeCandles[index].SetUses((int)(activeCandles[index].uses * 0.5f));
                 }
             }
             activeCandles[index] = null;

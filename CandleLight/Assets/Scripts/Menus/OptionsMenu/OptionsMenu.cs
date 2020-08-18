@@ -9,6 +9,7 @@
 using Audio;
 using General;
 using PlayerUI;
+using System.Linq;
 using TutorialConstants = Constants.TutorialConstants;
 using UIEffects;
 using UnityEngine;
@@ -132,7 +133,8 @@ namespace Menus.OptionsMenu {
         public void SetTutorial(bool value) {
             GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = value;
 
-            if (value == true) {
+            if (value == true) {    // setting tutorial to true, will reset all tips
+                GameManager.instance.tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
                 tutorialYes.SetColor("normalAlternate");
                 tutorialNo.SetColor("normal");
             }
