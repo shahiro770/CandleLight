@@ -943,14 +943,14 @@ MonoBehaviour:
     loop: 0
     type: 0
   - name: pathNormalGreyWastes
-    clip: {fileID: 8300000, guid: 04e26d165fceb427cb571a019415d6d0, type: 3}
+    clip: {fileID: 8300000, guid: cb101e1f2bb0342c9bb586a745839970, type: 3}
     source: {fileID: 0}
     volume: 0
     pitch: 1
-    loop: 0
+    loop: 1
     type: 1
-  bgmVolume: 1
-  sfxVolume: 1
+  bgmVolume: 0
+  sfxVolume: 0
 --- !u!1 &1495799579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1566310745}
-  textPreset: 1
+  textPreset: 0
 --- !u!114 &1566310745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,11 +1203,8 @@ MonoBehaviour:
   loadingBarFill: {fileID: 236172586}
   tipText: {fileID: 1566310744}
   loadingFlameSpriteRenderer: {fileID: 17016716}
-  data:
-    partyMemberDatas: []
-    spareGear: []
-    spareCandles: []
-    spareSpecials: []
+  gsData:
+    hsds: []
     pastItem:
       nameID: 
       className: 
@@ -1232,6 +1229,16 @@ MonoBehaviour:
         costValue: 0
       uses: 0
       maxUses: 0
+    tutorialTriggers: 
+    isTimer: 0
+    animationSpeed: 0
+    bgmVolume: 0
+    sfxVolume: 0
+  data:
+    partyMemberDatas: []
+    spareGear: []
+    spareCandles: []
+    spareSpecials: []
     midPoints: 
     tutorialTriggers: 
     elapsedTime: 0
@@ -1245,7 +1252,7 @@ MonoBehaviour:
   canvasWidth: 960
   canvasHeight: 540
   canvasScaleFactor: 53.999992
-  animationSpeed: 1
+  animationSpeed: 0
   monstersKilled: 0
   WAXobtained: 0
   totalEvents: 0

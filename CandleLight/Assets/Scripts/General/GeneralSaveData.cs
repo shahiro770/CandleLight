@@ -8,14 +8,13 @@
 */
 
 using Items;
-using Party;
-using System.Collections.Generic;
 
 namespace General {
 
     [System.Serializable]
     public class GeneralSaveData {
 
+        public HighScoreData[] hsds;
         public ItemData pastItem;
         public bool[] tutorialTriggers;
         public bool isTimer;
@@ -23,7 +22,8 @@ namespace General {
         public float bgmVolume;
         public float sfxVolume;
        
-        public GeneralSaveData(ItemData pastItem, bool[] tutorialTriggers, bool isTimer, float animationSpeed, float bgmVolume, float sfxVolume) {
+        public GeneralSaveData(ItemData pastItem, HighScoreData[] hsds, bool[] tutorialTriggers, bool isTimer, float animationSpeed, float bgmVolume, float sfxVolume) {
+            this.hsds = hsds;
             this.tutorialTriggers = tutorialTriggers;
             this.pastItem = pastItem;
             this.isTimer = isTimer;

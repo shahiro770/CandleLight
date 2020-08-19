@@ -22,7 +22,7 @@ namespace PlayerUI {
         public string subtitleColourString = "#B2B2B2";
         public ColorBlock orangeBlock = new ColorBlock();
         public ItemDisplay heldItemDisplay;
-        public bool isTimer = false;                /// <value> Flag for if there is a timer in the top left of the screen </value>
+        public bool isTimer;                        /// <value> Flag for if there is a timer in the top left of the screen </value>
         public bool panelButtonsEnabled = true;
         public bool inShop = false;                 /// <value> Flag for if the player is currently in a shop </value>
 

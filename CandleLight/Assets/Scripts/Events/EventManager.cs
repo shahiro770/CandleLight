@@ -1674,7 +1674,7 @@ namespace Events {
                 }
             }
 
-            gameOverMenu.Init(isWin, midPoints, currentArea.name + currentArea.GetSubAreaIndex(currentSubArea.name), subAreaProgress, timer.GetTime());
+            gameOverMenu.Init(isWin, midPoints, currentArea.name, currentArea.GetSubAreaIndex(currentSubArea.name), subAreaProgress, timer.GetTime());
             gameOverMenu.SetVisible(true);
         }
 
@@ -1976,6 +1976,9 @@ namespace Events {
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
             PartyManager.instance.ResetGame();
+            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, 
+            UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
+            GameManager.instance.SaveGeneralData(gsData);
             GameManager.instance.StartLoadNextScene("MainMenu");
         }
 
@@ -2013,21 +2016,15 @@ namespace Events {
         /// Save all data relevant to continuing a playthrough at a later time
         /// </summary>
         public void SaveGame() {
-            ItemData pastItemData = null;
-            if (GameManager.instance.pastItem != null) {
-                if (GameManager.instance.pastItem.type == ItemConstants.CANDLE) {
-                    pastItemData = ((Candle)GameManager.instance.pastItem).GetItemData();
-                }
-                else {
-                    pastItemData = GameManager.instance.pastItem.GetItemData();
-                }
-            }
-
             SaveData data = new SaveData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
             gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
             infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.monstersKilled,
-            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, pastItemData, timer.GetElapsedTime(), midPoints);
+            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints);
             GameManager.instance.SaveGame(data);
+
+            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, 
+            UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
+            GameManager.instance.SaveGeneralData(gsData);
         }
 
         /// <summary>

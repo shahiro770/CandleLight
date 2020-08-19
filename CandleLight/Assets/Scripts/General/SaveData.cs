@@ -20,7 +20,6 @@ namespace General {
         public ItemData[] spareGear;
         public ItemData[] spareCandles;
         public ItemData[] spareSpecials;
-        public ItemData pastItem;
         public string[][] questData;
         public List<int> midPoints;
         public bool[] tutorialTriggers;
@@ -33,7 +32,7 @@ namespace General {
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
 
         public SaveData(PartyMemberData[] partyMemberDatas, int WAX, ItemData[] spareGear, ItemData[] spareCandles, ItemData[] spareSpecials, 
-        string[][] questData, int areaProgress, bool[] tutorialTriggers, int monstersKilled, int WAXObtained, int totalEvents, ItemData pastItem, 
+        string[][] questData, int areaProgress, bool[] tutorialTriggers, int monstersKilled, int WAXObtained, int totalEvents, 
         float elapsedTime, List<int> midPoints) {
             this.partyMemberDatas = partyMemberDatas;
             this.WAX = WAX;
@@ -46,7 +45,6 @@ namespace General {
             this.monstersKilled = monstersKilled;
             this.WAXobtained = WAXObtained;
             this.totalEvents = totalEvents;
-            this.pastItem = pastItem;
             this.elapsedTime = elapsedTime;
             this.midPoints = midPoints;
         }

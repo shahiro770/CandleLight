@@ -130,6 +130,21 @@ namespace Menus.OptionsMenu {
             sfxSlider.value = AudioManager.instance.sfxVolume;
         }
 
+        /// <summary>
+        /// Save settings and hide any tooltips visible 
+        /// </summary>
+        void OnDisable() {
+            bgmtt.SetVisible(false);
+            sfxtt.SetVisible(false);
+            tutorialtt.SetVisible(false);
+            tipstt.SetVisible(false);
+            animationSpeedtt.SetVisible(false);
+            timertt.SetVisible(false);
+            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, 
+            UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
+            GameManager.instance.SaveGeneralData(gsData);
+        }
+
         public void SetTutorial(bool value) {
             GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = value;
 

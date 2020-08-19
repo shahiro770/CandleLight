@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 029fb3e74588e42dabd8b3cce325bd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectsAnimator: {fileID: 0}
   durationText: {fileID: 7364102255281600327}
   b: {fileID: 3617318113131332858}
   bts: {fileID: 4653707272274109826}
@@ -405,6 +406,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560515055815530552, guid: 40dd5d9c14f404e928ed678e277743a1,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}

@@ -10,6 +10,7 @@
 */
 
 
+using Audio;
 using Constants;
 using Database;
 using Items;
@@ -19,6 +20,7 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using UIManager = PlayerUI.UIManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -39,12 +41,13 @@ namespace General {
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
-        public SaveData data;                           /// <value> Data that was loaded from a save file</value>
+        public GeneralSaveData gsData;                  /// <value> Data that cannot be cleared after a run ends </value>
+        public SaveData data;                           /// <value> Data that was loaded from a save file regarding a run </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
         public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code </value>
-        public float animationSpeed = 1f;               /// <value> Value that alters the speed of animations </value>
+        public float animationSpeed;                    /// <value> Value that alters the speed of animations </value>
         public int monstersKilled = 0;                  /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
@@ -72,6 +75,14 @@ namespace General {
             mainCamera = Camera.main;                   // store reference to camera for other game objects to obtain
             DB = new GameDB();
             data = null;
+            
+        }
+
+        /// <summary>
+        /// Load in general data after all relevant gameobjects have woke up
+        /// </summary>
+        void Start() {
+            LoadGeneralData();
         }
 
         /// <summary>
@@ -124,8 +135,35 @@ namespace General {
         }
 
         /// <summary>
+        /// Saves data that isn't meant to be cleared 
+        /// </summary>
+        /// <param name="data"></param>
+        public void SaveGeneralData(GeneralSaveData gsData) {
+            ItemData pastItemData = null;
+            if (pastItem != null) {
+                if (pastItem.type == ItemConstants.CANDLE) {
+                    pastItemData = ((Candle)pastItem).GetItemData();
+                }
+                else {
+                    pastItemData = pastItem.GetItemData();
+                }
+            }
+            gsData.pastItem = pastItemData;
+
+            BinaryFormatter formatter  = new BinaryFormatter();
+            string path = Application.persistentDataPath + "/generalSave.cndl";
+            FileStream s = new FileStream(path, FileMode.Create);
+
+            formatter.Serialize(s, gsData);
+            s.Close();
+        }
+
+        /// <summary>
         /// Load game data, to continue where the player left off
         /// </summary>
+        /// <remark>
+        /// Cannot load game if in tutorial
+        /// </remark>
         public void LoadGame() {
             string path = Application.persistentDataPath + "/save.cndl";
             if (File.Exists(path)) {
@@ -136,21 +174,52 @@ namespace General {
                 s.Close();
 
                 tutorialTriggers = data.tutorialTriggers;
+                PartyManager.instance.LoadData(data);
                 
-                if (data.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {
-                    PartyManager.instance.LoadData(data);
-                }
-                // If in the tutorial, game is effecitvely a restart with tutorial on
-                else if (areaName == "GreyWastes") {
-                    PartyManager.instance.ResetGame();
-                    foreach (PartyMemberData pmData in data.partyMemberDatas) {
-                        PartyManager.instance.AddPartyMember(pmData.className);
-                    }
-                }
                 StartLoadNextScene("area");
             }
             else {
                 Debug.LogError("No save data found");
+            }
+        }
+
+        /// <summary>
+        /// Load general data (highscores, settings, etc.)
+        /// </summary>
+        public void LoadGeneralData() {
+            string path = Application.persistentDataPath + "/generalSave.cndl";
+            if (File.Exists(path)) {
+                BinaryFormatter formatter  = new BinaryFormatter();
+                FileStream s = new FileStream(path, FileMode.Open);
+
+                gsData = formatter.Deserialize(s) as GeneralSaveData;
+                s.Close();
+
+                tutorialTriggers = gsData.tutorialTriggers;
+                animationSpeed = gsData.animationSpeed;
+                UIManager.instance.isTimer = gsData.isTimer;
+                AudioManager.instance.bgmVolume = gsData.bgmVolume;
+                AudioManager.instance.sfxVolume = gsData.sfxVolume;
+                if (pastItem != null) {
+                    if (pastItem.type == ItemConstants.GEAR) {
+                        pastItem = new Gear(gsData.pastItem);
+                    }
+                    else if (pastItem.type == ItemConstants.CANDLE) {
+                        pastItem = new Candle(gsData.pastItem);
+                    }
+                    else {
+                        pastItem = new Special(gsData.pastItem);
+                    }
+                }
+            }
+            else {  // default settings on first load, or if generalSAveData non existance
+                tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
+                animationSpeed = 1f;               
+                gsData.hsds = new HighScoreData[4];
+                UIManager.instance.isTimer = false;
+                AudioManager.instance.bgmVolume = 1;
+                AudioManager.instance.sfxVolume = 1;
+                pastItem = null;
             }
         }
         
@@ -163,6 +232,28 @@ namespace General {
                 File.Delete(path);
             }
             data = null;
+        }
+
+        /// <summary>
+        /// Adds a highscore to the highscore data if it is high enough
+        /// </summary>
+        /// <param name="score"> Score amount </param>
+        /// <param name="subAreaIndex"> SubArea the player got to before the run ended </param>
+        public void AddHighScoreData(int score, int subAreaIndex) {
+            string[] partyComposition = PartyManager.instance.GetPartyComposition();
+            for (int i = 0; i < gsData.hsds.Length; i++) {
+                if (gsData.hsds[i] == null) {
+                    gsData.hsds[i] = new HighScoreData(areaName, partyComposition[0], partyComposition[1], score, subAreaIndex);
+                    break;
+                }
+                else if (score > gsData.hsds[i].score) {
+                    for (int j = gsData.hsds.Length - 1; j > i; j--) {
+                        gsData.hsds[j] = gsData.hsds[j - 1];
+                    }
+                    gsData.hsds[i] = new HighScoreData(areaName, partyComposition[0], partyComposition[1], score, subAreaIndex);
+                    break;
+                }
+            }
         }
 
         /// <summary>

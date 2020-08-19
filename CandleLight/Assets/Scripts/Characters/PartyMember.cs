@@ -448,6 +448,9 @@ namespace Characters {
 
             /* secondary stat changes from skills */
             if (className == ClassConstants.WARRIOR) {
+                if (skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                    HP += (int)(HP * 0.15f);
+                }
                 if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
                     PATK += (int)(PATK * 0.3f);
                 }
@@ -1232,6 +1235,9 @@ namespace Characters {
                 skills[index].skillEnabled = true;
 
                 if (className == ClassConstants.WARRIOR) {
+                    if (index == (int)SkillConstants.warriorSkills.STEADFAST) {
+                        statChange = true;
+                    }
                     if (index == (int)SkillConstants.warriorSkills.BLOODSWORN) {
                         for (int i = 0; i < attackNum; i++) {
                             attacks[i].costType = "HP";

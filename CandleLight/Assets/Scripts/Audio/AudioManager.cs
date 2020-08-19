@@ -10,8 +10,8 @@ namespace Audio {
 
         public Sound currentBGM;
         public Sound[] sounds;
-        public float bgmVolume = 1f;
-        public float sfxVolume = 1f;
+        public float bgmVolume;
+        public float sfxVolume;
 
         void Awake() {
             if (instance == null) {

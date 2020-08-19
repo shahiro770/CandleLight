@@ -180,6 +180,7 @@ namespace PlayerUI {
         /// </summary>
         public void ClearItem() {
             if (currentItemDisplay != null) {
+                print("hi");
                 Destroy(currentItemDisplay.gameObject);
                 currentItemDisplay = null;
             }

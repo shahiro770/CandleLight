@@ -42,6 +42,9 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="items"></param>
         public void SetItemDisplays(List<Item> items) {
+            foreach (ItemSlot slot in itemSlots) {
+                slot.ClearItem();
+            }
             this.itemNum = items.Count > itemSlots.Length ? itemSlots.Length : items.Count;
             this.numSpareFull = this.itemNum;
 
@@ -79,6 +82,9 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="items"></param>
         public void SetItemDisplaysShop(List<Item> items) {
+            foreach (ItemSlot slot in itemSlots) {
+                slot.ClearItem();
+            }
             this.itemNum = items.Count > itemSlots.Length ? itemSlots.Length : items.Count;
             this.numSpareFull = this.itemNum;
 

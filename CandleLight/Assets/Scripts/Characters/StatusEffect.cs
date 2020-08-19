@@ -126,7 +126,7 @@ namespace Characters {
                 value -= afflicted.MDEF;
             }
             else if (name == StatusEffectConstants.POISON) {
-                if (afflicter.poisonPlus == true) {
+                if (afflicter != null && afflicter.poisonPlus == true) {
                     plus = true;
                     preValue = (int)(afflicted.HP * 0.15f);
                 }

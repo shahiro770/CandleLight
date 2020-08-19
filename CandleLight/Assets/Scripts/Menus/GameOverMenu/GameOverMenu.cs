@@ -41,7 +41,7 @@ namespace Menus.GameOverMenu {
         /// <param name="isWin"> true if game was won (player reached last subArea), false otherwise </param>
         /// <param name="midPoints"> List of subArea indexes that were visited </param>
         /// <param name="subAreaProg"> Current subArea's progress</param>
-        public void Init(bool isWin, List<int> midPoints, string cardName, int subAreaProg, string timeString) {
+        public void Init(bool isWin, List<int> midPoints, string areaName, int subAreaIndex, int subAreaProg,  string timeString) {
             gameObject.SetActive(true);
             this.isWin = isWin;
 
@@ -52,7 +52,7 @@ namespace Menus.GameOverMenu {
             }
             else {
                 gameOverTitle.SetKey("game_over_title");
-                gameOverDes.SetKey("game_over_" + cardName);
+                gameOverDes.SetKey("game_over_" + areaName + subAreaIndex);
                 scoreTitle.SetKey("score_title");
             }
 
@@ -76,6 +76,7 @@ namespace Menus.GameOverMenu {
             eventsAmount.SetText(GameManager.instance.totalEvents.ToString());
             timeAmount.SetText(timeString);
             scoreAmount.SetText(CalculateScore().ToString());
+            GameManager.instance.AddHighScoreData(CalculateScore(), subAreaIndex);
         }
         
         /// <summary>
@@ -167,16 +168,12 @@ namespace Menus.GameOverMenu {
                     percentageComplete = Time.deltaTime * lerpSpeed;
 
                     frontFill.fillAmount = Mathf.Lerp(frontFill.fillAmount, fillAmount, percentageComplete); // NOTE THIS IS BUGGED (if you die at 0% progress, the number is wrong)
-                    if (frontFill.fillAmount >= midPointBarSeg * currMidPoint) {
+                    if (System.Math.Round(frontFill.fillAmount, 2) >= midPointBarSeg * currMidPoint) {
                         pbis[currMidPoint].PlayAnimation("pop");
                         currMidPoint++;
                     }
                     yield return new WaitForEndOfFrame();        
                 }
-            }
-
-            if (isWin == true) {
-                pbis[currMidPoint].PlayAnimation("pop");
             }
         }
     }

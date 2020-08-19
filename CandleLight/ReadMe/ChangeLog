@@ -106,9 +106,6 @@ Feature: Add the first BGM
 Feature: Add a shop to the right side's final area
 Bug: Make final pop time faster on game complete screen
 Feature: Add CandleMan event and some source of candles on the right (maybe add one to the doll pouch)
-
-JUST FINISHED
--------------
 Item: Added shield item
 Feature: Saving and Loading
     X CalculateWAXValue is broken on load
@@ -128,19 +125,28 @@ Feature: Added WastesWanderer
 Feature: Added webbedArch event
 Feature: Added custom death messages
 Bug: Forked road flipped has wrong names
+Fix: Change frostbite to scale off of PATK?
 
-COOKING
--------
+JUST FINISHED
+-------------
 Candlemancy: Take off negative clause
 Feature: Add glow to some stuff
 UI: Slowdown some animations
+Balance: Buffed steadffast
+Feaature: Added Armour3
+
+COOKING
+-------
+Fix bug where midpoints don't pop cause 0.4999999
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
 Feature: Highscores and achievements
 Feature: Added game save data (so stuff like options and pastItem won't get reset on new games)
-Fix bug where midpoints don't pop cause 0.4999999
-Fix: Change frostbite to scale off of PATK?
-Bug: Outline is broken on candle swapping
 
+Bug: No save tutorial prompt
+Bug: Outline is broken on candle swapping
+Fix: Make dialogue prompt rotate
+Fix: Make it so stuff can be hovered over during rewards panel
+Bug: item on double display broke
 
 NEAR FUTURE
 ----------------
@@ -157,6 +163,13 @@ UI: Redo fireball, bash, and slash sprites
 UI: Make custom colouring for same class partyMembers
 Balance: Reevaluate all interaction thresholds
 Bug: Tooltip dies
+Fix: Drag to item should also work (down press and up press)
+Mobile: Make people pay for save scumming
+Buff: Make steadfst give a buff
+Fix: Make buffs
+Bug: Path split is wrong
+Bug: Item stored over item doesn't work
+
 
 Balance: Buff final boss monsters some
 
@@ -165,7 +178,7 @@ FUTURE/MAYBE
 UI: Red colour wax if player can't afford
 Bug: Options menu tooltips need to be repositioned
 QOL: Have skills panel swap to active party member with skill points unspecced
-Fix: Drag to item should also work
+
 Feature: Make click on bag (AND BAG ONLY) do something
 Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
 UI: Make quest completed notification seperate from normal completition
