@@ -187,7 +187,7 @@ namespace Events {
         /// Reset game properties that are not tied to the partyManager
         /// </summary>
         public void ResetGame() {
-            GameManager.instance.monstersKilled = 0;
+            GameManager.instance.enemiesKilled = 0;
             GameManager.instance.WAXobtained = 0;
             GameManager.instance.totalEvents = 0;
             midPoints.Clear();
@@ -348,7 +348,7 @@ namespace Events {
                 ResetGame();
             }
             else {  
-                GameManager.instance.monstersKilled = GameManager.instance.data.monstersKilled;
+                GameManager.instance.enemiesKilled = GameManager.instance.data.enemiesKilled;
                 GameManager.instance.WAXobtained = GameManager.instance.data.WAXobtained;
                 GameManager.instance.totalEvents = GameManager.instance.data.totalEvents;
                 midPoints = GameManager.instance.data.midPoints;
@@ -796,8 +796,8 @@ namespace Events {
                     }
                 }
 
-                yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
-                GameManager.instance.monstersKilled += combatManager.monstersKilled.Count;
+                yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.enemiesKilled));
+                GameManager.instance.enemiesKilled += combatManager.enemiesKilled.Count;
                 if (infoPanel.isOpen) {
                     infoPanel.UpdateAmounts();
                 }
@@ -1665,6 +1665,10 @@ namespace Events {
             if (isWin == false) {
                 SetAllButtonsInteractable(false);
                 yield return new WaitForSeconds(1f);    // DRAMATIC PAUSE ON DEATH
+                GameManager.instance.timeTaken = -1;
+            }
+            else {
+                GameManager.instance.timeTaken = timer.GetElapsedTime();
             }
 
             if (currentAreaName == "GreyWastes") {
@@ -2018,7 +2022,7 @@ namespace Events {
         public void SaveGame() {
             SaveData data = new SaveData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
             gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
-            infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.monstersKilled,
+            infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
             GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints);
             GameManager.instance.SaveGame(data);
 

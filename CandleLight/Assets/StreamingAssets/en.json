@@ -109,6 +109,11 @@
 
 		{ "key": "highScores_title", "value": "High Scores"},
 		{ "key": "achievements_title", "value": "Achievements"},
+		{ "key": "records_title", "value": "Records"},
+		{ "key": "most_enemies_title", "value": "Most Enemies Killed:" },
+		{ "key": "most_WAX_title", "value": "Most WAX Obtained:" },
+		{ "key": "most_events_title", "value": "Most Events:" },
+		{ "key": "fastest_time_title", "value": "Fastest Time:" },
 
 		{ "key": "tip0_des", "value": "Tip: Hold shift while hovering over an attack to see its damage formula" },
 		{ "key": "tip1_des", "value": "Tip: Identical status effects will override the oldest, even if it is worse" },

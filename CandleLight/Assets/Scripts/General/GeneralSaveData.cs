@@ -15,21 +15,30 @@ namespace General {
     public class GeneralSaveData {
 
         public HighScoreData[] hsds;
-        public ItemData pastItem;
+        public ItemData pastItemData;
         public bool[] tutorialTriggers;
         public bool isTimer;
         public float animationSpeed;
         public float bgmVolume;
         public float sfxVolume;
+        public int mostEnemies;
+        public int mostWAX;
+        public int mostEvents;
+        public float fastestTime;
        
-        public GeneralSaveData(ItemData pastItem, HighScoreData[] hsds, bool[] tutorialTriggers, bool isTimer, float animationSpeed, float bgmVolume, float sfxVolume) {
+        public GeneralSaveData(ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool isTimer, 
+        float animationSpeed, float bgmVolume, float sfxVolume, int mostEnemies = -1, int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
             this.hsds = hsds;
             this.tutorialTriggers = tutorialTriggers;
-            this.pastItem = pastItem;
+            this.pastItemData = pastItemData;
             this.isTimer = isTimer;
             this.animationSpeed = animationSpeed;
             this.bgmVolume = bgmVolume;
             this.sfxVolume = sfxVolume;
+            this.mostEnemies = mostEnemies;
+            this.mostWAX = mostWAX;
+            this.mostEvents = mostEvents;
+            this.fastestTime = fastestTime;
         }
     }
 }

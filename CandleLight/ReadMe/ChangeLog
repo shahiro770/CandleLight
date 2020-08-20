@@ -134,26 +134,32 @@ Feature: Add glow to some stuff
 UI: Slowdown some animations
 Balance: Buffed steadffast
 Feaature: Added Armour3
+Bug: item on double display broke
+Bug: Options menu doesn't auto close tooltips
+Bug: Status effects play over tooltips
+Fix bug where midpoints don't pop cause 0.4999999
+Feature: Added game save data (so stuff like options and pastItem won't get reset on new games)
+Feature: Add high scores
+Buff: Make steadfst give a buff
+Bug: Path split is wrong
+Bug: Item stored over item doesn't work
+Balance: Buff final boss monsters some
 
 COOKING
 -------
-Fix bug where midpoints don't pop cause 0.4999999
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
 Feature: Highscores and achievements
-Feature: Added game save data (so stuff like options and pastItem won't get reset on new games)
 
 Bug: No save tutorial prompt
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
 Fix: Make it so stuff can be hovered over during rewards panel
-Bug: item on double display broke
 
 NEAR FUTURE
 ----------------
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
 Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
-Feature: Add high scores
 Feature: Sound effects and music
 Feature: Ending cutscenes
 Fix: ENUM EVERYTHING
@@ -165,13 +171,6 @@ Balance: Reevaluate all interaction thresholds
 Bug: Tooltip dies
 Fix: Drag to item should also work (down press and up press)
 Mobile: Make people pay for save scumming
-Buff: Make steadfst give a buff
-Fix: Make buffs
-Bug: Path split is wrong
-Bug: Item stored over item doesn't work
-
-
-Balance: Buff final boss monsters some
 
 FUTURE/MAYBE
 ------------

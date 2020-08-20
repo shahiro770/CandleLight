@@ -47,7 +47,7 @@ namespace Combat {
 
         public bool inCombat { get; private set; } = false;       
         public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
-        public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
+        public List<Monster> enemiesKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
         private EventSystem es;                                             /// <value> EventSystem reference </value>
         private List<PartyMember> partyMembersAll = new List<PartyMember>();    /// <value> List of partyMembers </value>
@@ -100,7 +100,7 @@ namespace Combat {
             inCombat = true;
             cq.Reset();
             monsters = new List<Monster>();
-            monstersKilled = new List<Monster>();
+            enemiesKilled = new List<Monster>();
             partyMembersAlive = new List<PartyMember>();
             partyMembersAll = PartyManager.instance.GetPartyMembers();
             this.championBuffs = championBuffs;
@@ -499,7 +499,7 @@ namespace Combat {
                 if (m.CheckDeath()) {
                     cq.RemoveCharacter(m.ID);
                     monstersToRemove.Add(m);
-                    monstersKilled.Add(m);
+                    enemiesKilled.Add(m);
 
                     yield return StartCoroutine(m.md.PlayDeathAnimation());
                 }
@@ -757,7 +757,7 @@ namespace Combat {
                 if (m.CheckDeath()) {
                     cq.RemoveCharacter(m.ID);
                     monstersToRemove.Add(m);
-                    monstersKilled.Add(m);
+                    enemiesKilled.Add(m);
 
                     yield return StartCoroutine(m.md.PlayDeathAnimation());
                 }

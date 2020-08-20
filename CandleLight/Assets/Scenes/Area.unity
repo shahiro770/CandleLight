@@ -55653,7 +55653,7 @@ MonoBehaviour:
   frontFill: {fileID: 815207014}
   gameOverTitle: {fileID: 1242500201}
   gameOverDes: {fileID: 134487652}
-  monstersAmount: {fileID: 2022860089}
+  enemiesAmount: {fileID: 2022860089}
   WAXAmount: {fileID: 1200478149}
   eventsAmount: {fileID: 2025773857}
   timeAmount: {fileID: 2084692518}

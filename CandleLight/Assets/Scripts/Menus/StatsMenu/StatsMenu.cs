@@ -10,6 +10,8 @@
 
 using ClassConstants = Constants.ClassConstants;
 using General;
+using Localization;
+using TimeSpan = System.TimeSpan;
 using UnityEngine;
 
 namespace Menus.Stats {
@@ -18,6 +20,10 @@ namespace Menus.Stats {
 
         /* external component references*/
         public HighScore[] highScores;
+        public LocalizedText enemiesAmount;
+        public LocalizedText WAXAmount;
+        public LocalizedText eventsAmount;
+        public LocalizedText timeAmount;
 
         private Sprite[] greyWastesSprites;
         private Sprite warriorIcon;
@@ -54,6 +60,16 @@ namespace Menus.Stats {
                 else {
                     highScores[i].Init();
                 }
+            }
+
+            enemiesAmount.SetText(GameManager.instance.gsData.mostEnemies.ToString());
+            WAXAmount.SetText(GameManager.instance.gsData.mostWAX.ToString());
+            eventsAmount.SetText(GameManager.instance.gsData.mostEvents.ToString());
+            if (GameManager.instance.gsData.fastestTime == -1) {
+                timeAmount.SetText("--");
+            }
+            else {
+                timeAmount.SetText(TimeSpan.FromSeconds(GameManager.instance.gsData.fastestTime).ToString(@"hh\:mm\:ss\.ff"));
             }
         }
 

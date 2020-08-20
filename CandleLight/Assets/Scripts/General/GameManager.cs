@@ -48,7 +48,8 @@ namespace General {
         public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code </value>
         public float animationSpeed;                    /// <value> Value that alters the speed of animations </value>
-        public int monstersKilled = 0;                  /// <value> Number of monsters killed </value>
+        public float timeTaken = -1;                    /// <value> Time spent on the most recent run (-1 means run ended in a loss) </value>
+        public int enemiesKilled = 0;                   /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public bool[] tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
@@ -148,7 +149,32 @@ namespace General {
                     pastItemData = pastItem.GetItemData();
                 }
             }
-            gsData.pastItem = pastItemData;
+            gsData.pastItemData = pastItemData;
+            if (this.gsData.mostEnemies < enemiesKilled) {
+                gsData.mostEnemies = enemiesKilled;
+            }
+            else {
+                gsData.mostEnemies = this.gsData.mostEnemies;
+            }
+            if (this.gsData.mostEvents < totalEvents) {
+                gsData.mostEvents = totalEvents;
+            }
+            else {
+                gsData.mostEvents = this.gsData.mostEvents;
+            }
+            if (this.gsData.mostWAX < WAXobtained) {
+                gsData.mostWAX = WAXobtained;
+            }
+            else {
+                gsData.mostWAX = this.gsData.mostWAX;
+            }
+            if (timeTaken != -1 && (timeTaken < this.gsData.fastestTime || this.gsData.fastestTime == -1)) {    // only update time if it was faster and the player won
+                gsData.fastestTime = timeTaken;
+            }
+            else {
+                gsData.fastestTime = this.gsData.fastestTime;;
+            }
+            this.gsData = gsData;
 
             BinaryFormatter formatter  = new BinaryFormatter();
             string path = Application.persistentDataPath + "/generalSave.cndl";
@@ -200,25 +226,26 @@ namespace General {
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
-                if (pastItem != null) {
-                    if (pastItem.type == ItemConstants.GEAR) {
-                        pastItem = new Gear(gsData.pastItem);
+                if (gsData.pastItemData != null) {
+                    if (gsData.pastItemData.type == ItemConstants.GEAR) {
+                        pastItem = new Gear(gsData.pastItemData);
                     }
-                    else if (pastItem.type == ItemConstants.CANDLE) {
-                        pastItem = new Candle(gsData.pastItem);
+                    else if (gsData.pastItemData.type == ItemConstants.CANDLE) {
+                        pastItem = new Candle(gsData.pastItemData);
                     }
                     else {
-                        pastItem = new Special(gsData.pastItem);
+                        pastItem = new Special(gsData.pastItemData);
                     }
                 }
             }
             else {  // default settings on first load, or if generalSAveData non existance
-                tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
-                animationSpeed = 1f;               
-                gsData.hsds = new HighScoreData[4];
-                UIManager.instance.isTimer = false;
-                AudioManager.instance.bgmVolume = 1;
-                AudioManager.instance.sfxVolume = 1;
+                gsData = new GeneralSaveData(null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(), 
+                false, 1f, 1, 1, 0, 0, 0, -1);
+                tutorialTriggers = gsData.tutorialTriggers;
+                animationSpeed = gsData.animationSpeed;               
+                UIManager.instance.isTimer = gsData.isTimer;
+                AudioManager.instance.bgmVolume = gsData.bgmVolume;
+                AudioManager.instance.sfxVolume = gsData.sfxVolume;
                 pastItem = null;
             }
         }

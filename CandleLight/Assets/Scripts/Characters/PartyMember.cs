@@ -1238,7 +1238,7 @@ namespace Characters {
                     if (index == (int)SkillConstants.warriorSkills.STEADFAST) {
                         statChange = true;
                     }
-                    if (index == (int)SkillConstants.warriorSkills.BLOODSWORN) {
+                    else if (index == (int)SkillConstants.warriorSkills.BLOODSWORN) {
                         for (int i = 0; i < attackNum; i++) {
                             attacks[i].costType = "HP";
                         }
@@ -1398,6 +1398,9 @@ namespace Characters {
                         for (int i = 0; i < attackNum; i++) {
                             attacks[i].costType = "MP";
                         }
+                    }
+                    else if (index == (int)SkillConstants.warriorSkills.STEADFAST) {
+                        statChange = true;
                     }
                 }
                 if (className == ClassConstants.MAGE) {
