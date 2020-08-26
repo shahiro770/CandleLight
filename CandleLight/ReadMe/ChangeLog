@@ -126,9 +126,6 @@ Feature: Added webbedArch event
 Feature: Added custom death messages
 Bug: Forked road flipped has wrong names
 Fix: Change frostbite to scale off of PATK?
-
-JUST FINISHED
--------------
 Candlemancy: Take off negative clause
 Feature: Add glow to some stuff
 UI: Slowdown some animations
@@ -144,16 +141,27 @@ Buff: Make steadfst give a buff
 Bug: Path split is wrong
 Bug: Item stored over item doesn't work
 Balance: Buff final boss monsters some
+Feature: Highscores
+Feature: Statistics
+Bug: HP regen for champion didn't include 1.66 hp bonus
+
+JUST FINISHED
+-------------
+
 
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
-Feature: Highscores and achievements
+Feature: achievements
 
 Bug: No save tutorial prompt
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
 Fix: Make it so stuff can be hovered over during rewards panel
+Fix: Add tutorial tip for not being able to assign skill point in combat
+Fix: Deal with items having 2 always rounded down to 1
+Fix: Nerf freeze (make it less complicated)
+Buff: Make timekeeper's heal a full heal and revive
 
 NEAR FUTURE
 ----------------
@@ -171,6 +179,8 @@ Balance: Reevaluate all interaction thresholds
 Bug: Tooltip dies
 Fix: Drag to item should also work (down press and up press)
 Mobile: Make people pay for save scumming
+Fix: Let checking of skills in game
+Add normal/hard mode
 
 FUTURE/MAYBE
 ------------

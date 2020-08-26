@@ -173,8 +173,12 @@ namespace Characters {
                     }
                 }
             }
-            else if (name == StatusEffectConstants.CHAMPIONHP || name == StatusEffectConstants.REGENERATE) {
+            else if (name == StatusEffectConstants.REGENERATE) {
                 preValue = (int)(Mathf.Ceil((float)afflicted.HP * 0.05f));
+                value = preValue;
+            }
+            else if (name == StatusEffectConstants.CHAMPIONHP) {
+                preValue = (int)(Mathf.Ceil((float)(afflicted.HP * 1.66) * 0.05f)); // the bonus hp is not calculated in initially for champion HP
                 value = preValue;
             }
             else if (name == StatusEffectConstants.FATALWOUND) {

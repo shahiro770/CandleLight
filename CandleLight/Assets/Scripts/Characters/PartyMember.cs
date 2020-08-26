@@ -463,7 +463,7 @@ namespace Characters {
                     MPRegen *= 2f;
                 }
                 if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
-                    MDEF += 2;
+                    MDEF += 3;
                 }
             }
             else if (className == ClassConstants.ARCHER) {

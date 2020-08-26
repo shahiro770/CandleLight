@@ -137,7 +137,7 @@ namespace Events {
         /// </summary>
         void Update() {
             // Only pause if the game isn't loading or over
-            if (Input.GetButtonDown("Cancel") == true && GameManager.instance.loadingScreen.activeSelf == false && gameOverMenu.gameObject.activeSelf == false) {            // escape key pressed
+            if (Input.GetButtonDown("Cancel") == true && GameManager.instance.loadingScreen.activeSelf == false && gameOverMenu.gameObject.activeSelf == false) {
                 if (optionsMenu.gameObject.activeSelf == false) {
                     SetPauseMenu(true);
                     return;
@@ -1887,7 +1887,7 @@ namespace Events {
             if (panelNum == 0) {
                 toastPanel0.SetTutorialNotification(tutorialName);
             }
-            else if (panelNum == -1) {
+            else if (panelNum == 1) {
                 toastPanel1.SetTutorialNotification(tutorialName);
             }
             else {
@@ -1896,6 +1896,23 @@ namespace Events {
                 }
                 else {
                     toastPanel0.SetTutorialNotification(tutorialName);
+                }
+            }
+        }
+
+        public void SetAchievementNotification(int index, Sprite s, int panelNum = -1) {
+            if (panelNum == 0) {
+                toastPanel0.SetAchievementNotification(s, index);
+            }
+            else if (panelNum == 1) {
+                toastPanel1.SetAchievementNotification(s, index);
+            }
+            else {
+                if (toastPanel0.gameObject.activeSelf == true) {
+                    toastPanel1.SetAchievementNotification(s, index);
+                }
+                else {
+                    toastPanel0.SetAchievementNotification(s, index);
                 }
             }
         }
@@ -1980,7 +1997,7 @@ namespace Events {
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
             PartyManager.instance.ResetGame();
-            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, 
+            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
             UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
             GameManager.instance.SaveGeneralData(gsData);
             GameManager.instance.StartLoadNextScene("MainMenu");
@@ -2026,7 +2043,7 @@ namespace Events {
             GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints);
             GameManager.instance.SaveGame(data);
 
-            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, 
+            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
             UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
             GameManager.instance.SaveGeneralData(gsData);
         }

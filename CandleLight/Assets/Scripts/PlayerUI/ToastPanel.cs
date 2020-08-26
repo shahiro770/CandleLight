@@ -1,5 +1,6 @@
 using Localization;
 using PartyManager = Party.PartyManager;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ namespace PlayerUI {
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         public LayoutElement le;
         public SpriteRenderer toastSprite;
-
+        public SpriteRenderer achievementIcon;
         public enum toastType { HP, MP, EXP, WAX, SE, PROGRESS, QUESTCOMPLETE };
 
         private Coroutine fader;            /// <value> Store the coroutine responsible for visibility to stop it if notification changes suddenly </value>
@@ -144,6 +145,48 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Special notification for indicating an achievement has been unlocked
+        /// </summary>
+        /// <param name="sprite"> Sprite to be displayed in the notification </param>
+        /// <param name="index"> Index of the sprite </param>
+        public void SetAchievementNotification(Sprite sprite, int index) {
+            titleText.SetKey("ACHIEVEMENT_toast");
+            descriptionText.SetKey(index + "_ach_title");
+            flameAnimator.gameObject.SetActive(false);
+            achievementIcon.gameObject.SetActive(true);
+            achievementIcon.sprite = sprite;
+            achievementIcon.color = GetAchievementColor(index);
+            
+
+            b.interactable = false;
+            SetVisible(true);      
+            fadeOuter = StartCoroutine(FadeOut());      
+        }
+
+                /// <summary>
+        /// Hard code the achievement's unlocked colour for easy use
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Color GetAchievementColor(int index) {
+            byte startAlpha = (byte)(255 * textBackgroundCanvas.alpha);
+            switch (index) {
+                case 0:
+                    return new Color32(133, 133, 133, startAlpha);
+                case 1:
+                    return new Color32(234, 50, 60, startAlpha);
+                case 2:
+                    return new Color32(92, 138, 57, startAlpha);
+                case 3:
+                    return new Color32(255, 205, 2, startAlpha);
+                case 4:
+                    return new Color32(155, 66, 28, startAlpha);
+                default:
+                    return new Color32(61, 61, 61, startAlpha);
+            }
+        }
+
+        /// <summary>
         /// Updates the amount of WAX being displayed in the notification.
         /// Assumes the notification is a shop notification
         /// </summary>
@@ -206,11 +249,14 @@ namespace PlayerUI {
 
                 textBackgroundCanvas.alpha = newAlpha;
                 toastSprite.color = new Color(255, 255, 255, newAlpha);
+                achievementIcon.color = new Color(achievementIcon.color.r, achievementIcon.color.g, achievementIcon.color.b, newAlpha);
 
                 yield return new WaitForEndOfFrame();
             }
 
             if (targetAlpha == 0) {
+                flameAnimator.gameObject.SetActive(true);
+                achievementIcon.gameObject.SetActive(false);
                 flameAnimator.SetTrigger("normal");
                 flameAnimator.ResetTrigger("normal");   // reset the trigger, because otherwise animator will swap back immediately on repeat triggers
                 gameObject.SetActive(false);

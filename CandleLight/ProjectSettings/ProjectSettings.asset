@@ -600,7 +600,7 @@ PlayerSettings:
   facebookStatus: 1
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
-  apiCompatibilityLevel: 6
+  apiCompatibilityLevel: 2
   cloudProjectId: f6c0c638-357e-4448-99e2-3451870cb45c
   framebufferDepthMemorylessMode: 0
   projectName: CandleLight

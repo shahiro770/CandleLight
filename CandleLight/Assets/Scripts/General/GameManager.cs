@@ -43,6 +43,7 @@ namespace General {
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
         public GeneralSaveData gsData;                  /// <value> Data that cannot be cleared after a run ends </value>
         public SaveData data;                           /// <value> Data that was loaded from a save file regarding a run </value>
+        public Sprite[] achievementSprites;             /// <value> Sprite array for all achievement sprites (loaded here cause both area and mainMenu need this) </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
         public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
@@ -53,6 +54,7 @@ namespace General {
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public bool[] tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
+        public bool[] achievementsUnlocked = Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
 
         private string activeScene = "Game";            /// <value> Current scene being displayed </value>
         private string areaScene = "Area";              /// <value> Name of area scene </value>
@@ -83,6 +85,7 @@ namespace General {
         /// Load in general data after all relevant gameobjects have woke up
         /// </summary>
         void Start() {
+            LoadAchievementSprites();
             LoadGeneralData();
         }
 
@@ -239,14 +242,26 @@ namespace General {
                 }
             }
             else {  // default settings on first load, or if generalSAveData non existance
-                gsData = new GeneralSaveData(null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(), 
-                false, 1f, 1, 1, 0, 0, 0, -1);
+                gsData = new GeneralSaveData(null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
+                Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(), 
+                false, 0.5f, 1f, 1, 0, 0, 0, -1);
+                achievementsUnlocked = gsData.achievementsUnlocked;
                 tutorialTriggers = gsData.tutorialTriggers;
                 animationSpeed = gsData.animationSpeed;               
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
                 pastItem = null;
+            }
+        }
+
+        /// <summary>
+        /// Load achievement sprites
+        /// </summary>
+        public void LoadAchievementSprites() {
+            achievementSprites = new Sprite[5];
+            for (int i = 0; i < achievementSprites.Length; i++) {
+                achievementSprites[i] = Resources.Load<Sprite>("Sprites/Achievements/" + i);
             }
         }
         

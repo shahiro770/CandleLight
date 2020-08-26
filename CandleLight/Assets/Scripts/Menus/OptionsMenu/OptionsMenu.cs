@@ -140,7 +140,7 @@ namespace Menus.OptionsMenu {
             tipstt.SetVisible(false);
             animationSpeedtt.SetVisible(false);
             timertt.SetVisible(false);
-            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, 
+            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked, 
             UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
             GameManager.instance.SaveGeneralData(gsData);
         }

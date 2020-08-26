@@ -938,17 +938,24 @@ MonoBehaviour:
   - name: click
     clip: {fileID: 8300000, guid: 998c798c4282a424b9d40fbd9a1e70a4, type: 3}
     source: {fileID: 0}
-    volume: 0
+    volume: 1
     pitch: 1
     loop: 0
     type: 0
   - name: pathNormalGreyWastes
     clip: {fileID: 8300000, guid: cb101e1f2bb0342c9bb586a745839970, type: 3}
     source: {fileID: 0}
-    volume: 0
+    volume: 1
     pitch: 1
     loop: 1
     type: 1
+  - name: 
+    clip: {fileID: 0}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    type: 0
   bgmVolume: 0
   sfxVolume: 0
 --- !u!1 &1495799579
@@ -1049,7 +1056,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 
   meshText: {fileID: 1566310745}
-  textPreset: 0
+  textPreset: 1
 --- !u!114 &1566310745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1205,7 +1212,7 @@ MonoBehaviour:
   loadingFlameSpriteRenderer: {fileID: 17016716}
   gsData:
     hsds: []
-    pastItem:
+    pastItemData:
       nameID: 
       className: 
       effects: []
@@ -1230,10 +1237,15 @@ MonoBehaviour:
       uses: 0
       maxUses: 0
     tutorialTriggers: 
+    achievementsUnlocked: 
     isTimer: 0
     animationSpeed: 0
     bgmVolume: 0
     sfxVolume: 0
+    mostEnemies: 0
+    mostWAX: 0
+    mostEvents: 0
+    fastestTime: 0
   data:
     partyMemberDatas: []
     spareGear: []
@@ -1245,18 +1257,21 @@ MonoBehaviour:
     WAX: 0
     subAreaProgress: 0
     areaProgress: 0
-    monstersKilled: 0
+    enemiesKilled: 0
     WAXobtained: 0
     totalEvents: 0
+  achievementSprites: []
   areaName: GreyWastes
   canvasWidth: 960
   canvasHeight: 540
   canvasScaleFactor: 53.999992
   animationSpeed: 0
-  monstersKilled: 0
+  timeTaken: -1
+  enemiesKilled: 0
   WAXobtained: 0
   totalEvents: 0
   tutorialTriggers: 01010101010101010101
+  achievementsUnlocked: 00000000000000000000
 --- !u!4 &1827646565
 Transform:
   m_ObjectHideFlags: 0

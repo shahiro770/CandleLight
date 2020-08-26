@@ -17,6 +17,7 @@ namespace General {
         public HighScoreData[] hsds;
         public ItemData pastItemData;
         public bool[] tutorialTriggers;
+        public bool[] achievementsUnlocked;
         public bool isTimer;
         public float animationSpeed;
         public float bgmVolume;
@@ -26,7 +27,7 @@ namespace General {
         public int mostEvents;
         public float fastestTime;
        
-        public GeneralSaveData(ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool isTimer, 
+        public GeneralSaveData(ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool[] achievementsUnlocked, bool isTimer, 
         float animationSpeed, float bgmVolume, float sfxVolume, int mostEnemies = -1, int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
             this.hsds = hsds;
             this.tutorialTriggers = tutorialTriggers;

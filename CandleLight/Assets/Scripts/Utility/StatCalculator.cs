@@ -50,6 +50,7 @@ public class StatCalculator : MonoBehaviour{
     }
 
     void Awake() {
+        //print(Random.Range((int)(Mathf.Max(1, 2f * 0.5)), (int)(2 * (1 + 0.5))));
         GetClassStats("warrior", 8, 4, 3, 3, 1, 4);
         GetClassStats("mage", 3, 4, 10, 3, 1, 4);
         GetClassStats("archer", 3, 9, 6, 2, 1, 4);

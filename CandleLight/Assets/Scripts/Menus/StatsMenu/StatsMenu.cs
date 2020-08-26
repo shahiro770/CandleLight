@@ -18,7 +18,8 @@ namespace Menus.Stats {
 
     public class StatsMenu : MonoBehaviour {
 
-        /* external component references*/
+        /* external component references */
+        public AchievementDisplay[] achievements;
         public HighScore[] highScores;
         public LocalizedText enemiesAmount;
         public LocalizedText WAXAmount;
@@ -46,6 +47,9 @@ namespace Menus.Stats {
             for (int i = 0; i < greyWastesSubAreas; i++) {
                 greyWastesSprites[i] =  Resources.Load<Sprite>("Sprites/SubAreas/GreyWastes/" + i);
             }
+            for (int i = 0; i < achievements.Length; i++) {
+                achievements[i].SetUnlockedColor(GetAchievementColor(i));
+            }
         }
 
         /// <summary>
@@ -60,6 +64,12 @@ namespace Menus.Stats {
                 else {
                     highScores[i].Init();
                 }
+            }
+
+            for (int i = 0; i < achievements.Length; i++) {
+                achievements[i].SetSprite(GameManager.instance.achievementSprites[i]);
+                achievements[i].SetTooltip(i);
+                achievements[i].SetColour(GameManager.instance.achievementsUnlocked[i]);
             }
 
             enemiesAmount.SetText(GameManager.instance.gsData.mostEnemies.ToString());
@@ -107,6 +117,28 @@ namespace Menus.Stats {
             }
             
             return null;
+        }
+
+        /// <summary>
+        /// Hard code the achievement's unlocked colour for easy use
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Color GetAchievementColor(int index) {
+            switch (index) {
+                case 0:
+                    return new Color32(133, 133, 133, 255);
+                case 1:
+                    return new Color32(234, 50, 60, 255);
+                case 2:
+                    return new Color32(92, 138, 57, 255);
+                case 3:
+                    return new Color32(255, 205, 2, 255);
+                case 4:
+                    return new Color32(155, 66, 28, 255);
+                default:
+                    return new Color32(61, 61, 61, 255);
+            }
         }
     }
 }
