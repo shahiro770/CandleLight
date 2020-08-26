@@ -32,6 +32,7 @@ namespace Constants {
         public const string END = "end";              /// <value> Ends the area, returning to the main menu </value>
         public const string REVIVE = "revive";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP </value>
         public const string REVIVEANDLEAVE = "reviveAndLeave";        /// <value> Bring all dead partyMembers back to life at 30% HP and MP and leave </value>
+        public const string REVIVEORSTATALL = "reviveOrStatAll";      /// <value> Statall effect applies to anyone alive, revive applies to those who are dead </value>
         public const string NEWINT = "newInt";        /// <value> Add a new interaction to the list of available ones </value>
         public const string SHOP = "shop";            /// <value> Player can purchase items here </value>
         public const string REKINDLE = "rekindle";    /// <value> All active candle uses are restored </value>

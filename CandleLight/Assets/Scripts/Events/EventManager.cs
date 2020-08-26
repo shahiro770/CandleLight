@@ -1119,6 +1119,15 @@ namespace Events {
                         eventDescription.SetNoReviveText();
                     }
                     break;
+                case ResultConstants.REVIVEORSTATALL:   
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.STATALL);
+                    if (PartyManager.instance.GetNumPartyMembersDead() > 0) { 
+                        PartyManager.instance.RevivePartyMembers();
+                    }
+
+                    eventDescription.SetKey(currentResult.resultKey); 
+                    actionsPanel.TravelActions();
+                    break;
                 case ResultConstants.SHOP:
                     UIManager.instance.inShop = true;
 

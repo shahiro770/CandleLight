@@ -395,9 +395,10 @@ namespace Party {
         }
 
         /// <summary>
-        /// Change CHP of all partyMembers
+        /// Change CHP of all partyMembers, only used outside of combat
         /// </summary>
         /// <param name="amount"></param>
+        /// <param name="type"> for certain result types, hp may be a loss, so need to pass it in and check </param>
         public IEnumerator ChangeHPAll(int amount, string type = "none") {
             if (amount >= 0) {
                 foreach (PartyMember pm in partyMembersAlive) {
@@ -406,24 +407,21 @@ namespace Party {
             }
             else {
                 for (int i = 0; i < partyMembersAll.Count; i++) {
-                    if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS || type == ResultConstants.STATALLANDITEMANDLEAVE
-                        || type == ResultConstants.QUESTCOMPLETE || type == ResultConstants.QUESTCOMPLETEANDNEWINT) {
-                        if (partyMembersAll[i].CheckDeath() == false) {
-                            if (partyMembersAll[i].className == ClassConstants.WARRIOR) {
-                                if (partyMembersAll[i].skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
-                                    StartCoroutine(partyMembersAll[i].LoseHP(amount >> 1));
-                                }
-                                else {
-                                    StartCoroutine(partyMembersAll[i].LoseHP(amount));
-                                }
+                    if (partyMembersAll[i].CheckDeath() == false) {
+                        if (partyMembersAll[i].className == ClassConstants.WARRIOR) {
+                            if (partyMembersAll[i].skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                                StartCoroutine(partyMembersAll[i].LoseHP(amount >> 1));
                             }
                             else {
                                 StartCoroutine(partyMembersAll[i].LoseHP(amount));
                             }
                         }
+                        else {
+                            StartCoroutine(partyMembersAll[i].LoseHP(amount));
+                        }
                     }
-                    else if (type == "Combat") {    // TODO: Make AoE attacks against the party show damage taken by everyone, as well as combat constants for type
-                        yield return null;
+                    else {
+                        yield return null; // I GUESS?????
                     }
                 }
             }
