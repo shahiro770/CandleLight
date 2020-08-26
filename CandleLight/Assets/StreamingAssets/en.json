@@ -1419,7 +1419,7 @@
 		{ "key": "frostGolem_attack", "value": "F. Golem" },
 		{ "key": "frostGolem_attack_des", "value": "frost golem" },
 		{ "key": "shatter_attack", "value": "Shatter" },
-		{ "key": "iceScream_attack", "value": "Ice Scream" },
+		{ "key": "iceScream_attack", "value": "I. Scream" },
 		{ "key": "angelsMercy_attack", "value": "A. Mercy" },
 		{ "key": "none_attack", "value": ""}
 	]

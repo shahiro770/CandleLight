@@ -924,6 +924,13 @@ namespace Combat {
                         monsters[monsterIndex + 1].md.SelectMonsterButtonAdjacent();
                     }    
                 }
+                else if (selectedAttackPM.scope == "allEnemies") {
+                    for (int i = 0; i < monsters.Count; i++) {
+                        if (monsters[i].ID != monsterToSelect.ID) {
+                            monsters[i].md.SelectMonsterButtonAdjacent();
+                        }
+                    }  
+                }  
             }
         }
 
@@ -933,8 +940,8 @@ namespace Combat {
         /// </summary>
         /// <param name="monsterToSelect"> Monster as the main target</param>
         public void HideAttackTargets(Monster monsterToSelect) {
-                if (selectedAttackPM != null) {
-                    if (selectedAttackPM.scope == "adjacent") {
+            if (selectedAttackPM != null) {
+                if (selectedAttackPM.scope == "adjacent") {
                     int monsterIndex = 0;
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID == monsterToSelect.ID) {
@@ -949,6 +956,13 @@ namespace Combat {
                         monsters[monsterIndex + 1].md.DeselectMonsterButton();
                     }    
                 }
+                if (selectedAttackPM.scope == "allEnemies") {
+                    for (int i = 0; i < monsters.Count; i++) {
+                        if (monsters[i].ID != monsterToSelect.ID) {
+                            monsters[i].md.DeselectMonsterButton();
+                        }
+                    }  
+                }  
             }
         }
         

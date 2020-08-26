@@ -502,8 +502,10 @@ namespace Characters {
         /// <param name="animationClipName"></param>
         /// <returns></returns>
         public IEnumerator DisplayAttackEffect(string animationClipName) {
+            isAnimating = true;
             SetEffectsAnimatorClip(animationClipName);
             yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
+            isAnimating = false;
         }
 
         /// <summary>

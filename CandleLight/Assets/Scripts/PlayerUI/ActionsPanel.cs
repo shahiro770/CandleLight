@@ -196,7 +196,7 @@ namespace PlayerUI {
         public void DisplayFirstPartyMember(PartyMember pm) {
             SetCombatActions(pm.attacks);
             FadeActions(1);
-            CheckAndSetActionsToUnusable(pm.CMP, pm.CHP);
+            CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
         }
 
         /// <summary>
@@ -331,8 +331,8 @@ namespace PlayerUI {
                             actions[i].SetUsable(true);
                         }
                     }
-                    else if (a.costType == "HP") {
-                        if (a.costValue > CHP) {
+                    else if (a.costType == "HP") { 
+                        if (a.costValue > CHP) {    // note: caster might die casting (but potential clutch god moments)
                             actions[i].SetUsable(false);
                         }
                         else {

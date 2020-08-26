@@ -64,19 +64,35 @@ namespace Characters {
         public void Init(PartyMember pm) {
             this.pm = pm;
             activeCandles = new ItemDisplay[3]; // due to object intialization orders, if this isnt dont here, it'll just be null
-            partyMemberSprite = Resources.Load<Sprite>("Sprites/Classes/" + char.ToUpper(pm.className[0]) + pm.className.Substring(1) + "Icon");
-            
-            if (pm.className == ClassConstants.WARRIOR) {
-                partyMemberColour = new Color32(189, 29, 0, 255);
+            if (PartyManager.instance.GetClassCount(pm.className) == 0) {   // don't show alternate colour scheme if its the first partyMember to be added
+                partyMemberSprite = Resources.Load<Sprite>("Sprites/Classes/" + char.ToUpper(pm.className[0]) + pm.className.Substring(1) + "Icon");
+                if (pm.className == ClassConstants.WARRIOR) {
+                    partyMemberColour = new Color32(189, 29, 0, 255);
+                }
+                else if (pm.className == ClassConstants.MAGE || pm.className == ClassConstants.FROSTGOLEM) {
+                    partyMemberColour = new Color32(0, 152, 220, 255);
+                }
+                else if (pm.className ==  ClassConstants.ARCHER) {
+                    partyMemberColour = new Color32(90, 197, 79, 255);
+                }
+                else if (pm.className == ClassConstants.ROGUE) {
+                    partyMemberColour = new Color32(255, 205, 2, 255);
+                }
             }
-            else if (pm.className == ClassConstants.MAGE || pm.className == ClassConstants.FROSTGOLEM) {
-                partyMemberColour = new Color32(0, 152, 220, 255);
-            }
-            else if (pm.className ==  ClassConstants.ARCHER) {
-                partyMemberColour = new Color32(90, 197, 79, 255);
-            }
-            else if (pm.className == ClassConstants.ROGUE) {
-                partyMemberColour = new Color32(255, 205, 2, 255);
+            else {
+                partyMemberSprite = Resources.Load<Sprite>("Sprites/Classes/" + char.ToUpper(pm.className[0]) + pm.className.Substring(1) + "IconAlt");
+                if (pm.className == ClassConstants.WARRIOR) {
+                    partyMemberColour = new Color32(236, 100, 75, 255);
+                }
+                else if (pm.className == ClassConstants.MAGE || pm.className == ClassConstants.FROSTGOLEM) {
+                    partyMemberColour = new Color32(0, 111, 135, 255);
+                }
+                else if (pm.className ==  ClassConstants.ARCHER) {
+                    partyMemberColour = new Color32(0, 156, 65, 255);
+                }
+                else if (pm.className == ClassConstants.ROGUE) {
+                    partyMemberColour = new Color32(133, 122, 61, 255);
+                }
             }
 
             for (int i = 0; i < pm.skills.Length; i++) {

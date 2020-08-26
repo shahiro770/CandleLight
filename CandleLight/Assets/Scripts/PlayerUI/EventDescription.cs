@@ -302,6 +302,14 @@ namespace PlayerUI {
                         attackString += ". Hits adjacents";
                     }
                 }
+                else if (a.scope == "allEnemies") {
+                    if (a.seName != "none") {
+                        attackString += ".\nHits all enemies";
+                    }
+                    else {
+                        attackString += ". Hits all enemies";
+                    }
+                }
             }
             
             displayedAttack = a;
@@ -370,6 +378,14 @@ namespace PlayerUI {
                     }
                     else {
                         formulaString += ". Hits adjacents";
+                    }
+                }
+                else if (displayedAttack.scope == "allEnemies") {
+                    if (displayedAttack.seName != "none") {
+                        formulaString += ".\nHits all enemies";
+                    }
+                    else {
+                        formulaString += ". Hits all enemies";
                     }
                 }
             }

@@ -164,6 +164,7 @@ namespace Characters {
             Mathos.Parser.MathParser parser = new Mathos.Parser.MathParser();
 
             parser.LocalVariables.Add("LVL", LVL);
+            parser.LocalVariables.Add("HP", HP);
 
             return (int)parser.Parse(a.costFormula);
         }

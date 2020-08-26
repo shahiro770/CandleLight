@@ -109,7 +109,7 @@ namespace Party {
                 partyMembersAll.Add(pmComponent);
             }
 
-            if (partyMembersAlive.Count == 0) {
+            if (partyMembersAlive.Count == 0) { // in the event on loading, first partyMember is dead
                 activePartyMember = partyMembersAll[0];
             }
             else {
@@ -757,12 +757,28 @@ namespace Party {
             else {
                 partyComposition = new string[partyMembersAll.Count];
 
-                for (int i = 0; i < PartyManager.instance.GetPartyMembers().Count; i++) {
+                for (int i = 0; i < partyMembersAll.Count; i++) {
                    partyComposition[i] = partyMembersAll[i].className;
                 }
             }
 
             return partyComposition;
+        }
+
+        /// <summary>
+        /// Returns the number of partyMembers in the party with a given class
+        /// </summary>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public int GetClassCount(string className) {
+            int count = 0;
+            for (int i = 0; i < partyMembersAll.Count; i++) {
+                if (partyMembersAll[i].className == className) {
+                    count++;
+                }
+            }
+
+            return count;
         }
     }
 }
