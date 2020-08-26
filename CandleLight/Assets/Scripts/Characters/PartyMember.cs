@@ -66,7 +66,7 @@ namespace Characters {
             this.subClassName = personalInfo[1];
             this.race = personalInfo[3];
             this.skills = skills;
-            skillPoints = 3;
+            skillPoints = 1;
 
             pmvc.Init(this);
         }

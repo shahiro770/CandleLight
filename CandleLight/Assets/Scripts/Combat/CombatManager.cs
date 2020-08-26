@@ -314,10 +314,6 @@ namespace Combat {
                 pmSelectionFinalized = true;
             }
             else {
-                Monster taunter = (Monster)CheckTauntIndex(activePartyMember);  // TODO: Make it so when taunted, player must choose an attack that can target the taunter (making candles and other attacks unusable)
-                if (taunter != null) {
-                    SelectMonster(taunter);
-                }
                 partyPanel.SetBlinkSelectables(null, false);
             }
 
@@ -839,10 +835,12 @@ namespace Combat {
             DeselectMonsters();
             
             selectedMonster = monsterToSelect;
+            Monster taunter = (Monster)CheckTauntIndex(activePartyMember);
 
             // Player can freely click on monsters without having an attack selected
-            if (selectedAttackPM != null) {
+            if (selectedAttackPM != null && (taunter == null || (taunter != null && monsterToSelect.ID == taunter.ID))) {
                 if (selectedAttackPM.type != AttackConstants.HEALHP && selectedAttackPM.type != AttackConstants.BUFF) {
+                    
                     if (selectedAttackPM.scope != "single") {
                         int monsterIndex = 0;
                         for (int i = 0; i < monsters.Count; i++) {
