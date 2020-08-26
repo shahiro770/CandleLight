@@ -147,7 +147,7 @@ namespace Characters {
                     }
                 }
             }
-            else if (name == StatusEffectConstants.TAUNT) {
+            else if (name == StatusEffectConstants.TAUNT || name == StatusEffectConstants.MARIONETTE) {
                 this.afflicter = afflicter;
             }
             else if (name == StatusEffectConstants.BLEED) {

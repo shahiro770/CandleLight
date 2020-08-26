@@ -128,7 +128,6 @@ namespace Characters {
                     PATK += (int)(PATK * 0.5);
                 }
                 else if (se.name == StatusEffectConstants.FREEZE) {
-                    DOG -= (int)(DOG * 0.3);
                     ACC -= (int)(ACC * 0.3);
                     PDEF -= (int)(PDEF * 0.3);
                 }
@@ -153,6 +152,9 @@ namespace Characters {
                 }
                 else if (se.name == StatusEffectConstants.BARRIER) {
                     MDEF += MDEF;
+                }
+                else if (se.name == StatusEffectConstants.MARIONETTE) {
+                    DOG -= DOG;
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);

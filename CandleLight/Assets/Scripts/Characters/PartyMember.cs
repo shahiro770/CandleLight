@@ -465,6 +465,9 @@ namespace Characters {
                 if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
                     MDEF += 3;
                 }
+                if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
+                    burnPlus = true;
+                }
             }
             else if (className == ClassConstants.ARCHER) {
                 if (skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
@@ -493,7 +496,6 @@ namespace Characters {
                     PATK += (int)(PATK * 0.5);
                 }
                 else if (se.name == StatusEffectConstants.FREEZE) {
-                    DOG -= (int)(DOG * 0.3);
                     ACC -= (int)(ACC * 0.3);
                     PDEF -= (int)(PDEF * 0.3);
                 }
@@ -515,6 +517,9 @@ namespace Characters {
                 }
                 else if (se.name == StatusEffectConstants.BARRIER) {
                     MDEF += MDEF;
+                }
+                else if (se.name == StatusEffectConstants.MARIONETTE) {
+                    DOG -= DOG;
                 }
             }
             

@@ -147,7 +147,9 @@ Bug: HP regen for champion didn't include 1.66 hp bonus
 
 JUST FINISHED
 -------------
-
+Fix: Nerf freeze (make it less complicated)
+Buff: Fiery veil buffed
+Balance: Gave wraith dolleyes and ice golem ice scream
 
 COOKING
 -------
@@ -160,7 +162,6 @@ Fix: Make dialogue prompt rotate
 Fix: Make it so stuff can be hovered over during rewards panel
 Fix: Add tutorial tip for not being able to assign skill point in combat
 Fix: Deal with items having 2 always rounded down to 1
-Fix: Nerf freeze (make it less complicated)
 Buff: Make timekeeper's heal a full heal and revive
 
 NEAR FUTURE

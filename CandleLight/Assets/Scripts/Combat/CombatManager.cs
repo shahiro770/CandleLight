@@ -1131,9 +1131,17 @@ namespace Combat {
         /// <returns></returns>
         public Character CheckTauntIndex(Character c) {
             int tauntIndex = c.GetStatusEffect(StatusEffectConstants.TAUNT);
+            int marionetteIndex = c.GetStatusEffect(StatusEffectConstants.MARIONETTE);
 
             if (tauntIndex != -1) {
                 Character taunter = c.statusEffects[tauntIndex].afflicter;
+
+                if (taunter != null && taunter.CheckDeath() == false) {
+                    return taunter;
+                }
+            }
+            if (marionetteIndex != -1) {
+                Character taunter = c.statusEffects[marionetteIndex].afflicter;
 
                 if (taunter != null && taunter.CheckDeath() == false) {
                     return taunter;
