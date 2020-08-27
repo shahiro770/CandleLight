@@ -287,27 +287,27 @@ namespace PlayerUI {
 
             if (a.seName != "none") {
                 if (a.seDuration == 1) {
-                    attackString += ". " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turn";
+                    attackString += ", " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turn";
                 }
                 else {
-                    attackString += ". " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turns";
+                    attackString += ", " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turns";
                 }
             }
             if (a.scope != "single") {
                 if (a.scope == "adjacent") {
                     if (a.seName != "none") {
-                        attackString += ".\nHits adjacents";
+                        attackString += ",\nhits adjacents";
                     }
                     else {
-                        attackString += ". Hits adjacents";
+                        attackString += ", hits adjacents";
                     }
                 }
                 else if (a.scope == "allEnemies") {
                     if (a.seName != "none") {
-                        attackString += ".\nHits all enemies";
+                        attackString += ",\nhits all enemies";
                     }
                     else {
-                        attackString += ". Hits all enemies";
+                        attackString += ", hits all enemies";
                     }
                 }
             }
@@ -365,27 +365,27 @@ namespace PlayerUI {
                 
             if (displayedAttack.seName != "none") {
                 if (displayedAttack.seDuration == 1) {
-                    formulaString += ". " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turn";
+                    formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turn";
                 }
                 else {
-                    formulaString += ". " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turns";
+                    formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turns";
                 }
             }
             if (displayedAttack.scope != "single") {
                 if (displayedAttack.scope == "adjacent") {
                     if (displayedAttack.seName != "none") {
-                        formulaString += ".\nHits adjacents";
+                        formulaString += ",\nHits adjacents";
                     }
                     else {
-                        formulaString += ". Hits adjacents";
+                        formulaString += ", Hits adjacents";
                     }
                 }
                 else if (displayedAttack.scope == "allEnemies") {
                     if (displayedAttack.seName != "none") {
-                        formulaString += ".\nHits all enemies";
+                        formulaString += ",\nHits all enemies";
                     }
                     else {
-                        formulaString += ". Hits all enemies";
+                        formulaString += ", Hits all enemies";
                     }
                 }
             }

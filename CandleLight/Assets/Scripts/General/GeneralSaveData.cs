@@ -18,6 +18,7 @@ namespace General {
         public ItemData pastItemData;
         public bool[] tutorialTriggers;
         public bool[] achievementsUnlocked;
+        public string[,] partyCombos;
         public bool isTimer;
         public float animationSpeed;
         public float bgmVolume;
@@ -27,10 +28,12 @@ namespace General {
         public int mostEvents;
         public float fastestTime;
        
-        public GeneralSaveData(ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool[] achievementsUnlocked, bool isTimer, 
+        public GeneralSaveData(ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool[] achievementsUnlocked, string[,] partyCombos, bool isTimer, 
         float animationSpeed, float bgmVolume, float sfxVolume, int mostEnemies = -1, int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
             this.hsds = hsds;
             this.tutorialTriggers = tutorialTriggers;
+            this.achievementsUnlocked = achievementsUnlocked;
+            this.partyCombos = partyCombos;
             this.pastItemData = pastItemData;
             this.isTimer = isTimer;
             this.animationSpeed = animationSpeed;

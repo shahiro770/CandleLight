@@ -15,6 +15,7 @@ namespace PlayerUI {
         public LocalizedText titleText;
         public LocalizedText descriptionText;
         public Image textBackground;        /// <value> Image background for text component </value>
+        public Canvas c;
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         public LayoutElement le;
         public SpriteRenderer toastSprite;
@@ -149,14 +150,17 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="sprite"> Sprite to be displayed in the notification </param>
         /// <param name="index"> Index of the sprite </param>
-        public void SetAchievementNotification(Sprite sprite, int index) {
+        public void SetAchievementNotification(Sprite sprite, int index, bool isHighLayer) {
             titleText.SetKey("ACHIEVEMENT_toast");
             descriptionText.SetKey(index + "_ach_title");
             flameAnimator.gameObject.SetActive(false);
             achievementIcon.gameObject.SetActive(true);
             achievementIcon.sprite = sprite;
             achievementIcon.color = GetAchievementColor(index);
-            
+            if (isHighLayer == true) {
+                c.sortingOrder = 6;
+                achievementIcon.sortingOrder = 6;
+            }
 
             b.interactable = false;
             SetVisible(true);      
@@ -257,6 +261,8 @@ namespace PlayerUI {
             if (targetAlpha == 0) {
                 flameAnimator.gameObject.SetActive(true);
                 achievementIcon.gameObject.SetActive(false);
+                c.sortingOrder = 4;
+                achievementIcon.sortingOrder = 4;
                 flameAnimator.SetTrigger("normal");
                 flameAnimator.ResetTrigger("normal");   // reset the trigger, because otherwise animator will swap back immediately on repeat triggers
                 gameObject.SetActive(false);

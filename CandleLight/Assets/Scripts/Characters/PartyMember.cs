@@ -93,6 +93,7 @@ namespace Characters {
             this.skillPoints = pmData.skillPoints;
 
             pmvc.Init(this);
+            
         }
 
         /// <summary>
@@ -114,6 +115,16 @@ namespace Characters {
                 if (pmData.equippedCandles[i] != null) {
                     EquipCandle(new Candle(pmData.equippedCandles[i]), i);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Add all of the partyMember's saved status effects
+        /// </summary>
+        /// <param name="pmData"></param>
+        public void AddLoadedStatusEffects(PartyMemberData pmData) {
+            for (int i = 0; i < pmData.seDatas.Length; i++) {
+                AddStatusEffect(pmData.seDatas[i]);
             }
         }
 
@@ -463,7 +474,7 @@ namespace Characters {
                     MPRegen *= 2f;
                 }
                 if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
-                    MDEF += 3;
+                    MDEF += 2;
                 }
                 if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
                     burnPlus = true;
@@ -520,6 +531,10 @@ namespace Characters {
                 }
                 else if (se.name == StatusEffectConstants.MARIONETTE) {
                     DOG -= DOG;
+                }
+                else if (se.name == StatusEffectConstants.SCUM) {
+                    HPRegen *= 0.5f;
+                    MPRegen *= 0.5f;
                 }
             }
             
@@ -995,6 +1010,19 @@ namespace Characters {
                 newStatus = new StatusEffect(seName, seDuration);
             }
             newStatus.SetValue(c, this);
+            AddStatusEffect(newStatus);
+            pmvc.AddStatusEffectDisplay(newStatus);
+
+            UpdateStatusEffectValues();
+        }
+
+        /// <summary>
+        /// Adds a status effect to the partyMember from save data
+        /// </summary>
+        /// <param name="seData"> Data </param>
+        public void AddStatusEffect(StatusEffectData seData ) {   
+            StatusEffect newStatus = new StatusEffect(seData);
+            newStatus.SetValue(null, this);
             AddStatusEffect(newStatus);
             pmvc.AddStatusEffectDisplay(newStatus);
 

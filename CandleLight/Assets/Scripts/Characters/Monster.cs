@@ -10,9 +10,12 @@
 *
 */
 
+using achievementConstants = Constants.AchievementConstants.achievementConstants;
 using AttackConstants = Constants.AttackConstants;
 using ClassConstants = Constants.ClassConstants;
 using Combat;
+using EventManager = Events.EventManager;
+using GameManager = General.GameManager;
 using PartyManager = Party.PartyManager;
 using Result = Events.Result;
 using SkillConstants = Constants.SkillConstants;
@@ -329,6 +332,12 @@ namespace Characters {
                 CHP = 0;
             }
             
+            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.LOTTADAMAGE] == false) {
+                if (amount >= 50) {
+                    GameManager.instance.achievementsUnlocked[(int)achievementConstants.LOTTADAMAGE] = true;
+                    EventManager.instance.SetAchievementNotification((int)achievementConstants.LOTTADAMAGE);
+                }
+            }
             yield return StartCoroutine(md.DisplayHPChange(amount, true, false, animationClipName));
         }
 
@@ -541,6 +550,12 @@ namespace Characters {
 
             if (seName == StatusEffectConstants.STUN) {
                 PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);
+            }
+            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] == false) {
+                if (statusEffects.Count >= 5) {
+                    GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] = true;
+                    EventManager.instance.SetAchievementNotification((int)achievementConstants.ANTIMASKERS);
+                }  
             }
         }
 

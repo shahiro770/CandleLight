@@ -202,6 +202,13 @@ namespace PlayerUI {
                     normalBlock.disabledColor = new Color32(255, 255, 255, 150);
                     durationText.SetColour(new Color32(255, 255, 255, 255));
                     break;
+                 case StatusEffectConstants.SCUM:
+                    normalBlock.normalColor = new Color32(61, 61, 61, 200);
+                    normalBlock.highlightedColor = new Color32(61, 61, 61, 255);
+                    normalBlock.pressedColor = new Color32(61, 61, 61, 255);
+                    normalBlock.disabledColor = new Color32(61, 61, 61, 150);
+                    durationText.SetColour(new Color32(61, 61, 61, 255));
+                    break;
             }
 
             bts.SetColorBlock("normal", normalBlock);

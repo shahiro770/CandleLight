@@ -12,9 +12,6 @@ using Attack = Combat.Attack;
 using Characters;
 using Items;
 using Skills;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Party {
 
@@ -40,6 +37,7 @@ namespace Party {
         public Skill[] skills;
         public ItemData[] equippedGear = new ItemData[3];
         public ItemData[] equippedCandles = new ItemData[3];
+        public StatusEffectData[] seDatas;
 
         public PartyMemberData(PartyMember pm) {
             LVL = pm.LVL;
@@ -73,16 +71,11 @@ namespace Party {
                     equippedCandles[i] = pm.activeCandles[i].GetItemData();
                 }
             }
-        }
 
-        /// <summary>
-        /// PartyMember data constructor for when the player is in the tutorial
-        /// (Contiuning the game from the tutorial will not have saved the second partyMember
-        /// as it they aren't in the party at the start)
-        /// </summary>
-        /// <param name="className"></param>
-        public PartyMemberData(string className) {
-            this.className = className;
+            seDatas = new StatusEffectData[pm.statusEffects.Count];
+            for (int i = 0; i < pm.statusEffects.Count; i++) {
+                seDatas[i] = pm.statusEffects[i].GetStatusEffectData();
+            }
         }
     }
 }

@@ -8,15 +8,16 @@
 *
 */
 
+using achievementConstants = Constants.AchievementConstants.achievementConstants;
 using Characters;
 using EventManager = Events.EventManager;
+using GameManager = General.GameManager;
 using Localization;
 using PanelConstants = Constants.PanelConstants;
 using Party;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PlayerUI {
 
@@ -96,7 +97,7 @@ namespace PlayerUI {
                     else if (monstersToDisplay[j].monsterNameID == enemiesKilled[i].monsterNameID) {
                         monsterCounts[j]++;
                         break;
-                    } 
+                    }
                 }
                 amountEXP += enemiesKilled[i].EXP;
                 amountWAX += (int)(enemiesKilled[i].WAX * PartyManager.instance.WAXDropMultiplier);
@@ -113,6 +114,16 @@ namespace PlayerUI {
             yield return new WaitForSeconds(0.4f);
             amountTextEXP.SetText(amountEXP.ToString());
             PartyManager.instance.AddWAX(amountWAX);
+
+            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] == false) {
+                for (int i = 0; i < enemiesKilled.Count; i++) {
+                    if (enemiesKilled[i].monsterNameID == "Hobgoblin 3 3") {
+                        GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] = true;
+                        EventManager.instance.SetAchievementNotification((int)achievementConstants.NOROCKUNTURNED);
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>

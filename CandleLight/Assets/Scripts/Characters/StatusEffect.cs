@@ -54,6 +54,8 @@ namespace Characters {
                 case StatusEffectConstants.SHOCK:
                 case StatusEffectConstants.TRAP:
                 case StatusEffectConstants.FATALWOUND:
+                case StatusEffectConstants.MARIONETTE:
+                case StatusEffectConstants.SCUM:
                     isBuff = false;
                     break;
                 case StatusEffectConstants.RAGE:
@@ -76,6 +78,16 @@ namespace Characters {
             }
 
             nameKey = name + "_status";
+        }
+
+        /// <summary>
+        /// Initialize the status effect from saved data
+        /// </summary>
+        /// <param name="seData"></param>
+        /// <returns></returns>
+        public StatusEffect(StatusEffectData seData) : this(seData.name, seData.duration) {
+            preValue = seData.preValue;
+            plus = seData.plus;
         }
 
         public void SetDisplay(StatusEffectDisplay sed) {
@@ -258,6 +270,14 @@ namespace Characters {
             }   
 
             sed.UpdateValue();
+        }
+
+        /// <summary>
+        /// Return  this status effect's pertinent save data (to reinitialize from a load)
+        /// </summary>
+        /// <returns></returns>
+        public StatusEffectData GetStatusEffectData() {
+            return new StatusEffectData(name, duration, preValue, plus);
         }
     }
 }

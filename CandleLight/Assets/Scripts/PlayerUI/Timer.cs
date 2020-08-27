@@ -7,7 +7,7 @@
 *
 */
 
-using System;
+using TimeSpan = System.TimeSpan;
 using System.Collections;
 using TMPro;
 using UnityEngine;

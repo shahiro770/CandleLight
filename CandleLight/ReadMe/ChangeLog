@@ -161,15 +161,12 @@ Feature: achievements
 Bug: No save tutorial prompt
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
-Fix: Make it so stuff can be hovered over during rewards panel
 Fix: Add tutorial tip for not being able to assign skill point in combat
 Fix: Deal with items having 2 always rounded down to 1
-Bug: 2x as breaks aoe debuff
 
 NEAR FUTURE
 ----------------
 Feature: Add another particle effect maker for the ending area (flame particles rising up)
-Speed Runner Tester: Jeffrey Zhao
 Feature: Add achievements
 Feature: Sound effects and music
 Feature: Ending cutscenes
@@ -179,6 +176,7 @@ UI: Redo sprites for creatures that are 192 x 192
 UI: Redo fireball, bash, and slash sprites
 
 Balance: Reevaluate all interaction thresholds
+Bug: Status effects not saving on load
 Bug: Tooltip dies
 Fix: Drag to item should also work (down press and up press)
 Mobile: Make people pay for save scumming
@@ -187,6 +185,7 @@ Add normal/hard mode
 
 FUTURE/MAYBE
 ------------
+Fix: Make it so stuff can be hovered over during rewards panel
 UI: Red colour wax if player can't afford
 Bug: Options menu tooltips need to be repositioned
 QOL: Have skills panel swap to active party member with skill points unspecced

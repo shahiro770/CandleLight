@@ -766,6 +766,23 @@ namespace Party {
         }
 
         /// <summary>
+        /// Returns the party composition, buth lexographically sorted from low to high
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetPartyCompositionSorted() {
+            string[] partyComposition = GetPartyComposition();
+            for (int i = 1 ; i < partyComposition.Length; i++) {
+                if (string.Compare(partyComposition[i - 1], partyComposition[i]) == 1) {
+                    string temp = partyComposition[i - 1];
+                    partyComposition[i - 1] = partyComposition[i];
+                    partyComposition[i] = temp;
+                }
+            }
+        
+            return partyComposition;
+        }
+
+        /// <summary>
         /// Returns the number of partyMembers in the party with a given class
         /// </summary>
         /// <param name="className"></param>

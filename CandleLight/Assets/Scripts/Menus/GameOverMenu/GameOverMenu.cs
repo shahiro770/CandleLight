@@ -6,10 +6,14 @@
 * The GameOverMenu class shows stats and other stuff at the end of a run
 */
 
+using achievementConstants = Constants.AchievementConstants.achievementConstants;
+using EventManager = Events.EventManager;
 using General;
 using Localization;
+using PartyManager = Party.PartyManager;
 using System.Collections;
 using System.Collections.Generic;
+using TimeSpan = System.TimeSpan;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,6 +80,39 @@ namespace Menus.GameOverMenu {
             eventsAmount.SetText(GameManager.instance.totalEvents.ToString());
             timeAmount.SetText(timeString);
             scoreAmount.SetText(CalculateScore().ToString());
+
+            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] == false && isWin == true) {
+                string[] partyComp = PartyManager.instance.GetPartyCompositionSorted();
+                for (int i = 0 ; i < GameManager.instance.partyCombos.Length; i++) {
+                    bool match = true;
+                    for (int j = 0; j < partyComp.Length; j++) {
+                        if (GameManager.instance.partyCombos[i,j] != partyComp[j]) {
+                            match = false;
+                        } 
+                    }
+                    if (match == true) {
+                        GameManager.instance.partyCombos[i, 0] = null;  // setting first entry in a combo to null means its been completed
+                        break;
+                    }
+                }
+                for (int i = 0 ; i < GameManager.instance.partyCombos.Length; i++) {
+                    if (GameManager.instance.partyCombos[i, 0] != null) {
+                        break;
+                    }
+                    else if (i == GameManager.instance.partyCombos.Length - 1) {
+                        GameManager.instance.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] = true;
+                        EventManager.instance.SetAchievementNotification((int)achievementConstants.ABSOLUTEMASTERY, true);
+                    }
+                }  
+            }
+            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] == false && isWin == true) {
+                if (TimeSpan.FromSeconds(GameManager.instance.timeTaken).TotalSeconds < 720) {
+                    print(TimeSpan.FromSeconds(GameManager.instance.timeTaken).TotalSeconds);
+                    GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] = true;
+                    EventManager.instance.SetAchievementNotification((int)achievementConstants.NOTIME, true);
+                }      
+            }
+
             GameManager.instance.AddHighScoreData(CalculateScore(), subAreaIndex);
         }
         

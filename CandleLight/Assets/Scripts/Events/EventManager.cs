@@ -103,6 +103,7 @@ namespace Events {
         private int shopToastIndex = 0;         /// <value> Index for which toastPanel is being used as the shop's wax display </value>
         private int tutorialProg = 0;           /// <value> Current progress through the tutorial </value>
         private int noCombatCount = 0;          /// <value> Counter for how long the player has gone without a combat event </value>
+        private int subAreaResets = 0;          /// <value> Number of times player has tried to save scum the subArea </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
         private bool isNextEventMain = false;   /// <value> Flag for if the next even is a main event </value>
         private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>
@@ -337,6 +338,10 @@ namespace Events {
             }
         }
 
+        public void LoadPartyStatusEffects() {
+            
+        }
+
         /// <summary>
         /// Waits until the area is done being loaded before starting the player's
         /// adventure with their first event in the area.
@@ -351,6 +356,7 @@ namespace Events {
                 GameManager.instance.enemiesKilled = GameManager.instance.data.enemiesKilled;
                 GameManager.instance.WAXobtained = GameManager.instance.data.WAXobtained;
                 GameManager.instance.totalEvents = GameManager.instance.data.totalEvents;
+                subAreaResets = GameManager.instance.data.subAreaResets;
                 midPoints = GameManager.instance.data.midPoints;
 
                 timer.SetElapseTimed(GameManager.instance.data.elapsedTime);
@@ -365,23 +371,21 @@ namespace Events {
 
             if (GameManager.instance.data != null) {
                 areaProgress = GameManager.instance.data.areaProgress;
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
-                    AlterParticleSystem();
-                    StartTutorial();
-                }
-                else {
-                    gearPanel.LoadData(GameManager.instance.data.spareGear);
-                    candlesPanel.LoadData(GameManager.instance.data.spareCandles);
-                    specialPanel.LoadData(GameManager.instance.data.spareSpecials);
-                    infoPanel.LoadData(GameManager.instance.data.questData);
-                    EquipPartyItems();
-                    foreach (Quest q in infoPanel.quests) {
-                        currentArea.SwapEventAndSubEvent(q.startEvent, q.nextEvent);
-                    }
 
-                    AlterParticleSystem();
-                    GetStartEvent();
+                gearPanel.LoadData(GameManager.instance.data.spareGear);
+                candlesPanel.LoadData(GameManager.instance.data.spareCandles);
+                specialPanel.LoadData(GameManager.instance.data.spareSpecials);
+                infoPanel.LoadData(GameManager.instance.data.questData);
+                EquipPartyItems();
+                foreach (Quest q in infoPanel.quests) {
+                    currentArea.SwapEventAndSubEvent(q.startEvent, q.nextEvent);
                 }
+                if (subAreaResets >= 3) {   // player gets punished for abusing the save system's convenience
+                    PartyManager.instance.AddSE(StatusEffectConstants.SCUM, 999);
+                }
+
+                AlterParticleSystem();
+                GetStartEvent(); 
             }
             else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 areaProgress = 0;
@@ -565,6 +569,22 @@ namespace Events {
         #region [Section 1] EventManagement
 
         /// <summary>
+        /// Sets the currentSubArea
+        /// </summary>
+        /// <param name="subAreaName"></param>
+        public void SetSubArea(string subAreaName) {
+            currentSubArea = currentArea.GetSubArea(subAreaName);
+            PlaySubAreaBGM();
+            UpdateMidPoints();
+            LoadSubAreaItems();
+            subAreaProgress = 0;
+            subAreaResets = 0;
+            if (infoPanel.isOpen == true) {
+                infoPanel.UpdateAmounts();
+            }
+        }
+
+        /// <summary>
         /// Displays the first event in an area (first event of the main subArea)
         /// </summary>
         public void GetStartEvent() {
@@ -641,7 +661,7 @@ namespace Events {
                 }
                 else if (subAreaProgress < 35 && currentEvent.type == EventConstants.SHOP) {    // reroll to reduce odds of a shop while subAreaProgress is still less than 20
                     currentEvent = currentSubArea.GetEvent();
-                } 
+                }
             }
         }
 
@@ -679,6 +699,7 @@ namespace Events {
             if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
             && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] == true
             && areaProgress == 2) {
+                print("hi");
                 GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] = false;
             }
 
@@ -1376,21 +1397,6 @@ namespace Events {
         }
 
         /// <summary>
-        /// Sets the currentSubArea
-        /// </summary>
-        /// <param name="subAreaName"></param>
-        public void SetSubArea(string subAreaName) {
-            currentSubArea = currentArea.GetSubArea(subAreaName);
-            PlaySubAreaBGM();
-            UpdateMidPoints();
-            LoadSubAreaItems();
-            subAreaProgress = 0;
-            if (infoPanel.isOpen == true) {
-                infoPanel.UpdateAmounts();
-            }
-        }
-
-        /// <summary>
         /// Updates all WAX amount displays to show the accurate number
         /// </summary>
         public void UpdateWAXAmounts(){
@@ -1909,19 +1915,25 @@ namespace Events {
             }
         }
 
-        public void SetAchievementNotification(int index, Sprite s, int panelNum = -1) {
+        /// <summary>
+        /// Set a notification panel to show an achievement has been unlocked
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="isHighLayer"> Certain achievements may only be displayed on a gameover (which means they need to trump the sorting order) </param>
+        /// <param name="panelNum"></param>
+        public void SetAchievementNotification(int index, bool isHighLayer = false, int panelNum = -1) {
             if (panelNum == 0) {
-                toastPanel0.SetAchievementNotification(s, index);
+                toastPanel0.SetAchievementNotification(GameManager.instance.achievementSprites[index], index, isHighLayer);
             }
             else if (panelNum == 1) {
-                toastPanel1.SetAchievementNotification(s, index);
+                toastPanel1.SetAchievementNotification(GameManager.instance.achievementSprites[index], index, isHighLayer);
             }
             else {
                 if (toastPanel0.gameObject.activeSelf == true) {
-                    toastPanel1.SetAchievementNotification(s, index);
+                    toastPanel1.SetAchievementNotification(GameManager.instance.achievementSprites[index], index, isHighLayer);
                 }
                 else {
-                    toastPanel0.SetAchievementNotification(s, index);
+                    toastPanel0.SetAchievementNotification(GameManager.instance.achievementSprites[index], index, isHighLayer);
                 }
             }
         }
@@ -2007,7 +2019,7 @@ namespace Events {
             Time.timeScale = 1;
             PartyManager.instance.ResetGame();
             GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
-            UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
+            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
             GameManager.instance.SaveGeneralData(gsData);
             GameManager.instance.StartLoadNextScene("MainMenu");
         }
@@ -2049,11 +2061,11 @@ namespace Events {
             SaveData data = new SaveData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
             gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
             infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
-            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints);
+            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1);
             GameManager.instance.SaveGame(data);
 
             GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
-            UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
+            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
             GameManager.instance.SaveGeneralData(gsData);
         }
 

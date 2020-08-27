@@ -39849,6 +39849,7 @@ MonoBehaviour:
   titleText: {fileID: 100780823}
   descriptionText: {fileID: 1817544240}
   textBackground: {fileID: 1839830810}
+  c: {fileID: 1101418320}
   textBackgroundCanvas: {fileID: 1839830807}
   le: {fileID: 1101418321}
   toastSprite: {fileID: 128506460}
@@ -68402,6 +68403,7 @@ MonoBehaviour:
   titleText: {fileID: 4154498625611883432}
   descriptionText: {fileID: 1893132478510218434}
   textBackground: {fileID: 1413160378991278981}
+  c: {fileID: 6269312971708277276}
   textBackgroundCanvas: {fileID: 8571726230743828993}
   le: {fileID: 670490125773742228}
   toastSprite: {fileID: 551873654}

@@ -10,7 +10,6 @@
 using AttackConstants = Constants.AttackConstants;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using Combat;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,7 +55,7 @@ namespace Characters {
         protected float baseHPRegen = 0.06f;                                /// <value> Base percentage of max MP recovered between events </value>
         protected float baseMPRegen = 0.12f;                                /// <value> Base percentage of max HP recovered between events </value>
         protected float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
-        protected float tempACCBonus = 0.05f;                              /// <value> % of base ACC tempACC increments by </value>
+        protected float tempACCBonus = 0.1f;                                /// <value> % of base ACC tempACC increments by on missing </value>
         protected int minAttacks = 1;
         protected int maxAttacks = 4;
         protected int maxStatusEffects = 10;                                /// <value> Max number of status effects that can be on a character </value>

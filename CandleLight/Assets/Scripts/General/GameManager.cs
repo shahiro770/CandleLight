@@ -53,8 +53,9 @@ namespace General {
         public int enemiesKilled = 0;                   /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
-        public bool[] tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
-        public bool[] achievementsUnlocked = Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
+        public bool[] tutorialTriggers;                 /// <value> List of tutorials/tips that have yet to be triggered (true if not yet triggered) </value>
+        public bool[] achievementsUnlocked;             /// <value> List of achievements not yet unlocked (false if not unlocked)</value>
+        public string[,] partyCombos;                   /// <value> List of party combinations player has yet to clear the game with </value>
 
         private string activeScene = "Game";            /// <value> Current scene being displayed </value>
         private string areaScene = "Area";              /// <value> Name of area scene </value>
@@ -225,6 +226,8 @@ namespace General {
                 s.Close();
 
                 tutorialTriggers = gsData.tutorialTriggers;
+                achievementsUnlocked = gsData.achievementsUnlocked;
+                partyCombos = gsData.partyCombos;
                 animationSpeed = gsData.animationSpeed;
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
@@ -243,15 +246,30 @@ namespace General {
             }
             else {  // default settings on first load, or if generalSAveData non existance
                 gsData = new GeneralSaveData(null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
-                Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(), 
-                false, 0.5f, 1f, 1, 0, 0, 0, -1);
-                achievementsUnlocked = gsData.achievementsUnlocked;
+                Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), null,
+                false, 1f, 0.5f, 1f, 0, 0, 0, -1);
                 tutorialTriggers = gsData.tutorialTriggers;
+                achievementsUnlocked = gsData.achievementsUnlocked;
+                partyCombos = new string[,] { 
+                    { ClassConstants.ARCHER, ClassConstants.ARCHER }, 
+                    { ClassConstants.ARCHER, ClassConstants.MAGE }, 
+                    { ClassConstants.ARCHER, ClassConstants.ROGUE },
+                    { ClassConstants.ARCHER, ClassConstants.WARRIOR }, 
+                    { ClassConstants.MAGE, ClassConstants.MAGE },    
+                    { ClassConstants.MAGE, ClassConstants.ROGUE },  
+                    { ClassConstants.MAGE, ClassConstants.WARRIOR },    
+                    { ClassConstants.ROGUE, ClassConstants.ROGUE }, 
+                    { ClassConstants.ROGUE, ClassConstants.WARRIOR }, 
+                    { ClassConstants.WARRIOR, ClassConstants.WARRIOR }, 
+                };
+                gsData.partyCombos = partyCombos;
                 animationSpeed = gsData.animationSpeed;               
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
                 pastItem = null;
+
+                SaveGeneralData(gsData);
             }
         }
 
