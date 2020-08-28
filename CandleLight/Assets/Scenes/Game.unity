@@ -908,7 +908,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339672354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.20833333, y: -0.055169925, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -933,31 +933,83 @@ MonoBehaviour:
     volume: 0
     pitch: 0
     loop: 0
-    type: 0
-  sounds:
+  sfxs:
   - name: click
     clip: {fileID: 8300000, guid: 998c798c4282a424b9d40fbd9a1e70a4, type: 3}
     source: {fileID: 0}
-    volume: 1
+    volume: 0
     pitch: 1
     loop: 0
-    type: 0
-  - name: pathNormalGreyWastes
-    clip: {fileID: 8300000, guid: cb101e1f2bb0342c9bb586a745839970, type: 3}
-    source: {fileID: 0}
-    volume: 1
-    pitch: 1
-    loop: 1
-    type: 1
-  - name: 
+  bgms:
+  - name: GreyWastes0
     clip: {fileID: 0}
     source: {fileID: 0}
     volume: 0
     pitch: 0
     loop: 0
-    type: 0
+  - name: GreyWastes1
+    clip: {fileID: 8300000, guid: d105dab056fa14596b5aefda83f00478, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: GreyWastes2
+    clip: {fileID: 8300000, guid: 126ca5a4ec94541e4bddc3ba24e9c30f, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: GreyWastes3
+    clip: {fileID: 8300000, guid: ccae736b2af234c048a24c7d077aa487, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: GreyWastes4
+    clip: {fileID: 0}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: GreyWastes5
+    clip: {fileID: 8300000, guid: 8585fef23ea03461ead8e179ef52766b, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: GreyWastes6
+    clip: {fileID: 8300000, guid: f905e28d85f4b44bc8ca9f2339e94c8d, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: GreyWastes7
+    clip: {fileID: 0}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: GreyWastes8
+    clip: {fileID: 8300000, guid: 8585fef23ea03461ead8e179ef52766b, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: pathNormalGreyWastes
+    clip: {fileID: 8300000, guid: cb101e1f2bb0342c9bb586a745839970, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: tombsGreyWastes
+    clip: {fileID: 8300000, guid: 506543d88c4654a9a81d5e5eb0fb96e8, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
   bgmVolume: 0
   sfxVolume: 0
+  shouldChangeBGM: 0
 --- !u!1 &1495799579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,6 +1312,7 @@ MonoBehaviour:
     enemiesKilled: 0
     WAXobtained: 0
     totalEvents: 0
+    subAreaResets: 0
   achievementSprites: []
   areaName: GreyWastes
   canvasWidth: 960

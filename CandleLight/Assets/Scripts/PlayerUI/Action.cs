@@ -72,23 +72,23 @@ namespace PlayerUI {
 
             highlightedBlock.normalColor = normalBlock.pressedColor;
 
-            STRBlock.normalColor = new Color32(185, 29, 0, 100);
-            STRBlock.highlightedColor = new Color32(185, 29, 0, 150);
+            STRBlock.normalColor = new Color32(185, 29, 0, 125);
+            STRBlock.highlightedColor = new Color32(185, 29, 0, 175);
             STRBlock.pressedColor = new Color32(185, 29, 0, 255);
             STRBlock.disabledColor = new Color32(61, 61, 61, 255);
 
-            DEXBlock.normalColor = new Color32(0, 156, 65, 100);
-            DEXBlock.highlightedColor = new Color32(0, 156, 65,  150);
+            DEXBlock.normalColor = new Color32(0, 156, 65, 125);
+            DEXBlock.highlightedColor = new Color32(0, 156, 65, 175);
             DEXBlock.pressedColor = new Color32(0, 156, 65,  255);
             DEXBlock.disabledColor = new Color32(61, 61, 61, 255);
 
-            INTBlock.normalColor = new Color32(0, 152, 220, 100);
-            INTBlock.highlightedColor = new Color32(0, 152, 220, 150);
+            INTBlock.normalColor = new Color32(0, 152, 220, 125);
+            INTBlock.highlightedColor = new Color32(0, 152, 220, 175);
             INTBlock.pressedColor = new Color32(0, 152, 220, 255);
             INTBlock.disabledColor = new Color32(61, 61, 61, 255);
 
-            LUKBlock.normalColor = new Color32(255, 205, 2, 100);
-            LUKBlock.highlightedColor = new Color32(255, 205, 2, 150);
+            LUKBlock.normalColor = new Color32(255, 205, 2, 125);
+            LUKBlock.highlightedColor = new Color32(255, 205, 2, 175);
             LUKBlock.pressedColor = new Color32(255, 205, 2, 255);
             LUKBlock.disabledColor = new Color32(61, 61, 61, 255);
 

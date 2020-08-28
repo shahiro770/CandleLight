@@ -120,7 +120,7 @@ namespace Items {
                     WAX += values[0] * 7;
                     break;
                 case "CRITCHANCE":
-                    WAX += values[0] * 4;
+                    WAX += values[0] * 2;
                     break;
                 case "HP":
                     WAX += values[0] * 2;

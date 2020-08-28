@@ -144,9 +144,6 @@ Balance: Buff final boss monsters some
 Feature: Highscores
 Feature: Statistics
 Bug: HP regen for champion didn't include 1.66 hp bonus
-
-JUST FINISHED
--------------
 Fix: Nerf freeze (make it less complicated)
 Buff: Fiery veil buffed
 Balance: Gave wraith dolleyes and ice golem ice scream
@@ -154,11 +151,17 @@ Buff: Make timekeeper's heal a full heal and revive
 UI: Make custom colouring for same class partyMembers
 Bug: Summon dying at the same time as summoner breaks the game
 Bug: No save tutorial prompt
+Feature: Added colour coding to interactions
+Feature: Save scum penalty
+Bug: Status effects not saving on load
+
+JUST FINISHED
+-------------
 
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
-Feature: achievements
+Feature: Add achievements
 
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
@@ -166,19 +169,16 @@ Fix: Deal with items having 2 always rounded down to 1
 
 NEAR FUTURE
 ----------------
-Feature: Add another particle effect maker for the ending area (flame particles rising up)
-Feature: Add achievements
+Feature: Make game appear over top of other games
 Feature: Sound effects and music
 Feature: Ending cutscenes
-Fix: ENUM EVERYTHING
+    Fix: Add another particle effect maker for the ending area (flame particles rising up)
 UI: Make monsterIcons have correct pixel sizing (rn its jank)
-UI: Redo sprites for creatures that are 192 x 192
 UI: Redo fireball, bash, and slash sprites
+UI: Redo main menu art
 Fix: Make it so closing the game also ups the scum checker
-
-Balance: Reevaluate all interaction thresholds
-Bug: Status effects not saving on load
-Bug: Tooltip dies
+Balance: Reevaluate all interaction thresholds (should be quick)
+Bug: Tooltip dies for absurd unknown reason on rare occasion
 Fix: Drag to item should also work (down press and up press)
 Mobile: Make people pay for save scumming
 Fix: Let checking of skills in game
@@ -186,6 +186,7 @@ Add normal/hard mode
 
 FUTURE/MAYBE
 ------------
+Fix: ENUM EVERYTHING
 Fix: Add tutorial tip for not being able to assign skill point in combat
 Fix: Make it so stuff can be hovered over during rewards panel
 Bug: Options menu tooltips need to be repositioned

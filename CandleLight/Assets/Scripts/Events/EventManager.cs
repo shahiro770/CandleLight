@@ -20,7 +20,6 @@ using Party;
 using PlayerUI;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -390,21 +389,26 @@ namespace Events {
                 if (subAreaResets >= 3) {   // player gets punished for abusing the save system's convenience
                     PartyManager.instance.AddSE(StatusEffectConstants.SCUM, 999);
                 }
-
+                PlaySubAreaBGM();
                 AlterParticleSystem();
-                GetStartEvent(); 
+                currentEvent = currentSubArea.GetEvent(areaProgress);
+                StartCoroutine(DisplayEvent());
             }
             else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 areaProgress = 0;
+                PlaySubAreaBGM();
                 AlterParticleSystem();
                 StartTutorial();
             }
             else {  // skip the tutorial
                 areaProgress = 1;
+                PlaySubAreaBGM();
                 AlterParticleSystem();
                 EquipPartyItems();
                 AddQuestNoNotification(mainQuestName, "", "");  // main story quest (TODO: Make this a constant?)
-                GetStartEvent();
+                currentEvent = currentSubArea.GetEvent(areaProgress);
+                SaveGame();
+                StartCoroutine(DisplayEvent());
             }
         }
 
@@ -419,13 +423,6 @@ namespace Events {
             tutorialProg = 0;
             itemsTabManager.SetTabsEmpty();
             utilityTabManager.SetTabsEmpty();
-            GetStartEventTutorial();
-        }
-
-        /// <summary>
-        /// Gets the first event like GetStartEvent(), hwoever it displays the event with a modified DisplayEvent()
-        /// </summary>
-        public void GetStartEventTutorial() {
             currentEvent = currentSubArea.GetEvent(areaProgress);
             StartCoroutine(DisplayEvent());
         }
@@ -592,15 +589,6 @@ namespace Events {
         }
 
         /// <summary>
-        /// Displays the first event in an area (first event of the main subArea)
-        /// </summary>
-        public void GetStartEvent() {
-            currentEvent = currentSubArea.GetEvent(areaProgress);
-            SaveGame();
-            StartCoroutine(DisplayEvent());
-        }
-
-        /// <summary>
         /// Gets the next event
         /// </summary>
         public void GetNextEvent() {
@@ -644,6 +632,7 @@ namespace Events {
             noShopInSubArea = true;
             currentSubArea = currentArea.GetSubArea("main" + currentAreaName);
             currentEvent = currentSubArea.GetEvent(areaProgress);
+            PlaySubAreaBGM();
             AlterParticleSystem();
             infoPanel.UpdateSubAreaCard(currentArea.GetSubAreaCard(0), currentArea.name + "0");
             SaveGame();
@@ -1411,13 +1400,13 @@ namespace Events {
         /// Updates all WAX amount displays to show the accurate number
         /// </summary>
         public void UpdateWAXAmounts(){
-            EventManager.instance.infoPanel.UpdateAmounts();
+            infoPanel.UpdateAmounts();
             if (UIManager.instance.inShop) {
                 if (shopToastIndex == 0) {
-                    EventManager.instance.toastPanel0.UpdateWAXAmount(); 
+                    toastPanel0.UpdateWAXAmount(); 
                 }
                 else {
-                    EventManager.instance.toastPanel1.UpdateWAXAmount(); 
+                    toastPanel1.UpdateWAXAmount(); 
                 }
             }
         }
@@ -1629,9 +1618,12 @@ namespace Events {
         /// Plays the subArea BGM (respective to areaProgress)
         /// </summary>
         public void PlaySubAreaBGM() {
-            if (areaProgress == 1) {
-                AudioManager.instance.ChangeBGM(currentSubArea.name);
+            if (currentSubArea.name == "main" + currentAreaName) {
+                AudioManager.instance.PlayBGM(currentAreaName + areaProgress);
             }
+            else {
+                AudioManager.instance.PlayBGM(currentSubArea.name);
+            }  
         }
 
         /// <summary>
@@ -2014,6 +2006,10 @@ namespace Events {
             GameManager.instance.DeleteSaveData();
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
+            if ((areaProgress == 0 || areaProgress == 1) && currentSubArea.name == ("main" + currentAreaName)) {
+                AudioManager.instance.shouldChangeBGM = true;
+            }
+
             string[] partyComposition = PartyManager.instance.GetPartyComposition();
             PartyManager.instance.ResetGame();
             foreach (string pm in partyComposition) {

@@ -267,7 +267,7 @@ namespace PlayerUI {
                 }
             }
 
-            AudioManager.instance.Play("click");
+            AudioManager.instance.PlaySFX("click");
         }
 
         /// <summary>

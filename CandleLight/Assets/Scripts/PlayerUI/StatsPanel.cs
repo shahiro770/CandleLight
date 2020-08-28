@@ -153,10 +153,10 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="stats"> Integer array of stats </param>
         public void SetPartyMemberStats(int[] stats) {
-            STRText.SetText(stats[1].ToString());
-            DEXText.SetText(stats[2].ToString());
-            INTText.SetText(stats[3].ToString());
-            LUKText.SetText(stats[4].ToString());
+            STRText.SetText("<color=#B91D00>" + stats[1] + "</color>");
+            DEXText.SetText("<color=#5AC54F>" + stats[2] + "</color>");
+            INTText.SetText("<color=#0098DC>" + stats[3] + "</color>");
+            LUKText.SetText("<color=#FFCD02>" + stats[4] + "</color>");
             PATKText.SetText(stats[5].ToString());
             MATKText.SetText(stats[6].ToString());
             PDEFText.SetText(stats[7].ToString());
