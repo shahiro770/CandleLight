@@ -167,7 +167,51 @@ namespace PlayerUI {
             fadeOuter = StartCoroutine(FadeOut());      
         }
 
-                /// <summary>
+        /// <summary>
+        /// Shows a notificatino for the results of a stat checking interaction
+        /// </summary>
+        /// <param name="isSucc"></param>
+        /// <param name="checkIndicator"></param>
+        /// <param name="stat"></param>
+        /// <param name="threshold"></param>
+        public void SetStatCheckNotification(bool isSucc, int checkIndicator, int stat, int threshold) {
+            if (isSucc == true) {
+                titleText.SetKey("SUCC_toast");
+                if (checkIndicator == 1) {
+                    descriptionText.SetText("<color=#B91D00>" + stat + " >= " + threshold + "</color>");
+                }
+                else if (checkIndicator == 2) {
+                    descriptionText.SetText("<color=#5AC54F>" + stat + " >= " + threshold + "</color>");
+                }
+                else if (checkIndicator == 3) {
+                    descriptionText.SetText("<color=#0098DC>" + stat + " >= " + threshold + "</color>");
+                }
+                else if (checkIndicator == 4) {
+                    descriptionText.SetText("<color=#FFCD02>" + stat + " >= " + threshold + "</color>");
+                }
+            }
+            else {
+                titleText.SetKey("FAIL_toast");
+                if (checkIndicator == 1) {
+                    descriptionText.SetText("<color=#B91D00>" + stat + " < " + threshold + "</color>");
+                }
+                else if (checkIndicator == 2) {
+                    descriptionText.SetText("<color=#5AC54F>" + stat + " < " + threshold + "</color>");
+                }
+                else if (checkIndicator == 3) {
+                    descriptionText.SetText("<color=#0098DC>" + stat + " < " + threshold + "</color>");
+                }
+                else if (checkIndicator == 4) {
+                    descriptionText.SetText("<color=#FFCD02>" + stat + " < " + threshold + "</color>");
+                }
+            }
+
+            b.interactable = false;
+            SetVisible(true);
+            fadeOuter = StartCoroutine(FadeOut());
+        }
+
+        /// <summary>
         /// Hard code the achievement's unlocked colour for easy use
         /// </summary>
         /// <param name="index"></param>
@@ -199,7 +243,7 @@ namespace PlayerUI {
         }
 
         public IEnumerator FadeOut() {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(2.5f);
             SetVisible(false);
         }
         

@@ -66,6 +66,7 @@ namespace Combat {
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
         private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
         private int selectedMonsterAttackIndex;     /// <value> Index of selectedMonster attack in its attack array </value>
+        private int fleeBonus;                      /// <value> Repeated flee fails increase future flee chances </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
         private bool pmSelectionFinalized = false;  /// <value> Flag for if player has selected an action and a monster if its an attack </value>
         private bool pmNoAction = false;            /// <value> Flag for if active partyMember can't do anything </value>
@@ -97,6 +98,7 @@ namespace Combat {
         public IEnumerator InitializeCombat(string[] monsterNames, string[] championBuffs, bool isFleePossible) {
             actionsPanel.Init(isFleePossible);
             isFleeSuccessful = false;
+            fleeBonus = 0;
             inCombat = true;
             cq.Reset();
             monsters = new List<Monster>();
@@ -333,6 +335,7 @@ namespace Combat {
             List<Monster> monstersToRemove = new List<Monster>();
 
             // flee chance modifiers
+            chance -= fleeBonus;
             if (activePartyMember.GetStatusEffect(StatusEffectConstants.TRAP) != -1) {
                 chance += 50;
             }
@@ -358,6 +361,7 @@ namespace Combat {
                 isFleeSuccessful = true;
             }
             else {
+                fleeBonus = (fleeBonus + 2) * 2;
                 eventDescription.SetKey(GetFleeFailedKey());
                 for (int i = 0; i < monsters.Count - 1; i++) {  // wait for all monsters to respawn
                     StartCoroutine(monsters[i].md.PlaySpawnAnimation());

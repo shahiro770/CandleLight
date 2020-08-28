@@ -70,7 +70,6 @@ namespace Audio {
             }
             else {
                 if (currentBGM != null && currentBGM.source != null) {
-                    print("fading out");
                     fadeOuter = StartCoroutine(FadeCurrentBGMVolume(currentBGM, 0));
                 }
 
@@ -82,7 +81,6 @@ namespace Audio {
                     s.source.loop = true;
                     s.source.Play();
                     currentBGM = s;
-                    print("fading in");
                     fadeInner = StartCoroutine(FadeCurrentBGMVolume(currentBGM, bgmVolume));
                 }
             }

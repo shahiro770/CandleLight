@@ -128,6 +128,8 @@
 		{ "key": "ACHIEVEMENT_toast", "value": "Achievement Unlocked" },
 		{ "key": "PARTYMEMBER_toast", "value": "Party Changed" },
 		{ "key": "generic_toast", "value": "Condition Changed" },
+		{ "key": "SUCC_toast", "value": "Success" },
+		{ "key": "FAIL_toast", "value": "Failure" },
 
 		{ "key": "special0_tutorial", "value": "Click on the Special tab to see important items" },
 		{ "key": "special1_tutorial", "value": "Items in the \"Very Special\" slots cannot be moved" },

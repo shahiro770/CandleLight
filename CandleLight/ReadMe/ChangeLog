@@ -157,14 +157,19 @@ Bug: Status effects not saving on load
 
 JUST FINISHED
 -------------
+Added flee chance bonus for each failed flee attempt
+Added stat check toast notifications
+Notificaitons now last slightly longer
 
 COOKING
 -------
-Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
+Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
 Feature: Add achievements
 
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
+Fix: Make flee attempts guaranteed success on 5th try
+Bug: One of the dialogue prompts is 3 lines
 Fix: Deal with items having 2 always rounded down to 1
 
 NEAR FUTURE

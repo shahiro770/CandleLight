@@ -39,7 +39,7 @@ namespace Characters {
         [field: SerializeField] public int MDEF { get; set; }             /// <value> Magical defense </value>
         [field: SerializeField] public int DOG { get; set; }              /// <value> Dodge rating </value>
         [field: SerializeField] public int ACC { get; set; }              /// <value> Accuracy rating </value>
-        [field: SerializeField] public int tempACC = 0;                   /// <value> Bonus accuracy accumulated by missing </value>
+        [field: SerializeField] public int bonusACC = 0;                  /// <value> Bonus accuracy accumulated by missing </value>
         [field: SerializeField] public int critChance { get; set; }       /// <value> % chance to crit </value>
         [field: SerializeField] public int attackNum { get; set; } = 0;   /// <value> Number of attacks monster has (max 4) </value>
         [field: SerializeField] public int championChance { get; set; }   /// <value> Additional percentage chance of a champion monster spawning for PartyMembers, or base chance for Monsters </value>
@@ -55,7 +55,7 @@ namespace Characters {
         protected float baseHPRegen = 0.06f;                                /// <value> Base percentage of max MP recovered between events </value>
         protected float baseMPRegen = 0.12f;                                /// <value> Base percentage of max HP recovered between events </value>
         protected float baseCritMult = 1.5f;                                /// <value> Base crit attack damage multiplier </value>
-        protected float tempACCBonus = 0.1f;                                /// <value> % of base ACC tempACC increments by on missing </value>
+        protected float bonusACCRate = 0.1f;                                /// <value> % of base ACC bonusACC increments by on missing </value>
         protected int minAttacks = 1;
         protected int maxAttacks = 4;
         protected int maxStatusEffects = 10;                                /// <value> Max number of status effects that can be on a character </value>
@@ -191,7 +191,7 @@ namespace Characters {
         /// resetting that bonus back to 0 upon hitting.
         /// </remark>
         protected bool CalculateAttackHit(Character c) {
-            int hitChance = c.ACC + c.tempACC - DOG;
+            int hitChance = c.ACC + c.bonusACC - DOG;
 
             if (hitChance > 100) {
                 hitChance = 100;
@@ -203,10 +203,10 @@ namespace Characters {
             bool attackHit = Random.Range(0, 100) < hitChance;
 
             if (attackHit) {
-                c.tempACC = 0;
+                c.bonusACC = 0;
             }
             else {
-                c.tempACC += (int)(c.ACC * tempACCBonus + c.tempACC);  
+                c.bonusACC += (int)(c.ACC * bonusACCRate + c.bonusACC);  
             }
 
             return attackHit;            
@@ -406,7 +406,7 @@ namespace Characters {
         /// Logs stats to console for debugging
         /// </summary>
         public virtual void LogSecondaryStats() {
-            Debug.Log("PDEF: " + PDEF + " MDEF: " + MDEF + " acc: " + ACC + " tempAcc:" + tempACC + " dog: " + DOG);
+            Debug.Log("PDEF: " + PDEF + " MDEF: " + MDEF + " acc: " + ACC + " bonusAcc:" + bonusACC + " dog: " + DOG);
         }
 
         /// <summary>

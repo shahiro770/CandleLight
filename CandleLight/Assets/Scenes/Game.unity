@@ -1001,6 +1001,12 @@ MonoBehaviour:
     volume: 0
     pitch: 0
     loop: 0
+  - name: mainMenu
+    clip: {fileID: 8300000, guid: 82b1b05e7920d4e05bb2ba4cb79a74be, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
   - name: tombsGreyWastes
     clip: {fileID: 8300000, guid: 506543d88c4654a9a81d5e5eb0fb96e8, type: 3}
     source: {fileID: 0}

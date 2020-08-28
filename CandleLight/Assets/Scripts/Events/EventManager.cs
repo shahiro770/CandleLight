@@ -45,6 +45,7 @@ namespace Events {
         public RewardsPanel rewardsPanel;           /// <value> RewardsPanel reference </value>
         public ToastPanel toastPanel0;              /// <value> ToastPanel reference </value>
         public ToastPanel toastPanel1;              /// <value> ToastPanel reference </value>
+        public ToastPanel toastPanel2;              /// <value> ToastPanel reference </value>
         public GearPanel gearPanel;                 /// <value> GearPanel reference </value>
         public CandlesPanel candlesPanel;           /// <value> CandlesPanel reference </value>
         public SpecialPanel specialPanel;           /// <value> SpecialPanel reference </value>
@@ -960,12 +961,15 @@ namespace Events {
                     }
                 }
                 else {
-                    if (PartyManager.instance.GetPrimaryStatAll(i.checkIndicator) + 
-                        (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f) >= Random.Range((int)i.statThreshold * 0.6f, (int)i.statThreshold * 1.3f)) {
+                    int stat = PartyManager.instance.GetPrimaryStatAll(i.checkIndicator) + (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f);
+                    int threshold = (int)Random.Range(i.statThreshold * 0.6f, i.statThreshold * 1.3f);
+                    if (stat >= threshold) {
                         currentResult = i.GetResult(0); // good result
+                        SetStatCheckNotification(true, i.checkIndicator, stat, threshold);
                     }
                     else {
                         currentResult = i.GetResultStartIndex(1); // bad result(s)
+                        SetStatCheckNotification(false, i.checkIndicator, stat, threshold);
                     }
                 }
             }
@@ -1147,7 +1151,6 @@ namespace Events {
                     }
 
                     eventDescription.SetKey(currentResult.resultKey); 
-                    actionsPanel.TravelActions();
                     break;
                 case ResultConstants.SHOP:
                     UIManager.instance.inShop = true;
@@ -1942,12 +1945,24 @@ namespace Events {
         }
 
         /// <summary>
+        /// Sets a notification letting the player know the results of a stat check
+        /// </summary>
+        /// <param name="isSucc"></param>
+        /// <param name="checkIndicator"></param>
+        /// <param name="stat"></param>
+        /// <param name="threshold"></param>
+        public void SetStatCheckNotification(bool isSucc, int checkIndicator, int stat, int threshold) {
+            toastPanel2.SetStatCheckNotification(isSucc, checkIndicator, stat, threshold);
+        }
+
+        /// <summary>
         /// Controls the visibility of the toast panels
         /// </summary>
         /// <param name="value"></param>
         public void SetToastPanelsVisible(bool value) {
             toastPanel0.SetVisible(value);
             toastPanel1.SetVisible(value);
+            toastPanel2.SetVisible(value);
         }
 
         #endregion

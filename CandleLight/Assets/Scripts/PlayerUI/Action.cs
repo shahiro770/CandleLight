@@ -77,10 +77,10 @@ namespace PlayerUI {
             STRBlock.pressedColor = new Color32(185, 29, 0, 255);
             STRBlock.disabledColor = new Color32(61, 61, 61, 255);
 
-            DEXBlock.normalColor = new Color32(0, 156, 65, 125);
-            DEXBlock.highlightedColor = new Color32(0, 156, 65, 175);
-            DEXBlock.pressedColor = new Color32(0, 156, 65,  255);
-            DEXBlock.disabledColor = new Color32(61, 61, 61, 255);
+            DEXBlock.normalColor = new Color32(90, 197, 79, 125);
+            DEXBlock.highlightedColor = new Color32(90, 197, 79, 175);
+            DEXBlock.pressedColor = new Color32(90, 197, 79, 255);
+            DEXBlock.disabledColor = new Color32(90, 197, 79, 255);
 
             INTBlock.normalColor = new Color32(0, 152, 220, 125);
             INTBlock.highlightedColor = new Color32(0, 152, 220, 175);

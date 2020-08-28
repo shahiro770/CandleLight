@@ -8,6 +8,7 @@
 *
 */
 
+using Audio;
 using GameManager = General.GameManager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,10 @@ namespace Menus.MainMenu {
         public Button continueButton;
 
         private Color defaultColour = new Color32(230, 126, 34, 255);
+
+        void Start() {
+            AudioManager.instance.PlayBGM("mainMenu");
+        }
 
         void OnEnable() {
             var main = ps.main;
