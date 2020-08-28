@@ -24,7 +24,11 @@ namespace UIEffects {
         private Button b;                           /// <value> Button to have its state managed </value>
         private Image i;                            /// <value> Image is used to get a button's default sprite </value>
         private ColorBlock normalBlock;             /// <value> Default colour block </value>
-        private ColorBlock normalAlternateBlock;    /// <value> Alternate normal colour block for buttons that have two sets of colours (e.g. "false enabled" and disabled) </value>
+        private ColorBlock naBlock0;               /// <value> Normal alternate colour block for buttons that have two sets of colours (e.g. "false enabled" and disabled) </value>
+        private ColorBlock naBlock1;
+        private ColorBlock naBlock2;
+        private ColorBlock naBlock3;
+        private ColorBlock naBlock4;
         private ColorBlock highlightedBlock;        /// <value> Hovered colour block </value>
         private ColorBlock pressedBlock;            /// <value> Clicked colour block </value>
         private ColorBlock disabledBlock;           /// <value> Disabled colour block </value>
@@ -84,8 +88,20 @@ namespace UIEffects {
             if (type == "normal") {     
                 b.colors = normalBlock;
             }
-            else if (type == "normalAlternate") { 
-                b.colors = normalAlternateBlock;
+            else if (type == "na0") { 
+                b.colors = naBlock0;
+            }
+            else if (type == "na1") { 
+                b.colors = naBlock1;
+            }
+            else if (type == "na2") { 
+                b.colors = naBlock2;
+            }
+            else if (type == "na3") { 
+                b.colors = naBlock3;
+            }
+            else if (type == "na4") { 
+                b.colors = naBlock4;
             }
             else if (type == "highlighted") {
                 b.colors = highlightedBlock;
@@ -116,8 +132,20 @@ namespace UIEffects {
             else if (blockType == "pressed") {
                 pressedBlock = cb;
             }
-            else if (blockType == "normalAlternate") {
-                normalAlternateBlock = cb;
+            else if (blockType == "na0") {
+                naBlock0 = cb;
+            }
+            else if (blockType == "na1") {
+                naBlock1 = cb;
+            }
+            else if (blockType == "na2") {
+                naBlock2 = cb;
+            }
+            else if (blockType == "na3") {
+                naBlock3 = cb;
+            }
+            else if (blockType == "na4") {
+                naBlock4 = cb;
             }
             else if (blockType == "disabled") {
                 disabledBlock = cb;

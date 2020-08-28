@@ -40,6 +40,7 @@ namespace PlayerUI {
         private Image img;                          /// <value> Button's sprite </value>
         private TextMeshProUGUI t;                  /// <value> Text display </value>
         
+        private string btsBlockName = "";
         private float lerpSpeed = 3f;               /// <value> Speed at which aciton text fades in </value>
 
         /// <summary>
@@ -55,6 +56,10 @@ namespace PlayerUI {
             ColorBlock unusableBlock = b.colors;
             ColorBlock highlightedBlock = b.colors;
             ColorBlock disabledBlock = b.colors;
+            ColorBlock STRBlock = b.colors;
+            ColorBlock DEXBlock = b.colors;
+            ColorBlock INTBlock = b.colors;
+            ColorBlock LUKBlock = b.colors;
             
             unusableBlock.normalColor = new Color32(196, 36, 48, 255);
             unusableBlock.highlightedColor = new Color32(255, 0, 64, 255);
@@ -67,8 +72,32 @@ namespace PlayerUI {
 
             highlightedBlock.normalColor = normalBlock.pressedColor;
 
+            STRBlock.normalColor = new Color32(185, 29, 0, 100);
+            STRBlock.highlightedColor = new Color32(185, 29, 0, 150);
+            STRBlock.pressedColor = new Color32(185, 29, 0, 255);
+            STRBlock.disabledColor = new Color32(61, 61, 61, 255);
+
+            DEXBlock.normalColor = new Color32(0, 156, 65, 100);
+            DEXBlock.highlightedColor = new Color32(0, 156, 65,  150);
+            DEXBlock.pressedColor = new Color32(0, 156, 65,  255);
+            DEXBlock.disabledColor = new Color32(61, 61, 61, 255);
+
+            INTBlock.normalColor = new Color32(0, 152, 220, 100);
+            INTBlock.highlightedColor = new Color32(0, 152, 220, 150);
+            INTBlock.pressedColor = new Color32(0, 152, 220, 255);
+            INTBlock.disabledColor = new Color32(61, 61, 61, 255);
+
+            LUKBlock.normalColor = new Color32(255, 205, 2, 100);
+            LUKBlock.highlightedColor = new Color32(255, 205, 2, 150);
+            LUKBlock.pressedColor = new Color32(255, 205, 2, 255);
+            LUKBlock.disabledColor = new Color32(61, 61, 61, 255);
+
             bts.SetColorBlock("normal", normalBlock);
-            bts.SetColorBlock("normalAlternate", unusableBlock);
+            bts.SetColorBlock("na0", unusableBlock);
+            bts.SetColorBlock("na1", STRBlock);
+            bts.SetColorBlock("na2", DEXBlock);
+            bts.SetColorBlock("na3", INTBlock);
+            bts.SetColorBlock("na4", LUKBlock);
             bts.SetColorBlock("highlighted", highlightedBlock);
             bts.SetColorBlock("disabled", disabledBlock);
         }
@@ -163,6 +192,7 @@ namespace PlayerUI {
         /// </summary>
         public void ShowActionSelected() {
             bts.SetColor("highlighted");
+            btsBlockName = "highlighted";
         }
 
         /// <summary>
@@ -170,10 +200,14 @@ namespace PlayerUI {
         /// </summary>
         public void ShowActionUnselected() {
             if (isUsable == true) {
-                bts.SetColor("normal");
+                if (btsBlockName == "highlighted" || btsBlockName == "unusable" || btsBlockName == "na0" || btsBlockName == "disabled" ) {
+                    bts.SetColor("normal");
+                    btsBlockName = "normal";
+                }
             }
             else {
-                bts.SetColor("normalAlternate");
+                bts.SetColor("na0");
+                btsBlockName = "na0";
             }
         }
 
@@ -182,6 +216,7 @@ namespace PlayerUI {
         /// </summary>
         public void ShowActionDisabled() {
             bts.SetColor("disabled");
+            btsBlockName = "disabled";
         }
 
         /// <summary>
@@ -194,10 +229,21 @@ namespace PlayerUI {
 
             if (value == true) {
                 bts.SetColor("normal");
+                btsBlockName = "normal";
             }
             else {
-                bts.SetColor("normalAlternate");
+                bts.SetColor("na0");
+                btsBlockName = "na0";
             }
+        }
+
+        /// <summary>
+        /// Sets the colour of an interaction based off a stat check indicator
+        /// </summary>
+        /// <param name="value"> Check indicator value </param>
+        public void SetCheckColor(int value) {
+            bts.SetColor("na" + value);
+            btsBlockName = "na" + value;
         }
 
         /// <summary>

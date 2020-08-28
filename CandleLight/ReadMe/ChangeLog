@@ -152,16 +152,16 @@ Buff: Fiery veil buffed
 Balance: Gave wraith dolleyes and ice golem ice scream
 Buff: Make timekeeper's heal a full heal and revive
 UI: Make custom colouring for same class partyMembers
+Bug: Summon dying at the same time as summoner breaks the game
+Bug: No save tutorial prompt
 
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and cllean up icons
 Feature: achievements
 
-Bug: No save tutorial prompt
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
-Fix: Add tutorial tip for not being able to assign skill point in combat
 Fix: Deal with items having 2 always rounded down to 1
 
 NEAR FUTURE
@@ -174,6 +174,7 @@ Fix: ENUM EVERYTHING
 UI: Make monsterIcons have correct pixel sizing (rn its jank)
 UI: Redo sprites for creatures that are 192 x 192
 UI: Redo fireball, bash, and slash sprites
+Fix: Make it so closing the game also ups the scum checker
 
 Balance: Reevaluate all interaction thresholds
 Bug: Status effects not saving on load
@@ -185,8 +186,8 @@ Add normal/hard mode
 
 FUTURE/MAYBE
 ------------
+Fix: Add tutorial tip for not being able to assign skill point in combat
 Fix: Make it so stuff can be hovered over during rewards panel
-UI: Red colour wax if player can't afford
 Bug: Options menu tooltips need to be repositioned
 QOL: Have skills panel swap to active party member with skill points unspecced
 
@@ -194,7 +195,6 @@ Feature: Make click on bag (AND BAG ONLY) do something
 Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
 UI: Make quest completed notification seperate from normal completition
 Fix: Make it so active skills are greyed out if 4 actives are already selected
-Fix: Make a way to halt a fading coroutine should another one start
 UI: Make status effects do the fade animation monster displays do
 UI: status effects don't display in the statusPanel
 UI: Add heal/focus animations on effect

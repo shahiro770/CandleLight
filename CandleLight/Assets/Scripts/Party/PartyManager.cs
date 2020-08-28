@@ -342,10 +342,12 @@ namespace Party {
         /// </summary>
         /// <param name="pm"> partyMember object </param>
         public void RegisterPartyMemberDead(PartyMember pm) {
-            partyMembersAlive.Remove(pm);
-            partyMembersDead.Add(pm);
+            if (partyMembersAlive.Contains(pm)) {
+                partyMembersAlive.Remove(pm);
+                partyMembersDead.Add(pm);
 
-            pm.RemoveAllStatusEffects();
+                pm.RemoveAllStatusEffects();
+            }
         }
 
         /// <summary>
@@ -749,6 +751,7 @@ namespace Party {
             string[] partyComposition;
 
             // if in tutorial, the second partyMember joins later, so need to use storedPartyMember if that partyMember hasn't joined yet
+            // this is only relevant if the player tries to restart in the tutorial
             if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true && storedPartyMember != null) { 
                 partyComposition = new string[partyMembersAll.Count + 1];
                 partyComposition[0] = partyMembersAll[0].className;

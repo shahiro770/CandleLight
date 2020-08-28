@@ -184,7 +184,7 @@ namespace Characters {
             monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 64);
             monsterAltSelectColorBlock.highlightedColor = monsterAltSelectColorBlock.normalColor;
             monsterAltSelectColorBlock.pressedColor = monsterAltSelectColorBlock.normalColor;
-            bts.SetColorBlock("normalAlternate", monsterAltSelectColorBlock);
+            bts.SetColorBlock("na0", monsterAltSelectColorBlock);
         }
 
         /// <summary>
@@ -195,10 +195,10 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Visually select monster with the "adjacent hovered" (registered as normalAlternate) colour
+        /// Visually select monster with the "adjacent hovered" (registered as na0) colour
         /// </summary>
         public void SelectMonsterButtonAdjacent() {
-            bts.SetColor("normalAlternate");
+            bts.SetColor("na0");
         }
 
         /// <summary>

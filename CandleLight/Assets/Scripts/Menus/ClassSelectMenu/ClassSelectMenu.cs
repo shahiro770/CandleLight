@@ -70,11 +70,11 @@ namespace Menus.ClassSelectMenu {
             
             foreach(ButtonTransitionState bts in compBtss) {
                 bts.SetColorBlock("normal", btsNormalBlock);
-                bts.SetColorBlock("normalAlternate", btsPressedBlock);   
+                bts.SetColorBlock("na0", btsPressedBlock);   
             }
             foreach(ButtonTransitionState bts in classBtss) {
                 bts.SetColorBlock("normal", btsNormalBlock);
-                bts.SetColorBlock("normalAlternate", btsPressedBlock);
+                bts.SetColorBlock("na0", btsPressedBlock);
             }
 
             warriorIcon = Resources.Load<Sprite>("Sprites/Classes/WarriorIcon");
@@ -82,7 +82,7 @@ namespace Menus.ClassSelectMenu {
             archerIcon = Resources.Load<Sprite>("Sprites/Classes/ArcherIcon");
             rogueIcon = Resources.Load<Sprite>("Sprites/Classes/RogueIcon");
 
-            sbBts.SetColorBlock("normalAlternate", sbEnabledBlock);
+            sbBts.SetColorBlock("na0", sbEnabledBlock);
         }
 
         /// <summary>
@@ -126,14 +126,14 @@ namespace Menus.ClassSelectMenu {
 
             for (int i = 0; i < classBtss.Length; i++) {
                 if (i == index) {
-                    classBtss[i].SetColor("normalAlternate"); 
+                    classBtss[i].SetColor("na0"); 
                 }
                 else {
                     classBtss[i].SetColor("normal");                  
                 }
             }
 
-            classBtss[index].SetColor("normalAlternate");
+            classBtss[index].SetColor("na0");
 
             if (index == 0) {
                 partyComposition[compIndex] = ClassConstants.WARRIOR;
@@ -166,7 +166,7 @@ namespace Menus.ClassSelectMenu {
             int correspondingClassIndex = -1;
             for (int i = 0; i < compBtss.Length; i++) {
                 if (i == index) {
-                    compBtss[i].SetColor("normalAlternate"); 
+                    compBtss[i].SetColor("na0"); 
                     compIndex = index;
                 }
                 else {
@@ -193,7 +193,7 @@ namespace Menus.ClassSelectMenu {
 
             for (int i = 0; i < classBtss.Length; i++) {
                 if (i == correspondingClassIndex) {
-                    classBtss[i].SetColor("normalAlternate");       
+                    classBtss[i].SetColor("na0");       
                 }
                 else {
                     classBtss[i].SetColor("normal");                  
@@ -234,7 +234,7 @@ namespace Menus.ClassSelectMenu {
                 sbBts.SetColor("normal");
             }
             else {
-                sbBts.SetColor("normalAlternate");
+                sbBts.SetColor("na0");
             }
         }
 

@@ -56,7 +56,7 @@ namespace PlayerUI {
                 activeBlock.pressedColor = new Color32(255, 255, 255, 255);
                 activeBlock.disabledColor = new Color32(255, 255, 255, 255);
                 
-                bts.SetColorBlock("normalAlternate", activeBlock);
+                bts.SetColorBlock("na0", activeBlock);
             }
         }
 
@@ -175,7 +175,7 @@ namespace PlayerUI {
         /// Sets the bts to show the partyMember that is active
         /// </summary>
         public void ShowActive() {
-            bts.SetColor("normalAlternate");
+            bts.SetColor("na0");
         }
         
         /// <summary>

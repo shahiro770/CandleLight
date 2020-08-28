@@ -53,20 +53,20 @@ namespace Menus.OptionsMenu {
 
             tutorialYes.SetColorBlock("normal", b.colors);  // for some reason this is all bugged, so need to set the normal colour block
             tutorialNo.SetColorBlock("normal", b.colors);
-            tutorialYes.SetColorBlock("normalAlternate", optionEnabled);
-            tutorialNo.SetColorBlock("normalAlternate", optionEnabled);
+            tutorialYes.SetColorBlock("na0", optionEnabled);
+            tutorialNo.SetColorBlock("na0", optionEnabled);
             tipsYes.SetColorBlock("normal", b.colors);
             tipsNo.SetColorBlock("normal", b.colors);
-            tipsYes.SetColorBlock("normalAlternate", optionEnabled);
-            tipsNo.SetColorBlock("normalAlternate", optionEnabled);
+            tipsYes.SetColorBlock("na0", optionEnabled);
+            tipsNo.SetColorBlock("na0", optionEnabled);
             as1.SetColorBlock("normal", b.colors);
             as2.SetColorBlock("normal", b.colors);
-            as1.SetColorBlock("normalAlternate", optionEnabled);
-            as2.SetColorBlock("normalAlternate", optionEnabled);
+            as1.SetColorBlock("na0", optionEnabled);
+            as2.SetColorBlock("na0", optionEnabled);
             timerYes.SetColorBlock("normal", b.colors);
             timerNo.SetColorBlock("normal", b.colors);
-            timerYes.SetColorBlock("normalAlternate", optionEnabled);
-            timerNo.SetColorBlock("normalAlternate", optionEnabled);
+            timerYes.SetColorBlock("na0", optionEnabled);
+            timerNo.SetColorBlock("na0", optionEnabled);
 
             bgmtt.SetKey("title", "bgm_title");
             bgmtt.SetKey("subtitle", "bgm_des");
@@ -91,39 +91,39 @@ namespace Menus.OptionsMenu {
 
         void OnEnable() {
             if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
-                tutorialYes.SetColor("normalAlternate");
+                tutorialYes.SetColor("na0");
                 tutorialNo.SetColor("normal");
             }
             else {
                 tutorialYes.SetColor("normal");
-                tutorialNo.SetColor("normalAlternate");
+                tutorialNo.SetColor("na0");
             }
 
             if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true) {
-                tipsYes.SetColor("normalAlternate");
+                tipsYes.SetColor("na0");
                 tipsNo.SetColor("normal");
             }
             else {
                 tipsYes.SetColor("normal");
-                tipsNo.SetColor("normalAlternate");
+                tipsNo.SetColor("na0");
             }
 
             if (GameManager.instance.animationSpeed == 1f) {
-                as1.SetColor("normalAlternate");
+                as1.SetColor("na0");
                 as2.SetColor("normal");
             }
             else {
                 as1.SetColor("normal");
-                as2.SetColor("normalAlternate");
+                as2.SetColor("na0");
             }
 
             if (UIManager.instance.isTimer == true) {
-                timerYes.SetColor("normalAlternate");
+                timerYes.SetColor("na0");
                 timerNo.SetColor("normal");
             }
             else {
                 timerYes.SetColor("normal");
-                timerNo.SetColor("normalAlternate");
+                timerNo.SetColor("na0");
             }
 
             bgmSlider.value = AudioManager.instance.bgmVolume;
@@ -150,12 +150,12 @@ namespace Menus.OptionsMenu {
 
             if (value == true) {    // setting tutorial to true, will reset all tips
                 GameManager.instance.tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
-                tutorialYes.SetColor("normalAlternate");
+                tutorialYes.SetColor("na0");
                 tutorialNo.SetColor("normal");
             }
             else {
                 tutorialYes.SetColor("normal");
-                tutorialNo.SetColor("normalAlternate");
+                tutorialNo.SetColor("na0");
             }
         }
 
@@ -163,12 +163,12 @@ namespace Menus.OptionsMenu {
             GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] = value;
 
             if (value == true) {
-                tipsYes.SetColor("normalAlternate");
+                tipsYes.SetColor("na0");
                 tipsNo.SetColor("normal");
             }
             else {
                 tipsYes.SetColor("normal");
-                tipsNo.SetColor("normalAlternate");
+                tipsNo.SetColor("na0");
             }
         }
 
@@ -176,12 +176,12 @@ namespace Menus.OptionsMenu {
             GameManager.instance.animationSpeed = value;
 
             if (value == 1f) {
-                as1.SetColor("normalAlternate");
+                as1.SetColor("na0");
                 as2.SetColor("normal");
             }
             else {
                 as1.SetColor("normal");
-                as2.SetColor("normalAlternate");
+                as2.SetColor("na0");
             }
         }
 
@@ -192,12 +192,12 @@ namespace Menus.OptionsMenu {
             }
 
             if (UIManager.instance.isTimer == true) {
-                timerYes.SetColor("normalAlternate");
+                timerYes.SetColor("na0");
                 timerNo.SetColor("normal");
             }
             else {
                 timerYes.SetColor("normal");
-                timerNo.SetColor("normalAlternate");
+                timerNo.SetColor("na0");
             }
         }
 

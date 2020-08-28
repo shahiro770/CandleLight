@@ -15,8 +15,7 @@ using Combat;
 using Events;
 using GameManager = General.GameManager;
 using PanelConstants = Constants.PanelConstants;
-using System.Collections;
-using System.Collections.Generic;
+using tutorialTriggers = Constants.TutorialConstants.tutorialTriggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -63,14 +62,25 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="interactions"> List of interactions according to event, length 5 </param>
         public void SetInteractionActions(Interaction[] interactions) { 
+            SetActionsUsable(true); // TODO: this kinda of interactions sets the colour like 3 times, but hopefully this isn't expensive (but redoing the logic here is risky)
+
             for (int i = 0; i < interactions.Length; i++) {
                 actions[i].SetAction(ActionConstants.INTERACTION, interactions[i]);
                 if (interactions[i].name == "takeAll") {
                     actions[i].SetAction(ActionConstants.TAKEALL);
                 }
+                if (interactions[i].checkIndicator != 0) {
+                    if (interactions[i].checkIndicator >= 1 && interactions[i].checkIndicator <= 4) {
+                        actions[i].SetCheckColor(interactions[i].checkIndicator);
+                        if (GameManager.instance.tutorialTriggers[(int)tutorialTriggers.isTips] == true
+                        && GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] == true) {
+                            EventManager.instance.SetTutorialNotification("stat");
+                            GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] = false;
+                        }
+                    }
+                }
             }
 
-            SetActionsUsable(true);
             SetAllActionsInteractable();
             FadeActions(1);
         }
@@ -265,14 +275,9 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="initialSelection"> Flag for if current selected action should remain selected </param>
         public void SetAllActionsInteractable(bool initialSelection = false) {
-            int firstInteractableIndex = -1;
-
             for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType != ActionConstants.NONE) {
                     actions[i].SetInteractable(true); 
-                    if (firstInteractableIndex == -1) {
-                        firstInteractableIndex = i;
-                    } 
                 } else {
                     actions[i].SetInteractable(false);  
                 }

@@ -21,7 +21,8 @@ namespace Constants {
             firstChampion,      /// <value> Flag for if the player hasn't encountered their first champion monster </value>
             firstFailedSkillDisable,    /// <value> Flag for if the player fails to disable a skill (due to it being required to enable a column) </value>
             firstFailedSkillEnable,     /// <value> Flag for if the player fails to enable a skill (due to have too many active skills) </value>
-            thirdPivotalMomentreached   /// <value> Flag for if player reached the third pivotal moment (path split between hill country and wraithsway) for the first time</value>
+            thirdPivotalMomentreached,  /// <value> Flag for if player reached the third pivotal moment (path split between hill country and wraithsway) for the first time </value>
+            firstStatInt        /// <value> Flag for if player has ran into their first stat-check interaction </value>
         };
     }
 }

@@ -62,6 +62,7 @@ namespace Events {
 
         public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
+        public string simEvent = ""; /// <value> event that when changed from the editor will be seen next if its in the subArea </value>
 
         private Area currentArea;            /// <value> Area to select subAreas from </value>
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
@@ -339,7 +340,12 @@ namespace Events {
         }
 
         public void LoadPartyStatusEffects() {
-            
+            if (GameManager.instance.data != null) {
+                List<PartyMember> pms = PartyManager.instance.GetPartyMembers();
+                for (int i = 0; i < pms.Count; i++) {
+                    pms[i].AddLoadedStatusEffects(GameManager.instance.data.partyMemberDatas[i]);
+                }
+            }
         }
 
         /// <summary>
@@ -377,6 +383,7 @@ namespace Events {
                 specialPanel.LoadData(GameManager.instance.data.spareSpecials);
                 infoPanel.LoadData(GameManager.instance.data.questData);
                 EquipPartyItems();
+                LoadPartyStatusEffects();
                 foreach (Quest q in infoPanel.quests) {
                     currentArea.SwapEventAndSubEvent(q.startEvent, q.nextEvent);
                 }
@@ -663,6 +670,9 @@ namespace Events {
                     currentEvent = currentSubArea.GetEvent();
                 }
             }
+            if (simEvent != "") {
+                currentEvent = currentSubArea.GetEvent(simEvent);
+            }
         }
 
         /// <summary>
@@ -690,6 +700,7 @@ namespace Events {
             } 
             else {  // for very first event in an area, there is no need to visually transition (just blit onto screen)
                 eventBackground.sprite = GetBGSprite(currentEvent.bgPackName);
+                SetToastPanelsVisible(false);
                 displayStartEvent = false;
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());
                 statusPanel.DisplayPartyMember(PartyManager.instance.GetActivePartyMember().pmvc);
@@ -699,8 +710,8 @@ namespace Events {
             if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
             && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] == true
             && areaProgress == 2) {
-                print("hi");
                 GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] = false;
+                SetTutorialNotification("save");
             }
 
             if (currentEvent.type == EventConstants.COMBAT) {

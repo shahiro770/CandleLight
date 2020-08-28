@@ -47,7 +47,7 @@ namespace PlayerUI {
                 btss[i].SetColorBlock("pressed", pressedBlock);
             }
             if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {
-                btss[1].SetColorBlock("normalAlternate", UIManager.instance.orangeBlock);
+                btss[1].SetColorBlock("na0", UIManager.instance.orangeBlock);
             }
         
             if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {                   // panels aren't opened immediatel in the tutorial
@@ -117,7 +117,7 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="index"></param>
         public void HighlightTab(int index) {
-            btss[index].SetColor("normalAlternate"); 
+            btss[index].SetColor("na0"); 
         }
 
         /// <summary>
