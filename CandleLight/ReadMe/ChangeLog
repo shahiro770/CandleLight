@@ -168,9 +168,7 @@ Feature: Add achievements
 
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
-Fix: Make flee attempts guaranteed success on 5th try
 Bug: One of the dialogue prompts is 3 lines
-Fix: Deal with items having 2 always rounded down to 1
 
 NEAR FUTURE
 ----------------
