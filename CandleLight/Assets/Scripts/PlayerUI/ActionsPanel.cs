@@ -27,15 +27,23 @@ namespace PlayerUI {
         /* external component references */
         public EventDescription actionDescription;
         public Action[] actions = new Action[5];    /// <value> List of actions, capped at 5 </value>
+        public Button toggleButton;
+        public Image toggleImage;
+        public Sprite attacksSprite;
+        public Sprite interactionsSprite;
         
         public Action selectedAction;              /// <value> Action that was selected </value>
+        public bool isStoringInt = false;
 
         private EventSystem es;                     /// <value> eventSystem reference </value>
+        private Interaction[] storedInts = new Interaction[5];          /// <value> List of interactions stored </value>
+        private bool[] storedUsability = new bool[5];
         private Interaction travelInt;
         private Interaction fightInt;
         private Interaction tutorialInt;
         private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
-
+        
+       
         /// <summary>
         /// Awake to get initialize event system
         /// </summary>
@@ -129,6 +137,17 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Initializes all actions with the partyMember's attacks for combat, but sets the fifth to none
+        /// </summary>
+        /// <param name="pm"></param>
+        public void SetCombatActionsNoFifth(PartyMember pm) {
+            for (int i = 0; i < pm.attacks.Length; i++) {
+                actions[i].SetAction(ActionConstants.ATTACK, pm.attacks[i]);
+            }
+            actions[actions.Length -1].SetAction(ActionConstants.NONE);
+        }
+
+        /// <summary>
         /// Displays all actions as empty
         /// </summary>
         public void ClearAllActions() {
@@ -192,8 +211,19 @@ namespace PlayerUI {
         public void AddInteraction(string intName) {
             for (int i = 0; i < actions.Length; i++) {
                 if (actions[i].actionType == ActionConstants.NONE) {
-                    actions[i].SetAction(ActionConstants.INTERACTION, GameManager.instance.DB.GetInteractionByName(intName));
+                    Interaction newInt =  GameManager.instance.DB.GetInteractionByName(intName);
+                    actions[i].SetAction(ActionConstants.INTERACTION, newInt);
                     actions[i].SetInteractable(true);
+                    if (newInt.checkIndicator != 0) {
+                        if (newInt.checkIndicator >= 1 && newInt.checkIndicator <= 4) {
+                            actions[i].SetCheckColor(newInt.checkIndicator);
+                            if (GameManager.instance.tutorialTriggers[(int)tutorialTriggers.isTips] == true
+                            && GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] == true) {
+                                EventManager.instance.SetTutorialNotification("stat");
+                                GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] = false;
+                            }
+                        }
+                    }
                     break;
                 }
             }
@@ -220,6 +250,53 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Swap between combat and interaction actions for the current event
+        /// (Combat actions cannot be used)
+        /// </summary>
+        /// <param name="pm"></param>
+        public void ToggleInteractionAndCombatActions(PartyMember pm) {
+            if (isStoringInt == false) {
+                isStoringInt = true;
+                toggleImage.sprite = interactionsSprite;
+                for (int i = 0; i < storedInts.Length; i++) {
+                    storedInts[i] = actions[i].i;
+                    storedUsability[i] = actions[i].isUsable;
+                }
+                SetCombatActionsNoFifth(pm);
+                CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
+            }
+            else {
+                isStoringInt = false;
+                toggleImage.sprite = attacksSprite;
+                for (int i = 0; i < storedInts.Length; i++) {
+                    if (storedInts[i] != null) {
+                        actions[i].SetAction(ActionConstants.INTERACTION, storedInts[i]);
+                        actions[i].SetUsable(storedUsability[i]);
+                        if (storedInts[i].name == "takeAll") {
+                            actions[i].SetAction(ActionConstants.TAKEALL);
+                            EventManager.instance.UpdateTakeAll();
+                        }
+                        if (storedInts[i].checkIndicator != 0) {
+                            if (storedInts[i].checkIndicator >= 1 && storedInts[i].checkIndicator <= 4) {
+                                actions[i].SetCheckColor(storedInts[i].checkIndicator); // no need to check for tutorials here, it would've happened pre toggle
+                            }
+                        }
+                    }
+                    else {
+                        actions[i].SetAction(ActionConstants.NONE);
+                    }
+                    storedInts[i] = null;
+                }
+            }
+            
+            SetAllActionsInteractable();
+        }
+
+        public void SetToggleButtonInteractable(bool value) {
+            toggleButton.interactable = value;
+        }
+
+        /// <summary>
         /// Updates the take all button's usability
         /// Fails if the first action is not of type TAKEALL 
         /// </summary>
@@ -241,7 +318,7 @@ namespace PlayerUI {
         /// <param name="a"> Name of action to be taken </param>
         public void SelectAction(Action a) {
             if (UIManager.instance.panelButtonsEnabled == true && a.isUsable == true) {
-                if (a.actionType == ActionConstants.ATTACK) {
+                if (a.actionType == ActionConstants.ATTACK && CombatManager.instance.inCombat == true) {
                     selectedAction = a;
                     for (int i = 0; i < actions.Length - 1; i++) {
                         if (actions[i] == selectedAction) {

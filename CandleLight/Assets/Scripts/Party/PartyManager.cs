@@ -41,7 +41,7 @@ namespace Party {
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
         private List<PartyMember> partyMembersDead = new List<PartyMember>();   /// <value> List of partyMembers in party </value>
         private List<PartyMember> summons = new List<PartyMember>();            /// <value> List of summons loaded </value>
-        private PartyMember activePartyMember = null;
+        public PartyMember activePartyMember = null;
         private enum primaryStats { NONE, STR, DEX, INT, LUK };                 /// <value> Enumerated primary stats </value>
         private string[] summonNames = new string[] { ClassConstants.FROSTGOLEM };  /// <value> Name of all possible summons </value>
         private int maxPartyMembers = 4;                                        /// <value> Max number of partyMembers </value>

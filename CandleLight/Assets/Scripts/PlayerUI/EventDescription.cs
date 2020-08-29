@@ -48,7 +48,8 @@ namespace PlayerUI {
         private string restoredText = LocalizationManager.instance.GetLocalizedValue("restored_text");     /// <value> Localized text for the text "restored" </value>
         private string summonText = LocalizationManager.instance.GetLocalizedValue("summon_text");  /// <value> Localized text for the text "summon a" </value>
         private string colour = "normal";   /// <value> Current colour state </value>
-        private bool appendMode = false;     /// <value> true to append </value>
+        private string storedKey;           /// <value> </value>
+        private bool appendMode = false;    /// <value> true to append </value>
 
         /// <summary>
         /// Awake to set displayedattack to null (so unity doesn't do its fake null setting)
@@ -444,6 +445,20 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Store the current key being displayed
+        /// </summary>
+        public void StoreKey() {
+            storedKey = eventText.key;
+        }
+
+        /// <summary>
+        /// Set the key to the currently stored key
+        /// </summary>
+        public void SetStoredKey() {
+            SetKey(storedKey);
+        }
+
+        /// <summary>
         /// Sets the current colour of the text
         /// </summary>
         /// <param name="colour"> String, "normal" or "unusable" </param>
@@ -458,7 +473,6 @@ namespace PlayerUI {
                 textBackground.color = unusableColourHalfAlpha;
                 eventText.SetColour(unusableColour);
             }
-            
         }
 
         /// <summary>

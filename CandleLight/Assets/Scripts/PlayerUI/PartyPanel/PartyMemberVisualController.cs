@@ -33,6 +33,7 @@ namespace Characters {
         public EventDescription eventDescription;               /// <value> Display that describes the event in text </value>
         public EXPBar statsPanelEXPBar { get; private set; }   /// <value> Visual for experience points in stats panel </value>
         public EXPBar rewardsPanelEXPBar { get; private set; } /// <value> Visual for experience points in rewards panel</value>
+        public ActionsPanel actionsPanel;       /// <value> actionsPanel reference </value>
         public GearPanel gearPanel;             /// <value> gearPanel reference </value>
         public CandlesPanel candlesPanel;       /// <value> candlesPanel reference </value>
         public StatusPanel statusPanel;         /// <value> statusPanel reference </value>
@@ -239,6 +240,7 @@ namespace Characters {
         /// </summary>
         public void SetExternalDisplayComponents() {
             eventDescription = EventManager.instance.eventDescription;
+            actionsPanel = EventManager.instance.actionsPanel;
             partyPanel = EventManager.instance.partyPanel;
             gearPanel = EventManager.instance.gearPanel;
             candlesPanel = EventManager.instance.candlesPanel;
@@ -328,6 +330,10 @@ namespace Characters {
                 partyPanel.DisplayActivePartyMember(pmdPartyPanel);
                 skillsPanel.DisplayActivePartyMember(pmdSkillsPanel);
                 statusPanel.DisplayPartyMember(this);
+                if (actionsPanel.isStoringInt == true) {
+                    pm.SetAttackValues();
+                    actionsPanel.SetCombatActionsNoFifth(pm);
+                }
             }
 
             if (gearPanel.isOpen == true) {

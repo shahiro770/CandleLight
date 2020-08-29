@@ -160,11 +160,14 @@ JUST FINISHED
 Added flee chance bonus for each failed flee attempt
 Added stat check toast notifications
 Notificaitons now last slightly longer
+Feature: Added options button
+
 
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
 Feature: Add achievements
+Feature: Added attacks swap int option
 
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate

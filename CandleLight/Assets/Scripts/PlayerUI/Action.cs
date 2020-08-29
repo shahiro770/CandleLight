@@ -277,6 +277,9 @@ namespace PlayerUI {
 
         public void OnPointerEnter(PointerEventData pointerEventData) {
             if (b.interactable && a != null) {
+                if (CombatManager.instance.inCombat == false) {
+                    eventDescription.StoreKey();
+                }
                 if (Input.GetButton("Shift") == true) {
                     eventDescription.SetFormulaText(isUsable, a);
                 }
@@ -298,8 +301,13 @@ namespace PlayerUI {
                     }
                 }
                 else {
-                    eventDescription.ClearText();
-                    eventDescription.displayedAttack = null;
+                    if (CombatManager.instance.inCombat == true) {
+                        eventDescription.ClearText();
+                        eventDescription.displayedAttack = null;
+                    }
+                    else {
+                        eventDescription.SetStoredKey();
+                    }
                 }  
             }
         }

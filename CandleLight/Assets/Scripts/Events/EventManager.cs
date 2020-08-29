@@ -656,7 +656,7 @@ namespace Events {
                         currentEvent = currentSubArea.GetEvent(EventConstants.COMBAT + currentAreaName);    //TODO: Make a function that 
                     }
                 }
-                else if (subAreaProgress < 35 && currentEvent.type == EventConstants.SHOP) {    // reroll to reduce odds of a shop while subAreaProgress is still less than 20
+                else if (subAreaProgress < 35 && currentEvent.type == EventConstants.SHOP) {    // reroll to reduce odds of a shop while subAreaProgress is still less than 35
                     currentEvent = currentSubArea.GetEvent();
                 }
             }
@@ -674,6 +674,7 @@ namespace Events {
             candlesPanel.SetTakeable(false);
             skillsPanel.SetTogglable(false);
             specialPanel.SetTakeable(false);
+            actionsPanel.SetToggleButtonInteractable(false);
             StartCoroutine(AlterBackgroundColor(0.5f));
             StartCoroutine(combatManager.InitializeCombat(monstersToSpawn, currentSubArea.championBuffs, currentEvent.isLeavePossible));
         }
@@ -828,6 +829,7 @@ namespace Events {
                 candlesPanel.SetTakeable(true);
                 specialPanel.SetTakeable(true);
                 skillsPanel.SetTogglable(true);
+                actionsPanel.SetToggleButtonInteractable(true);
 
                 if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {
                     actionsPanel.PostCombatActions(rewardsPanel.itemNum);
@@ -1776,6 +1778,14 @@ namespace Events {
             foreach (int index in indices) {
                 eventDisplays[index].SetItemsVisible(false);
             }
+        }
+
+        /// <summary>
+        /// Toggles the actions panel to swap between combat actions and interaction actions
+        /// </summary>
+        public void ToggleInteractionAndCombatActions() {
+            PartyManager.instance.GetActivePartyMember().SetAttackValues();
+            actionsPanel.ToggleInteractionAndCombatActions(PartyManager.instance.GetActivePartyMember());
         }
 
         /// <summary>
