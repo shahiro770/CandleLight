@@ -305,8 +305,8 @@ namespace PlayerUI {
             if (targetAlpha == 0) {
                 flameAnimator.gameObject.SetActive(true);
                 achievementIcon.gameObject.SetActive(false);
-                c.sortingOrder = 4;
-                achievementIcon.sortingOrder = 4;
+                c.sortingOrder = 5;
+                achievementIcon.sortingOrder = 5;
                 flameAnimator.SetTrigger("normal");
                 flameAnimator.ResetTrigger("normal");   // reset the trigger, because otherwise animator will swap back immediately on repeat triggers
                 gameObject.SetActive(false);

@@ -883,6 +883,7 @@ MonoBehaviour:
   bonusChampionChance: 0
   itemDropMultiplier: 1
   WAXDropMultiplier: 1
+  activePartyMember: {fileID: 0}
 --- !u!1 &1339672354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1003,7 @@ MonoBehaviour:
     pitch: 0
     loop: 0
   - name: mainMenu
-    clip: {fileID: 8300000, guid: 82b1b05e7920d4e05bb2ba4cb79a74be, type: 3}
+    clip: {fileID: 8300000, guid: ddfbacb213fc34b83a4ca041e8732994, type: 3}
     source: {fileID: 0}
     volume: 0
     pitch: 0

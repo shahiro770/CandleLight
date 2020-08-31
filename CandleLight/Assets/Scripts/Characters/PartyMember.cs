@@ -310,8 +310,8 @@ namespace Characters {
             MP = (int)(INT * 1.5 + LUK * 0.75);
             PATK = (int)(STR * 0.5 + DEX * 0.25);
             MATK = (int)(INT * 0.5 + LUK * 0.25); 
-            PDEF = (int)(STR * 0.15 + DEX * 0.075);
-            MDEF = (int)(INT * 0.15 + LUK * 0.075);
+            PDEF = (int)(STR * 0.125 + DEX * 0.075);
+            MDEF = (int)(INT * 0.125 + LUK * 0.075);
             DOG = (int)(LUK * 0.2 + DEX * 0.1);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             if (LVL != 0) {

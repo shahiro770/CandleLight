@@ -331,17 +331,18 @@ namespace Combat {
         /// <remark> Death animation for each monster is played as a de-spawning animation</remark>
         public IEnumerator AttemptFlee() {
             // partyMembers with higher luck will have a better chance at escaping
-            int chance = Random.Range(activePartyMember.LVL + (activePartyMember.LUK / 3 * activePartyMember.LVL), 100) - monsters[0].LVL;
+            int fleeChanceModifier = (activePartyMember.LVL - monsters[0].LVL) * 10;
+            int chance = Random.Range(activePartyMember.LVL + fleeChanceModifier, 100 + fleeChanceModifier) ;
             List<Monster> monstersToRemove = new List<Monster>();
 
             // flee chance modifiers
             chance -= fleeBonus;
             if (activePartyMember.GetStatusEffect(StatusEffectConstants.TRAP) != -1) {
-                chance += 50;
+                chance *= 2;
             }
             if (activePartyMember.className == ClassConstants.ARCHER) {
                 if (activePartyMember.skills[(int)SkillConstants.archerSkills.FLEETFOOTED].skillEnabled == true) {
-                    chance -= 50;
+                    chance = (int)(chance * 0.5f);
                 }
             }
 

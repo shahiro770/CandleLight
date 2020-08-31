@@ -1638,7 +1638,7 @@ MonoBehaviour:
   <MDEF>k__BackingField: 0
   <DOG>k__BackingField: 0
   <ACC>k__BackingField: 0
-  tempACC: 0
+  bonusACC: 0
   <critChance>k__BackingField: 0
   <attackNum>k__BackingField: 0
   <championChance>k__BackingField: 0

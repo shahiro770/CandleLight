@@ -3063,7 +3063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: highScores_title
   meshText: {fileID: 292522969}
-  textPreset: 1
+  textPreset: 0
 --- !u!114 &292522969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15580,7 +15580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: options_button
   meshText: {fileID: 1270150857}
-  textPreset: 1
+  textPreset: 0
 --- !u!1 &1275638552
 GameObject:
   m_ObjectHideFlags: 0
@@ -20558,7 +20558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: stats_button
   meshText: {fileID: 1845561343}
-  textPreset: 1
+  textPreset: 0
 --- !u!114 &1845561343
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,8 +14,9 @@ using CombatManager = Combat.CombatManager;
 using Constants;
 using General;
 using Items;
-using Menus.OptionsMenu;
 using Menus.GameOverMenu;
+using Menus.HelpMenu;
+using Menus.OptionsMenu;
 using Party;
 using PlayerUI;
 using System.Collections;
@@ -58,6 +59,7 @@ namespace Events {
         public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
         public Timer timer;                         /// <value> Timer reference </value>
         public OptionsMenu optionsMenu;             /// <value> OptionsMenu reference </value>
+        public HelpMenu helpMenu;                   /// <value> OptionsMenu reference </value>
         public GameOverMenu gameOverMenu;           /// <value> gameOverMenu reference </value>
 
         public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
@@ -139,13 +141,15 @@ namespace Events {
         /// </summary>
         void Update() {
             // Only pause if the game isn't loading or over
-            if (Input.GetButtonDown("Cancel") == true && GameManager.instance.loadingScreen.activeSelf == false && gameOverMenu.gameObject.activeSelf == false) {
+            if (Input.GetButtonDown("Cancel") == true && GameManager.instance.loadingScreen.activeSelf == false && gameOverMenu.gameObject.activeSelf == false
+            && helpMenu.gameObject.activeSelf == false) {
                 if (optionsMenu.gameObject.activeSelf == false) {
-                    SetPauseMenu(true);
+                    //SetPauseMenu(true);
+                    SetAchievementNotification(1);
                     return;
                 }
                 else {
-                    SetPauseMenu(false);
+                    //SetPauseMenu(false);
                     return;
                 }
             }
@@ -2024,6 +2028,22 @@ namespace Events {
             else {
                 Time.timeScale = 1;
                 optionsMenu.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// True to turn on the pause menu, false otherwise
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetHelpMenu(bool value) {
+            if (value == true) {
+                Time.timeScale = 0;
+                helpMenu.gameObject.SetActive(true);
+            
+            }
+            else {
+                Time.timeScale = 1;
+                helpMenu.gameObject.SetActive(false);
             }
         }
 

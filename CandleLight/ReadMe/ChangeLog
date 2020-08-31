@@ -161,17 +161,21 @@ Added flee chance bonus for each failed flee attempt
 Added stat check toast notifications
 Notificaitons now last slightly longer
 Feature: Added options button
-
+Feature: Add achievements
+Feature: Added attacks swap int option
 
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
-Feature: Add achievements
-Feature: Added attacks swap int option
 
+Bug: Achievement icon is hidden in toast
+Bug: too many status effects go right
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
 Bug: One of the dialogue prompts is 3 lines
+Bug: Player dies from random event doesn't trigger death check
+Bug: Who is Heidi doesn't generate items in second area
+Fix: Make boss level up if player is level 5
 
 NEAR FUTURE
 ----------------
