@@ -157,25 +157,28 @@ Bug: Status effects not saving on load
 
 JUST FINISHED
 -------------
-Added flee chance bonus for each failed flee attempt
-Added stat check toast notifications
-Notificaitons now last slightly longer
+Fix: Added flee chance bonus for each failed flee attempt
+Feature: Added stat check toast notifications
+Fix: Notificaitons now last slightly longer
 Feature: Added options button
 Feature: Add achievements
 Feature: Added attacks swap int option
+Bug: Achievement icon is hidden in toast
 
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
-
-Bug: Achievement icon is hidden in toast
 Bug: too many status effects go right
+Bug: Who is Heidi doesn't generate items in second area
+Fix: Colour all of the status effects in skills
+Fix: Make boss level up if player is same level, EXP curve nerfed from 2.21 to 2.35 (makes later levels much longer), champion monsters now give 50% less EXP (but now more WAX)
+Fix: All monsters give a little more WAX
+
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
 Bug: One of the dialogue prompts is 3 lines
-Bug: Player dies from random event doesn't trigger death check
-Bug: Who is Heidi doesn't generate items in second area
-Fix: Make boss level up if player is level 5
+CRITICAL BUG: Player dies from random event doesn't trigger death check
+Feature: Normal/hard mode
 
 NEAR FUTURE
 ----------------
@@ -190,14 +193,10 @@ Fix: Make it so closing the game also ups the scum checker
 Balance: Reevaluate all interaction thresholds (should be quick)
 Bug: Tooltip dies for absurd unknown reason on rare occasion
 Fix: Drag to item should also work (down press and up press)
-Mobile: Make people pay for save scumming
-Fix: Let checking of skills in game
-Add normal/hard mode
 
 FUTURE/MAYBE
 ------------
 Fix: ENUM EVERYTHING
-Fix: Add tutorial tip for not being able to assign skill point in combat
 Fix: Make it so stuff can be hovered over during rewards panel
 Bug: Options menu tooltips need to be repositioned
 QOL: Have skills panel swap to active party member with skill points unspecced

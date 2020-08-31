@@ -61,7 +61,7 @@ namespace Characters {
             base.Init(LVL, stats, attacks);
             CalculateStats(true);
             this.EXP = EXP;
-            this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
+            this.EXPToNextLVL = CalculateEXPToNextLVL(LVL);
             this.className = personalInfo[0];
             this.subClassName = personalInfo[1];
             this.race = personalInfo[3];
@@ -80,7 +80,7 @@ namespace Characters {
             this.CHP = pmData.CHP;
             this.CMP = pmData.CMP;
             this.EXP = pmData.EXP;
-            this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
+            this.EXPToNextLVL = CalculateEXPToNextLVL(LVL);
             this.className = pmData.className;
             this.subClassName = pmData.subClassName;
             this.race = pmData.race;
@@ -145,17 +145,17 @@ namespace Characters {
         /// Sets EXPToNextLevel based off of a math
         /// </summary>
         /// <param name="level"> Level to calculate EXP to next level for </param>
-        public int CalcEXPToNextLVL(int LVL) {
+        public int CalculateEXPToNextLVL(int LVL) {
             // it takes 4 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
-            return 2 + (int)(6 * Mathf.Pow(LVL, 2.21f) + LVL); 
+            return 2 + (int)(6 * Mathf.Pow(LVL, 2.35f) + LVL); 
         }
 
         /// <summary>
         /// Levels up a partyMember character; overriding base for different scaling for classes
         /// </summary>
         /// <param name="multiplier"> Multiplier because base needed it, won't be used here </param>
-        public override void LVLUp(int multiplier = 1) {
+        public override void LVLUp() {
             LVL++; 
             skillPoints++;
             pmvc.ExciteSkillsTab();
@@ -225,7 +225,7 @@ namespace Characters {
             LVL--;
             skillPoints--;
 
-            EXPToNextLVL = CalcEXPToNextLVL(LVL);
+            EXPToNextLVL = CalculateEXPToNextLVL(LVL);
             CalculateStats();
 
             pmvc.UpdateHPAndMPBars();
@@ -617,7 +617,7 @@ namespace Characters {
                 baseLUK += (int)(LVL * 0.3 + baseLUK * 0.3);
                 LUK = baseLUK;
             }      
-            this.EXPToNextLVL = CalcEXPToNextLVL(LVL);
+            this.EXPToNextLVL = CalculateEXPToNextLVL(LVL);
             skillPoints = 0;
 
             // summons get part of the summoner's stats
@@ -674,7 +674,7 @@ namespace Characters {
                 while (overflow >= EXPToNextLVL) { // small chance player might level up more than once
                     overflow -= EXPToNextLVL;
                     prevEXPToNextLVL = EXPToNextLVL;
-                    EXPToNextLVL = CalcEXPToNextLVL(LVL + 1);   // need this value to change the EXP display, but can't LVL up until after bar fills
+                    EXPToNextLVL = CalculateEXPToNextLVL(LVL + 1);   // need this value to change the EXP display, but can't LVL up until after bar fills
                     yield return(StartCoroutine(pmvc.DisplayEXPChange(prevEXPToNextLVL, prevEXPToNextLVL, LVL + 1)));
                     LVLUp();
                 }
@@ -996,24 +996,26 @@ namespace Characters {
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {   
-            int existingIndex = GetStatusEffect(seName);
-            if (existingIndex != -1) {  // reapply the status effect if its already applied
-                seToRemove.Add(statusEffects[existingIndex]);
-                RemoveStatusEffectsNoCalculate();   // will be recalculating anyways on AddStatusEffect
-            }
+            if (statusEffects.Count < maxStatusEffects) {
+                int existingIndex = GetStatusEffect(seName);
+                if (existingIndex != -1) {  // reapply the status effect if its already applied
+                    seToRemove.Add(statusEffects[existingIndex]);
+                    RemoveStatusEffectsNoCalculate();   // will be recalculating anyways on AddStatusEffect
+                }
 
-            StatusEffect newStatus;
-            if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
-                newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
-            }
-            else {
-                newStatus = new StatusEffect(seName, seDuration);
-            }
-            newStatus.SetValue(c, this);
-            AddStatusEffect(newStatus);
-            pmvc.AddStatusEffectDisplay(newStatus);
+                StatusEffect newStatus;
+                if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
+                    newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
+                }
+                else {
+                    newStatus = new StatusEffect(seName, seDuration);
+                }
+                newStatus.SetValue(c, this);
+                AddStatusEffect(newStatus);
+                pmvc.AddStatusEffectDisplay(newStatus);
 
-            UpdateStatusEffectValues();
+                UpdateStatusEffectValues();
+            }
         }
 
         /// <summary>

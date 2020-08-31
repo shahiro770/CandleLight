@@ -144,12 +144,11 @@ namespace Events {
             if (Input.GetButtonDown("Cancel") == true && GameManager.instance.loadingScreen.activeSelf == false && gameOverMenu.gameObject.activeSelf == false
             && helpMenu.gameObject.activeSelf == false) {
                 if (optionsMenu.gameObject.activeSelf == false) {
-                    //SetPauseMenu(true);
-                    SetAchievementNotification(1);
+                    SetPauseMenu(true);
                     return;
                 }
                 else {
-                    //SetPauseMenu(false);
+                    SetPauseMenu(false);
                     return;
                 }
             }
@@ -1087,6 +1086,7 @@ namespace Events {
                 case ResultConstants.STATALLANDEVENT:
                     ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDEVENT);
                     GetNextEvent();
+                    CheckGameOver();
                     break;
                 case ResultConstants.PRECOMBAT:
                     eventDescription.FadeOut();
@@ -1691,7 +1691,7 @@ namespace Events {
             timer.StartTimer(false);;
             if (isWin == false) {
                 SetAllButtonsInteractable(false);
-                yield return new WaitForSeconds(1f);    // DRAMATIC PAUSE ON DEATH
+                yield return new WaitForSeconds(2f);    // DRAMATIC PAUSE ON DEATH
                 GameManager.instance.timeTaken = -1;
             }
             else {

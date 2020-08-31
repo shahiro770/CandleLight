@@ -159,7 +159,6 @@ namespace PlayerUI {
             achievementIcon.color = GetAchievementColor(index);
             if (isHighLayer == true) {
                 c.sortingOrder = 6;
-                achievementIcon.sortingOrder = 6;
             }
 
             b.interactable = false;
@@ -305,8 +304,7 @@ namespace PlayerUI {
             if (targetAlpha == 0) {
                 flameAnimator.gameObject.SetActive(true);
                 achievementIcon.gameObject.SetActive(false);
-                c.sortingOrder = 5;
-                achievementIcon.sortingOrder = 5;
+                c.sortingOrder = 4;
                 flameAnimator.SetTrigger("normal");
                 flameAnimator.ResetTrigger("normal");   // reset the trigger, because otherwise animator will swap back immediately on repeat triggers
                 gameObject.SetActive(false);

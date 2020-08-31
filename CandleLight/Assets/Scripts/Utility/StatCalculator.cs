@@ -49,8 +49,20 @@ public class StatCalculator : MonoBehaviour{
         }
     }
 
+    public void GetEXPCurve() {
+        for (int i = 0; i < 5; i++) {
+            Debug.Log("LVL: " + i + " " + (2 + (int)(6 * Mathf.Pow(i, 2.35f) + i)));
+        }
+    }
+
+    public void PrintRandomMaths() {
+        for (int i = 0; i < 10; i++) {
+            Debug.Log(Random.Range((int)(Mathf.Max(1, 2f * 0.5f)), (int)(2 * (1 + 0.5))));
+        }
+    }
+
     void Awake() {
-        //print(Random.Range((int)(Mathf.Max(1, 2f * 0.5)), (int)(2 * (1 + 0.5))));
+        //PrintRandomMaths();
         GetClassStats("warrior", 8, 4, 3, 3, 1, 4);
         GetClassStats("mage", 3, 4, 10, 3, 1, 4);
         GetClassStats("archer", 3, 9, 6, 2, 1, 4);

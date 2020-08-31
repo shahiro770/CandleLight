@@ -37,7 +37,7 @@ namespace Characters {
         [field: SerializeField] public string monsterSpriteName { get; private set; }   /// <value> Name of monster's sprite as referenced in resources </value>
         [field: SerializeField] public string monsterDisplayName { get; private set; }  /// <value> Monster name <value>
         [field: SerializeField] public string monsterAI { get; private set; }           /// <value> Monster's behaviour in combat </value>
-        [field: SerializeField] public int multiplier { get; private set; }             /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
+        [field: SerializeField] public float multiplier { get; private set; }           /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
         [field: SerializeField] public int minLVL { get; private set; }                 /// <value> Minimum power level monster can spawn at </param>
         [field: SerializeField] public int maxLVL { get; private set; }                 /// <value> Maximum power level monster can spawn at </param>
         [field: SerializeField] public int bonusPDEF { get; private set; }              /// <value> Bonus PDEF added to the monster's stats </value>
@@ -201,15 +201,15 @@ namespace Characters {
         /// </summary>
         public void MultipleLVLUp(int subAreaProgress) {
             if (subAreaProgress < 35) { // prevent stronger monsters from appearing at the start of the area (note this affects boss fights)
-                base.MultipleLVLUp(minLVL, Mathf.Max(minLVL, maxLVL - 1), this.multiplier);  
+                base.MultipleLVLUp(minLVL, Mathf.Max(minLVL, maxLVL - 1));  
             }
             else {
-                base.MultipleLVLUp(minLVL, maxLVL, this.multiplier);  
+                base.MultipleLVLUp(minLVL, maxLVL);  
             }
             // it takes 5 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
             this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier);  
-            this.WAX = (int)(Mathf.Pow(LVL, 1.65f)) * this.multiplier;   
+            this.WAX = (int)(Mathf.Pow(LVL + 1, 1.65f) * this.multiplier);
 
             md.SetTooltip();
             md.SetHealthBar();
@@ -228,8 +228,8 @@ namespace Characters {
                 AddStatusEffectPermanent(newStatus);
                 md.AddStatusEffectDisplay(newStatus);
 
-                if (PartyManager.instance.GetHighestPartyMemberLVL() >= 5) {    // champion for bosses is guaranteed if the player somehow becomes overpowered beyond all belief
-                    championChance = 100;   
+                if (PartyManager.instance.GetHighestPartyMemberLVL() >= LVL) {    // boss levels up if the player is higher LVL than them
+                    LVLUp();
                 }
             }
         }
@@ -243,8 +243,9 @@ namespace Characters {
             isChampion = Random.Range(0, 100) < (championChance + PartyManager.instance.bonusChampionChance);
 
             if (isChampion == true) {
-                multiplier += 1;
+                multiplier += 0.5f;
                 this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier);  
+                this.WAX = (int)(Mathf.Pow(LVL + 1, 1.65f) * this.multiplier);
                 monsterReward.UpgradeResult();
                 dropChance = 100;
 
@@ -512,50 +513,52 @@ namespace Characters {
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {
-            if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
-                int index = Random.Range(0, 3);
-                switch(index) {
-                    case 0:
-                        seName = StatusEffectConstants.BLEED;
-                        break;
-                    case 1:
-                        seName = StatusEffectConstants.WEAKNESS;
-                        break;
-                    case 2:
-                        seName = StatusEffectConstants.ROOT;
-                        break;
-                    default:
-                        break;
+            if (statusEffects.Count < maxStatusEffects) {
+                if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
+                    int index = Random.Range(0, 3);
+                    switch(index) {
+                        case 0:
+                            seName = StatusEffectConstants.BLEED;
+                            break;
+                        case 1:
+                            seName = StatusEffectConstants.WEAKNESS;
+                            break;
+                        case 2:
+                            seName = StatusEffectConstants.ROOT;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            int existingIndex = GetStatusEffect(seName);
-            if (existingIndex != -1) {  // reapply the status effect if its already applied
-                seToRemove.Add(statusEffects[existingIndex]);
-                RemoveStatusEffectsNoCalculate();   // will be recalculating anyways on AddStatusEffect
-            }
+                int existingIndex = GetStatusEffect(seName);
+                if (existingIndex != -1) {  // reapply the status effect if its already applied
+                    seToRemove.Add(statusEffects[existingIndex]);
+                    RemoveStatusEffectsNoCalculate();   // will be recalculating anyways on AddStatusEffect
+                }
 
-            StatusEffect newStatus;
-            if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
-                newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
-            }
-            else {
-                newStatus = new StatusEffect(seName, seDuration);
-            }
-            newStatus.SetValue(c, this);
-            AddStatusEffect(newStatus);
-            md.AddStatusEffectDisplay(newStatus);
+                StatusEffect newStatus;
+                if (c != null && c.ID == this.ID && CombatManager.instance.inCombat == true) {
+                    newStatus = new StatusEffect(seName, seDuration + 1);   // status effects proc the same turn they show up, so to keep the duration equal between all characters, add 1 if selfinduced
+                }
+                else {
+                    newStatus = new StatusEffect(seName, seDuration);
+                }
+                newStatus.SetValue(c, this);
+                AddStatusEffect(newStatus);
+                md.AddStatusEffectDisplay(newStatus);
 
-            UpdateStatusEffectValues();
-            md.UpdateTooltip();         // update the tooltip last in case a status effect changes PDEF or MDEF when combined with another
+                UpdateStatusEffectValues();
+                md.UpdateTooltip();         // update the tooltip last in case a status effect changes PDEF or MDEF when combined with another
 
-            if (seName == StatusEffectConstants.STUN) {
-                PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);
-            }
-            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] == false) {
-                if (statusEffects.Count >= 5) {
-                    GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] = true;
-                    EventManager.instance.SetAchievementNotification((int)achievementConstants.ANTIMASKERS);
-                }  
+                if (seName == StatusEffectConstants.STUN) {
+                    PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);
+                }
+                if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] == false) {
+                    if (statusEffects.Count >= 5) {
+                        GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] = true;
+                        EventManager.instance.SetAchievementNotification((int)achievementConstants.ANTIMASKERS);
+                    }  
+                }
             }
         }
 

@@ -101,11 +101,11 @@ namespace Characters {
         /// <param name="minLVL"> Minimum level the character can be (assumed to be current level of the character) </param>
         /// <param name="maxLVL"> Maximum level the character can be </param>
         /// <param name="multiplier"> Bonus multiplier on stats (monsters might have modifiers) </param>
-        public void MultipleLVLUp(int minLVL, int maxLVL, int multiplier) {            
+        public void MultipleLVLUp(int minLVL, int maxLVL) {            
             int gainedLVLs = Random.Range(minLVL, maxLVL + 1) - LVL;
 
             for (int i = 0; i < gainedLVLs; i++) {
-                LVLUp(multiplier);
+                LVLUp();
             }            
         }
 
@@ -113,15 +113,15 @@ namespace Characters {
         /// Levels up the character, raising its stats
         /// </summary>
         /// <param name="multiplier"> Bonus multiplier on stats </param>
-        public virtual void LVLUp(int multiplier = 1) {
+        public virtual void LVLUp() {
             LVL += 1;
-            baseSTR += (int)(LVL * 0.5 + baseSTR * 0.3 * multiplier);
+            baseSTR += (int)(LVL * 0.5 + baseSTR * 0.3);
             STR = baseSTR;
-            baseDEX += (int)(LVL * 0.5 + baseDEX * 0.3 * multiplier);
+            baseDEX += (int)(LVL * 0.5 + baseDEX * 0.3);
             DEX = baseDEX;
-            baseINT += (int)(LVL * 0.5 + baseINT * 0.3 * multiplier);
+            baseINT += (int)(LVL * 0.5 + baseINT * 0.3);
             INT = baseINT;
-            baseLUK += (int)(LVL * 0.5 + baseLUK * 0.3 * multiplier);
+            baseLUK += (int)(LVL * 0.5 + baseLUK * 0.3);
             LUK = baseLUK;
             CalculateStats(true);
         }
