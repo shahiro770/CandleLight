@@ -1996,6 +1996,7 @@ namespace Events {
                 candlesPanel.SetInteractable(true);
                 specialPanel.SetInteractable(true);
                 actionsPanel.SetAllActionsInteractable();
+                actionsPanel.SetToggleButtonInteractable(true);
                 partyPanel.EnableButtons();
                 skillsPanel.SetInteractable(true);
                 itemsTabManager.SetAllButtonsInteractable();
@@ -2011,6 +2012,7 @@ namespace Events {
                 else {
                     actionsPanel.SetAllActionsUninteractable();
                 }
+                actionsPanel.SetToggleButtonInteractable(false);
                 actionsPanel.SetActionsUsable(true);
                 partyPanel.DisableButtons();
                 skillsPanel.SetInteractable(false);

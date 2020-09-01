@@ -370,6 +370,7 @@ namespace PlayerUI {
                     actions[i].SetInteractable(false);  
                 } 
             }
+            toggleButton.interactable = false;
             selectedAction = null;
         }
 
@@ -383,6 +384,7 @@ namespace PlayerUI {
                 } 
             }
             selectedAction = null;
+            SetToggleButtonInteractable(false);
             FadeActions(0);
         }
 
