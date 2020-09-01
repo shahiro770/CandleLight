@@ -257,6 +257,7 @@ namespace Characters {
             string[] textKeys = new string[4] { displayedMonster.monsterSpriteName + "_monster_description", "empty_label", "PDEF_label", "MDEF_label" };
             string[] textAmounts = new string[4] { "", "", displayedMonster.PDEF.ToString(), displayedMonster.MDEF.ToString() };
 
+            t.SetAmountText("subtitle", "LVL_label", displayedMonster.LVL);  // if for some reason the monster levels up
             t.SetAmountTextMultiple("description", textKeys, textAmounts);
         }
 

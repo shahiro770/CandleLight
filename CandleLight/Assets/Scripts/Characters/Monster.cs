@@ -38,6 +38,7 @@ namespace Characters {
         [field: SerializeField] public string monsterDisplayName { get; private set; }  /// <value> Monster name <value>
         [field: SerializeField] public string monsterAI { get; private set; }           /// <value> Monster's behaviour in combat </value>
         [field: SerializeField] public float multiplier { get; private set; }           /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
+        [field: SerializeField] public float difficultyModifier { get; private set; } = 1f;  /// <value> Stat modifier applied based on difficulty </value>
         [field: SerializeField] public int minLVL { get; private set; }                 /// <value> Minimum power level monster can spawn at </param>
         [field: SerializeField] public int maxLVL { get; private set; }                 /// <value> Maximum power level monster can spawn at </param>
         [field: SerializeField] public int bonusPDEF { get; private set; }              /// <value> Bonus PDEF added to the monster's stats </value>
@@ -46,6 +47,7 @@ namespace Characters {
         [field: SerializeField] public int WAX { get; private set; }                    /// <value> WAX monster gives on defeat </value>
         [field: SerializeField] public int dropChance { get; private set; }             /// <value> Chance of monster giving a result </value>
         [field: SerializeField] public int lastAttackIndex { get; set; } = -1;          /// <value> Index of attack last used (-1 if it hasn't attacked yet) </value>
+        [field: SerializeField] public int hardModeAttackIndex { get; set; } = -1;      /// <value> Index of attack that can only be used in hard mode </value>
         [field: SerializeField] public bool isChampion { get; private set; }            /// <value> Flag for when monsterDisplay is done setting properties </value>
         [field: SerializeField] public bool isReady { get; private set; }               /// <value> Flag for when monsterDisplay is done setting properties </value>
 
@@ -71,7 +73,7 @@ namespace Characters {
         /// <param name="monsterReward"> Result from monster dying </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
         string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, int bonusPDEF, int bonusMDEF, Attack[] attacks,
-        int dropChance, Result monsterReward, int championChance) {
+        int hardModeAttackIndex, int dropChance, Result monsterReward, int championChance) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterDisplayName = monsterDisplayName;
@@ -88,6 +90,7 @@ namespace Characters {
             base.Init(minLVL, stats, attacks);  // use minLVL for initialization, will use for scaling up on spawning
             CalculateStats(true);
 
+            this.hardModeAttackIndex = hardModeAttackIndex;
             this.dropChance = dropChance;
             this.multiplier = multiplier;
             this.monsterSize = monsterSize;
@@ -114,16 +117,18 @@ namespace Characters {
         /// </summary>
         /// <param name="setCurrent"> Flag for if CHP and CMP should equal new HP and MP values </param>
         protected override void CalculateStats(bool setCurrent = false) {
-            HP = (int)(STR * 2.25 + DEX * 1.5);
-            MP = (int)(INT * 1.25 + LUK * 0.5);
-            PATK = (int)(STR * 0.65 + DEX * 0.35);  // monsters have better primary scaling on PATK and MATK than players
-            MATK = (int)(INT * 0.65 + LUK * 0.35);
-            PDEF = (int)(STR * 0.125 + DEX * 0.075) + bonusPDEF;
-            MDEF = (int)(INT * 0.125 + LUK * 0.075) + bonusMDEF;
-            DOG = (int)(DEX * 0.2 + LUK * 0.1);
+            HP = (int)((STR * 2.25 + DEX * 1.5) * difficultyModifier);
+            MP = (int)((INT * 1.25 + LUK * 0.5) * difficultyModifier);
+            PATK = (int)((STR * 0.65 + DEX * 0.35) * difficultyModifier);  // monsters have better primary scaling on PATK and MATK than players
+            MATK = (int)((INT * 0.65 + LUK * 0.35) * difficultyModifier);
+            PDEF = (int)(((STR * 0.125 + DEX * 0.075) + bonusPDEF) * difficultyModifier);
+            MDEF = (int)(((INT * 0.125 + LUK * 0.075) + bonusMDEF) * difficultyModifier);
+            DOG = (int)((DEX * 0.2 + LUK * 0.1) * difficultyModifier);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             critChance = (int)(LUK * 0.1) + baseCritChance;
             critMult = baseCritMult;
+            burnPlus = false;
+            poisonPlus = false;
             bleedPlus = false;
 
             foreach (StatusEffect se in statusEffects) {
@@ -208,8 +213,8 @@ namespace Characters {
             }
             // it takes 5 LVL 1 enemies for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
-            this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier);  
-            this.WAX = (int)(Mathf.Pow(LVL + 1, 1.65f) * this.multiplier);
+            this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier * (1 / difficultyModifier));  
+            this.WAX = (int)(Mathf.Pow(LVL, 1.65f) * this.multiplier * (1 / difficultyModifier)) + 1;  
 
             md.SetTooltip();
             md.SetHealthBar();
@@ -217,7 +222,9 @@ namespace Characters {
 
         public void GetBuffs(string[] championBuffs) {
             GetBossBuff();
-            GetChampionBuff(championBuffs);
+            if (difficultyModifier >= 1f) {
+                GetChampionBuff(championBuffs);
+            }
             md.UpdateTooltip();
             md.SetHealthBar();
         }
@@ -230,10 +237,15 @@ namespace Characters {
 
                 if (PartyManager.instance.GetHighestPartyMemberLVL() >= LVL) {    // boss levels up if the player is higher LVL than them
                     LVLUp();
+                    if (difficultyModifier == 1f) {
+                        championChance = 100;
+                    }
+                    else {
+                        CalculateStats(true);
+                    }
                 }
             }
         }
-
 
         /// <summary>
         /// Applies a champion buff to a monster at random
@@ -244,8 +256,8 @@ namespace Characters {
 
             if (isChampion == true) {
                 multiplier += 0.5f;
-                this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier);  
-                this.WAX = (int)(Mathf.Pow(LVL + 1, 1.65f) * this.multiplier);
+                this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier * (1 / difficultyModifier));  
+                this.WAX = (int)(Mathf.Pow(LVL + 1, 1.65f) * this.multiplier * (1 / difficultyModifier)); 
                 monsterReward.UpgradeResult();
                 dropChance = 100;
 
@@ -284,6 +296,25 @@ namespace Characters {
                             md.AddStatusEffectDisplay(newStatus);
                             break;
                         }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Applies changes to a monster based on the game's difficulty
+        /// </summary>
+        public void ApplyDifficultyChanges() {
+            if (GameManager.instance.difficultyModifier == 0.75f) {
+                if (monsterNameID != "TutorialGreyhide 1 1") {  // tutorial greyhide needs 10 hp for tutorial to complete properly
+                    difficultyModifier = 0.75f;
+                    if (hardModeAttackIndex != -1) {
+                        for (int i = hardModeAttackIndex; i < attacks.Length - 1; i++) {
+                            attacks[i] = attacks[i + 1];
+                        }
+                    }
+                    md.SetMonsterAnimatorClips();
+                    attackNum--;
+                    CalculateStats(true);
                 }
             }
         }

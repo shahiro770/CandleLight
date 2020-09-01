@@ -154,6 +154,7 @@ namespace Combat {
             monsterComponent.ID = countID++;
             monsterComponent.turnCounter = 0;
             monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
+            monsterComponent.ApplyDifficultyChanges(); 
             monsterComponent.GetBuffs(championBuffs);
             monsterComponent.md.AddSMDListener(smd);
             monsterComponent.md.SetAlternateColourBlock();

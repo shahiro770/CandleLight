@@ -10,6 +10,7 @@
 
 using Audio;
 using GameManager = General.GameManager;
+using Menus.ClassSelectMenu;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
@@ -20,6 +21,7 @@ namespace Menus.MainMenu {
         
         public ParticleSystem ps;
         public Button continueButton;
+        public ClassSelectMenu.ClassSelectMenu csm;
 
         private Color defaultColour = new Color32(230, 126, 34, 255);
 
@@ -48,7 +50,7 @@ namespace Menus.MainMenu {
         public void ContinueGame() {
             string path = Application.persistentDataPath + "/save.cndl";
             if (File.Exists(path)) {
-                GameManager.instance.LoadGame();
+                GameManager.instance.LoadRunData();
             }
         }
 

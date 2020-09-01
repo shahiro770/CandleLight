@@ -1320,6 +1320,7 @@ MonoBehaviour:
     WAXobtained: 0
     totalEvents: 0
     subAreaResets: 0
+    isHardMode: 0
   achievementSprites: []
   areaName: GreyWastes
   canvasWidth: 960
@@ -1330,6 +1331,7 @@ MonoBehaviour:
   enemiesKilled: 0
   WAXobtained: 0
   totalEvents: 0
+  isHardMode: 0
   tutorialTriggers: 01010101010101010101
   achievementsUnlocked: 00000000000000000000
 --- !u!4 &1827646565

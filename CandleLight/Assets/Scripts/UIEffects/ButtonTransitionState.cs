@@ -118,6 +118,46 @@ namespace UIEffects {
         }
 
         /// <summary>
+        /// Sets the colour block of the button depending on the type, using ints for marginally faster times
+        /// </summary>
+        /// <param name="type"> String indicating which colour to become the normal colour </param>
+        public void SetColor(int type) {
+            if (b == null) {                // hack because for skillDisplays, awake doesn't happen in time
+                b = GetComponent<Button>();
+            }
+            if (type == 0) {     
+                b.colors = normalBlock;
+            }
+            else if (type == 1) { 
+                b.colors = naBlock0;
+            }
+            else if (type == 2) { 
+                b.colors = naBlock1;
+            }
+            else if (type == 3) { 
+                b.colors = naBlock2;
+            }
+            else if (type == 4) { 
+                b.colors = naBlock3;
+            }
+            else if (type == 5) { 
+                b.colors = naBlock4;
+            }
+            else if (type == 6) {
+                b.colors = highlightedBlock;
+            }
+            else if (type == 7) {
+                b.colors = pressedBlock;
+            }
+            else if (type == 8) {
+                b.colors = disabledBlock;
+            } 
+            else {
+                Debug.LogError("Invalid button colour type");
+            }
+        }
+
+        /// <summary>
         /// Sets a state's colour block to an inputted colour block
         /// </summary>
         /// <param name="blockType"> Which block to change </param>

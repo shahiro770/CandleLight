@@ -81,13 +81,15 @@ namespace Menus.GameOverMenu {
             timeAmount.SetText(timeString);
             scoreAmount.SetText(CalculateScore().ToString());
 
-            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] == false && isWin == true) {
+            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] == false && isWin == true
+            && GameManager.instance.difficultyModifier == 1f) {
                 string[] partyComp = PartyManager.instance.GetPartyCompositionSorted();
-                for (int i = 0 ; i < GameManager.instance.partyCombos.Length; i++) {
+                for (int i = 0; i < GameManager.instance.partyCombos.GetLength(0); i++) {
                     bool match = true;
                     for (int j = 0; j < partyComp.Length; j++) {
                         if (GameManager.instance.partyCombos[i,j] != partyComp[j]) {
                             match = false;
+                            break;
                         } 
                     }
                     if (match == true) {
@@ -95,17 +97,18 @@ namespace Menus.GameOverMenu {
                         break;
                     }
                 }
-                for (int i = 0 ; i < GameManager.instance.partyCombos.Length; i++) {
+                for (int i = 0 ; i < GameManager.instance.partyCombos.GetLength(0); i++) {
                     if (GameManager.instance.partyCombos[i, 0] != null) {
                         break;
                     }
-                    else if (i == GameManager.instance.partyCombos.Length - 1) {
+                    else if (i == GameManager.instance.partyCombos.GetLength(0) - 1) {
                         GameManager.instance.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] = true;
                         EventManager.instance.SetAchievementNotification((int)achievementConstants.ABSOLUTEMASTERY, true);
                     }
                 }  
             }
-            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] == false && isWin == true) {
+            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] == false && isWin == true 
+            && GameManager.instance.difficultyModifier == 1f) {
                 if (TimeSpan.FromSeconds(GameManager.instance.timeTaken).TotalSeconds < 720) {
                     print(TimeSpan.FromSeconds(GameManager.instance.timeTaken).TotalSeconds);
                     GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] = true;
@@ -122,7 +125,10 @@ namespace Menus.GameOverMenu {
         /// <returns></returns>
         private int CalculateScore() {
             int score = GameManager.instance.enemiesKilled * 10 + GameManager.instance.WAXobtained * 20 + GameManager.instance.totalEvents * 5;
-            if (isWin == true) {
+            if (isWin) {
+                score += 1000;
+            }
+            if (GameManager.instance.difficultyModifier == 1f) {
                 score *= 2;
             }
 

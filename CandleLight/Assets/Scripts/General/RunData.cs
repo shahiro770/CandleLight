@@ -3,7 +3,7 @@
 * Author: Shahir Chowdhury
 * Date: February 11, 2019
 * 
-* The SaveData class is used to store information needed to start the game relative to where the player left off. 
+* The RunData class is used to store information needed to start the game relative to where the player left off. 
 *
 */
 
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace General {
 
     [System.Serializable]
-    public class SaveData {
+    public class RunData {
 
         public PartyMemberData[] partyMemberDatas;
         public ItemData[] spareGear;
@@ -31,10 +31,11 @@ namespace General {
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public int subAreaResets = 0;                   /// <value> Number of times player has quit out to the main menu </value>
+        public float difficultyModifier;                         /// <value> True if in hard mode, false otherwise</value>
 
-        public SaveData(PartyMemberData[] partyMemberDatas, int WAX, ItemData[] spareGear, ItemData[] spareCandles, ItemData[] spareSpecials, 
+        public RunData(PartyMemberData[] partyMemberDatas, int WAX, ItemData[] spareGear, ItemData[] spareCandles, ItemData[] spareSpecials, 
         string[][] questData, int areaProgress, bool[] tutorialTriggers, int enemiesKilled, int WAXObtained, int totalEvents, 
-        float elapsedTime, List<int> midPoints, int subAreaResets) {
+        float elapsedTime, List<int> midPoints, int subAreaResets, float difficultyModifier) {
             this.partyMemberDatas = partyMemberDatas;
             this.WAX = WAX;
             this.spareGear = spareGear;
@@ -49,6 +50,7 @@ namespace General {
             this.elapsedTime = elapsedTime;
             this.midPoints = midPoints;
             this.subAreaResets = subAreaResets;
+            this.difficultyModifier = difficultyModifier;
         }
     }
 }

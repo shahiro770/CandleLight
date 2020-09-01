@@ -64,7 +64,7 @@ namespace Events {
 
         public Special strangeBottle;       /// <value> Penultimate item to the plot is placed in the player's inventory at the start </value>
         public int subAreaProgress { get; private set; } = 0;   /// <value> When subareaProgress = 100, player is given the next event from the area </value>
-        public string simEvent = ""; /// <value> event that when changed from the editor will be seen next if its in the subArea </value>
+        public string simEvent = "";        /// <value> event that when changed from the editor will be seen next if its in the subArea </value>
 
         private Area currentArea;            /// <value> Area to select subAreas from </value>
         private SubArea currentSubArea;      /// <value> SubArea to select events from </value>
@@ -879,6 +879,9 @@ namespace Events {
                         for (int j = 0; j < candleNum; j++) {
                             if (subAreaCandles[j].nameID == specificItemName) {
                                 items.Add(new Candle(subAreaCandles[j]));
+                                if (GameManager.instance.difficultyModifier == 0.75f) {
+                                    items[i].effects[1] = "none";   // on normal mode, champion monsters cannot spawn
+                                }
                                 break;
                             }
                         }
@@ -967,7 +970,8 @@ namespace Events {
                 }
                 else {
                     int stat = PartyManager.instance.GetPrimaryStatAll(i.checkIndicator) + (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f);
-                    int threshold = (int)Random.Range(i.statThreshold * 0.6f, i.statThreshold * 1.3f);
+                    int threshold = (int)(Random.Range(i.statThreshold * 0.6f, i.statThreshold * 1.3f) * GameManager.instance.difficultyModifier);
+
                     if (stat >= threshold) {
                         currentResult = i.GetResult(0); // good result
                         SetStatCheckNotification(true, i.checkIndicator, stat, threshold);
@@ -2110,11 +2114,12 @@ namespace Events {
         /// Save all data relevant to continuing a playthrough at a later time
         /// </summary>
         public void SaveGame() {
-            SaveData data = new SaveData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
+            RunData data = new RunData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
             gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
             infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
-            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1);
-            GameManager.instance.SaveGame(data);
+            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1,
+            GameManager.instance.difficultyModifier);
+            GameManager.instance.SaveRunData(data);
 
             GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
             GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);

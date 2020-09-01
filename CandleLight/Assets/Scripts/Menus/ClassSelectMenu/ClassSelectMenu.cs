@@ -16,7 +16,6 @@ using General;
 using Party;
 using UIEffects;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Menus.ClassSelectMenu {
@@ -25,16 +24,15 @@ namespace Menus.ClassSelectMenu {
     
         /* external component references */
         public Button selectButton;                 /// <value> Confirmation button  </value>
-        public Button firstToSelect;                /// <value> First button to select on enabling </value>
         public Button selectedCompButton;           /// <value> Currently selected composition button </value>
         public ButtonTransitionState sbBts;         /// <value> Confirmation button's visual state controller </value>   
         public ButtonTransitionState[] classBtss;   /// <value> List of all class buttons </value>
         public ButtonTransitionState[] compBtss;    /// <value> List of all composition buttons </value>
         public ClassInfo classInfo;                 /// <value> Displays information of a class </value>
+        public DifficultyMenu difficultyMenu;
         public SpriteRenderer[] compSprites;        /// <value> Sprites currently visible in the composition buttons </value>
         public ParticleSystem ps;
 
-        private EventSystem es;                     /// <value> eventSystem reference </value>
         private Color defaultColour = new Color32(230, 126, 34, 255);
         private Color warriorColour = new Color32(189, 29, 0, 255);
         private Color mageColour = new Color32(0, 152, 220, 255);
@@ -45,7 +43,8 @@ namespace Menus.ClassSelectMenu {
         private Sprite archerIcon;
         private Sprite rogueIcon;
        
-        private string[] partyComposition;    /// <value> </value>  
+        public string[] partyComposition;    /// <value> </value>  
+        
         private int compIndex = 0;
         private int numPartyMembers = 0;
         private bool selectButtonEnabled = false;   /// <value> Select button will only move to next scene if a class is selected </value>
@@ -54,8 +53,6 @@ namespace Menus.ClassSelectMenu {
         /// Awake to intialize eventSystem and select button's alternate colour blocks
         /// </summary> 
         void Awake() {
-            es = EventSystem.current;
-
             ColorBlock sbEnabledBlock = selectButton.colors; 
             ColorBlock btsPressedBlock = selectButton.colors;   // arbitrary, just need a color block
             ColorBlock btsNormalBlock = selectButton.colors;    // arbitrary, just need a color block
@@ -89,25 +86,30 @@ namespace Menus.ClassSelectMenu {
         /// OnEnable to select first class button and revert previous selections due to switching menus
         /// </summary> 
         void OnEnable() {
-            partyComposition = new string[] {"", ""};
-            numPartyMembers = 0;
-            compIndex = 0;
+            if (difficultyMenu.partyComposition.Length == 0) {  // inactive difficultyMenu does not call awake, hence its partyComposition is a string array length 0
+                partyComposition = new string[] {"", ""};
+                numPartyMembers = 0;
+                compIndex = 0;
 
-            foreach (ButtonTransitionState bts in compBtss) {
-                bts.SetColor("normal");
+                foreach (ButtonTransitionState bts in compBtss) {
+                    bts.SetColor("normal");
+                }
+                foreach (ButtonTransitionState bts in classBtss) {
+                    bts.SetColor("normal");
+                }
+                foreach (SpriteRenderer sr in compSprites) {
+                    sr.sprite = null;
+                }
+                
+                SelectCompositionButton(compIndex);
+                
+                classInfo.SetClassInfo("");
+                if (selectButtonEnabled) {
+                    SetSelectButtonEnabled(false);
+                }
             }
-            foreach (ButtonTransitionState bts in classBtss) {
-                bts.SetColor("normal");
-            }
-            foreach (SpriteRenderer sr in compSprites) {
-                sr.sprite = null;
-            }
-            
-            SelectCompositionButton(compIndex);
-            
-            classInfo.SetClassInfo("");
-            if (selectButtonEnabled) {
-                SetSelectButtonEnabled(false);
+            else {
+                difficultyMenu.partyComposition = new string[0];
             }
         }
 

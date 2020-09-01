@@ -42,7 +42,7 @@ namespace General {
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
         public GeneralSaveData gsData;                  /// <value> Data that cannot be cleared after a run ends </value>
-        public SaveData data;                           /// <value> Data that was loaded from a save file regarding a run </value>
+        public RunData data;                            /// <value> Data that was loaded from a save file regarding a run </value>
         public Sprite[] achievementSprites;             /// <value> Sprite array for all achievement sprites (loaded here cause both area and mainMenu need this) </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
         public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
@@ -50,6 +50,7 @@ namespace General {
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code </value>
         public float animationSpeed;                    /// <value> Value that alters the speed of animations </value>
         public float timeTaken = -1;                    /// <value> Time spent on the most recent run (-1 means run ended in a loss) </value>
+        public float difficultyModifier;                /// <value> Game's difficulty modifier (changes various things) </value>
         public int enemiesKilled = 0;                   /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
@@ -130,7 +131,7 @@ namespace General {
         /// Saves the game's data
         /// </summary>
         /// <param name="data"></param>
-        public void SaveGame(SaveData data) {
+        public void SaveRunData(RunData data) {
             BinaryFormatter formatter  = new BinaryFormatter();
             string path = Application.persistentDataPath + "/save.cndl";
             FileStream s = new FileStream(path, FileMode.Create);
@@ -154,6 +155,7 @@ namespace General {
                 }
             }
             gsData.pastItemData = pastItemData;
+            gsData.difficultyModifier = difficultyModifier;
             if (this.gsData.mostEnemies < enemiesKilled) {
                 gsData.mostEnemies = enemiesKilled;
             }
@@ -194,16 +196,18 @@ namespace General {
         /// <remark>
         /// Cannot load game if in tutorial
         /// </remark>
-        public void LoadGame() {
+        public void LoadRunData() {
             string path = Application.persistentDataPath + "/save.cndl";
             if (File.Exists(path)) {
                 BinaryFormatter formatter  = new BinaryFormatter();
                 FileStream s = new FileStream(path, FileMode.Open);
 
-                data = formatter.Deserialize(s) as SaveData;
+                data = formatter.Deserialize(s) as RunData;
+                print(data.elapsedTime);
                 s.Close();
 
                 tutorialTriggers = data.tutorialTriggers;
+                difficultyModifier = data.difficultyModifier;
                 PartyManager.instance.LoadData(data);
                 
                 StartLoadNextScene("area");
@@ -232,6 +236,7 @@ namespace General {
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
+                difficultyModifier = gsData.difficultyModifier;
                 if (gsData.pastItemData != null) {
                     if (gsData.pastItemData.type == ItemConstants.GEAR) {
                         pastItem = new Gear(gsData.pastItemData);
@@ -247,7 +252,7 @@ namespace General {
             else {  // default settings on first load, or if generalSAveData non existance
                 gsData = new GeneralSaveData(null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), null,
-                false, 1f, 0.5f, 1f, 0, 0, 0, -1);
+                false, 1f, 0.35f, 1f, 0.75f, 0, 0, 0, -1);
                 tutorialTriggers = gsData.tutorialTriggers;
                 achievementsUnlocked = gsData.achievementsUnlocked;
                 partyCombos = new string[,] { 
@@ -267,6 +272,7 @@ namespace General {
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
+                difficultyModifier = gsData.difficultyModifier;
                 pastItem = null;
 
                 SaveGeneralData(gsData);

@@ -159,6 +159,7 @@ namespace PlayerUI {
             achievementIcon.color = GetAchievementColor(index);
             if (isHighLayer == true) {
                 c.sortingOrder = 6;
+                achievementIcon.sortingOrder = 7;
             }
 
             b.interactable = false;
@@ -303,6 +304,7 @@ namespace PlayerUI {
 
             if (targetAlpha == 0) {
                 flameAnimator.gameObject.SetActive(true);
+                achievementIcon.sortingOrder = 5;
                 achievementIcon.gameObject.SetActive(false);
                 c.sortingOrder = 4;
                 flameAnimator.SetTrigger("normal");

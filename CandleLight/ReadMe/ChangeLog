@@ -173,12 +173,17 @@ Bug: Who is Heidi doesn't generate items in second area
 Fix: Colour all of the status effects in skills
 Fix: Make boss level up if player is same level, EXP curve nerfed from 2.21 to 2.35 (makes later levels much longer), champion monsters now give 50% less EXP (but now more WAX)
 Fix: All monsters give a little more WAX
+Feature: Normal/hard mode
+Bug: Fix tutorial greyhide for normal mode
 
+Verify: All Achievements are working (so far only know about 3)
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
 Bug: One of the dialogue prompts is 3 lines
 CRITICAL BUG: Player dies from random event doesn't trigger death check
-Feature: Normal/hard mode
+CRITICAL BUG: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
+Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
+Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 
 NEAR FUTURE
 ----------------

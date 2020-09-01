@@ -106,7 +106,8 @@ namespace Characters {
 
             for (int i = 0; i < gainedLVLs; i++) {
                 LVLUp();
-            }            
+            }    
+            CalculateStats(true);        
         }
 
         /// <summary>
@@ -123,7 +124,6 @@ namespace Characters {
             INT = baseINT;
             baseLUK += (int)(LVL * 0.5 + baseLUK * 0.3);
             LUK = baseLUK;
-            CalculateStats(true);
         }
 
         /// <summary>

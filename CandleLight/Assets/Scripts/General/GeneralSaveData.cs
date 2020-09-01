@@ -20,6 +20,7 @@ namespace General {
         public bool[] achievementsUnlocked;
         public string[,] partyCombos;
         public bool isTimer;
+        public float difficultyModifier;
         public float animationSpeed;
         public float bgmVolume;
         public float sfxVolume;
@@ -27,9 +28,10 @@ namespace General {
         public int mostWAX;
         public int mostEvents;
         public float fastestTime;
-       
+
+        // some values are defaulted just cause they'll be swapped with more logic in gameManager anyways
         public GeneralSaveData(ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool[] achievementsUnlocked, string[,] partyCombos, bool isTimer, 
-        float animationSpeed, float bgmVolume, float sfxVolume, int mostEnemies = -1, int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
+        float animationSpeed, float bgmVolume, float sfxVolume, float difficultyModifier = 0.75f, int mostEnemies = -1, int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
             this.hsds = hsds;
             this.tutorialTriggers = tutorialTriggers;
             this.achievementsUnlocked = achievementsUnlocked;
@@ -39,6 +41,7 @@ namespace General {
             this.animationSpeed = animationSpeed;
             this.bgmVolume = bgmVolume;
             this.sfxVolume = sfxVolume;
+            this.difficultyModifier = difficultyModifier;
             this.mostEnemies = mostEnemies;
             this.mostWAX = mostWAX;
             this.mostEvents = mostEvents;

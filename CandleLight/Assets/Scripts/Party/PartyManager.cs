@@ -188,7 +188,7 @@ namespace Party {
         /// Load partymanager specific values from saveData
         /// </summary>
         /// <param name="data"></param>
-        public void LoadData(SaveData data) {
+        public void LoadData(RunData data) {
             WAX = data.WAX;
             ID = 0;
             for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
