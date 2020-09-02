@@ -122,9 +122,14 @@ namespace Menus.OptionsMenu {
             int currentResolutionIndex = 0;
 
             for (int i = 0; i < resolutions.GetLength(0); i++) {
-                resolutionOptions.Add(resolutions[i, 0] + " x " + resolutions[i, 1]);
-                if (resolutions[i, 0] == GameManager.instance.resolutionWidth && resolutions[i, 1] == GameManager.instance.resolutionHeight) {
-                    currentResolutionIndex = i;
+                if (resolutions[i, 0] <= Screen.resolutions[Screen.resolutions.Length - 1].width && resolutions[i, 1] <= Screen.resolutions[Screen.resolutions.Length - 1].height) {
+                    resolutionOptions.Add(resolutions[i, 0] + " x " + resolutions[i, 1]);
+                    if (resolutions[i, 0] == GameManager.instance.resolutionWidth && resolutions[i, 1] == GameManager.instance.resolutionHeight) {
+                        currentResolutionIndex = i;
+                    }
+                }
+                else {
+                    break;
                 }
             }
             
@@ -192,6 +197,9 @@ namespace Menus.OptionsMenu {
             tipstt.SetVisible(false);
             animationSpeedtt.SetVisible(false);
             timertt.SetVisible(false);
+            fullscreentt.SetVisible(false);
+            resolutiontt.SetVisible(false);
+            
             GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked, 
             GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume,
             GameManager.instance.isFullscreen, GameManager.instance.resolutionWidth, GameManager.instance.resolutionHeight);

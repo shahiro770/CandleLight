@@ -16,7 +16,7 @@ PlayerSettings:
   productName: CandleLight
   defaultCursor: {fileID: 2800000, guid: 67f5fe6a328b94fc2a57da52a2d3d40e, type: 3}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_SplashScreenBackgroundColor: {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
@@ -115,7 +115,7 @@ PlayerSettings:
   m_SupportedAspectRatios:
     4:3: 0
     5:4: 0
-    16:10: 0
+    16:10: 1
     16:9: 1
     Others: 0
   bundleVersion: 0.1.4

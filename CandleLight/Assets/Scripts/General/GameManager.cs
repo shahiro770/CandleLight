@@ -42,7 +42,6 @@ namespace General {
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
         public GeneralSaveData gsData;                  /// <value> Data that cannot be cleared after a run ends </value>
-        public LetterBoxer lb;                          /// <value> Letter boxes the game </value>
         public RunData data;                            /// <value> Data that was loaded from a save file regarding a run </value>
         public Sprite[] achievementSprites;             /// <value> Sprite array for all achievement sprites (loaded here cause both area and mainMenu need this) </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
@@ -70,9 +69,7 @@ namespace General {
         /// <summary>
         /// Awake to instantiate singleton
         /// </summary> 
-        void Awake() { 
-            Application.targetFrameRate = 60;
-
+        void Awake() {
             if (instance == null) {
                 instance = this;
             }
@@ -91,6 +88,7 @@ namespace General {
         /// Load in general data after all relevant gameobjects have woke up
         /// </summary>
         void Start() {
+            Application.targetFrameRate = 60;
             LoadAchievementSprites();
             LoadGeneralData();
         }
@@ -284,9 +282,29 @@ namespace General {
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
                 
                 // get and save the initial resolution the app will play at, being full screen by defaultt
-                Resolution[] resolutions = Screen.resolutions;
-                gsData.resolutionWidth = 1920; 
-                gsData.resolutionHeight = 1080;
+                int[ , ] resolutions = new int[,] {
+                    { 960, 540 }, 
+                    { 1024, 576 }, 
+                    { 1152, 648 }, 
+                    { 1280, 720 }, 
+                    { 1366, 768 }, 
+                    { 1600, 900 }, 
+                    { 1920, 1080 }, 
+                    { 2560, 1440 },
+                    { 3840, 2160 }, 
+                };
+                for (int i = 1; i < resolutions.GetLength(0); i++) {
+                    if (Screen.resolutions[Screen.resolutions.Length - 1].width <= resolutions[i, 0] && Screen.resolutions[Screen.resolutions.Length - 1].height <= resolutions[i, 1]) {
+                        gsData.resolutionWidth = resolutions[i - 1, 0]; 
+                        gsData.resolutionHeight = resolutions[i - 1, 1]; 
+                        break;
+                    }  
+                    else if (i == resolutions.GetLength(0) - 1) {
+                        gsData.resolutionWidth = resolutions[resolutions.Length - 1, 0];
+                        gsData.resolutionHeight = resolutions[resolutions.Length - 1, 1];
+                    }
+                }
+
                 resolutionWidth = gsData.resolutionWidth;
                 resolutionHeight = gsData.resolutionHeight;
                 Screen.fullScreen = gsData.isFullscreen;
