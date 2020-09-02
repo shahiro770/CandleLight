@@ -121,8 +121,8 @@ namespace Characters {
             MP = (int)((INT * 1.25 + LUK * 0.5) * difficultyModifier);
             PATK = (int)((STR * 0.65 + DEX * 0.35) * difficultyModifier);  // monsters have better primary scaling on PATK and MATK than players
             MATK = (int)((INT * 0.65 + LUK * 0.35) * difficultyModifier);
-            PDEF = (int)(((STR * 0.125 + DEX * 0.075) + bonusPDEF) * difficultyModifier);
-            MDEF = (int)(((INT * 0.125 + LUK * 0.075) + bonusMDEF) * difficultyModifier);
+            PDEF = (int)(((STR * 0.15 + DEX * 0.075) + bonusPDEF) * difficultyModifier);
+            MDEF = (int)(((INT * 0.15 + LUK * 0.075) + bonusMDEF) * difficultyModifier);
             DOG = (int)((DEX * 0.2 + LUK * 0.1) * difficultyModifier);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             critChance = (int)(LUK * 0.1) + baseCritChance;

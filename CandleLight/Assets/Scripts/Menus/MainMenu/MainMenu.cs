@@ -22,10 +22,13 @@ namespace Menus.MainMenu {
         public ParticleSystem ps;
         public Button continueButton;
         public ClassSelectMenu.ClassSelectMenu csm;
+        public Canvas sceneCanvas;
 
         private Color defaultColour = new Color32(230, 126, 34, 255);
 
         void Start() {
+            Camera mainCamera = Camera.main;
+            sceneCanvas.worldCamera = mainCamera;
             AudioManager.instance.PlayBGM("mainMenu");
         }
 

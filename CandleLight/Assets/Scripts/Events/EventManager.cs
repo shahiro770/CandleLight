@@ -411,7 +411,7 @@ namespace Events {
                 EquipPartyItems();
                 AddQuestNoNotification(mainQuestName, "", "");  // main story quest (TODO: Make this a constant?)
                 currentEvent = currentSubArea.GetEvent(areaProgress);
-                SaveGame();
+                SaveRunAndGeneralData();
                 StartCoroutine(DisplayEvent());
             }
         }
@@ -639,7 +639,7 @@ namespace Events {
             PlaySubAreaBGM();
             AlterParticleSystem();
             infoPanel.UpdateSubAreaCard(currentArea.GetSubAreaCard(0), currentArea.name + "0");
-            SaveGame();
+            SaveRunAndGeneralData();
         }
 
         /// <summary>
@@ -2077,7 +2077,8 @@ namespace Events {
             Time.timeScale = 1;
             PartyManager.instance.ResetGame();
             GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
-            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
+            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume,
+            GameManager.instance.isFullscreen, GameManager.instance.resolutionWidth, GameManager.instance.resolutionHeight);
             GameManager.instance.SaveGeneralData(gsData);
             GameManager.instance.StartLoadNextScene("MainMenu");
         }
@@ -2115,7 +2116,7 @@ namespace Events {
         /// <summary>
         /// Save all data relevant to continuing a playthrough at a later time
         /// </summary>
-        public void SaveGame() {
+        public void SaveRunAndGeneralData() {
             RunData data = new RunData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
             gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
             infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
@@ -2124,7 +2125,8 @@ namespace Events {
             GameManager.instance.SaveRunData(data);
 
             GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
-            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume);
+            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume,
+            GameManager.instance.isFullscreen, GameManager.instance.resolutionWidth, GameManager.instance.resolutionHeight);
             GameManager.instance.SaveGeneralData(gsData);
         }
 

@@ -154,9 +154,6 @@ Bug: No save tutorial prompt
 Feature: Added colour coding to interactions
 Feature: Save scum penalty
 Bug: Status effects not saving on load
-
-JUST FINISHED
--------------
 Fix: Added flee chance bonus for each failed flee attempt
 Feature: Added stat check toast notifications
 Fix: Notificaitons now last slightly longer
@@ -165,9 +162,8 @@ Feature: Add achievements
 Feature: Added attacks swap int option
 Bug: Achievement icon is hidden in toast
 
-COOKING
--------
-Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
+JUST FINISHED
+-------------
 Bug: too many status effects go right
 Bug: Who is Heidi doesn't generate items in second area
 Fix: Colour all of the status effects in skills
@@ -175,8 +171,16 @@ Fix: Make boss level up if player is same level, EXP curve nerfed from 2.21 to 2
 Fix: All monsters give a little more WAX
 Feature: Normal/hard mode
 Bug: Fix tutorial greyhide for normal mode
+Verify: All Achievements are working
 
-Verify: All Achievements are working (so far only know about 3)
+COOKING
+-------
+Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
+Bug: Loading on a build has some awkward pause to it
+Bug: In run options is missing resolution settings
+Bug: Game doesn't start in full screen on first launch
+Bug: See what the computer's highest supported resolution is, then choose the highest possible 16:9 on launch
+
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
 Bug: One of the dialogue prompts is 3 lines

@@ -42,6 +42,7 @@ namespace General {
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
         public GeneralSaveData gsData;                  /// <value> Data that cannot be cleared after a run ends </value>
+        public LetterBoxer lb;                          /// <value> Letter boxes the game </value>
         public RunData data;                            /// <value> Data that was loaded from a save file regarding a run </value>
         public Sprite[] achievementSprites;             /// <value> Sprite array for all achievement sprites (loaded here cause both area and mainMenu need this) </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
@@ -50,12 +51,15 @@ namespace General {
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code </value>
         public float animationSpeed;                    /// <value> Value that alters the speed of animations </value>
         public float timeTaken = -1;                    /// <value> Time spent on the most recent run (-1 means run ended in a loss) </value>
+        public int resolutionWidth;
+        public int resolutionHeight;
         public float difficultyModifier;                /// <value> Game's difficulty modifier (changes various things) </value>
         public int enemiesKilled = 0;                   /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public bool[] tutorialTriggers;                 /// <value> List of tutorials/tips that have yet to be triggered (true if not yet triggered) </value>
         public bool[] achievementsUnlocked;             /// <value> List of achievements not yet unlocked (false if not unlocked)</value>
+        public bool isFullscreen;                       /// <value> </value>
         public string[,] partyCombos;                   /// <value> List of party combinations player has yet to clear the game with </value>
 
         private string activeScene = "Game";            /// <value> Current scene being displayed </value>
@@ -236,6 +240,12 @@ namespace General {
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
+                isFullscreen = gsData.isFullscreen;
+                Screen.fullScreen = isFullscreen;
+                resolutionWidth = gsData.resolutionWidth;
+                resolutionHeight = gsData.resolutionHeight;
+                Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+
                 difficultyModifier = gsData.difficultyModifier;
                 if (gsData.pastItemData != null) {
                     if (gsData.pastItemData.type == ItemConstants.GEAR) {
@@ -252,7 +262,7 @@ namespace General {
             else {  // default settings on first load, or if generalSAveData non existance
                 gsData = new GeneralSaveData(null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), null,
-                false, 1f, 0.35f, 1f, 0.75f, 0, 0, 0, -1);
+                false, 1f, 0.35f, 1f, true, 1, 1, 0.75f, 0, 0, 0, -1);
                 tutorialTriggers = gsData.tutorialTriggers;
                 achievementsUnlocked = gsData.achievementsUnlocked;
                 partyCombos = new string[,] { 
@@ -272,6 +282,16 @@ namespace General {
                 UIManager.instance.isTimer = gsData.isTimer;
                 AudioManager.instance.bgmVolume = gsData.bgmVolume;
                 AudioManager.instance.sfxVolume = gsData.sfxVolume;
+                
+                // get and save the initial resolution the app will play at, being full screen by defaultt
+                Resolution[] resolutions = Screen.resolutions;
+                gsData.resolutionWidth = 1920; 
+                gsData.resolutionHeight = 1080;
+                resolutionWidth = gsData.resolutionWidth;
+                resolutionHeight = gsData.resolutionHeight;
+                Screen.fullScreen = gsData.isFullscreen;
+                Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+
                 difficultyModifier = gsData.difficultyModifier;
                 pastItem = null;
 

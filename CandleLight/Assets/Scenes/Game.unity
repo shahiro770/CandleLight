@@ -498,8 +498,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168779442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.018518519, y: 0.018518519, z: 0.018518519}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.018523023, y: 0.018523023, z: 0.018523023}
   m_Children:
   - {fileID: 1030556619}
   - {fileID: 1070164197}
@@ -511,7 +511,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 960.00006, y: 540}
+  m_SizeDelta: {x: 960, y: 539.8687}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &236172584
 GameObject:
@@ -620,8 +620,8 @@ Camera:
   m_GameObject: {fileID: 588038758}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -1298,13 +1298,18 @@ MonoBehaviour:
     tutorialTriggers: 
     achievementsUnlocked: 
     isTimer: 0
+    isFullscreen: 0
+    difficultyModifier: 0
     animationSpeed: 0
     bgmVolume: 0
     sfxVolume: 0
+    fastestTime: 0
+    resolutionWidth: 0
+    resolutionHeight: 0
     mostEnemies: 0
     mostWAX: 0
     mostEvents: 0
-    fastestTime: 0
+  lb: {fileID: 0}
   data:
     partyMemberDatas: []
     spareGear: []
@@ -1320,7 +1325,7 @@ MonoBehaviour:
     WAXobtained: 0
     totalEvents: 0
     subAreaResets: 0
-    isHardMode: 0
+    difficultyModifier: 0
   achievementSprites: []
   areaName: GreyWastes
   canvasWidth: 960
@@ -1328,12 +1333,15 @@ MonoBehaviour:
   canvasScaleFactor: 53.999992
   animationSpeed: 0
   timeTaken: -1
+  resolutionWidth: 0
+  resolutionHeight: 0
+  difficultyModifier: 0
   enemiesKilled: 0
   WAXobtained: 0
   totalEvents: 0
-  isHardMode: 0
   tutorialTriggers: 01010101010101010101
   achievementsUnlocked: 00000000000000000000
+  isFullscreen: 0
 --- !u!4 &1827646565
 Transform:
   m_ObjectHideFlags: 0
