@@ -36,6 +36,7 @@ namespace Party {
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
         public float WAXDropMultiplier = 1f;    /// <value> Current multiplier on WAX drop amounts from enemies </value>
+        public float EXPmultiplier = 1f;
 
         private List<PartyMember> partyMembersAll = new List <PartyMember>();   /// <value> List containing all partyMembers (alive and dead) </value>
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
@@ -330,11 +331,13 @@ namespace Party {
 
         /// <summary>
         /// Adds a partyMember to the alive list and removes them from the dead list
-        /// </summary>
+        /// TODO: EXPMULTIPLIER needs to be incremented if player can revive in combat
+        /// /// </summary>
         /// <param name="pm"> partyMember object </param>
         public void RegisterPartyMemberAlive(PartyMember pm) {
             partyMembersAlive.Add(pm);
             partyMembersDead.Remove(pm);
+
         }
 
         /// <summary>
@@ -347,6 +350,7 @@ namespace Party {
                 partyMembersDead.Add(pm);
 
                 pm.RemoveAllStatusEffects();
+                EXPmultiplier += 0.5f;
             }
         }
 
@@ -493,6 +497,7 @@ namespace Party {
                 partyMembersAlive.Add(pm);
             }
             partyMembersDead.Clear();
+            EXPmultiplier = 1f;
         }
 
         /// <summary>

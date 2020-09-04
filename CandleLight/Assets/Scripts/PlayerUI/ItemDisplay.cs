@@ -8,6 +8,7 @@
 *
 */
 
+using GameManager = General.GameManager;
 using ClassConstants = Constants.ClassConstants;
 using Items;
 using ItemConstants = Constants.ItemConstants;
@@ -138,6 +139,9 @@ namespace PlayerUI {
                 return displayedGear.GetTooltipEffectKeys();
             }
             else { //if (displayedItem.type == "candle") {
+                if (GameManager.instance.difficultyModifier == 0.75f) {
+                    return displayedCandle.GetTooltipEffectKeysNoNegative();
+                }
                 return displayedCandle.GetTooltipEffectKeys();
             }
         }

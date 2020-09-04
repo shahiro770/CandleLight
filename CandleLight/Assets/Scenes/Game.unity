@@ -883,6 +883,7 @@ MonoBehaviour:
   bonusChampionChance: 0
   itemDropMultiplier: 1
   WAXDropMultiplier: 1
+  EXPmultiplier: 1
   activePartyMember: {fileID: 0}
 --- !u!1 &1339672354
 GameObject:
@@ -996,14 +997,14 @@ MonoBehaviour:
     volume: 0
     pitch: 0
     loop: 0
-  - name: pathNormalGreyWastes
-    clip: {fileID: 8300000, guid: cb101e1f2bb0342c9bb586a745839970, type: 3}
+  - name: mainMenu
+    clip: {fileID: 8300000, guid: ddfbacb213fc34b83a4ca041e8732994, type: 3}
     source: {fileID: 0}
     volume: 0
     pitch: 0
     loop: 0
-  - name: mainMenu
-    clip: {fileID: 8300000, guid: ddfbacb213fc34b83a4ca041e8732994, type: 3}
+  - name: pathNormalGreyWastes
+    clip: {fileID: 8300000, guid: cb101e1f2bb0342c9bb586a745839970, type: 3}
     source: {fileID: 0}
     volume: 0
     pitch: 0
@@ -1309,7 +1310,6 @@ MonoBehaviour:
     mostEnemies: 0
     mostWAX: 0
     mostEvents: 0
-  lb: {fileID: 0}
   data:
     partyMemberDatas: []
     spareGear: []

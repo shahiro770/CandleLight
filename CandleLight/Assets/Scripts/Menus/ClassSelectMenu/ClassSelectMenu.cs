@@ -241,17 +241,12 @@ namespace Menus.ClassSelectMenu {
         }
 
         /// <summary>
-        /// Starts the game by loading the next world map scene
-        /// </summary> 
-        /// <remark> TODO: World map scene still has to be made </remark>
-        public void BeginGame() {
-            if (selectButtonEnabled) {
-                GameManager.instance.DeleteSaveData();
-                foreach (string pm in partyComposition) {
-                    PartyManager.instance.AddPartyMember(pm);
-                }
-
-                GameManager.instance.StartLoadNextScene("Area");
+        /// Opens the difficulty menu (only possible if select button is enabled)
+        /// </summary>
+        public void OpenDifficultyMenu() {
+            if (selectButtonEnabled == true) {
+                difficultyMenu.gameObject.SetActive(true);
+                gameObject.SetActive(false);
             }
         }
     }

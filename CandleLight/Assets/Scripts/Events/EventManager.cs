@@ -851,6 +851,9 @@ namespace Events {
         /// <param name="r"> Result containing items </param>
         /// <returns> List of items </returns>
         public List<Item> GetResultItems(Result r) {
+            if (GameManager.instance.difficultyModifier == 0.75f) {     // normal mode has worse items
+                r.DowngradeResult();
+            }
             r.GenerateResults();
 
             List<Item> items = new List<Item>();
@@ -879,9 +882,6 @@ namespace Events {
                         for (int j = 0; j < candleNum; j++) {
                             if (subAreaCandles[j].nameID == specificItemName) {
                                 items.Add(new Candle(subAreaCandles[j]));
-                                if (GameManager.instance.difficultyModifier == 0.75f) {
-                                    items[i].effects[1] = "none";   // on normal mode, champion monsters cannot spawn
-                                }
                                 break;
                             }
                         }

@@ -380,6 +380,16 @@ namespace Characters {
                 pmdPartyPanel.UpdateStatsPanel();
             }
             UpdateHPAndMPBars();
+            UpdateCombatActions();
+        }
+
+        /// <summary>
+        /// Tell actions panel to update displayed combat actions
+        /// </summary>
+        public void UpdateCombatActions() {
+            if (actionsPanel != null) {
+                actionsPanel.UpdateCombatActions(pm);
+            }
         }
 
         /// <summary>

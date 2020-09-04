@@ -161,9 +161,6 @@ Feature: Added options button
 Feature: Add achievements
 Feature: Added attacks swap int option
 Bug: Achievement icon is hidden in toast
-
-JUST FINISHED
--------------
 Bug: too many status effects go right
 Bug: Who is Heidi doesn't generate items in second area
 Fix: Colour all of the status effects in skills
@@ -173,14 +170,31 @@ Feature: Normal/hard mode
 Bug: Fix tutorial greyhide for normal mode
 Verify: All Achievements are working
 
+JUST FINISHED
+-------------
+Bug: See what the computer's highest supported resolution is, then choose the highest possible 16:9 on launch
+Bug: Options menu in game was missing option colouring
+    1) start game
+    2) Click in help menu
+    3) Open options
+    (PROBABLY CAUSE OF STATUS EFFECTS)
+Fix: Move the resolution option one up
+Bug: Resolution changes in game don't do anything
+Bug: ATtack options not updating when toggling (stats information,avialable slots)
+Balance: Make raw stat items worth more
+Bug: You can start with one character
+Balance: Make it so when another partymember is dead, more exp to survivors
+Balance: Auto downgrade all easy mode weapons
+Bug: Candles on normal mode show champion chance
+
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
-Bug: Loading on a build has some awkward pause to it
-Bug: In run options is missing resolution settings
-Bug: Game doesn't start in full screen on first launch
-Bug: See what the computer's highest supported resolution is, then choose the highest possible 16:9 on launch
+Verify: Loading on a build has some awkward pause to it
 
+Bug: Having a dead party member breaks the game
+
+Feature: Colour difficulty icons
 Bug: Outline is broken on candle swapping
 Fix: Make dialogue prompt rotate
 Bug: One of the dialogue prompts is 3 lines

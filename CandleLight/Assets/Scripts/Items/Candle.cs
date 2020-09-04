@@ -249,6 +249,25 @@ namespace Items {
         }
 
         /// <summary>
+        /// Returns the effect keys in a string array
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetTooltipEffectKeysNoNegative() {
+            string[] effectKeys = new string[effects.Length];
+
+            for (int i = 0; i < effects.Length; i++) {
+                if (i == 2) {
+                     effectKeys[i] = "none_label";
+                }
+                else {
+                     effectKeys[i] = effects[i] + "_label";
+                }
+            }
+
+            return effectKeys;
+        }
+
+        /// <summary>
         /// Returns itemData that is specific for candles
         /// </summary>
         /// <returns></returns>

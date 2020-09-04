@@ -126,10 +126,13 @@ namespace Events {
         }
 
         /// <summary>
-        /// /// Upgrades the result to be higher quality
+        /// Upgrades the result to be higher quality
         /// </summary>
         public void UpgradeResult() {
-            if (itemQuality == "low") {
+            if (itemQuality == "trash") {
+                itemQuality = "low";
+            }
+            else if (itemQuality == "low") {
                 itemQuality = "med";
             }
             else if (itemQuality == "med") {
@@ -137,6 +140,24 @@ namespace Events {
             }
             else if (itemQuality == "high") {
                 itemQuality = "perfect";
+            }
+        }
+
+        /// <summary>
+        /// Downgrades the result to be of lower quality
+        /// </summary>
+        public void DowngradeResult() {
+            if (itemQuality == "low") {
+                itemQuality = "trash";
+            }
+            else if (itemQuality == "med") {
+                itemQuality = "low";
+            }
+            else if (itemQuality == "high") {
+                itemQuality = "med";
+            }
+            else if (itemQuality == "perfect") {
+                itemQuality = "high";
             }
         }
     }

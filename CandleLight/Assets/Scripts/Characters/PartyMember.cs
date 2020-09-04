@@ -315,7 +315,7 @@ namespace Characters {
             DOG = (int)(LUK * 0.2 + DEX * 0.1);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             if (LVL != 0) {
-                critChance = (int)(LUK * 0.1) + baseCritChance;
+                critChance = (int)(LUK * 0.15) + baseCritChance;
             }
             else {
                 critChance = 0; // tutorial prevents crits from the party so all tutorial blurbs can show up
@@ -1261,7 +1261,8 @@ namespace Characters {
                     }
 
                     attackNum++;
-                    
+                    SetAttackValues();
+                    pmvc.UpdateCombatActions();
                     return true;
                 }
             }
@@ -1369,7 +1370,8 @@ namespace Characters {
                             }
                         }
                     }
-
+                    SetAttackValues();
+                    pmvc.UpdateCombatActions();
                     return true;
                 }
                 else if (skills[skills[index].upgradeSkill].skillEnabled == true) { // TODO: Make logic to check if previous skill is enabled
@@ -1420,7 +1422,8 @@ namespace Characters {
                         attacks[i] = attacks[i + 1];
                     }
                     attacks[attackNum] = noneAttack;
-
+                    SetAttackValues();
+                    pmvc.UpdateCombatActions();
                     return true;
                 }
             }
@@ -1526,7 +1529,8 @@ namespace Characters {
                             }
                         }
                     }
-
+                    SetAttackValues();
+                    pmvc.UpdateCombatActions();
                     return true;
                 }
                 else if (skills[skills[index].upgradeSkill].skillEnabled == true) { // TODO: Make logic to check if previous skill is enabled

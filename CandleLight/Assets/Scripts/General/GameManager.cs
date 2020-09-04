@@ -260,7 +260,7 @@ namespace General {
             else {  // default settings on first load, or if generalSAveData non existance
                 gsData = new GeneralSaveData(null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), null,
-                false, 1f, 0.35f, 1f, true, 1, 1, 0.75f, 0, 0, 0, -1);
+                false, 1f, 0.35f, 1f, false, 1, 1, 0.75f, 0, 0, 0, -1);
                 tutorialTriggers = gsData.tutorialTriggers;
                 achievementsUnlocked = gsData.achievementsUnlocked;
                 partyCombos = new string[,] { 
@@ -307,7 +307,7 @@ namespace General {
 
                 resolutionWidth = gsData.resolutionWidth;
                 resolutionHeight = gsData.resolutionHeight;
-                Screen.fullScreen = gsData.isFullscreen;
+                Screen.fullScreen = false;
                 Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
 
                 difficultyModifier = gsData.difficultyModifier;

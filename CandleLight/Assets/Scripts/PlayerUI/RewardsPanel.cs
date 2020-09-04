@@ -99,7 +99,7 @@ namespace PlayerUI {
                         break;
                     }
                 }
-                amountEXP += enemiesKilled[i].EXP;
+                amountEXP += (int)(enemiesKilled[i].EXP * PartyManager.instance.EXPmultiplier);
                 amountWAX += (int)(enemiesKilled[i].WAX * PartyManager.instance.WAXDropMultiplier);
             }
 

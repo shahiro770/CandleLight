@@ -22,9 +22,9 @@
 
 		{ "key": "difficulty_menu_title", "value": "Select your Difficulty" },
 		{ "key": "normal_title", "value": "Normal" },
-		{ "key": "normal_des", "value": "A comfortable journey to explore the game's mechanics.\nRecommended for players new to roguelikes.\nScore Modifier: x1" },
+		{ "key": "normal_des", "value": "A comfortable journey to explore the game's mechanics.\nRecommended for players new to roguelikes.\nScore Modifier: x0.5" },
 		{ "key": "hard_title", "value": "Hard" },
-		{ "key": "hard_des", "value": "Any flicker of hope can be extinguished in an instant.\nThis is the difficulty the game was meant to be played on.\nScore Modifier: x2" },
+		{ "key": "hard_des", "value": "Any flicker of hope can be extinguished in an instant.\nThis is the difficulty the game was meant to be played on.\nScore Modifier: x1" },
 		{ "key": "begin_button", "value": "Begin" },
 
 		{ "key": "sfx_title", "value": "Sound Effects Volume" },

@@ -55,7 +55,10 @@ namespace Items {
             float multiplier;
             int effectIndex = Random.Range(0, effectsNum);
 
-            if (quality == "low") {
+            if (quality == "trash") {   // trash items can only show up on normal difficulty
+                multiplier = 0;
+            }
+            else if (quality == "low") {
                 multiplier = 0.5f;
             }
             else if (quality == "med") {
@@ -72,7 +75,7 @@ namespace Items {
                 if (i == effectIndex && effectsNum > 1 && quality == "med" ) {         // medium quality will have at most 2 random effects
                     effects[i] = "none";
                 }   
-                else if (i != effectIndex && quality == "low") {    // low quality will have 1 random effect
+                else if (i != effectIndex && (quality == "low" || quality == "trash")) {    // low and trash quality will have 1 random effect
                     effects[i] = "none";
                 }
 

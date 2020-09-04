@@ -145,6 +145,7 @@ namespace PlayerUI {
                 actions[i].SetAction(ActionConstants.ATTACK, pm.attacks[i]);
             }
             actions[actions.Length -1].SetAction(ActionConstants.NONE);
+            SetAllActionsInteractable();
         }
 
         /// <summary>
@@ -290,6 +291,13 @@ namespace PlayerUI {
             }
             
             SetAllActionsInteractable();
+        }
+
+        public void UpdateCombatActions(PartyMember pm) {
+            if (isStoringInt == true) {
+                SetCombatActionsNoFifth(pm);
+                CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
+            }
         }
 
         public void SetToggleButtonInteractable(bool value) {
