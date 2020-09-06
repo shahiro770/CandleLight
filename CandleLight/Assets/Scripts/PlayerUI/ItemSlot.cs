@@ -22,7 +22,7 @@ using UnityEngine.UI;
 
 namespace PlayerUI {
 
-    public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+    public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IEndDragHandler {
 
         /* external component references */
         public Panel parentPanel;           /// <value> Reference to the panel that contains this itemSlot </value>
@@ -31,6 +31,7 @@ namespace PlayerUI {
         public ButtonTransitionState bts;   /// <value> Button transisition state </value>
         public GameObject itemDisplayPrefab;    /// <value> ItemDisplay prefab for instantiating itemDisplays </value>
         public ItemDisplay currentItemDisplay;  /// <value> Current itemDisplay held, null if empty </value>
+        public RectTransform rt;            /// <value> Rect transform of this item slot </value>
         public Sprite defaultSprite = null; /// <value> Item sprite to display when no item is held </value>
         public SpriteRenderer defaultSpriteRenderer;   /// <value> Sprite to be displayed in the event no item is held </value>
         public Image imgBackground;         /// <value> Background for image tooltip will be on </value> 
@@ -158,7 +159,7 @@ namespace PlayerUI {
             }
 
             
-            if (direct == false) {
+            if (direct == false && UIManager.instance.hoveredItemSlot == this) {
                 t.SetVisible(true);
             }
         }
@@ -243,7 +244,7 @@ namespace PlayerUI {
                         TakeItem();
                     }
                 }
-            }
+            }   
        }
 
         /// <summary>
@@ -641,13 +642,35 @@ namespace PlayerUI {
 
         public void OnPointerEnter(PointerEventData pointerEventData) {
             if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
+                print(name);
                 t.SetVisible(true);
             }
+            UIManager.instance.hoveredItemSlot = this;
         }
 
         public void OnPointerExit(PointerEventData pointerEventData) {
             if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
                 t.SetVisible(false);
+            }
+            UIManager.instance.hoveredItemSlot = null;
+        }
+
+        public void OnDrag(PointerEventData pointerEventData) {
+            if (currentItemDisplay != null) {
+                OnClick();
+            }
+        }
+        
+        public void OnEndDrag(PointerEventData pointerEventData) {
+            if (UIManager.instance.heldItemDisplay != null) {
+                
+                if (UIManager.instance.hoveredItemSlot != null) {
+                    UIManager.instance.hoveredItemSlot.OnClick();
+                }
+                else {
+                    print(UIManager.instance.heldItemDisplay.parentSlot);
+                    UIManager.instance.heldItemDisplay.parentSlot.OnClick();
+                }
             }
         }
     }

@@ -169,9 +169,6 @@ Fix: All monsters give a little more WAX
 Feature: Normal/hard mode
 Bug: Fix tutorial greyhide for normal mode
 Verify: All Achievements are working
-
-JUST FINISHED
--------------
 Bug: See what the computer's highest supported resolution is, then choose the highest possible 16:9 on launch
 Bug: Options menu in game was missing option colouring
     1) start game
@@ -186,13 +183,28 @@ Bug: You can start with one character
 Balance: Make it so when another partymember is dead, more exp to survivors
 Balance: Auto downgrade all easy mode weapons
 Bug: Candles on normal mode show champion chance
+Balance: Make who is heidi second part harder
+Balance: Make challenger candle 5 patk instead of 3 patk
+Bug: Gameover sprites see through loading screen
+
+JUST FINISHED
+-------------
+Fix: Rename it to casual mode vs normal mode
+Fix: Forgot to colour roots
+UI: Drag and Drop for items
+Consideration: Maybe add "on hit" as a status effect cause 100% is too confusing 
 
 COOKING
 -------
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
 Verify: Loading on a build has some awkward pause to it
+Verify: Having a dead party member breaks the game
 
-Bug: Having a dead party member breaks the game
+Consideration: Figure out how to deal with illiteracy/betrayal
+Fix: Tutorials are skills! still missable, might need to make the window glow
+Fix: Change colour of skill point beside partymember icons so people can see how many skill points per character clearer
+
+UI: Highlight entire row for active party member
 
 Feature: Colour difficulty icons
 Bug: Outline is broken on candle swapping
@@ -215,7 +227,7 @@ UI: Redo main menu art
 Fix: Make it so closing the game also ups the scum checker
 Balance: Reevaluate all interaction thresholds (should be quick)
 Bug: Tooltip dies for absurd unknown reason on rare occasion
-Fix: Drag to item should also work (down press and up press)
+
 
 FUTURE/MAYBE
 ------------
@@ -225,7 +237,7 @@ Bug: Options menu tooltips need to be repositioned
 QOL: Have skills panel swap to active party member with skill points unspecced
 
 Feature: Make click on bag (AND BAG ONLY) do something
-Feature: Make it so dragging an item to an eventDisplay will place the item in an available slot if possible (will help mobile)
+
 UI: Make quest completed notification seperate from normal completition
 Fix: Make it so active skills are greyed out if 4 actives are already selected
 UI: Make status effects do the fade animation monster displays do

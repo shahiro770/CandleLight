@@ -293,6 +293,11 @@ namespace PlayerUI {
             SetAllActionsInteractable();
         }
 
+        /// <summary>
+        /// Update displayed combat actions for when outside of combat and the player is making
+        /// adjustments to their attacks and stats (via the actions panel toggle)
+        /// </summary>
+        /// <param name="pm"></param>
         public void UpdateCombatActions(PartyMember pm) {
             if (isStoringInt == true) {
                 SetCombatActionsNoFifth(pm);

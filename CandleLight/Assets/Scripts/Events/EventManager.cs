@@ -109,6 +109,7 @@ namespace Events {
         private int subAreaResets = 0;          /// <value> Number of times player has tried to save scum the subArea </value>
         private bool isReady = false;           /// <value> Wait until EventManager is ready before starting </value>
         private bool isNextEventMain = false;   /// <value> Flag for if the next even is a main event </value>
+        private bool isBossFight = false;       /// <value> Flag for if the current result led to a boss fight </value>
         private bool displayStartEvent = true;  /// <value> Flag for start event to have different visual effects </value>
         private bool noShopInSubArea = true;    /// <value> Flag for if player hasn't found a shop in the subArea </value>
 
@@ -802,6 +803,9 @@ namespace Events {
             }
             else {
                 StartCoroutine(AlterBackgroundColor(1f));
+                if (isBossFight == true) {
+                    PlayPostBossBGM();
+                }
                 actionsPanel.ClearAllActions();
                 rewardsPanel.SetVisible(true);
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());   // prevents summoned partyMembers's inventories from appearing post combat
@@ -1037,9 +1041,10 @@ namespace Events {
                     
                     GetNextEvent();
                     break;
-                case ResultConstants.SUBAREAANDCOMBAT:
+                case ResultConstants.SUBAREAANDCOMBAT:     // boss fight
                     SetSubArea(currentResult.subAreaName0);
 
+                    isBossFight = true;
                     monstersToSpawn = currentResult.GetMonstersToSpawn();
 
                     for (int j = 0; j < monstersToSpawn.Length; j++) {
@@ -1637,6 +1642,12 @@ namespace Events {
             else {
                 AudioManager.instance.PlayBGM(currentSubArea.name);
             }  
+        }
+
+        public void PlayPostBossBGM() {
+            if (currentAreaName == "GreyWastes") {
+                AudioManager.instance.PlayBGM("Wind");
+            }
         }
 
         /// <summary>

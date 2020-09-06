@@ -185,7 +185,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2061592957
   m_SortingLayer: 6
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 8498e95cdabc844f0a5161462388c68b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -488,7 +488,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 2061592957
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &168779447
 RectTransform:
@@ -968,7 +968,7 @@ MonoBehaviour:
     pitch: 0
     loop: 0
   - name: GreyWastes4
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 33c8c8968eee1476b8c84d30f51da496, type: 3}
     source: {fileID: 0}
     volume: 0
     pitch: 0
@@ -986,7 +986,7 @@ MonoBehaviour:
     pitch: 0
     loop: 0
   - name: GreyWastes7
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 33c8c8968eee1476b8c84d30f51da496, type: 3}
     source: {fileID: 0}
     volume: 0
     pitch: 0
@@ -1005,6 +1005,54 @@ MonoBehaviour:
     loop: 0
   - name: pathNormalGreyWastes
     clip: {fileID: 8300000, guid: cb101e1f2bb0342c9bb586a745839970, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: pathNormalHardGreyWastes
+    clip: {fileID: 8300000, guid: dcd03fc1b045d4e94b1c2ab4741094f5, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: tombsGreyWastes
+    clip: {fileID: 8300000, guid: 506543d88c4654a9a81d5e5eb0fb96e8, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: lostGreyWastes
+    clip: {fileID: 8300000, guid: 78bebc6ae7e6542419dc5c46e3effe80, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: lostTombsGreyWastes
+    clip: {fileID: 8300000, guid: e64797f5914b143f3b2b646bad67da69, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: denGreyWastes
+    clip: {fileID: 8300000, guid: 3b5dffe78798d4e54976319468c8adc2, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: largeTombGreyWastes
+    clip: {fileID: 8300000, guid: 3b5dffe78798d4e54976319468c8adc2, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: Wind
+    clip: {fileID: 8300000, guid: 33c8c8968eee1476b8c84d30f51da496, type: 3}
+    source: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+  - name: tombsGreyWastes
+    clip: {fileID: 8300000, guid: 506543d88c4654a9a81d5e5eb0fb96e8, type: 3}
     source: {fileID: 0}
     volume: 0
     pitch: 0

@@ -8,6 +8,7 @@
 */
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PlayerUI {
@@ -16,6 +17,7 @@ namespace PlayerUI {
 
         public static UIManager instance;             /// <value> Global instance </value>
 
+        public ItemSlot hoveredItemSlot;
         public Color32 unusableColour = new Color32(196, 36, 48, 255);  /// <value> Red colour to indicate unusable, stored here to minimize space </value>
         public Color32 subtitleColour = new Color32(178, 178, 178, 255);  /// <value> Grey colour for subtitles, stored here to minimize space </value>
         public string unusableColourString = "#C42430";
@@ -53,5 +55,12 @@ namespace PlayerUI {
         public void StartDragItem() {
             StartCoroutine(heldItemDisplay.StartDragItem());
         }
+
+        // public void OnEndDrag(PointerEventData pointerEventData) {
+        //     if (heldItemDisplay != null) {
+        //         print(heldItemDisplay.parentSlot.name);
+        //         heldItemDisplay.parentSlot.PlaceItem(heldItemDisplay);
+        //     }
+        // }
     }
 }

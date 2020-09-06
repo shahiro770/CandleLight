@@ -113,7 +113,7 @@ namespace Items {
                     WAX += 22;
                     break;
                 case "PATK":
-                    WAX += values[0] * 8;
+                    WAX += values[0] * 6;
                     break;
                 case "PDEF":
                 case "MDEF":
@@ -249,7 +249,8 @@ namespace Items {
         }
 
         /// <summary>
-        /// Returns the effect keys in a string array
+        /// Returns the effect keys in a string array, but omits the negative effect always
+        /// shown in the 2nd index
         /// </summary>
         /// <returns></returns>
         public string[] GetTooltipEffectKeysNoNegative() {

@@ -163,6 +163,7 @@ MonoBehaviour:
   itemDisplayPrefab: {fileID: 4188971574341748547, guid: 91636ca627db546c28abde4bed6eb157,
     type: 3}
   currentItemDisplay: {fileID: 0}
+  rt: {fileID: 3196357311366114042}
   defaultSprite: {fileID: 0}
   defaultSpriteRenderer: {fileID: 8792083573451188332}
   imgBackground: {fileID: 4439609894423774707}

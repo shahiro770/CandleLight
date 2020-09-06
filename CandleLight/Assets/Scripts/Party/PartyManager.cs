@@ -177,6 +177,9 @@ namespace Party {
             shouldStore = true;
             WAX = 0;
             ID = 0;
+            EXPmultiplier = 1f;
+            WAXDropMultiplier = 1f;
+            itemDropMultiplier = 1f;
             for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
                 Destroy(partyMembersAll[i].gameObject); 
             }
@@ -350,7 +353,9 @@ namespace Party {
                 partyMembersDead.Add(pm);
 
                 pm.RemoveAllStatusEffects();
-                EXPmultiplier += 0.5f;
+                if (pm.summoner == null) {
+                    EXPmultiplier += 0.5f;
+                }
             }
         }
 

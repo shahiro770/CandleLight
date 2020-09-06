@@ -136,8 +136,8 @@ namespace Characters {
                     PATK += (int)(PATK * 0.5);
                 }
                 else if (se.name == StatusEffectConstants.FREEZE) {
-                    ACC -= (int)(ACC * 0.3);
-                    PDEF -= (int)(PDEF * 0.3);
+                    ACC -= (int)(ACC * 0.35);
+                    PDEF -= (int)(PDEF * 0.35);
                 }
                 else if (se.name == StatusEffectConstants.WEAKNESS) {
                     PATK -= (int)(PATK * 0.3);
