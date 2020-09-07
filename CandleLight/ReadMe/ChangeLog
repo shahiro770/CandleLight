@@ -205,6 +205,7 @@ Fix: Tutorials are skills! still missable, might need to make the window glow
 Fix: Change colour of skill point beside partymember icons so people can see how many skill points per character clearer
 
 UI: Highlight entire row for active party member
+UI: Make used interactions uninteractle instaed of red (so unusable is only in combat)
 
 Feature: Colour difficulty icons
 Bug: Outline is broken on candle swapping

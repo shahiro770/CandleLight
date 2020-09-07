@@ -37,7 +37,7 @@ namespace PlayerUI {
 
         private EventSystem es;                     /// <value> eventSystem reference </value>
         private Interaction[] storedInts = new Interaction[5];          /// <value> List of interactions stored </value>
-        private bool[] storedUsability = new bool[5];
+        private bool[] storedInteractability = new bool[5];
         private Interaction travelInt;
         private Interaction fightInt;
         private Interaction tutorialInt;
@@ -261,18 +261,19 @@ namespace PlayerUI {
                 toggleImage.sprite = interactionsSprite;
                 for (int i = 0; i < storedInts.Length; i++) {
                     storedInts[i] = actions[i].i;
-                    storedUsability[i] = actions[i].isUsable;
+                    storedInteractability[i] = actions[i].b.interactable;
                 }
                 SetCombatActionsNoFifth(pm);
                 CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
+                SetAllActionsInteractable();
             }
             else {
                 isStoringInt = false;
                 toggleImage.sprite = attacksSprite;
                 for (int i = 0; i < storedInts.Length; i++) {
                     if (storedInts[i] != null) {
+                        actions[i].SetInteractable(storedInteractability[i]);
                         actions[i].SetAction(ActionConstants.INTERACTION, storedInts[i]);
-                        actions[i].SetUsable(storedUsability[i]);
                         if (storedInts[i].name == "takeAll") {
                             actions[i].SetAction(ActionConstants.TAKEALL);
                             EventManager.instance.UpdateTakeAll();
@@ -289,8 +290,6 @@ namespace PlayerUI {
                     storedInts[i] = null;
                 }
             }
-            
-            SetAllActionsInteractable();
         }
 
         /// <summary>
@@ -345,7 +344,8 @@ namespace PlayerUI {
                 }
                 else if (a.actionType == ActionConstants.INTERACTION) {
                     if (a.i.isSingleUse) {
-                        a.SetUsable(false);
+                        a.SetInteractable(false);
+                        // a.SetUsable(false);
                     }
                     StartCoroutine(EventManager.instance.Interact(a.i));
                 }

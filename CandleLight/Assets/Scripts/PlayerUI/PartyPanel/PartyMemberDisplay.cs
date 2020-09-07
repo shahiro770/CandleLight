@@ -138,13 +138,6 @@ namespace PlayerUI {
         /// <param name="amount"></param>
         public void UpdateSkillPointsText(int amount) {
             skillPointsText.SetText(amount.ToString());
-
-            if (amount > 0) {
-                skillPointsText.SetColour(new Color(255, 255, 255, 255));
-            }
-            else {
-                skillPointsText.SetColour(new Color(141, 141, 141, 255));
-            }
             pmvc.UpdateSkillsTab();
         }
 

@@ -55,12 +55,5 @@ namespace PlayerUI {
         public void StartDragItem() {
             StartCoroutine(heldItemDisplay.StartDragItem());
         }
-
-        // public void OnEndDrag(PointerEventData pointerEventData) {
-        //     if (heldItemDisplay != null) {
-        //         print(heldItemDisplay.parentSlot.name);
-        //         heldItemDisplay.parentSlot.PlaceItem(heldItemDisplay);
-        //     }
-        // }
     }
 }
