@@ -334,20 +334,20 @@ namespace Events {
         public void EquipPartyItems() {
             List<PartyMember> pms = PartyManager.instance.GetPartyMembers();
             for (int i = 0; i < pms.Count; i++) {
-                if (GameManager.instance.data == null) {
+                if (GameManager.instance.rData == null || GameManager.instance.rData.partyMemberDatas == null) {
                     pms[i].EquipGear(GenerateStartingWeapon(pms[i].className), ItemConstants.WEAPON);
                 }
                 else {
-                    pms[i].EquipLoadedItems(GameManager.instance.data.partyMemberDatas[i]);
+                    pms[i].EquipLoadedItems(GameManager.instance.rData.partyMemberDatas[i]);
                 }
             }
         }
 
         public void LoadPartyStatusEffects() {
-            if (GameManager.instance.data != null) {
+            if (GameManager.instance.rData != null && GameManager.instance.rData.partyMemberDatas != null) {
                 List<PartyMember> pms = PartyManager.instance.GetPartyMembers();
                 for (int i = 0; i < pms.Count; i++) {
-                    pms[i].AddLoadedStatusEffects(GameManager.instance.data.partyMemberDatas[i]);
+                    pms[i].AddLoadedStatusEffects(GameManager.instance.rData.partyMemberDatas[i]);
                 }
             }
         }
@@ -359,17 +359,17 @@ namespace Events {
         /// <param name="areaName"> Name of area </param>
         /// <returns> Yields to wait for area to load </returns>
         public IEnumerator StartArea(string areaName) {
-            if (GameManager.instance.data == null) {
+            if (GameManager.instance.rData == null || GameManager.instance.rData.partyMemberDatas == null) {
                 ResetGame();
             }
             else {  
-                GameManager.instance.enemiesKilled = GameManager.instance.data.enemiesKilled;
-                GameManager.instance.WAXobtained = GameManager.instance.data.WAXobtained;
-                GameManager.instance.totalEvents = GameManager.instance.data.totalEvents;
-                subAreaResets = GameManager.instance.data.subAreaResets;
-                midPoints = GameManager.instance.data.midPoints;
+                GameManager.instance.enemiesKilled = GameManager.instance.rData.enemiesKilled;
+                GameManager.instance.WAXobtained = GameManager.instance.rData.WAXobtained;
+                GameManager.instance.totalEvents = GameManager.instance.rData.totalEvents;
+                subAreaResets = GameManager.instance.rData.subAreaResets;
+                midPoints = GameManager.instance.rData.midPoints;
 
-                timer.SetElapseTimed(GameManager.instance.data.elapsedTime);
+                timer.SetElapseTimed(GameManager.instance.rData.elapsedTime);
                 timer.StartTimer(true);
                 timer.SetVisible(UIManager.instance.isTimer);
             }
@@ -379,13 +379,13 @@ namespace Events {
                 yield return null;
             }
 
-            if (GameManager.instance.data != null) {
-                areaProgress = GameManager.instance.data.areaProgress;
+            if (GameManager.instance.rData != null && GameManager.instance.rData.partyMemberDatas != null) {
+                areaProgress = GameManager.instance.rData.areaProgress;
 
-                gearPanel.LoadData(GameManager.instance.data.spareGear);
-                candlesPanel.LoadData(GameManager.instance.data.spareCandles);
-                specialPanel.LoadData(GameManager.instance.data.spareSpecials);
-                infoPanel.LoadData(GameManager.instance.data.questData);
+                gearPanel.LoadData(GameManager.instance.rData.spareGear);
+                candlesPanel.LoadData(GameManager.instance.rData.spareCandles);
+                specialPanel.LoadData(GameManager.instance.rData.spareSpecials);
+                infoPanel.LoadData(GameManager.instance.rData.questData);
                 EquipPartyItems();
                 LoadPartyStatusEffects();
                 foreach (Quest q in infoPanel.quests) {
@@ -2083,14 +2083,11 @@ namespace Events {
         /// <summary>
         /// Ends the run, returning to the main menu
         /// </summary>
-        public void EndRun() {
+        public void EndRun(bool isGameOver) {
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
+            SaveRunAndGeneralData(isGameOver);
             PartyManager.instance.ResetGame();
-            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
-            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume,
-            GameManager.instance.isFullscreen, GameManager.instance.resolutionWidth, GameManager.instance.resolutionHeight);
-            GameManager.instance.SaveGeneralData(gsData);
             GameManager.instance.StartLoadNextScene("MainMenu");
         }
 
@@ -2125,15 +2122,18 @@ namespace Events {
         }
 
         /// <summary>
-        /// Save all data relevant to continuing a playthrough at a later time
+        /// Save all data relevant to continuing a playthrough at a later time 
         /// </summary>
-        public void SaveRunAndGeneralData() {
-            RunData data = new RunData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
-            gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
-            infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
-            GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1,
-            GameManager.instance.difficultyModifier);
-            GameManager.instance.SaveRunData(data);
+        public void SaveRunAndGeneralData(bool isGameOver = false) {
+            if (isGameOver == false) {
+                RunData data = new RunData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
+                gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
+                infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
+                GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1,
+                GameManager.instance.difficultyModifier);
+                print(subAreaResets);
+                GameManager.instance.SaveRunData(data);
+            }
 
             GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked,
             GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume,

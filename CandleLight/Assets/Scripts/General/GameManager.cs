@@ -42,7 +42,7 @@ namespace General {
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
         public GeneralSaveData gsData;                  /// <value> Data that cannot be cleared after a run ends </value>
-        public RunData data;                            /// <value> Data that was loaded from a save file regarding a run </value>
+        public RunData rData;                           /// <value> Data that was loaded from a save file regarding a run </value>
         public Sprite[] achievementSprites;             /// <value> Sprite array for all achievement sprites (loaded here cause both area and mainMenu need this) </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
         public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
@@ -80,8 +80,7 @@ namespace General {
             
             mainCamera = Camera.main;                   // store reference to camera for other game objects to obtain
             DB = new GameDB();
-            data = null;
-            
+            rData = null;
         }
 
         /// <summary>
@@ -204,13 +203,12 @@ namespace General {
                 BinaryFormatter formatter  = new BinaryFormatter();
                 FileStream s = new FileStream(path, FileMode.Open);
 
-                data = formatter.Deserialize(s) as RunData;
-                print(data.elapsedTime);
+                rData = formatter.Deserialize(s) as RunData;
                 s.Close();
 
-                tutorialTriggers = data.tutorialTriggers;
-                difficultyModifier = data.difficultyModifier;
-                PartyManager.instance.LoadData(data);
+                tutorialTriggers = rData.tutorialTriggers;
+                difficultyModifier = rData.difficultyModifier;
+                PartyManager.instance.LoadData(rData);
                 
                 StartLoadNextScene("area");
             }
@@ -335,7 +333,7 @@ namespace General {
             if (File.Exists(path)) {
                 File.Delete(path);
             }
-            data = null;
+            rData = null;
         }
 
         /// <summary>
