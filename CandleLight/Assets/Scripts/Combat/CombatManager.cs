@@ -630,8 +630,12 @@ namespace Combat {
 
             if (activeMonster.attacks[selectedMonsterAttackIndex].type == AttackConstants.DEBUFF) {
                 if (pm.GetStatusEffect(activeMonster.attacks[selectedMonsterAttackIndex].seName) != -1) {
-                    selectedMonsterAttackIndex = (selectedMonsterAttackIndex + 1) % activeMonster.attackNum;
+                    selectedMonsterAttackIndex = (selectedMonsterAttackIndex - 1) % activeMonster.attackNum;
                 }
+            }
+            if ((attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFFSELF || attacks[selectedMonsterAttackIndex].type == AttackConstants.HEALHPSELF
+            || attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFF) && activeMonster.GetStatusEffect(attacks[selectedMonsterAttackIndex].seName) == -1) {
+                    selectedMonsterAttackIndex = (selectedMonsterAttackIndex - 1) % activeMonster.attackNum;
             }
 
             return attacks[selectedMonsterAttackIndex];  

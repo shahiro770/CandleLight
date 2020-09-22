@@ -186,69 +186,66 @@ Bug: Candles on normal mode show champion chance
 Balance: Make who is heidi second part harder
 Balance: Make challenger candle 5 patk instead of 3 patk
 Bug: Gameover sprites see through loading screen
-
-JUST FINISHED
--------------
 Fix: Rename it to casual mode vs normal mode
 Fix: Forgot to colour roots
 UI: Drag and Drop for items
 Consideration: Maybe add "on hit" as a status effect cause 100% is too confusing 
+Bug: Take All Options on TimeKeeper lets you take everything from the store for free
+
+JUST FINISHED
+-------------
+Balance: Reevaluate all interaction thresholds (should be quick)
+Balance: Tweaked some events to not end the player's life (e.g. dirt storm spawning double lvl 4 wastes wanderer)
+Verify: Loading on a build has some awkward pause to it
+Verify: Having a dead party member breaks the game
+UI: Make used interactions uninteractle instaed of red (so unusable is only in combat)
 
 COOKING
 -------
-Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
-Verify: Loading on a build has some awkward pause to it
-Verify: Having a dead party member breaks the game
-
-Consideration: Figure out how to deal with illiteracy/betrayal
-Fix: Tutorials are skills! still missable, might need to make the window glow
-Fix: Change colour of skill point beside partymember icons so people can see how many skill points per character clearer
-
-UI: Highlight entire row for active party member
-UI: Make used interactions uninteractle instaed of red (so unusable is only in combat)
-
-Feature: Colour difficulty icons
-Bug: Outline is broken on candle swapping
-Fix: Make dialogue prompt rotate
-Bug: One of the dialogue prompts is 3 lines
-CRITICAL BUG: Player dies from random event doesn't trigger death check
-CRITICAL BUG: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
-Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
+Balance: Make it so thresholds are reduced by 20% of your LUK, party roll stays exact this way
+Bug: first item in shop inventory tooltip is broken 
+Bug: Middle skill tooltip position might be wrong
+Bug: Outline is broken on candle swapping
+Bug: One of the dialogue prompts is 3 lines (but which one I forget)
+Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
+Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
+CRITICAL BUG: Player dies from random event doesn't always trigger death check?!?!?
+Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
+Fix: Tutorials are skills! still missable, might need to make the window glow
+Verify: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
+UI: Make Success/fail interaction check text more clear
+UI: Highlight entire row for active party member
+UI: Fix particle lighting in subAreas
 
 NEAR FUTURE
 ----------------
+Bug: Tooltip dies for absurd unknown reason on rare occasion
 Feature: Make game appear over top of other games
 Feature: Sound effects and music
 Feature: Ending cutscenes
     Fix: Add another particle effect maker for the ending area (flame particles rising up)
+Fix: Make it so closing the game also ups the scum checker
 UI: Make monsterIcons have correct pixel sizing (rn its jank)
 UI: Redo fireball, bash, and slash sprites
 UI: Redo main menu art
-Fix: Make it so closing the game also ups the scum checker
-Balance: Reevaluate all interaction thresholds (should be quick)
-Bug: Tooltip dies for absurd unknown reason on rare occasion
-
 
 FUTURE/MAYBE
 ------------
-Fix: ENUM EVERYTHING
-Fix: Make it so stuff can be hovered over during rewards panel
-Bug: Options menu tooltips need to be repositioned
-QOL: Have skills panel swap to active party member with skill points unspecced
-
+Bug: Options menu tooltips can be repositioned
+Bug: If encounter is possible on rekindle event, don't allow
+Clean Up: ENUM EVERYTHING
 Feature: Make click on bag (AND BAG ONLY) do something
-
-UI: Make quest completed notification seperate from normal completition
+Fix: Make it so stuff can be hovered over during rewards panel
+Fix: Change colour of skill point beside partymember icons so people can see how many skill points per character clearer
 Fix: Make it so active skills are greyed out if 4 actives are already selected
+Fix: Make dialogue prompt rotate
+QOL: Have skills panel swap to active party member with skill points unspecced
+Tutorial: Clicking actions progresses the tutorial, but this might not be the worst thing
+UI: Make quest completed notification seperate from normal completition
+UI: Make drag and droppable partymember select
 UI: Make status effects do the fade animation monster displays do
 UI: status effects don't display in the statusPanel
 UI: Add heal/focus animations on effect
-Future: Add combat order on the side
-Tutorial: Clicking actions progresses the tutorial, but this might not be the worst thing
-Bug: If encounter is possible on rekindle event, don't allow
-
-
-
-
-
+UI: Colour difficulty icon borders
+UI: Add combat order on the side

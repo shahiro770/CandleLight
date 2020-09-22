@@ -2762,6 +2762,7 @@ Material:
     - _ColorMask: 15
     - _Diffuse: 0.5
     - _FaceDilate: 0
+    - _FaceShininess: 0
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.043
@@ -2772,6 +2773,7 @@ Material:
     - _LightAngle: 3.14
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
+    - _OutlineShininess: 0
     - _OutlineSoftness: 0.007
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
@@ -2810,6 +2812,7 @@ Material:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!28 &28447524865374442
@@ -2831,6 +2834,8 @@ Texture2D:
   m_TextureFormat: 1
   m_MipCount: 1
   m_IsReadable: 0
+  m_IgnoreMasterTextureLimit: 0
+  m_IsPreProcessed: 0
   m_StreamingMipmaps: 0
   m_StreamingMipmapsPriority: 0
   m_AlphaIsTransparency: 0

@@ -10,8 +10,8 @@
 
 using Audio;
 using GameManager = General.GameManager;
-using Menus.ClassSelectMenu;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
 using System.IO;
 
@@ -23,6 +23,8 @@ namespace Menus.MainMenu {
         public Button continueButton;
         public ClassSelectMenu.ClassSelectMenu csm;
         public Canvas sceneCanvas;
+        public Light2D freeForm;
+        public Light2D particleLight;
 
         private Color defaultColour = new Color32(230, 126, 34, 255);
 
@@ -36,6 +38,8 @@ namespace Menus.MainMenu {
             var main = ps.main;
             var colorOverLifetime = ps.colorOverLifetime;
             colorOverLifetime.color = defaultColour;
+            freeForm.color = defaultColour;
+            particleLight.color = defaultColour;
 
             // continue button is only enabled if save data exists
             string path = Application.persistentDataPath + "/save.cndl";

@@ -642,7 +642,6 @@ namespace PlayerUI {
 
         public void OnPointerEnter(PointerEventData pointerEventData) {
             if ((defaultSprite != null || currentItemDisplay != null) && b.interactable == true) {
-                print(name);
                 t.SetVisible(true);
             }
             UIManager.instance.hoveredItemSlot = this;
@@ -663,12 +662,10 @@ namespace PlayerUI {
         
         public void OnEndDrag(PointerEventData pointerEventData) {
             if (UIManager.instance.heldItemDisplay != null) {
-                
                 if (UIManager.instance.hoveredItemSlot != null) {
                     UIManager.instance.hoveredItemSlot.OnClick();
                 }
                 else {
-                    print(UIManager.instance.heldItemDisplay.parentSlot);
                     UIManager.instance.heldItemDisplay.parentSlot.OnClick();
                 }
             }

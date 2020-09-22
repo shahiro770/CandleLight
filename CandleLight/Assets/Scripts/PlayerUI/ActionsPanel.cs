@@ -316,10 +316,10 @@ namespace PlayerUI {
         public void UpdateTakeAll(int numSpareFull) {
             if (actions[0].actionType == ActionConstants.TAKEALL) {
                 if (numSpareFull > 0) {
-                    actions[0].SetUsable(true);
+                    actions[0].SetInteractable(true);
                 }
                 else {
-                    actions[0].SetUsable(false);
+                    actions[0].SetInteractable(false);
                 }
             }
         }

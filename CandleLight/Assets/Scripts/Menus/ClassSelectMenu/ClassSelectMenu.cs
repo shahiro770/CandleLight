@@ -12,10 +12,9 @@
 */
 
 using ClassConstants = Constants.ClassConstants;
-using General;
-using Party;
 using UIEffects;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace Menus.ClassSelectMenu {
@@ -32,6 +31,8 @@ namespace Menus.ClassSelectMenu {
         public DifficultyMenu difficultyMenu;
         public SpriteRenderer[] compSprites;        /// <value> Sprites currently visible in the composition buttons </value>
         public ParticleSystem ps;
+        public Light2D freeForm;
+        public Light2D particleLight;
 
         private Color defaultColour = new Color32(230, 126, 34, 255);
         private Color warriorColour = new Color32(189, 29, 0, 255);
@@ -141,21 +142,29 @@ namespace Menus.ClassSelectMenu {
                 partyComposition[compIndex] = ClassConstants.WARRIOR;
                 compSprites[compIndex].sprite = warriorIcon;
                 colorOverLifetime.color = warriorColour;
+                freeForm.color = warriorColour;
+                particleLight.color = warriorColour;
             }
             else if (index == 1) {
                 partyComposition[compIndex] = ClassConstants.MAGE;
                 compSprites[compIndex].sprite = mageIcon;
                 colorOverLifetime.color = mageColour;
+                freeForm.color = mageColour;
+                particleLight.color = mageColour;
             }
             else if (index == 2) {
                 partyComposition[compIndex] = ClassConstants.ARCHER;
                 compSprites[compIndex].sprite = archerIcon;
                 colorOverLifetime.color = archerColour;
+                freeForm.color = archerColour;
+                particleLight.color = archerColour;
             }
             else if (index == 3) {
                 partyComposition[compIndex] = ClassConstants.ROGUE;
                 compSprites[compIndex].sprite = rogueIcon;
                 colorOverLifetime.color = rogueColour;
+                freeForm.color = rogueColour;
+                particleLight.color = rogueColour;
             }
             
             classInfo.SetClassInfo(partyComposition[compIndex]);
@@ -179,18 +188,26 @@ namespace Menus.ClassSelectMenu {
             if (partyComposition[index] == ClassConstants.WARRIOR) {
                 correspondingClassIndex = 0;
                 colorOverLifetime.color = warriorColour;
+                freeForm.color = warriorColour;
+                particleLight.color = warriorColour;
             }
             else if (partyComposition[index] == ClassConstants.MAGE) {
                 correspondingClassIndex = 1;
                 colorOverLifetime.color = mageColour;
+                freeForm.color = mageColour;
+                particleLight.color = mageColour;
             }
             else if (partyComposition[index] == ClassConstants.ARCHER) {
                 correspondingClassIndex = 2;
                 colorOverLifetime.color = archerColour;
+                freeForm.color = archerColour;
+                particleLight.color = archerColour;
             }
             else if (partyComposition[index] == ClassConstants.ROGUE) {
                 correspondingClassIndex = 3;
                 colorOverLifetime.color = rogueColour;
+                freeForm.color = rogueColour;
+                particleLight.color = rogueColour;
             }
 
             for (int i = 0; i < classBtss.Length; i++) {
