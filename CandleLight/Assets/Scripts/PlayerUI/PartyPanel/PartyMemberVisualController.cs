@@ -8,6 +8,7 @@
 *
 */
 
+using Audio;
 using ClassConstants = Constants.ClassConstants;
 using Combat;
 using Events;
@@ -413,6 +414,7 @@ namespace Characters {
                     yield return new WaitForSeconds(0.5f);
                     rewardsPanelEXPBar.SetMaxAndCurrentImmediate(pm.EXPToNextLVL, 0);
                     rewardsPanelLVLText.SetText("LVL " + LVLtoDisplay);
+                    AudioManager.instance.PlaySFX("LVLUp");
                 }
                 else {
                     yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(currentAmount)));

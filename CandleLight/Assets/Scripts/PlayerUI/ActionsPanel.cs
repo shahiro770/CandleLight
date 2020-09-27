@@ -299,6 +299,7 @@ namespace PlayerUI {
         /// <param name="pm"></param>
         public void UpdateCombatActions(PartyMember pm) {
             if (isStoringInt == true) {
+                print("updating");
                 SetCombatActionsNoFifth(pm);
                 CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
             }

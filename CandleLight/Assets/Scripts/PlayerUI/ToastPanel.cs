@@ -24,6 +24,14 @@ namespace PlayerUI {
 
         private Coroutine fader;            /// <value> Store the coroutine responsible for visibility to stop it if notification changes suddenly </value>
         private Coroutine fadeOuter;        /// <value> Store the coroutine responsible for fading out to stop it if notification changes suddenly </value>
+        private string partySTRText = LocalizationManager.instance.GetLocalizedValue("partySTR_text");  /// <value> Localized text for the text "Party STR: " </value>
+        private string partyDEXText = LocalizationManager.instance.GetLocalizedValue("partyDEX_text");  /// <value> Localized text for the text "Party DEX: " </value>
+        private string partyINTText = LocalizationManager.instance.GetLocalizedValue("partyINT_text");  /// <value> Localized text for the text "Party INT: " </value>
+        private string partyLUKText = LocalizationManager.instance.GetLocalizedValue("partyLUK_text");  /// <value> Localized text for the text "Party LUK: " </value>
+        private string threshSTRText = LocalizationManager.instance.GetLocalizedValue("threshSTR_text");      /// <value> Localized text for the text "Threshold STR: " </value>
+        private string threshDEXText = LocalizationManager.instance.GetLocalizedValue("threshDEX_text");      /// <value> Localized text for the text "Threshold STR: " </value>
+        private string threshINTText = LocalizationManager.instance.GetLocalizedValue("threshINT_text");      /// <value> Localized text for the text "Threshold STR: " </value>
+        private string threshLUKText = LocalizationManager.instance.GetLocalizedValue("threshLUK_text");      /// <value> Localized text for the text "Threshold STR: " </value>
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
 
         public void SetNotification(bool[] types, string[] amounts) {
@@ -177,34 +185,24 @@ namespace PlayerUI {
         public void SetStatCheckNotification(bool isSucc, int checkIndicator, int stat, int threshold) {
             if (isSucc == true) {
                 titleText.SetKey("SUCC_toast");
-                if (checkIndicator == 1) {
-                    descriptionText.SetText("<color=#B91D00>" + stat + " >= " + threshold + "</color>");
-                }
-                else if (checkIndicator == 2) {
-                    descriptionText.SetText("<color=#5AC54F>" + stat + " >= " + threshold + "</color>");
-                }
-                else if (checkIndicator == 3) {
-                    descriptionText.SetText("<color=#0098DC>" + stat + " >= " + threshold + "</color>");
-                }
-                else if (checkIndicator == 4) {
-                    descriptionText.SetText("<color=#FFCD02>" + stat + " >= " + threshold + "</color>");
-                }
             }
             else {
                 titleText.SetKey("FAIL_toast");
-                if (checkIndicator == 1) {
-                    descriptionText.SetText("<color=#B91D00>" + stat + " < " + threshold + "</color>");
-                }
-                else if (checkIndicator == 2) {
-                    descriptionText.SetText("<color=#5AC54F>" + stat + " < " + threshold + "</color>");
-                }
-                else if (checkIndicator == 3) {
-                    descriptionText.SetText("<color=#0098DC>" + stat + " < " + threshold + "</color>");
-                }
-                else if (checkIndicator == 4) {
-                    descriptionText.SetText("<color=#FFCD02>" + stat + " < " + threshold + "</color>");
-                }
             }
+
+            if (checkIndicator == 1) {
+                descriptionText.SetText(partySTRText + "<color=#B91D00>" + stat + "</color>" + "\n" + threshSTRText + "<color=#B91D00>" + threshold + " </color>");
+            }
+            else if (checkIndicator == 2) {
+                descriptionText.SetText(partyDEXText + "<color=#5AC54F>" + stat + "</color>" + "\n" + threshDEXText + "<color=#5AC54F>" + threshold + " </color>");
+            }
+            else if (checkIndicator == 3) {
+                descriptionText.SetText(partyINTText  + "<color=#0098DC>" + stat + "</color>" + "\n" + threshINTText + "<color=#0098DC>" + threshold + " </color>");
+            }
+            else if (checkIndicator == 4) {
+                descriptionText.SetText(partyLUKText  + "<color=#FFCD02>" + stat + "</color>" + "\n" + threshLUKText + "<color=#FFCD02>" + threshold + " </color>");
+            }
+            
 
             b.interactable = false;
             SetVisible(true);

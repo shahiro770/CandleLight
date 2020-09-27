@@ -191,35 +191,41 @@ Fix: Forgot to colour roots
 UI: Drag and Drop for items
 Consideration: Maybe add "on hit" as a status effect cause 100% is too confusing 
 Bug: Take All Options on TimeKeeper lets you take everything from the store for free
-
-JUST FINISHED
--------------
 Balance: Reevaluate all interaction thresholds (should be quick)
 Balance: Tweaked some events to not end the player's life (e.g. dirt storm spawning double lvl 4 wastes wanderer)
 Verify: Loading on a build has some awkward pause to it
 Verify: Having a dead party member breaks the game
 UI: Make used interactions uninteractle instaed of red (so unusable is only in combat)
 
+JUST FINISHED
+-------------
+Balance: Gave vampireBats Fly attack
+Balance: Make it so thresholds are reduced by 20% of your LUK, party roll stays exact this way
+Bug: Middle skill tooltip position might be wrong
+Bug: One of the dialogue prompts is 3 lines (but which one I forget)
+UI: Make Success/fail interaction check text more clear
+UI: Fix particle lighting in subAreas
+
 COOKING
 -------
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
-Balance: Make it so thresholds are reduced by 20% of your LUK, party roll stays exact this way
 Bug: first item in shop inventory tooltip is broken 
-Bug: Middle skill tooltip position might be wrong
 Bug: Outline is broken on candle swapping
-Bug: One of the dialogue prompts is 3 lines (but which one I forget)
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
-CRITICAL BUG: Player dies from random event doesn't always trigger death check?!?!?
+Bug: Attack toggle not updating stats properly
+Bug: Colouring is wack when toggling between attacks and interactions
+Bug: Not all monster attacks being used
+Verify: Player dies from random event doesn't always trigger death check?!?!?
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
 Fix: Tutorials are skills! still missable, might need to make the window glow
 Verify: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
-UI: Make Success/fail interaction check text more clear
 UI: Highlight entire row for active party member
-UI: Fix particle lighting in subAreas
+Credits: Add Adam
 
 NEAR FUTURE
 ----------------
+Lighting: EM for all attacks and SE
 Bug: Tooltip dies for absurd unknown reason on rare occasion
 Feature: Make game appear over top of other games
 Feature: Sound effects and music
@@ -232,6 +238,7 @@ UI: Redo main menu art
 
 FUTURE/MAYBE
 ------------
+Balance: Rework CritChance (Make it only come from items and skills, or minimal effects on leveling up)
 Bug: Options menu tooltips can be repositioned
 Bug: If encounter is possible on rekindle event, don't allow
 Clean Up: ENUM EVERYTHING

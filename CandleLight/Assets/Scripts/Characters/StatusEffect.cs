@@ -66,6 +66,7 @@ namespace Characters {
                 case StatusEffectConstants.CURE:           
                 case StatusEffectConstants.MIRACLE:
                 case StatusEffectConstants.BARRIER:
+                case StatusEffectConstants.NIMBLE:
                 case StatusEffectConstants.BOSS:
                 case StatusEffectConstants.FAMILIAR:
                 case StatusEffectConstants.CHAMPIONHP:

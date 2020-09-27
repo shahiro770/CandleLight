@@ -312,7 +312,7 @@ namespace Characters {
             MATK = (int)(INT * 0.5 + LUK * 0.25); 
             PDEF = (int)(STR * 0.125 + DEX * 0.065);
             MDEF = (int)(INT * 0.125 + LUK * 0.065);
-            DOG = (int)(LUK * 0.2 + DEX * 0.1);
+            DOG = (int)(DEX * 0.15 + LUK * 0.25);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             if (LVL != 0) {
                 critChance = (int)(LUK * 0.15) + baseCritChance;
@@ -532,6 +532,9 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.MARIONETTE) {
                     DOG -= DOG;
                 }
+                else if (se.name == StatusEffectConstants.NIMBLE) {
+                    DOG += DOG;
+                }
                 else if (se.name == StatusEffectConstants.SCUM) {
                     HPRegen *= 0.5f;
                     MPRegen *= 0.5f;
@@ -558,6 +561,8 @@ namespace Characters {
             if (critChance > 100) {
                 critChance = 100;
             }
+
+            SetAttackValues();
         }
 
         #region [ Section 0 ] Summoned Partymember Logic

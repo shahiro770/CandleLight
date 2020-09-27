@@ -123,7 +123,7 @@ namespace Characters {
             MATK = (int)((INT * 0.65 + LUK * 0.35) * difficultyModifier);
             PDEF = (int)(((STR * 0.15 + DEX * 0.075) + bonusPDEF) * difficultyModifier);
             MDEF = (int)(((INT * 0.15 + LUK * 0.075) + bonusMDEF) * difficultyModifier);
-            DOG = (int)((DEX * 0.2 + LUK * 0.1) * difficultyModifier);
+            DOG = (int)((DEX * 0.15 + LUK * 0.25) * difficultyModifier);
             ACC = (int)(DEX * 0.2 + STR * 0.1 + INT * 0.1) + defaultACC;
             critChance = (int)(LUK * 0.15) + baseCritChance;
             critMult = baseCritMult;
@@ -163,6 +163,9 @@ namespace Characters {
                 }
                 else if (se.name == StatusEffectConstants.MARIONETTE) {
                     DOG -= DOG;
+                }
+                else if (se.name == StatusEffectConstants.NIMBLE) {
+                    DOG += DOG;
                 }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);

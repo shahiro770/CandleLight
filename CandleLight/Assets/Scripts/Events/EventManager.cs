@@ -973,8 +973,12 @@ namespace Events {
                     }
                 }
                 else {
-                    int stat = PartyManager.instance.GetPrimaryStatAll(i.checkIndicator) + (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f);
-                    int threshold = (int)(Random.Range(i.statThreshold * 0.6f, i.statThreshold * 1.3f) * GameManager.instance.difficultyModifier);
+                    int stat = PartyManager.instance.GetPrimaryStatAll(i.checkIndicator);
+                    int threshold = (int)(Random.Range(i.statThreshold * 0.6f, i.statThreshold * 1.3f) * GameManager.instance.difficultyModifier) 
+                    - (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f);
+                    if (threshold < 0) {
+                        threshold = 0;
+                    }
 
                     if (stat >= threshold) {
                         currentResult = i.GetResult(0); // good result
@@ -1522,7 +1526,7 @@ namespace Events {
         /// </summary>
         /// <param name="targetAlpha"></param>
         /// <returns></returns>
-        public IEnumerator FadeParticles(int targetAlpha) {
+        public IEnumerator FadeParticles(float targetAlpha) {
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
             float percentageComplete = timeSinceStarted * alphaLerpSpeed;
@@ -1605,7 +1609,7 @@ namespace Events {
                     emission1.rateOverTime = 10;
                     main0.startLifetime = 1.25f;
                     main1.startLifetime = 1.25f;
-                    StartCoroutine(FadeParticles(1));
+                    StartCoroutine(FadeParticles(0.2f));
                     break;
                 case 4:
                 case 7:
@@ -1615,7 +1619,7 @@ namespace Events {
                     emission1.rateOverTime = 15;
                     main0.startLifetime = 1.25f;
                     main1.startLifetime = 1.25f;
-                    StartCoroutine(FadeParticles(1));
+                    StartCoroutine(FadeParticles(0.2f));
                     break;
                 case 5:
                 case 8:
@@ -2131,7 +2135,6 @@ namespace Events {
                 infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
                 GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1,
                 GameManager.instance.difficultyModifier);
-                print(subAreaResets);
                 GameManager.instance.SaveRunData(data);
             }
 

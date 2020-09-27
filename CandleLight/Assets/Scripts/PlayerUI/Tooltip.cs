@@ -282,15 +282,14 @@ namespace PlayerUI {
              * if the position of the textBackground + its height > 270 (540 / 2), it will be below the screen.
              * Tooltips can never go above the screen unless the image they are on is out of the screen, so that edge case
              * is no concern. Some numbers are treated as negatives due to being below the origin point (0, 0);
-             * -7 magic number is for spacing.
+             * -7 magic number is for spacing and -9 is to deal with weirdo rounding.
              */
-            if (imageDisplayBackground.transform.position.y * canvasScaleFactor - textBackgroundHeight <= rootCanvasHeightHalved * -1) {
+            if (imageDisplayBackground.transform.position.y * canvasScaleFactor - textBackgroundHeight <= (rootCanvasHeightHalved * -1) - 9) {
                 newYPos = (int)(((imageDisplayBackground.transform.position.y  * canvasScaleFactor) - textBackgroundHeight) + rootCanvasHeightHalved - 7) * -1;
             }
             else {
                 newYPos = gameObject.transform.localPosition.y;
             }
-
             gameObject.transform.localPosition = new Vector3(newXPos, newYPos);
 
             textBackground.color = new Color32(255, 255, 255, 255);

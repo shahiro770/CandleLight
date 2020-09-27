@@ -34,7 +34,8 @@ namespace Constants {
         public const string RBW = "rbw";       /// <value> Randomly decide between root, bleed, and weakness </value>
         public const string FROSTBITE = "frostbite";          /// <value> Magical damage over time, doubled if inflicted with FREEZE </value>
         public const string BARRIER = "barrier";              /// <value> Gains MDEF </value>
-        public const string MARIONETTE = "marionette";        /// <value> Reducees MDEF and is taunted </value>
+        public const string MARIONETTE = "marionette";        /// <value> Reducees DOG and is taunted </value>
+        public const string NIMBLE = "nimble";                /// <value> Increases DOG </value>
         public const string FAMILIAR = "familiar";            /// <value> Indicates a temporary partyMember </value>
         public const string BOSS = "boss";     /// <value> Makes the enemy stronger against shenanigans </value>
         public const string CHAMPIONHP = "championHP";        /// <value> Bonus HP and HP regen  </value>

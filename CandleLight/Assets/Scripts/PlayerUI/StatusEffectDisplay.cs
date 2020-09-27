@@ -189,6 +189,13 @@ namespace PlayerUI {
                     normalBlock.disabledColor = new Color32(99, 33, 197, 150);
                     durationText.SetColour(new Color32(99, 33, 197, 255));
                     break;
+                case StatusEffectConstants.NIMBLE:
+                    normalBlock.normalColor = new Color32(0, 111, 135, 200);
+                    normalBlock.highlightedColor = new Color32(0, 111, 135, 255);
+                    normalBlock.pressedColor = new Color32(0, 111, 135, 255);
+                    normalBlock.disabledColor = new Color32(0, 111, 135, 150);
+                    durationText.SetColour(new Color32(0, 111, 135, 255));
+                    break;
                 case StatusEffectConstants.BOSS:
                 case StatusEffectConstants.FAMILIAR:
                 case StatusEffectConstants.CHAMPIONHP:
