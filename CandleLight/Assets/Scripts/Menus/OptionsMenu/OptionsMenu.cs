@@ -189,6 +189,8 @@ namespace Menus.OptionsMenu {
 
         /// <summary>
         /// Save settings and hide any tooltips visible 
+        /// IMPORTANT: This seems to save when a scene is loading too (i.e. going from area to main menu)
+        /// So no need to make another GeneralSaveData function when going to main menu from options menu using EndrunNoSave
         /// </summary>
         void OnDisable() {
             bgmtt.SetVisible(false);

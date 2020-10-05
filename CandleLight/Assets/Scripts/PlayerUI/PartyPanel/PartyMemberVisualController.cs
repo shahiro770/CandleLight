@@ -307,8 +307,8 @@ namespace Characters {
         /// when in combat
         /// </summary>
         public void DisplayActivePartyMemberCombat() {
-            partyPanel.DisplayActivePartyMember(pmdPartyPanel);
-            skillsPanel.DisplayActivePartyMember(pmdSkillsPanel);
+            partyPanel.DisplayActivePartyMemberCombat(pmdPartyPanel);
+            skillsPanel.DisplayActivePartyMemberCombat(pmdSkillsPanel);
             statusPanel.DisplayPartyMember(this);
             
             if (gearPanel.isOpen == true) {
@@ -414,7 +414,6 @@ namespace Characters {
                     yield return new WaitForSeconds(0.5f);
                     rewardsPanelEXPBar.SetMaxAndCurrentImmediate(pm.EXPToNextLVL, 0);
                     rewardsPanelLVLText.SetText("LVL " + LVLtoDisplay);
-                    AudioManager.instance.PlaySFX("LVLUp");
                 }
                 else {
                     yield return (StartCoroutine(rewardsPanelEXPBar.SetCurrent(currentAmount)));
@@ -612,6 +611,11 @@ namespace Characters {
             if (partyPanel.isOpen == true) {
                 pmdPartyPanel.PlayCleanUpStatusEffectAnimations(animationsToPlay);
             }
+        }
+
+        public void ShowLVLUp() {
+            AudioManager.instance.PlaySFX("LVLUp");
+            ExciteSkillsTab(); 
         }
 
         public void ExciteSkillsTab() {

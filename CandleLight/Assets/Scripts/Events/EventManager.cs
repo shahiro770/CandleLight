@@ -428,6 +428,7 @@ namespace Events {
             tutorialProg = 0;
             itemsTabManager.SetTabsEmpty();
             utilityTabManager.SetTabsEmpty();
+            actionsPanel.SetToggleButtonLocked(true);
             currentEvent = currentSubArea.GetEvent(areaProgress);
             StartCoroutine(DisplayEvent());
         }
@@ -571,6 +572,7 @@ namespace Events {
             tutorialProg++;             
             GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
             subAreaProgress += 100;
+            actionsPanel.SetToggleButtonLocked(false);
         }
 
         #endregion
@@ -2091,6 +2093,16 @@ namespace Events {
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
             SaveRunAndGeneralData(isGameOver);
+            PartyManager.instance.ResetGame();
+            GameManager.instance.StartLoadNextScene("MainMenu");
+        }
+
+        /// <summary>
+        /// Ends the run returning to the main menu, not saving current game data
+        /// </summary>
+        public void EndRunNoSave() {
+            optionsMenu.cg.interactable = false;
+            Time.timeScale = 1;
             PartyManager.instance.ResetGame();
             GameManager.instance.StartLoadNextScene("MainMenu");
         }

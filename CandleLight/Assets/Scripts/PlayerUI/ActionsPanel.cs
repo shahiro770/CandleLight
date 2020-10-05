@@ -42,7 +42,7 @@ namespace PlayerUI {
         private Interaction fightInt;
         private Interaction tutorialInt;
         private bool isLeavePossible;               /// <value> Flag for if player can leave scenario </value>
-        
+        private bool isToggleButtonLocked;          /// <value> Flag for if toggle button is locked (making interactability setting not work) </value>
        
         /// <summary>
         /// Awake to get initialize event system
@@ -286,6 +286,7 @@ namespace PlayerUI {
                     }
                     else {
                         actions[i].SetAction(ActionConstants.NONE);
+                        actions[i].SetInteractable(storedInteractability[i]);
                     }
                     storedInts[i] = null;
                 }
@@ -299,14 +300,32 @@ namespace PlayerUI {
         /// <param name="pm"></param>
         public void UpdateCombatActions(PartyMember pm) {
             if (isStoringInt == true) {
-                print("updating");
                 SetCombatActionsNoFifth(pm);
                 CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
             }
         }
 
+        /// <summary>
+        /// Locks the toggle button, preventing it from changing interactability.
+        /// If locked, interactability is set to false.
+        /// Only use is to delay its usage toggle until the end of the tutorial.
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetToggleButtonLocked(bool value) {
+            isToggleButtonLocked = value;
+            if (value == true) {
+                toggleButton.interactable = false;
+            }
+        }
+
+        /// <summary>
+        /// Sets the interactability of the toggle button, but only if the toggle can change
+        /// </summary>
+        /// <param name="value"></param>
         public void SetToggleButtonInteractable(bool value) {
-            toggleButton.interactable = value;
+            if (isToggleButtonLocked == false) {
+                toggleButton.interactable = value;
+            }
         }
 
         /// <summary>

@@ -158,6 +158,7 @@ namespace Characters {
         public override void LVLUp() {
             LVL++; 
             skillPoints++;
+            pmvc.ShowLVLUp();
             pmvc.ExciteSkillsTab();
 
             if (className == ClassConstants.WARRIOR) {

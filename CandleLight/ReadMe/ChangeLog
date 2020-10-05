@@ -196,15 +196,25 @@ Balance: Tweaked some events to not end the player's life (e.g. dirt storm spawn
 Verify: Loading on a build has some awkward pause to it
 Verify: Having a dead party member breaks the game
 UI: Make used interactions uninteractle instaed of red (so unusable is only in combat)
-
-JUST FINISHED
--------------
 Balance: Gave vampireBats Fly attack
 Balance: Make it so thresholds are reduced by 20% of your LUK, party roll stays exact this way
 Bug: Middle skill tooltip position might be wrong
 Bug: One of the dialogue prompts is 3 lines (but which one I forget)
 UI: Make Success/fail interaction check text more clear
 UI: Fix particle lighting in subAreas
+Bug: Not all monster attacks being used
+Credits: Add Adam Mehdi
+UI: Highlight entire row for active party member
+UI: Make background highlight colour coded
+Bug: Colouring and interactability is wack when toggling between attacks and interactions
+Bug: Attack toggle not updating stats properly
+Bug: Background highlight persists on skills when it should go away
+Bug: Saving saves partyMember state constantly
+Bug: On load, regen() hits
+Bug: LEveling up from an event EXP doesn't make LVLup sound
+
+JUST FINISHED
+-------------
 
 COOKING
 -------
@@ -213,15 +223,87 @@ Bug: first item in shop inventory tooltip is broken
 Bug: Outline is broken on candle swapping
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
-Bug: Attack toggle not updating stats properly
-Bug: Colouring is wack when toggling between attacks and interactions
-Bug: Not all monster attacks being used
+UI: Make eventDescription show physical/magical damage
+Monster: The Tumbled
+    - Tumble: Physical attack that may root
+    - Cursed Seeds: Magical attack that damages all other characters (enemies included) and inflicts rbw
+    - Fiery Fall: Fire physical attack guaranteed to burn
+Monster: Enchanted Puppet
+    - Disrupting Slash: Physical Attack, Inflict seal (MATK -30%)
+    - Spell Shield: Grant barrier for 3 turns to a random ally
+Gear: Thornmail
+    - Revenge Bleed: 10%
+    - PDEF: 2
+    - HP: 5
+Gear: Puppet Blade (Warrior)
+    - Seal On Hit: 20%
+    - PATK: 4
+Gear: Anti-Magic Dagger (Rogue)
+    - Seal On Hit: 20%
+    - MATK: 4
+Event: Tumbleweed Patch (Hill Country) 
+    - Forage
+        Make medium quality Thornmail
+        Find mana root
+        Attacked by two tumbled + Rooted for 3 turns
+    - Hunt (DEX 15) (Failure does not end event)
+        Random 1 monster
+        Progress Down 5
+    - Leave
+Event: Tumbleweed Tornado (Lost Desert)
+    - Brave (STR 45)
+        EXP + high quality thornmail
+        Debuffed rbw (make new result that uses a possible spawned monster's stats to scale a status effect)
+        Fight tumbled and wastes wanderers
+    - Wait
+        Progress down 10
+        Debuffed rbw (make new result that uses a possible spawned monster's stats to scale a status effect)
+        Nothing
+Event: Broken Puppet (Broken puppet lying motionless on the ground)
+    - Smash (STR 20)
+        Gain Low quality Enchanted Puppet Gear
+        Fight enchanted Puppet
+    - Scavenge
+        Gain Med quality Enchanted Puppet Gear
+        Fight Champion Enchanted Puppet
+Balance: Greyhide Alpha
+    Call Pack:
+        Summon two greyhides
+Balance: Lesser Wraith
+    Spell Curse: Debuff, inflict seal
+Alternate Final Boss:
+    - TheDen has a chance to be replaced by ThistleCanyon
+    - Elder Tumbled (4 PDEF 10 MDEF)
+        Enroot: Magical Attack with chance to root
+        Cursed Seeds: Magical attack that damages all other characters (enemies included) and inflicts rbw
+        Sprout: Summon The Tumbled 
+        Ignition: Gain permanent Fiery Veil SE 
+Alternate Final Boss:
+    - WraithTomb has a chance to be replaced by Abandoned Workshop
+    - Puppet Master (PDEF 7 MDEF 7)
+        Wicked Dance: Weak magical attack that may inflict Marionette for 1 turn
+        Soul Reap: Physical Attack, may inflict bleed 
+        Puppeteer: Summon two enchanted puppets to fight beside it
+        Soul Shield: Give itself Miracle for 1 turn
+Feature: Fragrances
+    1) Haughty Huckleberry (Monsters spawn with a random buff at the start of combat)
+        Unlock: Kill over 50 monsters in a single run
+        Score + .5
+    2) Lost Lemon (Progress required to clear an area may be increased by up to 50%.)
+        Unlock: Experience 40 events in a single run
+        Score + .25
+    3) Pauper's Pomelo (All WAX is decreased by 25%)
+        Unlock: Earn 250 WAX in a single run
+        Score + .25
+    4) Timeless Tea Leaves (Each area in the game must be cleared in under 5 minutes)
+        Unlock: Beat the game in under 25 minutes
+        Score + .5
+
 Verify: Player dies from random event doesn't always trigger death check?!?!?
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
 Fix: Tutorials are skills! still missable, might need to make the window glow
 Verify: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
-UI: Highlight entire row for active party member
-Credits: Add Adam
+Verify: Test frost golem and pmd in skills panel
 
 NEAR FUTURE
 ----------------

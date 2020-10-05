@@ -32,6 +32,7 @@ namespace PlayerUI {
         public Animator pmFocusAnimator;        /// <value> Animator for focus </value>
         public Animator pmFrostBiteAnimator;    /// <value> Animator for frostbite </value>
         public Image LVLBackground;     /// <value> Background to where level text is displayed </value>
+        public Image background;        /// <value> Background for entire pmd </value>
         public Bar HPBar;               /// <value> Visual for health points </value>
         public Bar MPBar;               /// <value> Visual for mana points </value>
         public GameObject SEDisplayPrefab;  /// <value> Status Effect display prefab </value>    
@@ -45,6 +46,10 @@ namespace PlayerUI {
         public StatsPanel statsPanel;   /// <value> Panel for stats </value>
 
         private PartyMemberVisualController pmvc;       /// <value> PartyMember the display is referring to <value>
+        private Color32 backgroundNormalColor = new Color32(0, 0, 0, 0);
+        private Color32 backgroundSelectedColor;
+        // private Coroutine lerper;                       /// <value> Store the coroutine responsible for changing background colour </value>
+        // private float lerpSpeed = 25f;
         private bool selectForAttack = false;           /// <value> Flag for if partyMember can be selected for an attack target on the next click</value>
 
         public void Awake() {
@@ -65,9 +70,12 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="pm"></param>
         public void Init(PartyMemberVisualController pmvc) {
-            this.pmvc = pmvc;
-            classIcon.sprite = pmvc.partyMemberSprite;
-            pmvc.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
+            if (pmvc.pmdPartyPanel == null) {
+                this.pmvc = pmvc;
+                classIcon.sprite = pmvc.partyMemberSprite;
+                backgroundSelectedColor = new Color32(pmvc.partyMemberColour.r, pmvc.partyMemberColour.g, pmvc.partyMemberColour.b, 100);
+                pmvc.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
+            }
         }
 
         /// <summary>
@@ -90,26 +98,32 @@ namespace PlayerUI {
         /// <param name="pmvc"></param>
         /// <param name="skillPoints"></param>
         public void InitSkillsDisplay(PartyMemberVisualController pmvc, int skillPoints) {
-            this.pmvc = pmvc;
+            if (pmvc.pmdSkillsPanel == null) {
+                this.pmvc = pmvc;
+                classIcon.sprite = pmvc.partyMemberSprite;
+                backgroundSelectedColor = new Color32(pmvc.partyMemberColour.r, pmvc.partyMemberColour.g, pmvc.partyMemberColour.b, 100);
+                pmvc.SetPartyMemberDisplaySkillsPanel(this);
+            }
 
-            classIcon.sprite = pmvc.partyMemberSprite;
             UpdateSkillPointsText(skillPoints);
-
-            pmvc.SetPartyMemberDisplaySkillsPanel(this);
         }
 
         /// <summary>
         /// Toggles the stats panel open or close
-        /// Also sets the active partyMember to whoever was clicked/selected
+        /// Also sets the active partyMember to whoever was clicked/selected (side effect shows active skills)
         /// </summary>
         public void ToggleStatsPanel() {
-            if (statsPanel.pmvc == this.pmvc || statsPanel.pmvc == null) {
-                statsPanel.gameObject.SetActive(!statsPanel.isOpen);
+            if (statsPanel != null) {
+                if (statsPanel.pmvc == this.pmvc || statsPanel.pmvc == null) {
+                    statsPanel.gameObject.SetActive(!statsPanel.isOpen);
+                }
+                pmvc.SetActivePartyMember();
+                if (statsPanel.isOpen == true) {
+                    UpdateStatsPanel();
+                }
             }
-            pmvc.SetActivePartyMember();
-            
-            if (statsPanel.isOpen == true) {
-                UpdateStatsPanel();
+            else {
+                pmvc.SetActivePartyMember();
             }
         }
 
@@ -162,6 +176,15 @@ namespace PlayerUI {
         /// </summary>
         public void ShowNormal() {
             bts.SetColor("normal");
+            // if (gameObject.activeSelf == true && gameObject.activeInHierarchy) {
+            //     if (lerper != null) {
+            //         StopCoroutine(lerper);
+            //     }
+            //     lerper = StartCoroutine(LerpBackgroundColour(backgroundNormalColor));
+            // }
+            // else {
+            background.color = backgroundNormalColor;
+            // }
         }
 
         /// <summary>
@@ -169,6 +192,23 @@ namespace PlayerUI {
         /// </summary>
         public void ShowActive() {
             bts.SetColor("na0");
+            background.color = backgroundNormalColor;
+        }
+
+        /// <summary>
+        /// Sets the bts and background to show the partyMember that is active in combat
+        /// </summary>
+        public void ShowActiveCombat() {
+            bts.SetColor("na0");
+            // if (gameObject.activeSelf == true && gameObject.activeInHierarchy) {
+            //     if (lerper != null) {
+            //         StopCoroutine(lerper);
+            //     }
+            //     lerper = StartCoroutine(LerpBackgroundColour(backgroundNormalColor));
+            // }
+            // else {
+            background.color = backgroundSelectedColor;
+            // }
         }
         
         /// <summary>
@@ -338,5 +378,20 @@ namespace PlayerUI {
                 }
             }
         }
+
+        // public IEnumerator LerpBackgroundColour(Color targetColour) {
+        //     float timeStartedLerping = Time.time;
+        //     float timeSinceStarted = Time.time - timeStartedLerping;
+        //     float percentageComplete = timeSinceStarted * lerpSpeed;
+        //     Color prevColour = background.color;
+            
+        //     while (background.color != targetColour) {
+        //         timeSinceStarted = Time.time - timeStartedLerping;
+        //         percentageComplete = timeSinceStarted * lerpSpeed;
+
+        //         background.color = Color.Lerp(prevColour, targetColour, percentageComplete);
+        //         yield return new WaitForEndOfFrame();
+        //     }
+        // }
     }
 }

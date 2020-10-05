@@ -142,7 +142,6 @@ namespace Database {
                         else {
                             Debug.LogError("PartyMember with className " + className + " does not exist in the DB");
                         }
-                        // need to figure out how to attach this information to a monster gameObject, can't use new
                         pm.Init(personalInfo, LVL, EXP, CHP, CMP, stats, attacks, skills); 
                     }
                 }

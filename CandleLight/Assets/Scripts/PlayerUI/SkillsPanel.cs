@@ -35,7 +35,7 @@ namespace PlayerUI {
             Init();
 
             if (initializing == true) {     // initialize to set pmd references for pmvc, implies skillsPanel is initially open 
-                initializing = false;
+                initializing = false;   
                 gameObject.SetActive(false);
             }
         }
@@ -44,20 +44,46 @@ namespace PlayerUI {
             isOpen = false;
         }
 
+        /// <summary>
+        /// Initializes the skillDisplays and pmds if its first initializing
+        /// TODO: Reset initializing if a new, non-summon partymember is added (for now,
+        /// a summoned partyMember should have 0 as skill points by default in the unity editor (or 
+        /// possibly not show up))
+        /// </summary>
         public void Init() {
             List<PartyMember> pms = PartyManager.instance.GetPartyMembers();
             PartyMember pm = PartyManager.instance.GetActivePartyMember();
             colPoints = new int[] { 0, 0, 0, 0 };
 
-            for (int i = 0; i < pmDisplays.Length;i++) {
-                pmDisplays[i].gameObject.SetActive(false);
-            }    
+            // if (initializing == true) {
+                for (int i = 0; i < pmDisplays.Length;i++) {
+                    pmDisplays[i].gameObject.SetActive(false);
+                }    
+            // }
     
             for (int i = 0; i < pms.Count; i++) {
                 int x = i;          // unity loses track of loop variable, so copying somehow fixes this
-                pmDisplays[i].gameObject.SetActive(true);
-                pmDisplays[i].InitSkillsDisplay(pms[i].pmvc, pms[i].skillPoints);
-            }     
+                // print(pm.pmvc.pmdSkillsPanel.name);
+                // if (pm.pmvc.pmdSkillsPanel == null) {
+                    pmDisplays[i].gameObject.SetActive(true);
+                    pmDisplays[i].InitSkillsDisplay(pms[i].pmvc, pms[i].skillPoints);
+                    
+                //    print(pm.pmvc.pmdSkillsPanel.name);
+                // }
+                //print(pm.pmvc.pmdSkillsPanel);
+                //pmDisplays[i].UpdateSkillPointsText(pms[i].skillPoints);
+                // if (initializing == true) {
+                //     pmDisplays[i].gameObject.SetActive(true);
+                //     pmDisplays[i].InitSkillsDisplay(pms[i].pmvc, pms[i].skillPoints);
+                // }
+                // else {
+                //     if (pm.pmvc.pmdSkillsPanel == null) {
+                //         pmDisplays[i].gameObject.SetActive(true);
+                //         pmDisplays[i].InitSkillsDisplay(pms[i].pmvc, pms[i].skillPoints);
+                //     }
+                //     pmDisplays[i].UpdateSkillPointsText(pms[i].skillPoints);
+                // }
+            }  
 
             for (int i = 0; i < skillDisplays.Length; i++) {
                 int x = i;          // dumb hack cause unity forgets for loop ints
@@ -158,6 +184,35 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Displays the active partyMember with the proper visual colouring
+        /// </summary>
+        /// <param name="pmd"></param>
+        public void DisplayActivePartyMember(PartyMemberDisplay pmd) {
+            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
+                if (pmd != pmDisplays[i]) {
+                    pmDisplays[i].ShowNormal();
+                }
+            }
+
+            pmd.ShowActive();
+        }
+
+        /// <summary>
+        /// Displays the active partyMember with the proper visual colouring,
+        /// colouring the background as well for combat clarity
+        /// </summary>
+        /// <param name="pmd"></param>
+        public void DisplayActivePartyMemberCombat(PartyMemberDisplay pmd) {
+            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
+                if (pmd != pmDisplays[i]) {
+                    pmDisplays[i].ShowNormal();
+                }
+            }
+
+            pmd.ShowActiveCombat();
+        }
+
+        /// <summary>
         /// Sets the skillPanel's buttons interactability
         /// </summary>
         /// <param name="value"></param>
@@ -168,18 +223,6 @@ namespace PlayerUI {
             for (int i = 0; i < pmDisplays.Length; i++) {
                 pmDisplays[i].SetInteractable(value, value);
             }
-        }
-
-        /// <summary>
-        /// Displays the active partyMember with the proper visual colouring
-        /// </summary>
-        /// <param name="pmd"></param>
-        public void DisplayActivePartyMember(PartyMemberDisplay pmd) {
-            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
-                pmDisplays[i].ShowNormal();
-            }
-
-            pmd.ShowActive();
         }
 
         public override string GetPanelName() {

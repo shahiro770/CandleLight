@@ -79,15 +79,16 @@ namespace PlayerUI {
             }
         }
 
-        /// <summary>
-        /// Adds a new partyMemberDisplay to the partyPanel
-        /// </summary>
-        /// <param name="pm"> PartyMember to base display off of </param>
-        public void AddPartyMemberDisplay(PartyMember pm) {
-            int newIndex = PartyManager.instance.GetNumPartyMembers();
-            pmDisplays[newIndex - 1].gameObject.SetActive(true);
-            pmDisplays[newIndex - 1].Init(pm.pmvc);   
-        }
+        // /// <summary>
+        // /// Adds a new partyMemberDisplay to the partyPanel
+        // /// </summary>
+        // /// <param name="pm"> PartyMember to base display off of </param>
+        // public void AddPartyMemberDisplay(PartyMember pm) {
+        //     int newIndex = PartyManager.instance.GetNumPartyMembers();
+        //     pmDisplays[newIndex - 1].gameObject.SetActive(true);
+        //     print("initting " + pm.pmName);
+        //     pmDisplays[newIndex - 1].Init(pm.pmvc);   
+        // }
 
         /// <summary>
         /// Displays the active partyMember with the proper visual colouring
@@ -95,10 +96,29 @@ namespace PlayerUI {
         /// <param name="pmd"></param>
         public void DisplayActivePartyMember(PartyMemberDisplay pmd) {
             for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
-                pmDisplays[i].ShowNormal();
+                if (pmd != pmDisplays[i]) {
+                    pmDisplays[i].ShowNormal();
+                }
             }
 
             pmd.ShowActive();
+            if (statsPanel.isOpen == true) {
+                statsPanel.OnEnable();
+            }
+        }
+
+        /// <summary>
+        /// Displays the active partyMember with the proper visual colouring
+        /// </summary>
+        /// <param name="pmd"></param>
+        public void DisplayActivePartyMemberCombat(PartyMemberDisplay pmd) {
+            for (int i = 0; i < PartyManager.instance.GetNumPartyMembers(); i++) {
+                if (pmd != pmDisplays[i]) {
+                    pmDisplays[i].ShowNormal();
+                }
+            }
+
+            pmd.ShowActiveCombat();
             if (statsPanel.isOpen == true) {
                 statsPanel.OnEnable();
             }
