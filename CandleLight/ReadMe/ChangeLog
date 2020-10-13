@@ -224,12 +224,13 @@ Bug: Outline is broken on candle swapping
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
 UI: Make eventDescription show physical/magical damage
-Monster: The Tumbled
+
+Monster: The Tumbled (PDEF 2 MDEF 0)
     - Tumble: Physical attack that may root
-    - Cursed Seeds: Magical attack that damages all other characters (enemies included) and inflicts rbw
+    - Cursed Seeds: Magical attack that damages a character and inflicts rbw
     - Fiery Fall: Fire physical attack guaranteed to burn
-Monster: Enchanted Puppet
-    - Disrupting Slash: Physical Attack, Inflict seal (MATK -30%)
+Monster: Knight Puppet (PDEF 2 MDEF 1)
+    - Disrupting Slash: Magical Attack, 50% chance to inflict seal (MATK -30%)
     - Spell Shield: Grant barrier for 3 turns to a random ally
 Gear: Thornmail
     - Revenge Bleed: 10%
@@ -237,7 +238,7 @@ Gear: Thornmail
     - HP: 5
 Gear: Puppet Blade (Warrior)
     - Seal On Hit: 20%
-    - PATK: 4
+    - MATK: 4
 Gear: Anti-Magic Dagger (Rogue)
     - Seal On Hit: 20%
     - MATK: 4
@@ -245,6 +246,7 @@ Event: Tumbleweed Patch (Hill Country)
     - Forage
         Make medium quality Thornmail
         Find mana root
+        Nothing
         Attacked by two tumbled + Rooted for 3 turns
     - Hunt (DEX 15) (Failure does not end event)
         Random 1 monster
@@ -259,7 +261,7 @@ Event: Tumbleweed Tornado (Lost Desert)
         Progress down 10
         Debuffed rbw (make new result that uses a possible spawned monster's stats to scale a status effect)
         Nothing
-Event: Broken Puppet (Broken puppet lying motionless on the ground)
+Event: Broken Puppet (Broken puppet lying motionless on the ground because strings got detatched)
     - Smash (STR 20)
         Gain Low quality Enchanted Puppet Gear
         Fight enchanted Puppet
@@ -279,17 +281,17 @@ Alternate Final Boss:
         Sprout: Summon The Tumbled 
         Ignition: Gain permanent Fiery Veil SE 
 Alternate Final Boss:
-    - WraithTomb has a chance to be replaced by Abandoned Workshop
+    - WraithTomb has a chance to be replaced by Ruined Workshop
     - Puppet Master (PDEF 7 MDEF 7)
         Wicked Dance: Weak magical attack that may inflict Marionette for 1 turn
         Soul Reap: Physical Attack, may inflict bleed 
-        Puppeteer: Summon two enchanted puppets to fight beside it
+        Puppeteer: Summon two puppet knights to fight beside it
         Soul Shield: Give itself Miracle for 1 turn
 Feature: Fragrances
     1) Haughty Huckleberry (Monsters spawn with a random buff at the start of combat)
         Unlock: Kill over 50 monsters in a single run
         Score + .5
-    2) Lost Lemon (Progress required to clear an area may be increased by up to 50%.)
+    2) Lost Lemon (Progress percentage is hidden. Progress required to clear an area may be increased or decreased by up to 25%.)
         Unlock: Experience 40 events in a single run
         Score + .25
     3) Pauper's Pomelo (All WAX is decreased by 25%)
@@ -307,6 +309,9 @@ Verify: Test frost golem and pmd in skills panel
 
 NEAR FUTURE
 ----------------
+Event: Event that swaps you between zones laterally
+    - Progress stays the same
+    - Event chance is low
 Lighting: EM for all attacks and SE
 Bug: Tooltip dies for absurd unknown reason on rare occasion
 Feature: Make game appear over top of other games

@@ -268,10 +268,10 @@ namespace Combat {
             DisplayActivePartyMember();
 
             pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstants.STUN) != -1;
-            if (activePartyMember.turnCounter % 3 == 0 && activePartyMember.className == ClassConstants.WARRIOR) {
+            if (activePartyMember.turnCounter % 4 == 0 && activePartyMember.className == ClassConstants.WARRIOR) {
                 if (activePartyMember.skills[(int)SkillConstants.warriorSkills.THUNDEROUSANGER].skillEnabled == true) {
                     foreach (Monster m in monsters) {
-                        m.AddStatusEffect(StatusEffectConstants.SHOCK, 1, null);
+                        m.AddStatusEffect(StatusEffectConstants.SHOCK, 2, null);
                     }
                 }
             }
