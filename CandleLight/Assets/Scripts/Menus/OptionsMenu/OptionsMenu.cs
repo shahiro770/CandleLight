@@ -202,10 +202,7 @@ namespace Menus.OptionsMenu {
             fullscreentt.SetVisible(false);
             resolutiontt.SetVisible(false);
             
-            GeneralSaveData gsData = new GeneralSaveData(null, GameManager.instance.gsData.hsds, GameManager.instance.tutorialTriggers, GameManager.instance.achievementsUnlocked, 
-            GameManager.instance.partyCombos, UIManager.instance.isTimer, GameManager.instance.animationSpeed, AudioManager.instance.bgmVolume, AudioManager.instance.sfxVolume,
-            GameManager.instance.isFullscreen, GameManager.instance.resolutionWidth, GameManager.instance.resolutionHeight);
-            GameManager.instance.SaveGeneralData(gsData);
+            GameManager.instance.SaveGeneralData();
         }
 
         public void SetTutorial(bool value) {

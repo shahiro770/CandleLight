@@ -58,7 +58,7 @@ namespace Characters {
         private PartyMember pm;         /// <value> PartyMember object visual controller is referring to </value>
         private int attackAmount = 0;   /// <value> Amount of damage taken/ healed to display via the eventDescription </value>
         private bool isCrit = false;    /// <value> Flag for if eventDescription will mention the attack dealt a critical hit/heal </value>
-        
+
         /// <summary>
         /// Initializes with basic information using a given partyMember
         /// </summary>

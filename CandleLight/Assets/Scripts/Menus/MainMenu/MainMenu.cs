@@ -10,6 +10,7 @@
 
 using Audio;
 using GameManager = General.GameManager;
+using Localization;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ namespace Menus.MainMenu {
         public Canvas sceneCanvas;
         public Light2D freeForm;
         public Light2D particleLight;
+        public LocalizedText versionText;
 
         private Color defaultColour = new Color32(230, 126, 34, 255);
 
@@ -40,6 +42,7 @@ namespace Menus.MainMenu {
             colorOverLifetime.color = defaultColour;
             freeForm.color = defaultColour;
             particleLight.color = defaultColour;
+            versionText.SetText("v" + GameManager.instance.gsData.version.ToString("0.0"));
 
             // continue button is only enabled if save data exists
             string path = Application.persistentDataPath + "/save.cndl";

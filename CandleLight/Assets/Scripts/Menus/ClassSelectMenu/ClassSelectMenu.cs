@@ -23,7 +23,6 @@ namespace Menus.ClassSelectMenu {
     
         /* external component references */
         public Button selectButton;                 /// <value> Confirmation button  </value>
-        public Button selectedCompButton;           /// <value> Currently selected composition button </value>
         public ButtonTransitionState sbBts;         /// <value> Confirmation button's visual state controller </value>   
         public ButtonTransitionState[] classBtss;   /// <value> List of all class buttons </value>
         public ButtonTransitionState[] compBtss;    /// <value> List of all composition buttons </value>
@@ -121,7 +120,6 @@ namespace Menus.ClassSelectMenu {
         /// </summary> 
         /// <param name="cb"> Class button to change appearance of </param>
         public void SelectClassButton(int index) {
-            var main = ps.main;
             var colorOverLifetime = ps.colorOverLifetime;
             if (partyComposition[compIndex] == "") {
                 numPartyMembers++;
@@ -172,7 +170,6 @@ namespace Menus.ClassSelectMenu {
         }
 
         public void SelectCompositionButton(int index) {
-            var main = ps.main;
             var colorOverLifetime = ps.colorOverLifetime;
             int correspondingClassIndex = -1;
             for (int i = 0; i < compBtss.Length; i++) {

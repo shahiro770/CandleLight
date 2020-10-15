@@ -215,6 +215,7 @@ Bug: LEveling up from an event EXP doesn't make LVLup sound
 
 JUST FINISHED
 -------------
+UI: Toastpanels now glow
 
 COOKING
 -------
@@ -225,23 +226,68 @@ Bug: Mage and Archer class select buttons can visually be seen de-whitening when
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
 UI: Make eventDescription show physical/magical damage
 
-Monster: The Tumbled (PDEF 2 MDEF 0)
+Monster: The Tumbled (PDEF 2 MDEF 0) (Random)
     - Tumble: Physical attack that may root
     - Cursed Seeds: Magical attack that damages a character and inflicts rbw
     - Fiery Fall: Fire physical attack guaranteed to burn
-Monster: Knight Puppet (PDEF 2 MDEF 1)
+    - Has root debuff permanently
+Monster: The Grumbled (PDEF 4 MDEF 2) (Random)
+    - Enroot: Magical attack that guarantees root
+    - Cursed Seeds: Magical attack that damages a character and inflicts rbw
+    - Regrow: Gain regenerate for 3 turns
+    - Wildfire: Inflict burn on all characters
+    - Has root debuff permanently
+Monster: Knight Puppet (PDEF 2 MDEF 1) (Random)
     - Disrupting Slash: Magical Attack, 50% chance to inflict seal (MATK -30%)
-    - Spell Shield: Grant barrier for 3 turns to a random ally
+    - Guarding Stance: Gain Guard for 3 turns
+    - Spell Shield: Restore HP and grant barrier for 3 turns to a random ally
+Monster: Hanged Man (PDEF 2 MDEF 4) (Last on fifth turn AI)
+    - Silent Arrows: Magical attack, 50% chance to inflict seal (MATK - 30%), hits all enemies
+    - Hang: Inflict trap for 3 turns
+    - Spell Shield: Restore health to an ally and grant them Barrier
+    - Free Man: Suicides and deals half remaining HP as damage, happens on 5th turn
+Monster: Dire Greyhide (Last at 60%)
+    - Bite: Stronger physical attack
+    - Howl: Give self and a random ally Advantage
+    - Prowl: Gain Nimble for 3 turns
+    - Enrage: Gain Rage for 3 turns
 Gear: Thornmail
-    - Revenge Bleed: 10%
+    - Revenge Bleed: 20%
     - PDEF: 2
     - HP: 5
+Gear: Root's Wrath (Mage)
+    - MATK 4
+    - Root On Hit: 20%
+    - MP 5
+Gear: Cursed Axe (Warrior)
+    - PATK 4
+    - Weakness On Hit: 20%
+Gear: Root Bow (Archer)
+    - MATK 6
+    - Root On Hit: 20%
+    - Root Plus
+Gear: Poison Claws (Rogue)
+    - Poison On Hit: 20%
+    - PATK 3
 Gear: Puppet Blade (Warrior)
     - Seal On Hit: 20%
     - MATK: 4
 Gear: Anti-Magic Dagger (Rogue)
     - Seal On Hit: 20%
     - MATK: 4
+Gear: Pariah's Prayers (Archer)
+    - Seal On Hit: 20%
+    - MATK: 7
+    - MP On Hit: 2
+Gear: Grey Wind (Archer)
+    - PATK: 4
+    - CRITCHANCE: 3
+Gear: Membrane Bow 
+    - Bleed On Hit 20%
+Gear: Pariah's Garb
+    - Revenge Seal: 20%
+    - Revenge Focus 100%
+    - MDEF 3
 Event: Tumbleweed Patch (Hill Country) 
     - Forage
         Make medium quality Thornmail
@@ -288,15 +334,15 @@ Alternate Final Boss:
         Puppeteer: Summon two puppet knights to fight beside it
         Soul Shield: Give itself Miracle for 1 turn
 Feature: Fragrances
-    1) Haughty Huckleberry (Monsters spawn with a random buff at the start of combat)
-        Unlock: Kill over 50 monsters in a single run
-        Score + .5
-    2) Lost Lemon (Progress percentage is hidden. Progress required to clear an area may be increased or decreased by up to 25%.)
+    1) Lost Lemon (Progress percentage is hidden. Progress required to clear an area may be increased or decreased by up to 25%.)
         Unlock: Experience 40 events in a single run
         Score + .25
-    3) Pauper's Pomelo (All WAX is decreased by 25%)
+    2) Pauper's Pomelo (All WAX is decreased by 50%)
         Unlock: Earn 250 WAX in a single run
         Score + .25
+    3) Haughty Huckleberry (Monsters spawn with a random buff at the start of combat)
+        Unlock: Kill over 50 monsters in a single run
+        Score + .5
     4) Timeless Tea Leaves (Each area in the game must be cleared in under 5 minutes)
         Unlock: Beat the game in under 25 minutes
         Score + .5

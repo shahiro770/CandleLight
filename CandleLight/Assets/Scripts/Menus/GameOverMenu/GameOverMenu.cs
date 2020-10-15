@@ -128,11 +128,8 @@ namespace Menus.GameOverMenu {
             if (isWin) {
                 score += 1000;
             }
-            if (GameManager.instance.difficultyModifier == 0.75f) { // normal mode has a lower score multiplier
-                score = (int)(score * 0.5f);
-            }
 
-            return score;
+            return (int)(score * GameManager.instance.gsData.scoreModifier);
         }
 
         /// <summary>

@@ -18,10 +18,13 @@ namespace General {
         public ItemData pastItemData;
         public bool[] tutorialTriggers;
         public bool[] achievementsUnlocked;
+        public bool[] aromas;
         public string[,] partyCombos;
         public bool isTimer;
         public bool isFullscreen;
+        public float version;
         public float difficultyModifier;
+        public float scoreModifier;
         public float animationSpeed;
         public float bgmVolume;
         public float sfxVolume;
@@ -31,14 +34,17 @@ namespace General {
         public int mostEnemies;
         public int mostWAX;
         public int mostEvents;
-
+       
         // some values are defaulted just cause they'll be swapped with more logic in gameManager anyways
-        public GeneralSaveData(ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool[] achievementsUnlocked, string[,] partyCombos, bool isTimer, 
-        float animationSpeed, float bgmVolume, float sfxVolume, bool isFullscreen, int resolutionWidth, int resolutionHeight, 
-        float difficultyModifier = 0.75f, int mostEnemies = -1, int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
+        public GeneralSaveData(float version, ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool[] achievementsUnlocked, bool[] aromas,
+        string[,] partyCombos, bool isTimer, float scoreModifier, float animationSpeed, float bgmVolume, float sfxVolume, bool isFullscreen, 
+        int resolutionWidth, int resolutionHeight, float difficultyModifier = 0.75f, int mostEnemies = -1, 
+        int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
+            this.version = version;
             this.hsds = hsds;
             this.tutorialTriggers = tutorialTriggers;
             this.achievementsUnlocked = achievementsUnlocked;
+            this.aromas = aromas;
             this.partyCombos = partyCombos;
             this.pastItemData = pastItemData;
             this.isTimer = isTimer;
@@ -49,6 +55,7 @@ namespace General {
             this.resolutionWidth = resolutionWidth;
             this.resolutionHeight = resolutionHeight;
             this.difficultyModifier = difficultyModifier;
+            this.scoreModifier = scoreModifier;
             this.mostEnemies = mostEnemies;
             this.mostWAX = mostWAX;
             this.mostEvents = mostEvents;
