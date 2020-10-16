@@ -99,8 +99,8 @@ namespace PlayerUI {
                         break;
                     }
                 }
-                amountEXP += (int)(enemiesKilled[i].EXP * PartyManager.instance.EXPmultiplier);
-                amountWAX += (int)(enemiesKilled[i].WAX * PartyManager.instance.WAXDropMultiplier);
+                amountEXP += (int)(enemiesKilled[i].EXP);
+                amountWAX += (int)(enemiesKilled[i].WAX);
             }
 
             for (int i = 0; i < monstersToDisplay.Length; i++) {
@@ -110,9 +110,9 @@ namespace PlayerUI {
                 }
             }
 
-            amountTextWAX.SetText(amountWAX.ToString());
+            amountTextWAX.SetText(((int)(amountWAX * PartyManager.instance.WAXmultiplier)).ToString());
             yield return new WaitForSeconds(0.4f);
-            amountTextEXP.SetText(amountEXP.ToString());
+            amountTextEXP.SetText(((int)(amountEXP * PartyManager.instance.EXPmultiplier)).ToString());
             PartyManager.instance.AddWAX(amountWAX);
 
             if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] == false) {

@@ -93,7 +93,6 @@ namespace Characters {
             this.skillPoints = pmData.skillPoints;
 
             pmvc.Init(this);
-            
         }
 
         /// <summary>
@@ -1317,7 +1316,7 @@ namespace Characters {
                 }
                 else if (className == ClassConstants.ARCHER) {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
-                        PartyManager.instance.itemDropMultiplier *= 1.5f;
+                        PartyManager.instance.CalculateMultipliers();
                     }
                     else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
                         statChange = true;
@@ -1331,7 +1330,7 @@ namespace Characters {
                 }
                 else if (className == ClassConstants.ROGUE) {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
-                        PartyManager.instance.WAXDropMultiplier *= 1.5f;
+                        PartyManager.instance.CalculateMultipliers();
                         pmvc.UpdateWAXValues();
                     }
                     else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
@@ -1477,7 +1476,7 @@ namespace Characters {
                 }
                 else if (className == ClassConstants.ARCHER) {
                     if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
-                        PartyManager.instance.itemDropMultiplier /= 1.5f;
+                        PartyManager.instance.CalculateMultipliers();
                     }
                     else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
                         statChange = true;
@@ -1491,7 +1490,7 @@ namespace Characters {
                 }
                 else if (className == ClassConstants.ROGUE) {
                     if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
-                        PartyManager.instance.WAXDropMultiplier /= 1.5f;
+                        PartyManager.instance.CalculateMultipliers();
                         pmvc.UpdateWAXValues();
                     }
                     else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {

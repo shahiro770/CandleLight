@@ -8,13 +8,12 @@
 *
 */
 
+using PartyManager = Party.PartyManager;
 using UnityEngine;
 
 namespace Items {
 
     public class Consumable : Item {
-
-        int WAXpreValue = 0;    /// <value> WAX effect value before any multipliers </value>
 
         /// <summary>
         /// Consumable item constructor
@@ -80,9 +79,6 @@ namespace Items {
                 }
 
                 values[i] =  Random.Range((int)(Mathf.Max(1, values[i] * multiplier)), (int)(values[i] * (1 + multiplier)));
-                if (effects[i] == "WAX") {      // store the consumable WAX value, as it can be modified by skills and other multipliers
-                    WAXpreValue = values[i];
-                }
             }
 
             CalculateWAXValue();
@@ -117,19 +113,6 @@ namespace Items {
         }
 
         /// <summary>
-        /// Multiplies the WAX effect value by a given multiplier
-        /// </summary>
-        /// <param name="multiplier"></param>
-        public void UpdateWAXValue(float multiplier) {
-            for (int i = 0; i < effects.Length; i++) {
-                if (effects[i] == "WAX") {
-                    values[i] = (int)(WAXpreValue * multiplier);    
-                    break;  // assume an item can only have one WAX effect
-                }
-            }
-        }
-
-        /// <summary>
         /// Returns effects
         /// </summary>
         /// <returns></returns>
@@ -157,6 +140,24 @@ namespace Items {
             }
 
             return effectKeys;
+        }
+
+        /// <summary>
+        /// Returns values as strings
+        /// </summary>
+        /// <returns></returns>
+        public override string[] GetValuesAsStrings() {
+            string[] amountStrings = new string[effects.Length];
+            for (int i = 0; i < effects.Length; i++) {
+                if (effects[i] == "WAX") {
+                    amountStrings[i] = ((int)(values[i] * PartyManager.instance.WAXmultiplier)).ToString();
+                }
+                else {
+                    amountStrings[i] = values[i].ToString();
+                }  
+            }
+
+            return amountStrings;
         }
     }
 }

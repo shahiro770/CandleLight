@@ -277,9 +277,12 @@ namespace General {
                 }
             }
             else {  // default settings on first load, or if generalSaveData non existance
-                gsData = new GeneralSaveData(1.0f, null, new HighScoreData[4], Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
-                Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), new bool[4], null,
-                false, 1f, 1f, 0.35f, 1f, false, 1, 1, 0.75f, 0, 0, 0, -1);
+                gsData = new GeneralSaveData(1.0f, null, new HighScoreData[4], 
+                    Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
+                    Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), 
+                    Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AromaConstants.aromaConstants)).Length).ToArray(), 
+                    null,
+                    false, 1f, 1f, 0.35f, 1f, false, 1, 1, 0.75f, 0, 0, 0, -1);
                 tutorialTriggers = gsData.tutorialTriggers;
                 achievementsUnlocked = gsData.achievementsUnlocked;
                 partyCombos = new string[,] { 

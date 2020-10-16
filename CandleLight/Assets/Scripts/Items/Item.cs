@@ -70,10 +70,10 @@ namespace Items {
         }
 
         /// <summary>
-        /// Returns amounts as strings
+        /// Returns values as strings
         /// </summary>
         /// <returns></returns>
-        public virtual string[] GetAmountsAsStrings() {
+        public virtual string[] GetValuesAsStrings() {
             string[] amountStrings = new string[effects.Length];
             for (int i = 0; i < effects.Length; i++) {
                 if (effects[i] == "%MAXHP" || effects[i] == "CRITCHANCE" || effects[i] == "CHAMPIONCHANCE" 

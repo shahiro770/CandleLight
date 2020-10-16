@@ -221,9 +221,12 @@ Feature: Got on hit effects code set up
 Gear: Poison Claws (Rogue)
     - Poison On Hit: 20%
     - PATK 3
+Fix: Monster gear is now attached to the monster (gearItem pool is only used for events)
 
 COOKING
 -------
+Fix: Make sure WAX and EXP multipliers are correct on load
+
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: first item in shop inventory tooltip is broken 
 Bug: Outline is broken on candle swapping
@@ -344,15 +347,15 @@ Balance: Greyhide Alpha
 Balance: Lesser Wraith
     Spell Curse: Debuff, inflict seal
 Alternate Final Boss:
-    - TheDen has a chance to be replaced by ThistleCanyon
-    - Elder Tumbled (4 PDEF 10 MDEF)
+    - TheDen has a chance to be replaced by ThistleHut
+    - Wind Witch (9 PDEF 6 MDEF)
         Enroot: Magical Attack with chance to root
-        Cursed Seeds: Magical attack that damages all other characters (enemies included) and inflicts rbw
+        Cursed Seeds: Magical attack that damages inflicts rbw
         Sprout: Summon The Tumbled 
-        Ignition: Gain permanent Fiery Veil SE 
+        Tumbleweed Tornado: Sacrifice tumbleweeds every 5 turns, doing half their life summed as damage to all partyMembers
 Alternate Final Boss:
     - WraithTomb has a chance to be replaced by Ruined Workshop
-    - Puppet Master (PDEF 7 MDEF 7)
+    - Puppet Master (PDEF 5 MDEF 11)
         Wicked Dance: Weak magical attack that may inflict Marionette for 1 turn
         Soul Reap: Physical Attack, may inflict bleed 
         Puppeteer: Summon two puppet knights to fight beside it

@@ -8,6 +8,7 @@
 *
 */
 
+using AromaConstants = Constants.AromaConstants;
 using Candle = Items.Candle;
 using ClassConstants = Constants.ClassConstants;
 using Characters;
@@ -16,7 +17,6 @@ using General;
 using PlayerUI;
 using ItemConstants = Constants.ItemConstants;
 using SkillConstants = Constants.SkillConstants;
-using ResultConstants = Constants.ResultConstants;
 using System.Collections;
 using System.Collections.Generic;
 using TutorialConstants = Constants.TutorialConstants;
@@ -35,8 +35,9 @@ namespace Party {
         public int bonusChampionChance = 0;     /// <value> Chance of encountering champion monsters, summed from all partyMembers </value>
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
         public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
-        public float WAXDropMultiplier = 1f;    /// <value> Current multiplier on WAX drop amounts from enemies </value>
-        public float EXPmultiplier = 1f;
+        public float WAXmultiplier = 1f;        /// <value> Current multiplier on WAX amounts </value>
+        public float EXPmultiplier = 1f;        /// <value> Current multiplier on EXP amounts </value>
+        public float PROGmultiplier = 1f;       /// <value> Current multiplier on PROG amounts </value>
 
         private List<PartyMember> partyMembersAll = new List <PartyMember>();   /// <value> List containing all partyMembers (alive and dead) </value>
         private List<PartyMember> partyMembersAlive = new List<PartyMember>();  /// <value> List of partyMembers in party </value>
@@ -177,15 +178,13 @@ namespace Party {
             shouldStore = true;
             WAX = 0;
             ID = 0;
-            EXPmultiplier = 1f;
-            WAXDropMultiplier = 1f;
-            itemDropMultiplier = 1f;
             for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
                 Destroy(partyMembersAll[i].gameObject); 
             }
             partyMembersAll.Clear();
             partyMembersAlive.Clear();
             partyMembersDead.Clear();
+            CalculateMultipliers();
         }
 
         /// <summary>
@@ -205,6 +204,7 @@ namespace Party {
             foreach (PartyMemberData pmData in data.partyMemberDatas) {
                 PartyManager.instance.AddPartyMember(pmData);
             }
+            PartyManager.instance.CalculateMultipliers();
         }
         
         /// <summary>
@@ -353,8 +353,43 @@ namespace Party {
                 partyMembersDead.Add(pm);
 
                 pm.RemoveAllStatusEffects();
+                CalculateMultipliers();
+            }
+        }
+
+        /// <summary>
+        /// Calculate all multipliers on various game elements (WAX, PROG, EXP, item drop rates, etc.)
+        /// base on all factors that may affect them
+        /// </summary>
+        public void CalculateMultipliers() {
+            EXPmultiplier = 1f;
+            WAXmultiplier = 1f;
+            itemDropMultiplier = 1f;
+            PROGmultiplier = 1f;
+
+            if (GameManager.instance.gsData.aromas[(int)AromaConstants.aromaConstants.LOSTLILAC] == true) {
+                EXPmultiplier *= 0.75f;
+                PROGmultiplier *= 0.75f;
+            }
+            if (GameManager.instance.gsData.aromas[(int)AromaConstants.aromaConstants.PAUPERSPOMELO] == true) {
+                WAXmultiplier *= 0.5f;
+            }
+
+            foreach (PartyMember pm in partyMembersDead) {
                 if (pm.summoner == null) {
                     EXPmultiplier += 0.5f;
+                }
+            }
+            foreach (PartyMember pm in partyMembersAlive) {
+                if (pm.className == ClassConstants.ARCHER) {
+                    if (pm.skills[(int)SkillConstants.archerSkills.SCAVENGER].skillEnabled == true) {
+                        itemDropMultiplier *= 1.5f;
+                    }
+                }
+                if (pm.className == ClassConstants.ROGUE) {
+                    if (pm.skills[(int)SkillConstants.rogueSkills.WAXTHIEF].skillEnabled == true) {
+                        WAXmultiplier *= 1.5f;
+                    }
                 }
             }
         }
@@ -365,7 +400,12 @@ namespace Party {
         /// <param name="amount"> Positive int amount to be added </param>
         public void AddEXP(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
-                StartCoroutine(pm.AddEXP(amount));
+                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+                    StartCoroutine(pm.AddEXP((int)(amount)));   // ignore multiplier on EXP in the tutorial
+                }
+                else {
+                    StartCoroutine(pm.AddEXP((int)(amount * EXPmultiplier)));
+                }
             }
         }
 
@@ -378,17 +418,15 @@ namespace Party {
                 partyMembersAlive[Random.Range(0, partyMembersAlive.Count)].AddHP(amount);
             }
             else {
-                PartyMember pm = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];
-                if (type == ResultConstants.STATALL || type == ResultConstants.STATALLANDLEAVE || type == ResultConstants.COMBATWITHSIDEEFFECTS) {
-                    if (pm.className == ClassConstants.WARRIOR) {
-                        if (pm.skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
-                            pm.LoseHP(amount >> 1);
-                        }
-                    }
-                    else {
-                        pm.LoseHP(amount);
+                PartyMember pm = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];      
+                if (pm.className == ClassConstants.WARRIOR) {
+                    if (pm.skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                        pm.LoseHP(amount >> 1);
                     }
                 }
+                else {
+                    pm.LoseHP(amount);
+                }  
             }
         }
 
@@ -502,7 +540,7 @@ namespace Party {
                 partyMembersAlive.Add(pm);
             }
             partyMembersDead.Clear();
-            EXPmultiplier = 1f;
+            CalculateMultipliers();
         }
 
         /// <summary>
@@ -526,8 +564,8 @@ namespace Party {
         /// </summary>
         /// <param name="amount"> Positive int to increase by </param>
         public void AddWAX(int amount) {
-            WAX += amount;
-            GameManager.instance.WAXobtained += amount;
+            WAX += (int)(amount * WAXmultiplier);
+            GameManager.instance.WAXobtained += (int)(amount * WAXmultiplier);
             EventManager.instance.UpdateWAXAmounts();
         }
 

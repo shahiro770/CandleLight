@@ -191,6 +191,8 @@ namespace Events {
 
         /// <summary>
         /// Reset game properties that are not tied to the partyManager
+        /// TODO: Kinda don't like how partyManager has to reset stuff at the end of the game
+        /// and EventMAnager resets stuff at the start of the game
         /// </summary>
         public void ResetGame() {
             GameManager.instance.enemiesKilled = 0;
@@ -201,6 +203,7 @@ namespace Events {
             timer.ResetTimer();
             timer.StartTimer(true);
             timer.SetVisible(UIManager.instance.isTimer);
+            PartyManager.instance.CalculateMultipliers();
         }
         
         /// <summary>
@@ -599,7 +602,12 @@ namespace Events {
         /// Gets the next event
         /// </summary>
         public void GetNextEvent() {
-            subAreaProgress += currentEvent.progressAmount;
+            if (GameManager.instance.gsData.aromas[(int)AromaConstants.aromaConstants.LOSTLILAC] == true) {
+                subAreaProgress += (int)(currentEvent.progressAmount * PartyManager.instance.PROGmultiplier);
+            }
+            else {
+                subAreaProgress += currentEvent.progressAmount;
+            }
             GameManager.instance.totalEvents += 1;
 
             if (isNextEventMain == true) {  // don't reset progress to 0 until after player leaves the current main event
@@ -746,7 +754,7 @@ namespace Events {
         /// Displays the current event to the player, with no visual transitions unless the background image is specified
         /// </summary>
         public IEnumerator DisplaySubEvent() {
-            if (currentSubArea.name == "endGreyWastes") {
+            if (currentSubArea.name == "endGreyWastes") {   // for the game's ending in the GreyWastes subArea, add progress and trigger status effects in subEvents
                 StartCoroutine(PartyManager.instance.TriggerStatuses(false));
                 subAreaProgress += currentEvent.progressAmount;
             }
@@ -1130,8 +1138,9 @@ namespace Events {
                     actionsPanel.SetItemActions();         
                     CheckGameOver();
                     break;
-                case ResultConstants.STATALLANDEVENT:
-                    ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDEVENT);
+                case ResultConstants.STATALLANDENDSUBAREA:
+                    ApplyResultStatChangesAll(currentResult, ResultConstants.STATALLANDENDSUBAREA);
+                    subAreaProgress = 100;
                     GetNextEvent();
                     CheckGameOver();
                     break;
@@ -1384,9 +1393,10 @@ namespace Events {
                 }
             }
             if (r.EXPAmount != 0) {
+                int EXPAmountToAdd = Mathf.Max((int)(r.EXPAmount * PartyManager.instance.EXPmultiplier), 1);
                 PartyManager.instance.AddEXP(r.EXPAmount);
                 changes[(int)ToastPanel.toastType.EXP] = true;
-                amounts[(int)ToastPanel.toastType.EXP] = r.EXPAmount.ToString();
+                amounts[(int)ToastPanel.toastType.EXP] = EXPAmountToAdd.ToString();
             }
             if (r.WAXAmount != 0) {
                 if (r.WAXAmount >= 0) {
@@ -1401,7 +1411,9 @@ namespace Events {
                 
             }
             if (r.PROGAmount != 0) {
-                subAreaProgress += currentResult.PROGAmount;
+                int PROGAmountToAdd =  Mathf.Max((int)(currentResult.PROGAmount * PartyManager.instance.PROGmultiplier), 1);
+
+                subAreaProgress += PROGAmountToAdd;
                 if (subAreaProgress > 100) {
                     subAreaProgress = 100;
                 }
@@ -1414,10 +1426,10 @@ namespace Events {
 
                 changes[(int)ToastPanel.toastType.PROGRESS] = true;
                 if (r.PROGAmount > 0) {
-                    amounts[(int)ToastPanel.toastType.PROGRESS] = "+" + currentResult.PROGAmount.ToString();
+                    amounts[(int)ToastPanel.toastType.PROGRESS] = "+" + PROGAmountToAdd.ToString();
                 }
                 else {
-                    amounts[(int)ToastPanel.toastType.PROGRESS] = currentResult.PROGAmount.ToString();
+                    amounts[(int)ToastPanel.toastType.PROGRESS] = PROGAmountToAdd.ToString();
                 }
                 
             }

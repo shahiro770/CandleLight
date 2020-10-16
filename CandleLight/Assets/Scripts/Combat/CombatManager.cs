@@ -629,14 +629,18 @@ namespace Combat {
                 selectedMonsterAttackIndex =  activeMonster.lastAttackIndex;
             }
 
+            print(selectedMonsterAttackIndex);
             if (activeMonster.attacks[selectedMonsterAttackIndex].type == AttackConstants.DEBUFF) {
                 if (pm.GetStatusEffect(activeMonster.attacks[selectedMonsterAttackIndex].seName) != -1) {
                     selectedMonsterAttackIndex = (selectedMonsterAttackIndex - 1) % activeMonster.attackNum;
+                    print("move the debuff one back");
                 }
             }
+            
             if ((attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFFSELF || attacks[selectedMonsterAttackIndex].type == AttackConstants.HEALHPSELF
             || attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFF) && activeMonster.GetStatusEffect(attacks[selectedMonsterAttackIndex].seName) != -1) {
                 selectedMonsterAttackIndex = (selectedMonsterAttackIndex - 1) % activeMonster.attackNum;
+                print("move the buff one back");
             }
 
             return attacks[selectedMonsterAttackIndex];  
