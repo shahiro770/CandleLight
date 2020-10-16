@@ -11729,7 +11729,7 @@ MonoBehaviour:
   optionsMenu: {fileID: 685122650}
   helpMenu: {fileID: 1006311642}
   gameOverMenu: {fileID: 1781244077}
-  simEvent: combatGreyWastes
+  simEvent: 
 --- !u!4 &154656196
 Transform:
   m_ObjectHideFlags: 0
@@ -22843,7 +22843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: HP_label
+  key: HP_label_uncoloured
   meshText: {fileID: 481492097}
   textPreset: 0
 --- !u!1 &483198016
@@ -25723,7 +25723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: HP_label
+  key: HP_label_uncoloured
   meshText: {fileID: 559438741}
   textPreset: 0
 --- !u!222 &559438743
@@ -55849,7 +55849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MP_label
+  key: MP_label_uncoloured
   meshText: {fileID: 1181357956}
   textPreset: 0
 --- !u!222 &1181357958
@@ -87186,7 +87186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MP_label
+  key: MP_label_uncoloured
   meshText: {fileID: 2024571001}
   textPreset: 0
 --- !u!1 &2025773855

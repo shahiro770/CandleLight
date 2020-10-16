@@ -541,6 +541,9 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.NIMBLE) {
                     DOG += DOG;
                 }
+                else if (se.name == StatusEffectConstants.ETHEREAL) {
+                    MATK += (int)(MATK * 0.5);
+                }
                 else if (se.name == StatusEffectConstants.SCUM) {
                     HPRegen *= 0.5f;
                     MPRegen *= 0.5f;

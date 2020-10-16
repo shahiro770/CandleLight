@@ -42,13 +42,13 @@ namespace PlayerUI {
 
             if (types[(int)toastType.HP] == true) {
                 titleKey = "HP_toast";
-                descriptionKeys[0] = "HP_label_coloured";
+                descriptionKeys[0] = "HP_label";
                 amountStrings[0] = "<color=#EA323C>" + amounts[0] + "</color>";
                 typesCount++;
             }
             if (types[(int)toastType.MP] == true) {
                 titleKey = "MP_toast";
-                descriptionKeys[1] = "MP_label_coloured";
+                descriptionKeys[1] = "MP_label";
                 amountStrings[1] = "<color=#502BFF>" + amounts[1] + "</color>";
                 typesCount++;
             }

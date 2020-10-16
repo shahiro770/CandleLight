@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: HP_label
+  key: HP_label_uncoloured
   meshText: {fileID: 8247081326662861777}
   textPreset: 0
 --- !u!114 &8247081326662861777
@@ -2096,7 +2096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MP_label
+  key: MP_label_uncoloured
   meshText: {fileID: 8247081327350692785}
   textPreset: 0
 --- !u!114 &8247081327350692785

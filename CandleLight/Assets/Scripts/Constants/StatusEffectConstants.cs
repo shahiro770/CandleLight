@@ -29,6 +29,7 @@ namespace Constants {
         public const string GUARD = "guard";   /// <value> Gains PDEF </value>
         public const string CURE = "cure";     /// <value> Debuffs last half as long </value>
         public const string MIRACLE = "miracle";     /// <value>  User gains max PDEF and MDEF </value>
+        public const string ETHEREAL = "ethereal";   /// <value>  Gain MATK </value>
         public const string FATALWOUND = "fatalWound";  /// <value> Game ending debuff </value>
         public const string VAMPIRE = "vampire";      /// <value> Has bleedPlus (increased bleed damage) </value>
         public const string RBW = "rbw";       /// <value> Randomly decide between root, bleed, and weakness </value>

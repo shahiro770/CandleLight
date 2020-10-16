@@ -155,11 +155,11 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(155, 66, 28, 255));
                     break;
                 case StatusEffectConstants.CURE:
-                    normalBlock.normalColor = new Color32(90, 197, 79, 200);
-                    normalBlock.highlightedColor = new Color32(90, 197, 79, 255);
-                    normalBlock.pressedColor = new Color32(90, 197, 79, 255);
-                    normalBlock.disabledColor = new Color32(90, 197, 79, 150);
-                    durationText.SetColour(new Color32(90, 197, 79, 255));
+                    normalBlock.normalColor = new Color32(125, 237, 164, 200);
+                    normalBlock.highlightedColor = new Color32(125, 237, 164, 255);
+                    normalBlock.pressedColor = new Color32(125, 237, 164, 255);
+                    normalBlock.disabledColor = new Color32(125, 237, 164, 150);
+                    durationText.SetColour(new Color32(125, 237, 164, 255));
                     break;
                 case StatusEffectConstants.TRAP:
                     normalBlock.normalColor = new Color32(133, 133, 133, 200);
@@ -195,6 +195,13 @@ namespace PlayerUI {
                     normalBlock.pressedColor = new Color32(0, 111, 135, 255);
                     normalBlock.disabledColor = new Color32(0, 111, 135, 150);
                     durationText.SetColour(new Color32(0, 111, 135, 255));
+                    break;
+                case StatusEffectConstants.ETHEREAL:
+                    normalBlock.normalColor = new Color32(209, 201, 255, 200);
+                    normalBlock.highlightedColor = new Color32(209, 201, 255, 255);
+                    normalBlock.pressedColor = new Color32(209, 201, 255, 255);
+                    normalBlock.disabledColor = new Color32(209, 201, 255, 150);
+                    durationText.SetColour(new Color32(209, 201, 255, 255));
                     break;
                 case StatusEffectConstants.BOSS:
                 case StatusEffectConstants.FAMILIAR:

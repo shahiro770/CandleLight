@@ -1411,7 +1411,13 @@ namespace Events {
                 
             }
             if (r.PROGAmount != 0) {
-                int PROGAmountToAdd =  Mathf.Max((int)(currentResult.PROGAmount * PartyManager.instance.PROGmultiplier), 1);
+                int PROGAmountToAdd;
+                if (r.PROGAmount < 0) {
+                    PROGAmountToAdd =  Mathf.Min((int)(currentResult.PROGAmount * PartyManager.instance.PROGmultiplier), -1);
+                }
+                else {
+                    PROGAmountToAdd =  Mathf.Max((int)(currentResult.PROGAmount * PartyManager.instance.PROGmultiplier), 1);
+                }
 
                 subAreaProgress += PROGAmountToAdd;
                 if (subAreaProgress > 100) {

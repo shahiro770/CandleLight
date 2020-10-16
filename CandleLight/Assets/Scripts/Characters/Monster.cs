@@ -185,6 +185,9 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.NIMBLE) {
                     DOG += DOG;
                 }
+                else if (se.name == StatusEffectConstants.ETHEREAL) {
+                    MATK += (int)(MATK * 0.5);
+                }
                 else if (se.name == StatusEffectConstants.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);
                 }
@@ -246,6 +249,9 @@ namespace Characters {
             if (difficultyModifier >= 1f) {
                 GetChampionBuff(championBuffs);
             }
+            if (GameManager.instance.gsData.aromas[(int)AromaConstants.aromaConstants.VICIOUSVINEYARD] == true) {
+                GetRandomBuff();
+            }
             md.UpdateTooltip();
             md.SetHealthBar();
         }
@@ -270,6 +276,7 @@ namespace Characters {
 
         /// <summary>
         /// Applies a champion buff to a monster at random
+        /// TODO: Make AddStatusEffectPermanent similar to AddStatusEffect
         /// </summary>
         /// <param name="championBuffs"> List of championBuffs that can be applied in the subArea (assumed length 3) </param>
         public void GetChampionBuff(string[] championBuffs) {
@@ -320,6 +327,51 @@ namespace Characters {
                 }
             }
         }
+
+        /// <summary>
+        /// Apply a random buff to the monster.
+        /// If champion, monster gets two buffs
+        /// </summary>
+        public void GetRandomBuff() {
+            int buffNum = isChampion == false ? 1 : 2;
+
+            for (int i = 0; i < buffNum; i++) {
+                int buffIndex = Random.Range(0, 100);
+                bool isCommon = Random.Range(0, 100) < 75;
+                
+                if (isCommon) {
+                    if (buffIndex < 20) {
+                        AddStatusEffect(StatusEffectConstants.GUARD, 2, this);
+                    }
+                    else if (buffIndex < 40) {
+                        AddStatusEffect(StatusEffectConstants.BARRIER, 2, this);
+                    }
+                    else if (buffIndex < 60) {
+                        AddStatusEffect(StatusEffectConstants.REGENERATE, 2, this);
+                    }
+                    else if (buffIndex < 80) {
+                        AddStatusEffect(StatusEffectConstants.CURE, 4, this);
+                    }
+                    else { // if (buffIndex < 100) 
+                        AddStatusEffect(StatusEffectConstants.NIMBLE, 2, this);
+                    }
+                }
+                else {  // rare buff pool
+                    if (buffIndex < 50) {
+                        if (PATK > MATK) {
+                            AddStatusEffect(StatusEffectConstants.RAGE, 2, this);
+                        }
+                        else {
+                            AddStatusEffect(StatusEffectConstants.ETHEREAL, 2, this);
+                        }
+                    }
+                    else {
+                        AddStatusEffect(StatusEffectConstants.MIRACLE, 1, this);    // buffs by default get +1 to their duration
+                    }
+                }
+            }
+        }
+        
 
         /// <summary>
         /// Applies changes to a monster based on the game's difficulty
