@@ -216,6 +216,11 @@ Bug: LEveling up from an event EXP doesn't make LVLup sound
 JUST FINISHED
 -------------
 UI: Toastpanels now glow
+UI: Got aromas set up
+Feature: Got on hit effects code set up
+Gear: Poison Claws (Rogue)
+    - Poison On Hit: 20%
+    - PATK 3
 
 COOKING
 -------
@@ -225,6 +230,7 @@ Bug: Outline is broken on candle swapping
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
 UI: Make eventDescription show physical/magical damage
+Fix: Rename all uses of "Enemy" to "monster" (more consistent naming convetion)
 
 Monster: The Tumbled (PDEF 2 MDEF 0) (Random)
     - Tumble: Physical attack that may root
@@ -266,9 +272,6 @@ Gear: Root Bow (Archer)
     - MATK 6
     - Root On Hit: 20%
     - Root Plus
-Gear: Poison Claws (Rogue)
-    - Poison On Hit: 20%
-    - PATK 3
 Gear: Puppet Blade (Warrior)
     - Seal On Hit: 20%
     - MATK: 4
@@ -310,10 +313,31 @@ Event: Tumbleweed Tornado (Lost Desert)
 Event: Broken Puppet (Broken puppet lying motionless on the ground because strings got detatched)
     - Smash (STR 20)
         Gain Low quality Enchanted Puppet Gear
-        Fight enchanted Puppet
+        No result and leave
     - Scavenge
         Gain Med quality Enchanted Puppet Gear
         Fight Champion Enchanted Puppet
+Event: Field of Arrows (A hanged man hangs from a gallow admist a field of arrows, his fingers are pointing at piles of items and a bowl)   
+    - Shop
+        - Sell random items from the area
+    - Question
+        - Comply (LUK 35)
+            Gain high quality Hanged Man Gear
+            Barrier for 9 turns
+            Fight Champion Hanged Man
+        - Fight
+            Hanged Man
+Event: Give A Dog a Bone (Dire Greyhide scavenging a carcass, gnawing on a bone) 
+    - Bone (STR 30)
+        High quality Weapon0 
+        Fight champion Dire Greyhide
+    - Meat
+        Get some rotten meat
+Event: Berserk Ravager (see a Ravager losing its mind amongst countless dead Unkindled)
+    - Fight 
+        Fight a Champion Ravager
+    - Travel
+
 Balance: Greyhide Alpha
     Call Pack:
         Summon two greyhides

@@ -152,6 +152,7 @@ namespace Combat {
             SelectMonsterDelegate smd = new SelectMonsterDelegate(SelectMonster);
             
             monsterComponent.ID = countID++;
+            monsterComponent.monsterGear = DataManager.instance.GetMonsterGear(monsterName);
             monsterComponent.turnCounter = 0;
             monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
             monsterComponent.ApplyDifficultyChanges(); 

@@ -76,7 +76,8 @@ namespace Items {
         public virtual string[] GetAmountsAsStrings() {
             string[] amountStrings = new string[effects.Length];
             for (int i = 0; i < effects.Length; i++) {
-                if (effects[i] == "%MAXHP" || effects[i] == "CRITCHANCE" || effects[i] == "CHAMPIONCHANCE") {     // TODO Make this account for percent effects
+                if (effects[i] == "%MAXHP" || effects[i] == "CRITCHANCE" || effects[i] == "CHAMPIONCHANCE" 
+                || effects[i] == "POISONCHANCE") {     // TODO Make this account for percent effects
                     amountStrings[i] = values[i] + "%";
                 }
                 else if (effects[i] == "BURNPLUS" || effects[i] == "POISONPLUS" || effects[i] == "BLEEDPLUS" 

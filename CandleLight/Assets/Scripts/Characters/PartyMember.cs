@@ -328,6 +328,9 @@ namespace Characters {
             burnPlus = false;
             poisonPlus = false;
             bleedPlus = false;
+            for (int i = 0; i < onHitChances.Length; i++) {
+                onHitChances[i] = 0;
+            }
 
             /* secondary stats changes from gear */
             for (int i = 0; i < numGear; i++) {
@@ -388,6 +391,9 @@ namespace Characters {
                                 break;
                             case "BLEEDPLUS":
                                 bleedPlus = true;
+                                break;
+                            case "POISONCHANCE":
+                                onHitChances[0] += gearToCalculate.values[j];
                                 break;
                             default:
                                 break;

@@ -138,7 +138,7 @@ namespace PlayerUI {
                 }
                 if (enemiesKilled[i].CheckItemDrop(PartyManager.instance.itemDropMultiplier) == true) {
                     itemSlots[itemNum].SetVisible(true);
-                    itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItems(enemiesKilled[i].monsterReward)[0]); // will only get one item
+                    itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItemsMonster(enemiesKilled[i])); // will only get one item
                     itemNum++;
                     numSpareFull++;
                     yield return null;

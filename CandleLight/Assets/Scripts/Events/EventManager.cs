@@ -943,6 +943,38 @@ namespace Events {
         }
 
         /// <summary>
+        /// Get the gear dropped by a monster.
+        /// If the monster drops non-gear items, use subarea item pools to find the item
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public Item GetResultItemsMonster(Monster m) {
+            Result r = m.monsterReward;
+            
+            if (r.itemType == ItemConstants.GEAR) {  
+                if (GameManager.instance.difficultyModifier == 0.75f) {     // normal mode has worse items
+                    r.DowngradeResult();
+                }
+                r.GenerateResults();
+
+                Gear g =  new Gear(m.monsterGear[Random.Range(0, m.monsterGear.Length - 1)]);
+                g.RandomizeAmounts(r.itemQuality);
+
+                if (g == null) {
+                    Debug.LogError("Monster gear was not generated");
+                }
+                else {
+                    return g;
+                }
+            }
+            else {  // if monster were to drop something that isn't gear (extremely rare)
+                GetResultItems(r);
+            }
+             
+            return null;
+        }
+
+        /// <summary>
         /// Does something depending on the interaction selected by the player
         /// </summary>
         /// <param name="i"> Interaction object </param>

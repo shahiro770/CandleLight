@@ -126,6 +126,9 @@ namespace Items {
 
             for (int i = 0; i < effects.Length; i++) {
                 switch(effects[i]) {
+                    case "POISONCHANCE":
+                        WAX += (int)(values[i] * 0.25f);
+                        break;
                     case "STR":
                     case "DEX":   
                     case "INT":  

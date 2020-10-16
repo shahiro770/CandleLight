@@ -13,11 +13,14 @@
 using achievementConstants = Constants.AchievementConstants.achievementConstants;
 using AttackConstants = Constants.AttackConstants;
 using ClassConstants = Constants.ClassConstants;
+using Constants;
 using Combat;
 using EventManager = Events.EventManager;
 using GameManager = General.GameManager;
+using Items;
 using PartyManager = Party.PartyManager;
 using Result = Events.Result;
+using ResultConstants = Constants.ResultConstants;
 using SkillConstants = Constants.SkillConstants;
 using StatusEffectConstants = Constants.StatusEffectConstants;
 using System.Collections;
@@ -31,6 +34,7 @@ namespace Characters {
         public MonsterDisplay md;
 
         [field: SerializeField] public Result monsterReward { get; private set; }       /// <value> Result monster gives on death </value>
+        [field: SerializeField] public Gear[] monsterGear { get; set; }                 /// <value> If monster drops gear, preload the gear into an array for fast access  </value>
         [field: SerializeField] public string monsterArea { get; private set; }         /// <value> Area where monster can be found </value>
         [field: SerializeField] public string monsterSize { get; private set; }         /// <value> String constant describing size of monster's sprite </value>
         [field: SerializeField] public string monsterNameID { get; private set; }       /// <value> NameID as referenced in database </value>
@@ -82,6 +86,20 @@ namespace Characters {
             this.bonusPDEF = bonusPDEF;
             this.bonusMDEF = bonusMDEF;
             this.monsterReward = monsterReward;
+            if (monsterReward.type == ResultConstants.ITEM) {   // if the monster is going to drop gear, store it inside the monster
+                if (monsterReward.itemType == ItemConstants.GEAR) {
+                    int gearNum = 0;
+                    for (int i = 0; i < monsterReward.specificItemNames.Length; i++) {
+                        if (monsterReward.specificItemNames[i] != "none") {
+                            gearNum++;
+                        }
+                    }
+                    monsterGear = new Gear[gearNum];      
+                    for (int i = 0; i < gearNum; i++) {
+                        monsterGear[i] = (Gear)(GameManager.instance.DB.GetItemByNameID(monsterReward.specificItemNames[i], "Gear"));
+                    }
+                }
+            }
             this.championChance = championChance;
 
             string[] LVLString = monsterNameID.Split(' ');
@@ -478,6 +496,15 @@ namespace Characters {
 
                 if (isStatus == true && CheckDeath() == false) {
                    AddStatusEffect(a.seName, a.seDuration, c);
+                }
+
+                // side effects from partyMember on hit effects
+                for (int i = 0; i < c.onHitChances.Length; i++) {
+                    if (c.onHitChances[i] != 0) {
+                        if (CalculateOnHitHit(i, c) == true) {
+                            AddStatusEffect(StatusEffectConstants.POISON, 2, c);
+                        }
+                    }
                 }
             }
             else {

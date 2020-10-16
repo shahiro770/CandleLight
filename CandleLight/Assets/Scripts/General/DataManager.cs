@@ -141,8 +141,8 @@ namespace General {
         /// </summary>
         /// <param name="monsterName"> Name of monster to load </param>
         /// <returns> Initialized monsterDisplay game object </returns>
-        public GameObject GetLoadedMonsterDisplay(string monsterName) {
-            int index = loadedMonsters.FindIndex(m => m.monsterNameID == monsterName);    
+        public GameObject GetLoadedMonsterDisplay(string monsterNameID) {
+            int index = loadedMonsters.FindIndex(m => m.monsterNameID == monsterNameID);    
             return loadedMonsterDisplayGameObjects[index];
         }
 
@@ -177,6 +177,16 @@ namespace General {
             } 
 
             yield break;
+        }
+
+        /// <summary>
+        /// Instantiated monster components don't copy their monsterGear[]
+        /// so it needs to be copied over manually
+        /// </summary>
+        /// <param name="monsterNameID"></param>
+        /// <returns></returns>
+        public Gear[] GetMonsterGear(string monsterNameID) {
+            return loadedMonsters.Find(m => m.monsterNameID == monsterNameID).monsterGear;  
         }
 
         /// <summary>

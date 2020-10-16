@@ -48,6 +48,7 @@ namespace Characters {
         [field: SerializeField] public bool burnPlus { get; set; } = false;     /// <value> Flag for if this character can inflict stronger burns </value>
         [field: SerializeField] public bool poisonPlus { get; set; } = false;   /// <value> Flag for if this character can inflict stronger poisons </value>
         [field: SerializeField] public bool bleedPlus { get; set; } = false;    /// <value> Flag for if this character can inflict stronger bleeds </value>
+        [field: SerializeField] public int[] onHitChances = new int[3];
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
@@ -308,6 +309,16 @@ namespace Characters {
         /// <returns></returns>
         public int CalculateAttackFocusCrit(int amount, Character c) {
             return (int)(amount * c.critMult);
+        }
+
+        /// <summary>
+        /// Calculates the chance of on hit effect applying against this character 
+        /// </summary>
+        /// <param name="index"> specific on hit chance being applied (e.g. index 0 is poison) </param>
+        /// <param name="c"> Character applying the on hit effect on this character </param>
+        /// <returns></returns>
+        public bool CalculateOnHitHit(int index, Character c) {
+            return Random.Range(0, 100) < c.onHitChances[index];
         }
 
         protected void AddStatusEffect(StatusEffect se) {
