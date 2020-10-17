@@ -222,11 +222,24 @@ Gear: Poison Claws (Rogue)
     - Poison On Hit: 20%
     - PATK 3
 Fix: Monster gear is now attached to the monster (gearItem pool is only used for events)
+Feature: Fragrances
+    1) Lost Lemon (Progress percentage is hidden. Progress required to clear an area may be increased or decreased by up to 25%.)
+        Unlock: Experience 40 events in a single run
+        Score + .25
+    2) Pauper's Pomelo (All WAX is decreased by 50%)
+        Unlock: Earn 250 WAX in a single run
+        Score + .25
+    3) Haughty Huckleberry (Monsters spawn with a random buff at the start of combat)
+        Unlock: Kill over 50 monsters in a single run
+        Score + .5
+    4) Timeless Tea Leaves (Each area in the game must be cleared in under 5 minutes)
+        Unlock: Beat the game in under 25 minutes
+        Score + .5
+Fix: Multiplier code cleaned up
+Fix: Make sure WAX and EXP multipliers are correct on load
 
 COOKING
 -------
-Fix: Make sure WAX and EXP multipliers are correct on load
-
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: first item in shop inventory tooltip is broken 
 Bug: Outline is broken on candle swapping
@@ -360,19 +373,6 @@ Alternate Final Boss:
         Soul Reap: Physical Attack, may inflict bleed 
         Puppeteer: Summon two puppet knights to fight beside it
         Soul Shield: Give itself Miracle for 1 turn
-Feature: Fragrances
-    1) Lost Lemon (Progress percentage is hidden. Progress required to clear an area may be increased or decreased by up to 25%.)
-        Unlock: Experience 40 events in a single run
-        Score + .25
-    2) Pauper's Pomelo (All WAX is decreased by 50%)
-        Unlock: Earn 250 WAX in a single run
-        Score + .25
-    3) Haughty Huckleberry (Monsters spawn with a random buff at the start of combat)
-        Unlock: Kill over 50 monsters in a single run
-        Score + .5
-    4) Timeless Tea Leaves (Each area in the game must be cleared in under 5 minutes)
-        Unlock: Beat the game in under 25 minutes
-        Score + .5
 
 Verify: Player dies from random event doesn't always trigger death check?!?!?
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons

@@ -110,7 +110,6 @@ namespace Menus.GameOverMenu {
             if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] == false && isWin == true 
             && GameManager.instance.difficultyModifier == 1f) {
                 if (TimeSpan.FromSeconds(GameManager.instance.timeTaken).TotalSeconds < 720) {
-                    print(TimeSpan.FromSeconds(GameManager.instance.timeTaken).TotalSeconds);
                     GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] = true;
                     EventManager.instance.SetAchievementNotification((int)achievementConstants.NOTIME, true);
                 }      

@@ -35,7 +35,7 @@
 		{ "key": "aroma2_title", "value": "Vicious Vineyard" },
 		{ "key": "aroma2_des", "value": "To survive, your foes learned to be cruel.\nAll enemies spawn with a random buff." },
 		{ "key": "aroma3_title", "value": "Wilting Wintergreen" },
-		{ "key": "aroma3_des", "value": "If only you knew how precious your time was.\nYou have 7 minutes to clear each area." },
+		{ "key": "aroma3_des", "value": "If only you knew how precious your time was.\nYou have 7 minutes to reach each pivotal moment." },
 		{ "key": "score_modifier_title", "value": "Score Modifier:" },
 		{ "key": "begin_button", "value": "Begin" },
 		{ "key": "aromas_button", "value": "Aromas" },

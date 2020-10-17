@@ -167,7 +167,7 @@ namespace Characters {
                     DOG -= (int)(DOG * 0.5);
                 }
                 else if (se.name == StatusEffectConstants.GUARD) {
-                    PDEF += PDEF;
+                    PDEF += Mathf.Max(1, PDEF);
                 }
                 else if (se.name == StatusEffectConstants.MIRACLE) {
                     PDEF += 9999;
@@ -177,7 +177,7 @@ namespace Characters {
                     bleedPlus = true;
                 }
                 else if (se.name == StatusEffectConstants.BARRIER) {
-                    MDEF += MDEF;
+                    MDEF += Mathf.Max(1, MDEF);
                 }
                 else if (se.name == StatusEffectConstants.MARIONETTE) {
                     DOG -= DOG;

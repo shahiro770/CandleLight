@@ -58,6 +58,7 @@ namespace Events {
         public TabManager itemsTabManager;          /// <value> Click on to display other panels with item information </value>
         public TabManager utilityTabManager;        /// <value> Click on to display other panels with utillity information </value>
         public Timer timer;                         /// <value> Timer reference </value>
+        public Timer aromaTimer;                    /// <value> Timer reference to timer that counts down to game over </value>
         public OptionsMenu optionsMenu;             /// <value> OptionsMenu reference </value>
         public HelpMenu helpMenu;                   /// <value> OptionsMenu reference </value>
         public GameOverMenu gameOverMenu;           /// <value> gameOverMenu reference </value>
@@ -203,6 +204,13 @@ namespace Events {
             timer.ResetTimer();
             timer.StartTimer(true);
             timer.SetVisible(UIManager.instance.isTimer);
+            if (GameManager.instance.gsData.aromas[(int)AromaConstants.aromaConstants.WILTINGWINTERGREEN] == true) {
+                aromaTimer.SetVisibleAromaTimer(true);
+                aromaTimer.StartTimerAroma(true);
+            }
+            else {
+                aromaTimer.SetVisibleAromaTimer(false);
+            }
             PartyManager.instance.CalculateMultipliers();
         }
         
@@ -375,6 +383,13 @@ namespace Events {
                 timer.SetElapseTimed(GameManager.instance.rData.elapsedTime);
                 timer.StartTimer(true);
                 timer.SetVisible(UIManager.instance.isTimer);
+                if (GameManager.instance.gsData.aromas[(int)AromaConstants.aromaConstants.WILTINGWINTERGREEN] == true) {
+                    aromaTimer.SetVisibleAromaTimer(true);
+                    aromaTimer.StartTimerAroma(true);
+                }
+                else {
+                    aromaTimer.SetVisibleAromaTimer(false);
+                }
             }
 
             LoadArea(areaName);
@@ -651,6 +666,9 @@ namespace Events {
             AlterParticleSystem();
             infoPanel.UpdateSubAreaCard(currentArea.GetSubAreaCard(0), currentArea.name + "0");
             SaveRunAndGeneralData();
+            if (GameManager.instance.gsData.aromas[(int)AromaConstants.aromaConstants.WILTINGWINTERGREEN] == true) {
+                aromaTimer.ResetTimer();
+            }
         }
 
         /// <summary>
@@ -1759,7 +1777,8 @@ namespace Events {
         /// <returns></returns>
         public IEnumerator DisplayGameOver(bool isWin) {
             GameManager.instance.DeleteSaveData();
-            timer.StartTimer(false);;
+            timer.StartTimer(false);
+            aromaTimer.StartTimerAroma(false);
             if (isWin == false) {
                 SetAllButtonsInteractable(false);
                 yield return new WaitForSeconds(2f);    // DRAMATIC PAUSE ON DEATH
