@@ -23,3 +23,45 @@ namespace Constants {
         public enum rogueSkills { STAB = -2, LACERATE, FAEDUST, CLOAKED, WAXTHIEF, AMBUSHER, DEADLY, THUNDEREDGE, KILLERINSTINCT, RITUALDAGGERS, ANGELSMERCY };
     }
 }
+
+```
+Class   
+Warrior   Col 0      Col 1        Col 2              Col 3
+          Healthy    Manablade    Vampiric Mail      Tri Slash
+          Whirlwind  Fire Slash   Thunderous Might   Draken's Rage
+          Steadfast  Bloodsworn   Timeless Blade     Honour Guard
+
+New Skills:
+- Healthy doubles HP regen
+- Whirlwind sidegrades Taunt, aoe physical attack that hits adjacents
+- Tri Slash upgrades Slash, physical attack that scales off of MATK, has a 66% chance of inflict, freeze, burn, or shock
+- Draken's Rage provides permanent Rage (PATK up) while a partyMember is dead
+_ Honour Guard gives 33% the Warrior's PDEF to all partyMembers (including himself)
+
+Changes:
+- Timeless Blade now upgrades Safeguard
+
+Class   
+Mage    Col 0       Col 1               Col 2              Col 3
+        Third Eye   Critical Magic      Mana Shield        Fire Storm
+        Frost       Heal                Fiery Veil         Cripple
+        Pyromancy   Candlemancy         Frost Golem        Twin Elements
+
+New Skills:
+- Healthy doubles HP regen
+- Whirlwind sidegrades Taunt, aoe physical attack that hits adjacents
+- Tri Slash upgrades Slash, physical attack that scales off of MATK, has a 66% chance of inflict, freeze, burn, or shock
+- Draken's Rage provides permanent Rage (PATK up) while a partyMember is dead
+_ Honour Guard gives 33% the Warrior's PDEF to all partyMembers (including himself)
+
+Changes:
+- Timeless Blade now upgrades Safeguard
+
+Mage      Whack    Fireball   Channel      Seal
+Archer    Arrow    Enroot     Elven Gift   Volley
+Rogue     Stab     Lacerate   Fae Dust     Evade
+
+New Skills:
+- Channel buffs an ally +MATK for X turns
+- Seal debuffs an enemy -MATK for X turns
+- Evade buffs an ally +DOG for X turns
