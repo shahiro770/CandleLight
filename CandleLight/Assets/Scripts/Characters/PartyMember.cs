@@ -394,6 +394,9 @@ namespace Characters {
                             case "POISONCHANCE":
                                 onHitChances[0] += gearToCalculate.values[j];
                                 break;
+                            case "WEAKNESSCHANCE":
+                                onHitChances[1] += gearToCalculate.values[j];
+                                break;
                             default:
                                 break;
                         }
@@ -474,7 +477,7 @@ namespace Characters {
             }
             else if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
-                     critChance += 10;
+                     critChance += 12;
                 }
                 if (skills[(int)SkillConstants.mageSkills.THIRDEYE].skillEnabled == true) {
                     MPRegen *= 2f;

@@ -176,7 +176,7 @@ namespace Party {
         /// </summary>
         public void ResetGame() {
             shouldStore = true;
-            WAX = 0;
+            WAX = 100;
             ID = 0;
             for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
                 Destroy(partyMembersAll[i].gameObject); 
@@ -565,7 +565,7 @@ namespace Party {
         /// <param name="amount"> Positive int to increase by </param>
         public void AddWAX(int amount) {
             WAX += (int)(amount * WAXmultiplier);
-            GameManager.instance.WAXobtained += (int)(amount * WAXmultiplier);
+            GameManager.instance.WAXobtained += Mathf.Max((int)(amount * WAXmultiplier), 1);
             EventManager.instance.UpdateWAXAmounts();
         }
 

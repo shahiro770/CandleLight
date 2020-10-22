@@ -53,9 +53,10 @@ namespace Characters {
                 case StatusEffectConstants.STUN:
                 case StatusEffectConstants.SHOCK:
                 case StatusEffectConstants.TRAP:
-                case StatusEffectConstants.FATALWOUND:
                 case StatusEffectConstants.MARIONETTE:
+                case StatusEffectConstants.SILENCE:
                 case StatusEffectConstants.SCUM:
+                case StatusEffectConstants.FATALWOUND:
                     isBuff = false;
                     break;
                 case StatusEffectConstants.RAGE:

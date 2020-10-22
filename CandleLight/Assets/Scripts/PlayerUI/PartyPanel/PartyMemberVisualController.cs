@@ -333,7 +333,7 @@ namespace Characters {
                 statusPanel.DisplayPartyMember(this);
                 if (actionsPanel.isStoringInt == true) {
                     pm.SetAttackValues();
-                    actionsPanel.SetCombatActionsNoFifth(pm);
+                    actionsPanel.DisplayPartyMemberNoFifth(pm);
                 }
             }
 

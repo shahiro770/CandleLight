@@ -922,6 +922,7 @@ namespace Events {
                         for (int j = 0; j < specialNum; j++) {
                             if (subAreaSpecials[j].nameID == specificItemName) {
                                 items.Add(new Special(subAreaSpecials[j]));
+                                print("hi");
                                 break;
                             }
                         }
@@ -994,7 +995,7 @@ namespace Events {
                 }
             }
             else {  // if monster were to drop something that isn't gear (extremely rare)
-                GetResultItems(r);
+                return GetResultItems(r)[0];
             }
              
             return null;

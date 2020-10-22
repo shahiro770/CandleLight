@@ -204,7 +204,11 @@ namespace PlayerUI {
                 timeSinceStarted = Time.time - timeStartedLerping;
                 percentageComplete = timeSinceStarted * lerpSpeed;
 
-                imgCanvas.alpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+                float newAlpha = Mathf.Lerp(prevAlpha, targetAlpha, percentageComplete);
+                imgCanvas.alpha = newAlpha;
+                foreach(PartyMemberDisplay pmd in pmDisplays) {
+                    pmd.classIcon.color = new Color(255, 255, 255, newAlpha);
+                }
 
                 yield return new WaitForEndOfFrame();
             }

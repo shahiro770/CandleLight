@@ -448,7 +448,7 @@ namespace PlayerUI {
                 }
 
                 // selling
-                PartyManager.instance.AddWAX(newItemDisplay.GetWAXValue());
+                PartyManager.instance.AddWAX(newItemDisplay.GetWAXValueNoMultiplier());
 
                 return true;
             }
@@ -463,7 +463,7 @@ namespace PlayerUI {
                 }
                 else {  // trading
                     if ((PartyManager.instance.WAX + newItemDisplay.GetWAXValue()) - currentItemDisplay.GetWAXValueShop() >= 0) {
-                        PartyManager.instance.AddWAX(newItemDisplay.GetWAXValue());
+                        PartyManager.instance.AddWAX(newItemDisplay.GetWAXValueNoMultiplier());
                         PartyManager.instance.LoseWAX(currentItemDisplay.GetWAXValueShop());
                         return true;
                     }

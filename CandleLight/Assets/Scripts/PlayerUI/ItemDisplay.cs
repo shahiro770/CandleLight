@@ -171,6 +171,10 @@ namespace PlayerUI {
             return Mathf.Max((int)(displayedItem.WAXvalue * 0.5f * PartyManager.instance.WAXmultiplier), 1);
         }
 
+        public int GetWAXValueNoMultiplier() {
+            return Mathf.Max((int)(displayedItem.WAXvalue * 0.5f), 1);
+        }
+
         /// <summary>
         /// Returns how much the displayed item is worth (buy price)
         /// </summary>

@@ -212,9 +212,6 @@ Bug: Background highlight persists on skills when it should go away
 Bug: Saving saves partyMember state constantly
 Bug: On load, regen() hits
 Bug: LEveling up from an event EXP doesn't make LVLup sound
-
-JUST FINISHED
--------------
 UI: Toastpanels now glow
 UI: Got aromas set up
 Feature: Got on hit effects code set up
@@ -237,6 +234,20 @@ Feature: Fragrances
         Score + .5
 Fix: Multiplier code cleaned up
 Fix: Make sure WAX and EXP multipliers are correct on load
+Gear: Cursed Axe (Warrior)
+    - Weakness On Hit: 20%
+    - PATK 4
+
+JUST FINISHED
+-------------
+Bug: Selling WAX items with pauper's pomello no work properly
+Bug: Cure debuff no work on monsters
+Bug: Take disappears when toggling
+Bug: Swapping between attacks and non attacks while attacks are unusable glitches colouring
+Bug: Enabling a skill that doesn't have enough mana to be cast doesn't properly prevent player from using
+Bug: Special items don't drop from monsters
+Bug: Plus debuff damage isnt' halved
+Bug: Alpha in rewardsPanel is not shifting gradually
 
 COOKING
 -------
@@ -271,8 +282,8 @@ Monster: Hanged Man (PDEF 2 MDEF 4) (Last on fifth turn AI)
 Monster: Dire Greyhide (Last at 60%)
     - Bite: Stronger physical attack
     - Howl: Give self and a random ally Advantage
-    - Prowl: Gain Nimble for 3 turns
-    - Enrage: Gain Rage for 3 turns
+    - Prowl: Gain Nimble for 5 turns
+    - Enrage: Gain Rage for 5 turns
 Gear: Thornmail
     - Revenge Bleed: 20%
     - PDEF: 2
@@ -281,9 +292,6 @@ Gear: Root's Wrath (Mage)
     - MATK 4
     - Root On Hit: 20%
     - MP 5
-Gear: Cursed Axe (Warrior)
-    - PATK 4
-    - Weakness On Hit: 20%
 Gear: Root Bow (Archer)
     - MATK 6
     - Root On Hit: 20%
@@ -368,17 +376,58 @@ Alternate Final Boss:
         Tumbleweed Tornado: Sacrifice tumbleweeds every 5 turns, doing half their life summed as damage to all partyMembers
 Alternate Final Boss:
     - WraithTomb has a chance to be replaced by Ruined Workshop
-    - Puppet Master (PDEF 5 MDEF 11)
+    - Puppet Master (PDEF 4 MDEF 11)
         Wicked Dance: Weak magical attack that may inflict Marionette for 1 turn
         Soul Reap: Physical Attack, may inflict bleed 
         Puppeteer: Summon two puppet knights to fight beside it
         Soul Shield: Give itself Miracle for 1 turn
 
 Verify: Player dies from random event doesn't always trigger death check?!?!?
+Verify: Vamprie Bat event might do damage in a wonky way
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
 Fix: Tutorials are skills! still missable, might need to make the window glow
 Verify: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
 Verify: Test frost golem and pmd in skills panel
+Verify: Timing out in the tutorial during wintergreen (should work)
+Bug: Cure no work properly on monsters
+Fix: Recolour and rename Elven Gift (probably need to recolour attack animation)
+Balance: 
+    Critical Magic:
+        12% CRIT
+    Vantage Point:
+        Every 3 turns, gain Advantage for 1 turn
+    New: Twin Leaves (Replacing Blooming Fortune)
+        After doing magical/physical damage, gain Rage/Ethereal for 1 turn,
+Feature: Third Starting Attack/Class Action that only targets ally?? (only available after)
+    Warrior: 
+        Safeguard: Give Guard for 4 turns
+        Whirlwind: weak physical atatck that hits an enemy and its adjacents?
+    Mage: 
+        Channel: Gain Ethereal for 2 turn?
+    Archer: 
+        Elven Gift: Heal that cures
+    Rogue:
+        Twin Stab: Stab an enemy twice?
+    Rogue: Gain Hase for 1 turn (lets them move twice in one turn)
+Feature: Fourth Skills
+    Warrior:
+        Elemental Blade
+            Magical Attack, 100% chance to inflict shock, frost, or burn
+        Revenge of the Fallen
+            While another partymember is dead, permanently gain Rage
+        Spell
+       
+            
+
+Timer:
+    For aroma timer, turn red at 6:00 minute
+Options:
+    Bloom option (eughhh)
+Champions:
+    Add a shader to show champion
+Difficulty:
+    Turn reticle and name red if enemy is higher level
+
 
 NEAR FUTURE
 ----------------

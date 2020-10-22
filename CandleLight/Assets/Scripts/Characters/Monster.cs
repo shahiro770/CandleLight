@@ -366,7 +366,7 @@ namespace Characters {
                         }
                     }
                     else {
-                        AddStatusEffect(StatusEffectConstants.MIRACLE, 1, this);    // buffs by default get +1 to their duration
+                        AddStatusEffect(StatusEffectConstants.MIRACLE, 0, this);    // buffs by default get +1 to their duration
                     }
                 }
             }
@@ -449,6 +449,7 @@ namespace Characters {
         public IEnumerator TriggerStatuses() {
             int damageTaken = 0;
             int[] animationsToPlay = new int[] { 0 ,0, 0, 0, 0 }; 
+            bool isCure = GetStatusEffect(StatusEffectConstants.CURE) != -1;
 
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstants.BURN) {
@@ -477,7 +478,13 @@ namespace Characters {
                     animationsToPlay[4] = 1;
                 }
 
-                se.UpdateDuration(-1);
+                if (isCure && se.isBuff == false) {
+                    se.UpdateDuration(-2);
+                }
+                else {
+                    se.UpdateDuration(-1);
+                }
+                
                 if (se.duration == 0) {
                     seToRemove.Add(se);
                 }   
@@ -554,7 +561,12 @@ namespace Characters {
                 for (int i = 0; i < c.onHitChances.Length; i++) {
                     if (c.onHitChances[i] != 0) {
                         if (CalculateOnHitHit(i, c) == true) {
-                            AddStatusEffect(StatusEffectConstants.POISON, 2, c);
+                            if (i == 0) {
+                                AddStatusEffect(StatusEffectConstants.POISON, 2, c);
+                            }
+                            else if (i == 1) {
+                                AddStatusEffect(StatusEffectConstants.WEAKNESS, 2, c);
+                            }
                         }
                     }
                 }

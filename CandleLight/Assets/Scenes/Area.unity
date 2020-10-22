@@ -11730,7 +11730,7 @@ MonoBehaviour:
   optionsMenu: {fileID: 685122650}
   helpMenu: {fileID: 1006311642}
   gameOverMenu: {fileID: 1781244077}
-  simEvent: 
+  simEvent: greyMerchant
 --- !u!4 &154656196
 Transform:
   m_ObjectHideFlags: 0

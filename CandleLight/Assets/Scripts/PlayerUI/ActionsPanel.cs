@@ -37,6 +37,7 @@ namespace PlayerUI {
 
         private EventSystem es;                     /// <value> eventSystem reference </value>
         private Interaction[] storedInts = new Interaction[5];          /// <value> List of interactions stored </value>
+        private string[] storedActionTypes = new string[5];
         private bool[] storedInteractability = new bool[5];
         private Interaction travelInt;
         private Interaction fightInt;
@@ -140,9 +141,9 @@ namespace PlayerUI {
         /// Initializes all actions with the partyMember's attacks for combat, but sets the fifth to none
         /// </summary>
         /// <param name="pm"></param>
-        public void SetCombatActionsNoFifth(PartyMember pm) {
-            for (int i = 0; i < pm.attacks.Length; i++) {
-                actions[i].SetAction(ActionConstants.ATTACK, pm.attacks[i]);
+        public void SetCombatActionsNoFifth(Attack[] attacks) {
+            for (int i = 0; i < attacks.Length; i++) {
+                actions[i].SetAction(ActionConstants.ATTACK, attacks[i]);
             }
             actions[actions.Length -1].SetAction(ActionConstants.NONE);
             SetAllActionsInteractable();
@@ -241,11 +242,22 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Display all the actions of a partyMember and their usability
+        /// Display all the combatactions of a partyMember and their usability
         /// </summary>
         /// <param name="pm"></param>
         public void DisplayPartyMember(PartyMember pm) {
             SetCombatActions(pm.attacks);
+            SetAllActionsInteractable();
+            CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
+        }
+
+        /// <summary>
+        /// Display all the combat actions of a partyMember and their usability,
+        /// but leaves the fifth action blank
+        /// </summary>
+        /// <param name="pm"></param>
+        public void DisplayPartyMemberNoFifth(PartyMember pm) {
+            SetCombatActionsNoFifth(pm.attacks);
             SetAllActionsInteractable();
             CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
         }
@@ -262,34 +274,38 @@ namespace PlayerUI {
                 for (int i = 0; i < storedInts.Length; i++) {
                     storedInts[i] = actions[i].i;
                     storedInteractability[i] = actions[i].b.interactable;
+                    storedActionTypes[i] = actions[i].actionType;
                 }
-                SetCombatActionsNoFifth(pm);
-                CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
-                SetAllActionsInteractable();
+                DisplayPartyMemberNoFifth(pm);
             }
             else {
                 isStoringInt = false;
                 toggleImage.sprite = attacksSprite;
                 for (int i = 0; i < storedInts.Length; i++) {
-                    if (storedInts[i] != null) {
+                    if (storedActionTypes[i] != ActionConstants.NONE) {
                         actions[i].SetInteractable(storedInteractability[i]);
-                        actions[i].SetAction(ActionConstants.INTERACTION, storedInts[i]);
-                        if (storedInts[i].name == "takeAll") {
-                            actions[i].SetAction(ActionConstants.TAKEALL);
-                            EventManager.instance.UpdateTakeAll();
-                        }
-                        if (storedInts[i].checkIndicator != 0) {
-                            if (storedInts[i].checkIndicator >= 1 && storedInts[i].checkIndicator <= 4) {
-                                actions[i].SetCheckColor(storedInts[i].checkIndicator); // no need to check for tutorials here, it would've happened pre toggle
+                        if (storedActionTypes[i] == ActionConstants.INTERACTION) {
+                            actions[i].SetAction(ActionConstants.INTERACTION, storedInts[i]);
+                            if (storedInts[i].checkIndicator != 0) {
+                                if (storedInts[i].checkIndicator >= 1 && storedInts[i].checkIndicator <= 4) {
+                                    actions[i].SetCheckColor(storedInts[i].checkIndicator); // no need to check for tutorials here, it would've happened pre toggle
+                                }
                             }
                         }
+                        if (storedActionTypes[i] == ActionConstants.TAKEALL) {
+                            actions[i].SetAction(ActionConstants.TAKEALL);
+                            EventManager.instance.UpdateTakeAll();
+                        } 
                     }
                     else {
                         actions[i].SetAction(ActionConstants.NONE);
+                        actions[i].SetUsable(true);
                         actions[i].SetInteractable(storedInteractability[i]);
                     }
                     storedInts[i] = null;
+                    storedActionTypes[i] = null;
                 }
+
             }
         }
 
@@ -300,7 +316,7 @@ namespace PlayerUI {
         /// <param name="pm"></param>
         public void UpdateCombatActions(PartyMember pm) {
             if (isStoringInt == true) {
-                SetCombatActionsNoFifth(pm);
+                SetCombatActionsNoFifth(pm.attacks);
                 CheckAndSetActionsToUnusable(pm.CHP, pm.CMP);
             }
         }
