@@ -253,9 +253,13 @@ Bug: Starting game with 0 audio from previous save doesn't play bgm
 UI: For aroma timer, turn red at 6:00 minute
 Bug: Game crashes on load cause null is not null
 UI: Got some tutorial arrow logic set up
+Fix: Made modifiers give half score on lower difficulties (and upped their values drastically)
 
 COOKING
 -------
+Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
+Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
+
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: first item in shop inventory tooltip is broken 
 Bug: Outline is broken on candle swapping
