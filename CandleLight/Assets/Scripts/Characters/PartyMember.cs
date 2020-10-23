@@ -99,22 +99,27 @@ namespace Characters {
         /// Equip a partyMember's gear and candles using saved data
         /// </summary>
         /// <param name="pmData"></param>
+        /// <remark> This causes dumb stat recalculations, maybe make an equipGear/Candle no calculations method? </remark>
         public void EquipLoadedItems(PartyMemberData pmData) {
-            if (pmData.equippedGear[0] != null) {
-                EquipGear(new Gear(pmData.equippedGear[0]), "weapon");
+            if (pmData.equippedGear[0] != null && pmData.equippedGear[0].nameID != null) {
+                EquipGear(new Gear(pmData.equippedGear[0]), "weapon", false);
             }
-            if (pmData.equippedGear[1] != null) {
-                EquipGear(new Gear(pmData.equippedGear[1]), "secondary");
+            if (pmData.equippedGear[1] != null && pmData.equippedGear[1].nameID != null) {
+                EquipGear(new Gear(pmData.equippedGear[1]), "secondary", false);
             }
-            if (pmData.equippedGear[2] != null) {
-                EquipGear(new Gear(pmData.equippedGear[2]), "armour");
+            if (pmData.equippedGear[2] != null && pmData.equippedGear[2].nameID != null) {
+                EquipGear(new Gear(pmData.equippedGear[2]), "armour", false);
             }
 
             for (int i = 0; i < pmData.equippedCandles.Length; i++) {
-                if (pmData.equippedCandles[i] != null) {
-                    EquipCandle(new Candle(pmData.equippedCandles[i]), i);
+                if (pmData.equippedCandles[i] != null && pmData.equippedCandles[i].nameID != null) {
+                    EquipCandle(new Candle(pmData.equippedCandles[i]), i, false);
                 }
             }
+
+            CalculateStats();
+            UpdateStatusEffectValues();
+            pmvc.UpdateStats();
         }
 
         /// <summary>
@@ -1140,7 +1145,8 @@ namespace Characters {
         /// </summary>
         /// <param name="g"></param>
         /// <param name="subType"></param>
-        public void EquipGear(Gear g, string subType) {
+        /// <param name="calculateStats"> Set to false to prevent calculating stats when unnecessary </param>
+        public void EquipGear(Gear g, string subType, bool calculateStats = true) {
             if (subType == "weapon") {
                 weapon = g;
             }
@@ -1151,9 +1157,11 @@ namespace Characters {
                 armour = g;
             }
 
-            CalculateStats();
-            UpdateStatusEffectValues();
-            pmvc.UpdateStats();
+            if (calculateStats == true) {
+                CalculateStats();
+                UpdateStatusEffectValues();
+                pmvc.UpdateStats();
+            }
             pmvc.SetEquippedGear();
         }
 
@@ -1183,7 +1191,8 @@ namespace Characters {
         /// </summary>
         /// <param name="c"></param>
         /// <param name="index"> Equips a candle to one of the active candle slots (0, 1, or 2) </param>
-        public void EquipCandle(Candle c, int index) {
+        /// <param name="calculateStats"> Set to false to prevent calculating stats when unnecessary </param>
+        public void EquipCandle(Candle c, int index, bool calculateStats = true) {
             activeCandles[index] = c;
             if (className == ClassConstants.MAGE) {
                 if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
@@ -1191,12 +1200,14 @@ namespace Characters {
                 }
             }
             SetAttackValues();          // candle attack values need to be set
-
-            if (c.isUsable == true) {   // no need to recalculate stats if the equipped candle is unusable
-                CalculateStats();
-                UpdateStatusEffectValues();
+            
+            if (calculateStats == true) {
+                if (c.isUsable == true) {   // no need to recalculate stats if the equipped candle is unusable
+                    CalculateStats();
+                    UpdateStatusEffectValues();
+                }
+                pmvc.UpdateStats();
             }
-            pmvc.UpdateStats();
             pmvc.SetEquippedCandles();
         }
 

@@ -114,7 +114,7 @@ namespace PlayerUI {
         /// <param name="specialData"></param>
         public void LoadData(ItemData[] specialData) {
             for (int i = 0; i < specialData.Length; i++) {  
-                if (specialData[i] != null) {
+                if (specialData[i] != null && specialData[i].nameID != null) {
                     Special s = new Special(specialData[i]);
                     spare[i].PlaceItemInstant(s);
                 }

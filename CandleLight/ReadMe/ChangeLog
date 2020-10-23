@@ -237,9 +237,6 @@ Fix: Make sure WAX and EXP multipliers are correct on load
 Gear: Cursed Axe (Warrior)
     - Weakness On Hit: 20%
     - PATK 4
-
-JUST FINISHED
--------------
 Bug: Selling WAX items with pauper's pomello no work properly
 Bug: Cure debuff no work on monsters
 Bug: Take disappears when toggling
@@ -248,6 +245,14 @@ Bug: Enabling a skill that doesn't have enough mana to be cast doesn't properly 
 Bug: Special items don't drop from monsters
 Bug: Plus debuff damage isnt' halved
 Bug: Alpha in rewardsPanel is not shifting gradually
+
+JUST FINISHED
+-------------
+Bug: Can exit game and change difficulty/aromas and then load game to affect current run
+Bug: Starting game with 0 audio from previous save doesn't play bgm
+UI: For aroma timer, turn red at 6:00 minute
+Bug: Game crashes on load cause null is not null
+UI: Got some tutorial arrow logic set up
 
 COOKING
 -------
@@ -389,38 +394,85 @@ Fix: Tutorials are skills! still missable, might need to make the window glow
 Verify: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
 Verify: Test frost golem and pmd in skills panel
 Verify: Timing out in the tutorial during wintergreen (should work)
-Bug: Cure no work properly on monsters
-Fix: Recolour and rename Elven Gift (probably need to recolour attack animation)
-Balance: 
-    Critical Magic:
-        12% CRIT
-    Vantage Point:
-        Every 3 turns, gain Advantage for 1 turn
-    New: Twin Leaves (Replacing Blooming Fortune)
-        After doing magical/physical damage, gain Rage/Ethereal for 1 turn,
-Feature: Third Starting Attack/Class Action that only targets ally?? (only available after)
-    Warrior: 
-        Safeguard: Give Guard for 4 turns
-        Whirlwind: weak physical atatck that hits an enemy and its adjacents?
-    Mage: 
-        Channel: Gain Ethereal for 2 turn?
-    Archer: 
-        Elven Gift: Heal that cures
-    Rogue:
-        Twin Stab: Stab an enemy twice?
-    Rogue: Gain Hase for 1 turn (lets them move twice in one turn)
-Feature: Fourth Skills
-    Warrior:
-        Elemental Blade
-            Magical Attack, 100% chance to inflict shock, frost, or burn
-        Revenge of the Fallen
-            While another partymember is dead, permanently gain Rage
-        Spell
-       
-            
 
-Timer:
-    For aroma timer, turn red at 6:00 minute
+Base Skill Order
+----------------
+Class     Lvl 0    Lvl 1      Lvl 2        Lvl 3
+Warrior   Slash    Taunt      Bash         Safeguard
+Mage      Whack    Fireball   Channel      Seal
+Archer    Arrow    Enroot     Elven Gift   Volley
+Rogue     Stab     Lacerate   Fae Dust     Evade
+
+New Skills:
+- Channel buffs an ally +MATK for X turns
+- Seal debuffs an enemy -MATK for X turns
+- Evade buffs an ally +DOG for X turns
+
+Skill Trees
+-----------
+Class   
+Warrior   Col 0      Col 1        Col 2              Col 3
+          Healthy    Manablade    Vampiric Mail      Tri Slash
+          Whirlwind  Fire Slash   Thunderous Might   Draken's Rage
+          Steadfast  Bloodsworn   Timeless Blade     Honour Guard
+
+New Skills:
+- Healthy doubles HP regen of all party members
+- Whirlwind sidegrades Taunt, aoe physical attack that hits adjacents
+- Tri Slash upgrades Slash, physical attack that scales off of MATK, has a 66% chance of inflict, freeze, burn, or shock
+- Draken's Rage provides permanent Rage (PATK up) while a partyMember is dead
+- Honour Guard gives 33% the Warrior's PDEF to all partyMembers (including himself)
+
+Changes:
+- Timeless Blade now upgrades Safeguard
+
+Class   
+Mage    Col 0       Col 1               Col 2              Col 3
+        Third Eye   Critical Magic      Mana Shield        M. Refresh
+        Frost       Heal                Fiery Veil         F. Nova
+        Pyromancy   Candlemancy         Frost Golem        Wax Conjurer
+
+New Skills:
+- Mana Refresh lets all allies (including self) restore 5% MP at the end of each turn in combat
+- Frostfire Nova upgrades Seal, big Aoe attack that hits all enemies and may Freeze or burn (but obv costs like a third of your mp)
+- Every 10 events, add a random candle to your inventory
+
+Changes:
+- Heal upgrades Channel
+- Frost Golem upgrades Fireball
+
+Class
+Archer      Col 0           Col 1               Col 2               Col 3
+            Vantage Point   Survivalist         Cursed Roots        Reanimate
+            Poison Arrow    Break Shot          Adaptable           Great Winds
+            Scavenger       Blooming Fortune    Fleet Footed        Burning Eyes
+
+New Skills:
+- Break Shot replaces Enroot, does physical damage and reduces enemy PDEF
+- Adaptable makes using a magical/physical attack grant PATK/MATK up for 1 turn
+- Reanimate upgrades Volley, revives an ally, restoring 25% HP and MP
+- Great Winds passives makes all allies move after archer in turn order (fastest archer if double archer)
+- Burning Eyes gives archer advantage for 2 turns on using a candle
+
+Changes:
+- Blooming Fortune increases LUK by 100% and prevents critical hits on this unit
+
+Class   
+Rogue   Col 0           Col 1           Col 2              Col 3
+        Thunder Edge    Ambusher        Killer Instinct    Hasten   
+        Cloaked         Deadly          Ritual Daggers     Silencer
+        Wax Thief       Fae Tigue       Twin Fang          Angel's Mercy
+
+New Skills:
+- Fae Tigue replaces Fae Dust, does more magic damage and inflicts weakness
+- Twin fang upgrades stab, twice the damage and double chance to proc on-hits
+- Hasten upgrades Evade lets target move twice in one turn, but costs rogue HP instead of MP, ally only
+- Silencer gives rogue on hit silence 
+- Angel's Mercy gives all partyMembers passive, one per combat, if an attack would be lethal, grant ally miracle for one turn instead
+
+Changes:
+- Thunder Edge now upgrades lacerate
+
 Options:
     Bloom option (eughhh)
 Champions:

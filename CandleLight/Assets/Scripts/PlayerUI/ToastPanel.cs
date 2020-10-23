@@ -10,8 +10,10 @@ namespace PlayerUI {
     public class ToastPanel : MonoBehaviour {
         
         /* external component references */
+        public Animator arrowAnimator;
         public Animator flameAnimator;
         public Button b;
+        public GameObject arrow;
         public LocalizedText titleText;
         public LocalizedText descriptionText;
         public Image textBackground;        /// <value> Image background for text component </value>
@@ -33,6 +35,7 @@ namespace PlayerUI {
         private string threshINTText = LocalizationManager.instance.GetLocalizedValue("threshINT_text");      /// <value> Localized text for the text "Threshold STR: " </value>
         private string threshLUKText = LocalizationManager.instance.GetLocalizedValue("threshLUK_text");      /// <value> Localized text for the text "Threshold STR: " </value>
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
+        private static bool showingArrow = false;
 
         public void SetNotification(bool[] types, string[] amounts) {
             int typesCount = 0;
@@ -137,6 +140,18 @@ namespace PlayerUI {
             if (fadeOuter != null) {
                 StopCoroutine(fadeOuter);
             }
+
+            switch (tutorialName) {
+                case "special0":
+                    arrow.transform.localPosition = new Vector3(-210, -110);
+                    if (showingArrow == false) {
+                        arrowAnimator.SetTrigger("show"); 
+                        showingArrow = true; 
+                    }  
+                    arrowAnimator.SetTrigger("vbob");
+                    break;
+            }
+            
             SetVisible(true);
         }
 
@@ -260,6 +275,10 @@ namespace PlayerUI {
                 if (gameObject.activeSelf == true) {
                     if (fader != null) {
                         StopCoroutine(fader);
+                    }
+                    if (arrow != null && showingArrow == true) {
+                        arrowAnimator.ResetTrigger("hide");
+                        arrowAnimator.SetTrigger("hide");
                     }
                     fader = StartCoroutine(Fade(0));
                 }

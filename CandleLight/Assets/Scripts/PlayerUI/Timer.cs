@@ -21,14 +21,21 @@ namespace PlayerUI {
         public CanvasGroup cg;
         public TextMeshProUGUI timeDisplay;
 
+        private Color32 aromaColour = new Color32(125, 237, 164, 255);
+        private Color32 warningColour = new Color32(234, 50, 60, 255);
         private TimeSpan timeCounter;
-        private bool timerGoing;
-
         private float elapsedTime;
+        private bool timerGoing;
+        private bool swappedColours = false;
+       
 
         public void ResetTimer() {
             timeDisplay.text = "00:00:00.00";
             elapsedTime = 0f;
+            if (swappedColours == true) {   // for aroma timers that have swapped colours, swap them back
+                timeDisplay.color = aromaColour;
+                swappedColours = false;
+            }
         }
 
         public void StartTimer(bool value) {
@@ -90,7 +97,11 @@ namespace PlayerUI {
                 timeCounter = TimeSpan.FromSeconds(elapsedTime);
                 
                 timeDisplay.text = timeCounter.ToString(@"hh\:mm\:ss\.ff");
-                if (timeCounter.TotalMinutes >= 7) {
+                if (timeCounter.TotalMinutes >= 6 && swappedColours == false) {
+                    timeDisplay.color = warningColour;
+                    swappedColours = true;
+                }
+                else if (timeCounter.TotalMinutes >= 7) {
                     StartCoroutine(EventManager.instance.DisplayGameOver(false));
                 }
 

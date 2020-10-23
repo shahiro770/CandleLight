@@ -47,6 +47,8 @@ namespace Menus.ClassSelectMenu {
         public string[] partyComposition;                 /// <value> store the party composition if player moves back a menu </value>  
 
         private float scoreModifier;
+        private float difficultyModifierToBe;
+        private bool[] aromasToBe; 
 
         /// <summary>
         /// Awake to intialize eventSystem and select button's alternate colour blocks
@@ -76,22 +78,27 @@ namespace Menus.ClassSelectMenu {
         /// </summary> 
         void OnEnable() {
             partyComposition = csm.partyComposition;
-            if (GameManager.instance.difficultyModifier == 0.75f) {
+            difficultyModifierToBe = GameManager.instance.difficultyModifier;
+            aromasToBe = new bool[aromaBtss.Length];
+            if (difficultyModifierToBe == 0.75f) {
                 SelectDifficultyButton(0);
             }
             else {
                 SelectDifficultyButton(1);
             }
             for (int i = 0; i < aromaBtss.Length; i++) {
-                if (GameManager.instance.gsData.aromas[i] == true) {
+                aromasToBe[i] = GameManager.instance.gsData.aromas[i];
+                if (aromasToBe[i] == true) {
                     aromas[i].sprite = aromaActiveSprites[i];
-                    aromaBtss[i].SetColor("na0");
+                    aromaBtss[i].SetColor("na0");  
                 }
                 else {
                     aromas[i].sprite = aromaSprites[i];
                     aromaBtss[i].SetColor("normal");
                 }
             }
+            
+            CalculateScoreModifier(true);
         }
 
         /// <summary>
@@ -102,12 +109,12 @@ namespace Menus.ClassSelectMenu {
         /// <param name="cb"> Class button to change appearance of </param>
         public void SelectDifficultyButton(int index) {
             if (index == 0) {
-                GameManager.instance.difficultyModifier = 0.75f;
+                difficultyModifierToBe = 0.75f;            
                 difficultyTitle.SetKey("casual_title");
                 difficultyDes.SetKey("casual_des");
             }
             else {
-                GameManager.instance.difficultyModifier = 1f;
+                difficultyModifierToBe = 1f;
                 difficultyTitle.SetKey("normal_title");
                 difficultyDes.SetKey("normal_des");
             }
@@ -121,7 +128,7 @@ namespace Menus.ClassSelectMenu {
                 }
             }
 
-            CalculateScoreModifier();
+            CalculateScoreModifier(true);
         }
 
         /// <summary>
@@ -131,8 +138,9 @@ namespace Menus.ClassSelectMenu {
         public void SelectAromaButton(int index) {
             var colorOverLifetime = ps.colorOverLifetime;
 
-            GameManager.instance.gsData.aromas[index] = !GameManager.instance.gsData.aromas[index];
-            if (GameManager.instance.gsData.aromas[index] == true) {
+            // GameManager.instance.gsData.aromas[index] = !GameManager.instance.gsData.aromas[index];
+            aromasToBe[index] = !aromasToBe[index];
+            if (aromasToBe[index] == true) {
                 aromas[index].sprite = aromaActiveSprites[index];
                 aromaBtss[index].SetColor("na0");
             }
@@ -147,7 +155,7 @@ namespace Menus.ClassSelectMenu {
             difficultyTitle.SetKey("aroma" + index + "_title");
             difficultyDes.SetKey("aroma" + index + "_des");
             
-            CalculateScoreModifier();
+            CalculateScoreModifier(true);
         }
 
         public void ToggleDifficultyAndAromas() {
@@ -180,30 +188,35 @@ namespace Menus.ClassSelectMenu {
         /// <summary>
         /// Calculate the player's score modifier based on their difficulty and active aromas
         /// </summary>
-        public void CalculateScoreModifier() {
+        /// /// <param name="updateText"> update the displayed text value if true, update general save data otherwise </param>
+        public void CalculateScoreModifier(bool updateText) {
             scoreModifier = 0;
-            if (GameManager.instance.difficultyModifier == 0.75f) {
+            if (difficultyModifierToBe == 0.75f) {
                 scoreModifier += 0.5f;
             }
-            else if (GameManager.instance.difficultyModifier == 1f) {
+            else if (difficultyModifierToBe == 1f) {
                 scoreModifier += 1f;
             }
 
-            if (GameManager.instance.gsData.aromas[0] == true) {
+            if (aromasToBe[0] == true) {
                 scoreModifier += 0.25f;
             }
-            if (GameManager.instance.gsData.aromas[1] == true) {
+            if (aromasToBe[1] == true) {
                 scoreModifier += 0.25f;
             }
-            if (GameManager.instance.gsData.aromas[2] == true) {
+            if (aromasToBe[2] == true) {
                 scoreModifier += 0.5f;
             }
-            if (GameManager.instance.gsData.aromas[3] == true) {
+            if (aromasToBe[3] == true) {
                 scoreModifier += 0.5f;
             }
 
-            GameManager.instance.gsData.scoreModifier = scoreModifier;
-            scoreModifierText.SetKeyAndAppend("score_modifier_title", "x" + scoreModifier);
+            if (updateText == true) {
+                scoreModifierText.SetKeyAndAppend("score_modifier_title", "x" + scoreModifier);
+            }
+            else {
+                GameManager.instance.gsData.scoreModifier = scoreModifier;
+            }
         }
 
         /// <summary>
@@ -215,8 +228,14 @@ namespace Menus.ClassSelectMenu {
             foreach (string pm in partyComposition) {
                 PartyManager.instance.AddPartyMember(pm);
             }
+            // only modifier all gsData properties on game start (otherwise player can change game properties mid run)
+            GameManager.instance.difficultyModifier = difficultyModifierToBe;
+            for (int i = 0; i < aromasToBe.Length; i++) {
+                GameManager.instance.gsData.aromas[i] = aromasToBe[i];
+            }
+            CalculateScoreModifier(false);
+            
             // partyComposition is going to be length 0 anyways on scene load
-
             GameManager.instance.StartLoadNextScene("Area");
         }
     }

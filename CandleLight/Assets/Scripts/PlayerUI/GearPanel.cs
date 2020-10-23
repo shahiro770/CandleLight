@@ -130,9 +130,8 @@ namespace PlayerUI {
         /// Load invento save data into spare slots
         /// </summary>
         public void LoadData(ItemData[] gearData) {
-            print(gearData.Length);
             for (int i = 0; i < gearData.Length; i++) {  
-                if (gearData[i] != null) {
+                if (gearData[i] != null && gearData[i].nameID != null) {
                     Gear g = new Gear(gearData[i]);
                     spare[i].PlaceItemInstant(g);
                 }

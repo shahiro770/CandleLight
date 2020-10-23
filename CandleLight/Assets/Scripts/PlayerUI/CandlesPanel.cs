@@ -142,7 +142,7 @@ namespace PlayerUI {
         /// <param name="candleData"></param>
         public void LoadData(ItemData[] candleData) {
             for (int i = 0; i < candleData.Length; i++) {  
-                if (candleData[i] != null) {
+                if (candleData[i] != null && candleData[i].nameID != null) {
                     Candle c = new Candle(candleData[i]);
                     spare[i].PlaceItemInstant(c);
                 }

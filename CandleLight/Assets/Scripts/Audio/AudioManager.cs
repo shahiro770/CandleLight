@@ -112,7 +112,7 @@ namespace Audio {
                 yield return new WaitForEndOfFrame();
             }
 
-            if (s.source.volume == 0) {
+            if (s.source.volume == 0 && s != currentBGM) {
                 s.source.Stop();
             }
         }
