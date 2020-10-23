@@ -567,6 +567,9 @@ namespace Characters {
                             else if (i == 1) {
                                 AddStatusEffect(StatusEffectConstants.WEAKNESS, 2, c);
                             }
+                            else if (i == 2) {
+                                AddStatusEffect(StatusEffectConstants.SHOCK, 2, c);
+                            }
                         }
                     }
                 }

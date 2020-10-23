@@ -48,7 +48,7 @@ namespace Characters {
         [field: SerializeField] public bool burnPlus { get; set; } = false;     /// <value> Flag for if this character can inflict stronger burns </value>
         [field: SerializeField] public bool poisonPlus { get; set; } = false;   /// <value> Flag for if this character can inflict stronger poisons </value>
         [field: SerializeField] public bool bleedPlus { get; set; } = false;    /// <value> Flag for if this character can inflict stronger bleeds </value>
-        [field: SerializeField] public int[] onHitChances = new int[3];
+        [field: SerializeField] public int[] onHitChances = new int[4];
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         

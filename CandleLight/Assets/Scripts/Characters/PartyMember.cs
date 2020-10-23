@@ -402,6 +402,9 @@ namespace Characters {
                             case "WEAKNESSCHANCE":
                                 onHitChances[1] += gearToCalculate.values[j];
                                 break;
+                            case "SHOCKCHANCE":
+                                onHitChances[2] += gearToCalculate.values[j];
+                                break;
                             default:
                                 break;
                         }

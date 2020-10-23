@@ -245,15 +245,16 @@ Bug: Enabling a skill that doesn't have enough mana to be cast doesn't properly 
 Bug: Special items don't drop from monsters
 Bug: Plus debuff damage isnt' halved
 Bug: Alpha in rewardsPanel is not shifting gradually
-
-JUST FINISHED
--------------
 Bug: Can exit game and change difficulty/aromas and then load game to affect current run
 Bug: Starting game with 0 audio from previous save doesn't play bgm
 UI: For aroma timer, turn red at 6:00 minute
 Bug: Game crashes on load cause null is not null
 UI: Got some tutorial arrow logic set up
 Fix: Made modifiers give half score on lower difficulties (and upped their values drastically)
+
+JUST FINISHED
+-------------
+
 
 COOKING
 -------
