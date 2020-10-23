@@ -46,7 +46,6 @@ namespace Database {
                     using (IDataReader reader = dbcmd.ExecuteReader()) {
                         string monsterNameID = "";
                         string monsterSpriteName = "";
-                        string monsterDisplayName = "";
                         string monsterArea = "";
                         string monsterSize = "";
                         string monsterAI = "";
@@ -65,31 +64,31 @@ namespace Database {
                         if (reader.Read()) {
                             monsterNameID = reader.GetString(1);
                             monsterSpriteName = reader.GetString(2);
-                            monsterDisplayName = reader.GetString(3);
-                            monsterArea = reader.GetString(4);
-                            monsterSize = reader.GetString(5);
-                            monsterAI = reader.GetString(6);
-                            multiplier = reader.GetInt32(7);
-                            HP = reader.GetInt32(8); 
-                            MP = reader.GetInt32(9);
-                            stats = new int[] { reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12), reader.GetInt32(13) };
-                            bonusPDEF = reader.GetInt32(14);
-                            bonusMDEF = reader.GetInt32(15);
+                            //monsterDisplayName = reader.GetString(3);
+                            monsterArea = reader.GetString(3);
+                            monsterSize = reader.GetString(4);
+                            monsterAI = reader.GetString(5);
+                            multiplier = reader.GetInt32(6);
+                            HP = reader.GetInt32(7); 
+                            MP = reader.GetInt32(8);
+                            stats = new int[] { reader.GetInt32(9), reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12) };
+                            bonusPDEF = reader.GetInt32(13);
+                            bonusMDEF = reader.GetInt32(14);
 
                             for (int i = 0; i < maxAttacks; i++) {
-                                string attackName = reader.GetString(16 + i);
+                                string attackName = reader.GetString(15 + i);
                                 attacks[i] = GetAttack(attackName, true, dbConnection);
                             }
-                            hardModeAttackIndex = reader.GetInt32(20);
-                            dropChance = reader.GetInt32(21);
-                            monsterReward = GetResultByName(reader.GetString(22), "", dbConnection);      
-                            championChance = reader.GetInt32(23);               
+                            hardModeAttackIndex = reader.GetInt32(19);
+                            dropChance = reader.GetInt32(20);
+                            monsterReward = GetResultByName(reader.GetString(21), "", dbConnection);      
+                            championChance = reader.GetInt32(22);               
                         }
                         else {
                             Debug.LogError("Monster " + monsterName + " does not exist in the DB");
                         }
 
-                        monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterDisplayName, monsterArea, 
+                        monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterArea, 
                         monsterSize, monsterAI, multiplier, HP, MP, stats, bonusPDEF, bonusMDEF, attacks, hardModeAttackIndex,
                         dropChance, monsterReward, championChance)); 
                     }

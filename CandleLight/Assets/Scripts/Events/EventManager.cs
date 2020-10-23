@@ -524,6 +524,7 @@ namespace Events {
                 utilityTabManager.SetButtonInteractableAndName(2);
                 utilityTabManager.ExciteTab(2);
                 AddQuest(currentResult.questName, "", "");
+                toastPanel1.ShowArrow(425, -110, true);
             }
         }
 
@@ -537,22 +538,27 @@ namespace Events {
         public bool TutorialTabOnClick(int index, bool tabManager) {
             if (tutorialProg == 0 && tabManager == false && itemsTabManager.panels[index].GetPanelName() == PanelConstants.SPECIALPANEL) {
                 SetTutorialNotification("special1", 1);
+                HideTutorialArrow();
                 return true;
             }
             else if (tutorialProg == 1 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.PARTYPANEL) {
                 SetTutorialNotification("party1", 1);
+                HideTutorialArrow();
                 return true;
             }
             else if ((tutorialProg == 4 || tutorialProg == 5) && tabManager == false && itemsTabManager.panels[index].GetPanelName() == PanelConstants.GEARPANEL) {              
                 SetTutorialNotification("gear1", 1);
+                HideTutorialArrow();
                 return true;
             }
             else if (tutorialProg == 11 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.SKILLSPANEL) {
                 SetTutorialNotification("skills1", 1);
+                HideTutorialArrow();
                 return true;
             }
             else if (tutorialProg == 12 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.INFOPANEL) {
                 SetTutorialNotification("info0");
+                HideTutorialArrow();
                 return true;
             }
 
@@ -2068,6 +2074,18 @@ namespace Events {
             toastPanel0.SetVisible(value);
             toastPanel1.SetVisible(value);
             toastPanel2.SetVisible(value);
+        }
+
+        /// <summary>
+        /// Hides the arrow shown by tutorial toast panels
+        /// </summary>
+        public void HideTutorialArrow() {
+            if (toastPanel0.isArrowHolder) {
+                toastPanel0.HideArrow();
+            }
+            else if (toastPanel1.isArrowHolder) {
+                toastPanel1.HideArrow();
+            }
         }
 
         #endregion

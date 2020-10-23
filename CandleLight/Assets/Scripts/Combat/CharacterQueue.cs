@@ -177,7 +177,7 @@ namespace Combat {
             foreach (QueueNode q in combatQueue) {
                 if (q.c is Monster) {
                     Monster m = (Monster)q.c;
-                    Debug.Log("ID: " + m.ID + " Priority: " + q.priority + " MonsterName: " + m.monsterDisplayName);
+                    Debug.Log("ID: " + m.ID + " Priority: " + q.priority + " MonsterName: " + m.monsterNameID);
                 }
                 else {
                     PartyMember pm = (PartyMember)q.c;

@@ -24291,8 +24291,15 @@ MonoBehaviour:
   c: {fileID: 530883994}
   textBackgroundCanvas: {fileID: 387542077}
   le: {fileID: 530883992}
+  arrowRenderer: {fileID: 0}
   toastSprite: {fileID: 1318024553}
   achievementIcon: {fileID: 1141599273}
+  arrowSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  isArrowHolder: 0
 --- !u!223 &530883994
 Canvas:
   m_ObjectHideFlags: 0
@@ -53628,8 +53635,15 @@ MonoBehaviour:
   c: {fileID: 1101418320}
   textBackgroundCanvas: {fileID: 1839830807}
   le: {fileID: 1101418321}
+  arrowRenderer: {fileID: 572212385}
   toastSprite: {fileID: 128506460}
   achievementIcon: {fileID: 742757563}
+  arrowSprites:
+  - {fileID: 21300000, guid: f8cc394f34be348d0bad86274d37a236, type: 3}
+  - {fileID: 21300000, guid: 4b0061762b71e400d9d04526f508726f, type: 3}
+  - {fileID: 21300000, guid: eabc0fb85c8754fe7b49de5ae1c60c07, type: 3}
+  - {fileID: 21300000, guid: cf2f4a6aa3f1c48ddbeddda260e32124, type: 3}
+  isArrowHolder: 0
 --- !u!223 &1101418320
 Canvas:
   m_ObjectHideFlags: 0
@@ -93118,8 +93132,15 @@ MonoBehaviour:
   c: {fileID: 6269312971708277276}
   textBackgroundCanvas: {fileID: 8571726230743828993}
   le: {fileID: 670490125773742228}
+  arrowRenderer: {fileID: 572212385}
   toastSprite: {fileID: 551873654}
   achievementIcon: {fileID: 1790495283}
+  arrowSprites:
+  - {fileID: 21300000, guid: f8cc394f34be348d0bad86274d37a236, type: 3}
+  - {fileID: 21300000, guid: 4b0061762b71e400d9d04526f508726f, type: 3}
+  - {fileID: 21300000, guid: eabc0fb85c8754fe7b49de5ae1c60c07, type: 3}
+  - {fileID: 21300000, guid: cf2f4a6aa3f1c48ddbeddda260e32124, type: 3}
+  isArrowHolder: 0
 --- !u!114 &670490125773742228
 MonoBehaviour:
   m_ObjectHideFlags: 0

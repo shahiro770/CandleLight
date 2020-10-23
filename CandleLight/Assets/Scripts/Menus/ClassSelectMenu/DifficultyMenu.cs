@@ -138,7 +138,6 @@ namespace Menus.ClassSelectMenu {
         public void SelectAromaButton(int index) {
             var colorOverLifetime = ps.colorOverLifetime;
 
-            // GameManager.instance.gsData.aromas[index] = !GameManager.instance.gsData.aromas[index];
             aromasToBe[index] = !aromasToBe[index];
             if (aromasToBe[index] == true) {
                 aromas[index].sprite = aromaActiveSprites[index];
@@ -174,7 +173,7 @@ namespace Menus.ClassSelectMenu {
                 menuTitle.SetKey("difficulty_menu_title");
                 toggleButtonText.SetKey("aromas_button");
 
-                if (GameManager.instance.difficultyModifier == 0.75f) {
+                if (difficultyModifierToBe == 0.75f) {
                     difficultyTitle.SetKey("casual_title");
                     difficultyDes.SetKey("casual_des");
                 }

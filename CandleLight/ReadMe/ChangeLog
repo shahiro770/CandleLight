@@ -254,7 +254,9 @@ Fix: Made modifiers give half score on lower difficulties (and upped their value
 
 JUST FINISHED
 -------------
-
+Fix: Removed monsterDisplayName as a property
+UI: Updated more icons
+Feature: Added shockchance and bleedchance
 
 COOKING
 -------

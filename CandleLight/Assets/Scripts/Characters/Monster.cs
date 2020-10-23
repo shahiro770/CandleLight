@@ -6,8 +6,6 @@
 * The Monster class is used to store and manipulate information about the Monster. 
 * It is always attached to a Monster gameObject.
 *
-* TO DO: Get rid of the monsterDisplayName and replace it with spriteName for tooltips
-*
 */
 
 using achievementConstants = Constants.AchievementConstants.achievementConstants;
@@ -39,7 +37,6 @@ namespace Characters {
         [field: SerializeField] public string monsterSize { get; private set; }         /// <value> String constant describing size of monster's sprite </value>
         [field: SerializeField] public string monsterNameID { get; private set; }       /// <value> NameID as referenced in database </value>
         [field: SerializeField] public string monsterSpriteName { get; private set; }   /// <value> Name of monster's sprite as referenced in resources </value>
-        [field: SerializeField] public string monsterDisplayName { get; private set; }  /// <value> Monster name <value>
         [field: SerializeField] public string monsterAI { get; private set; }           /// <value> Monster's behaviour in combat </value>
         [field: SerializeField] public float multiplier { get; private set; }           /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
         [field: SerializeField] public float difficultyModifier { get; private set; } = 1f;  /// <value> Stat modifier applied based on difficulty </value>
@@ -62,7 +59,6 @@ namespace Characters {
         /// </summary>
         /// <param name="monsterNameID"> Name of monster as referenced by the database </param>
         /// <param name="monsterSpriteName"> Name of monster's sprite, castle case </param>
-        /// <param name="monsterDisplayName"> Name of monster in game, separated by spaces </param>
         /// <param name="monsterArea"> Area of monster to get file path to sprite, castle case </param>
         /// <param name="monsterSize"> Size of monster (small, medium, large) </param>
         /// <param name="monsterAI"> Pattern for how monster attacks </param>
@@ -75,12 +71,11 @@ namespace Characters {
         /// <param name="attacks"> List of known attacks (length 4) </param>
         /// <param name="dropChance"> Chance of monster dropping something </param>
         /// <param name="monsterReward"> Result from monster dying </param>
-        public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterDisplayName, string monsterArea, 
+        public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterArea, 
         string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, int bonusPDEF, int bonusMDEF, Attack[] attacks,
         int hardModeAttackIndex, int dropChance, Result monsterReward, int championChance) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
-            this.monsterDisplayName = monsterDisplayName;
             this.monsterArea = monsterArea;
             this.monsterAI = monsterAI;
             this.bonusPDEF = bonusPDEF;
@@ -229,7 +224,7 @@ namespace Characters {
         /// Sets the monster's level between its minimum level and maximum level
         /// </summary>
         public void MultipleLVLUp(int subAreaProgress) {
-            if (subAreaProgress < 35) { // prevent stronger monsters from appearing at the start of the area (note this affects boss fights)
+            if (subAreaProgress < 50) { // prevent stronger monsters from appearing at the start of the area (note this affects boss fights)
                 base.MultipleLVLUp(minLVL, Mathf.Max(minLVL, maxLVL - 1));  
             }
             else {
@@ -568,6 +563,9 @@ namespace Characters {
                                 AddStatusEffect(StatusEffectConstants.WEAKNESS, 2, c);
                             }
                             else if (i == 2) {
+                                AddStatusEffect(StatusEffectConstants.BLEED, 2, c);
+                            }
+                            else if (i == 3) {
                                 AddStatusEffect(StatusEffectConstants.SHOCK, 2, c);
                             }
                         }
@@ -716,7 +714,7 @@ namespace Characters {
         /// Logs primary stat information for debugging
         /// </summary>
         public override void LogPrimaryStats() {
-            Debug.Log(monsterDisplayName);
+            Debug.Log(monsterNameID);
             base.LogPrimaryStats();
         }
 
@@ -724,7 +722,7 @@ namespace Characters {
         /// Logs monster's display name for debugging
         /// </summary>
         public override void LogName() {
-            Debug.Log("Name " + monsterDisplayName);
+            Debug.Log("Name " + monsterNameID);
         }
     }
 }

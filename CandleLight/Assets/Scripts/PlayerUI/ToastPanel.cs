@@ -20,9 +20,13 @@ namespace PlayerUI {
         public Canvas c;
         public CanvasGroup textBackgroundCanvas; /// <value> Canvas group for controlling alpha </value>
         public LayoutElement le;
+        public SpriteRenderer arrowRenderer;
         public SpriteRenderer toastSprite;
         public SpriteRenderer achievementIcon;
+        public Sprite[] arrowSprites = new Sprite[4];
+        public enum arrowType { UP, RIGHT, DOWN, LEFT };
         public enum toastType { HP, MP, EXP, WAX, SE, PROGRESS, QUESTCOMPLETE };
+        public bool isArrowHolder = false;
 
         private Coroutine fader;            /// <value> Store the coroutine responsible for visibility to stop it if notification changes suddenly </value>
         private Coroutine fadeOuter;        /// <value> Store the coroutine responsible for fading out to stop it if notification changes suddenly </value>
@@ -35,7 +39,7 @@ namespace PlayerUI {
         private string threshINTText = LocalizationManager.instance.GetLocalizedValue("threshINT_text");      /// <value> Localized text for the text "Threshold STR: " </value>
         private string threshLUKText = LocalizationManager.instance.GetLocalizedValue("threshLUK_text");      /// <value> Localized text for the text "Threshold STR: " </value>
         private float lerpSpeed = 4;        /// <value> Speed at which canvas fades in and out </value>
-        private static bool showingArrow = false;
+        private static bool isShowingArrow = false;
 
         public void SetNotification(bool[] types, string[] amounts) {
             int typesCount = 0;
@@ -143,12 +147,16 @@ namespace PlayerUI {
 
             switch (tutorialName) {
                 case "special0":
-                    arrow.transform.localPosition = new Vector3(-210, -110);
-                    if (showingArrow == false) {
-                        arrowAnimator.SetTrigger("show"); 
-                        showingArrow = true; 
-                    }  
-                    arrowAnimator.SetTrigger("vbob");
+                    ShowArrow(-210, -110, true);   
+                    break;
+                case "party0":
+                    ShowArrow(210, -110, true);   
+                    break;
+                case "gear0":
+                    ShowArrow(195, 50, false);   
+                    break;
+                case "skills0":
+                    ShowArrow(320, -110, true);   
                     break;
             }
             
@@ -276,13 +284,42 @@ namespace PlayerUI {
                     if (fader != null) {
                         StopCoroutine(fader);
                     }
-                    if (arrow != null && showingArrow == true) {
-                        arrowAnimator.ResetTrigger("hide");
-                        arrowAnimator.SetTrigger("hide");
+                    if (arrow != null && isShowingArrow == true && isArrowHolder == true) {
+                        HideArrow();
                     }
                     fader = StartCoroutine(Fade(0));
                 }
             }
+        }
+
+        public void ShowArrow(int x, int y, bool isV) {
+            if (isShowingArrow == false) {
+                isShowingArrow = true;
+                isArrowHolder = true;
+                arrow.transform.localPosition = new Vector3(x, y);
+                
+                if (isV == true){
+                    arrowRenderer.sprite = arrowSprites[(int)arrowType.DOWN];
+                    arrowAnimator.ResetTrigger("vbob");    
+                    arrowAnimator.SetTrigger("vbob");
+                }
+                else {
+                    arrowRenderer.sprite = arrowSprites[(int)arrowType.LEFT];
+                    arrowAnimator.ResetTrigger("hbob");    
+                    arrowAnimator.SetTrigger("hbob");
+                }
+                arrowAnimator.ResetTrigger("stop");
+                arrowAnimator.ResetTrigger("show");
+                arrowAnimator.SetTrigger("show"); 
+            }
+        }
+
+        public void HideArrow() {
+            isShowingArrow = false;
+            isArrowHolder = false;
+            arrowAnimator.ResetTrigger("hide");
+            arrowAnimator.SetTrigger("hide");
+            arrowAnimator.SetTrigger("stop");
         }
 
         /// <summary>
