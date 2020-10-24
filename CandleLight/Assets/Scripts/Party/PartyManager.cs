@@ -34,7 +34,7 @@ namespace Party {
         public string storedPartyMember;        /// <value> Classname of the partyMember to add </value>
         public int bonusChampionChance = 0;     /// <value> Chance of encountering champion monsters, summed from all partyMembers </value>
         public int WAX { get; private set; }    /// <value> Currency party has stored up </value>
-        public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from enemies </value>
+        public float itemDropMultiplier = 1f;   /// <value> Current multiplier on item drop rates from monsters </value>
         public float WAXmultiplier = 1f;        /// <value> Current multiplier on WAX amounts </value>
         public float EXPmultiplier = 1f;        /// <value> Current multiplier on EXP amounts </value>
         public float PROGmultiplier = 1f;       /// <value> Current multiplier on PROG amounts </value>

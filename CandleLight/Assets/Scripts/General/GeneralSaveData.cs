@@ -31,14 +31,14 @@ namespace General {
         public float fastestTime;
         public int resolutionWidth;
         public int resolutionHeight;
-        public int mostEnemies;
+        public int mostMonsters;
         public int mostWAX;
         public int mostEvents;
        
         // some values are defaulted just cause they'll be swapped with more logic in gameManager anyways
         public GeneralSaveData(float version, ItemData pastItemData, HighScoreData[] hsds, bool[] tutorialTriggers, bool[] achievementsUnlocked, bool[] aromas,
         string[,] partyCombos, bool isTimer, float scoreModifier, float animationSpeed, float bgmVolume, float sfxVolume, bool isFullscreen, 
-        int resolutionWidth, int resolutionHeight, float difficultyModifier = 0.75f, int mostEnemies = -1, 
+        int resolutionWidth, int resolutionHeight, float difficultyModifier = 0.75f, int mostMonsters = -1, 
         int mostWAX = -1, int mostEvents = -1, float fastestTime = -1) {
             this.version = version;
             this.hsds = hsds;
@@ -56,7 +56,7 @@ namespace General {
             this.resolutionHeight = resolutionHeight;
             this.difficultyModifier = difficultyModifier;
             this.scoreModifier = scoreModifier;
-            this.mostEnemies = mostEnemies;
+            this.mostMonsters = mostMonsters;
             this.mostWAX = mostWAX;
             this.mostEvents = mostEvents;
             this.fastestTime = fastestTime;

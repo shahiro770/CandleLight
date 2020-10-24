@@ -26,7 +26,7 @@ namespace Menus.GameOverMenu {
         public Image frontFill;                 /// <value> Image that displays overtop of progress bar's background </value>
         public LocalizedText gameOverTitle;
         public LocalizedText gameOverDes;
-        public LocalizedText enemiesAmount;
+        public LocalizedText monstersAmount;
         public LocalizedText WAXAmount;
         public LocalizedText eventsAmount;
         public LocalizedText timeAmount;
@@ -75,7 +75,7 @@ namespace Menus.GameOverMenu {
             midPointBarSeg = 1f / (midPoints.Count + 1);
             fillAmount += (subAreaProg / 100f) * (1f / (midPoints.Count + 1));
 
-            enemiesAmount.SetText(GameManager.instance.enemiesKilled.ToString());
+            monstersAmount.SetText(GameManager.instance.monstersKilled.ToString());
             WAXAmount.SetText(GameManager.instance.WAXobtained.ToString());
             eventsAmount.SetText(GameManager.instance.totalEvents.ToString());
             timeAmount.SetText(timeString);
@@ -123,7 +123,7 @@ namespace Menus.GameOverMenu {
         /// </summary>
         /// <returns></returns>
         private int CalculateScore() {
-            int score = GameManager.instance.enemiesKilled * 10 + GameManager.instance.WAXobtained * 20 + GameManager.instance.totalEvents * 5;
+            int score = GameManager.instance.monstersKilled * 10 + GameManager.instance.WAXobtained * 20 + GameManager.instance.totalEvents * 5;
             if (isWin) {
                 score += 1000;
             }

@@ -53,7 +53,7 @@ namespace General {
         public int resolutionWidth;
         public int resolutionHeight;
         public float difficultyModifier;                /// <value> Game's difficulty modifier (changes various things) </value>
-        public int enemiesKilled = 0;                   /// <value> Number of monsters killed </value>
+        public int monstersKilled = 0;                   /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public bool[] tutorialTriggers;                 /// <value> List of tutorials/tips that have yet to be triggered (true if not yet triggered) </value>
@@ -157,11 +157,11 @@ namespace General {
             }
             gsData.pastItemData = pastItemData;
             gsData.difficultyModifier = difficultyModifier;
-            if (this.gsData.mostEnemies < enemiesKilled) {
-                gsData.mostEnemies = enemiesKilled;
+            if (this.gsData.mostMonsters < monstersKilled) {
+                gsData.mostMonsters = monstersKilled;
             }
             else {
-                gsData.mostEnemies = this.gsData.mostEnemies;
+                gsData.mostMonsters = this.gsData.mostMonsters;
             }
             if (this.gsData.mostEvents < totalEvents) {
                 gsData.mostEvents = totalEvents;

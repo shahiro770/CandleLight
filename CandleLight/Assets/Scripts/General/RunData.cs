@@ -27,14 +27,14 @@ namespace General {
         public int WAX;
         public int subAreaProgress;
         public int areaProgress;
-        public int enemiesKilled = 0;                   /// <value> Number of monsters killed </value>
+        public int monstersKilled = 0;                   /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
         public int subAreaResets = 0;                   /// <value> Number of times player has quit out to the main menu </value>
         public float difficultyModifier;                         /// <value> True if in hard mode, false otherwise</value>
 
         public RunData(PartyMemberData[] partyMemberDatas, int WAX, ItemData[] spareGear, ItemData[] spareCandles, ItemData[] spareSpecials, 
-        string[][] questData, int areaProgress, bool[] tutorialTriggers, int enemiesKilled, int WAXObtained, int totalEvents, 
+        string[][] questData, int areaProgress, bool[] tutorialTriggers, int monstersKilled, int WAXObtained, int totalEvents, 
         float elapsedTime, List<int> midPoints, int subAreaResets, float difficultyModifier) {
             this.partyMemberDatas = partyMemberDatas;
             this.WAX = WAX;
@@ -44,7 +44,7 @@ namespace General {
             this.questData = questData;
             this.areaProgress = areaProgress;
             this.tutorialTriggers = tutorialTriggers;
-            this.enemiesKilled = enemiesKilled;
+            this.monstersKilled = monstersKilled;
             this.WAXobtained = WAXObtained;
             this.totalEvents = totalEvents;
             this.elapsedTime = elapsedTime;

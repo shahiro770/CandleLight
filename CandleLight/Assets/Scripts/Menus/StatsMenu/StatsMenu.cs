@@ -21,7 +21,7 @@ namespace Menus.Stats {
         /* external component references */
         public AchievementDisplay[] achievements;
         public HighScore[] highScores;
-        public LocalizedText enemiesAmount;
+        public LocalizedText monstersAmount;
         public LocalizedText WAXAmount;
         public LocalizedText eventsAmount;
         public LocalizedText timeAmount;
@@ -72,7 +72,7 @@ namespace Menus.Stats {
                 achievements[i].SetColour(GameManager.instance.achievementsUnlocked[i]);
             }
 
-            enemiesAmount.SetText(GameManager.instance.gsData.mostEnemies.ToString());
+            monstersAmount.SetText(GameManager.instance.gsData.mostMonsters.ToString());
             WAXAmount.SetText(GameManager.instance.gsData.mostWAX.ToString());
             eventsAmount.SetText(GameManager.instance.gsData.mostEvents.ToString());
             if (GameManager.instance.gsData.fastestTime == -1) {

@@ -45,8 +45,8 @@ namespace PlayerUI {
         /// Initializes partyMemberDisplays and monsterResultDisplays, and sets text values to empty
         /// </summary>
         /// <param name="pms"> PartyMembers list (max count of 4) </param>
-        /// <param name="enemiesKilled"> Monsters list (max unique monsters of 5) </param>
-        public IEnumerator Init(List<PartyMember> pms, List<Monster> enemiesKilled) {
+        /// <param name="monstersKilled"> Monsters list (max unique monsters of 5) </param>
+        public IEnumerator Init(List<PartyMember> pms, List<Monster> monstersKilled) {
             for (int i = 0; i < pmDisplays.Length; i++) {
                 pmDisplays[i].gameObject.SetActive(false);
             }
@@ -72,8 +72,8 @@ namespace PlayerUI {
             amountWAX = 0;
             amountTextEXP.SetText("");
             amountTextWAX.SetText("");
-            yield return (StartCoroutine(DisplayMonstersDisplays(pms, enemiesKilled)));
-            yield return (StartCoroutine(DisplayItemDrops(enemiesKilled)));
+            yield return (StartCoroutine(DisplayMonstersDisplays(pms, monstersKilled)));
+            yield return (StartCoroutine(DisplayItemDrops(monstersKilled)));
             yield return (StartCoroutine(UpdateEXPBars(pms)));
             for (int i = 0; i < itemNum; i++) {
                 itemSlots[i].SetTakeable(true);
@@ -84,23 +84,23 @@ namespace PlayerUI {
         /// Displays the monsterResultDisplays, initializing them
         /// </summary>
         /// <param name="pms"> List of partyMembers </param>
-        /// <param name="enemiesKilled"> List of monsters killed </param>
+        /// <param name="monstersKilled"> List of monsters killed </param>
         /// <returns> IEnumerator for smooth animation</returns>
-        private IEnumerator DisplayMonstersDisplays(List<PartyMember> pms ,List<Monster> enemiesKilled) {
-            for (int i = 0; i < enemiesKilled.Count; i++) {
+        private IEnumerator DisplayMonstersDisplays(List<PartyMember> pms ,List<Monster> monstersKilled) {
+            for (int i = 0; i < monstersKilled.Count; i++) {
                 for (int j = 0; j < monstersToDisplay.Length; j++) {
                     if (monsterCounts[j] == 0) {
                         monsterCounts[j]++;
-                        monstersToDisplay[j] = enemiesKilled[i];
+                        monstersToDisplay[j] = monstersKilled[i];
                         break;
                     }
-                    else if (monstersToDisplay[j].monsterNameID == enemiesKilled[i].monsterNameID) {
+                    else if (monstersToDisplay[j].monsterNameID == monstersKilled[i].monsterNameID) {
                         monsterCounts[j]++;
                         break;
                     }
                 }
-                amountEXP += (int)(enemiesKilled[i].EXP);
-                amountWAX += (int)(enemiesKilled[i].WAX);
+                amountEXP += (int)(monstersKilled[i].EXP);
+                amountWAX += (int)(monstersKilled[i].WAX);
             }
 
             for (int i = 0; i < monstersToDisplay.Length; i++) {
@@ -116,8 +116,8 @@ namespace PlayerUI {
             PartyManager.instance.AddWAX(amountWAX);
 
             if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] == false) {
-                for (int i = 0; i < enemiesKilled.Count; i++) {
-                    if (enemiesKilled[i].monsterNameID == "Hobgoblin 3 3") {
+                for (int i = 0; i < monstersKilled.Count; i++) {
+                    if (monstersKilled[i].monsterNameID == "Hobgoblin 3 3") {
                         GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] = true;
                         EventManager.instance.SetAchievementNotification((int)achievementConstants.NOROCKUNTURNED);
                         break;
@@ -129,16 +129,16 @@ namespace PlayerUI {
         /// <summary>
         /// Displays the items dropped by each monster
         /// </summary>
-        /// <param name="enemiesKilled"> List of monsters killed </param>
+        /// <param name="monstersKilled"> List of monsters killed </param>
         /// <returns> IEnumerator for timing </returns>
-        private IEnumerator DisplayItemDrops(List<Monster> enemiesKilled) {
-            for (int i = 0; i < enemiesKilled.Count; i++) {
+        private IEnumerator DisplayItemDrops(List<Monster> monstersKilled) {
+            for (int i = 0; i < monstersKilled.Count; i++) {
                 if (itemNum == itemSlots.Length) {  // if itemNum is maxed out, no more items
                     break;
                 }
-                if (enemiesKilled[i].CheckItemDrop(PartyManager.instance.itemDropMultiplier) == true) {
+                if (monstersKilled[i].CheckItemDrop(PartyManager.instance.itemDropMultiplier) == true) {
                     itemSlots[itemNum].SetVisible(true);
-                    itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItemsMonster(enemiesKilled[i])); // will only get one item
+                    itemSlots[itemNum].PlaceItem(EventManager.instance.GetResultItemsMonster(monstersKilled[i])); // will only get one item
                     itemNum++;
                     numSpareFull++;
                     yield return null;

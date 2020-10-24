@@ -28192,7 +28192,7 @@ GameObject:
   - component: {fileID: 630607590}
   - component: {fileID: 630607589}
   m_Layer: 5
-  m_Name: EnemiesText
+  m_Name: MonstersText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28214,7 +28214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -66.25001, y: 71.25}
+  m_AnchoredPosition: {x: -90, y: 71.25}
   m_SizeDelta: {x: 280, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &630607589
@@ -28229,9 +28229,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308a23777c6644a3db7b3ec30fca41b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: enemies_killed_title
+  key: monsters_killed_title
   meshText: {fileID: 630607590}
-  textPreset: 1
+  textPreset: 0
 --- !u!114 &630607590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28251,7 +28251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enemies Killed:'
+  m_text: 'Monsters Killed:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb46062d1e9a94614959a0902ee45f9a, type: 2}
   m_sharedMaterial: {fileID: 21707548357601402, guid: cb46062d1e9a94614959a0902ee45f9a,
@@ -28321,7 +28321,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 630607590}
-    characterCount: 15
+    characterCount: 16
     spriteCount: 0
     spaceCount: 1
     wordCount: 2
@@ -31678,7 +31678,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -66.25001, y: 36.249992}
+  m_AnchoredPosition: {x: -90, y: 36.249992}
   m_SizeDelta: {x: 280, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719883389
@@ -31695,7 +31695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: WAX_obtained_title
   meshText: {fileID: 719883390}
-  textPreset: 1
+  textPreset: 0
 --- !u!114 &719883390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57534,7 +57534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -66.25001, y: -71.250015}
+  m_AnchoredPosition: {x: -66.25001, y: -76}
   m_SizeDelta: {x: 280, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1249074259
@@ -62825,7 +62825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24dbd6f7606a4092a16d717bfbdf4e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCanvas: {fileID: 1731593852}
+  monsterCanvas: {fileID: 1731593852}
   eventDescription: {fileID: 95653651}
   statusPanel: {fileID: 1216048677}
   actionsPanel: {fileID: 1991115682}
@@ -63378,8 +63378,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 412.5, y: 192.5}
+  m_AnchoredPosition: {x: 0, y: -95}
+  m_SizeDelta: {x: 485, y: 192.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1412867963
 GameObject:
@@ -65749,7 +65749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -66.25001, y: 1.2500305}
+  m_AnchoredPosition: {x: -90, y: 1.2500305}
   m_SizeDelta: {x: 280, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1470914269
@@ -65766,7 +65766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: total_events_title
   meshText: {fileID: 1470914270}
-  textPreset: 1
+  textPreset: 0
 --- !u!114 &1470914270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75650,7 +75650,7 @@ MonoBehaviour:
   frontFill: {fileID: 815207014}
   gameOverTitle: {fileID: 1242500201}
   gameOverDes: {fileID: 134487652}
-  enemiesAmount: {fileID: 2022860089}
+  monstersAmount: {fileID: 2022860089}
   WAXAmount: {fileID: 1200478149}
   eventsAmount: {fileID: 2025773857}
   timeAmount: {fileID: 2084692518}
@@ -76377,7 +76377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -66.25001, y: -33.750023}
+  m_AnchoredPosition: {x: -90, y: -33.750023}
   m_SizeDelta: {x: 280, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1791310762
@@ -76394,7 +76394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: time_played_title
   meshText: {fileID: 1791310763}
-  textPreset: 1
+  textPreset: 0
 --- !u!114 &1791310763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86195,7 +86195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 136.24998, y: -71.250015}
+  m_AnchoredPosition: {x: 136.24998, y: -76}
   m_SizeDelta: {x: 140, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1976403139
@@ -87203,7 +87203,7 @@ GameObject:
   - component: {fileID: 2022860090}
   - component: {fileID: 2022860089}
   m_Layer: 5
-  m_Name: EnemiesAmount
+  m_Name: MonstersAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

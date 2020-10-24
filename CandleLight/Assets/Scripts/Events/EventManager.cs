@@ -196,7 +196,7 @@ namespace Events {
         /// and EventMAnager resets stuff at the start of the game
         /// </summary>
         public void ResetGame() {
-            GameManager.instance.enemiesKilled = 0;
+            GameManager.instance.monstersKilled = 0;
             GameManager.instance.WAXobtained = 0;
             GameManager.instance.totalEvents = 0;
             midPoints.Clear();
@@ -374,7 +374,7 @@ namespace Events {
                 ResetGame();
             }
             else {  
-                GameManager.instance.enemiesKilled = GameManager.instance.rData.enemiesKilled;
+                GameManager.instance.monstersKilled = GameManager.instance.rData.monstersKilled;
                 GameManager.instance.WAXobtained = GameManager.instance.rData.WAXobtained;
                 GameManager.instance.totalEvents = GameManager.instance.rData.totalEvents;
                 subAreaResets = GameManager.instance.rData.subAreaResets;
@@ -860,8 +860,8 @@ namespace Events {
                     }
                 }
 
-                yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.enemiesKilled));
-                GameManager.instance.enemiesKilled += combatManager.enemiesKilled.Count;
+                yield return StartCoroutine(rewardsPanel.Init(PartyManager.instance.GetPartyMembers(), combatManager.monstersKilled));
+                GameManager.instance.monstersKilled += combatManager.monstersKilled.Count;
                 if (infoPanel.isOpen) {
                     infoPanel.UpdateAmounts();
                 }
@@ -2232,7 +2232,7 @@ namespace Events {
             if (isGameOver == false) {
                 RunData data = new RunData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
                 gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
-                infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.enemiesKilled,
+                infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.monstersKilled,
                 GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1,
                 GameManager.instance.difficultyModifier);
                 GameManager.instance.SaveRunData(data);

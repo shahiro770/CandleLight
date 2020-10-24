@@ -65,13 +65,13 @@ namespace Items {
         /// <param name="quality"> String quality of the gear, will make this into a constant soon </param>
         /// <remark>
         /// This function is kept seperate from the consumable's version for future changes
-        /// (such as handling custom gear modifiers, like "10% chance to poison enemies on attacks")
+        /// (such as handling custom gear modifiers, like "10% chance to poison monsters on attacks")
         /// </remark>
         public void RandomizeAmounts(string quality) {
             float multiplier;
             int effectIndex = Random.Range(0, effectsNum);
 
-            if (quality == "trash") {   // trash items can only show up on normal difficulty
+            if (quality == "trash") {   // trash items can only show up on casual difficulty
                 multiplier = 0;
             }
             else if (quality == "low") {
@@ -83,7 +83,7 @@ namespace Items {
             else if (quality == "high") {
                 multiplier = 1.5f;
             }
-            else {      // perfect quality, can only be achieved under rare circumstances
+            else {                     // perfect quality, can only be achieved under rare circumstances
                 multiplier = 2f;
             }
 

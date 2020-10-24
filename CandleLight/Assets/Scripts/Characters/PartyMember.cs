@@ -150,8 +150,8 @@ namespace Characters {
         /// </summary>
         /// <param name="level"> Level to calculate EXP to next level for </param>
         public int CalculateEXPToNextLVL(int LVL) {
-            // it takes 4 LVL 1 enemies for a LVL 1 player to reach LVL 2
-            // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
+            // it takes 6 LVL 1 monsters for a LVL 1 player to reach LVL 2
+            // it takes 47 LVL 98 monsters for LVL 98 player to reach LVL 99
             return 2 + (int)(6 * Mathf.Pow(LVL, 2.35f) + LVL); 
         }
 

@@ -8,7 +8,7 @@ Rogue     Stab     Lacerate   Fae Dust     Evade
 
 New Skills:
 - Channel buffs an ally +MATK for X turns
-- Seal debuffs an enemy -MATK for X turns
+- Seal debuffs a monster -MATK for X turns
 - Evade buffs an ally +DOG for X turns
 
 Skill Trees
@@ -37,7 +37,7 @@ Mage    Col 0       Col 1               Col 2              Col 3
 
 New Skills:
 - Mana Refresh lets all allies (including self) restore 5% MP at the end of each turn in combat
-- Frostfire Nova upgrades Seal, big Aoe attack that hits all enemies and may Freeze or burn (but obv costs like a third of your mp)
+- Frostfire Nova upgrades Seal, big Aoe attack that hits all monsters and may Freeze or burn (but obv costs like a third of your mp)
 - Every 10 events, add a random candle to your inventory
 
 Changes:
@@ -51,7 +51,7 @@ Archer      Col 0           Col 1               Col 2               Col 3
             Scavenger       Blooming Fortune    Fleet Footed        Burning Eyes
 
 New Skills:
-- Break Shot replaces Enroot, does physical damage and reduces enemy PDEF
+- Break Shot replaces Enroot, does physical damage and reduces monster PDEF
 - Adaptable makes using a magical/physical attack grant PATK/MATK up for 1 turn
 - Reanimate upgrades Volley, revives an ally, restoring 25% HP and MP
 - Great Winds passives makes all allies move after archer in turn order (fastest archer if double archer)

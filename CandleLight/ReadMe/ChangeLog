@@ -56,10 +56,10 @@ Balance: Poison damage increased to 10%
 Bug: Candlemancy kinda bugged but need to figure out why 
 Fix: Make stinger sting turn them poison green before attacking
 Balance: Nerfed MDEF again
-Balance: Give Greyhides a howl move in later areas that lets them give a random enemy advantage (But only if they don't have advantage themselves)
+Balance: Give Greyhides a howl move in later areas that lets them give a random monster advantage (But only if they don't have advantage themselves)
 Feature: Add options
 Fix: Give bosses a unique death animation (blink three times before dying)
-Balance: Buff some enemies
+Balance: Buff some monsters
 Bug: Boss death animation doesn't apply same to bar and sed (should fix that)
 Balance: Takes more EXP to level up
 Bug: Pause Menu Doesn't BLOCK RAYCASTS
@@ -80,7 +80,7 @@ Bug: pixel effect is too much for dirt storm (and it doesn't go over everything)
 Bug: Recolour taunt se
 Bug: Frost golem text is bugged
 Bug: Pause menu freezes emitter
-Balance: Tweak the bat event's EXP rewards, and probably tweak some enemy's DEX (e.g. wraiths are now faster)
+Balance: Tweak the bat event's EXP rewards, and probably tweak some monster's DEX (e.g. wraiths are now faster)
 Balance: Monsters now drop a little more WAX at higher levels
 Balance: Nerfed monsters again cause too strong
 Feature: Restart button added to options menu
@@ -248,7 +248,7 @@ Bug: Alpha in rewardsPanel is not shifting gradually
 Bug: Can exit game and change difficulty/aromas and then load game to affect current run
 Bug: Starting game with 0 audio from previous save doesn't play bgm
 UI: For aroma timer, turn red at 6:00 minute
-Bug: Game crashes on load cause null is not null
+Bug: Game crashes on load cause null is not null for gear
 UI: Got some tutorial arrow logic set up
 Fix: Made modifiers give half score on lower difficulties (and upped their values drastically)
 Fix: Removed monsterDisplayName as a property
@@ -270,24 +270,31 @@ Bug: Safeguard does not work
 Feature: Give option for monsters to spawn with permanent buffs (e.g. tumbled are rooted by default)
 Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
 Bug: Outpost candle abandoned gives 0 progress
+Gear: Thornmail
+    - Revenge Root: 20%
+    - PDEF: 2
+    - HP: 5
+Gear: Root's Wrath (Mage)
+    - MATK 4
+    - Root On Hit: 20%
+    - MP 5
 
 COOKING
 -------
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
-Bug: Animation cutting bug (where enemies end on the last frame of their animation)
+Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: Empty tooltip bug
-Bug: Outline is broken on candle swapping
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
 UI: Make eventDescription show physical/magical damage
-Fix: Rename all uses of "Enemy" to "monster" (more consistent naming convetion)
+Fix: Rename all uses of "monster" to "monster" (more consistent naming convetion)
 
 Monster: The Grumbled (PDEF 4 MDEF 2) (Random)
     - Enroot: Magical attack that guarantees root
     - Cursed Seeds: Magical attack that damages a character and inflicts rbw
-    - Regrow: Gain regenerate for 3 turns
+    - Regrow: Heal and gain regenerate for 3 turns
     - Wildfire: Inflict burn on all characters
     - Has root debuff permanently
 Monster: Knight Puppet (PDEF 2 MDEF 1) (Random)
@@ -295,7 +302,7 @@ Monster: Knight Puppet (PDEF 2 MDEF 1) (Random)
     - Guarding Stance: Gain Guard for 3 turns
     - Spell Shield: Restore HP and grant barrier for 3 turns to a random ally
 Monster: Hanged Man (PDEF 2 MDEF 4) (Last on fifth turn AI)
-    - Silent Arrows: Magical attack, 50% chance to inflict seal (MATK - 30%), hits all enemies
+    - Silent Arrows: Magical attack, 50% chance to inflict seal (MATK - 30%), hits all monsters
     - Hang: Inflict trap for 3 turns
     - Spell Shield: Restore health to an ally and grant them Barrier
     - Free Man: Suicides and deals half remaining HP as damage, happens on 5th turn
@@ -304,14 +311,6 @@ Monster: Dire Greyhide (Last at 60%)
     - Howl: Give self and a random ally Advantage
     - Prowl: Gain Nimble for 5 turns
     - Enrage: Gain Rage for 5 turns
-Gear: Thornmail
-    - Revenge Bleed: 20%
-    - PDEF: 2
-    - HP: 5
-Gear: Root's Wrath (Mage)
-    - MATK 4
-    - Root On Hit: 20%
-    - MP 5
 Gear: Root Bow (Archer)
     - MATK 6
     - Root On Hit: 20%
@@ -387,6 +386,7 @@ Balance: Greyhide Alpha
         Summon two greyhides
 Balance: Lesser Wraith
     Spell Curse: Debuff, inflict seal
+    Channel: Give an ally or self Ethereal for 3 turns
 Alternate Final Boss:
     - TheDen has a chance to be replaced by ThistleHut
     - Wind Witch (9 PDEF 6 MDEF)
@@ -402,11 +402,9 @@ Alternate Final Boss:
         Puppeteer: Summon two puppet knights to fight beside it
         Soul Shield: Give itself Miracle for 1 turn
 
-Verify: Player dies from random event doesn't always trigger death check?!?!?
-Verify: Vamprie Bat event might do damage in a wonky way
 Feature: Redo pixel sizing on all monster sprites that are 192 x 192, and clean up icons
-Fix: Tutorials are skills! still missable, might need to make the window glow
-Verify: Game will bug out on load on rare occasion (citing spare gear item data???!?!?)
+Verify: Player dies from random event doesn't always trigger death check?!?!?
+Verify: Outline is broken on candle swapping
 Verify: Test frost golem and pmd in skills panel
 Verify: Timing out in the tutorial during wintergreen (should work)
 
@@ -420,7 +418,7 @@ Rogue     Stab     Lacerate   Fae Dust     Evade
 
 New Skills:
 - Channel buffs an ally +MATK for X turns
-- Seal debuffs an enemy -MATK for X turns
+- Seal debuffs an monster -MATK for X turns
 - Evade buffs an ally +DOG for X turns
 
 Skill Trees
@@ -449,7 +447,7 @@ Mage    Col 0       Col 1               Col 2              Col 3
 
 New Skills:
 - Mana Refresh lets all allies (including self) restore 5% MP at the end of each turn in combat
-- Frostfire Nova upgrades Seal, big Aoe attack that hits all enemies and may Freeze or burn (but obv costs like a third of your mp)
+- Frostfire Nova upgrades Seal, big Aoe attack that hits all monsters and may Freeze or burn (but obv costs like a third of your mp)
 - Every 10 events, add a random candle to your inventory
 
 Changes:
@@ -463,7 +461,7 @@ Archer      Col 0           Col 1               Col 2               Col 3
             Scavenger       Blooming Fortune    Fleet Footed        Burning Eyes
 
 New Skills:
-- Break Shot replaces Enroot, does physical damage and reduces enemy PDEF
+- Break Shot replaces Enroot, does physical damage and reduces monster PDEF
 - Adaptable makes using a magical/physical attack grant PATK/MATK up for 1 turn
 - Reanimate upgrades Volley, revives an ally, restoring 25% HP and MP
 - Great Winds passives makes all allies move after archer in turn order (fastest archer if double archer)
@@ -493,7 +491,7 @@ Options:
 Champions:
     Add a shader to show champion
 Difficulty:
-    Turn reticle and name red if enemy is higher level
+    Turn reticle and name red if monster is higher level
 
 
 NEAR FUTURE

@@ -32,7 +32,7 @@ namespace Combat {
         public static CombatManager instance;       /// <value> Combat scene instance </value>
 
         /* external component references */
-        public Canvas enemyCanvas;                  /// <value> Canvas for where monsters are displayed </value>
+        public Canvas monsterCanvas;                /// <value> Canvas for where monsters are displayed </value>
         public EventDescription eventDescription;   /// <value> eventDescription reference </value>
         public StatusPanel statusPanel;             /// <value> statusPanel reference </value>
         public ActionsPanel actionsPanel;           /// <value> actionsPanel reference </value>
@@ -47,7 +47,7 @@ namespace Combat {
 
         public bool inCombat { get; private set; } = false;       
         public bool isReady { get; private set; } = false;                  /// <value> Localization happens at the start, program loads while waiting </value>
-        public List<Monster> enemiesKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
+        public List<Monster> monstersKilled { get; private set; }           /// <value> List of monsters killed in combat instance </value>
         
         private EventSystem es;                                             /// <value> EventSystem reference </value>
         private List<PartyMember> partyMembersAll = new List<PartyMember>();    /// <value> List of partyMembers </value>
@@ -64,7 +64,7 @@ namespace Combat {
         private string[] championBuffs;             /// <value> List of buffs monsters can be spawn with </value>
         private int countID = 0;                    /// <value> Unique ID for each character in combat </value>
         private int middleMonster = 0;              /// <value> Index of monster in the middle of the canvas, rounds down </value>
-        private int maxMonsters = 5;                /// <value> Max number of enemies that can appear on screen </value>
+        private int maxMonsters = 5;                /// <value> Max number of monsters that can appear on screen </value>
         private int selectedMonsterAttackIndex;     /// <value> Index of selectedMonster attack in its attack array </value>
         private int fleeBonus;                      /// <value> Repeated flee fails increase future flee chances </value>
         private bool turn;                          /// <value> Current turn (PMTURN or MTURN) </value>
@@ -102,7 +102,7 @@ namespace Combat {
             inCombat = true;
             cq.Reset();
             monsters = new List<Monster>();
-            enemiesKilled = new List<Monster>();
+            monstersKilled = new List<Monster>();
             partyMembersAlive = new List<PartyMember>();
             partyMembersAll = PartyManager.instance.GetPartyMembers();
             this.championBuffs = championBuffs;
@@ -139,7 +139,7 @@ namespace Combat {
         }
 
         /// <summary>
-        /// Adds a monster GO to the enemy canvas, initializing its values
+        /// Adds a monster GO to the monster canvas, initializing its values
         /// </summary>
         /// <param name="monsterName"> Name of the monster to be fetched from the DB </param>
         /// <returns> IEnumerator cause animations </returns>
@@ -161,7 +161,7 @@ namespace Combat {
             monsterComponent.md.SetAlternateColourBlock();
             monsterComponent.md.SetInteractable(false, false);
 
-            newMonster.transform.SetParent(enemyCanvas.transform, false);
+            newMonster.transform.SetParent(monsterCanvas.transform, false);
             monsters.Add(monsterComponent);
             
             newMonster.SetActive(false); // hide after manipulating components so player doesn't see monster until ArrangeMonsters()
@@ -501,7 +501,7 @@ namespace Combat {
                 if (m.CheckDeath()) {
                     cq.RemoveCharacter(m.ID);
                     monstersToRemove.Add(m);
-                    enemiesKilled.Add(m);
+                    monstersKilled.Add(m);
 
                     yield return StartCoroutine(m.md.PlayDeathAnimation());
                 }
@@ -768,7 +768,7 @@ namespace Combat {
                 if (m.CheckDeath()) {
                     cq.RemoveCharacter(m.ID);
                     monstersToRemove.Add(m);
-                    enemiesKilled.Add(m);
+                    monstersKilled.Add(m);
 
                     yield return StartCoroutine(m.md.PlayDeathAnimation());
                 }

@@ -228,8 +228,8 @@ namespace Characters {
             else {
                 base.MultipleLVLUp(minLVL, maxLVL);  
             }
-            // it takes 5 LVL 1 enemies for a LVL 1 player to reach LVL 2
-            // it takes 47 LVL 98 enemies for LVL 98 player to reach LVL 99
+            // it takes 5 LVL 1 monster for a LVL 1 player to reach LVL 2
+            // it takes 47 LVL 98 monsters for LVL 98 player to reach LVL 99
             this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier * (1 / difficultyModifier));  
             this.WAX = (int)(Mathf.Pow(LVL, 1.65f) * this.multiplier * (1 / difficultyModifier)) + 1;  
 
@@ -255,7 +255,7 @@ namespace Characters {
         }
         
         /// <summary>
-        /// If enemy always spawns with a given buff, apply it
+        /// If monster always spawns with a given buff, apply it
         /// </summary>
         public void GetPermanentBuff() {
             if (permanentBuff != "") {
@@ -264,7 +264,10 @@ namespace Characters {
                 md.AddStatusEffectDisplay(newStatus);
             }
         }
-
+        
+        /// <summary>
+        /// Give boss buff if monster's multiplier is high enough 
+        /// </summary>
         public void GetBossBuff() {
             if (multiplier == 4) {      // boss monsters will always have an EXP multiplier of 4
                 StatusEffect newStatus = new StatusEffect(StatusEffectConstants.BOSS, 999);
