@@ -176,7 +176,7 @@ namespace Party {
         /// </summary>
         public void ResetGame() {
             shouldStore = true;
-            WAX = 100;
+            WAX = 0;
             ID = 0;
             for (int i = partyMembersAll.Count - 1; i >= 0; i--)  {    // not sure if this is redundant
                 Destroy(partyMembersAll[i].gameObject); 

@@ -551,10 +551,6 @@ namespace Characters {
                 else if (se.name == StatusEffectConstants.GUARD) {
                     PDEF += Mathf.Max(1, PDEF);
                 }
-                else if (se.name == StatusEffectConstants.MIRACLE) {
-                    PDEF += 9999;
-                    MDEF += 9999;
-                }
                 else if (se.name == StatusEffectConstants.BARRIER) {
                     MDEF += Mathf.Max(1, MDEF);
                 }

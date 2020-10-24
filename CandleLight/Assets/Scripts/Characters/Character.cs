@@ -252,6 +252,9 @@ namespace Characters {
             else if (a.type == AttackConstants.MAGICAL) {
                 damage = damage - MDEF; 
             }
+            if (GetStatusEffect(StatusEffectConstants.MIRACLE) != -1) {
+                damage = 0;
+            }
             if (damage < 0) {
                 damage = 0;
             }  

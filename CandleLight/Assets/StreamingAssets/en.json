@@ -1076,7 +1076,7 @@
 		{ "key": "WeaknessC0_use_title", "value": "Dying Flames" },
 		{ "key": "WeaknessC0_use_des", "value": "Inflict <color=#622461>weakness</color> for 3 turns on all enemies" },
 		{ "key": "MiracleC0_use_title", "value": "Burning Hope" },
-		{ "key": "MiracleC0_use_des", "value": "Gain miracle for 1 turn" },
+		{ "key": "MiracleC0_use_des", "value": "Gain <color=#D0D0D0>miracle</color> for 1 turn" },
 
 		{ "key": "weapon_item", "value": "Weapon" },
 		{ "key": "secondary_item", "value": "Secondary" },
@@ -1300,7 +1300,7 @@
 		{ "key": "trap_ed", "value": "<color=#858585>trap</color>" },
 		{ "key": "miracle_title", "value": "<color=#D0D0D0>Miracle</color>" },
 		{ "key": "miracle_sub", "value": "Buff" },
-		{ "key": "miracle_description", "value": "Has PDEF and MDEF increased by 9999" },
+		{ "key": "miracle_description", "value": "Damage taken from attacks is reduced to 0" },
 		{ "key": "miracle_ed", "value": "<color=#D0D0D0>miracle</color>" },
 		{ "key": "fatalWound_title", "value": "<color=#8A0707>Fatal Wound</color>" },
 		{ "key": "fatalWound_sub", "value": "Permanent Debuff" },

@@ -251,9 +251,6 @@ UI: For aroma timer, turn red at 6:00 minute
 Bug: Game crashes on load cause null is not null
 UI: Got some tutorial arrow logic set up
 Fix: Made modifiers give half score on lower difficulties (and upped their values drastically)
-
-JUST FINISHED
--------------
 Fix: Removed monsterDisplayName as a property
 UI: Updated more icons
 Feature: Added shockchance and bleedchance
@@ -266,12 +263,16 @@ Monster: The Tumbled (PDEF 2 MDEF 0) (Random)
     - Cursed Seeds: Magical attack that damages a character and inflicts rbw
     - Fiery Fall: Fire physical attack guaranteed to burn
     - Has root debuff permanently
+
+JUST FINISHED
+-------------
 Bug: Safeguard does not work
 Feature: Give option for monsters to spawn with permanent buffs (e.g. tumbled are rooted by default)
+Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
+Bug: Outpost candle abandoned gives 0 progress
 
 COOKING
 -------
-Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
 Bug: Animation cutting bug (where enemies end on the last frame of their animation)
 

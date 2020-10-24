@@ -632,7 +632,7 @@ namespace Combat {
             if (activeMonster.attacks[selectedMonsterAttackIndex].type == AttackConstants.DEBUFF) {
                 if (pm.GetStatusEffect(activeMonster.attacks[selectedMonsterAttackIndex].seName) != -1) {
                     selectedMonsterAttackIndex = (selectedMonsterAttackIndex - 1) % activeMonster.attackNum;
-                    print("move the debuff one back");
+                    print("move the debuff one back " + selectedMonsterAttackIndex);
                 }
             }
             
