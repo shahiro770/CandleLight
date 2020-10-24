@@ -48,8 +48,8 @@ namespace Characters {
         [field: SerializeField] public bool burnPlus { get; set; } = false;     /// <value> Flag for if this character can inflict stronger burns </value>
         [field: SerializeField] public bool poisonPlus { get; set; } = false;   /// <value> Flag for if this character can inflict stronger poisons </value>
         [field: SerializeField] public bool bleedPlus { get; set; } = false;    /// <value> Flag for if this character can inflict stronger bleeds </value>
-        [field: SerializeField] public int[] onHitChances = new int[4];         /// <value> </value>
-        [field: SerializeField] public int[] revengeChances = new int[4]; /// <value> Chance of revenge </value>
+        [field: SerializeField] public int[] onHitChances = new int[5];         /// <value> </value>
+        [field: SerializeField] public int[] revengeChances = new int[5]; /// <value> Chance of revenge </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
@@ -327,17 +327,18 @@ namespace Characters {
         }
 
         protected void AddStatusEffect(StatusEffect se) {
-            if (statusEffects.Count < maxStatusEffects) {
-                statusEffects.Add(se);
-                CalculateStats();
-            }
+            statusEffects.Add(se);
+            CalculateStats();
         }
 
-        protected void AddStatusEffectPermanent(StatusEffect se) {
+        protected bool AddStatusEffectPermanent(StatusEffect se) {
             if (statusEffects.Count < maxStatusEffects) {
                 statusEffects.Add(se);
                 CalculateStats(true);
+
+                return true;
             }
+            return false;
         }
 
         /// <summary>

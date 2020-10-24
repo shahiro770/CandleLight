@@ -1671,6 +1671,7 @@ MonoBehaviour:
   <poisonPlus>k__BackingField: 0
   <bleedPlus>k__BackingField: 0
   onHitChances: 000000000000000000000000
+  revengeChances: 00000000000000000000000000000000
   <attacks>k__BackingField: []
   <statusEffects>k__BackingField: []
   md: {fileID: 8085412351755015521}
@@ -1710,8 +1711,8 @@ MonoBehaviour:
   <monsterSize>k__BackingField: 
   <monsterNameID>k__BackingField: 
   <monsterSpriteName>k__BackingField: 
-  <monsterDisplayName>k__BackingField: 
   <monsterAI>k__BackingField: 
+  <permanentBuff>k__BackingField: 
   <multiplier>k__BackingField: 0
   <difficultyModifier>k__BackingField: 1
   <minLVL>k__BackingField: 0

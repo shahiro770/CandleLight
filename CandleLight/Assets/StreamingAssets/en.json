@@ -1039,6 +1039,7 @@
 		{ "key": "MageWeapon0_item", "value": "Reflective Eye" },
 		{ "key": "MageWeapon1_item", "value": "Copper Wand" },
 		{ "key": "MageWeapon2_item", "value": "Spine Staff" },
+		{ "key": "MageWeapon3_item", "value": "Root's Wrath" },
 		{ "key": "ArcherWeapon-1_item", "value": "Gnawed Bow" },
 		{ "key": "ArcherWeapon0_item", "value": "Membrane Bow" },
 		{ "key": "ArcherWeapon1_item", "value": "Copper Bow" },
@@ -1413,7 +1414,7 @@
 		{ "key": "GiantSpider_monster", "value": "Giant Spider" },
 		{ "key": "GiantSpider_monster_description", "value": "It can choose to spray <color=#858585>sticky silk</color> or <color=#5C8A39>deadly acid</color>." },
 		{ "key": "TheTumbled_monster", "value": "The Tumbled" },
-		{ "key": "TheTumbled_monster_description", "value": "A witch once threw <color=#622461>evil</color> seeds into the wind. Her spawn are the <color=#5D2C28>root</color> of many farmer's troubles." },
+		{ "key": "TheTumbled_monster_description", "value": "Long ago, a witch <color=#5D2C28>rooted</color> in hatred threw <color=#622461>evil</color> seeds into the wind." },
 		{ "key": "PuppetKnight_monster", "value": "Puppet Knight" },
 		{ "key": "PuppetKnight_monster_description", "value": "Crude imitations of knights from across Anhum. Suspended by anti-magical strings, their creator saw no use for legs." },
 

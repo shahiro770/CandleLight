@@ -408,8 +408,11 @@ namespace Characters {
                             case "BLEEDCHANCE":
                                 onHitChances[2] += gearToCalculate.values[j];
                                 break;
-                            case "SHOCKCHANCE":
+                            case "ROOTCHANCE":
                                 onHitChances[3] += gearToCalculate.values[j];
+                                break;
+                            case "SHOCKCHANCE":
+                                onHitChances[4] += gearToCalculate.values[j];
                                 break;
                             case "REVENGEROOT":
                                 revengeChances[0] += gearToCalculate.values[j];
@@ -1021,6 +1024,7 @@ namespace Characters {
                 }
             }
             else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) {
+                print("hi");
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
                 AddStatusEffect(a.seName, a.seDuration, c);
             }
@@ -1042,6 +1046,22 @@ namespace Characters {
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {   
             if (statusEffects.Count < maxStatusEffects) {
+                if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
+                    int index = Random.Range(0, 3);
+                    switch(index) {
+                        case 0:
+                            seName = StatusEffectConstants.BLEED;
+                            break;
+                        case 1:
+                            seName = StatusEffectConstants.WEAKNESS;
+                            break;
+                        case 2:
+                            seName = StatusEffectConstants.ROOT;
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 int existingIndex = GetStatusEffect(seName);
                 if (existingIndex != -1) {  // reapply the status effect if its already applied
                     seToRemove.Add(statusEffects[existingIndex]);

@@ -456,7 +456,6 @@ namespace Combat {
                             }
                             yield return (StartCoroutine(activePartyMember.summon.GetSummoned(selectedAttackPM, true)));
                         }
-                        
                     }
                 }
                 else if (selectedAttackPM.scope == "adjacent") {

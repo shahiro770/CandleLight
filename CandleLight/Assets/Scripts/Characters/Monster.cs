@@ -38,6 +38,7 @@ namespace Characters {
         [field: SerializeField] public string monsterNameID { get; private set; }       /// <value> NameID as referenced in database </value>
         [field: SerializeField] public string monsterSpriteName { get; private set; }   /// <value> Name of monster's sprite as referenced in resources </value>
         [field: SerializeField] public string monsterAI { get; private set; }           /// <value> Monster's behaviour in combat </value>
+        [field: SerializeField] public string permanentBuff { get; private set; }       /// <value> Name of buff monster will always spawn with </value>
         [field: SerializeField] public float multiplier { get; private set; }           /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
         [field: SerializeField] public float difficultyModifier { get; private set; } = 1f;  /// <value> Stat modifier applied based on difficulty </value>
         [field: SerializeField] public int minLVL { get; private set; }                 /// <value> Minimum power level monster can spawn at </param>
@@ -73,7 +74,7 @@ namespace Characters {
         /// <param name="monsterReward"> Result from monster dying </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterArea, 
         string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, int bonusPDEF, int bonusMDEF, Attack[] attacks,
-        int hardModeAttackIndex, int dropChance, Result monsterReward, int championChance) {
+        int hardModeAttackIndex, int dropChance, Result monsterReward, int championChance, string permanentBuff) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterArea = monsterArea;
@@ -96,6 +97,7 @@ namespace Characters {
                 }
             }
             this.championChance = championChance;
+            this.permanentBuff = permanentBuff;
 
             string[] LVLString = monsterNameID.Split(' ');
             this.minLVL = int.Parse(LVLString[1]);  // efficiency won't matter for numbers less than 1000
@@ -239,7 +241,12 @@ namespace Characters {
             md.SetHealthBar();
         }
 
+        /// <summary>
+        /// Apply all buffs monster may get on spawn
+        /// </summary>
+        /// <param name="championBuffs"></param>
         public void GetBuffs(string[] championBuffs) {
+            GetPermanentBuff();
             GetBossBuff();
             if (difficultyModifier >= 1f) {
                 GetChampionBuff(championBuffs);
@@ -249,6 +256,17 @@ namespace Characters {
             }
             md.UpdateTooltip();
             md.SetHealthBar();
+        }
+        
+        /// <summary>
+        /// If enemy always spawns with a given buff, apply it
+        /// </summary>
+        public void GetPermanentBuff() {
+            if (permanentBuff != "") {
+                StatusEffect newStatus = new StatusEffect(permanentBuff, 999);
+                AddStatusEffectPermanent(newStatus);
+                md.AddStatusEffectDisplay(newStatus);
+            }
         }
 
         public void GetBossBuff() {
@@ -566,6 +584,9 @@ namespace Characters {
                                 AddStatusEffect(StatusEffectConstants.BLEED, 2, c);
                             }
                             else if (i == 3) {
+                                AddStatusEffect(StatusEffectConstants.ROOT, 2, c);
+                            }
+                            else if (i == 4) {
                                 AddStatusEffect(StatusEffectConstants.SHOCK, 2, c);
                             }
                         }

@@ -261,27 +261,28 @@ Feature: Added the tumbled
 Feature: Added armour4
 Feature: Added revenge skills
 Bug: Being on another panel then swpaping back to party doesn't show correct values
+Monster: The Tumbled (PDEF 2 MDEF 0) (Random)
+    - Tumble: Physical attack that may root
+    - Cursed Seeds: Magical attack that damages a character and inflicts rbw
+    - Fiery Fall: Fire physical attack guaranteed to burn
+    - Has root debuff permanently
+Bug: Safeguard does not work
+Feature: Give option for monsters to spawn with permanent buffs (e.g. tumbled are rooted by default)
 
 COOKING
 -------
 Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
-Bug: Safeguard does not work
-Feature: Give option for monsters to spawn with permanent buffs (e.g. tumbled are rooted by default)
+Bug: Animation cutting bug (where enemies end on the last frame of their animation)
 
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
-Bug: first item in shop inventory tooltip is broken 
+Bug: Empty tooltip bug
 Bug: Outline is broken on candle swapping
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
 UI: Make eventDescription show physical/magical damage
 Fix: Rename all uses of "Enemy" to "monster" (more consistent naming convetion)
 
-Monster: The Tumbled (PDEF 2 MDEF 0) (Random)
-    - Tumble: Physical attack that may root
-    - Cursed Seeds: Magical attack that damages a character and inflicts rbw
-    - Fiery Fall: Fire physical attack guaranteed to burn
-    - Has root debuff permanently
 Monster: The Grumbled (PDEF 4 MDEF 2) (Random)
     - Enroot: Magical attack that guarantees root
     - Cursed Seeds: Magical attack that damages a character and inflicts rbw

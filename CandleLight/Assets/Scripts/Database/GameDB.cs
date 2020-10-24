@@ -49,6 +49,7 @@ namespace Database {
                         string monsterArea = "";
                         string monsterSize = "";
                         string monsterAI = "";
+                        string permanentBuff = "";
                         int multiplier = 0;
                         int HP = 0;
                         int MP = 0;
@@ -64,7 +65,6 @@ namespace Database {
                         if (reader.Read()) {
                             monsterNameID = reader.GetString(1);
                             monsterSpriteName = reader.GetString(2);
-                            //monsterDisplayName = reader.GetString(3);
                             monsterArea = reader.GetString(3);
                             monsterSize = reader.GetString(4);
                             monsterAI = reader.GetString(5);
@@ -82,7 +82,8 @@ namespace Database {
                             hardModeAttackIndex = reader.GetInt32(19);
                             dropChance = reader.GetInt32(20);
                             monsterReward = GetResultByName(reader.GetString(21), "", dbConnection);      
-                            championChance = reader.GetInt32(22);               
+                            championChance = reader.GetInt32(22);       
+                            permanentBuff = reader.GetString(23);
                         }
                         else {
                             Debug.LogError("Monster " + monsterName + " does not exist in the DB");
@@ -90,7 +91,7 @@ namespace Database {
 
                         monster.StartCoroutine(monster.Init(monsterNameID, monsterSpriteName, monsterArea, 
                         monsterSize, monsterAI, multiplier, HP, MP, stats, bonusPDEF, bonusMDEF, attacks, hardModeAttackIndex,
-                        dropChance, monsterReward, championChance)); 
+                        dropChance, monsterReward, championChance, permanentBuff)); 
                     }
                 }
             }          
