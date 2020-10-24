@@ -267,6 +267,7 @@ COOKING
 Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
 Bug: Safeguard does not work
+Feature: Give option for monsters to spawn with permanent buffs (e.g. tumbled are rooted by default)
 
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: first item in shop inventory tooltip is broken 
