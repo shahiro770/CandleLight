@@ -564,7 +564,7 @@ namespace Party {
         /// </summary>
         /// <param name="amount"> Positive int to increase by </param>
         public void AddWAX(int amount) {
-            WAX += (int)(amount * WAXmultiplier);
+            WAX += (Mathf.Max((int)(amount * WAXmultiplier), 1));
             GameManager.instance.WAXobtained += Mathf.Max((int)(amount * WAXmultiplier), 1);
             EventManager.instance.UpdateWAXAmounts();
         }

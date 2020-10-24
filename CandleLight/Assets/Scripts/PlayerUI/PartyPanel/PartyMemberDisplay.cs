@@ -76,6 +76,9 @@ namespace PlayerUI {
                 backgroundSelectedColor = new Color32(pmvc.partyMemberColour.r, pmvc.partyMemberColour.g, pmvc.partyMemberColour.b, 100);
                 pmvc.SetPartyMemberDisplay(this, PanelConstants.PARTYPANEL, HPBar, MPBar);
             }
+            else {
+                pmvc.UpdateHPAndMPBar(PanelConstants.PARTYPANEL);
+            }
         }
 
         /// <summary>

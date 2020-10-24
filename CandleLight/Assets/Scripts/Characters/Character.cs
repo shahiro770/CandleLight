@@ -48,7 +48,8 @@ namespace Characters {
         [field: SerializeField] public bool burnPlus { get; set; } = false;     /// <value> Flag for if this character can inflict stronger burns </value>
         [field: SerializeField] public bool poisonPlus { get; set; } = false;   /// <value> Flag for if this character can inflict stronger poisons </value>
         [field: SerializeField] public bool bleedPlus { get; set; } = false;    /// <value> Flag for if this character can inflict stronger bleeds </value>
-        [field: SerializeField] public int[] onHitChances = new int[4];
+        [field: SerializeField] public int[] onHitChances = new int[4];         /// <value> </value>
+        [field: SerializeField] public int[] revengeChances = new int[4]; /// <value> Chance of revenge </value>
         [field: SerializeField] public Attack[] attacks { get; set; }     /// <value> List of known attacks (length 4) </value>
         [field: SerializeField] public List<StatusEffect> statusEffects { get; set; }     /// <value> List of afflicted status effects </value>
         
@@ -319,6 +320,10 @@ namespace Characters {
         /// <returns></returns>
         public bool CalculateOnHitHit(int index, Character c) {
             return Random.Range(0, 100) < c.onHitChances[index];
+        }
+
+        public bool CalculateRevengeProc(int index) {
+            return Random.Range(0, 100) < revengeChances[index];
         }
 
         protected void AddStatusEffect(StatusEffect se) {

@@ -353,7 +353,7 @@ namespace Characters {
                 }
                 else {  // rare buff pool
                     if (buffIndex < 50) {
-                        if (PATK > MATK) {
+                        if (PATK >= MATK) {
                             AddStatusEffect(StatusEffectConstants.RAGE, 2, this);
                         }
                         else {

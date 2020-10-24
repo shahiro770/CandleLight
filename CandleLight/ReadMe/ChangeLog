@@ -257,11 +257,16 @@ JUST FINISHED
 Fix: Removed monsterDisplayName as a property
 UI: Updated more icons
 Feature: Added shockchance and bleedchance
+Feature: Added the tumbled
+Feature: Added armour4
+Feature: Added revenge skills
+Bug: Being on another panel then swpaping back to party doesn't show correct values
 
 COOKING
 -------
 Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
+Bug: Safeguard does not work
 
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: first item in shop inventory tooltip is broken 

@@ -637,6 +637,7 @@ namespace Combat {
                 }
             }
             
+            // BUG: here is that something is index out of bounds
             if ((attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFFSELF || attacks[selectedMonsterAttackIndex].type == AttackConstants.HEALHPSELF
             || attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFF) && activeMonster.GetStatusEffect(attacks[selectedMonsterAttackIndex].seName) != -1) {
                 selectedMonsterAttackIndex = (selectedMonsterAttackIndex - 1) % activeMonster.attackNum;

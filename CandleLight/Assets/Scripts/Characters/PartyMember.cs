@@ -335,6 +335,9 @@ namespace Characters {
             for (int i = 0; i < onHitChances.Length; i++) {
                 onHitChances[i] = 0;
             }
+            for (int i = 0; i < revengeChances.Length; i++) {
+                revengeChances[i] = 0;
+            }
 
             /* secondary stats changes from gear */
             for (int i = 0; i < numGear; i++) {
@@ -407,6 +410,9 @@ namespace Characters {
                                 break;
                             case "SHOCKCHANCE":
                                 onHitChances[3] += gearToCalculate.values[j];
+                                break;
+                            case "REVENGEROOT":
+                                revengeChances[0] += gearToCalculate.values[j];
                                 break;
                             default:
                                 break;
@@ -908,6 +914,17 @@ namespace Characters {
                         if (Random.Range(0, 100) < burnChance) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
                             cm.AddStatusEffect(StatusEffectConstants.BURN, 3, this); 
+                        }
+                    }
+                }
+
+                // side effects from partyMember revenge effects
+                for (int i = 0; i < revengeChances.Length; i++) {
+                    if (revengeChances[i] != 0) {
+                        if (CalculateRevengeProc(i) == true) {
+                            if (i == 0) {
+                                AddStatusEffect(StatusEffectConstants.ROOT, 2, c);
+                            }
                         }
                     }
                 }

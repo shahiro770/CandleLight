@@ -172,6 +172,25 @@ namespace Characters {
         }
 
         /// <summary>
+        /// Update the HP and MP bars of a given panel
+        /// </summary>
+        /// <param name="panelName"></param>
+        public void UpdateHPAndMPBar(string panelName) {
+            if (panelName == PanelConstants.STATUSPANEL) {
+                statusPanelHPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+                statusPanelMPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
+            }
+            else if (panelName == PanelConstants.PARTYPANEL) {
+                partyPanelHPBar.SetMaxAndCurrent(pm.HP, pm.CHP);
+                partyPanelMPBar.SetMaxAndCurrent(pm.MP, pm.CMP);
+            }
+            else if (panelName == PanelConstants.STATSPANEL) {
+                statsPanelHPBar.SetMaxAndCurrentDisplayCurrentOverMax(pm.HP, pm.CHP);
+                statsPanelMPBar.SetMaxAndCurrentDisplayCurrentOverMax(pm.MP, pm.CMP);
+            }
+        }
+
+        /// <summary>
         /// Removes the HPBar and MPBar references depending on the panel
         /// </summary>
         /// <param name="panelName"> Name of panel </param>
