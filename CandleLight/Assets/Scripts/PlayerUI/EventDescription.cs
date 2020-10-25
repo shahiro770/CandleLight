@@ -294,8 +294,8 @@ namespace PlayerUI {
                     attackString += ", " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turns on hit";
                 }
             }
-            if (a.scope != "single") {
-                if (a.scope == "adjacent") {
+            if (a.scope != (int)AttackConstants.attackScopes.single) {
+                if (a.scope == (int)AttackConstants.attackScopes.adjacent) {
                     if (a.seName != "none") {
                         attackString += ",\nhits adjacents";
                     }
@@ -303,12 +303,12 @@ namespace PlayerUI {
                         attackString += ", hits adjacents";
                     }
                 }
-                else if (a.scope == "allEnemies") {
+                else if (a.scope == (int)AttackConstants.attackScopes.allMonsters) {
                     if (a.seName != "none") {
-                        attackString += ",\nhits all enemies";
+                        attackString += ",\nhits all monsters";
                     }
                     else {
-                        attackString += ", hits all enemies";
+                        attackString += ", hits all monsters";
                     }
                 }
             }
@@ -372,21 +372,21 @@ namespace PlayerUI {
                     formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turns on hit";
                 }
             }
-            if (displayedAttack.scope != "single") {
-                if (displayedAttack.scope == "adjacent") {
+            if (displayedAttack.scope != (int)AttackConstants.attackScopes.single) {
+                if (displayedAttack.scope == (int)AttackConstants.attackScopes.adjacent) {
                     if (displayedAttack.seName != "none") {
-                        formulaString += ",\nHits adjacents";
+                        formulaString += ",\nhits adjacents";
                     }
                     else {
-                        formulaString += ", Hits adjacents";
+                        formulaString += ", hits adjacents";
                     }
                 }
-                else if (displayedAttack.scope == "allEnemies") {
+                else if (displayedAttack.scope == (int)AttackConstants.attackScopes.allMonsters) {
                     if (displayedAttack.seName != "none") {
-                        formulaString += ",\nHits all enemies";
+                        formulaString += ",\nhits all monsters";
                     }
                     else {
-                        formulaString += ", Hits all enemies";
+                        formulaString += ", hits all monsters";
                     }
                 }
             }

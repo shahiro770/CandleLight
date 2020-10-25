@@ -23,7 +23,7 @@ namespace Combat {
         [field: SerializeField] public string type { get; private set; }        /// <value> Type of attack </value>
         [field: SerializeField] public string costFormula { get; set; }         /// <value> Formula for calculating cost to use attack </value>      
         [field: SerializeField] public string damageFormula { get; private set; }     /// <value> Formula for calculating damage dealt by attack </value>
-        [field: SerializeField] public string scope { get; private set; }       /// <value> String describing the number of targets the attack affects </value>
+        [field: SerializeField] public int scope { get; private set; }          /// <value> int (enum) describing the possible targets the attack affects </value>
         [field: SerializeField] public string seNameKey { get; private set; }   /// <value> String for the seName in event description </value>
         [field: SerializeField] public string seName { get; private set; }      /// <value> Status effect of attack </value>
         [field: SerializeField] public int seDuration { get; private set; }     /// <value> Number of turns status effect lasts </value>       
@@ -43,7 +43,7 @@ namespace Combat {
         /// <param name="cost"> Cost of attack (in MP or HP) </param>
         /// <param name="scope"> String describing the targets this attack hits </param>
         /// <param name="animationClipName"> Animation clip to play when attack is used </param>
-        public Attack(string name, string type, string damageFormula, string seName, int seDuration, int seChance, string costType, string costFormula, string scope, string animationClipName) {
+        public Attack(string name, string type, string damageFormula, string seName, int seDuration, int seChance, string costType, string costFormula, int scope, string animationClipName) {
             this.name = name;
             this.type = type;
             this.damageFormula = damageFormula;

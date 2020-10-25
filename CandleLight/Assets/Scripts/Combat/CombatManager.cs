@@ -425,7 +425,7 @@ namespace Combat {
                 yield return new WaitForSeconds(0.25f);
 
                 yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackPM.costType, selectedAttackPM.costValue)));
-                if (selectedAttackPM.scope == "single") {
+                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.single) {
                     if (selectedAttackPM.type == AttackConstants.PHYSICAL || selectedAttackPM.type == AttackConstants.MAGICAL) {
                         yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackPM, activePartyMember)));    
                     }
@@ -458,7 +458,7 @@ namespace Combat {
                         }
                     }
                 }
-                else if (selectedAttackPM.scope == "adjacent") {
+                else if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
                     if (selectedAttackPM.type == AttackConstants.PHYSICAL || selectedAttackPM.type == AttackConstants.MAGICAL) {
                         foreach (Monster m in selectedMonsterAdjacents) {
                             StartCoroutine(m.GetAttacked(selectedAttackPM, activePartyMember));    
@@ -472,7 +472,7 @@ namespace Combat {
                         }
                     }
                 }
-                else if (selectedAttackPM.scope == "allEnemies") {
+                else if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.allMonsters) {
                     if (selectedAttackPM.type == AttackConstants.DEBUFF) {
                         for (int i = 0; i < monsters.Count; i++) {
                             StartCoroutine(monsters[i].GetStatusEffected(selectedAttackPM, activePartyMember)); 
@@ -703,7 +703,7 @@ namespace Combat {
                 
                 yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation(selectedMonsterAttackIndex)));
 
-                if (selectedAttackMonster.scope == "single") {
+                if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.single) {
                     if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
                         yield return (StartCoroutine(targetChoice.GetAttacked(selectedAttackMonster, activeMonster)));
                     } 
@@ -714,7 +714,7 @@ namespace Combat {
                         yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
                     }
                 }
-                else if (selectedAttackMonster.scope == "allAllies") {
+                else if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.allAllies) {
                     if (selectedAttackMonster.type == AttackConstants.BUFF) {
                         for (int i = 1; i < monsters.Count; i++) {
                             StartCoroutine(monsters[i].GetHelped(selectedAttackMonster, activeMonster)); 
@@ -722,7 +722,7 @@ namespace Combat {
                         yield return (StartCoroutine(monsters[0].GetHelped(selectedAttackMonster, activeMonster)));
                     }
                 }
-                else if (selectedAttackMonster.scope == "selfAndRandomAlly") {
+                else if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.selfAndRandomAlly) {
                     if (monsters.Count > 1) {   // if there is another monster, target them as well
                         int target = Random.Range(0, monsters.Count);
                         if (monsters[target].ID == activeMonster.ID) {  // if target self, pick right, or left if no monster right
@@ -737,7 +737,7 @@ namespace Combat {
                     }
                     yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
                 }
-                else if (selectedAttackMonster.scope == "allEnemies") {
+                else if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.allMonsters) {
                     for (int i = 0; i < partyMembersAlive.Count; i++) {
                         if (i == 1) {
                             eventDescription.SetAppendMode(true);
@@ -856,7 +856,7 @@ namespace Combat {
             if (selectedAttackPM != null && (taunter == null || (taunter != null && monsterToSelect.ID == taunter.ID))) {
                 if (selectedAttackPM.type != AttackConstants.HEALHP && selectedAttackPM.type != AttackConstants.BUFF) {
                     
-                    if (selectedAttackPM.scope != "single") {
+                    if (selectedAttackPM.scope != (int)AttackConstants.attackScopes.single) {
                         int monsterIndex = 0;
                         for (int i = 0; i < monsters.Count; i++) {
                             if (monsters[i].ID == monsterToSelect.ID) {
@@ -865,7 +865,7 @@ namespace Combat {
                             }
                         }
 
-                        if (selectedAttackPM.scope == "adjacent") {
+                        if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
                             if (monsterIndex - 1 >= 0) {
                                 selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
                             }
@@ -922,7 +922,7 @@ namespace Combat {
         /// <param name="monsterToSelect"> Monster as the main target </param>
         public void ShowAttackTargets(Monster monsterToSelect) {
             if (selectedAttackPM != null) {
-                if (selectedAttackPM.scope == "adjacent") {
+                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
                     int monsterIndex = 0;
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID == monsterToSelect.ID) {
@@ -937,7 +937,7 @@ namespace Combat {
                         monsters[monsterIndex + 1].md.SelectMonsterButtonAdjacent();
                     }    
                 }
-                else if (selectedAttackPM.scope == "allEnemies") {
+                else if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.allMonsters) {
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID != monsterToSelect.ID) {
                             monsters[i].md.SelectMonsterButtonAdjacent();
@@ -954,7 +954,7 @@ namespace Combat {
         /// <param name="monsterToSelect"> Monster as the main target</param>
         public void HideAttackTargets(Monster monsterToSelect) {
             if (selectedAttackPM != null) {
-                if (selectedAttackPM.scope == "adjacent") {
+                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
                     int monsterIndex = 0;
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID == monsterToSelect.ID) {
@@ -969,7 +969,7 @@ namespace Combat {
                         monsters[monsterIndex + 1].md.DeselectMonsterButton();
                     }    
                 }
-                if (selectedAttackPM.scope == "allEnemies") {
+                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.allMonsters) {
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID != monsterToSelect.ID) {
                             monsters[i].md.DeselectMonsterButton();

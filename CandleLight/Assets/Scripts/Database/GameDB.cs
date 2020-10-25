@@ -197,7 +197,7 @@ namespace Database {
                     string damageFormula = "";
                     string costFormula = "";
                     string costType = "";
-                    string scope = "";
+                    int scope = 0;
                     string animationClipName = "";
                     string seName = "";
                     int seChance = 0;
@@ -211,7 +211,7 @@ namespace Database {
                         seChance = reader.GetInt32(6);
                         costType = reader.GetString(7);
                         costFormula = reader.GetString(8);
-                        scope = reader.GetString(9);
+                        scope = reader.GetInt32(9);
                         if (isMonster) {
                             animationClipName = reader.GetString(10);
                         }
