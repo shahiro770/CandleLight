@@ -263,9 +263,6 @@ Monster: The Tumbled (PDEF 2 MDEF 0) (Random)
     - Cursed Seeds: Magical attack that damages a character and inflicts rbw
     - Fiery Fall: Fire physical attack guaranteed to burn
     - Has root debuff permanently
-
-JUST FINISHED
--------------
 Bug: Safeguard does not work
 Feature: Give option for monsters to spawn with permanent buffs (e.g. tumbled are rooted by default)
 Fix: Change miracle to just prevent damage (+9999 DEF has op side effects)
@@ -281,15 +278,22 @@ Gear: Root's Wrath (Mage)
 Fix: Rename all uses of "monster" to "monster" (more consistent naming convetion)
 Fix: Enum attack scopes
 
+JUST FINISHED
+-------------
+Bug: Certain gear properties were missing % sign
+Balance: MDEF from palm gem is too much
+
 COOKING
 -------
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
+Bug: Frost Golem skills should have unique message "Summons don't get skills"
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: Empty tooltip bug
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
 UI: Make eventDescription show physical/magical damage
+UI: Might need to redo all attack animations cause pixel sizing is janky (64x64 to 96x96)
 
 Monster: Need anohter monster for starting area to get a second theme
     -

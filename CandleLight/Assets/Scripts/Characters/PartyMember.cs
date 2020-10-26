@@ -417,6 +417,9 @@ namespace Characters {
                             case "REVENGEROOT":
                                 revengeChances[0] += gearToCalculate.values[j];
                                 break;
+                            case "REVENGESHOCK":
+                                revengeChances[1] += gearToCalculate.values[j];
+                                break;
                             default:
                                 break;
                         }
@@ -923,6 +926,9 @@ namespace Characters {
                         if (CalculateRevengeProc(i) == true) {
                             if (i == 0) {
                                 AddStatusEffect(StatusEffectConstants.ROOT, 2, c);
+                            }
+                            if (i == 1) {
+                                AddStatusEffect(StatusEffectConstants.SHOCK, 2, c);
                             }
                         }
                     }

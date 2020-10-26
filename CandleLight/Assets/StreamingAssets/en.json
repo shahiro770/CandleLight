@@ -958,6 +958,7 @@
 		{ "key": "ROOTCHANCE_label", "value": "<color=#5D2C28>Root Chance</color>" },
 		{ "key": "SHOCKCHANCE_label", "value": "<color=#FFEB57>Shock Chance</color>" },
 		{ "key": "REVENGEROOT_label", "value": "<color=#5D2C28>Revenge Root</color>" },
+		{ "key": "REVENGESHOCK_label", "value": "<color=#FFEB57>Revenge Shock</color>" },
 		{ "key": "PROG_space_label", "value": "PROG " },
 		{ "key": "STR_space_label", "value": "  <color=#B91D00>STR</color>" },
 		{ "key": "DEX_space_label", "value": "  <color=#5AC54F>DEX</color>" },

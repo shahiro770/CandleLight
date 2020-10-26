@@ -127,6 +127,7 @@ namespace Items {
             for (int i = 0; i < effects.Length; i++) {
                 switch(effects[i]) {
                     case "REVENGEROOT":
+                    case "REVENGESHOCK"
                     case "POISONCHANCE":
                     case "WEAKNESSCHANCE":
                     case "BLEEDCHANCE":

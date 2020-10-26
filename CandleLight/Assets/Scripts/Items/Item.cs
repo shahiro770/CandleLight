@@ -77,7 +77,9 @@ namespace Items {
             string[] amountStrings = new string[effects.Length];
             for (int i = 0; i < effects.Length; i++) {
                 if (effects[i] == "%MAXHP" || effects[i] == "CRITCHANCE" || effects[i] == "CHAMPIONCHANCE" 
-                || effects[i] == "POISONCHANCE") {     // TODO Make this account for percent effects
+                || effects[i] == "POISONCHANCE" || effects[i] == "WEAKNESSCHANCE" || effects[i] == "BLEEDCHANCE"
+                || effects[i] == "ROOTCHANCE" || effects[i] == "SHOCKCHANCE" || effects[i] == "REVENGEROOT"
+                || effects[i] == "REVENGESHOCK" ) {
                     amountStrings[i] = values[i] + "%";
                 }
                 else if (effects[i] == "BURNPLUS" || effects[i] == "POISONPLUS" || effects[i] == "BLEEDPLUS" 
