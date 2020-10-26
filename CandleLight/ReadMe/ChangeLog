@@ -278,23 +278,27 @@ Gear: Root's Wrath (Mage)
     - MATK 4
     - Root On Hit: 20%
     - MP 5
+Fix: Rename all uses of "monster" to "monster" (more consistent naming convetion)
+Fix: Enum attack scopes
 
 COOKING
 -------
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
-
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Bug: Empty tooltip bug
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 Bug: Monsters trying to use attackIndex - 1 % attackNum logic goes out of index
 UI: Make eventDescription show physical/magical damage
-Fix: Rename all uses of "monster" to "monster" (more consistent naming convetion)
 
-Monster: The Grumbled (PDEF 4 MDEF 2) (Random)
+Monster: Need anohter monster for starting area to get a second theme
+    -
+    -
+    -
+Monster: The Grumbled (PDEF 5 MDEF 2) (Random)
     - Enroot: Magical attack that guarantees root
     - Cursed Seeds: Magical attack that damages a character and inflicts rbw
-    - Regrow: Heal and gain regenerate for 3 turns
+    - Regrow: Heal and gain regenerate for 3 turns  (make AI prevent use of heal if at > 90% health)
     - Wildfire: Inflict burn on all characters
     - Has root debuff permanently
 Monster: Knight Puppet (PDEF 2 MDEF 1) (Random)
