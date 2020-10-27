@@ -239,6 +239,70 @@ namespace General {
         }
 
         /// <summary>
+        /// Set the initial general save data for the run
+        /// </summary>
+        public void SetInitialGeneralData() {
+            gsData = new GeneralSaveData(0.11f, null, new HighScoreData[4], 
+                Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
+                Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), 
+                Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AromaConstants.aromaConstants)).Length).ToArray(), 
+                null,
+                false, 1f, 1f, 0.35f, 1f, false, 1, 1, 0.75f, 0, 0, 0, -1);
+            tutorialTriggers = gsData.tutorialTriggers;
+            achievementsUnlocked = gsData.achievementsUnlocked;
+            partyCombos = new string[,] { 
+                { ClassConstants.ARCHER, ClassConstants.ARCHER }, 
+                { ClassConstants.ARCHER, ClassConstants.MAGE }, 
+                { ClassConstants.ARCHER, ClassConstants.ROGUE },
+                { ClassConstants.ARCHER, ClassConstants.WARRIOR }, 
+                { ClassConstants.MAGE, ClassConstants.MAGE },    
+                { ClassConstants.MAGE, ClassConstants.ROGUE },  
+                { ClassConstants.MAGE, ClassConstants.WARRIOR },    
+                { ClassConstants.ROGUE, ClassConstants.ROGUE }, 
+                { ClassConstants.ROGUE, ClassConstants.WARRIOR }, 
+                { ClassConstants.WARRIOR, ClassConstants.WARRIOR }, 
+            };
+            gsData.partyCombos = partyCombos;
+            animationSpeed = gsData.animationSpeed;               
+            UIManager.instance.isTimer = gsData.isTimer;
+            AudioManager.instance.bgmVolume = gsData.bgmVolume;
+            AudioManager.instance.sfxVolume = gsData.sfxVolume;
+            
+            // get and save the initial resolution the app will play at, being full screen by defaultt
+            int[ , ] resolutions = new int[,] {
+                { 960, 540 }, 
+                { 1024, 576 }, 
+                { 1152, 648 }, 
+                { 1280, 720 }, 
+                { 1366, 768 }, 
+                { 1600, 900 }, 
+                { 1920, 1080 }, 
+                { 2560, 1440 },
+                { 3840, 2160 }, 
+            };
+            for (int i = 1; i < resolutions.GetLength(0); i++) {
+                if (Screen.resolutions[Screen.resolutions.Length - 1].width <= resolutions[i, 0] && Screen.resolutions[Screen.resolutions.Length - 1].height <= resolutions[i, 1]) {
+                    gsData.resolutionWidth = resolutions[i - 1, 0]; 
+                    gsData.resolutionHeight = resolutions[i - 1, 1]; 
+                    break;
+                }  
+                else if (i == resolutions.GetLength(0) - 1) {
+                    gsData.resolutionWidth = resolutions[resolutions.Length - 1, 0];
+                    gsData.resolutionHeight = resolutions[resolutions.Length - 1, 1];
+                }
+            }
+
+            resolutionWidth = gsData.resolutionWidth;
+            resolutionHeight = gsData.resolutionHeight;
+            Screen.fullScreen = false;
+            Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+
+            difficultyModifier = gsData.difficultyModifier;
+            pastItem = null;
+            SaveGeneralData(gsData);
+        }
+
+        /// <summary>
         /// Load general data (highscores, settings, etc.)
         /// </summary>
         public void LoadGeneralData() {
@@ -250,92 +314,39 @@ namespace General {
                 gsData = formatter.Deserialize(s) as GeneralSaveData;
                 s.Close();
 
-                tutorialTriggers = gsData.tutorialTriggers;
-                achievementsUnlocked = gsData.achievementsUnlocked;
-                partyCombos = gsData.partyCombos;
-                animationSpeed = gsData.animationSpeed;
-                UIManager.instance.isTimer = gsData.isTimer;
-                AudioManager.instance.bgmVolume = gsData.bgmVolume;
-                AudioManager.instance.sfxVolume = gsData.sfxVolume;
-                isFullscreen = gsData.isFullscreen;
-                Screen.fullScreen = isFullscreen;
-                resolutionWidth = gsData.resolutionWidth;
-                resolutionHeight = gsData.resolutionHeight;
-                Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+                if (gsData.version != 0.11f) {
+                    SetInitialGeneralData();
+                }
+                else {
+                    tutorialTriggers = gsData.tutorialTriggers;
+                    achievementsUnlocked = gsData.achievementsUnlocked;
+                    partyCombos = gsData.partyCombos;
+                    animationSpeed = gsData.animationSpeed;
+                    UIManager.instance.isTimer = gsData.isTimer;
+                    AudioManager.instance.bgmVolume = gsData.bgmVolume;
+                    AudioManager.instance.sfxVolume = gsData.sfxVolume;
+                    isFullscreen = gsData.isFullscreen;
+                    Screen.fullScreen = isFullscreen;
+                    resolutionWidth = gsData.resolutionWidth;
+                    resolutionHeight = gsData.resolutionHeight;
+                    Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
 
-                difficultyModifier = gsData.difficultyModifier;
-                if (gsData.pastItemData != null) {
-                    if (gsData.pastItemData.type == ItemConstants.GEAR) {
-                        pastItem = new Gear(gsData.pastItemData);
-                    }
-                    else if (gsData.pastItemData.type == ItemConstants.CANDLE) {
-                        pastItem = new Candle(gsData.pastItemData);
-                    }
-                    else {
-                        pastItem = new Special(gsData.pastItemData);
+                    difficultyModifier = gsData.difficultyModifier;
+                    if (gsData.pastItemData != null) {
+                        if (gsData.pastItemData.type == ItemConstants.GEAR) {
+                            pastItem = new Gear(gsData.pastItemData);
+                        }
+                        else if (gsData.pastItemData.type == ItemConstants.CANDLE) {
+                            pastItem = new Candle(gsData.pastItemData);
+                        }
+                        else {
+                            pastItem = new Special(gsData.pastItemData);
+                        }
                     }
                 }
             }
             else {  // default settings on first load, or if generalSaveData non existance
-                gsData = new GeneralSaveData(1.0f, null, new HighScoreData[4], 
-                    Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
-                    Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), 
-                    Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AromaConstants.aromaConstants)).Length).ToArray(), 
-                    null,
-                    false, 1f, 1f, 0.35f, 1f, false, 1, 1, 0.75f, 0, 0, 0, -1);
-                tutorialTriggers = gsData.tutorialTriggers;
-                achievementsUnlocked = gsData.achievementsUnlocked;
-                partyCombos = new string[,] { 
-                    { ClassConstants.ARCHER, ClassConstants.ARCHER }, 
-                    { ClassConstants.ARCHER, ClassConstants.MAGE }, 
-                    { ClassConstants.ARCHER, ClassConstants.ROGUE },
-                    { ClassConstants.ARCHER, ClassConstants.WARRIOR }, 
-                    { ClassConstants.MAGE, ClassConstants.MAGE },    
-                    { ClassConstants.MAGE, ClassConstants.ROGUE },  
-                    { ClassConstants.MAGE, ClassConstants.WARRIOR },    
-                    { ClassConstants.ROGUE, ClassConstants.ROGUE }, 
-                    { ClassConstants.ROGUE, ClassConstants.WARRIOR }, 
-                    { ClassConstants.WARRIOR, ClassConstants.WARRIOR }, 
-                };
-                gsData.partyCombos = partyCombos;
-                animationSpeed = gsData.animationSpeed;               
-                UIManager.instance.isTimer = gsData.isTimer;
-                AudioManager.instance.bgmVolume = gsData.bgmVolume;
-                AudioManager.instance.sfxVolume = gsData.sfxVolume;
-                
-                // get and save the initial resolution the app will play at, being full screen by defaultt
-                int[ , ] resolutions = new int[,] {
-                    { 960, 540 }, 
-                    { 1024, 576 }, 
-                    { 1152, 648 }, 
-                    { 1280, 720 }, 
-                    { 1366, 768 }, 
-                    { 1600, 900 }, 
-                    { 1920, 1080 }, 
-                    { 2560, 1440 },
-                    { 3840, 2160 }, 
-                };
-                for (int i = 1; i < resolutions.GetLength(0); i++) {
-                    if (Screen.resolutions[Screen.resolutions.Length - 1].width <= resolutions[i, 0] && Screen.resolutions[Screen.resolutions.Length - 1].height <= resolutions[i, 1]) {
-                        gsData.resolutionWidth = resolutions[i - 1, 0]; 
-                        gsData.resolutionHeight = resolutions[i - 1, 1]; 
-                        break;
-                    }  
-                    else if (i == resolutions.GetLength(0) - 1) {
-                        gsData.resolutionWidth = resolutions[resolutions.Length - 1, 0];
-                        gsData.resolutionHeight = resolutions[resolutions.Length - 1, 1];
-                    }
-                }
-
-                resolutionWidth = gsData.resolutionWidth;
-                resolutionHeight = gsData.resolutionHeight;
-                Screen.fullScreen = false;
-                Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
-
-                difficultyModifier = gsData.difficultyModifier;
-                pastItem = null;
-
-                SaveGeneralData(gsData);
+                SetInitialGeneralData();
             }
         }
 

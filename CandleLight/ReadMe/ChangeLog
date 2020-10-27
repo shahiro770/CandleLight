@@ -282,9 +282,12 @@ JUST FINISHED
 -------------
 Bug: Certain gear properties were missing % sign
 Balance: MDEF from palm gem is too much
+Fix: Make gsData wipe data if version is less than current version (FOR NOW)
+Fix: Make seperate functino for initial generalSaveData
 
 COOKING
 -------
+Fix: Make useCandles tutorial appear for the first character than can use candles
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 Bug: Frost Golem skills should have unique message "Summons don't get skills"

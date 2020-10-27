@@ -928,7 +928,6 @@ namespace Events {
                         for (int j = 0; j < specialNum; j++) {
                             if (subAreaSpecials[j].nameID == specificItemName) {
                                 items.Add(new Special(subAreaSpecials[j]));
-                                print("hi");
                                 break;
                             }
                         }

@@ -1026,7 +1026,6 @@ namespace Characters {
                 }
             }
             else if (a.type == AttackConstants.BUFF || a.type == AttackConstants.BUFFSELF) {
-                print("hi");
                 yield return StartCoroutine(pmvc.DisplayAttackHelped(a.animationClipName));
                 AddStatusEffect(a.seName, a.seDuration, c);
             }
