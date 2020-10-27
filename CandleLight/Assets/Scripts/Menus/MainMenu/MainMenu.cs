@@ -42,7 +42,7 @@ namespace Menus.MainMenu {
             colorOverLifetime.color = defaultColour;
             freeForm.color = defaultColour;
             particleLight.color = defaultColour;
-            versionText.SetText("v" + GameManager.instance.gsData.version.ToString("0.00"));
+            versionText.SetText("v" + GameManager.instance.gsData.version.ToString("0.0"));
 
             // continue button is only enabled if save data exists
             string path = Application.persistentDataPath + "/save.cndl";

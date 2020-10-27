@@ -250,7 +250,7 @@ namespace General {
                 gsData = formatter.Deserialize(s) as GeneralSaveData;
                 s.Close();
 
-                if (gsData.version != 0.10f) {  // TEMPORARY 
+                if (gsData.version != 0.2f) {  // TEMPORARY 
                     SetInitialGeneralData();
                 }
                 else {
@@ -290,7 +290,7 @@ namespace General {
         /// Set the initial general save data for the run
         /// </summary>
         public void SetInitialGeneralData() {
-            gsData = new GeneralSaveData(0.10f, null, new HighScoreData[4], 
+            gsData = new GeneralSaveData(0.2f, null, new HighScoreData[4], 
                 Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), 
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AromaConstants.aromaConstants)).Length).ToArray(), 
