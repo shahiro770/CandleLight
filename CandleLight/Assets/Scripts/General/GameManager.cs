@@ -239,10 +239,58 @@ namespace General {
         }
 
         /// <summary>
+        /// Load general data (highscores, settings, etc.)
+        /// </summary>
+        public void LoadGeneralData() {
+            string path = Application.persistentDataPath + "/generalSave.cndl";
+            if (File.Exists(path)) {
+                BinaryFormatter formatter  = new BinaryFormatter();
+                FileStream s = new FileStream(path, FileMode.Open);
+
+                gsData = formatter.Deserialize(s) as GeneralSaveData;
+                s.Close();
+
+                if (gsData.version != 0.10f) {  // TEMPORARY 
+                    SetInitialGeneralData();
+                }
+                else {
+                    tutorialTriggers = gsData.tutorialTriggers;
+                    achievementsUnlocked = gsData.achievementsUnlocked;
+                    partyCombos = gsData.partyCombos;
+                    animationSpeed = gsData.animationSpeed;
+                    UIManager.instance.isTimer = gsData.isTimer;
+                    AudioManager.instance.bgmVolume = gsData.bgmVolume;
+                    AudioManager.instance.sfxVolume = gsData.sfxVolume;
+                    isFullscreen = gsData.isFullscreen;
+                    Screen.fullScreen = isFullscreen;
+                    resolutionWidth = gsData.resolutionWidth;
+                    resolutionHeight = gsData.resolutionHeight;
+                    Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+
+                    difficultyModifier = gsData.difficultyModifier;
+                    if (gsData.pastItemData != null) {
+                        if (gsData.pastItemData.type == ItemConstants.GEAR) {
+                            pastItem = new Gear(gsData.pastItemData);
+                        }
+                        else if (gsData.pastItemData.type == ItemConstants.CANDLE) {
+                            pastItem = new Candle(gsData.pastItemData);
+                        }
+                        else {
+                            pastItem = new Special(gsData.pastItemData);
+                        }
+                    }
+                }
+            }
+            else {  // default settings on first load, or if generalSaveData non existance
+                SetInitialGeneralData();
+            }
+        }
+
+        /// <summary>
         /// Set the initial general save data for the run
         /// </summary>
         public void SetInitialGeneralData() {
-            gsData = new GeneralSaveData(0.11f, null, new HighScoreData[4], 
+            gsData = new GeneralSaveData(0.10f, null, new HighScoreData[4], 
                 Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), 
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AromaConstants.aromaConstants)).Length).ToArray(), 
@@ -300,54 +348,6 @@ namespace General {
             difficultyModifier = gsData.difficultyModifier;
             pastItem = null;
             SaveGeneralData(gsData);
-        }
-
-        /// <summary>
-        /// Load general data (highscores, settings, etc.)
-        /// </summary>
-        public void LoadGeneralData() {
-            string path = Application.persistentDataPath + "/generalSave.cndl";
-            if (File.Exists(path)) {
-                BinaryFormatter formatter  = new BinaryFormatter();
-                FileStream s = new FileStream(path, FileMode.Open);
-
-                gsData = formatter.Deserialize(s) as GeneralSaveData;
-                s.Close();
-
-                if (gsData.version != 0.11f) {
-                    SetInitialGeneralData();
-                }
-                else {
-                    tutorialTriggers = gsData.tutorialTriggers;
-                    achievementsUnlocked = gsData.achievementsUnlocked;
-                    partyCombos = gsData.partyCombos;
-                    animationSpeed = gsData.animationSpeed;
-                    UIManager.instance.isTimer = gsData.isTimer;
-                    AudioManager.instance.bgmVolume = gsData.bgmVolume;
-                    AudioManager.instance.sfxVolume = gsData.sfxVolume;
-                    isFullscreen = gsData.isFullscreen;
-                    Screen.fullScreen = isFullscreen;
-                    resolutionWidth = gsData.resolutionWidth;
-                    resolutionHeight = gsData.resolutionHeight;
-                    Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
-
-                    difficultyModifier = gsData.difficultyModifier;
-                    if (gsData.pastItemData != null) {
-                        if (gsData.pastItemData.type == ItemConstants.GEAR) {
-                            pastItem = new Gear(gsData.pastItemData);
-                        }
-                        else if (gsData.pastItemData.type == ItemConstants.CANDLE) {
-                            pastItem = new Candle(gsData.pastItemData);
-                        }
-                        else {
-                            pastItem = new Special(gsData.pastItemData);
-                        }
-                    }
-                }
-            }
-            else {  // default settings on first load, or if generalSaveData non existance
-                SetInitialGeneralData();
-            }
         }
 
         /// <summary>
