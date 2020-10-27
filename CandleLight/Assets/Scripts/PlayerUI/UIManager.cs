@@ -18,8 +18,10 @@ namespace PlayerUI {
         public static UIManager instance;             /// <value> Global instance </value>
 
         public ItemSlot hoveredItemSlot;
-        public Color32 unusableColour = new Color32(196, 36, 48, 255);  /// <value> Red colour to indicate unusable, stored here to minimize space </value>
-        public Color32 subtitleColour = new Color32(178, 178, 178, 255);  /// <value> Grey colour for subtitles, stored here to minimize space </value>
+        public Color32 unusableColour = new Color32(196, 36, 48, 255);      /// <value> Red colour to indicate unusable, stored here to minimize space </value>
+        public Color32 subtitleColour = new Color32(178, 178, 178, 255);    /// <value> Grey colour for subtitles, stored here to minimize space </value>
+        public Color32 whiteColour = new Color32(255, 255 ,255, 255);       /// <value> White colour for most text </value>
+        public Color32 hideColour = new Color32(0, 0, 0, 0);                /// <value> Inivisible colour to hide tooltips while transitioning </value>
         public string unusableColourString = "#C42430";
         public string subtitleColourString = "#B2B2B2";
         public ColorBlock orangeBlock = new ColorBlock();

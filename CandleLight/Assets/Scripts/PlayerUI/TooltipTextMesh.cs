@@ -230,15 +230,15 @@ namespace PlayerUI {
         /// resize based on its content.
         /// </returns>
         private IEnumerator SetPosition() {
-            textBackground.color = new Color32(0, 0, 0, 0); // hide the tooltip while position adjustments are being made
+            textBackground.color = UIManager.instance.hideColour; // hide the tooltip while position adjustments are being made
             Color32 titleColour = titleText.meshText.color; // store the prevous colour to set it back to normal after
             Color32 subtitleColour = subtitleText.meshText.color;
             Color32 descriptionColour = descriptionText.meshText.color;
             Color32 valueColour = valueText.meshText.color;
-            titleText.SetColour(new Color32(0, 0, 0 ,0));
-            subtitleText.SetColour(new Color32(0, 0, 0 ,0));
-            descriptionText.SetColour(new Color32(0, 0, 0 ,0));
-            valueText.SetColour(new Color32(0, 0 ,0 ,0));
+            titleText.SetColour(UIManager.instance.hideColour);
+            subtitleText.SetColour(UIManager.instance.hideColour);
+            descriptionText.SetColour(UIManager.instance.hideColour);
+            valueText.SetColour(UIManager.instance.hideColour);
             yield return new WaitForEndOfFrame();
             float textBackgroundWidth = textBackground.rectTransform.sizeDelta.x;
             float textBackgroundHeight = textBackground.rectTransform.sizeDelta.y;
@@ -280,6 +280,7 @@ namespace PlayerUI {
             subtitleText.SetColour(subtitleColour);
             descriptionText.SetColour(descriptionColour);
             valueText.SetColour(valueColour);
+            yield return new WaitForEndOfFrame();
         }
 
         /// <summary>
