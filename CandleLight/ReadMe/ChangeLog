@@ -541,3 +541,59 @@ UI: status effects don't display in the statusPanel
 UI: Add heal/focus animations on effect
 UI: Colour difficulty icon borders
 UI: Add combat order on the side
+
+Its been a long time and private'd this repo (AND LOST ALL OF MY STARS) thinking the game would be in a release-ready state in like 2 weeks after the "A Quest for a Cure" update. 3 months later and I couldn't be more wrong. I will probably un-private so people can take a look at what this game looks like right now (and how dumb I am when it comes to semantic versioning). 
+
+### Preamble
+
+When I'm not studying, reading, or applying for jobs I'm playing Spelunky 2 and Hades. Both are extremely polished and high quality roguelikes that have innovated and drawn a lot of attention to the genre. I think both games are about 9/10s for gameplay, but they both have a fair share of flaws that have made me want to fix some core gamedev issues with my game. Both games highlighted to me 3 key ideas that any roguelike needs to have:
+
+1. A wide variety of "content" needs to exist from start to finish
+2. There must be inherent synergy that shapes itself (even better if it doesn't slap itself in the face of the player)
+3. There must be a strong mix of macro and micro decisions 
+
+With respect to CandleLight, the previous version content-wise had just barely has enough to feel fresh for about 4 full runs. From play tests, the average player will lose on their first 3-4 tries, beat one of the game's bosses, lose 1-2 more times, and then beat the other game's boss. They might stick around to experiment with different class combinations if they find the game fun, but that practically meant 2 more complete runs before the game started to bore them. The new version makes improvements in all of these areas, but I still don't believe its enough to make this game something I'm proud of, nor a product worth selling.
+
+This update is mainly a huge "setup" for some big changes. Polish is time consuming, but fairly easy. What matters more is making something fun and worth coming back to every now and then. Now let's get to the changes.
+
+### Major Additions
+
+- Loading and Loading Screen
+  - A lot more of the game's loading is done at the game's launch, making things feel a lot less herky-jerky
+  - There is now a loading screen played to transition between scenes
+  - Useful tips are displayed to tell the player about a few underlying mechanics the game has which aren't super clear (or super meaningful)
+- Options Menu
+  - You can finally tweak various UI elements to make game feel better to your liking
+  - Choose to start the game with the tutorial, see in game tips, speed up combat animations, have a speed-run timer, music and sound effects volume, window sizing, and resolution
+  - Bloom control option will be coming soon (cause you non-bloomers are autistic)
+- Saving
+  - Game now saves your progress whenever you reach a Pivotal Moment (big moments where the game's current area is about to change)
+  - Clicking the continue game button from the main menu will let you continue from the last pivotal moment you reached, but be save data is lost on a game over
+  - You can abuse this system by quitting and reloading if you make a bad series of choices (the game won't be happy though)
+- Game Over and Scores
+  - Now when a run ends, you can see how far you made it through the adventure and the various areas you passed through
+  - Your final score is also displayed here, which provides players with an incentive to try and do as well as possible on a run
+- Statistics
+  - You can now see a list of cool records by clicking the stats menu from the main menu
+  - Your top 4 highest scoring runs, the most monsters killed, events seen, *achievements*, etc.
+  - Want to try and do the impossible? The stats menu also shows the various noteworthy feats the player can try to accomplish as they play the game
+  - There are 5 achievements in total, some of which are very difficult to unlock
+- Credits
+  - You can see anyone who's worked on this game in the credits menu (which can be accessed from the main menu)
+  - Anyone who's play-tested and found bugs in the game should see their name listed under the "Testing and Invaluable Support" section 
+- Music and Sound Effects
+  - The extremely ~~talented but won't acknowledge it~~ humble Tristhal Parasram has graced this game with a sound track so good that I listen to it while I'm at the gym pumping iron 
+  - There's currently 5 absolutely amazing background tracks that play as you progress through the various areas in the game, and more to come
+  - Sound effects are limited as I'm still experimenting with trying to find the right sounds for a lot of things, so this will probably be coming in a lot later, but major ones such as a level up sound and some button clicking are in
+- Lighting and Particles
+  - I'm starting to mess around with lighting and particle effects and have got a lot set up to make these work
+  - Now the final area of the game will really feel like you're lost in a desert storm, and things in the main menu will feel more lit up, but there's still a lot more to be done here
+- Difficulty Options
+  - Having more and more people play the game has made me realize it is actually difficult, hence now the player can choose between a Casual and Normal mode (with score modifiers reflecting the difficulty)
+  - Casual mode makes monsters weaker, prevents champion monsters from spawning, makes stat-checks easier to pass, and prevents most monsters from using their strongest moves
+  - Normal mode is essentially the current game
+  - Aromas
+     - To let the player challenge themselves further, they can now enable certain handicaps, ranging from halving the amount of WAX they can find in the game, to putting the entire adventure on a strict time limit
+     - Score modifiers are increased with these handicaps and scale with the base difficulty (i.e. turning on all handicaps in casual mode will net the player a 2x score modifier, and a 4x score modifier in normal mode)
+
+Minor Additions
