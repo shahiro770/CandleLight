@@ -45,7 +45,7 @@ namespace Menus.Stats {
 
             greyWastesSprites = new Sprite[greyWastesSubAreas];
             for (int i = 0; i < greyWastesSubAreas; i++) {
-                greyWastesSprites[i] =  Resources.Load<Sprite>("Sprites/SubAreas/GreyWastes/" + i);
+                greyWastesSprites[i] =  Resources.Load<Sprite>("Sprites/SubAreas/GreyWastesLarge/" + i);
             }
             for (int i = 0; i < achievements.Length; i++) {
                 achievements[i].SetUnlockedColor(GetAchievementColor(i));

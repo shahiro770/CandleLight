@@ -9,13 +9,11 @@
 */
 
 using Mono.Data.Sqlite;
-using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Database {
 
@@ -29,14 +27,19 @@ namespace Database {
         /// </summary>
         /// <param name="databaseFile"> Name of the database file to access </param>
         public SqliteHelper(string databaseFileName) {
-            tag = databaseFileName + ":\t";
-
-            string dbPath = Path.Combine(Application.streamingAssetsPath, databaseFileName);  
-            if (System.IO.File.Exists(dbPath)) {
-                dbConnectionString = "URI=file:" + dbPath;
+            if (Application.platform == RuntimePlatform.WebGLPlayer) {
+                // ????????
             }
             else {
-                Debug.Log ("ERROR: the file DB named " + databaseFileName + " doesn't exist anywhere");
+                tag = databaseFileName + ":\t";
+
+                string dbPath = Path.Combine(Application.streamingAssetsPath, databaseFileName);  
+                if (System.IO.File.Exists(dbPath)) {
+                    dbConnectionString = "URI=file:" + dbPath;
+                }
+                else {
+                    Debug.Log ("ERROR: the file DB named " + databaseFileName + " doesn't exist anywhere");
+                }
             }
         }
         
