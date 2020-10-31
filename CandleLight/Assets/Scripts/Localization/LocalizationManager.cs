@@ -9,7 +9,6 @@
 *
 */
 
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -46,24 +45,50 @@ namespace Localization {
         /// <remark> Only english for now </remark> 
         public void LoadLocalizedText(string fileName) {
             localizedText = new Dictionary<string, string>();
-            // StreamingAssetsPath will always be known to unity, regardless of hardware
-            string filePath = Path.Combine(Application.streamingAssetsPath, fileName);  
-            if (File.Exists(filePath)) {
-                string dataAsJson = File.ReadAllText(filePath);
 
-                // deserialize text from text to a LocalizationData object
-                LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+            // if (Application.platform == RuntimePlatform.WebGLPlayer) {
+            //     //UnityWebRequest webRequest = new UnityWebRequest();
+            //     var webRequest = UnityWebRequest.Get(Path.Combine(Application.streamingAssetsPath, fileName));
+            //     yield return webRequest.SendWebRequest();
+            //     // while (!webRequest.isDone) {
+            //     //     if (webRequest.isNetworkError || webRequest.isHttpError) {
+            //     //         break;
+            //     //     }
+            //     // }
+            //     // if (webRequest.isNetworkError || webRequest.isHttpError) {
+            //     //      Debug.LogError("WebRequest broke yo");
+            //     // } else {
+            //     string dataAsJson = webRequest.downloadHandler.text;//ReadAllText(filePath);
 
-                for(int i = 0; i < loadedData.texts.Length; i++) {
-                    localizedText.Add(loadedData.texts[i].key, loadedData.texts[i].value);
+            //     // deserialize text from text to a LocalizationData object
+            //     LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+
+            //     for(int i = 0; i < loadedData.texts.Length; i++) {
+            //         localizedText.Add(loadedData.texts[i].key, loadedData.texts[i].value);
+            //     }
+            //     //}
+            // }
+            // else {
+            // StreamingAssetsPath will always be known to unity if standalone
+                string filePath = Path.Combine(Application.streamingAssetsPath, fileName);  
+                if (File.Exists(filePath)) {
+                    string dataAsJson = File.ReadAllText(filePath);
+
+                    // deserialize text from text to a LocalizationData object
+                    LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+
+                    for(int i = 0; i < loadedData.texts.Length; i++) {
+                        localizedText.Add(loadedData.texts[i].key, loadedData.texts[i].value);
+                    }
                 }
-            }
-            else {
-                // ideally would handle this more gracefully, than just throwing an error (e.g. a pop up)
-                Debug.LogError("Cannot find file");
-            }
+                else {
+                    // ideally would handle this more gracefully, than just throwing an error (e.g. a pop up)
+                    Debug.LogError("Cannot find file");
+                }
+            // }
             
             isReady = true;
+            // yield return null;
         }
 
         /// <summary>

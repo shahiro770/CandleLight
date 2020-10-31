@@ -120,7 +120,9 @@ namespace Events {
         /// Awake to instantiate singleton
         /// </summary>
         void Awake() {
-            Application.targetFrameRate = 60;
+            if (Application.platform != RuntimePlatform.WebGLPlayer) {
+                Application.targetFrameRate = 60;
+            }
 
             if (instance == null) {
                 instance = this;
