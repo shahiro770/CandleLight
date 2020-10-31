@@ -28,7 +28,7 @@ namespace Database {
         /// <param name="databaseFile"> Name of the database file to access </param>
         public SqliteHelper(string databaseFileName) {
             if (Application.platform == RuntimePlatform.WebGLPlayer) {
-                // ???????? 
+                // ?????????
             }
             else {
                 tag = databaseFileName + ":\t";
@@ -42,7 +42,7 @@ namespace Database {
                 }
             }
         }
-        
+
         /// <summary>
         /// Destructor to close connection on destruction
         /// </summary>
