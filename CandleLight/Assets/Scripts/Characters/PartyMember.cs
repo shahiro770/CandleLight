@@ -152,11 +152,11 @@ namespace Characters {
         public int CalculateEXPToNextLVL(int LVL) {
             // LVL 0 -> LVL 1 = 2 EXP
             // LVL 1 -> LVL 2 = 10 EXP
-            // LVL 2 -> LVL 3 = 38 EXP
-            // LVL 3 -> LVL 4 = 97 EXP
-            // LVL 4 -> LVL 5 = 190 EXP
-            // LVL 5 -> LVL 6 = 322 EXP
-            return 2 + (int)(6 * Mathf.Pow(LVL, 2.45f) + LVL * 2); 
+            // LVL 2 -> LVL 3 = 40 EXP
+            // LVL 3 -> LVL 4 = 100 EXP
+            // LVL 4 -> LVL 5 = 197 EXP
+            // LVL 5 -> LVL 6 = 333 EXP
+            return 2 + (int)(6 * Mathf.Pow(LVL, 2.45f) + 2 * Mathf.Pow(LVL, 1.5f)); 
         }
 
         /// <summary>
@@ -929,10 +929,10 @@ namespace Characters {
                     if (revengeChances[i] != 0) {
                         if (CalculateRevengeProc(i) == true) {
                             if (i == 0) {
-                                AddStatusEffect(StatusEffectConstants.ROOT, 2, c);
+                                AddStatusEffect(StatusEffectConstants.ROOT, 3, c);
                             }
                             if (i == 1) {
-                                AddStatusEffect(StatusEffectConstants.SHOCK, 2, c);
+                                AddStatusEffect(StatusEffectConstants.SHOCK, 3, c);
                             }
                         }
                     }
