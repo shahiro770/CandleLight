@@ -277,8 +277,15 @@ namespace Events {
         /// List length is assumed to be at most 5.
         /// </summary>
         /// <returns> String array </returns>
-        public string[] GetMonstersToSpawn() {
-            int numToSpawn = Random.Range(minMonsterNum, maxMonsterNum + 1);
+        public string[] GetMonstersToSpawn(int subAreaProgress) {
+            int numToSpawn;
+            if (subAreaProgress < 75) {
+                numToSpawn = Random.Range(minMonsterNum, maxMonsterNum + 1);
+            }
+            else {
+                numToSpawn = Random.Range(minMonsterNum + 1, maxMonsterNum + 2);
+            }
+
             string[] monsterNames = new string[numToSpawn];
 
             for (int i = 0; i < numToSpawn; i++) {

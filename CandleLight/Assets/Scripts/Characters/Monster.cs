@@ -226,7 +226,7 @@ namespace Characters {
                 base.MultipleLVLUp(minLVL, Mathf.Max(minLVL, maxLVL - 1));  
             }
             else {
-                base.MultipleLVLUp(minLVL, maxLVL);  
+                base.MultipleLVLUp(Mathf.Min(minLVL + 1, maxLVL), maxLVL);  
             }
             // it takes 5 LVL 1 monster for a LVL 1 player to reach LVL 2
             // it takes 47 LVL 98 monsters for LVL 98 player to reach LVL 99
@@ -280,6 +280,7 @@ namespace Characters {
                         championChance = 100;
                     }
                     else {
+                        championChance = 0;
                         CalculateStats(true);
                     }
                 }
@@ -292,8 +293,12 @@ namespace Characters {
         /// </summary>
         /// <param name="championBuffs"> List of championBuffs that can be applied in the subArea (assumed length 3) </param>
         public void GetChampionBuff(string[] championBuffs) {
-            isChampion = Random.Range(0, 100) < (championChance + PartyManager.instance.bonusChampionChance);
-
+            if (multiplier == 4) {      // boss monsters can only be champion if GetBossBuff() allows it (otherwise too op)
+                isChampion = Random.Range(0, 100) < championChance;
+            }
+            else {
+                isChampion = Random.Range(0, 100) < (championChance + PartyManager.instance.bonusChampionChance);
+            }
             if (isChampion == true) {
                 multiplier += 0.5f;
                 this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier * (1 / difficultyModifier));  
@@ -659,7 +664,7 @@ namespace Characters {
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {
-            if (statusEffects.Count < maxStatusEffects) {
+            if (CanBeStatusEffected() == true) {
                 if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
                     int index = Random.Range(0, 3);
                     switch(index) {

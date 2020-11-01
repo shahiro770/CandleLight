@@ -589,7 +589,7 @@ namespace Combat {
                 if (activeMonster.CHP <= (int)(activeMonster.HP * 0.6f)) {
 
                     if ((attacks[attackNum - 1].type == AttackConstants.BUFFSELF || attacks[attackNum - 1].type == AttackConstants.HEALHPSELF
-                    || attacks[attackNum - 1].type == AttackConstants.BUFF) && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) == -1) {
+                    || attacks[attackNum - 1].type == AttackConstants.BUFF) && activeMonster.CanBeStatusEffected() == true && activeMonster.GetStatusEffect(attacks[attackNum - 1].seName) == -1) {
                         selectedMonsterAttackIndex = attackNum - 1;
                     }
                     else if ((attacks[attackNum - 1].type == AttackConstants.PHYSICAL || attacks[attackNum - 1].type == AttackConstants.MAGICAL)) {
@@ -638,7 +638,8 @@ namespace Combat {
             
             // BUG: here is that something is index out of bounds
             if ((attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFFSELF || attacks[selectedMonsterAttackIndex].type == AttackConstants.HEALHPSELF
-            || attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFF) && activeMonster.GetStatusEffect(attacks[selectedMonsterAttackIndex].seName) != -1) {
+            || attacks[selectedMonsterAttackIndex].type == AttackConstants.BUFF) && activeMonster.CanBeStatusEffected() == true 
+            && activeMonster.GetStatusEffect(attacks[selectedMonsterAttackIndex].seName) != -1) {
                 selectedMonsterAttackIndex = (selectedMonsterAttackIndex - 1) % activeMonster.attackNum;
                 print("move the buff one back");
             }

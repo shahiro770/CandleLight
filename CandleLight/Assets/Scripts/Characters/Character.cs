@@ -329,13 +329,17 @@ namespace Characters {
             return Random.Range(0, 100) < revengeChances[index];
         }
 
+        public bool CanBeStatusEffected() {
+            return statusEffects.Count < maxStatusEffects;
+        }
+
         protected void AddStatusEffect(StatusEffect se) {
             statusEffects.Add(se);
             CalculateStats();
         }
 
         protected bool AddStatusEffectPermanent(StatusEffect se) {
-            if (statusEffects.Count < maxStatusEffects) {
+            if (CanBeStatusEffected() == true) {
                 statusEffects.Add(se);
                 CalculateStats(true);
 

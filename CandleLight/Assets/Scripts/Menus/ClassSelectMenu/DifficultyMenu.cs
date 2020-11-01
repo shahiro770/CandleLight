@@ -192,16 +192,16 @@ namespace Menus.ClassSelectMenu {
             scoreModifier = 1;
 
             if (aromasToBe[0] == true) {
-                scoreModifier += 0.5f;
+                scoreModifier += 0.75f;
             }
             if (aromasToBe[1] == true) {
-                scoreModifier += 0.5f;
+                scoreModifier += 0.75f;
             }
             if (aromasToBe[2] == true) {
-                scoreModifier += 1f;
+                scoreModifier += 1.5f;
             }
             if (aromasToBe[3] == true) {
-                scoreModifier += 1f;
+                scoreModifier += 1.5f;
             }
 
             if (difficultyModifierToBe == 0.75f) {

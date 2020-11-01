@@ -150,9 +150,13 @@ namespace Characters {
         /// </summary>
         /// <param name="level"> Level to calculate EXP to next level for </param>
         public int CalculateEXPToNextLVL(int LVL) {
-            // it takes 6 LVL 1 monsters for a LVL 1 player to reach LVL 2
-            // it takes 47 LVL 98 monsters for LVL 98 player to reach LVL 99
-            return 2 + (int)(6 * Mathf.Pow(LVL, 2.35f) + LVL); 
+            // LVL 0 -> LVL 1 = 2 EXP
+            // LVL 1 -> LVL 2 = 10 EXP
+            // LVL 2 -> LVL 3 = 38 EXP
+            // LVL 3 -> LVL 4 = 97 EXP
+            // LVL 4 -> LVL 5 = 190 EXP
+            // LVL 5 -> LVL 6 = 322 EXP
+            return 2 + (int)(6 * Mathf.Pow(LVL, 2.45f) + LVL * 2); 
         }
 
         /// <summary>
@@ -1046,7 +1050,7 @@ namespace Characters {
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
         public void AddStatusEffect(string seName, int seDuration, Character c) {   
-            if (statusEffects.Count < maxStatusEffects) {
+            if (CanBeStatusEffected() == true) {
                 if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
                     int index = Random.Range(0, 3);
                     switch(index) {

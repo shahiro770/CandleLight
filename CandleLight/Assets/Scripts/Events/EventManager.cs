@@ -747,7 +747,7 @@ namespace Events {
 
             if (currentEvent.type == EventConstants.COMBAT) {
                 eventDescription.SetKeyAndFadeIn(currentSubArea.GetCombatPrompt());
-                monstersToSpawn = currentSubArea.GetMonstersToSpawn();
+                monstersToSpawn = currentSubArea.GetMonstersToSpawn(subAreaProgress);
                 
                 GetCombatEvent();
             }
@@ -790,7 +790,7 @@ namespace Events {
             }
             if (currentEvent.type == EventConstants.COMBAT) {
                 eventDescription.SetKey(currentSubArea.GetCombatPrompt());
-                monstersToSpawn = currentSubArea.GetMonstersToSpawn();
+                monstersToSpawn = currentSubArea.GetMonstersToSpawn(subAreaProgress);
                 
                 GetCombatEvent();
             }
@@ -991,7 +991,7 @@ namespace Events {
                 }
                 r.GenerateResults();
 
-                Gear g =  new Gear(m.monsterGear[Random.Range(0, m.monsterGear.Length - 1)]);
+                Gear g =  new Gear(m.monsterGear[Random.Range(0, m.monsterGear.Length)]);
                 g.RandomizeAmounts(r.itemQuality);
 
                 if (g == null) {
