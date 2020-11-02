@@ -20,10 +20,14 @@ Fix: Make useCandles tutorial appear for the first character than can use candle
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 Bug: Frost Golem skills should have unique message "Summons don't get skills"
 Bug: Empty tooltip bug
+Bug: Cursed Axe missing localized text
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 CRITICAL BUG: Going fullscreen causes buttons to offset (this might be a unity bug but need to try)
 UI: Make eventDescription show physical/magical damage
 UI: Might need to redo all attack animations cause pixel sizing is janky (64x64 to 96x96)
+UI: Make clicking anoter party member in combat show their attacks (but obv they can't do anything)
+UI: Make stat check toast last 1 second longer
+UI: Hot key item tabs
 Options: Bloom option (eughhh)
 UI: Add a shader to show champion
 Difficulty: Turn reticle and name red if monster is higher level
@@ -263,4 +267,11 @@ UI: status effects don't display in the statusPanel
 UI: Add heal/focus animations on effect
 UI: Colour difficulty icon borders
 UI: Add combat order on the side
+UI: Toast Flame could be smoother by splitting sprite in half and making top move up and down
 
+Itchc.IO Notes
+--------------
+- Parallax or animated background
+- Animated banner
+- CSS buttons
+- For good UI design, see House

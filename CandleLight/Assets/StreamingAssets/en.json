@@ -1041,6 +1041,7 @@
 		{ "key": "WarriorWeapon1_item", "value": "Copper Greatsword" },
 		{ "key": "WarriorWeapon2_item", "value": "Hob's Edge" },
 		{ "key": "WarriorWeapon3_item", "value": "Wind Sword" },
+		{ "key": "WarriorWeapon4_item", "value": "Cursed Axe" },
 		{ "key": "MageWeapon-1_item", "value": "Damaged Staff" },
 		{ "key": "MageWeapon0_item", "value": "Reflective Eye" },
 		{ "key": "MageWeapon1_item", "value": "Copper Wand" },
