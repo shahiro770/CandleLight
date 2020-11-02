@@ -299,6 +299,7 @@ namespace Characters {
             else {
                 isChampion = Random.Range(0, 100) < (championChance + PartyManager.instance.bonusChampionChance);
             }
+
             if (isChampion == true) {
                 multiplier += 0.5f;
                 this.EXP = (int)((Mathf.Pow(LVL, 1.65f) + ((STR + DEX + INT + LUK) / 10)) * this.multiplier * (1 / difficultyModifier));  
