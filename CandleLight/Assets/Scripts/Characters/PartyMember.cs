@@ -16,7 +16,7 @@ using Party;
 using Skills;
 using SkillConstants = Constants.SkillConstants;
 using System.Collections;
-using StatusEffectConstants = Constants.StatusEffectConstants;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using UnityEngine;
 
 namespace Characters {
@@ -37,7 +37,7 @@ namespace Characters {
         
         public PartyMember summon = null;       /// <value> Summoned familiar of this partyMember </value>
         public PartyMember summoner = null;     /// <value> PartyMember that summoned this </value>
-        public Attack noneAttack = new Attack("none", "physical", "0", null, 0, 0, "MP", "0", 0, "none");
+        public Attack noneAttack = new Attack("none", "physical", "0", StatusEffectConstant.NONE, 0, 0, "MP", "0", 0, "none");
         public Skill[] skills = new Skill[12];
         public Gear weapon = null;        /// <value> Weapon </value>
         public Gear secondary = null;     /// <value> Secondary </value>
@@ -306,10 +306,10 @@ namespace Characters {
 
             /* primary stat changes from skills */
             if (className == ClassConstants.ARCHER) {
-                if (skills[(int)SkillConstants.archerSkills.BLOOMINGFORTUNE].skillEnabled == true) {
+                if (skills[(int)SkillConstants.ArcherSkills.BLOOMINGFORTUNE].skillEnabled == true) {
                     LUK *= 2;
                 }
-                if (skills[(int)SkillConstants.archerSkills.FLEETFOOTED].skillEnabled == true) {
+                if (skills[(int)SkillConstants.ArcherSkills.FLEETFOOTED].skillEnabled == true) {
                     DEX += 5;
                 }
             }
@@ -495,82 +495,82 @@ namespace Characters {
 
             /* secondary stat changes from skills */
             if (className == ClassConstants.WARRIOR) {
-                if (skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                if (skills[(int)SkillConstants.WarriorSkills.STEADFAST].skillEnabled == true) {
                     HP += (int)(HP * 0.15f);
                 }
-                if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                if (skills[(int)SkillConstants.WarriorSkills.BLOODSWORN].skillEnabled == true) {
                     PATK += (int)(PATK * 0.3f);
                 }
             }
             else if (className == ClassConstants.MAGE) {
-                if (skills[(int)SkillConstants.mageSkills.CRITICALMAGIC].skillEnabled == true) {
+                if (skills[(int)SkillConstants.MageSkills.CRITICALMAGIC].skillEnabled == true) {
                      critChance += 12;
                 }
-                if (skills[(int)SkillConstants.mageSkills.THIRDEYE].skillEnabled == true) {
+                if (skills[(int)SkillConstants.MageSkills.THIRDEYE].skillEnabled == true) {
                     MPRegen *= 2f;
                 }
-                if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
+                if (skills[(int)SkillConstants.MageSkills.MANASHIELD].skillEnabled == true) {
                     MDEF += 2;
                 }
-                if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
+                if (skills[(int)SkillConstants.MageSkills.FIERYVEIL].skillEnabled == true) {
                     burnPlus = true;
                 }
             }
             else if (className == ClassConstants.ARCHER) {
-                if (skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                if (skills[(int)SkillConstants.ArcherSkills.SURVIVALIST].skillEnabled == true) {
                     PDEF += 1;
                 }
             }
             else if (className == ClassConstants.ROGUE) {
-                if (skills[(int)SkillConstants.rogueSkills.CLOAKED].skillEnabled == true) {
+                if (skills[(int)SkillConstants.RogueSkills.CLOAKED].skillEnabled == true) {
                     //int DOGBoost = (int)(DOG * 0.15f); // or 15% (whichever is greater) will be implemented if the game gets dlc
                     DOG += 15; //>= DOGBoost ? 15 : DOGBoost;
                 }
-                if (skills[(int)SkillConstants.rogueSkills.DEADLY].skillEnabled == true) {
+                if (skills[(int)SkillConstants.RogueSkills.DEADLY].skillEnabled == true) {
                     PATK += 5;
                 }
-                if (skills[(int)SkillConstants.rogueSkills.KILLERINSTINCT].skillEnabled == true) {
+                if (skills[(int)SkillConstants.RogueSkills.KILLERINSTINCT].skillEnabled == true) {
                     critMult += 0.5f;
                 }
-                if (skills[(int)SkillConstants.rogueSkills.RITUALDAGGERS].skillEnabled == true) {
+                if (skills[(int)SkillConstants.RogueSkills.RITUALDAGGERS].skillEnabled == true) {
                     MATK *= 2;
                 }
             }
 
             /* secondary stat changes from status effects */
             foreach (StatusEffect se in statusEffects) {
-                if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
+                if (se.name == StatusEffectConstant.TAUNT || se.name == StatusEffectConstant.RAGE) {
                     PATK += (int)(PATK * 0.5);
                 }
-                else if (se.name == StatusEffectConstants.FREEZE) {
+                else if (se.name == StatusEffectConstant.FREEZE) {
                     ACC -= (int)(ACC * 0.35);
                     PDEF -= (int)(PDEF * 0.35);
                 }
-                else if (se.name == StatusEffectConstants.WEAKNESS) {
+                else if (se.name == StatusEffectConstant.WEAKNESS) {
                     PATK -= (int)(PATK * 0.3);
                 }
-                else if (se.name == StatusEffectConstants.ADVANTAGE) {
+                else if (se.name == StatusEffectConstant.ADVANTAGE) {
                     critChance += 50;
                 }
-                else if (se.name == StatusEffectConstants.ROOT) {
+                else if (se.name == StatusEffectConstant.ROOT) {
                     DOG -= (int)(DOG * 0.5);;
                 }
-                else if (se.name == StatusEffectConstants.GUARD) {
+                else if (se.name == StatusEffectConstant.GUARD) {
                     PDEF += Mathf.Max(1, PDEF);
                 }
-                else if (se.name == StatusEffectConstants.BARRIER) {
+                else if (se.name == StatusEffectConstant.BARRIER) {
                     MDEF += Mathf.Max(1, MDEF);
                 }
-                else if (se.name == StatusEffectConstants.MARIONETTE) {
+                else if (se.name == StatusEffectConstant.MARIONETTE) {
                     DOG -= DOG;
                 }
-                else if (se.name == StatusEffectConstants.NIMBLE) {
+                else if (se.name == StatusEffectConstant.NIMBLE) {
                     DOG += DOG;
                 }
-                else if (se.name == StatusEffectConstants.ETHEREAL) {
+                else if (se.name == StatusEffectConstant.ETHEREAL) {
                     MATK += (int)(MATK * 0.5);
                 }
-                else if (se.name == StatusEffectConstants.SCUM) {
+                else if (se.name == StatusEffectConstant.SCUM) {
                     HPRegen *= 0.5f;
                     MPRegen *= 0.5f;
                 }
@@ -636,7 +636,7 @@ namespace Characters {
         /// Adds the summoned familiar buff (doesn't do anything besides a visual indicator)
         /// </summary>
         public void GetSummonBuff() {
-            StatusEffect newStatus = new StatusEffect(StatusEffectConstants.FAMILIAR, 999);
+            StatusEffect newStatus = new StatusEffect(StatusEffectConstant.FAMILIAR, 999);
             AddStatusEffectPermanent(newStatus);
             pmvc.AddStatusEffectDisplay(newStatus);
         }
@@ -809,7 +809,7 @@ namespace Characters {
             // side effects from partyMember skills may alter calculations
             bool skillAltered = false;
             if (className == ClassConstants.MAGE) {
-                if (skills[(int)SkillConstants.mageSkills.MANASHIELD].skillEnabled == true) {
+                if (skills[(int)SkillConstants.MageSkills.MANASHIELD].skillEnabled == true) {
                     if (CMP > 0) {
                         skillAltered = true;
                         CHP -= (int)Mathf.Ceil(amount * 0.75f);
@@ -904,22 +904,22 @@ namespace Characters {
                 }
                 // side effects from partyMember skills
                 if (className == ClassConstants.WARRIOR) {
-                    if (skills[(int)SkillConstants.warriorSkills.VAMPIRICMAIL].skillEnabled == true) {
+                    if (skills[(int)SkillConstants.WarriorSkills.VAMPIRICMAIL].skillEnabled == true) {
                         if (Random.Range(0, 100) < 35) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
-                            cm.AddStatusEffect(StatusEffectConstants.BLEED, 2, this); 
+                            cm.AddStatusEffect(StatusEffectConstant.BLEED, 2, this); 
                         }
                     }
                 }
                 else if (className == ClassConstants.MAGE) {
-                    if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
+                    if (skills[(int)SkillConstants.MageSkills.FIERYVEIL].skillEnabled == true) {
                         int burnChance = 30;
-                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.MageSkills.PYROMANCY].skillEnabled == true) {
                             burnChance *= 2;
                         }
                         if (Random.Range(0, 100) < burnChance) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
-                            cm.AddStatusEffect(StatusEffectConstants.BURN, 3, this); 
+                            cm.AddStatusEffect(StatusEffectConstant.BURN, 3, this); 
                         }
                     }
                 }
@@ -929,10 +929,10 @@ namespace Characters {
                     if (revengeChances[i] != 0) {
                         if (CalculateRevengeProc(i) == true) {
                             if (i == 0) {
-                                AddStatusEffect(StatusEffectConstants.ROOT, 3, c);
+                                AddStatusEffect(StatusEffectConstant.ROOT, 3, c);
                             }
                             if (i == 1) {
-                                AddStatusEffect(StatusEffectConstants.SHOCK, 3, c);
+                                AddStatusEffect(StatusEffectConstant.SHOCK, 3, c);
                             }
                         }
                     }
@@ -958,22 +958,22 @@ namespace Characters {
 
                 // side effects from partyMember skills
                 if (className == ClassConstants.WARRIOR) {
-                    if (skills[(int)SkillConstants.warriorSkills.VAMPIRICMAIL].skillEnabled == true) {
+                    if (skills[(int)SkillConstants.WarriorSkills.VAMPIRICMAIL].skillEnabled == true) {
                         if (Random.Range(0, 100) < 50) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
-                            cm.AddStatusEffect(StatusEffectConstants.BLEED, 2, this); 
+                            cm.AddStatusEffect(StatusEffectConstant.BLEED, 2, this); 
                         }
                     }
                 }
                 else if (className == ClassConstants.MAGE) {
-                    if (skills[(int)SkillConstants.mageSkills.FIERYVEIL].skillEnabled == true) {
+                    if (skills[(int)SkillConstants.MageSkills.FIERYVEIL].skillEnabled == true) {
                         int burnChance = 33;
-                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.MageSkills.PYROMANCY].skillEnabled == true) {
                             burnChance *= 2;
                         }
                         if (Random.Range(0, 100) < burnChance) {
                             Monster cm = (Monster)c;    // TODO: If partyMember can ever be attacked by a partyMember, need to if this
-                            cm.AddStatusEffect(StatusEffectConstants.BURN, 3, this); 
+                            cm.AddStatusEffect(StatusEffectConstant.BURN, 3, this); 
                         }
                     }
                 }
@@ -1049,19 +1049,19 @@ namespace Characters {
         /// <param name="seName"> Name of the statusEffect </param>
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
-        public void AddStatusEffect(string seName, int seDuration, Character c) {   
+        public void AddStatusEffect(StatusEffectConstant seName, int seDuration, Character c) {   
             if (CanBeStatusEffected() == true) {
-                if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
+                if (seName == StatusEffectConstant.RBW) {    // for archer's cursed roots, rbw randomly chooses
                     int index = Random.Range(0, 3);
                     switch(index) {
                         case 0:
-                            seName = StatusEffectConstants.BLEED;
+                            seName = StatusEffectConstant.BLEED;
                             break;
                         case 1:
-                            seName = StatusEffectConstants.WEAKNESS;
+                            seName = StatusEffectConstant.WEAKNESS;
                             break;
                         case 2:
-                            seName = StatusEffectConstants.ROOT;
+                            seName = StatusEffectConstant.ROOT;
                             break;
                         default:
                             break;
@@ -1113,18 +1113,18 @@ namespace Characters {
             int HPchange = 0;   // negative means HP gained
             int MPchange = 0;   // negative means MP gained
             int[] animationsToPlay = new int[] { 0 ,0, 0, 0, 0, 0 }; 
-            bool isCure = GetStatusEffect(StatusEffectConstants.CURE) != -1;
+            bool isCure = GetStatusEffect(StatusEffectConstant.CURE) != -1;
 
             foreach (StatusEffect se in statusEffects) {
-                if (se.name == StatusEffectConstants.BURN) {
+                if (se.name == StatusEffectConstant.BURN) {
                     HPchange += se.value;
                     animationsToPlay[0] = 1;
                 }
-                else if (se.name == StatusEffectConstants.POISON) {
+                else if (se.name == StatusEffectConstant.POISON) {
                     HPchange += se.value;
                     animationsToPlay[1] = 1;
                 }
-                else if (se.name == StatusEffectConstants.BLEED) {
+                else if (se.name == StatusEffectConstant.BLEED) {
                     int bleedDamage = se.value;
                     HPchange += bleedDamage;
                     if (se.afflicter != null && se.afflicter.CheckDeath() == false) {
@@ -1132,19 +1132,19 @@ namespace Characters {
                     }
                     animationsToPlay[2] = 1;
                 }
-                else if (se.name == StatusEffectConstants.REGENERATE) {
+                else if (se.name == StatusEffectConstant.REGENERATE) {
                     HPchange -= se.value;
                     animationsToPlay[3] = 1;
                 }
-                else if (se.name == StatusEffectConstants.FOCUS) {
+                else if (se.name == StatusEffectConstant.FOCUS) {
                     MPchange -= se.value;
                     animationsToPlay[4] = 1;
                 }
-                else if (se.name == StatusEffectConstants.FATALWOUND) {
+                else if (se.name == StatusEffectConstant.FATALWOUND) {
                     HPchange += se.value;
                     animationsToPlay[2] = 1;
                 }
-                else if (se.name == StatusEffectConstants.FROSTBITE) {
+                else if (se.name == StatusEffectConstant.FROSTBITE) {
                     HPchange -= se.value;
                     animationsToPlay[5] = 1;
                 }
@@ -1243,7 +1243,7 @@ namespace Characters {
         public void EquipCandle(Candle c, int index, bool calculateStats = true) {
             activeCandles[index] = c;
             if (className == ClassConstants.MAGE) {
-                if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
+                if (skills[(int)SkillConstants.MageSkills.CANDLEMANCY].skillEnabled == true) {
                     c.SetUses(c.uses * 2);
                 }
             }
@@ -1265,7 +1265,7 @@ namespace Characters {
         /// <param name="index"> Unequips a candle from one of the active candle slots (0, 1, or 2) </param>
         public void UnequipCandle(int index) {
             if (className == ClassConstants.MAGE) {
-                if (skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
+                if (skills[(int)SkillConstants.MageSkills.CANDLEMANCY].skillEnabled == true) {
                     activeCandles[index].SetUses((int)(activeCandles[index].uses * 0.5f));
                 }
             }
@@ -1294,7 +1294,7 @@ namespace Characters {
         public void Rekindle() {
             foreach(Candle c in activeCandles) {
                 if (c != null) {
-                    if (className == ClassConstants.MAGE && skills[(int)SkillConstants.mageSkills.CANDLEMANCY].skillEnabled == true) {
+                    if (className == ClassConstants.MAGE && skills[(int)SkillConstants.MageSkills.CANDLEMANCY].skillEnabled == true) {
                         c.CandlemancyRekindle();
                     }
                     else {
@@ -1319,19 +1319,19 @@ namespace Characters {
                     skills[index].skillEnabled = true;
 
                     if (className == ClassConstants.WARRIOR) {
-                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.WarriorSkills.BLOODSWORN].skillEnabled == true) {
                             attacks[attackNum].costType = "HP";
                         }
                     }
                     else if (className == ClassConstants.MAGE) {
-                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
-                            if (attacks[attackNum].seName == StatusEffectConstants.BURN) {
+                        if (skills[(int)SkillConstants.MageSkills.PYROMANCY].skillEnabled == true) {
+                            if (attacks[attackNum].seName == StatusEffectConstant.BURN) {
                                 attacks[attackNum].seChance = attacks[attackNum].baseSeChance << 1;
                             }
                         }
                     }
                     else if (className == ClassConstants.ROGUE) {
-                        if (skills[(int)SkillConstants.rogueSkills.RITUALDAGGERS].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.RogueSkills.RITUALDAGGERS].skillEnabled == true) {
                             attacks[attackNum].costFormula += " * 2";
                         }
                     }
@@ -1347,10 +1347,10 @@ namespace Characters {
                 skills[index].skillEnabled = true;
 
                 if (className == ClassConstants.WARRIOR) {
-                    if (index == (int)SkillConstants.warriorSkills.STEADFAST) {
+                    if (index == (int)SkillConstants.WarriorSkills.STEADFAST) {
                         statChange = true;
                     }
-                    else if (index == (int)SkillConstants.warriorSkills.BLOODSWORN) {
+                    else if (index == (int)SkillConstants.WarriorSkills.BLOODSWORN) {
                         for (int i = 0; i < attackNum; i++) {
                             attacks[i].costType = "HP";
                         }
@@ -1358,56 +1358,56 @@ namespace Characters {
                     }
                 }
                 else if (className == ClassConstants.MAGE) {
-                    if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
+                    if (index == (int)SkillConstants.MageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
-                            if (attacks[i].seName == StatusEffectConstants.BURN) {
+                            if (attacks[i].seName == StatusEffectConstant.BURN) {
                                 attacks[i].seChance = attacks[i].baseSeChance << 1;
                             }
                         }
                     }
-                    else if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
+                    else if (index == (int)SkillConstants.MageSkills.CRITICALMAGIC) {
                         statChange = true; 
                     }
-                    else if (index == (int)SkillConstants.mageSkills.CANDLEMANCY) {
+                    else if (index == (int)SkillConstants.MageSkills.CANDLEMANCY) {
                         foreach (Candle c in activeCandles) {
                             if (c != null) {
                                 c.SetUses(c.uses * 2);
                             }
                         }
                     }
-                    else if (index == (int)SkillConstants.mageSkills.MANASHIELD) {
+                    else if (index == (int)SkillConstants.MageSkills.MANASHIELD) {
                         statChange = true;
                     }
                 }
                 else if (className == ClassConstants.ARCHER) {
-                    if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
+                    if (index == (int)(SkillConstants.ArcherSkills.SCAVENGER)) {
                         PartyManager.instance.CalculateMultipliers();
                     }
-                    else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                    else if (index == (int)(SkillConstants.ArcherSkills.SURVIVALIST)) {
                         statChange = true;
                     }
-                    else if (index == (int)(SkillConstants.archerSkills.BLOOMINGFORTUNE)) {
+                    else if (index == (int)(SkillConstants.ArcherSkills.BLOOMINGFORTUNE)) {
                         statChange = true;
                     }
-                    else if (index == (int)(SkillConstants.archerSkills.FLEETFOOTED)) {
+                    else if (index == (int)(SkillConstants.ArcherSkills.FLEETFOOTED)) {
                         statChange = true;
                     }
                 }
                 else if (className == ClassConstants.ROGUE) {
-                    if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
+                    if (index == (int)SkillConstants.RogueSkills.WAXTHIEF) {
                         PartyManager.instance.CalculateMultipliers();
                         pmvc.UpdateWAXValues();
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
+                    else if (index == (int)SkillConstants.RogueSkills.CLOAKED) {
                         statChange = true;
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.DEADLY) {
+                    else if (index == (int)SkillConstants.RogueSkills.DEADLY) {
                         statChange = true;
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.KILLERINSTINCT) {
+                    else if (index == (int)SkillConstants.RogueSkills.KILLERINSTINCT) {
                         statChange = true;
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.RITUALDAGGERS) {
+                    else if (index == (int)SkillConstants.RogueSkills.RITUALDAGGERS) {
                         for (int i = 0; i < attackNum; i++) {
                             attacks[i].costFormula += " * 1.5";
                         }
@@ -1433,14 +1433,14 @@ namespace Characters {
                     skills[index].skillEnabled = true;
 
                     if (className == ClassConstants.WARRIOR) {
-                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.WarriorSkills.BLOODSWORN].skillEnabled == true) {
                             attacks[replacedSkillIndex].costType = "HP";
                             skills[index].storedAttack.costType = "MP";     // revert any skill changes to the original attack 
                         }
                     }
                     else if (className == ClassConstants.MAGE) {
-                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
-                            if (attacks[replacedSkillIndex].seName == StatusEffectConstants.BURN) {
+                        if (skills[(int)SkillConstants.MageSkills.PYROMANCY].skillEnabled == true) {
+                            if (attacks[replacedSkillIndex].seName == StatusEffectConstant.BURN) {
                                 attacks[replacedSkillIndex].seChance = skills[replacedSkillIndex].storedAttack.baseSeChance << 1;
                                 skills[index].storedAttack.seChance = skills[index].storedAttack.baseSeChance >> 1;     // revert any skill changes to the original attack
                             }
@@ -1476,19 +1476,19 @@ namespace Characters {
 
                     // revert changes to an active skill caused by a passive skill
                     if (className == ClassConstants.WARRIOR) {
-                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.WarriorSkills.BLOODSWORN].skillEnabled == true) {
                             attacks[attackIndex].costType = "MP";
                         }
                     }
                     else if (className == ClassConstants.MAGE) {
-                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {       
-                            if (attacks[attackIndex].seName == StatusEffectConstants.BURN) {
+                        if (skills[(int)SkillConstants.MageSkills.PYROMANCY].skillEnabled == true) {       
+                            if (attacks[attackIndex].seName == StatusEffectConstant.BURN) {
                                 attacks[attackIndex].seChance = attacks[attackIndex].baseSeChance;
                             }   
                         }
                     }
                     else if (className == ClassConstants.ROGUE) {
-                        if (skills[(int)SkillConstants.rogueSkills.RITUALDAGGERS].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.RogueSkills.RITUALDAGGERS].skillEnabled == true) {
                             attacks[attackIndex].costFormula =  attacks[attackIndex].costFormula.Remove(attacks[attackIndex].costFormula.Length - 4, 4);
                         }
                     }
@@ -1508,66 +1508,66 @@ namespace Characters {
                 skills[index].skillEnabled = false;
 
                 if (className == ClassConstants.WARRIOR) {
-                    if (index == (int)SkillConstants.warriorSkills.BLOODSWORN) {
+                    if (index == (int)SkillConstants.WarriorSkills.BLOODSWORN) {
                         for (int i = 0; i < attackNum; i++) {
                             attacks[i].costType = "MP";
                         }
                     }
-                    else if (index == (int)SkillConstants.warriorSkills.STEADFAST) {
+                    else if (index == (int)SkillConstants.WarriorSkills.STEADFAST) {
                         statChange = true;
                     }
                 }
                 if (className == ClassConstants.MAGE) {
-                    if (index == (int)SkillConstants.mageSkills.PYROMANCY) {  
+                    if (index == (int)SkillConstants.MageSkills.PYROMANCY) {  
                         for (int i = 0; i < attackNum; i++) {
-                            if (attacks[i].seName == StatusEffectConstants.BURN) {
+                            if (attacks[i].seName == StatusEffectConstant.BURN) {
                                 attacks[i].seChance = attacks[i].baseSeChance;
                             }
                         }
                     }
-                    else if (index == (int)SkillConstants.mageSkills.CRITICALMAGIC) {
+                    else if (index == (int)SkillConstants.MageSkills.CRITICALMAGIC) {
                         statChange = true;     
                     }
-                    else if (index == (int)SkillConstants.mageSkills.CANDLEMANCY) {
+                    else if (index == (int)SkillConstants.MageSkills.CANDLEMANCY) {
                         foreach (Candle c in activeCandles) {
                             if (c != null) {
                                 c.SetUses((int)(c.uses * 0.5));     // rounds down by truncating
                             }
                         }
                     }
-                    else if (index == (int)SkillConstants.mageSkills.MANASHIELD) {
+                    else if (index == (int)SkillConstants.MageSkills.MANASHIELD) {
                         statChange = true;
                     }
                 }
                 else if (className == ClassConstants.ARCHER) {
-                    if (index == (int)(SkillConstants.archerSkills.SCAVENGER)) {
+                    if (index == (int)(SkillConstants.ArcherSkills.SCAVENGER)) {
                         PartyManager.instance.CalculateMultipliers();
                     }
-                    else if (index == (int)(SkillConstants.archerSkills.SURVIVALIST)) {
+                    else if (index == (int)(SkillConstants.ArcherSkills.SURVIVALIST)) {
                         statChange = true;
                     }
-                    else if (index == (int)(SkillConstants.archerSkills.BLOOMINGFORTUNE)) {
+                    else if (index == (int)(SkillConstants.ArcherSkills.BLOOMINGFORTUNE)) {
                         statChange = true;
                     }
-                    else if (index == (int)(SkillConstants.archerSkills.FLEETFOOTED)) {
+                    else if (index == (int)(SkillConstants.ArcherSkills.FLEETFOOTED)) {
                         statChange = true;
                     }
                 }
                 else if (className == ClassConstants.ROGUE) {
-                    if (index == (int)SkillConstants.rogueSkills.WAXTHIEF) {
+                    if (index == (int)SkillConstants.RogueSkills.WAXTHIEF) {
                         PartyManager.instance.CalculateMultipliers();
                         pmvc.UpdateWAXValues();
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.CLOAKED) {
+                    else if (index == (int)SkillConstants.RogueSkills.CLOAKED) {
                         statChange = true;
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.DEADLY) {
+                    else if (index == (int)SkillConstants.RogueSkills.DEADLY) {
                         statChange = true;
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.KILLERINSTINCT) {
+                    else if (index == (int)SkillConstants.RogueSkills.KILLERINSTINCT) {
                         statChange = true;
                     }
-                    else if (index == (int)SkillConstants.rogueSkills.RITUALDAGGERS) {  
+                    else if (index == (int)SkillConstants.RogueSkills.RITUALDAGGERS) {  
                         statChange = true;   
                         for (int i = 0; i < attackNum; i++) { // all strings will be at least length 6 due to the appended characters
                             attacks[i].costFormula = attacks[i].costFormula.Remove(attacks[i].costFormula.Length - 6, 6);
@@ -1594,13 +1594,13 @@ namespace Characters {
                     skills[index].skillEnabled = false;
 
                     if (className == ClassConstants.WARRIOR) {
-                        if (skills[(int)SkillConstants.warriorSkills.BLOODSWORN].skillEnabled == true) {
+                        if (skills[(int)SkillConstants.WarriorSkills.BLOODSWORN].skillEnabled == true) {
                             attacks[replacedSkillIndex].costType = "HP";
                         }
                     }
                     else if (className == ClassConstants.MAGE) {
-                        if (skills[(int)SkillConstants.mageSkills.PYROMANCY].skillEnabled == true) {
-                            if (attacks[replacedSkillIndex].seName == StatusEffectConstants.BURN) {
+                        if (skills[(int)SkillConstants.MageSkills.PYROMANCY].skillEnabled == true) {
+                            if (attacks[replacedSkillIndex].seName == StatusEffectConstant.BURN) {
                                 attacks[replacedSkillIndex].seChance = attacks[replacedSkillIndex].baseSeChance << 1;
                             }
                         }
@@ -1625,8 +1625,8 @@ namespace Characters {
         /// <param name="index"> Index of skill </param>
         public void TriggerSkill(string className, int index, Character c) {
             if (className == ClassConstants.ROGUE) {
-                if (index == (int)SkillConstants.rogueSkills.AMBUSHER) {
-                    AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, c);
+                if (index == (int)SkillConstants.RogueSkills.AMBUSHER) {
+                    AddStatusEffect(StatusEffectConstant.ADVANTAGE, 1, c);
                 }
             }
         }

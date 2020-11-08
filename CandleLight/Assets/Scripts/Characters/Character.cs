@@ -8,7 +8,7 @@
 */
 
 using AttackConstants = Constants.AttackConstants;
-using StatusEffectConstants = Constants.StatusEffectConstants;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using Combat;
 using System.Collections.Generic;
 using UnityEngine;
@@ -233,7 +233,7 @@ namespace Characters {
         /// <param name="a"> Attack object </param>
         /// <returns> The amount of damage taken </returns>
         public int CalculateAttackDamage(Attack a) {
-            if (a.type == AttackConstants.MAGICAL && GetStatusEffect(StatusEffectConstants.SHOCK) != -1) {
+            if (a.type == AttackConstants.MAGICAL && GetStatusEffect(StatusEffectConstant.SHOCK) != -1) {
                 return (int)(a.attackValue * 1.5f);
             }
             return a.attackValue;
@@ -252,7 +252,7 @@ namespace Characters {
             else if (a.type == AttackConstants.MAGICAL) {
                 damage = damage - MDEF; 
             }
-            if (GetStatusEffect(StatusEffectConstants.MIRACLE) != -1) {
+            if (GetStatusEffect(StatusEffectConstant.MIRACLE) != -1) {
                 damage = 0;
             }
             if (damage < 0) {
@@ -273,7 +273,12 @@ namespace Characters {
         }
 
         protected bool CalculateAttackStatus(Attack a, Character c) {
-            bool attackStatus = Random.Range(0, 100) < a.seChance;
+            int statusChance = a.seChance;
+            if (GetStatusEffect(StatusEffectConstant.BOSS) != -1 && a.seName == StatusEffectConstant.STUN) {
+                statusChance = (int)(statusChance * 0.5f);
+            }
+
+            bool attackStatus = Random.Range(0, 100) < statusChance;
 
             return attackStatus;
         }
@@ -406,7 +411,7 @@ namespace Characters {
         /// </summary>
         /// <param name="seName"> Name of statusEffect to find </param>
         /// <returns></returns>
-        public int GetStatusEffect(string seName) {
+        public int GetStatusEffect(StatusEffectConstant seName) {
             return statusEffects.FindIndex(se => se.name == seName);
         }
 

@@ -49,7 +49,7 @@ namespace Database {
                         string monsterArea = "";
                         string monsterSize = "";
                         string monsterAI = "";
-                        string permanentBuff = "";
+                        StatusEffectConstant permanentBuff = StatusEffectConstant.NONE;
                         int multiplier = 0;
                         int HP = 0;
                         int MP = 0;
@@ -83,7 +83,7 @@ namespace Database {
                             dropChance = reader.GetInt32(20);
                             monsterReward = GetResultByName(reader.GetString(21), "", dbConnection);      
                             championChance = reader.GetInt32(22);       
-                            permanentBuff = reader.GetString(23);
+                            permanentBuff = (StatusEffectConstant)Enum.Parse(typeof(StatusEffectConstant), reader.GetString(23)); 
                         }
                         else {
                             Debug.LogError("Monster " + monsterName + " does not exist in the DB");
@@ -199,14 +199,14 @@ namespace Database {
                     string costType = "";
                     int scope = 0;
                     string animationClipName = "";
-                    string seName = "";
+                    StatusEffectConstant seName; 
                     int seChance = 0;
                     int seDuration = 0;
                     
                     if (reader.Read()) {
                         type = reader.GetString(2);
                         damageFormula = reader.GetString(3);
-                        seName = reader.GetString(4);
+                        seName = (StatusEffectConstant)Enum.Parse(typeof(StatusEffectConstant), reader.GetString(4)); 
                         seDuration = reader.GetInt32(5);
                         seChance = reader.GetInt32(6);
                         costType = reader.GetString(7);
@@ -514,7 +514,7 @@ namespace Database {
                     int[] resultAmounts = new int[5];
                     int monsterCount = 0;
                     string newIntName = ""; 
-                    string seName = "";
+                    StatusEffectConstant seName = StatusEffectConstant.NONE;
                     int seDuration = 0;
                     bool isUnique = false;
                     bool hasPostCombatPrompt = false;
@@ -546,7 +546,7 @@ namespace Database {
                         specificItemNames[2] = reader.GetString(23);
                         itemQuality = reader.GetString(24);
                         newIntName = reader.GetString(25);
-                        seName = reader.GetString(26);
+                        seName = (StatusEffectConstant)Enum.Parse(typeof(StatusEffectConstant), reader.GetString(26)); 
                         seDuration = reader.GetInt32(27);
                         hasPostCombatPrompt = reader.GetBoolean(28);
                         questName = reader.GetString(29);

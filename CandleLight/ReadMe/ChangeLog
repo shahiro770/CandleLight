@@ -13,14 +13,19 @@ JUST FINISHED
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Balance: Redid modifier values (WAX -50% for 50% more points was not worth it)
+Bug: Cursed Axe missing localized text
+
+Fix: Enummed status effects 
 
 COOKING
 -------
+Verify: Was a statcheck not checked for ancientAltar?
+Bug: Make Lesser Wraith Wizard box adjustments for tooltip
 Fix: Make useCandles tutorial appear for the first character than can use candles
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 Bug: Frost Golem skills should have unique message "Summons don't get skills"
 Bug: Empty tooltip bug
-Bug: Cursed Axe missing localized text
+Bug: Fran string bad for time keeper ("no one else would send)
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 CRITICAL BUG: Going fullscreen causes buttons to offset (this might be a unity bug but need to try)
 UI: Make eventDescription show physical/magical damage
@@ -32,10 +37,11 @@ Options: Bloom option (eughhh)
 UI: Add a shader to show champion
 Difficulty: Turn reticle and name red if monster is higher level
 
-Monster: Need another monster for starting area to get a second theme
-    -
-    -
-    -
+Monster: Goo (slimes mostly made of dirt, consume to survive but die if they have no mass)
+    - 
+    - Metabolize (Heal self for 50% HP, but also poisons for 3 turns)
+    - 
+    - 
 Monster: The Grumbled (PDEF 5 MDEF 2) (Random)
     - Enroot: Magical attack that guarantees root
     - Cursed Seeds: Magical attack that damages a character and inflicts rbw
@@ -46,7 +52,7 @@ Monster: Knight Puppet (PDEF 2 MDEF 1) (Random)
     - Disrupting Slash: Magical Attack, 50% chance to inflict seal (MATK -30%)
     - Guarding Stance: Gain Guard for 3 turns
     - Spell Shield: Restore HP and grant barrier for 3 turns to a random ally
-Monster: Hanged Man (PDEF 2 MDEF 5) (Last on fifth turn AI)
+Monster: Hanged Men (PDEF 2 MDEF 5) (Last on fifth turn AI)
     - Silent Arrows: Magical attack, 50% chance to inflict seal (MATK - 30%), hits all monsters
     - Hang: Inflict trap for 3 turns
     - Spell Shield: Restore health to an ally and grant them Barrier
@@ -77,7 +83,7 @@ Gear: Membrane Bow
     - Bleed On Hit 20%
 Gear: Pariah's Garb
     - Revenge Seal: 20%
-    - Revenge Focus 100%
+    - Revenge MP: 5
     - MDEF 3
 Event: Tumbleweed Patch (Hill Country) 
     - Forage

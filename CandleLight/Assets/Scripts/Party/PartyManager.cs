@@ -17,6 +17,7 @@ using General;
 using PlayerUI;
 using ItemConstants = Constants.ItemConstants;
 using SkillConstants = Constants.SkillConstants;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using System.Collections;
 using System.Collections.Generic;
 using TutorialConstants = Constants.TutorialConstants;
@@ -382,12 +383,12 @@ namespace Party {
             }
             foreach (PartyMember pm in partyMembersAlive) {
                 if (pm.className == ClassConstants.ARCHER) {
-                    if (pm.skills[(int)SkillConstants.archerSkills.SCAVENGER].skillEnabled == true) {
+                    if (pm.skills[(int)SkillConstants.ArcherSkills.SCAVENGER].skillEnabled == true) {
                         itemDropMultiplier *= 1.5f;
                     }
                 }
                 if (pm.className == ClassConstants.ROGUE) {
-                    if (pm.skills[(int)SkillConstants.rogueSkills.WAXTHIEF].skillEnabled == true) {
+                    if (pm.skills[(int)SkillConstants.RogueSkills.WAXTHIEF].skillEnabled == true) {
                         WAXmultiplier *= 1.5f;
                     }
                 }
@@ -420,7 +421,7 @@ namespace Party {
             else {
                 PartyMember pm = partyMembersAlive[Random.Range(0, partyMembersAlive.Count)];      
                 if (pm.className == ClassConstants.WARRIOR) {
-                    if (pm.skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                    if (pm.skills[(int)SkillConstants.WarriorSkills.STEADFAST].skillEnabled == true) {
                         pm.LoseHP(amount >> 1);
                     }
                 }
@@ -458,7 +459,7 @@ namespace Party {
                 for (int i = 0; i < partyMembersAll.Count; i++) {
                     if (partyMembersAll[i].CheckDeath() == false) {
                         if (partyMembersAll[i].className == ClassConstants.WARRIOR) {
-                            if (partyMembersAll[i].skills[(int)SkillConstants.warriorSkills.STEADFAST].skillEnabled == true) {
+                            if (partyMembersAll[i].skills[(int)SkillConstants.WarriorSkills.STEADFAST].skillEnabled == true) {
                                 StartCoroutine(partyMembersAll[i].LoseHP(amount >> 1));
                             }
                             else {
@@ -583,7 +584,7 @@ namespace Party {
             EventManager.instance.UpdateWAXAmounts();
         }
 
-        public void AddSE(string seName, int seDuration) {
+        public void AddStatusEffect(StatusEffectConstant seName, int seDuration) {
             foreach (PartyMember pm in partyMembersAlive) {
                 pm.AddStatusEffect(seName, seDuration, null);   // will fail for effects that care about the afflicter
             }

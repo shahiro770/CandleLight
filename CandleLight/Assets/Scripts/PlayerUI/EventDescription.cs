@@ -12,6 +12,7 @@ using Attack = Combat.Attack;
 using AttackConstants = Constants.AttackConstants;
 using Characters;
 using Localization;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -286,7 +287,7 @@ namespace PlayerUI {
                 attackString = costString + " " + a.attackValue + " " + a.type + " " + damageText;
             }
 
-            if (a.seName != "none") {
+            if (a.seName != StatusEffectConstant.NONE) {
                 if (a.seDuration == 1) {
                     attackString += ", " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turn on hit";
                 }
@@ -294,17 +295,17 @@ namespace PlayerUI {
                     attackString += ", " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turns on hit";
                 }
             }
-            if (a.scope != (int)AttackConstants.attackScopes.single) {
-                if (a.scope == (int)AttackConstants.attackScopes.adjacent) {
-                    if (a.seName != "none") {
+            if (a.scope != (int)AttackConstants.AttackScopes.single) {
+                if (a.scope == (int)AttackConstants.AttackScopes.adjacent) {
+                    if (a.seName != StatusEffectConstant.NONE) {
                         attackString += ",\nhits adjacents";
                     }
                     else {
                         attackString += ", hits adjacents";
                     }
                 }
-                else if (a.scope == (int)AttackConstants.attackScopes.allMonsters) {
-                    if (a.seName != "none") {
+                else if (a.scope == (int)AttackConstants.AttackScopes.allMonsters) {
+                    if (a.seName != StatusEffectConstant.NONE) {
                         attackString += ",\nhits all monsters";
                     }
                     else {
@@ -364,7 +365,7 @@ namespace PlayerUI {
                 formulaString += " " + displayedAttack.damageFormula + " " + displayedAttack.type + " " + damageText;
             }
                 
-            if (displayedAttack.seName != "none") {
+            if (displayedAttack.seName != StatusEffectConstant.NONE) {
                 if (displayedAttack.seDuration == 1) {
                     formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turn on hit";
                 }
@@ -372,17 +373,17 @@ namespace PlayerUI {
                     formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turns on hit";
                 }
             }
-            if (displayedAttack.scope != (int)AttackConstants.attackScopes.single) {
-                if (displayedAttack.scope == (int)AttackConstants.attackScopes.adjacent) {
-                    if (displayedAttack.seName != "none") {
+            if (displayedAttack.scope != (int)AttackConstants.AttackScopes.single) {
+                if (displayedAttack.scope == (int)AttackConstants.AttackScopes.adjacent) {
+                    if (displayedAttack.seName != StatusEffectConstant.NONE) {
                         formulaString += ",\nhits adjacents";
                     }
                     else {
                         formulaString += ", hits adjacents";
                     }
                 }
-                else if (displayedAttack.scope == (int)AttackConstants.attackScopes.allMonsters) {
-                    if (displayedAttack.seName != "none") {
+                else if (displayedAttack.scope == (int)AttackConstants.AttackScopes.allMonsters) {
+                    if (displayedAttack.seName != StatusEffectConstant.NONE) {
                         formulaString += ",\nhits all monsters";
                     }
                     else {

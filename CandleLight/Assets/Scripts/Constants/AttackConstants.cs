@@ -23,7 +23,7 @@ namespace Constants {
         public const string HEALMPSELF = "healMPSelf";    /// <value> Attack that restores MP, but can only target the user </value> 
         public const string SUMMON = "summon";      /// <value> Adds a temporary party member to combat (limit one per partyMember) </value>
 
-        public enum attackScopes { 
+        public enum AttackScopes { 
             single,
             adjacent,
             allMonsters,

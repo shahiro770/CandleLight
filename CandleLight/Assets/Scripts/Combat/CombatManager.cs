@@ -113,8 +113,8 @@ namespace Combat {
                     partyMembersAlive.Add(pm);
                     pm.turnCounter = 0;
                     if (pm.className == ClassConstants.ARCHER) {
-                        if (pm.skills[(int)SkillConstants.archerSkills.VANTAGEPOINT].skillEnabled == true) {
-                            pm.AddStatusEffect(StatusEffectConstants.ADVANTAGE, 1, null);
+                        if (pm.skills[(int)SkillConstants.ArcherSkills.VANTAGEPOINT].skillEnabled == true) {
+                            pm.AddStatusEffect(StatusEffectConstant.ADVANTAGE, 1, null);
                         }
                     }
                 }
@@ -268,11 +268,11 @@ namespace Combat {
             activePartyMember.turnCounter++;
             DisplayActivePartyMember();
 
-            pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstants.STUN) != -1;
+            pmNoAction = activePartyMember.GetStatusEffect(StatusEffectConstant.STUN) != -1;
             if (activePartyMember.turnCounter % 4 == 0 && activePartyMember.className == ClassConstants.WARRIOR) {
-                if (activePartyMember.skills[(int)SkillConstants.warriorSkills.THUNDEROUSANGER].skillEnabled == true) {
+                if (activePartyMember.skills[(int)SkillConstants.WarriorSkills.THUNDEROUSANGER].skillEnabled == true) {
                     foreach (Monster m in monsters) {
-                        m.AddStatusEffect(StatusEffectConstants.SHOCK, 2, null);
+                        m.AddStatusEffect(StatusEffectConstant.SHOCK, 2, null);
                     }
                 }
             }
@@ -339,11 +339,11 @@ namespace Combat {
 
             // flee chance modifiers
             chance -= fleeBonus;
-            if (activePartyMember.GetStatusEffect(StatusEffectConstants.TRAP) != -1) {
+            if (activePartyMember.GetStatusEffect(StatusEffectConstant.TRAP) != -1) {
                 chance *= 2;
             }
             if (activePartyMember.className == ClassConstants.ARCHER) {
-                if (activePartyMember.skills[(int)SkillConstants.archerSkills.FLEETFOOTED].skillEnabled == true) {
+                if (activePartyMember.skills[(int)SkillConstants.ArcherSkills.FLEETFOOTED].skillEnabled == true) {
                     chance = (int)(chance * 0.5f);
                 }
             }
@@ -425,7 +425,7 @@ namespace Combat {
                 yield return new WaitForSeconds(0.25f);
 
                 yield return (StartCoroutine(activePartyMember.PayAttackCost(selectedAttackPM.costType, selectedAttackPM.costValue)));
-                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.single) {
+                if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.single) {
                     if (selectedAttackPM.type == AttackConstants.PHYSICAL || selectedAttackPM.type == AttackConstants.MAGICAL) {
                         yield return (StartCoroutine(selectedMonster.GetAttacked(selectedAttackPM, activePartyMember)));    
                     }
@@ -458,7 +458,7 @@ namespace Combat {
                         }
                     }
                 }
-                else if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
+                else if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.adjacent) {
                     if (selectedAttackPM.type == AttackConstants.PHYSICAL || selectedAttackPM.type == AttackConstants.MAGICAL) {
                         foreach (Monster m in selectedMonsterAdjacents) {
                             StartCoroutine(m.GetAttacked(selectedAttackPM, activePartyMember));    
@@ -472,7 +472,7 @@ namespace Combat {
                         }
                     }
                 }
-                else if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.allMonsters) {
+                else if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.allMonsters) {
                     if (selectedAttackPM.type == AttackConstants.DEBUFF) {
                         for (int i = 0; i < monsters.Count; i++) {
                             StartCoroutine(monsters[i].GetStatusEffected(selectedAttackPM, activePartyMember)); 
@@ -572,7 +572,7 @@ namespace Combat {
                 bool isBleeding = false;
 
                 for (int i = 0; i < partyMembersAlive.Count; i++) {
-                    if (partyMembersAlive[i].GetStatusEffect("bleed") != -1) {
+                    if (partyMembersAlive[i].GetStatusEffect(StatusEffectConstant.BLEED) != -1) {
                         isBleeding = true;
                         break;
                     }
@@ -656,7 +656,7 @@ namespace Combat {
             PartyMember targetChoice = null;
 
             PartyMember taunter = (PartyMember)CheckTauntIndex(activeMonster);
-            mNoAction = activeMonster.GetStatusEffect(StatusEffectConstants.STUN) != -1;
+            mNoAction = activeMonster.GetStatusEffect(StatusEffectConstant.STUN) != -1;
 
             if (mNoAction == true) {
                 eventDescription.SetNoMoveTextM(activeMonster.monsterSpriteName);
@@ -689,7 +689,7 @@ namespace Combat {
                 }
                 else if (activeMonster.monsterAI == "bleedHunter") {
                     for (int i = 0; i < partyMembersAlive.Count; i++) {
-                        if (partyMembersAlive[i].GetStatusEffect(StatusEffectConstants.BLEED) != -1) {
+                        if (partyMembersAlive[i].GetStatusEffect(StatusEffectConstant.BLEED) != -1) {
                             targetChoice = partyMembersAlive[i];
                             break;
                         }
@@ -704,7 +704,7 @@ namespace Combat {
                 
                 yield return (StartCoroutine(activeMonster.md.PlayAttackAnimation(selectedMonsterAttackIndex)));
 
-                if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.single) {
+                if (selectedAttackMonster.scope == (int)AttackConstants.AttackScopes.single) {
                     if (selectedAttackMonster.type == AttackConstants.PHYSICAL || selectedAttackMonster.type == AttackConstants.MAGICAL) {
                         yield return (StartCoroutine(targetChoice.GetAttacked(selectedAttackMonster, activeMonster)));
                     } 
@@ -715,7 +715,7 @@ namespace Combat {
                         yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
                     }
                 }
-                else if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.allAllies) {
+                else if (selectedAttackMonster.scope == (int)AttackConstants.AttackScopes.allAllies) {
                     if (selectedAttackMonster.type == AttackConstants.BUFF) {
                         for (int i = 1; i < monsters.Count; i++) {
                             StartCoroutine(monsters[i].GetHelped(selectedAttackMonster, activeMonster)); 
@@ -723,7 +723,7 @@ namespace Combat {
                         yield return (StartCoroutine(monsters[0].GetHelped(selectedAttackMonster, activeMonster)));
                     }
                 }
-                else if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.selfAndRandomAlly) {
+                else if (selectedAttackMonster.scope == (int)AttackConstants.AttackScopes.selfAndRandomAlly) {
                     if (monsters.Count > 1) {   // if there is another monster, target them as well
                         int target = Random.Range(0, monsters.Count);
                         if (monsters[target].ID == activeMonster.ID) {  // if target self, pick right, or left if no monster right
@@ -738,7 +738,7 @@ namespace Combat {
                     }
                     yield return (StartCoroutine(activeMonster.GetHelped(selectedAttackMonster, activeMonster)));
                 }
-                else if (selectedAttackMonster.scope == (int)AttackConstants.attackScopes.allMonsters) {
+                else if (selectedAttackMonster.scope == (int)AttackConstants.AttackScopes.allMonsters) {
                     for (int i = 0; i < partyMembersAlive.Count; i++) {
                         if (i == 1) {
                             eventDescription.SetAppendMode(true);
@@ -857,7 +857,7 @@ namespace Combat {
             if (selectedAttackPM != null && (taunter == null || (taunter != null && monsterToSelect.ID == taunter.ID))) {
                 if (selectedAttackPM.type != AttackConstants.HEALHP && selectedAttackPM.type != AttackConstants.BUFF) {
                     
-                    if (selectedAttackPM.scope != (int)AttackConstants.attackScopes.single) {
+                    if (selectedAttackPM.scope != (int)AttackConstants.AttackScopes.single) {
                         int monsterIndex = 0;
                         for (int i = 0; i < monsters.Count; i++) {
                             if (monsters[i].ID == monsterToSelect.ID) {
@@ -866,7 +866,7 @@ namespace Combat {
                             }
                         }
 
-                        if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
+                        if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.adjacent) {
                             if (monsterIndex - 1 >= 0) {
                                 selectedMonsterAdjacents.Add(monsters[monsterIndex - 1]);
                             }
@@ -923,7 +923,7 @@ namespace Combat {
         /// <param name="monsterToSelect"> Monster as the main target </param>
         public void ShowAttackTargets(Monster monsterToSelect) {
             if (selectedAttackPM != null) {
-                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
+                if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.adjacent) {
                     int monsterIndex = 0;
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID == monsterToSelect.ID) {
@@ -938,7 +938,7 @@ namespace Combat {
                         monsters[monsterIndex + 1].md.SelectMonsterButtonAdjacent();
                     }    
                 }
-                else if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.allMonsters) {
+                else if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.allMonsters) {
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID != monsterToSelect.ID) {
                             monsters[i].md.SelectMonsterButtonAdjacent();
@@ -955,7 +955,7 @@ namespace Combat {
         /// <param name="monsterToSelect"> Monster as the main target</param>
         public void HideAttackTargets(Monster monsterToSelect) {
             if (selectedAttackPM != null) {
-                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.adjacent) {
+                if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.adjacent) {
                     int monsterIndex = 0;
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID == monsterToSelect.ID) {
@@ -970,7 +970,7 @@ namespace Combat {
                         monsters[monsterIndex + 1].md.DeselectMonsterButton();
                     }    
                 }
-                if (selectedAttackPM.scope == (int)AttackConstants.attackScopes.allMonsters) {
+                if (selectedAttackPM.scope == (int)AttackConstants.AttackScopes.allMonsters) {
                     for (int i = 0; i < monsters.Count; i++) {
                         if (monsters[i].ID != monsterToSelect.ID) {
                             monsters[i].md.DeselectMonsterButton();
@@ -1158,8 +1158,8 @@ namespace Combat {
         /// <param name="c"></param>
         /// <returns></returns>
         public Character CheckTauntIndex(Character c) {
-            int tauntIndex = c.GetStatusEffect(StatusEffectConstants.TAUNT);
-            int marionetteIndex = c.GetStatusEffect(StatusEffectConstants.MARIONETTE);
+            int tauntIndex = c.GetStatusEffect(StatusEffectConstant.TAUNT);
+            int marionetteIndex = c.GetStatusEffect(StatusEffectConstant.MARIONETTE);
 
             if (tauntIndex != -1) {
                 Character taunter = c.statusEffects[tauntIndex].afflicter;

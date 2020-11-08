@@ -9,11 +9,13 @@
 */
 
 using ClassConstants = Constants.ClassConstants;
+using Enum = System.Enum;
 using EventManager = Events.EventManager;
 using Items;
 using ItemConstants = Constants.ItemConstants;
 using PanelConstants = Constants.PanelConstants;
 using Party;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using System.Collections;
 using UIEffects;
 using UnityEngine;
@@ -272,7 +274,7 @@ namespace PlayerUI {
                             PartyManager.instance.AddWAX(amounts[i]);
                         }
                         else if (effects[i] != "none") { // status effects
-                            PartyManager.instance.AddSE(effects[i], amounts[i]);
+                            PartyManager.instance.AddStatusEffect((StatusEffectConstant)Enum.Parse(typeof(StatusEffectConstant), effects[i]), amounts[i]);
                         }
                     }
                     itemTaken = true;

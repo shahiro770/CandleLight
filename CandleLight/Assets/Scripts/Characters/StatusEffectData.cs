@@ -8,17 +8,19 @@
 *
 */
 
+using StatusEffectConstant = Constants.StatusEffectConstant;
+
 namespace Characters {
 
     [System.Serializable]
     public class StatusEffectData {
       
-        public string name;          
+        public StatusEffectConstant name;          
         public int duration;      
         public int preValue;                                                   
         public bool plus;                              
 
-        public StatusEffectData(string name, int duration, int preValue, bool plus) {
+        public StatusEffectData(StatusEffectConstant name, int duration, int preValue, bool plus) {
             this.name = name;
             this.preValue = preValue;
             this.duration = duration;

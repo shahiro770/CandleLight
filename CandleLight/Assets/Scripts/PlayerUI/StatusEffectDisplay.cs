@@ -10,7 +10,7 @@
 
 using LocalizedText = Localization.LocalizedText;
 using StatusEffect = Characters.StatusEffect;
-using StatusEffectConstants = Constants.StatusEffectConstants;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using UIEffects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,7 +60,7 @@ namespace PlayerUI {
             ColorBlock normalBlock = b.colors; 
 
             switch(se.name) {
-                case StatusEffectConstants.BURN:
+                case StatusEffectConstant.BURN:
                     normalBlock.normalColor = new Color32(185, 29, 0, 200);
                     normalBlock.highlightedColor = new Color32(185, 29, 0, 255);
                     normalBlock.pressedColor = new Color32(185, 29, 0, 255);
@@ -68,7 +68,7 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(185, 29, 0, 255));
                     break;
             
-                case StatusEffectConstants.POISON:
+                case StatusEffectConstant.POISON:
                     normalBlock.normalColor = new Color32(92, 138, 57, 200);
                     normalBlock.highlightedColor = new Color32(92, 138, 57, 255);
                     normalBlock.pressedColor = new Color32(92, 138, 57, 255);
@@ -76,16 +76,16 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(92, 138, 57, 255));
                     break;
 
-                case StatusEffectConstants.FROSTBITE:
-                case StatusEffectConstants.FREEZE:
+                case StatusEffectConstant.FROSTBITE:
+                case StatusEffectConstant.FREEZE:
                     normalBlock.normalColor = new Color32(0, 152, 220, 200);
                     normalBlock.highlightedColor = new Color32(0, 152, 220, 255);
                     normalBlock.pressedColor = new Color32(0, 152, 220, 255);
                     normalBlock.disabledColor = new Color32(0, 152, 220, 150);
                     durationText.SetColour(new Color32(0, 152, 220, 255));
                     break;
-                case StatusEffectConstants.TAUNT:
-                case StatusEffectConstants.RAGE:
+                case StatusEffectConstant.TAUNT:
+                case StatusEffectConstant.RAGE:
                     normalBlock.normalColor = new Color32(234, 50, 60, 200);
                     normalBlock.highlightedColor = new Color32(234, 50, 60, 255);
                     normalBlock.pressedColor = new Color32(234, 50, 60, 255);
@@ -93,9 +93,9 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(234, 50, 60, 255));
                     break;
 
-                case StatusEffectConstants.FATALWOUND:
-                case StatusEffectConstants.VAMPIRE:
-                case StatusEffectConstants.BLEED:
+                case StatusEffectConstant.FATALWOUND:
+                case StatusEffectConstant.VAMPIRE:
+                case StatusEffectConstant.BLEED:
                     normalBlock.normalColor = new Color32(138, 7, 7, 200);
                     normalBlock.highlightedColor = new Color32(138, 7, 7, 255);
                     normalBlock.pressedColor = new Color32(138, 7, 7, 255);
@@ -103,7 +103,7 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(138, 7, 7, 255));
                     break;
 
-                case StatusEffectConstants.WEAKNESS:
+                case StatusEffectConstant.WEAKNESS:
                     normalBlock.normalColor = new Color32(98, 36, 97, 200);
                     normalBlock.highlightedColor = new Color32(98, 36, 97, 255);
                     normalBlock.pressedColor = new Color32(98, 36, 97, 255);
@@ -111,7 +111,7 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(98, 36, 97, 255));
                     break;
             
-                case StatusEffectConstants.ADVANTAGE:
+                case StatusEffectConstant.ADVANTAGE:
                     normalBlock.normalColor = new Color32(230, 126, 34, 200);
                     normalBlock.highlightedColor = new Color32(230, 126, 34, 255);
                     normalBlock.pressedColor = new Color32(230, 126, 34, 255);
@@ -119,104 +119,104 @@ namespace PlayerUI {
                     durationText.SetColour(new Color32(230, 126, 34, 255));
                     break;
                 
-                case StatusEffectConstants.ROOT:
+                case StatusEffectConstant.ROOT:
                     normalBlock.normalColor = new Color32(93, 44, 40, 200);
                     normalBlock.highlightedColor = new Color32(93, 44, 40, 255);
                     normalBlock.pressedColor = new Color32(93, 44, 40, 255);
                     normalBlock.disabledColor = new Color32(93, 44, 40, 150);
                     durationText.SetColour(new Color32(93, 44, 40, 255));
                     break;
-                case StatusEffectConstants.STUN:
+                case StatusEffectConstant.STUN:
                     normalBlock.normalColor = new Color32(255, 205, 2, 200);
                     normalBlock.highlightedColor = new Color32(255, 205, 2, 255);
                     normalBlock.pressedColor = new Color32(255, 205, 2, 255);
                     normalBlock.disabledColor = new Color32(255, 205, 2, 150);
                     durationText.SetColour(new Color32(255, 205, 2, 255));
                     break;
-                case StatusEffectConstants.SHOCK:
+                case StatusEffectConstant.SHOCK:
                     normalBlock.normalColor = new Color32(255, 235, 87, 200);
                     normalBlock.highlightedColor = new Color32(255, 235, 87, 255);
                     normalBlock.pressedColor = new Color32(255, 235, 87, 255);
                     normalBlock.disabledColor = new Color32(255, 235, 87, 150);
                     durationText.SetColour(new Color32(255, 235, 87, 255));
                     break;
-                case StatusEffectConstants.REGENERATE:
+                case StatusEffectConstant.REGENERATE:
                     normalBlock.normalColor = new Color32(90, 197, 79, 200);
                     normalBlock.highlightedColor = new Color32(90, 197, 79, 255);
                     normalBlock.pressedColor = new Color32(90, 197, 79, 255);
                     normalBlock.disabledColor = new Color32(90, 197, 79, 255);
                     durationText.SetColour(new Color32(90, 197, 79, 255));
                     break;
-                case StatusEffectConstants.GUARD:
+                case StatusEffectConstant.GUARD:
                     normalBlock.normalColor = new Color32(155, 66, 28, 200);
                     normalBlock.highlightedColor = new Color32(155, 66, 28, 255);
                     normalBlock.pressedColor = new Color32(155, 66, 28, 255);
                     normalBlock.disabledColor = new Color32(155, 66, 28, 150);
                     durationText.SetColour(new Color32(155, 66, 28, 255));
                     break;
-                case StatusEffectConstants.CURE:
+                case StatusEffectConstant.CURE:
                     normalBlock.normalColor = new Color32(125, 237, 164, 200);
                     normalBlock.highlightedColor = new Color32(125, 237, 164, 255);
                     normalBlock.pressedColor = new Color32(125, 237, 164, 255);
                     normalBlock.disabledColor = new Color32(125, 237, 164, 150);
                     durationText.SetColour(new Color32(125, 237, 164, 255));
                     break;
-                case StatusEffectConstants.TRAP:
+                case StatusEffectConstant.TRAP:
                     normalBlock.normalColor = new Color32(133, 133, 133, 200);
                     normalBlock.highlightedColor = new Color32(133, 133, 133, 255);
                     normalBlock.pressedColor = new Color32(133, 133, 133, 255);
                     normalBlock.disabledColor = new Color32(133, 133, 133, 150);
                     durationText.SetColour(new Color32(133, 133, 133, 255));
                     break;
-                case StatusEffectConstants.MIRACLE:
+                case StatusEffectConstant.MIRACLE:
                     normalBlock.normalColor = new Color32(208, 208, 208, 200);
                     normalBlock.highlightedColor = new Color32(208, 208, 208, 255);
                     normalBlock.pressedColor = new Color32(208, 208, 208, 255);
                     normalBlock.disabledColor = new Color32(208, 208, 208, 150);
                     durationText.SetColour(new Color32(208, 208, 208, 255));
                     break;
-                case StatusEffectConstants.BARRIER:
+                case StatusEffectConstant.BARRIER:
                     normalBlock.normalColor = new Color32(60, 50, 234, 200);
                     normalBlock.highlightedColor = new Color32(60, 50, 234, 255);
                     normalBlock.pressedColor = new Color32(60, 50, 234, 255);
                     normalBlock.disabledColor = new Color32(60, 50, 234, 150);
                     durationText.SetColour(new Color32(60, 50, 234, 255));
                     break;
-                case StatusEffectConstants.MARIONETTE:
+                case StatusEffectConstant.MARIONETTE:
                     normalBlock.normalColor = new Color32(99, 33, 197, 200);
                     normalBlock.highlightedColor = new Color32(99, 33, 197, 255);
                     normalBlock.pressedColor = new Color32(99, 33, 197, 255);
                     normalBlock.disabledColor = new Color32(99, 33, 197, 150);
                     durationText.SetColour(new Color32(99, 33, 197, 255));
                     break;
-                case StatusEffectConstants.NIMBLE:
+                case StatusEffectConstant.NIMBLE:
                     normalBlock.normalColor = new Color32(0, 111, 135, 200);
                     normalBlock.highlightedColor = new Color32(0, 111, 135, 255);
                     normalBlock.pressedColor = new Color32(0, 111, 135, 255);
                     normalBlock.disabledColor = new Color32(0, 111, 135, 150);
                     durationText.SetColour(new Color32(0, 111, 135, 255));
                     break;
-                case StatusEffectConstants.ETHEREAL:
+                case StatusEffectConstant.ETHEREAL:
                     normalBlock.normalColor = new Color32(209, 201, 255, 200);
                     normalBlock.highlightedColor = new Color32(209, 201, 255, 255);
                     normalBlock.pressedColor = new Color32(209, 201, 255, 255);
                     normalBlock.disabledColor = new Color32(209, 201, 255, 150);
                     durationText.SetColour(new Color32(209, 201, 255, 255));
                     break;
-                case StatusEffectConstants.BOSS:
-                case StatusEffectConstants.FAMILIAR:
-                case StatusEffectConstants.CHAMPIONHP:
-                case StatusEffectConstants.CHAMPIONPATK:
-                case StatusEffectConstants.CHAMPIONMATK:
-                case StatusEffectConstants.CHAMPIONPDEF:
-                case StatusEffectConstants.CHAMPIONMDEF:
+                case StatusEffectConstant.BOSS:
+                case StatusEffectConstant.FAMILIAR:
+                case StatusEffectConstant.CHAMPIONHP:
+                case StatusEffectConstant.CHAMPIONPATK:
+                case StatusEffectConstant.CHAMPIONMATK:
+                case StatusEffectConstant.CHAMPIONPDEF:
+                case StatusEffectConstant.CHAMPIONMDEF:
                     normalBlock.normalColor = new Color32(255, 255, 255, 200);
                     normalBlock.highlightedColor = new Color32(255, 255, 255, 255);
                     normalBlock.pressedColor = new Color32(255, 255, 255, 255);
                     normalBlock.disabledColor = new Color32(255, 255, 255, 150);
                     durationText.SetColour(new Color32(255, 255, 255, 255));
                     break;
-                 case StatusEffectConstants.SCUM:
+                 case StatusEffectConstant.SCUM:
                     normalBlock.normalColor = new Color32(61, 61, 61, 200);
                     normalBlock.highlightedColor = new Color32(61, 61, 61, 255);
                     normalBlock.pressedColor = new Color32(61, 61, 61, 255);
@@ -241,12 +241,12 @@ namespace PlayerUI {
             }
             
             amounts[0] = "";
-            if (se.name == StatusEffectConstants.BURN || se.name == StatusEffectConstants.POISON || se.name == StatusEffectConstants.BLEED 
-            || se.name == StatusEffectConstants.FROSTBITE || se.name == StatusEffectConstants.FATALWOUND) {
+            if (se.name == StatusEffectConstant.BURN || se.name == StatusEffectConstant.POISON || se.name == StatusEffectConstant.BLEED 
+            || se.name == StatusEffectConstant.FROSTBITE || se.name == StatusEffectConstant.FATALWOUND) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
             }
-            else if (se.name == StatusEffectConstants.CHAMPIONHP || se.name == StatusEffectConstants.REGENERATE) {
+            else if (se.name == StatusEffectConstant.CHAMPIONHP || se.name == StatusEffectConstant.REGENERATE) {
                 textKeys[1] = "HP_regen_description";
                 amounts[1] = se.value.ToString();
             }
@@ -282,15 +282,15 @@ namespace PlayerUI {
         /// Update the values in the status effect tooltip
         /// </summary>
         public void UpdateValue() {
-            if (se.name == StatusEffectConstants.BURN || se.name == StatusEffectConstants.FROSTBITE) {
+            if (se.name == StatusEffectConstant.BURN || se.name == StatusEffectConstant.FROSTBITE) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
             }
-            else if (se.name == StatusEffectConstants.POISON) {
+            else if (se.name == StatusEffectConstant.POISON) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
             }
-            else if (se.name == StatusEffectConstants.BLEED) {
+            else if (se.name == StatusEffectConstant.BLEED) {
                 textKeys[1] = "damage_description";
                 amounts[1] = se.value.ToString();
             }

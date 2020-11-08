@@ -10,7 +10,7 @@
 using ClassConstants = Constants.ClassConstants;
 using SkillConstants = Constants.SkillConstants;
 using StatusEffectDisplay = PlayerUI.StatusEffectDisplay;
-using StatusEffectConstants = Constants.StatusEffectConstants;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using UnityEngine;
 
 namespace Characters {
@@ -23,8 +23,7 @@ namespace Characters {
 
         [field: SerializeField] public Character afflicter;                     /// <value> Character that caused the status effect </value>    
         [field: SerializeField] public Character afflicted;                     /// <value> Character that has the status effect </value>    
-        [field: SerializeField] public string nameKey { get; set; }             /// <value> Key used to access localized text  </value>
-        [field: SerializeField] public string name { get; private set; }        /// <value> Name of status effect </value>
+        [field: SerializeField] public StatusEffectConstant name { get; private set; }        /// <value> Name of status effect </value>
         [field: SerializeField] public int value { get; private set; }          /// <value> Calculated value from formula </value>
         [field: SerializeField] public int duration;                            /// <value> Turn duration of status </value>      
         [field: SerializeField] public bool isDispellable;                      /// <value> Flag for if the statusEffect can be removed </value>
@@ -36,51 +35,49 @@ namespace Characters {
         /// <summary>
         /// Constructor to initialize statusEffect's properties
         /// </summary>
-        public StatusEffect(string name, int duration) {
+        public StatusEffect(StatusEffectConstant name, int duration) {
             this.name = name;
             
             this.duration = duration;
             
              switch(name) {
-                case StatusEffectConstants.BURN:
-                case StatusEffectConstants.POISON:
-                case StatusEffectConstants.TAUNT:
-                case StatusEffectConstants.FREEZE:
-                case StatusEffectConstants.FROSTBITE:
-                case StatusEffectConstants.BLEED:
-                case StatusEffectConstants.WEAKNESS:
-                case StatusEffectConstants.ROOT:
-                case StatusEffectConstants.STUN:
-                case StatusEffectConstants.SHOCK:
-                case StatusEffectConstants.TRAP:
-                case StatusEffectConstants.MARIONETTE:
-                case StatusEffectConstants.SILENCE:
-                case StatusEffectConstants.SCUM:
-                case StatusEffectConstants.FATALWOUND:
+                case StatusEffectConstant.BURN:
+                case StatusEffectConstant.POISON:
+                case StatusEffectConstant.TAUNT:
+                case StatusEffectConstant.FREEZE:
+                case StatusEffectConstant.FROSTBITE:
+                case StatusEffectConstant.BLEED:
+                case StatusEffectConstant.WEAKNESS:
+                case StatusEffectConstant.ROOT:
+                case StatusEffectConstant.STUN:
+                case StatusEffectConstant.SHOCK:
+                case StatusEffectConstant.TRAP:
+                case StatusEffectConstant.MARIONETTE:
+                case StatusEffectConstant.SILENCE:
+                case StatusEffectConstant.SCUM:
+                case StatusEffectConstant.FATALWOUND:
                     isBuff = false;
                     break;
-                case StatusEffectConstants.RAGE:
-                case StatusEffectConstants.ADVANTAGE:
-                case StatusEffectConstants.VAMPIRE:
-                case StatusEffectConstants.REGENERATE:
-                case StatusEffectConstants.GUARD:
-                case StatusEffectConstants.CURE:           
-                case StatusEffectConstants.MIRACLE:
-                case StatusEffectConstants.BARRIER:
-                case StatusEffectConstants.NIMBLE:
-                case StatusEffectConstants.ETHEREAL:
-                case StatusEffectConstants.BOSS:
-                case StatusEffectConstants.FAMILIAR:
-                case StatusEffectConstants.CHAMPIONHP:
-                case StatusEffectConstants.CHAMPIONPATK:
-                case StatusEffectConstants.CHAMPIONMATK:
-                case StatusEffectConstants.CHAMPIONPDEF:
-                case StatusEffectConstants.CHAMPIONMDEF:
+                case StatusEffectConstant.RAGE:
+                case StatusEffectConstant.ADVANTAGE:
+                case StatusEffectConstant.VAMPIRE:
+                case StatusEffectConstant.REGENERATE:
+                case StatusEffectConstant.GUARD:
+                case StatusEffectConstant.CURE:           
+                case StatusEffectConstant.MIRACLE:
+                case StatusEffectConstant.BARRIER:
+                case StatusEffectConstant.NIMBLE:
+                case StatusEffectConstant.ETHEREAL:
+                case StatusEffectConstant.BOSS:
+                case StatusEffectConstant.FAMILIAR:
+                case StatusEffectConstant.CHAMPIONHP:
+                case StatusEffectConstant.CHAMPIONPATK:
+                case StatusEffectConstant.CHAMPIONMATK:
+                case StatusEffectConstant.CHAMPIONPDEF:
+                case StatusEffectConstant.CHAMPIONMDEF:
                     isBuff = true;
                     break;
             }
-
-            nameKey = name + "_status";
         }
 
         /// <summary>
@@ -110,7 +107,7 @@ namespace Characters {
         public void SetValue(Character afflicter, Character afflicted) {
             this.afflicted = afflicted;
             
-            if (name == StatusEffectConstants.BURN) {
+            if (name == StatusEffectConstant.BURN) {
                  if (afflicter.burnPlus == true) {
                     plus = true;
                     preValue = (int)(afflicter.MATK * 0.5f);
@@ -120,27 +117,27 @@ namespace Characters {
                 }
                 value = preValue;
 
-                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                if (afflicted.GetStatusEffect(StatusEffectConstant.BOSS) != -1) {
                     value = (int)(value * 0.5f);
                 }
-                if (afflicted.GetStatusEffect(StatusEffectConstants.ROOT) != -1){
+                if (afflicted.GetStatusEffect(StatusEffectConstant.ROOT) != -1){
                     value *= 2;
                 }
                 value -= afflicted.MDEF;
             }
-            if (name == StatusEffectConstants.FROSTBITE) {
+            if (name == StatusEffectConstant.FROSTBITE) {
                 preValue = (int)(afflicter.PATK * 0.3f);
                 value = preValue;
 
-                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                if (afflicted.GetStatusEffect(StatusEffectConstant.BOSS) != -1) {
                     value = (int)(value * 0.5f);
                 }
-                if (afflicted.GetStatusEffect(StatusEffectConstants.FREEZE) != -1){
+                if (afflicted.GetStatusEffect(StatusEffectConstant.FREEZE) != -1){
                     value *= 2;
                 }
                 value -= afflicted.MDEF;
             }
-            else if (name == StatusEffectConstants.POISON) {
+            else if (name == StatusEffectConstant.POISON) {
                 if (afflicter != null && afflicter.poisonPlus == true) {
                     plus = true;
                     preValue = (int)(afflicted.HP * 0.15f);
@@ -150,11 +147,11 @@ namespace Characters {
                 }
 
                 PartyMember pm = afflicted as PartyMember;
-                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.ArcherSkills.SURVIVALIST].skillEnabled == true) {
                     value = 0;
                 }
                 else {
-                    if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                    if (afflicted.GetStatusEffect(StatusEffectConstant.BOSS) != -1) {
                         value = (int)(preValue * 0.5f);
                     }
                     else { 
@@ -162,10 +159,10 @@ namespace Characters {
                     }
                 }
             }
-            else if (name == StatusEffectConstants.TAUNT || name == StatusEffectConstants.MARIONETTE) {
+            else if (name == StatusEffectConstant.TAUNT || name == StatusEffectConstant.MARIONETTE) {
                 this.afflicter = afflicter;
             }
-            else if (name == StatusEffectConstants.BLEED) {
+            else if (name == StatusEffectConstant.BLEED) {
                 this.afflicter = afflicter;
                 if (afflicter.bleedPlus == true) {
                     plus = true;
@@ -176,11 +173,11 @@ namespace Characters {
                 }
 
                 PartyMember pm = afflicted as PartyMember;
-                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.ArcherSkills.SURVIVALIST].skillEnabled == true) {
                     value = 0;
                 }
                 else {
-                    if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                    if (afflicted.GetStatusEffect(StatusEffectConstant.BOSS) != -1) {
                         value = (int)(preValue * 0.5f) - afflicted.PDEF;
                     }
                     else { 
@@ -188,15 +185,15 @@ namespace Characters {
                     }
                 }
             }
-            else if (name == StatusEffectConstants.REGENERATE) {
+            else if (name == StatusEffectConstant.REGENERATE) {
                 preValue = (int)(Mathf.Ceil((float)afflicted.HP * 0.05f));
                 value = preValue;
             }
-            else if (name == StatusEffectConstants.CHAMPIONHP) {
+            else if (name == StatusEffectConstant.CHAMPIONHP) {
                 preValue = (int)(Mathf.Ceil((float)(afflicted.HP * 1.66) * 0.05f)); // the bonus hp is not calculated in initially for champion HP
                 value = preValue;
             }
-            else if (name == StatusEffectConstants.FATALWOUND) {
+            else if (name == StatusEffectConstant.FATALWOUND) {
                 preValue = (int)(afflicted.HP * 0.33f);
                 value = preValue;
             }
@@ -222,32 +219,32 @@ namespace Characters {
         /// Updates the value of the statusEffect and then updates the display
         /// </summary>
         public void UpdateValue() {
-            if (name == StatusEffectConstants.BURN) {
+            if (name == StatusEffectConstant.BURN) {
                 value = preValue;
 
-                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                if (afflicted.GetStatusEffect(StatusEffectConstant.BOSS) != -1) {
                     value = (int)(value * 0.5f);
                 }
-                if (afflicted.GetStatusEffect(StatusEffectConstants.ROOT) != -1){
+                if (afflicted.GetStatusEffect(StatusEffectConstant.ROOT) != -1){
                     value *= 2;
                 }
                 value -= afflicted.MDEF;
             }
-            if (name == StatusEffectConstants.FROSTBITE) {
+            if (name == StatusEffectConstant.FROSTBITE) {
                 value = preValue;
 
-                if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {
+                if (afflicted.GetStatusEffect(StatusEffectConstant.BOSS) != -1) {
                     value = (int)(value * 0.5f);
                 }
-                if (afflicted.GetStatusEffect(StatusEffectConstants.FREEZE) != -1){
+                if (afflicted.GetStatusEffect(StatusEffectConstant.FREEZE) != -1){
                     value *= 2;
                 }
                 value -= afflicted.MDEF;
             }
-            else if (name == StatusEffectConstants.POISON) { // right now poison damage only needs to update for partyMembers
+            else if (name == StatusEffectConstant.POISON) { // right now poison damage only needs to update for partyMembers
                 PartyMember pm = afflicted as PartyMember;
                 if (pm != null) {
-                    if (pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                    if (pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.ArcherSkills.SURVIVALIST].skillEnabled == true) {
                         value = 0;
                     }
                     else {  // skill reducing poison damage was toggled off 
@@ -255,12 +252,12 @@ namespace Characters {
                     }
                 }
             }
-            else if (name == StatusEffectConstants.BLEED) {
+            else if (name == StatusEffectConstant.BLEED) {
                 PartyMember pm = afflicted as PartyMember;
-                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.archerSkills.SURVIVALIST].skillEnabled == true) {
+                if (pm != null && pm.className == ClassConstants.ARCHER && pm.skills[(int)SkillConstants.ArcherSkills.SURVIVALIST].skillEnabled == true) {
                     value = 0;
                 }
-                else if (afflicted.GetStatusEffect(StatusEffectConstants.BOSS) != -1) {  // if not a partyMember, bleed damage can also be halved from being a boss
+                else if (afflicted.GetStatusEffect(StatusEffectConstant.BOSS) != -1) {  // if not a partyMember, bleed damage can also be halved from being a boss
                     value = (int)(preValue * 0.5f) - afflicted.PDEF;
                 }
                 else {

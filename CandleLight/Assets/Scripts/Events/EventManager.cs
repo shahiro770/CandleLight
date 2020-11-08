@@ -412,7 +412,7 @@ namespace Events {
                     currentArea.SwapEventAndSubEvent(q.startEvent, q.nextEvent);
                 }
                 if (subAreaResets >= 3) {   // player gets punished for abusing the save system's convenience
-                    PartyManager.instance.AddSE(StatusEffectConstants.SCUM, 999);
+                    PartyManager.instance.AddStatusEffect(StatusEffectConstant.SCUM, 999);
                 }
                 PlaySubAreaBGM();
                 AlterParticleSystem();
@@ -1465,8 +1465,8 @@ namespace Events {
                 }
                 
             }
-            if (r.seName != "none") {
-                PartyManager.instance.AddSE(r.seName, r.seDuration);
+            if (r.seName != StatusEffectConstant.NONE) {
+                PartyManager.instance.AddStatusEffect(r.seName, r.seDuration);
                 changes[(int)ToastPanel.toastType.SE] = true;
                 amounts[(int)ToastPanel.toastType.SE] = r.seName + "_title";
             }

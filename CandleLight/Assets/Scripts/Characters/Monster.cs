@@ -20,7 +20,7 @@ using PartyManager = Party.PartyManager;
 using Result = Events.Result;
 using ResultConstants = Constants.ResultConstants;
 using SkillConstants = Constants.SkillConstants;
-using StatusEffectConstants = Constants.StatusEffectConstants;
+using Enum = System.Enum;
 using System.Collections;
 using UnityEngine;
 
@@ -38,7 +38,7 @@ namespace Characters {
         [field: SerializeField] public string monsterNameID { get; private set; }       /// <value> NameID as referenced in database </value>
         [field: SerializeField] public string monsterSpriteName { get; private set; }   /// <value> Name of monster's sprite as referenced in resources </value>
         [field: SerializeField] public string monsterAI { get; private set; }           /// <value> Monster's behaviour in combat </value>
-        [field: SerializeField] public string permanentBuff { get; private set; }       /// <value> Name of buff monster will always spawn with </value>
+        [field: SerializeField] public StatusEffectConstant permanentBuff { get; private set; }       /// <value> Name of buff monster will always spawn with </value>
         [field: SerializeField] public float multiplier { get; private set; }           /// <value> Multipler to EXP and WAX rewarded (due to being a boss, variant, etc) </value>
         [field: SerializeField] public float difficultyModifier { get; private set; } = 1f;  /// <value> Stat modifier applied based on difficulty </value>
         [field: SerializeField] public int minLVL { get; private set; }                 /// <value> Minimum power level monster can spawn at </param>
@@ -74,7 +74,7 @@ namespace Characters {
         /// <param name="monsterReward"> Result from monster dying </param>
         public IEnumerator Init(string monsterNameID, string monsterSpriteName, string monsterArea, 
         string monsterSize, string monsterAI, int multiplier, int HP, int MP, int[] stats, int bonusPDEF, int bonusMDEF, Attack[] attacks,
-        int hardModeAttackIndex, int dropChance, Result monsterReward, int championChance, string permanentBuff) {
+        int hardModeAttackIndex, int dropChance, Result monsterReward, int championChance, StatusEffectConstant permanentBuff) {
             this.monsterNameID = monsterNameID;
             this.monsterSpriteName = monsterSpriteName;
             this.monsterArea = monsterArea;
@@ -147,56 +147,56 @@ namespace Characters {
             bleedPlus = false;
 
             foreach (StatusEffect se in statusEffects) {
-                if (se.name == StatusEffectConstants.TAUNT || se.name == StatusEffectConstants.RAGE) {
+                if (se.name == StatusEffectConstant.TAUNT || se.name == StatusEffectConstant.RAGE) {
                     PATK += (int)(PATK * 0.5);
                 }
-                else if (se.name == StatusEffectConstants.FREEZE) {
+                else if (se.name == StatusEffectConstant.FREEZE) {
                     ACC -= (int)(ACC * 0.35);
                     PDEF -= (int)(PDEF * 0.35);
                 }
-                else if (se.name == StatusEffectConstants.WEAKNESS) {
+                else if (se.name == StatusEffectConstant.WEAKNESS) {
                     PATK -= (int)(PATK * 0.3);
                 }
-                else if (se.name == StatusEffectConstants.ADVANTAGE) {
+                else if (se.name == StatusEffectConstant.ADVANTAGE) {
                     critChance += 50;
                 }
-                else if (se.name == StatusEffectConstants.ROOT) {
+                else if (se.name == StatusEffectConstant.ROOT) {
                     DOG -= (int)(DOG * 0.5);
                 }
-                else if (se.name == StatusEffectConstants.GUARD) {
+                else if (se.name == StatusEffectConstant.GUARD) {
                     PDEF += Mathf.Max(1, PDEF);
                 }
-                else if (se.name == StatusEffectConstants.VAMPIRE) {
+                else if (se.name == StatusEffectConstant.VAMPIRE) {
                     bleedPlus = true;
                 }
-                else if (se.name == StatusEffectConstants.BARRIER) {
+                else if (se.name == StatusEffectConstant.BARRIER) {
                     MDEF += Mathf.Max(1, MDEF);
                 }
-                else if (se.name == StatusEffectConstants.MARIONETTE) {
+                else if (se.name == StatusEffectConstant.MARIONETTE) {
                     DOG -= DOG;
                 }
-                else if (se.name == StatusEffectConstants.NIMBLE) {
+                else if (se.name == StatusEffectConstant.NIMBLE) {
                     DOG += DOG;
                 }
-                else if (se.name == StatusEffectConstants.ETHEREAL) {
+                else if (se.name == StatusEffectConstant.ETHEREAL) {
                     MATK += (int)(MATK * 0.5);
                 }
-                else if (se.name == StatusEffectConstants.CHAMPIONHP) {
+                else if (se.name == StatusEffectConstant.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);
                 }
-                else if (se.name == StatusEffectConstants.CHAMPIONPATK) {
+                else if (se.name == StatusEffectConstant.CHAMPIONPATK) {
                     PATK += (int)(1 + PATK * 0.5);
                     HP += (int)(HP * 0.33);
                 }
-                else if (se.name == StatusEffectConstants.CHAMPIONMATK) {
+                else if (se.name == StatusEffectConstant.CHAMPIONMATK) {
                     MATK += (int)(1 + MATK * 0.5);
                     HP += (int)(HP * 0.33);
                 }
-                else if (se.name == StatusEffectConstants.CHAMPIONPDEF) {
+                else if (se.name == StatusEffectConstant.CHAMPIONPDEF) {
                     PDEF += (int)(1 + PDEF * 0.5);
                     HP += (int)(HP * 0.33);
                 }
-                else if (se.name == StatusEffectConstants.CHAMPIONMDEF) {
+                else if (se.name == StatusEffectConstant.CHAMPIONMDEF) {
                     MDEF += (int)(1 + MDEF * 0.5);
                     HP += (int)(HP * 0.33);
                 }
@@ -258,7 +258,7 @@ namespace Characters {
         /// If monster always spawns with a given buff, apply it
         /// </summary>
         public void GetPermanentBuff() {
-            if (permanentBuff != "") {
+            if (permanentBuff != StatusEffectConstant.NONE) {
                 StatusEffect newStatus = new StatusEffect(permanentBuff, 999);
                 AddStatusEffectPermanent(newStatus);
                 md.AddStatusEffectDisplay(newStatus);
@@ -270,7 +270,7 @@ namespace Characters {
         /// </summary>
         public void GetBossBuff() {
             if (multiplier == 4) {      // boss monsters will always have an EXP multiplier of 4
-                StatusEffect newStatus = new StatusEffect(StatusEffectConstants.BOSS, 999);
+                StatusEffect newStatus = new StatusEffect(StatusEffectConstant.BOSS, 999);
                 AddStatusEffectPermanent(newStatus);
                 md.AddStatusEffectDisplay(newStatus);
 
@@ -307,36 +307,36 @@ namespace Characters {
                 monsterReward.UpgradeResult();
                 dropChance = 100;
 
-                string championBuff = championBuffs[Random.Range(0, championBuffs.Length)];
+                StatusEffectConstant championBuff = (StatusEffectConstant)Enum.Parse(typeof(StatusEffectConstant), championBuffs[Random.Range(0, championBuffs.Length)]);
                 StatusEffect newStatus;
                 switch (championBuff) {
-                    case StatusEffectConstants.CHAMPIONATK:
+                    case StatusEffectConstant.CHAMPIONATK:
                         {
                             if (PATK >= MATK) {
-                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONPATK, 999);
+                                newStatus = new StatusEffect(StatusEffectConstant.CHAMPIONPATK, 999);
                             }
                             else {
-                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONMATK, 999);
+                                newStatus = new StatusEffect(StatusEffectConstant.CHAMPIONMATK, 999);
                             }
                             AddStatusEffectPermanent(newStatus);
                             md.AddStatusEffectDisplay(newStatus);
                             break;
                         }     
-                    case StatusEffectConstants.CHAMPIONDEF:
+                    case StatusEffectConstant.CHAMPIONDEF:
                         {
                             if (PDEF >= MDEF) {
-                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONPDEF, 999);
+                                newStatus = new StatusEffect(StatusEffectConstant.CHAMPIONPDEF, 999);
                             }
                             else {
-                                newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONMDEF, 999);
+                                newStatus = new StatusEffect(StatusEffectConstant.CHAMPIONMDEF, 999);
                             }
                             AddStatusEffectPermanent(newStatus);
                             md.AddStatusEffectDisplay(newStatus);
                             break;
                         }
-                    case StatusEffectConstants.CHAMPIONHP:
+                    case StatusEffectConstant.CHAMPIONHP:
                         {
-                            newStatus = new StatusEffect(StatusEffectConstants.CHAMPIONHP, 999);
+                            newStatus = new StatusEffect(StatusEffectConstant.CHAMPIONHP, 999);
                             newStatus.SetValue(this, this);
                             AddStatusEffectPermanent(newStatus);
                             md.AddStatusEffectDisplay(newStatus);
@@ -359,32 +359,32 @@ namespace Characters {
                 
                 if (isCommon) {
                     if (buffIndex < 20) {
-                        AddStatusEffect(StatusEffectConstants.GUARD, 2, this);
+                        AddStatusEffect(StatusEffectConstant.GUARD, 2, this);
                     }
                     else if (buffIndex < 40) {
-                        AddStatusEffect(StatusEffectConstants.BARRIER, 2, this);
+                        AddStatusEffect(StatusEffectConstant.BARRIER, 2, this);
                     }
                     else if (buffIndex < 60) {
-                        AddStatusEffect(StatusEffectConstants.REGENERATE, 2, this);
+                        AddStatusEffect(StatusEffectConstant.REGENERATE, 2, this);
                     }
                     else if (buffIndex < 80) {
-                        AddStatusEffect(StatusEffectConstants.CURE, 4, this);
+                        AddStatusEffect(StatusEffectConstant.CURE, 4, this);
                     }
                     else { // if (buffIndex < 100) 
-                        AddStatusEffect(StatusEffectConstants.NIMBLE, 2, this);
+                        AddStatusEffect(StatusEffectConstant.NIMBLE, 2, this);
                     }
                 }
                 else {  // rare buff pool
                     if (buffIndex < 50) {
                         if (PATK >= MATK) {
-                            AddStatusEffect(StatusEffectConstants.RAGE, 2, this);
+                            AddStatusEffect(StatusEffectConstant.RAGE, 2, this);
                         }
                         else {
-                            AddStatusEffect(StatusEffectConstants.ETHEREAL, 2, this);
+                            AddStatusEffect(StatusEffectConstant.ETHEREAL, 2, this);
                         }
                     }
                     else {
-                        AddStatusEffect(StatusEffectConstants.MIRACLE, 0, this);    // buffs by default get +1 to their duration
+                        AddStatusEffect(StatusEffectConstant.MIRACLE, 0, this);    // buffs by default get +1 to their duration
                     }
                 }
             }
@@ -467,19 +467,19 @@ namespace Characters {
         public IEnumerator TriggerStatuses() {
             int damageTaken = 0;
             int[] animationsToPlay = new int[] { 0 ,0, 0, 0, 0 }; 
-            bool isCure = GetStatusEffect(StatusEffectConstants.CURE) != -1;
+            bool isCure = GetStatusEffect(StatusEffectConstant.CURE) != -1;
 
             foreach (StatusEffect se in statusEffects) {
-                if (se.name == StatusEffectConstants.BURN) {
+                if (se.name == StatusEffectConstant.BURN) {
                     damageTaken += se.value;
                     animationsToPlay[0] = 1;
                 }
-                else if (se.name == StatusEffectConstants.POISON) {
+                else if (se.name == StatusEffectConstant.POISON) {
 
                     damageTaken += se.value;
                     animationsToPlay[1] = 1;
                 }
-                else if (se.name == StatusEffectConstants.BLEED) {
+                else if (se.name == StatusEffectConstant.BLEED) {
                     int bleedDamage = se.value;
                     damageTaken += bleedDamage;
                     if (se.afflicter != null && se.afflicter.CheckDeath() == false) {
@@ -487,11 +487,11 @@ namespace Characters {
                     }
                     animationsToPlay[2] = 1;
                 }
-                else if (se.name == StatusEffectConstants.FROSTBITE) {
+                else if (se.name == StatusEffectConstant.FROSTBITE) {
                     damageTaken += se.value;
                     animationsToPlay[3] = 1;
                 }
-                else if (se.name == StatusEffectConstants.CHAMPIONHP || se.name == StatusEffectConstants.REGENERATE) {
+                else if (se.name == StatusEffectConstant.CHAMPIONHP || se.name == StatusEffectConstant.REGENERATE) {
                     damageTaken -= se.value; 
                     animationsToPlay[4] = 1;
                 }
@@ -564,7 +564,7 @@ namespace Characters {
 
                 // side effects from partyMember skills
                 if (pmc.className == ClassConstants.WARRIOR) {
-                    if (pmc.skills[(int)SkillConstants.warriorSkills.MANABLADE].skillEnabled == true) {
+                    if (pmc.skills[(int)SkillConstants.WarriorSkills.MANABLADE].skillEnabled == true) {
                         if (a.type == AttackConstants.PHYSICAL) {
                             pmc.AddMP((int)(damage * 0.25f));
                         }
@@ -580,19 +580,19 @@ namespace Characters {
                     if (c.onHitChances[i] != 0) {
                         if (CalculateOnHitHit(i, c) == true) {
                             if (i == 0) {
-                                AddStatusEffect(StatusEffectConstants.POISON, 2, c);
+                                AddStatusEffect(StatusEffectConstant.POISON, 2, c);
                             }
                             else if (i == 1) {
-                                AddStatusEffect(StatusEffectConstants.WEAKNESS, 2, c);
+                                AddStatusEffect(StatusEffectConstant.WEAKNESS, 2, c);
                             }
                             else if (i == 2) {
-                                AddStatusEffect(StatusEffectConstants.BLEED, 2, c);
+                                AddStatusEffect(StatusEffectConstant.BLEED, 2, c);
                             }
                             else if (i == 3) {
-                                AddStatusEffect(StatusEffectConstants.ROOT, 2, c);
+                                AddStatusEffect(StatusEffectConstant.ROOT, 2, c);
                             }
                             else if (i == 4) {
-                                AddStatusEffect(StatusEffectConstants.SHOCK, 2, c);
+                                AddStatusEffect(StatusEffectConstant.SHOCK, 2, c);
                             }
                         }
                     }
@@ -664,19 +664,19 @@ namespace Characters {
         /// <param name="seName"> Name of the statusEffect </param>
         /// <param name="seDuration"> Duration of the statusEffect </param>
         /// <param name="c"> Character afflicting the statusEffect on this character, can be null for some effects </param>
-        public void AddStatusEffect(string seName, int seDuration, Character c) {
+        public void AddStatusEffect(StatusEffectConstant seName, int seDuration, Character c) {
             if (CanBeStatusEffected() == true) {
-                if (seName == StatusEffectConstants.RBW) {    // for archer's cursed roots, rbw randomly chooses
+                if (seName == StatusEffectConstant.RBW) {    // for archer's cursed roots, rbw randomly chooses
                     int index = Random.Range(0, 3);
                     switch(index) {
                         case 0:
-                            seName = StatusEffectConstants.BLEED;
+                            seName = StatusEffectConstant.BLEED;
                             break;
                         case 1:
-                            seName = StatusEffectConstants.WEAKNESS;
+                            seName = StatusEffectConstant.WEAKNESS;
                             break;
                         case 2:
-                            seName = StatusEffectConstants.ROOT;
+                            seName = StatusEffectConstant.ROOT;
                             break;
                         default:
                             break;
@@ -702,8 +702,8 @@ namespace Characters {
                 UpdateStatusEffectValues();
                 md.UpdateTooltip();         // update the tooltip last in case a status effect changes PDEF or MDEF when combined with another
 
-                if (seName == StatusEffectConstants.STUN) {
-                    PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.rogueSkills.AMBUSHER, c);
+                if (seName == StatusEffectConstant.STUN) {
+                    PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.RogueSkills.AMBUSHER, c);
                 }
                 if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] == false) {
                     if (statusEffects.Count >= 5) {

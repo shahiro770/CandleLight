@@ -8,6 +8,7 @@
 */
 
 using ResultConstants = Constants.ResultConstants;
+using StatusEffectConstant = Constants.StatusEffectConstant;
 using UnityEngine;
 
 namespace Events {
@@ -27,7 +28,7 @@ namespace Events {
         [field: SerializeField] public string itemQuality { get; private set; }             /// <value> String quality of item (low, med, high) </value>
         [field: SerializeField] public string[] specificMonsterNames;           /// <value> Names of monsters this event spawns </value>
         [field: SerializeField] public string newIntName;                       /// <value> Name of interaction to load if result has one </value>
-        [field: SerializeField] public string seName;                           /// <value> Name of the status effect this result causes </value>
+        [field: SerializeField] public StatusEffectConstant seName;             /// <value> Name of the status effect this result causes </value>
         [field: SerializeField] public string questName;                        /// <value> Name of the quest this result gives</value>
         [field: SerializeField] public int EXPAmount { get; private set; }      /// <value> Amount of EXP result gives </value>
         [field: SerializeField] public int HPAmount { get; private set; }       /// <value> Amount of HP result gives </value>
@@ -57,7 +58,7 @@ namespace Events {
         /// <param name="changeValues"></param>
         public Result(string name, string resultKey, string type, bool isUnique, string quantity, string scope,  int[] amounts,
         string subAreaName0, string subAreaName1, string subEventName, int monsterCount, string[] specificMonsterNames, string itemType, string[] specificItemNames, string itemQuality,
-        string newIntName, string seName, int seDuration, bool hasPostCombatPrompt, string questName) {
+        string newIntName, StatusEffectConstant seName, int seDuration, bool hasPostCombatPrompt, string questName) {
             this.name = name;
             this.resultKey = resultKey;
             this.type = type;
