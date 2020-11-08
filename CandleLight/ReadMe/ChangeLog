@@ -7,20 +7,18 @@ Bug: Horizontal arrow movement takes a second to prime
 QOL: Monster levels and number in appearance were changed
 Bug: Monstesr not dropping all items
 Balance: Nerfed EXP more
-
-JUST FINISHED
--------------
 Fix: Make UI subcards in highscore menu different (So they ain't cut off up top)
 Balance: Look into PDEF and MDEF values vs a lot of damage values (first area seems balanced, but later areas need to see)
 Balance: Redid modifier values (WAX -50% for 50% more points was not worth it)
 Bug: Cursed Axe missing localized text
 
+JUST FINISHED
+-------------
 Fix: Enummed status effects 
+Bug: Make Lesser Wraith Wizard box adjustments for tooltip
 
 COOKING
 -------
-Verify: Was a statcheck not checked for ancientAltar?
-Bug: Make Lesser Wraith Wizard box adjustments for tooltip
 Fix: Make useCandles tutorial appear for the first character than can use candles
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 Bug: Frost Golem skills should have unique message "Summons don't get skills"

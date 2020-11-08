@@ -1688,7 +1688,7 @@ MonoBehaviour:
     <itemQuality>k__BackingField: 
     specificMonsterNames: []
     newIntName: 
-    seName: 
+    seName: 0
     questName: 
     <EXPAmount>k__BackingField: 0
     <HPAmount>k__BackingField: 0
@@ -1712,7 +1712,7 @@ MonoBehaviour:
   <monsterNameID>k__BackingField: 
   <monsterSpriteName>k__BackingField: 
   <monsterAI>k__BackingField: 
-  <permanentBuff>k__BackingField: 
+  <permanentBuff>k__BackingField: 0
   <multiplier>k__BackingField: 0
   <difficultyModifier>k__BackingField: 1
   <minLVL>k__BackingField: 0
@@ -2224,7 +2224,7 @@ PrefabInstance:
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 230
+      value: 235
       objectReference: {fileID: 0}
     - target: {fileID: 1362144272845895268, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
@@ -2360,6 +2360,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102538280507425400, guid: 40dd5d9c14f404e928ed678e277743a1,
+        type: 3}
+      propertyPath: m_text
+      value: Title
       objectReference: {fileID: 0}
     - target: {fileID: 3960168972768849427, guid: 40dd5d9c14f404e928ed678e277743a1,
         type: 3}
