@@ -38,6 +38,8 @@ namespace Constants {
         MARIONETTE,             /// <value> Decreases DOG and is taunted </value>
         NIMBLE,                 /// <value> Increases DOG </value>
         SILENCE,                /// <value> Decreases MATK </value>
+        BREAK,                  /// <value> Decreases PDEF </value>
+        TANGIBLE,               /// <value> Decreases MDEF </value>
         FAMILIAR,               /// <value> Indicates a temporary partyMember </value>
         BOSS,                   /// <value> Makes the monster stronger against shenanigans </value>
         CHAMPIONHP,             /// <value> Bonus HP and HP regen  </value>

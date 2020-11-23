@@ -54,6 +54,8 @@ namespace Characters {
                 case StatusEffectConstant.TRAP:
                 case StatusEffectConstant.MARIONETTE:
                 case StatusEffectConstant.SILENCE:
+                case StatusEffectConstant.BREAK:
+                case StatusEffectConstant.TANGIBLE:
                 case StatusEffectConstant.SCUM:
                 case StatusEffectConstant.FATALWOUND:
                     isBuff = false;
