@@ -50,8 +50,8 @@ namespace Combat {
             this.type = type;
             this.damageFormula = damageFormula;
             this.seName = seName;
-            if (seName != 0) {   // HACK cause all atatcks except the noneAttack in a partyMember are loaded AFTER the localizationMAnager is accessible
-                seNameKey = LocalizationManager.instance.GetLocalizedValue(nameof(seName) + "_ed");
+            if (seName != 0) {   // HACK cause all attacks except the noneAttack in a partyMember are loaded AFTER the localizationMAnager is accessible
+                seNameKey = LocalizationManager.instance.GetLocalizedValue(seName + "_ed");
             }
             this.seDuration = seDuration;
             this.baseSeChance = seChance;

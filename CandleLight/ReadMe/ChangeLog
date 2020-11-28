@@ -24,7 +24,11 @@ Sprites Update
     Stinger
 Sprites Added
     PuppetKnight
-
+    HangedMen
+    GreyGoo
+    PlantImposter
+    TheGrumbled
+    DireGreyhide
 
 COOKING
 -------
@@ -83,7 +87,7 @@ Alternate Final Boss: Wind Witch (10 PDEF 7 MDEF) (Last on fifth turn)
     - Permanently Root
 Alternate Final Boss: Puppet Master (PDEF 6 MDEF 8) (Last at 60%)
     - Wicked Dance: Magical attack that may inflict Marionette for 2 turns
-    - Soul Drain: Physical Attack, may inflict tangible for 3 turns
+    - Soul Rip: Physical Attack, may inflict tangible for 3 turns
     - Puppeteer: Summon two puppet knights to fight beside it
     - Soul Shield: Give itself Miracle for 1 turn
 Gear: Root Bow (Archer)
