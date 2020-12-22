@@ -287,8 +287,21 @@ namespace Party {
         /// <param name="className"></param>
         /// <returns></returns>
         public PartyMember GetAvailablePartyMember(ItemDisplay id) {
+            // check if the currently displayed party member can equip the item and has an empty slot
+            if (activePartyMember.className == id.className || id.className == ItemConstants.ANY) {    
+                if (id.subType == ItemConstants.WEAPON && activePartyMember.weapon == null) {
+                    return activePartyMember;
+                }
+                else if (id.subType == ItemConstants.SECONDARY && activePartyMember.secondary == null) {
+                    return activePartyMember;
+                }
+                else if (id.subType == ItemConstants.ARMOUR && activePartyMember.armour == null) {
+                    return activePartyMember;
+                }
+            }
+            // then check all other party members to see if they have empty slots
             foreach (PartyMember pm in partyMembersAll) {
-                if (pm.className == id.className || id.className == ItemConstants.ANY) {    // find the first party member that can equip the item with nothing equipped
+                if (pm.ID != activePartyMember.ID && pm.className == id.className || id.className == ItemConstants.ANY) {    // find the first party member that can equip the item with nothing equipped
                     if (id.subType == ItemConstants.WEAPON && pm.weapon == null) {
                         return pm;
                     }
@@ -300,7 +313,8 @@ namespace Party {
                     }
                 }
             }
-            foreach (PartyMember pm in partyMembersAll) {   // find the first party member that can equip the item otherwise
+            // find the first party member that can equip the item otherwise
+            foreach (PartyMember pm in partyMembersAll) {   
                 if (pm.className == id.className) {
                     return pm;
                 }

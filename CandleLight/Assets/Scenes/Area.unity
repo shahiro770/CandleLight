@@ -6240,9 +6240,9 @@ MonoBehaviour:
     <type>k__BackingField: 
     <costFormula>k__BackingField: 
     <damageFormula>k__BackingField: 
-    <scope>k__BackingField: 
-    <seNameKey>k__BackingField: 
-    <seName>k__BackingField: 
+    <scope>k__BackingField: 0
+    <seNameValue>k__BackingField: 
+    <seName>k__BackingField: 0
     <seDuration>k__BackingField: 0
     <baseSeChance>k__BackingField: 0
     <seChance>k__BackingField: 0

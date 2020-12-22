@@ -70,8 +70,10 @@ namespace PlayerUI {
         /// <param name="index"> Index in the panels array to open </param>
         public void OpenPanel(int index) {
             panels[currentIndex].gameObject.SetActive(false);
-            btss[currentIndex].SetColor("normal");
-            
+            if (index != currentIndex) {
+                btss[currentIndex].SetColor("normal");
+            }
+                
             currentIndex = index;
             panels[currentIndex].gameObject.SetActive(true);
             btss[currentIndex].SetColor("pressed");
