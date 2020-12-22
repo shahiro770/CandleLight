@@ -34,11 +34,12 @@ Bug: Cure colouring in event description is wrong
 Bug: Make the item selection thing not swap if the active character has empty slot
 Bug: Slight-flicker on already open tabs 
 Bug: Fran string bad for time keeper ("no one else would send)
+Bug: Make stat threshold text last longer
+Bug: Two 4 line notifications on the right squish the lower's text slightly (only if its the first time two notifications show up at the same time)
+    Solution: Remove flex and preferred height/width, just set min height/width
 
 COOKING
 -------
-Bug: Two 4 line notifications on the right squish the lower's text slightly
-Bug: Make stat threshold text last longer
 Info: Make combat initial prompt last a little longer
 Bug: Arrow not disappearing if info tab is not clicked on final part of tutorial
 Balance: Make Stat altering buffs and debuffs always do 1 point of change minimum

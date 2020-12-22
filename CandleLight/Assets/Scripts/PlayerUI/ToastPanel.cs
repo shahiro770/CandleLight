@@ -264,7 +264,7 @@ namespace PlayerUI {
         }
 
         public IEnumerator FadeOut() {
-            yield return new WaitForSeconds(2.75f);
+            yield return new WaitForSeconds(2.8f);
             SetVisible(false);
         }
         
@@ -285,7 +285,7 @@ namespace PlayerUI {
                         StopCoroutine(fader);
                     }
                     if (arrow != null && isShowingArrow == true && isArrowHolder == true) {
-                        HideArrow();
+                        HideTutorialArrow();
                     }
                     fader = StartCoroutine(Fade(0));
                 }
@@ -314,7 +314,7 @@ namespace PlayerUI {
             }
         }
 
-        public void HideArrow() {
+        public void HideTutorialArrow() {
             isShowingArrow = false;
             isArrowHolder = false;
             arrowAnimator.ResetTrigger("hide");
@@ -332,8 +332,8 @@ namespace PlayerUI {
                 le.flexibleHeight = 1;  // lets the textbackground expand to fit the text first
                 le.flexibleWidth = 1;
                 yield return new WaitForEndOfFrame();   // wait a frame to update
-                le.preferredHeight = textBackground.rectTransform.sizeDelta.y;  // then size the preferred size of the layout element
-                le.preferredWidth = textBackground.rectTransform.sizeDelta.x;
+                le.minHeight = textBackground.rectTransform.sizeDelta.y;  // then size the preferred size of the layout element
+                le.minWidth = textBackground.rectTransform.sizeDelta.x;
                 le.flexibleHeight = 0;  // disable the flexibility after  to not squish additional toastPanels
                 le.flexibleWidth = 0;
             }

@@ -2082,10 +2082,10 @@ namespace Events {
         /// </summary>
         public void HideTutorialArrow() {
             if (toastPanel0.isArrowHolder) {
-                toastPanel0.HideArrow();
+                toastPanel0.HideTutorialArrow();
             }
             else if (toastPanel1.isArrowHolder) {
-                toastPanel1.HideArrow();
+                toastPanel1.HideTutorialArrow();
             }
         }
 
