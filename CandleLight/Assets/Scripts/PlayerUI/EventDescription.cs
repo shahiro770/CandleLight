@@ -289,10 +289,10 @@ namespace PlayerUI {
 
             if (a.seName != StatusEffectConstant.NONE) {
                 if (a.seDuration == 1) {
-                    attackString += ", " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turn on hit";
+                    attackString += ", " + a.seChance + "% chance to " + a.seNameValue + " for " + a.seDuration  + " turn on hit";
                 }
                 else {
-                    attackString += ", " + a.seChance + "% chance to " + a.seNameKey + " for " + a.seDuration  + " turns on hit";
+                    attackString += ", " + a.seChance + "% chance to " + a.seNameValue + " for " + a.seDuration  + " turns on hit";
                 }
             }
             if (a.scope != (int)AttackConstants.AttackScopes.single) {
@@ -367,10 +367,10 @@ namespace PlayerUI {
                 
             if (displayedAttack.seName != StatusEffectConstant.NONE) {
                 if (displayedAttack.seDuration == 1) {
-                    formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turn on hit";
+                    formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameValue + " for " + displayedAttack.seDuration  + " turn on hit";
                 }
                 else {
-                    formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameKey + " for " + displayedAttack.seDuration  + " turns on hit";
+                    formulaString += ", " + displayedAttack.seChance + "% chance to " + displayedAttack.seNameValue + " for " + displayedAttack.seDuration  + " turns on hit";
                 }
             }
             if (displayedAttack.scope != (int)AttackConstants.AttackScopes.single) {

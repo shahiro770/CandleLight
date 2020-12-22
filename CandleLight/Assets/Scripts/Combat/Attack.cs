@@ -25,7 +25,7 @@ namespace Combat {
         [field: SerializeField] public string costFormula { get; set; }         /// <value> Formula for calculating cost to use attack </value>      
         [field: SerializeField] public string damageFormula { get; private set; }     /// <value> Formula for calculating damage dealt by attack </value>
         [field: SerializeField] public int scope { get; private set; }          /// <value> int (enum) describing the possible targets the attack affects </value>
-        [field: SerializeField] public string seNameKey { get; private set; }   /// <value> String for the seName in event description </value>
+        [field: SerializeField] public string seNameValue { get; private set; } /// <value> String for the seName in event description </value>
         [field: SerializeField] public StatusEffectConstant seName { get; private set; }         /// <value> Status effect of attack (enum) </value>
         [field: SerializeField] public int seDuration { get; private set; }     /// <value> Number of turns status effect lasts </value>       
         [field: SerializeField] public int baseSeChance { get; private set; }   /// <value> Base chance of status effect occurring </value>
@@ -51,7 +51,7 @@ namespace Combat {
             this.damageFormula = damageFormula;
             this.seName = seName;
             if (seName != 0) {   // HACK cause all attacks except the noneAttack in a partyMember are loaded AFTER the localizationMAnager is accessible
-                seNameKey = LocalizationManager.instance.GetLocalizedValue(seName + "_ed");
+                seNameValue = LocalizationManager.instance.GetLocalizedValue(seName + "_ed");
             }
             this.seDuration = seDuration;
             this.baseSeChance = seChance;

@@ -29,9 +29,17 @@ Sprites Added
     PlantImposter
     TheGrumbled
     DireGreyhide
+Bug: Monster not capitlized in champion tutorial
+Bug: Cure colouring in event description is wrong
 
 COOKING
 -------
+
+Bug: Make the item selection thing not swap if the active character has empty slot
+
+Bug: Make stat threshold text last longer
+Info: Make combat initial prompt last a little longer
+Bug: Arrow not disappearing if info tab is not clicked
 Balance: Make Stat altering buffs and debuffs always do 1 point of change minimum
 Balance: Make bite have a 50% chance to inflict break
 Fix: Make useCandles tutorial appear for the first character than can use candles
@@ -63,11 +71,11 @@ Monster: Knight Puppet (PDEF 2 MDEF 1) (Random)
     - Disrupting Slash: Magical Attack, 50% chance to inflict seal (MATK -30%)
     - Guarding Stance: Gain Guard for 3 turns
     - Spell Shield: Restore HP and grant barrier for 3 turns to a random ally [normal mode only]
-Monster: Imposter Plant (PDEF 0 MDEF 3) (Mimic - Only use last attack if ally present)
+Monster: Imposter Plant (PDEF 0 MDEF 2) (Mimic - Only use last attack if ally present)
     - Bite: Physical attack
     - Enroot: Magical attack that guarantees root
-    - Mimic: Use an ally's attack 
     - Tendril: Physical attack that hits all party members, guarantees break [normal mode only]
+    - Mimic: Use an ally's attack 
     - Has root debuff permanently
 Monster: Hanged Men (PDEF 2 MDEF 5) (Last on fifth turn)
     - Silent Arrows: Magical attack, 50% chance to inflict seal (MATK - 30%), hits all monsters
@@ -77,19 +85,19 @@ Monster: Hanged Men (PDEF 2 MDEF 5) (Last on fifth turn)
 Monster: Dire Greyhide (PDEF 4 MDEF 3) (Last at 60%)
     - Bite: Stronger physical attack that has 50% chance to inflict break
     - Challenge: Taunt for 3 turns
-    - Rampage: Physical attack that hits all party members, 50% chance to inflict break
+    - Rampage: Physical attack that hits all party members
     - Enrage: Gain Rage for 5 turns [Normal mode only]
 Alternate Final Boss: Wind Witch (10 PDEF 7 MDEF) (Last on fifth turn)
     - Enroot: Magical Attack with chance to root
     - Cursed Seeds: Magical attack that damages inflicts rbw
     - Sprout: Summon The Tumbled 
-    - Tumbleweed Tornado: Sacrifice tumbleweeds doing half their life summed as damage to all partyMembers
-    - Permanently Root
+    - Tumbleweed Tornado: Sacrifice tumbleweeds doing half their life summed as damage to all partyMembers [normal mode only]
+    - Permanently Ro ot
 Alternate Final Boss: Puppet Master (PDEF 6 MDEF 8) (Last at 60%)
     - Wicked Dance: Magical attack that may inflict Marionette for 2 turns
     - Soul Rip: Physical Attack, may inflict tangible for 3 turns
     - Puppeteer: Summon two puppet knights to fight beside it
-    - Soul Shield: Give itself Miracle for 1 turn
+    - Soul Shield: Give itself Miracle for 1 turn [normal mode only]
 Gear: Root Bow (Archer)
     - MATK 6
     - Root On Hit: 20%

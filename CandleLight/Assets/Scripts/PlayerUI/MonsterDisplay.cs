@@ -336,7 +336,7 @@ namespace Characters {
             a.SetTrigger(trigger);
             do {
                 yield return null;    
-            } while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);     
+            } while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
         }
 
         /// <summary>
@@ -451,6 +451,34 @@ namespace Characters {
             yield return (StartCoroutine(PlayAnimation(monsterAnimator, "spawn")));
         }
 
+        /// <summary>
+        /// Plays animation of when monster is attacked with no damage numbers or hp bar change.
+        /// Used for buffs and debuffs.
+        /// </summary>
+        /// <param name="animationClipName"></param>
+        /// <returns></returns>
+        public IEnumerator DisplayAttackEffect(string animationClipName) {
+            isAnimating = true;
+            SetEffectsAnimatorClip(animationClipName);
+            yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
+            isAnimating = false;
+        }
+
+        /// <summary>
+        /// Plays animation for when attack is dodged
+        /// </summary>
+        /// <param name="animationClipName"> Name of animation to play overtop of monster </param>
+        /// <returns> IEnumerator for animations</returns>
+        public IEnumerator DisplayAttackDodged(string animationClipName) {
+            isAnimating = true;
+            SetEffectsAnimatorClip(animationClipName);
+            yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
+            dt.ShowDodged();
+            yield return (StartCoroutine(PlayAnimation(dt.textAnimator, "showDamage")));
+            dt.HideDamage();
+            isAnimating = false;
+        }
+
         #endregion
 
         #region [ Section 3] Combat Information
@@ -493,34 +521,6 @@ namespace Characters {
 
                 yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
             }
-            isAnimating = false;
-        }
-
-        /// <summary>
-        /// Plays animation of when monster is attacked with no damage numbers or hp bar change.
-        /// Used for buffs and debuffs.
-        /// </summary>
-        /// <param name="animationClipName"></param>
-        /// <returns></returns>
-        public IEnumerator DisplayAttackEffect(string animationClipName) {
-            isAnimating = true;
-            SetEffectsAnimatorClip(animationClipName);
-            yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
-            isAnimating = false;
-        }
-
-        /// <summary>
-        /// Plays animation for when attack is dodged
-        /// </summary>
-        /// <param name="animationClipName"> Name of animation to play overtop of monster </param>
-        /// <returns> IEnumerator for animations</returns>
-        public IEnumerator DisplayAttackDodged(string animationClipName) {
-            isAnimating = true;
-            SetEffectsAnimatorClip(animationClipName);
-            yield return (StartCoroutine(PlayAnimation(effectsAnimator, "attacked")));
-            dt.ShowDodged();
-            yield return (StartCoroutine(PlayAnimation(dt.textAnimator, "showDamage")));
-            dt.HideDamage();
             isAnimating = false;
         }
 

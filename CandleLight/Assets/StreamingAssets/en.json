@@ -192,7 +192,7 @@
 		{ "key": "candles1_tutorial", "value": "Candles have abilities that can be used in combat, but effects are lost when\nfully used" },
 		{ "key": "shop_tutorial", "value": "Items can be sold at shops by dragging them to the shopkeeper's inventory" },
 		{ "key": "consumable_tutorial", "value": "Consumables are used immediately when taken, affecting everyone alive" },
-		{ "key": "champion_tutorial", "value": "monsters may spawn with powerful champion buffs, making them stronger with better loot" },
+		{ "key": "champion_tutorial", "value": "Monsters may spawn with powerful champion buffs, making them stronger with better loot" },
 		{ "key": "save_tutorial", "value": "Progress is saved when a pivotal moment is reached, but save data is lost\non death" },
 		{ "key": "stat_tutorial", "value": "Some actions test your party's stats; passing the threshold guarantees a good result" },
 
@@ -1300,7 +1300,7 @@
 		{ "key": "CURE_title", "value": "<color=#7DEDA4>Cure</color>" },
 		{ "key": "CURE_sub", "value": "Buff" },
 		{ "key": "CURE_description", "value": "Debuffs on this character last half as long" },
-		{ "key": "CURE_ed", "value": "<color=#5AC54F>cure</color>" },
+		{ "key": "CURE_ed", "value": "<color=#7DEDA4>cure</color>" },
 		{ "key": "TRAP_title", "value": "<color=#858585>Trap</color>" },
 		{ "key": "TRAP_sub", "value": "Debuff" },
 		{ "key": "TRAP_description", "value": "Fleeing from combat is very unlikely" },
