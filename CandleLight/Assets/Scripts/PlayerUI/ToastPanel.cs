@@ -163,7 +163,7 @@ namespace PlayerUI {
                     ShowTutorialArrow(210, -110, true);   
                     break;
                 case "gear0":
-                    ShowTutorialArrow(195, 50, false);   
+                    ShowTutorialArrow(205, 50, false);   
                     break;
                 case "skills0":
                     ShowTutorialArrow(320, -110, true);   

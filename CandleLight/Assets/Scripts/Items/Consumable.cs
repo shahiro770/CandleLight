@@ -97,11 +97,11 @@ namespace Items {
                     case "MP":
                         WAX += (int)(values[i] * 0.5f);
                         break;
-                    case "regenerate":
-                    case "cure":
+                    case "REGENERATE":
+                    case "CURE":
                         WAX += values[i];
                         break;
-                    case "poison":
+                    case "POISON":
                         WAX -= values[i] * 5;
                         break;
                     default:

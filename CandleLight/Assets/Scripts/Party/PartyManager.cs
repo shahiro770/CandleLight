@@ -708,14 +708,12 @@ namespace Party {
         /// </summary>
         /// <returns></returns>
         public bool IsCandlesEquipped() {
-            foreach(PartyMember pm in partyMembersAlive) {
-                foreach (Candle c in pm.activeCandles) {
-                    if (c != null) {
-                        return true;
-                    }
+            foreach (Candle c in activePartyMember.activeCandles) {
+                if (c != null) {
+                    return true;
                 }
             }
-
+            
             return false;
         }
 

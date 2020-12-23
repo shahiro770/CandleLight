@@ -522,6 +522,7 @@ namespace Events {
                 SetTutorialNotification("skills0", 0);
             }
             else if (tutorialProg == 12) {
+                subAreaProgress += 80;
                 utilityTabManager.SetButtonInteractableAndName(2);
                 utilityTabManager.ExciteTab(2);
                 AddQuestNoNotification(currentResult.questName, "", "");
@@ -596,7 +597,7 @@ namespace Events {
         public void EndTutorial() {
             tutorialProg++;             
             GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
-            subAreaProgress += 100;
+            subAreaProgress += 20;
             actionsPanel.SetToggleButtonLocked(false);
         }
 
