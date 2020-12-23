@@ -181,6 +181,9 @@ namespace Characters {
                 else if (se.name == StatusEffectConstant.ETHEREAL) {
                     MATK += (int)(MATK * 0.5);
                 }
+                else if (se.name == StatusEffectConstant.BREAK) {
+                    PDEF -= (int)(PDEF * 0.5);
+                }
                 else if (se.name == StatusEffectConstant.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);
                 }

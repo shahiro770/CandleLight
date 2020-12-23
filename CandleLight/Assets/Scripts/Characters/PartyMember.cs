@@ -540,20 +540,20 @@ namespace Characters {
             /* secondary stat changes from status effects */
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstant.TAUNT || se.name == StatusEffectConstant.RAGE) {
-                    PATK += Mathf.Max(1, (int)(PATK * 0.5));
+                    PATK += (int)(PATK * 0.5);
                 }
                 else if (se.name == StatusEffectConstant.FREEZE) {
-                    ACC -= Mathf.Max(1, (int)(ACC * 0.35));
-                    PDEF -= Mathf.Max(1, (int)(PDEF * 0.35));
+                    ACC -= (int)(ACC * 0.35);
+                    PDEF -= (int)(PDEF * 0.35);
                 }
                 else if (se.name == StatusEffectConstant.WEAKNESS) {
-                    PATK -= Mathf.Max(1, (int)(PATK * 0.3));
+                    PATK -= (int)(PATK * 0.3);
                 }
                 else if (se.name == StatusEffectConstant.ADVANTAGE) {
                     critChance += 50;
                 }
                 else if (se.name == StatusEffectConstant.ROOT) {
-                    DOG -= Mathf.Max(1, (int)(DOG * 0.5));
+                    DOG -= (int)(DOG * 0.5);;
                 }
                 else if (se.name == StatusEffectConstant.GUARD) {
                     PDEF += Mathf.Max(1, PDEF);
@@ -565,10 +565,13 @@ namespace Characters {
                     DOG -= DOG;
                 }
                 else if (se.name == StatusEffectConstant.NIMBLE) {
-                    DOG += DOG;
+                    DOG += Mathf.Max(1, DOG);
                 }
                 else if (se.name == StatusEffectConstant.ETHEREAL) {
-                    MATK += Mathf.Max(1, (int)(MATK * 0.5));
+                    MATK += (int)(MATK * 0.5);
+                }
+                else if (se.name == StatusEffectConstant.BREAK) {
+                    PDEF -= Mathf.Max(2, (int)(PDEF * 0.5));
                 }
                 else if (se.name == StatusEffectConstant.SCUM) {
                     HPRegen *= 0.5f;
