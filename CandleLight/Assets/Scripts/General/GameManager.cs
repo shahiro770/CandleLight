@@ -290,12 +290,28 @@ namespace General {
         /// Set the initial general save data for the run
         /// </summary>
         public void SetInitialGeneralData() {
-            gsData = new GeneralSaveData(0.2f, null, new HighScoreData[4], 
+            gsData = new GeneralSaveData(
+                0.2f,   // version
+                null,   // past item data
+                new HighScoreData[4],
                 Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray(),
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AchievementConstants.achievementConstants)).Length).ToArray(), 
                 Enumerable.Repeat<bool>(false, System.Enum.GetNames(typeof(AromaConstants.aromaConstants)).Length).ToArray(), 
-                null,
-                false, 1f, 1f, 0.35f, 1f, false, 1, 1, 0.75f, 0, 0, 0, -1);
+                null,   // partycombos
+                false,  // isTimer
+                1f,     // scoremodifier
+                1f,     // animationspeed
+                0.35f,  // bgmvolume
+                1f,     // sfxvolume
+                false,  // isfullscreen
+                1,      // resolution width
+                1,      // resolution height
+                0.75f,  // difficulty modifier
+                0,      // most monsters
+                0,      // most wax
+                0,      // most events
+                -1      // fastest clear time
+            );    
             tutorialTriggers = gsData.tutorialTriggers;
             achievementsUnlocked = gsData.achievementsUnlocked;
             partyCombos = new string[,] { 

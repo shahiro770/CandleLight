@@ -439,7 +439,7 @@ namespace Events {
 
         #endregion
 
-        #region [Section 0] TutorialStuff
+        #region [Section 0] Tutorial
 
         /// <summary>
         /// Starts the tutorial by disabling most of the game's features
@@ -521,12 +521,11 @@ namespace Events {
             else if (tutorialProg == 11 && CombatManager.instance.inCombat == false) {
                 SetTutorialNotification("skills0", 0);
             }
-            // skills panel is enabled after first combat event
             else if (tutorialProg == 12) {
                 utilityTabManager.SetButtonInteractableAndName(2);
                 utilityTabManager.ExciteTab(2);
-                AddQuest(currentResult.questName, "", "");
-                toastPanel1.ShowArrow(425, -110, true);
+                AddQuestNoNotification(currentResult.questName, "", "");
+                SetTutorialNotification("info0", 0);
             }
         }
 
@@ -559,7 +558,7 @@ namespace Events {
                 return true;
             }
             else if (tutorialProg == 12 && tabManager == true &&  utilityTabManager.panels[index].GetPanelName() == PanelConstants.INFOPANEL) {
-                SetTutorialNotification("info0");
+                SetTutorialNotification("info1");
                 HideTutorialArrow();
                 return true;
             }

@@ -1,6 +1,16 @@
+/*
+* Project: CandleLight 
+* Author: Shahir Chowdhury
+* Date: August 1, 2020
+* 
+* The ToastPanel class is used to control all aspects of a toast notification that may show up
+* on the screen to give the player status updates
+* 
+*/
+
+using GameManager = General.GameManager;
 using Localization;
 using PartyManager = Party.PartyManager;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -147,16 +157,19 @@ namespace PlayerUI {
 
             switch (tutorialName) {
                 case "special0":
-                    ShowArrow(-210, -110, true);   
+                    ShowTutorialArrow(-210, -110, true);   
                     break;
                 case "party0":
-                    ShowArrow(210, -110, true);   
+                    ShowTutorialArrow(210, -110, true);   
                     break;
                 case "gear0":
-                    ShowArrow(195, 50, false);   
+                    ShowTutorialArrow(195, 50, false);   
                     break;
                 case "skills0":
-                    ShowArrow(320, -110, true);   
+                    ShowTutorialArrow(320, -110, true);   
+                    break;
+                case "info0":
+                    ShowTutorialArrow(425, -110, true);
                     break;
             }
             
@@ -264,7 +277,7 @@ namespace PlayerUI {
         }
 
         public IEnumerator FadeOut() {
-            yield return new WaitForSeconds(2.8f);
+            yield return new WaitForSeconds(2.8f - (-1f + GameManager.instance.animationSpeed));
             SetVisible(false);
         }
         
@@ -292,7 +305,7 @@ namespace PlayerUI {
             }
         }
 
-        public void ShowArrow(int x, int y, bool isV) {
+        public void ShowTutorialArrow(int x, int y, bool isV) {
             if (isShowingArrow == false) {
                 isShowingArrow = true;
                 isArrowHolder = true;
@@ -332,7 +345,13 @@ namespace PlayerUI {
                 le.flexibleHeight = 1;  // lets the textbackground expand to fit the text first
                 le.flexibleWidth = 1;
                 yield return new WaitForEndOfFrame();   // wait a frame to update
-                le.minHeight = textBackground.rectTransform.sizeDelta.y;  // then size the preferred size of the layout element
+                // then size the min size of the layout element
+                if (textBackground.rectTransform.sizeDelta.y == 87.5f) {    // HACK to deal with two four line tips squishing eachother (its always 87.5 for some reason)
+                    le.minHeight = 97.02f;
+                }
+                else {
+                    le.minHeight = textBackground.rectTransform.sizeDelta.y;  
+                }
                 le.minWidth = textBackground.rectTransform.sizeDelta.x;
                 le.flexibleHeight = 0;  // disable the flexibility after  to not squish additional toastPanels
                 le.flexibleWidth = 0;

@@ -190,7 +190,7 @@ namespace Combat {
             }
                   
             if (eventDescription.HasText()) {
-                yield return new WaitForSeconds(1.5f / GameManager.instance.animationSpeed);   
+                yield return new WaitForSeconds(1.75f / GameManager.instance.animationSpeed);   
                 eventDescription.ClearText();    
             }
             else {

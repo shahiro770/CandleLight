@@ -540,20 +540,20 @@ namespace Characters {
             /* secondary stat changes from status effects */
             foreach (StatusEffect se in statusEffects) {
                 if (se.name == StatusEffectConstant.TAUNT || se.name == StatusEffectConstant.RAGE) {
-                    PATK += (int)(PATK * 0.5);
+                    PATK += Mathf.Max(1, (int)(PATK * 0.5));
                 }
                 else if (se.name == StatusEffectConstant.FREEZE) {
-                    ACC -= (int)(ACC * 0.35);
-                    PDEF -= (int)(PDEF * 0.35);
+                    ACC -= Mathf.Max(1, (int)(ACC * 0.35));
+                    PDEF -= Mathf.Max(1, (int)(PDEF * 0.35));
                 }
                 else if (se.name == StatusEffectConstant.WEAKNESS) {
-                    PATK -= (int)(PATK * 0.3);
+                    PATK -= Mathf.Max(1, (int)(PATK * 0.3));
                 }
                 else if (se.name == StatusEffectConstant.ADVANTAGE) {
                     critChance += 50;
                 }
                 else if (se.name == StatusEffectConstant.ROOT) {
-                    DOG -= (int)(DOG * 0.5);;
+                    DOG -= Mathf.Max(1, (int)(DOG * 0.5));
                 }
                 else if (se.name == StatusEffectConstant.GUARD) {
                     PDEF += Mathf.Max(1, PDEF);
@@ -568,7 +568,7 @@ namespace Characters {
                     DOG += DOG;
                 }
                 else if (se.name == StatusEffectConstant.ETHEREAL) {
-                    MATK += (int)(MATK * 0.5);
+                    MATK += Mathf.Max(1, (int)(MATK * 0.5));
                 }
                 else if (se.name == StatusEffectConstant.SCUM) {
                     HPRegen *= 0.5f;

@@ -15,9 +15,6 @@ Fix: Enummed status effects
 Bug: Make Lesser Wraith Wizard box adjustments for tooltip
 Gear: Membrane Bow 
     - Bleed On Hit 20%
-
-JUST FINISHED
--------------
 Sprites Update
     Wraith
     Stranglehead
@@ -34,17 +31,22 @@ Bug: Cure colouring in event description is wrong
 Bug: Make the item selection thing not swap if the active character has empty slot
 Bug: Slight-flicker on already open tabs 
 Bug: Fran string bad for time keeper ("no one else would send)
-Bug: Make stat threshold text last longer
+
+JUST FINISHED
+-------------
+Bug: Make stat threshold text last longer (all notifications are now 2.5 -> 2.8 seconds)
 Bug: Two 4 line notifications on the right squish the lower's text slightly (only if its the first time two notifications show up at the same time)
     Solution: Remove flex and preferred height/width, just set min height/width
+Info: Make combat initial prompt last a little longer (1.5 -> 1.75 seconds)
+Bug: Arrow not disappearing if info tab is not clicked on final part of tutorial
+Bug: Help menu is mad broke yo (update localized values)
 
 COOKING
 -------
-Info: Make combat initial prompt last a little longer
-Bug: Arrow not disappearing if info tab is not clicked on final part of tutorial
 Balance: Make Stat altering buffs and debuffs always do 1 point of change minimum
 Balance: Make bite have a 50% chance to inflict break
-Fix: Make useCandles tutorial appear for the first character than can use candles
+Fix: Make useCandles tutorial appear for the first character that can use candles
+Cleanup: Make it so general save data's properties are stored in another gsdata (for organization), so saving gsdata is just replacing the old with the mutable copy
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 Bug: Frost Golem skills should have unique message "Summons don't get skills"
 Bug: Empty tooltip bug
@@ -52,8 +54,7 @@ Bug: Mage and Archer class select buttons can visually be seen de-whitening when
 CRITICAL BUG: Going fullscreen causes buttons to offset (this might be a unity bug but need to try)
 UI: Make eventDescription show physical/magical damage
 UI: Might need to redo all attack animations cause pixel sizing is janky (64x64 to 96x96)
-UI: Make clicking anoter party member in combat show their attacks (but obv they can't do anything)
-UI: Make stat check toast last 1 second longer
+UI: Make clicking another party member in combat show their attacks (but obv they can't do anything)
 UI: Hot key item tabs
 Options: Bloom option (eughhh)
 UI: Add a shader to show champion
@@ -93,7 +94,7 @@ Alternate Final Boss: Wind Witch (10 PDEF 7 MDEF) (Last on fifth turn)
     - Cursed Seeds: Magical attack that damages inflicts rbw
     - Sprout: Summon The Tumbled 
     - Tumbleweed Tornado: Sacrifice tumbleweeds doing half their life summed as damage to all partyMembers [normal mode only]
-    - Permanently Ro ot
+    - Permanently Root
 Alternate Final Boss: Puppet Master (PDEF 6 MDEF 8) (Last at 60%)
     - Wicked Dance: Magical attack that may inflict Marionette for 2 turns
     - Soul Rip: Physical Attack, may inflict tangible for 3 turns
