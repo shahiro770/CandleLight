@@ -87,12 +87,12 @@ namespace PlayerUI {
 
             for (int i = 0; i < skillDisplays.Length; i++) {
                 int x = i;          // dumb hack cause unity forgets for loop ints
-                if (pm.skills[i] != null) { // TEMPORARY
+                if (i < 9) {        // TEMPORARY
                     if (pm.skills[i].skillEnabled == true) {   
                         colPoints[i / 3]++;
                         skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
                     }
-                    else if (i < 3 || ( i >= 3 && colPoints[(i / 3) - 1] > 0)) {
+                    else if ((i < 3 || (i >= 3 && colPoints[(i / 3) - 1] > 0))) {
                         skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
                     }
                     else {

@@ -45,20 +45,23 @@ Fix: Change line about "Kill it before it becomes a wraith"
 Fix: "4 days" now changes depending on subArea (assuming each area is reached in a day)
 Bug: Consumables are worth 0 if they only give status effects
 Fix: Make useCandles tutorial appear for the first character that can use candles
-Bug: Stranglehead art clips into hp bar
 Fix: Change tutorial prog to 80% when its first visible
 
 JUST FINISHED
 -------------
-
-COOKING
--------
+Bug: Skills panel shows glitch skill on 9th
 Cleanup: Make it so general save data's properties are stored in another gsdata (for organization), so saving gsdata is just replacing the old with the mutable copy
     1) Mutable copy keeps track of any changes player makes
     2) On saving, if a property changed effects the current run (aka startng a run, halfway through changing aromas, then returning to the run) don't modify old gsData with it
     3) Everything will reference the copy gsData 
     4) Make it so achievements save instantly on being earned (so players can quit right after if they want)
     5) Move aromas and difficulty modifier to rData (better for multiple save files)
+Verify: See if you can gameover in the tutorial and final areas with Wilting Wintergreen on
+Bug: Changing aromas doesn't preserve them between menus
+Bug: Stranglehead art clips into hp bar
+
+COOKING
+-------
 Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 Bug: Frost Golem skills should have unique message "Summons don't get skills"
 Bug: Empty tooltip bug
@@ -72,7 +75,6 @@ Options: Bloom option (eughhh)
 UI: Add a shader to show champion
 UI: Turn reticle and name red if monster is higher level
 UI: Let player see other status effects from help menu
-Verify: See if you can gameover in the tutorial and final areas with Wilting Wintergreen on
 
 Monster: Goo (PDEF 1 MDEF 1) (Random, but won't use metabolize if at full health)
     - Body Rush (physical attack, 50% chance to inflict break)
