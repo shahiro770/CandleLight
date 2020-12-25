@@ -136,8 +136,8 @@ namespace PlayerUI {
             else if (displayedItem.type == ItemConstants.GEAR) {
                 return displayedGear.GetTooltipEffectKeys();
             }
-            else { //if (displayedItem.type == "candle") {
-                if (GameManager.instance.difficultyModifier == 0.75f) {
+            else { // if (displayedItem.type == "candle") {
+                if (GameManager.instance.gsData.difficultyModifier == 0.75f) {
                     return displayedCandle.GetTooltipEffectKeysNoNegative();
                 }
                 return displayedCandle.GetTooltipEffectKeys();

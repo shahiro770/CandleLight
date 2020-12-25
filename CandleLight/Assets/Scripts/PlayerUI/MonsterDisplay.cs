@@ -331,7 +331,7 @@ namespace Characters {
         /// Base Layer as the name of their base animator layer. 
         /// </remark>
         public IEnumerator PlayAnimation(Animator a, string trigger) {
-            a.speed = GameManager.instance.animationSpeed;
+            a.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             a.ResetTrigger(trigger); // Reset the trigger just in case
             a.SetTrigger(trigger);
             do {
@@ -353,8 +353,8 @@ namespace Characters {
         /// Will change this to accept an array of animators and triggers if its needed in the future.
         /// </remark>
         public IEnumerator PlayTwoAnimations(Animator a1, Animator a2, string trigger1, string trigger2) {
-            a1.speed = GameManager.instance.animationSpeed;
-            a2.speed = GameManager.instance.animationSpeed;
+            a1.speed = GameManager.instance.gsDataCurrent.animationSpeed;
+            a2.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             a1.ResetTrigger(trigger1);
             a2.ResetTrigger(trigger2);
             a1.SetTrigger(trigger1);
@@ -519,7 +519,7 @@ namespace Characters {
                 }
                 HPBar.SetCurrent(displayedMonster.CHP);
 
-                yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
+                yield return new WaitForSeconds(1f / GameManager.instance.gsDataCurrent.animationSpeed);
             }
             isAnimating = false;
         }

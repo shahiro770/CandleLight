@@ -124,7 +124,7 @@ namespace Menus.OptionsMenu {
             for (int i = 0; i < resolutions.GetLength(0); i++) {
                 if (resolutions[i, 0] <= Screen.resolutions[Screen.resolutions.Length - 1].width && resolutions[i, 1] <= Screen.resolutions[Screen.resolutions.Length - 1].height) {
                     resolutionOptions.Add(resolutions[i, 0] + " x " + resolutions[i, 1]);
-                    if (resolutions[i, 0] == GameManager.instance.resolutionWidth && resolutions[i, 1] == GameManager.instance.resolutionHeight) {
+                    if (resolutions[i, 0] == GameManager.instance.gsDataCurrent.resolutionWidth && resolutions[i, 1] == GameManager.instance.gsDataCurrent.resolutionHeight) {
                         currentResolutionIndex = i;
                     }
                 }
@@ -139,7 +139,7 @@ namespace Menus.OptionsMenu {
         }
 
         void OnEnable() {
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 tutorialYes.SetColor("na0");
                 tutorialNo.SetColor("normal");
             }
@@ -148,7 +148,7 @@ namespace Menus.OptionsMenu {
                 tutorialNo.SetColor("na0");
             }
 
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true) {
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true) {
                 tipsYes.SetColor("na0");
                 tipsNo.SetColor("normal");
             }
@@ -157,7 +157,7 @@ namespace Menus.OptionsMenu {
                 tipsNo.SetColor("na0");
             }
 
-            if (GameManager.instance.animationSpeed == 1f) {
+            if (GameManager.instance.gsDataCurrent.animationSpeed == 1f) {
                 as1.SetColor("na0");
                 as2.SetColor("normal");
             }
@@ -206,10 +206,10 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetTutorial(bool value) {
-            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = value;
+            GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = value;
 
             if (value == true) {    // setting tutorial to true, will reset all tips
-                GameManager.instance.tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
+                GameManager.instance.gsDataCurrent.tutorialTriggers = Enumerable.Repeat<bool>(true, System.Enum.GetNames(typeof(TutorialConstants.tutorialTriggers)).Length).ToArray();
                 tutorialYes.SetColor("na0");
                 tutorialNo.SetColor("normal");
             }
@@ -220,7 +220,7 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetTips(bool value) {
-            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] = value;
+            GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] = value;
 
             if (value == true) {
                 tipsYes.SetColor("na0");
@@ -233,7 +233,7 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetAnimationSpeed(float value) {
-            GameManager.instance.animationSpeed = value;
+            GameManager.instance.gsDataCurrent.animationSpeed = value;
 
             if (value == 1f) {
                 as1.SetColor("na0");
@@ -270,8 +270,8 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetFullScreen(bool isFullScreen) {
-            GameManager.instance.isFullscreen = isFullScreen;
-            Screen.fullScreen = GameManager.instance.isFullscreen;
+            GameManager.instance.gsDataCurrent.isFullscreen = isFullScreen;
+            Screen.fullScreen = GameManager.instance.gsDataCurrent.isFullscreen;
 
             if (isFullScreen == true) {
                 fullscreenYes.SetColor("na0");
@@ -284,9 +284,9 @@ namespace Menus.OptionsMenu {
         }
 
         public void SetResolution(int resolutionIndex) {
-            GameManager.instance.resolutionWidth = resolutions[resolutionIndex, 0];
-            GameManager.instance.resolutionHeight = resolutions[resolutionIndex, 1];
-            Screen.SetResolution(GameManager.instance.resolutionWidth, GameManager.instance.resolutionHeight, Screen.fullScreen);
+            GameManager.instance.gsDataCurrent.resolutionWidth = resolutions[resolutionIndex, 0];
+            GameManager.instance.gsDataCurrent.resolutionHeight = resolutions[resolutionIndex, 1];
+            Screen.SetResolution(GameManager.instance.gsDataCurrent.resolutionWidth, GameManager.instance.gsDataCurrent.resolutionHeight, Screen.fullScreen);
         }
     }
 }

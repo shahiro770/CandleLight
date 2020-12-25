@@ -50,7 +50,7 @@ namespace PlayerUI {
                 btss[1].SetColorBlock("na0", UIManager.instance.orangeBlock);
             }
         
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {                   // panels aren't opened immediatel in the tutorial
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {                   // panels aren't opened immediatel in the tutorial
                 if (panels[0].GetPanelName() == PanelConstants.PARTYPANEL) {  // right tabManager
                     OpenPanel(0);
                     if (PartyManager.instance.GetSkillPointsAll() > 0) {    // only excite if there are skill points unspent (which may not be the case on continue)

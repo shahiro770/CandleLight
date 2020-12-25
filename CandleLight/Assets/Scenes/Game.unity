@@ -1527,9 +1527,9 @@ MonoBehaviour:
         <type>k__BackingField: 
         <costFormula>k__BackingField: 
         <damageFormula>k__BackingField: 
-        <scope>k__BackingField: 
-        <seNameKey>k__BackingField: 
-        <seName>k__BackingField: 
+        <scope>k__BackingField: 0
+        <seNameValue>k__BackingField: 
+        <seName>k__BackingField: 0
         <seDuration>k__BackingField: 0
         <baseSeChance>k__BackingField: 0
         <seChance>k__BackingField: 0
@@ -1551,7 +1551,50 @@ MonoBehaviour:
     fastestTime: 0
     resolutionWidth: 0
     resolutionHeight: 0
-    mostEnemies: 0
+    mostMonsters: 0
+    mostWAX: 0
+    mostEvents: 0
+  gsDataCurrent:
+    hsds: []
+    pastItemData:
+      nameID: 
+      className: 
+      effects: []
+      values: 
+      effectsNum: 0
+      a:
+        <animationClipName>k__BackingField: 
+        <costType>k__BackingField: 
+        <nameKey>k__BackingField: 
+        <name>k__BackingField: 
+        <type>k__BackingField: 
+        <costFormula>k__BackingField: 
+        <damageFormula>k__BackingField: 
+        <scope>k__BackingField: 0
+        <seNameValue>k__BackingField: 
+        <seName>k__BackingField: 0
+        <seDuration>k__BackingField: 0
+        <baseSeChance>k__BackingField: 0
+        <seChance>k__BackingField: 0
+        attackValue: 0
+        costValue: 0
+      uses: 0
+      maxUses: 0
+    tutorialTriggers: 
+    achievementsUnlocked: 
+    aromas: 
+    isTimer: 0
+    isFullscreen: 0
+    version: 0
+    difficultyModifier: 0
+    scoreModifier: 0
+    animationSpeed: 0
+    bgmVolume: 0
+    sfxVolume: 0
+    fastestTime: 0
+    resolutionWidth: 0
+    resolutionHeight: 0
+    mostMonsters: 0
     mostWAX: 0
     mostEvents: 0
   rData:
@@ -1565,7 +1608,7 @@ MonoBehaviour:
     WAX: 0
     subAreaProgress: 0
     areaProgress: 0
-    enemiesKilled: 0
+    monstersKilled: 0
     WAXobtained: 0
     totalEvents: 0
     subAreaResets: 0
@@ -1575,17 +1618,10 @@ MonoBehaviour:
   canvasWidth: 960
   canvasHeight: 540
   canvasScaleFactor: 53.999992
-  animationSpeed: 0
   timeTaken: -1
-  resolutionWidth: 0
-  resolutionHeight: 0
-  difficultyModifier: 0
-  enemiesKilled: 0
+  monstersKilled: 0
   WAXobtained: 0
   totalEvents: 0
-  tutorialTriggers: 01010101010101010101
-  achievementsUnlocked: 00000000000000000000
-  isFullscreen: 0
 --- !u!4 &1827646565
 Transform:
   m_ObjectHideFlags: 0
@@ -1736,6 +1772,12 @@ MonoBehaviour:
   subtitleColour:
     serializedVersion: 2
     rgba: 4289901234
+  whiteColour:
+    serializedVersion: 2
+    rgba: 4294967295
+  hideColour:
+    serializedVersion: 2
+    rgba: 0
   unusableColourString: '#C42430'
   subtitleColourString: '#B2B2B2'
   orangeBlock:

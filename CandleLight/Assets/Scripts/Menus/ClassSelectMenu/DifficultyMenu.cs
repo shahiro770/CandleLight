@@ -78,7 +78,7 @@ namespace Menus.ClassSelectMenu {
         /// </summary> 
         void OnEnable() {
             partyComposition = csm.partyComposition;
-            difficultyModifierToBe = GameManager.instance.difficultyModifier;
+            difficultyModifierToBe = GameManager.instance.gsDataCurrent.difficultyModifier;
             aromasToBe = new bool[aromaBtss.Length];
             if (difficultyModifierToBe == 0.75f) {
                 SelectDifficultyButton(0);
@@ -87,7 +87,7 @@ namespace Menus.ClassSelectMenu {
                 SelectDifficultyButton(1);
             }
             for (int i = 0; i < aromaBtss.Length; i++) {
-                aromasToBe[i] = GameManager.instance.gsData.aromas[i];
+                aromasToBe[i] = GameManager.instance.gsDataCurrent.aromas[i];
                 if (aromasToBe[i] == true) {
                     aromas[i].sprite = aromaActiveSprites[i];
                     aromaBtss[i].SetColor("na0");  
@@ -127,6 +127,7 @@ namespace Menus.ClassSelectMenu {
                     difficultyBtss[i].SetColor("normal");                  
                 }
             }
+            GameManager.instance.gsDataCurrent.difficultyModifier = difficultyModifierToBe;
 
             CalculateScoreModifier(true);
         }
@@ -153,7 +154,8 @@ namespace Menus.ClassSelectMenu {
 
             difficultyTitle.SetKey("aroma" + index + "_title");
             difficultyDes.SetKey("aroma" + index + "_des");
-            
+            GameManager.instance.gsDataCurrent.aromas[index] = aromasToBe[index];
+
             CalculateScoreModifier(true);
         }
 
@@ -212,7 +214,7 @@ namespace Menus.ClassSelectMenu {
                 scoreModifierText.SetKeyAndAppend("score_modifier_title", "x" + scoreModifier);
             }
             else {
-                GameManager.instance.gsData.scoreModifier = scoreModifier;
+                GameManager.instance.gsDataCurrent.scoreModifier = scoreModifier;
             }
         }
 
@@ -221,17 +223,15 @@ namespace Menus.ClassSelectMenu {
         /// </summary> 
         /// <remark> TODO: World map scene still has to be made </remark>
         public void BeginGame() {
-            GameManager.instance.DeleteSaveData();
+            GameManager.instance.DeleteRunData();
             foreach (string pm in partyComposition) {
                 PartyManager.instance.AddPartyMember(pm);
             }
-            // only modifier all gsData properties on game start (otherwise player can change game properties mid run)
-            GameManager.instance.difficultyModifier = difficultyModifierToBe;
-            for (int i = 0; i < aromasToBe.Length; i++) {
-                GameManager.instance.gsData.aromas[i] = aromasToBe[i];
-            }
+
             CalculateScoreModifier(false);
-            
+            // RunData data = new RunData(null, -1, null, null, null, null, -1, null, -1, -1, -1, -1f, null, -1,
+            // difficultyModifierToBe, aromasToBe);
+            GameManager.instance.SaveGeneralData();
             // partyComposition is going to be length 0 anyways on scene load
             GameManager.instance.StartLoadNextScene("Area");
         }

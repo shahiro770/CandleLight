@@ -69,7 +69,7 @@ namespace Menus.Stats {
             for (int i = 0; i < achievements.Length; i++) {
                 achievements[i].SetSprite(GameManager.instance.achievementSprites[i]);
                 achievements[i].SetTooltip(i);
-                achievements[i].SetColour(GameManager.instance.achievementsUnlocked[i]);
+                achievements[i].SetColour(GameManager.instance.gsDataCurrent.achievementsUnlocked[i]);
             }
 
             monstersAmount.SetText(GameManager.instance.gsData.mostMonsters.ToString());

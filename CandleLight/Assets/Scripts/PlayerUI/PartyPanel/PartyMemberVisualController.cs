@@ -478,7 +478,7 @@ namespace Characters {
                         yield return (StartCoroutine(pmdPartyPanel.PlayDamagedAnimation()));
                     }
                     if (pm.CHP == 0) {
-                        yield return new WaitForSeconds(0.5f / GameManager.instance.animationSpeed);
+                        yield return new WaitForSeconds(0.5f / GameManager.instance.gsDataCurrent.animationSpeed);
                     }
                 }
                 else if (isLoss == false && CombatManager.instance.inCombat == true && isHealAnim == true) {
@@ -492,7 +492,7 @@ namespace Characters {
                     else {
                         eventDescription.SetPMHealText(pm, attackAmount);
                     }
-                    yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
+                    yield return new WaitForSeconds(1f / GameManager.instance.gsDataCurrent.animationSpeed);
                 }
             }
             else {
@@ -517,7 +517,7 @@ namespace Characters {
                         eventDescription.SetPMHealText(pm, attackAmount);
                     }
                 }
-                yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
+                yield return new WaitForSeconds(1f / GameManager.instance.gsDataCurrent.animationSpeed);
             }
             isAnimating = false;
         }
@@ -548,7 +548,7 @@ namespace Characters {
                     eventDescription.SetPMFocusText(pm, attackAmount);
                 }
 
-                yield return new WaitForSeconds(1f / GameManager.instance.animationSpeed);
+                yield return new WaitForSeconds(1f / GameManager.instance.gsDataCurrent.animationSpeed);
             }
 
             yield break;
@@ -565,7 +565,7 @@ namespace Characters {
                 yield return (StartCoroutine(pmdPartyPanel.PlayDodgedAnimation()));
             }
             else {
-                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.gsDataCurrent.animationSpeed);
             }
             isAnimating = false;
         }
@@ -581,7 +581,7 @@ namespace Characters {
                 yield return (StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName)));
             }
             else {
-                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.gsDataCurrent.animationSpeed);
             }
         }
 
@@ -596,7 +596,7 @@ namespace Characters {
                 yield return (StartCoroutine(pmdPartyPanel.PlaySpawnAnimation()));  
             }
             else {
-                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.gsDataCurrent.animationSpeed);
             }
         }
 
@@ -610,7 +610,7 @@ namespace Characters {
                 yield return StartCoroutine(pmdPartyPanel.PlayEffectAnimation(animationClipName));
             }
             else {
-                yield return new WaitForSeconds(0.75f / GameManager.instance.animationSpeed);
+                yield return new WaitForSeconds(0.75f / GameManager.instance.gsDataCurrent.animationSpeed);
             }
         }
 

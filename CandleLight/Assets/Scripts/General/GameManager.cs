@@ -41,25 +41,18 @@ namespace General {
         public Camera mainCamera { get; private set; }  /// <value> Cached main camera reference for performance </value>
         public GameDB DB { get; set; }                  /// <value> Access to database to fetch and store information </value>
         public Item pastItem;                           /// <value> Item stored from previous run under special condition </value>
-        public GeneralSaveData gsData;                  /// <value> Data that cannot be cleared after a run ends </value>
+        public GeneralSaveData gsData;                  /// <value> Data that can be saved to a file at any time, unaffecting the current run (for the most part) </value>
+        public GeneralSaveData gsDataCurrent;           /// <value> Mutable copy of gsData, effectively the "state" for several game variables </value>
         public RunData rData;                           /// <value> Data that was loaded from a save file regarding a run </value>
         public Sprite[] achievementSprites;             /// <value> Sprite array for all achievement sprites (loaded here cause both area and mainMenu need this) </value>
         public string areaName = "GreyWastes";          /// <value> Name of area being explored, which is constant until dlc comes out </value>
         public float canvasWidth = 960;                     /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasHeight = 540;                    /// <value> gameObject positions on the screen are scaled via the canvas, change this number if scaling changes </value>
         public float canvasScaleFactor = 1 / 0.01851852f;   /// <value> Factor to scale up position values in code </value>
-        public float animationSpeed;                    /// <value> Value that alters the speed of animations </value>
         public float timeTaken = -1;                    /// <value> Time spent on the most recent run (-1 means run ended in a loss) </value>
-        public int resolutionWidth;
-        public int resolutionHeight;
-        public float difficultyModifier;                /// <value> Game's difficulty modifier (changes various things) </value>
-        public int monstersKilled = 0;                   /// <value> Number of monsters killed </value>
+        public int monstersKilled = 0;                  /// <value> Number of monsters killed </value>
         public int WAXobtained = 0;                     /// <value> Amount of WAX obtained (doesn't matter if its spent) </value>
         public int totalEvents = 0;                     /// <value> Total number of events visited </value>
-        public bool[] tutorialTriggers;                 /// <value> List of tutorials/tips that have yet to be triggered (true if not yet triggered) </value>
-        public bool[] achievementsUnlocked;             /// <value> List of achievements not yet unlocked (false if not unlocked)</value>
-        public bool isFullscreen;                       /// <value> </value>
-        public string[,] partyCombos;                   /// <value> List of party combinations player has yet to clear the game with </value>
 
         private string activeScene = "Game";            /// <value> Current scene being displayed </value>
         private string areaScene = "Area";              /// <value> Name of area scene </value>
@@ -132,12 +125,13 @@ namespace General {
         /// Saves the game's data
         /// </summary>
         /// <param name="data"></param>
-        public void SaveRunData(RunData data) {
+        public void SaveRunData(RunData rDataToSave) {
+            rData = rDataToSave;
             BinaryFormatter formatter  = new BinaryFormatter();
             string path = Application.persistentDataPath + "/save.cndl";
             FileStream s = new FileStream(path, FileMode.Create);
 
-            formatter.Serialize(s, data);
+            formatter.Serialize(s, rDataToSave);
             s.Close();
         }
 
@@ -145,7 +139,7 @@ namespace General {
         /// Saves data that isn't meant to be cleared 
         /// </summary>
         /// <param name="data"></param>
-        public void SaveGeneralData(GeneralSaveData gsData) {
+        public void SaveGeneralData(GeneralSaveData gsDataToSave) {
             ItemData pastItemData = null;
             if (pastItem != null) {
                 if (pastItem.type == ItemConstants.CANDLE) {
@@ -155,33 +149,33 @@ namespace General {
                     pastItemData = pastItem.GetItemData();
                 }
             }
-            gsData.pastItemData = pastItemData;
-            gsData.difficultyModifier = difficultyModifier;
-            if (this.gsData.mostMonsters < monstersKilled) {
-                gsData.mostMonsters = monstersKilled;
+            gsDataToSave.pastItemData = pastItemData;
+
+            if (gsDataToSave.mostMonsters < monstersKilled) {
+                gsDataToSave.mostMonsters = monstersKilled;
             }
             else {
-                gsData.mostMonsters = this.gsData.mostMonsters;
+                gsDataToSave.mostMonsters = gsData.mostMonsters;
             }
-            if (this.gsData.mostEvents < totalEvents) {
-                gsData.mostEvents = totalEvents;
-            }
-            else {
-                gsData.mostEvents = this.gsData.mostEvents;
-            }
-            if (this.gsData.mostWAX < WAXobtained) {
-                gsData.mostWAX = WAXobtained;
+            if (gsDataToSave.mostEvents < totalEvents) {
+                gsDataToSave.mostEvents = totalEvents;
             }
             else {
-                gsData.mostWAX = this.gsData.mostWAX;
+                gsDataToSave.mostEvents = gsData.mostEvents;
             }
-            if (timeTaken != -1 && (timeTaken < this.gsData.fastestTime || this.gsData.fastestTime == -1)) {    // only update time if it was faster and the player won
-                gsData.fastestTime = timeTaken;
+            if (gsDataToSave.mostWAX < WAXobtained) {
+                gsDataToSave.mostWAX = WAXobtained;
             }
             else {
-                gsData.fastestTime = this.gsData.fastestTime;;
+                gsDataToSave.mostWAX = gsData.mostWAX;
             }
-            this.gsData = gsData;
+            if (timeTaken != -1 && (timeTaken < gsData.fastestTime || gsData.fastestTime == -1)) {    // only update time if it was faster and the player won
+                gsDataToSave.fastestTime = timeTaken;
+            }
+            else {
+                gsDataToSave.fastestTime = gsData.fastestTime;;
+            }
+            gsData = gsDataToSave;
 
             BinaryFormatter formatter  = new BinaryFormatter();
             string path = Application.persistentDataPath + "/generalSave.cndl";
@@ -192,24 +186,16 @@ namespace General {
         }
 
         public void SaveGeneralData() {
-            GeneralSaveData gsDataNew = new GeneralSaveData(
-                gsData.version, 
-                null, 
-                gsData.hsds, 
-                tutorialTriggers, 
-                achievementsUnlocked, 
-                gsData.aromas, 
-                partyCombos, 
-                UIManager.instance.isTimer,
-                gsData.scoreModifier,
-                animationSpeed, 
-                AudioManager.instance.bgmVolume, 
-                AudioManager.instance.sfxVolume,
-                isFullscreen, 
-                resolutionWidth, 
-                resolutionHeight
-            );
-            GameManager.instance.SaveGeneralData(gsDataNew);
+            if (rData != null) {    // do not update these properties if a run is currently in progress
+                gsDataCurrent.aromas = gsData.aromas;
+                gsDataCurrent.difficultyModifier = gsData.difficultyModifier;
+                gsDataCurrent.mostMonsters = gsData.mostMonsters;
+                gsDataCurrent.mostEvents = gsData.mostEvents;
+                gsDataCurrent.mostWAX = gsData.mostWAX;
+                gsDataCurrent.fastestTime = gsData.fastestTime;
+            }
+            gsData = new GeneralSaveData(gsDataCurrent);
+            GameManager.instance.SaveGeneralData(gsData);
         }
 
         /// <summary>
@@ -227,8 +213,9 @@ namespace General {
                 rData = formatter.Deserialize(s) as RunData;
                 s.Close();
 
-                tutorialTriggers = rData.tutorialTriggers;
-                difficultyModifier = rData.difficultyModifier;
+                gsData.tutorialTriggers = rData.tutorialTriggers;
+                gsData.difficultyModifier = rData.difficultyModifier;
+                gsData.aromas = rData.aromas;
                 PartyManager.instance.LoadData(rData);
                 
                 StartLoadNextScene("area");
@@ -254,20 +241,12 @@ namespace General {
                     SetInitialGeneralData();
                 }
                 else {
-                    tutorialTriggers = gsData.tutorialTriggers;
-                    achievementsUnlocked = gsData.achievementsUnlocked;
-                    partyCombos = gsData.partyCombos;
-                    animationSpeed = gsData.animationSpeed;
                     UIManager.instance.isTimer = gsData.isTimer;
                     AudioManager.instance.bgmVolume = gsData.bgmVolume;
                     AudioManager.instance.sfxVolume = gsData.sfxVolume;
-                    isFullscreen = gsData.isFullscreen;
-                    Screen.fullScreen = isFullscreen;
-                    resolutionWidth = gsData.resolutionWidth;
-                    resolutionHeight = gsData.resolutionHeight;
-                    Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+                    Screen.fullScreen = gsData.isFullscreen;
+                    Screen.SetResolution(gsData.resolutionWidth, gsData.resolutionHeight, Screen.fullScreen);
 
-                    difficultyModifier = gsData.difficultyModifier;
                     if (gsData.pastItemData != null) {
                         if (gsData.pastItemData.type == ItemConstants.GEAR) {
                             pastItem = new Gear(gsData.pastItemData);
@@ -279,6 +258,7 @@ namespace General {
                             pastItem = new Special(gsData.pastItemData);
                         }
                     }
+                    gsDataCurrent = new GeneralSaveData(gsData);
                 }
             }
             else {  // default settings on first load, or if generalSaveData non existance
@@ -312,9 +292,8 @@ namespace General {
                 0,      // most events
                 -1      // fastest clear time
             );    
-            tutorialTriggers = gsData.tutorialTriggers;
-            achievementsUnlocked = gsData.achievementsUnlocked;
-            partyCombos = new string[,] { 
+
+            gsData.partyCombos = new string[,] { 
                 { ClassConstants.ARCHER, ClassConstants.ARCHER }, 
                 { ClassConstants.ARCHER, ClassConstants.MAGE }, 
                 { ClassConstants.ARCHER, ClassConstants.ROGUE },
@@ -326,8 +305,6 @@ namespace General {
                 { ClassConstants.ROGUE, ClassConstants.WARRIOR }, 
                 { ClassConstants.WARRIOR, ClassConstants.WARRIOR }, 
             };
-            gsData.partyCombos = partyCombos;
-            animationSpeed = gsData.animationSpeed;               
             UIManager.instance.isTimer = gsData.isTimer;
             AudioManager.instance.bgmVolume = gsData.bgmVolume;
             AudioManager.instance.sfxVolume = gsData.sfxVolume;
@@ -355,15 +332,11 @@ namespace General {
                     gsData.resolutionHeight = resolutions[resolutions.Length - 1, 1];
                 }
             }
-
-            resolutionWidth = gsData.resolutionWidth;
-            resolutionHeight = gsData.resolutionHeight;
             Screen.fullScreen = false;
-            Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+            Screen.SetResolution(gsData.resolutionWidth, gsData.resolutionHeight, Screen.fullScreen);
 
-            difficultyModifier = gsData.difficultyModifier;
-            pastItem = null;
             SaveGeneralData(gsData);
+            gsDataCurrent = new GeneralSaveData(gsData);
         }
 
         /// <summary>
@@ -379,7 +352,7 @@ namespace General {
         /// <summary>
         /// Delete run-specific save data
         /// </summary>
-        public void DeleteSaveData() {
+        public void DeleteRunData() {
             string path = Application.persistentDataPath + "/save.cndl";
             if (File.Exists(path)) {
                 File.Delete(path);

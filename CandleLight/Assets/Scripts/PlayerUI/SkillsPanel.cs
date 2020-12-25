@@ -118,9 +118,9 @@ namespace PlayerUI {
                             sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }            
                     }
-                    else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
-                    && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillDisable] == true) {
-                        GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillDisable] = false;
+                    else if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
+                    && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillDisable] == true) {
+                        GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillDisable] = false;
                         EventManager.instance.SetTutorialNotification("skills2");     
                     }
                 }
@@ -134,9 +134,9 @@ namespace PlayerUI {
                             UpdateSkillsVisible();
                             sd.pmd.UpdateSkillPointsText(PartyManager.instance.GetSkillPoints());
                         }
-                        else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
-                        && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillEnable] == true) {
-                            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillEnable] = false;
+                        else if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
+                        && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillEnable] == true) {
+                            GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstFailedSkillEnable] = false;
                             EventManager.instance.SetTutorialNotification("skills3");    
                         }
                     }

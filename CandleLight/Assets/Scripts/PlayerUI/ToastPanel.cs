@@ -277,7 +277,7 @@ namespace PlayerUI {
         }
 
         public IEnumerator FadeOut() {
-            yield return new WaitForSeconds(2.8f - (-1f + GameManager.instance.animationSpeed));
+            yield return new WaitForSeconds(2.8f - (-1f + GameManager.instance.gsDataCurrent.animationSpeed));
             SetVisible(false);
         }
         

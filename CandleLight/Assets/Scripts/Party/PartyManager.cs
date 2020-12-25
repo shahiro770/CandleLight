@@ -69,7 +69,7 @@ namespace Party {
         /// </summary>   
         /// <param name="className"> Class of the partyMember to be added </param>
         public void AddPartyMember(string className) {
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true && GetNumPartyMembers() == 1 && shouldStore == true) { // if in tutorial, the second partyMember joins later
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true && GetNumPartyMembers() == 1 && shouldStore == true) { // if in tutorial, the second partyMember joins later
                 storedPartyMember = className;
                 shouldStore = false;
             }
@@ -80,7 +80,7 @@ namespace Party {
                 newMember.transform.SetParent(gameObject.transform, false);
                 pmComponent.ID = (ID++);
                 pmComponent.GenerateName(GetNumPartyMembers());
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+                if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                     pmComponent.LVLDown();
                 }
                 partyMembersAlive.Add(pmComponent);
@@ -415,7 +415,7 @@ namespace Party {
         /// <param name="amount"> Positive int amount to be added </param>
         public void AddEXP(int amount) {
             foreach (PartyMember pm in partyMembersAlive) {
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+                if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                     StartCoroutine(pm.AddEXP((int)(amount)));   // ignore multiplier on EXP in the tutorial
                 }
                 else {
@@ -813,7 +813,7 @@ namespace Party {
 
             // if in tutorial, the second partyMember joins later, so need to use storedPartyMember if that partyMember hasn't joined yet
             // this is only relevant if the player tries to restart in the tutorial
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true && storedPartyMember != null) { 
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true && storedPartyMember != null) { 
                 partyComposition = new string[partyMembersAll.Count + 1];
                 partyComposition[0] = partyMembersAll[0].className;
                 partyComposition[1] = storedPartyMember;

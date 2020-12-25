@@ -182,7 +182,7 @@ namespace Characters {
                     MATK += (int)(MATK * 0.5);
                 }
                 else if (se.name == StatusEffectConstant.BREAK) {
-                    PDEF -= (int)(PDEF * 0.5);
+                    PDEF -= Mathf.Max(2, (int)(PDEF * 0.5));
                 }
                 else if (se.name == StatusEffectConstant.CHAMPIONHP) {
                     HP += (int)(HP * 0.66);
@@ -398,7 +398,7 @@ namespace Characters {
         /// Applies changes to a monster based on the game's difficulty
         /// </summary>
         public void ApplyDifficultyChanges() {
-            if (GameManager.instance.difficultyModifier == 0.75f) {
+            if (GameManager.instance.gsData.difficultyModifier == 0.75f) {
                 if (monsterNameID != "TutorialGreyhide 1 1") {  // tutorial greyhide needs 10 hp for tutorial to complete properly
                     difficultyModifier = 0.75f;
                     if (hardModeAttackIndex != -1) {
@@ -458,9 +458,9 @@ namespace Characters {
                 CHP = 0;
             }
             
-            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.LOTTADAMAGE] == false) {
+            if (GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.LOTTADAMAGE] == false) {
                 if (amount >= 50) {
-                    GameManager.instance.achievementsUnlocked[(int)achievementConstants.LOTTADAMAGE] = true;
+                    GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.LOTTADAMAGE] = true;
                     EventManager.instance.SetAchievementNotification((int)achievementConstants.LOTTADAMAGE);
                 }
             }
@@ -708,9 +708,9 @@ namespace Characters {
                 if (seName == StatusEffectConstant.STUN) {
                     PartyManager.instance.TriggerSkillEnabled(ClassConstants.ROGUE, (int)SkillConstants.RogueSkills.AMBUSHER, c);
                 }
-                if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] == false) {
+                if (GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] == false) {
                     if (statusEffects.Count >= 5) {
-                        GameManager.instance.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] = true;
+                        GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.ANTIMASKERS] = true;
                         EventManager.instance.SetAchievementNotification((int)achievementConstants.ANTIMASKERS);
                     }  
                 }

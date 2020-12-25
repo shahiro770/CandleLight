@@ -81,36 +81,36 @@ namespace Menus.GameOverMenu {
             timeAmount.SetText(timeString);
             scoreAmount.SetText(CalculateScore().ToString());
 
-            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] == false && isWin == true
-            && GameManager.instance.difficultyModifier == 1f) {
+            if (GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] == false && isWin == true
+            && GameManager.instance.gsData.difficultyModifier == 1f) {
                 string[] partyComp = PartyManager.instance.GetPartyCompositionSorted();
-                for (int i = 0; i < GameManager.instance.partyCombos.GetLength(0); i++) {
+                for (int i = 0; i < GameManager.instance.gsDataCurrent.partyCombos.GetLength(0); i++) {
                     bool match = true;
                     for (int j = 0; j < partyComp.Length; j++) {
-                        if (GameManager.instance.partyCombos[i,j] != partyComp[j]) {
+                        if (GameManager.instance.gsDataCurrent.partyCombos[i,j] != partyComp[j]) {
                             match = false;
                             break;
                         } 
                     }
                     if (match == true) {
-                        GameManager.instance.partyCombos[i, 0] = null;  // setting first entry in a combo to null means its been completed
+                        GameManager.instance.gsDataCurrent.partyCombos[i, 0] = null;  // setting first entry in a combo to null means its been completed
                         break;
                     }
                 }
-                for (int i = 0 ; i < GameManager.instance.partyCombos.GetLength(0); i++) {
-                    if (GameManager.instance.partyCombos[i, 0] != null) {
+                for (int i = 0 ; i < GameManager.instance.gsDataCurrent.partyCombos.GetLength(0); i++) {
+                    if (GameManager.instance.gsDataCurrent.partyCombos[i, 0] != null) {
                         break;
                     }
-                    else if (i == GameManager.instance.partyCombos.GetLength(0) - 1) {
-                        GameManager.instance.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] = true;
+                    else if (i == GameManager.instance.gsDataCurrent.partyCombos.GetLength(0) - 1) {
+                        GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.ABSOLUTEMASTERY] = true;
                         EventManager.instance.SetAchievementNotification((int)achievementConstants.ABSOLUTEMASTERY, true);
                     }
                 }  
             }
-            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] == false && isWin == true 
-            && GameManager.instance.difficultyModifier == 1f) {
+            if (GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.NOTIME] == false && isWin == true 
+            && GameManager.instance.gsData.difficultyModifier == 1f) {
                 if (TimeSpan.FromSeconds(GameManager.instance.timeTaken).TotalSeconds < 720) {
-                    GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOTIME] = true;
+                    GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.NOTIME] = true;
                     EventManager.instance.SetAchievementNotification((int)achievementConstants.NOTIME, true);
                 }      
             }

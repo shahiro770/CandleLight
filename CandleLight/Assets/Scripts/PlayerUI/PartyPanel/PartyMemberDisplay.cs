@@ -250,7 +250,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayDamagedAnimation() {
-            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
+            pmDisplayAnimator.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             pmDisplayAnimator.SetTrigger("damaged");
             do {
                 yield return null;    
@@ -263,7 +263,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayCritDamagedAnimation() {
-            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
+            pmDisplayAnimator.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             pmDisplayAnimator.SetTrigger("damagedCrit");
             do {
                 yield return null;    
@@ -276,7 +276,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayDodgedAnimation() {
-            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
+            pmDisplayAnimator.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             pmDisplayAnimator.SetTrigger("dodged");
             do {
                 yield return null;    
@@ -289,7 +289,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlaySpawnAnimation() {
-            pmDisplayAnimator.speed = GameManager.instance.animationSpeed;
+            pmDisplayAnimator.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             pmDisplayAnimator.SetTrigger("spawn");
             do {
                 yield return null;    
@@ -319,7 +319,7 @@ namespace PlayerUI {
         /// </summary>
         /// <returns> Waits for animation to finish playing </returns>
         public IEnumerator PlayEffectAnimation(string animationClipName) {
-            pmEffectsAnimator.speed = GameManager.instance.animationSpeed;
+            pmEffectsAnimator.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             SetEffectsAnimatorClip(animationClipName);
             pmEffectsAnimator.SetTrigger("statusEffected");
             do {
@@ -329,7 +329,7 @@ namespace PlayerUI {
         }
 
         public IEnumerator PlaySEAnimation(Animator animator) {
-            animator.speed = GameManager.instance.animationSpeed;
+            animator.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             animator.SetTrigger("statusEffected");
             do {
                 yield return null;    

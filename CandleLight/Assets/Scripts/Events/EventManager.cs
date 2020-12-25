@@ -306,7 +306,7 @@ namespace Events {
         /// Since the girl's sprite is class-based, these need to be loaded right after the class is decided.
         /// </summary>
         public void LoadGirlSprites() {
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 girlSprites[0] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.storedPartyMember + "0");
                 girlSprites[1] = Resources.Load<Sprite>("Sprites/Classes/Girl" + PartyManager.instance.storedPartyMember + "1");
             }
@@ -419,7 +419,7 @@ namespace Events {
                 currentEvent = currentSubArea.GetEvent(areaProgress);
                 StartCoroutine(DisplayEvent());
             }
-            else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+            else if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 areaProgress = 0;
                 PlaySubAreaBGM();
                 AlterParticleSystem();
@@ -596,7 +596,7 @@ namespace Events {
         
         public void EndTutorial() {
             tutorialProg++;             
-            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
+            GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] = false; // if the player continues into the main game from the tutorial, base tutorial popups can no longer trigger
             subAreaProgress += 20;
             actionsPanel.SetToggleButtonLocked(false);
         }
@@ -738,10 +738,10 @@ namespace Events {
             }
 
             PartyManager.instance.RegenParty();
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
-            && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] == true
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
+            && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] == true
             && areaProgress == 2) {
-                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] = false;
+                GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.thirdPivotalMomentreached] = false;
                 SetTutorialNotification("save");
             }
 
@@ -845,8 +845,8 @@ namespace Events {
                 actionsPanel.ClearAllActions();
                 rewardsPanel.SetVisible(true);
                 PartyManager.instance.SetActivePartyMember(PartyManager.instance.GetFirstPartyMemberAlive());   // prevents summoned partyMembers's inventories from appearing post combat
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true || 
-                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true) {
+                if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true || 
+                GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true) {
                     SetToastPanelsVisible(false);
                 }
 
@@ -874,7 +874,7 @@ namespace Events {
                 skillsPanel.SetTogglable(true);
                 actionsPanel.SetToggleButtonInteractable(true);
 
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {
+                if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == false) {
                     actionsPanel.PostCombatActions(rewardsPanel.itemNum);
                 }
                 else {
@@ -891,7 +891,7 @@ namespace Events {
         /// <param name="r"> Result containing items </param>
         /// <returns> List of items </returns>
         public List<Item> GetResultItems(Result r) {
-            if (GameManager.instance.difficultyModifier == 0.75f) {     // normal mode has worse items
+            if (GameManager.instance.gsData.difficultyModifier == 0.75f) {     // normal mode has worse items
                 r.DowngradeResult();
             }
             r.GenerateResults();
@@ -958,14 +958,14 @@ namespace Events {
                 }
             }
 
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
-            && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstConsumable] == true && r.itemType == ItemConstants.CONSUMABLE) {
-                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstConsumable] = false;
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true
+            && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstConsumable] == true && r.itemType == ItemConstants.CONSUMABLE) {
+                GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstConsumable] = false;
                 SetTutorialNotification("consumable");
             }
-            else if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true  
-            && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandle] == true && r.itemType == ItemConstants.CANDLE) {
-                GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandle] = false;
+            else if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true  
+            && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandle] == true && r.itemType == ItemConstants.CANDLE) {
+                GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandle] = false;
                 SetTutorialNotification("candles0");
             }
 
@@ -986,7 +986,7 @@ namespace Events {
             Result r = m.monsterReward;
             
             if (r.itemType == ItemConstants.GEAR) {  
-                if (GameManager.instance.difficultyModifier == 0.75f) {     // normal mode has worse items
+                if (GameManager.instance.gsData.difficultyModifier == 0.75f) {     // normal mode has worse items
                     r.DowngradeResult();
                 }
                 r.GenerateResults();
@@ -1042,7 +1042,7 @@ namespace Events {
                 }
                 else {
                     int stat = PartyManager.instance.GetPrimaryStatAll(i.checkIndicator);
-                    int threshold = (int)(Random.Range(i.statThreshold * 0.6f, i.statThreshold * 1.3f) * GameManager.instance.difficultyModifier) 
+                    int threshold = (int)(Random.Range(i.statThreshold * 0.6f, i.statThreshold * 1.3f) * GameManager.instance.gsData.difficultyModifier) 
                     - (int)(PartyManager.instance.GetPrimaryStatAll((int)checkIndicators.LUK) * 0.2f);
                     if (threshold < 0) {
                         threshold = 0;
@@ -1249,9 +1249,9 @@ namespace Events {
 
                     eventDescription.SetKey(currentResult.resultKey);
 
-                    if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
-                    && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstShop] == true) {
-                        GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstShop] = false;
+                    if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
+                    && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstShop] == true) {
+                        GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstShop] = false;
                         SetTutorialNotification("shop");
                     }
                     break;
@@ -1784,7 +1784,7 @@ namespace Events {
         /// </summary>
         /// <returns></returns>
         public IEnumerator DisplayGameOver(bool isWin) {
-            GameManager.instance.DeleteSaveData();
+            GameManager.instance.DeleteRunData();
             timer.StartTimer(false);
             aromaTimer.StartTimerAroma(false);
             if (isWin == false) {
@@ -2054,6 +2054,7 @@ namespace Events {
                     toastPanel0.SetAchievementNotification(GameManager.instance.achievementSprites[index], index, isHighLayer);
                 }
             }
+            GameManager.instance.SaveGeneralData(); // after getting an achievement, save the game to update (kinda bad with it being tied to a visual)
         }
 
         /// <summary>
@@ -2160,7 +2161,7 @@ namespace Events {
         }
 
         public void RestartRun() {
-            GameManager.instance.DeleteSaveData();
+            GameManager.instance.DeleteRunData();
             optionsMenu.cg.interactable = false;
             Time.timeScale = 1;
             if ((areaProgress == 0 || areaProgress == 1) && currentSubArea.name == ("main" + currentAreaName)) {
@@ -2177,6 +2178,7 @@ namespace Events {
 
         /// <summary>
         /// Ends the run, returning to the main menu
+        /// This is called from the gameOverMenu (main menu button) and pause menu (restart button)
         /// </summary>
         public void EndRun(bool isGameOver) {
             optionsMenu.cg.interactable = false;
@@ -2233,12 +2235,11 @@ namespace Events {
             if (isGameOver == false) {
                 RunData data = new RunData(PartyManager.instance.GetPartyMemberDatas(), PartyManager.instance.WAX, 
                 gearPanel.GetSpareGearData(), candlesPanel.GetSpareCandleData(), specialPanel.GetSpareSpecialData(), 
-                infoPanel.GetData(), areaProgress, GameManager.instance.tutorialTriggers, GameManager.instance.monstersKilled,
+                infoPanel.GetData(), areaProgress, GameManager.instance.gsDataCurrent.tutorialTriggers, GameManager.instance.monstersKilled,
                 GameManager.instance.WAXobtained, GameManager.instance.totalEvents, timer.GetElapsedTime(), midPoints, subAreaResets + 1,
-                GameManager.instance.difficultyModifier);
+                GameManager.instance.gsData.difficultyModifier, GameManager.instance.gsData.aromas);
                 GameManager.instance.SaveRunData(data);
             }
-
             GameManager.instance.SaveGeneralData();
         }
 

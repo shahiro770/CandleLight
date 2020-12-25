@@ -181,7 +181,7 @@ namespace Combat {
             if (candlesPanel.isOpen == false) {
                 itemsTabManager.OpenPanel(1);
             }
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 EventManager.instance.SetToastPanelsVisible(false);
             }
             DisableAllButtons();
@@ -190,11 +190,11 @@ namespace Combat {
             }
                   
             if (eventDescription.HasText()) {
-                yield return new WaitForSeconds(1.75f / GameManager.instance.animationSpeed);   
+                yield return new WaitForSeconds(1.75f / GameManager.instance.gsDataCurrent.animationSpeed);   
                 eventDescription.ClearText();    
             }
             else {
-                yield return new WaitForSeconds(0.3f / GameManager.instance.animationSpeed);   
+                yield return new WaitForSeconds(0.3f / GameManager.instance.gsDataCurrent.animationSpeed);   
             }   
         }
 
@@ -283,19 +283,21 @@ namespace Combat {
             else {
                 EnableAllButtonsInSidePanels();
                 eventDescription.ClearText();
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+                if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                     EventManager.instance.ProgressTutorial();
                 }
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandleCombat]  == true 
+                if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips] == true 
+                && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandleCombat]  == true 
                 && PartyManager.instance.IsCandlesEquipped() == true) {
                     EventManager.instance.SetTutorialNotification("candles1");
-                    GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandleCombat] = false;
+                    GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstCandleCombat] = false;
                 }
-                if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips]  == true && GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstChampion] == true) {
+                if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTips]  == true 
+                && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstChampion] == true) {
                     foreach(Monster m in monsters) {
                         if (m.isChampion == true) {
                             EventManager.instance.SetTutorialNotification("champion");
-                            GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstChampion] = false;
+                            GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.firstChampion] = false;
                             break;
                         }
                     }
@@ -321,7 +323,7 @@ namespace Combat {
                 partyPanel.SetBlinkSelectables(null, false);
             }
 
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 EventManager.instance.ProgressTutorial();
             }  
         }
@@ -413,7 +415,7 @@ namespace Combat {
         /// Yields to allow animations to play out when a monster is being attacked or taking damage
         /// </returns>
         public IEnumerator ExecutePMAttack() { 
-            if (GameManager.instance.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
+            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)TutorialConstants.tutorialTriggers.isTutorial] == true) {
                 EventManager.instance.ProgressTutorial();
             } 
             if (pmNoAction == true) {

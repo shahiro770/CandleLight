@@ -133,10 +133,10 @@ namespace PlayerUI {
         /// <returns></returns>
         private IEnumerator Fill() {
             if (Mathf.Abs(fillAmount - frontFill.fillAmount) * 100 > 75) {
-                lerpSpeed = lerpSpeedFast * GameManager.instance.animationSpeed;
+                lerpSpeed = lerpSpeedFast * GameManager.instance.gsDataCurrent.animationSpeed;
             }
             else {
-                lerpSpeed = lerpSpeedSlow * GameManager.instance.animationSpeed;
+                lerpSpeed = lerpSpeedSlow * GameManager.instance.gsDataCurrent.animationSpeed;
             }
 
             float timeStartedLerping = Time.time;

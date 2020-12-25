@@ -81,10 +81,10 @@ namespace PlayerUI {
                 if (interactions[i].checkIndicator != 0) {
                     if (interactions[i].checkIndicator >= 1 && interactions[i].checkIndicator <= 4) {
                         actions[i].SetCheckColor(interactions[i].checkIndicator);
-                        if (GameManager.instance.tutorialTriggers[(int)tutorialTriggers.isTips] == true
-                        && GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] == true) {
+                        if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)tutorialTriggers.isTips] == true
+                        && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)tutorialTriggers.firstStatInt] == true) {
                             EventManager.instance.SetTutorialNotification("stat");
-                            GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] = false;
+                            GameManager.instance.gsDataCurrent.tutorialTriggers[(int)tutorialTriggers.firstStatInt] = false;
                         }
                     }
                 }
@@ -219,10 +219,10 @@ namespace PlayerUI {
                     if (newInt.checkIndicator != 0) {
                         if (newInt.checkIndicator >= 1 && newInt.checkIndicator <= 4) {
                             actions[i].SetCheckColor(newInt.checkIndicator);
-                            if (GameManager.instance.tutorialTriggers[(int)tutorialTriggers.isTips] == true
-                            && GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] == true) {
+                            if (GameManager.instance.gsDataCurrent.tutorialTriggers[(int)tutorialTriggers.isTips] == true
+                            && GameManager.instance.gsDataCurrent.tutorialTriggers[(int)tutorialTriggers.firstStatInt] == true) {
                                 EventManager.instance.SetTutorialNotification("stat");
-                                GameManager.instance.tutorialTriggers[(int)tutorialTriggers.firstStatInt] = false;
+                                GameManager.instance.gsDataCurrent.tutorialTriggers[(int)tutorialTriggers.firstStatInt] = false;
                             }
                         }
                     }

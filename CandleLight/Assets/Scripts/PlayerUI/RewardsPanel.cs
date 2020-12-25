@@ -115,10 +115,10 @@ namespace PlayerUI {
             amountTextEXP.SetText(((int)(amountEXP * PartyManager.instance.EXPmultiplier)).ToString());
             PartyManager.instance.AddWAX(amountWAX);
 
-            if (GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] == false) {
+            if (GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] == false) {
                 for (int i = 0; i < monstersKilled.Count; i++) {
                     if (monstersKilled[i].monsterNameID == "Hobgoblin 3 3") {
-                        GameManager.instance.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] = true;
+                        GameManager.instance.gsDataCurrent.achievementsUnlocked[(int)achievementConstants.NOROCKUNTURNED] = true;
                         EventManager.instance.SetAchievementNotification((int)achievementConstants.NOROCKUNTURNED);
                         break;
                     }

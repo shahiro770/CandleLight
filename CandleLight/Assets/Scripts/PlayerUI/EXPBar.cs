@@ -115,12 +115,12 @@ namespace PlayerUI {
         private IEnumerator Fill() {
             float timeStartedLerping = Time.time;
             float timeSinceStarted = Time.time - timeStartedLerping;
-            float percentageComplete = timeSinceStarted * GameManager.instance.animationSpeed;
+            float percentageComplete = timeSinceStarted * GameManager.instance.gsDataCurrent.animationSpeed;
             float prevFill = frontFill.fillAmount;
 
             while (frontFill.fillAmount != fillAmount) {
                 timeSinceStarted = Time.time - timeStartedLerping;
-                percentageComplete = timeSinceStarted * GameManager.instance.animationSpeed;
+                percentageComplete = timeSinceStarted * GameManager.instance.gsDataCurrent.animationSpeed;
                 
                 frontFill.fillAmount = Mathf.Lerp(prevFill, fillAmount, percentageComplete);
                 EXPText.SetText(((int)(frontFill.fillAmount * 100)).ToString() + "%");
