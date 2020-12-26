@@ -153,11 +153,24 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Updates the WAX effect value of all items (checks if this is possible internally)
+        /// </summary>
+        public void UpdateWAXValues() {
+            for (int i = 0; i < spare.Length; i++) {
+                spare[i].UpdateWAXValue();
+            }
+
+            weaponSlot.UpdateWAXValue();
+            secondarySlot.UpdateWAXValue();
+            armourSlot.UpdateWAXValue();   
+        }
+
+        /// <summary>
         /// Sets if the item slots can be interacted with (includes hovering to see tooltips)
         /// </summary>
         /// <param name="value"></param>
         public void SetInteractable(bool value) {
-            for (int i = 0;i < spare.Length; i++) {
+            for (int i = 0; i < spare.Length; i++) {
                 spare[i].SetInteractable(value);
             }
 

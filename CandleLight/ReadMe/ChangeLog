@@ -61,11 +61,11 @@ Bug: Changing aromas doesn't preserve them between menus
 Bug: Stranglehead art clips into hp bar
 Balance: Slightly reduced EXP needed to level up
 Bug: Revenge root roots self
+Bug: Animation cutting bug (where monsters end on the last frame of their animation)
+Bug: WAX values don't update properly with WAX thief
 
 COOKING
 -------
-Bug: WAX values don't update properly with WAX theif
-Bug: Animation cutting bug (where monsters end on the last frame of their animation)
 Bug: Frost Golem skills should have unique message "Summons don't get skills"
 Bug: Empty tooltip bug
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)

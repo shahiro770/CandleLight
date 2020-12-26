@@ -476,11 +476,10 @@ namespace PlayerUI {
         }
 
         /// <summary>
-        /// Updates the displayed item's displayed WAX effect if it could potentially have one (e.g. a consumable)
+        /// Updates the displayed item's displayed WAX value/effect
         /// </summary>
         public void UpdateWAXValue() {
-            // prevents needless tooltip setting if the item could never have a WAX effect to update
-            if (currentItemDisplay != null && currentItemDisplay.displayedConsumable != null) {   
+            if (currentItemDisplay != null) {   
                 SetTooltipText();
             }
         }

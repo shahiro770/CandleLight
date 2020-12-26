@@ -212,6 +212,19 @@ namespace PlayerUI {
         }
 
         /// <summary>
+        /// Updates the WAX effect value of all items (checks if this is possible internally)
+        /// </summary>
+        public void UpdateWAXValues() {
+            for (int i = 0; i < spare.Length; i++) {
+                spare[i].UpdateWAXValue();
+            }
+
+            activeCandles[0].UpdateWAXValue();
+            activeCandles[1].UpdateWAXValue();
+            activeCandles[2].UpdateWAXValue();   
+        }
+
+        /// <summary>
         /// Sets if the item slots can be interacted with (includes hovering to see tooltips)
         /// </summary>
         /// <param name="value"></param>

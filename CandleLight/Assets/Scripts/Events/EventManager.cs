@@ -1930,12 +1930,16 @@ namespace Events {
         }
 
         /// <summary>
-        /// Updates the WAX values of any consumable items displayed in event displays
+        /// Updates the WAX values of any items displayed in event displays or visible
+        /// inventory panels
         /// </summary>
         public void UpdateWAXValues() {
             if (eventDisplays[0].itemNum > 0) {
                 eventDisplays[0].UpdateWAXValues();
             }
+
+            gearPanel.UpdateWAXValues();
+            candlesPanel.UpdateWAXValues();
         }
 
         /// <summary>
