@@ -29,6 +29,10 @@ namespace PlayerUI {
         [field: SerializeField] private float rootCanvasHeightHalved;
         [field: SerializeField] private float canvasScaleFactor;    
         [field: SerializeField] private float imageDisplayBackgroundWidthHalved;    /// <value> Half the width of whatever image is being displayed </value>
+        Color32 titleColourCurrent = new Color32(255, 255, 255, 255);               /// <value> store the prevous colours to set them back when hiding during repositions </value>
+        Color32 subtitleColourCurrent = new Color32(178, 178, 178, 255);
+        Color32 descriptionColourCurrent = new Color32(255, 255, 255, 255);
+        Color32 valueColourCurrent = new Color32(255, 205, 2, 255);
 
         /// <summary>
         /// Sets a bunch of parameters for properly positioning the tooltip
@@ -173,15 +177,19 @@ namespace PlayerUI {
         public void SetColour(string textName, Color32 newColor) {
             if (textName == "title") {
                 titleText.SetColour(newColor);
+                titleColourCurrent = newColor;
             }
             else if (textName == "subtitle") {
                 subtitleText.SetColour(newColor);
+                subtitleColourCurrent = newColor;
             }
             else if (textName == "description") {
                 descriptionText.SetColour(newColor);
+                descriptionColourCurrent = newColor;
             }
             else if (textName == "value") {
                 valueText.SetColour(newColor);
+                valueColourCurrent = newColor;
             }
         }
 
@@ -202,6 +210,7 @@ namespace PlayerUI {
             }
             else if (textName == "value") {
                 valueText.SetColour(newColor);
+                
             }
         }
 
@@ -248,11 +257,7 @@ namespace PlayerUI {
         /// resize based on its content.
         /// </returns>
         private IEnumerator SetPosition() {
-            textBackground.color = UIManager.instance.hideColour; // hide the tooltip while position adjustments are being made
-            Color32 titleColour = titleText.meshText.color; // store the prevous colour to set it back to normal after
-            Color32 subtitleColour = subtitleText.meshText.color;
-            Color32 descriptionColour = descriptionText.meshText.color;
-            Color32 valueColour = valueText.meshText.color;
+            textBackground.color = UIManager.instance.hideColour;   // hide the tooltip while position adjustments are being made
             titleText.SetColour(UIManager.instance.hideColour);
             subtitleText.SetColour(UIManager.instance.hideColour);
             descriptionText.SetColour(UIManager.instance.hideColour);
@@ -293,10 +298,10 @@ namespace PlayerUI {
             gameObject.transform.localPosition = new Vector3(newXPos, newYPos);
 
             textBackground.color = new Color32(255, 255, 255, 255);
-            titleText.SetColour(titleColour);
-            subtitleText.SetColour(subtitleColour);
-            descriptionText.SetColour(descriptionColour);
-            valueText.SetColour(valueColour);
+            titleText.SetColour(titleColourCurrent);
+            subtitleText.SetColour(subtitleColourCurrent);
+            descriptionText.SetColour(descriptionColourCurrent);
+            valueText.SetColour(valueColourCurrent);
         }
 
         /// <summary>
