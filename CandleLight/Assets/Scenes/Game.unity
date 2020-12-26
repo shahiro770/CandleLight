@@ -1604,6 +1604,7 @@ MonoBehaviour:
     spareSpecials: []
     midPoints: 
     tutorialTriggers: 
+    aromas: 
     elapsedTime: 0
     WAX: 0
     subAreaProgress: 0
@@ -1769,6 +1770,27 @@ MonoBehaviour:
   unusableColour:
     serializedVersion: 2
     rgba: 4281345220
+  tooltipDangerColourInvisible:
+    serializedVersion: 2
+    rgba: 1180020
+  tooltipDangerColour:
+    serializedVersion: 2
+    rgba: 3356623220
+  tooltipDangerColourFaded:
+    serializedVersion: 2
+    rgba: 2148663668
+  tooltipDangerColourVibrant:
+    serializedVersion: 2
+    rgba: 4279370100
+  tooltipNormalColour:
+    serializedVersion: 2
+    rgba: 3372220415
+  monsterAltButtonColour:
+    serializedVersion: 2
+    rgba: 1090519039
+  monsterAltDangerButtonColour:
+    serializedVersion: 2
+    rgba: 1074921844
   subtitleColour:
     serializedVersion: 2
     rgba: 4289901234

@@ -14,6 +14,7 @@
 using Combat;
 using EventManager = Events.EventManager;
 using General;
+using PartyManager = Party.PartyManager;
 using PlayerUI;
 using System.Collections;
 using System.Collections.Generic;
@@ -176,15 +177,46 @@ namespace Characters {
         }
 
         /// <summary>
-        /// Sets the alternate colour block scheme for the monster's selection button
+        /// Sets the alternate colour block scheme for the monster's selection button (and tooltip)
         /// (used to show this monster is a target of an area of effect attack)
         /// </summary>
-        public void SetAlternateColourBlock() {
-            ColorBlock monsterAltSelectColorBlock = b.colors;  
-            monsterAltSelectColorBlock.normalColor = new Color32(255, 255, 255, 64);
-            monsterAltSelectColorBlock.highlightedColor = monsterAltSelectColorBlock.normalColor;
-            monsterAltSelectColorBlock.pressedColor = monsterAltSelectColorBlock.normalColor;
-            bts.SetColorBlock("na0", monsterAltSelectColorBlock);
+        public void SetButtonColourBlock() {
+            ColorBlock aoeSelectBlock = b.colors;  
+
+            if (PartyManager.instance.GetHighestPartyMemberLVL() < displayedMonster.LVL) {
+                ColorBlock normalBlock = b.colors;
+                ColorBlock highlightedBlock = b.colors;
+                ColorBlock pressedBlock = b.colors;
+
+                t.SetBackgroundColour(UIManager.instance.tooltipDangerColour);
+                t.SetColour("subtitle", UIManager.instance.tooltipDangerColourVibrant);
+
+                highlightedBlock.normalColor = UIManager.instance.tooltipDangerColourVibrant;
+
+                pressedBlock.normalColor = UIManager.instance.tooltipDangerColourVibrant;
+                pressedBlock.highlightedColor = UIManager.instance.tooltipDangerColourVibrant;
+                pressedBlock.selectedColor = UIManager.instance.tooltipDangerColourVibrant;
+
+                normalBlock.normalColor = UIManager.instance.tooltipDangerColourInvisible;
+                normalBlock.highlightedColor = UIManager.instance.tooltipDangerColourFaded;
+                normalBlock.pressedColor = UIManager.instance.tooltipDangerColourVibrant;
+                normalBlock.selectedColor = UIManager.instance.tooltipDangerColourVibrant;
+                
+                aoeSelectBlock.normalColor = UIManager.instance.monsterAltDangerButtonColour;
+                aoeSelectBlock.highlightedColor = aoeSelectBlock.normalColor;
+                aoeSelectBlock.pressedColor = aoeSelectBlock.normalColor;
+
+                bts.SetColorBlock("normal", normalBlock);
+                bts.SetColorBlock("highlighted", highlightedBlock);
+                bts.SetColorBlock("pressed", pressedBlock);
+            }
+            else {
+                aoeSelectBlock.normalColor = UIManager.instance.monsterAltButtonColour;
+                aoeSelectBlock.highlightedColor = aoeSelectBlock.normalColor;
+                aoeSelectBlock.pressedColor = aoeSelectBlock.normalColor;
+            }
+            
+            bts.SetColorBlock("na0", aoeSelectBlock);
         }
 
         /// <summary>

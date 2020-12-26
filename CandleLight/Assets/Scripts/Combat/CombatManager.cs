@@ -158,7 +158,7 @@ namespace Combat {
             monsterComponent.ApplyDifficultyChanges(); 
             monsterComponent.GetBuffs(championBuffs);
             monsterComponent.md.AddSMDListener(smd);
-            monsterComponent.md.SetAlternateColourBlock();
+            monsterComponent.md.SetButtonColourBlock();
             monsterComponent.md.SetInteractable(false, false);
 
             newMonster.transform.SetParent(monsterCanvas.transform, false);

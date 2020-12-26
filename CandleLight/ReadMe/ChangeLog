@@ -70,7 +70,7 @@ COOKING
 -------
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
 CRITICAL BUG: Going fullscreen causes buttons to offset (this might be a unity bug but need to try)
-UI: Make eventDescription show physical/magical damage
+UI: Make eventDescription show physical/magical damage (dealt to partymembers)
 UI: Might need to redo all attack animations cause pixel sizing is janky (64x64 to 96x96)
 UI: Make clicking another party member in combat show their attacks (but obv they can't do anything)
 UI: Hot key item tabs
@@ -176,7 +176,7 @@ Event: Field of Arrows (A hanged man hangs from a gallow admist a field of arrow
     - Question
         - Comply (LUK 35)
             Gain high quality Hanged Man Gear
-            Barrier for 9 turns
+            Barrier for 5 turns
             Fight Champion Hanged Man
         - Fight
             Hanged Man

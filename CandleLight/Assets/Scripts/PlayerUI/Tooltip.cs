@@ -33,6 +33,7 @@ namespace PlayerUI {
         Color32 subtitleColourCurrent = new Color32(178, 178, 178, 255);
         Color32 descriptionColourCurrent = new Color32(255, 255, 255, 255);
         Color32 valueColourCurrent = new Color32(255, 205, 2, 255);
+        Color32 backgroundColourCurrent = new Color32(255, 255, 255, 255);
 
         /// <summary>
         /// Sets a bunch of parameters for properly positioning the tooltip
@@ -174,22 +175,22 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="textName"></param>
         /// <param name="newColor"></param>
-        public void SetColour(string textName, Color32 newColor) {
+        public void SetColour(string textName, Color32 newColour) {
             if (textName == "title") {
-                titleText.SetColour(newColor);
-                titleColourCurrent = newColor;
+                titleText.SetColour(newColour);
+                titleColourCurrent = newColour;
             }
             else if (textName == "subtitle") {
-                subtitleText.SetColour(newColor);
-                subtitleColourCurrent = newColor;
+                subtitleText.SetColour(newColour);
+                subtitleColourCurrent = newColour;
             }
             else if (textName == "description") {
-                descriptionText.SetColour(newColor);
-                descriptionColourCurrent = newColor;
+                descriptionText.SetColour(newColour);
+                descriptionColourCurrent = newColour;
             }
             else if (textName == "value") {
-                valueText.SetColour(newColor);
-                valueColourCurrent = newColor;
+                valueText.SetColour(newColour);
+                valueColourCurrent = newColour;
             }
         }
 
@@ -198,20 +199,28 @@ namespace PlayerUI {
         /// </summary>
         /// <param name="textName"></param>
         /// <param name="newColor"></param>
-        public void SetColour(string textName, string newColor) {
+        public void SetColour(string textName, string newColour) {
             if (textName == "title") {
-                titleText.SetColour(newColor);
+                titleText.SetColour(newColour);
             }
             else if (textName == "subtitle") {
-                subtitleText.SetColour(newColor);
+                subtitleText.SetColour(newColour);
             }
             else if (textName == "description") {
-                descriptionText.SetColour(newColor);
+                descriptionText.SetColour(newColour);
             }
             else if (textName == "value") {
-                valueText.SetColour(newColor);
-                
+                valueText.SetColour(newColour);
             }
+        }
+
+        /// <summary>
+        /// Sets the colour of the tooltip's outline
+        /// </summary>
+        /// <param name="newColour"></param>
+        public void SetBackgroundColour(Color32 newColour) {
+            textBackground.color = newColour;
+            backgroundColourCurrent = newColour;
         }
 
         /// <summary>
@@ -297,7 +306,7 @@ namespace PlayerUI {
             }
             gameObject.transform.localPosition = new Vector3(newXPos, newYPos);
 
-            textBackground.color = new Color32(255, 255, 255, 255);
+            textBackground.color = backgroundColourCurrent;
             titleText.SetColour(titleColourCurrent);
             subtitleText.SetColour(subtitleColourCurrent);
             descriptionText.SetColour(descriptionColourCurrent);
