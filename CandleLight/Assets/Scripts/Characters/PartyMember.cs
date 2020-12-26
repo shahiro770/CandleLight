@@ -151,12 +151,12 @@ namespace Characters {
         /// <param name="level"> Level to calculate EXP to next level for </param>
         public int CalculateEXPToNextLVL(int LVL) {
             // LVL 0 -> LVL 1 = 2 EXP
-            // LVL 1 -> LVL 2 = 10 EXP
-            // LVL 2 -> LVL 3 = 40 EXP
-            // LVL 3 -> LVL 4 = 100 EXP
-            // LVL 4 -> LVL 5 = 197 EXP
-            // LVL 5 -> LVL 6 = 333 EXP
-            return 2 + (int)(6 * Mathf.Pow(LVL, 2.45f) + 2 * Mathf.Pow(LVL, 1.5f)); 
+            // LVL 1 -> LVL 2 = 9 EXP
+            // LVL 2 -> LVL 3 = 37 EXP
+            // LVL 3 -> LVL 4 = 95 EXP
+            // LVL 4 -> LVL 5 = 189 EXP
+            // LVL 5 -> LVL 6 = 322 EXP
+            return 2 + (int)(6 * Mathf.Pow(LVL, 2.45f) + 1 * Mathf.Pow(LVL, 1.5f)); 
         }
 
         /// <summary>
@@ -931,11 +931,27 @@ namespace Characters {
                 for (int i = 0; i < revengeChances.Length; i++) {
                     if (revengeChances[i] != 0) {
                         if (CalculateRevengeProc(i) == true) {
+                            PartyMember pm = null;
+                            Monster m = null;
                             if (i == 0) {
-                                AddStatusEffect(StatusEffectConstant.ROOT, 3, c);
+                                if (c is PartyMember) {
+                                    pm = (PartyMember)c;
+                                    pm.AddStatusEffect(StatusEffectConstant.ROOT, 3, c);
+                                }
+                                else {
+                                    m = (Monster)c;
+                                    m.AddStatusEffect(StatusEffectConstant.ROOT, 3, c);
+                                }
                             }
                             if (i == 1) {
-                                AddStatusEffect(StatusEffectConstant.SHOCK, 3, c);
+                                if (c is PartyMember) {
+                                    pm = (PartyMember)c;
+                                    pm.AddStatusEffect(StatusEffectConstant.SHOCK, 3, c);
+                                }
+                                else {
+                                    m = (Monster)c;
+                                    m.AddStatusEffect(StatusEffectConstant.SHOCK, 3, c);
+                                }
                             }
                         }
                     }

@@ -332,11 +332,14 @@ namespace Characters {
         /// </remark>
         public IEnumerator PlayAnimation(Animator a, string trigger) {
             a.speed = GameManager.instance.gsDataCurrent.animationSpeed;
-            a.ResetTrigger(trigger); // Reset the trigger just in case
             a.SetTrigger(trigger);
-            do {
+            while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == true) {
                 yield return null;    
-            } while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            }
+            while (a.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false) {
+                yield return null;
+            }
+            a.ResetTrigger(trigger); // Reset the trigger just in case
         }
 
         /// <summary>
@@ -355,14 +358,14 @@ namespace Characters {
         public IEnumerator PlayTwoAnimations(Animator a1, Animator a2, string trigger1, string trigger2) {
             a1.speed = GameManager.instance.gsDataCurrent.animationSpeed;
             a2.speed = GameManager.instance.gsDataCurrent.animationSpeed;
-            a1.ResetTrigger(trigger1);
-            a2.ResetTrigger(trigger2);
             a1.SetTrigger(trigger1);
             a2.SetTrigger(trigger2);
             do {
                 yield return null;    
             } while (a1.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false ||
                 a2.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Idle") == false);
+            a1.ResetTrigger(trigger1);
+            a2.ResetTrigger(trigger2);
         }
 
         /// <summary>
