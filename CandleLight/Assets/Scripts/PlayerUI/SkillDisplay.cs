@@ -37,6 +37,9 @@ namespace PlayerUI {
         private string dlcTitle = "dlc_skill_title";
         private string dlcSub = "dlc_skill_sub";
         private string dlcDes = "dlc_skill_des";
+        private string summonTitle = "summon_skill_title";
+        private string summonSub = "summon_skill_sub";
+        private string summonDes = "summon_skill_des";
 
         /// <summary>
         /// Initialize a skillDisplay, displaying the skill's icon and preparing the possible colourings
@@ -162,6 +165,11 @@ namespace PlayerUI {
                 t.SetKey("title", dlcTitle);
                 t.SetKey("subtitle", dlcSub);
                 t.SetKey("description", dlcDes);
+            }
+            else if (skillIndex == -3) {
+                t.SetKey("title", summonTitle);
+                t.SetKey("subtitle", summonSub);
+                t.SetKey("description", summonDes);
             }
         }
 

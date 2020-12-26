@@ -263,10 +263,12 @@ namespace Menus.OptionsMenu {
 
         public void SetBgmVolume(float value) {
             AudioManager.instance.ChangeBGMVolume(value);
+            GameManager.instance.gsDataCurrent.bgmVolume = value;
         }
 
         public void SetSfxVolume(float value) {
             AudioManager.instance.sfxVolume = value;
+            GameManager.instance.gsDataCurrent.sfxVolume = value;
         }
 
         public void SetFullScreen(bool isFullScreen) {

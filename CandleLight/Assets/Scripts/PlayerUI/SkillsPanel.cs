@@ -9,6 +9,7 @@
 *
 */
 
+using ClassConstants = Constants.ClassConstants;
 using Characters;
 using EventManager = Events.EventManager;
 using GameManager = General.GameManager;
@@ -84,23 +85,29 @@ namespace PlayerUI {
                 //     pmDisplays[i].UpdateSkillPointsText(pms[i].skillPoints);
                 // }
             }  
-
-            for (int i = 0; i < skillDisplays.Length; i++) {
-                int x = i;          // dumb hack cause unity forgets for loop ints
-                if (i < 9) {        // TEMPORARY
-                    if (pm.skills[i].skillEnabled == true) {   
-                        colPoints[i / 3]++;
-                        skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
-                    }
-                    else if ((i < 3 || (i >= 3 && colPoints[(i / 3) - 1] > 0))) {
-                        skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
-                    }
+            if (pm.className == ClassConstants.FROSTGOLEM) {
+                for (int i = 0; i < skillDisplays.Length; i++) {
+                    skillDisplays[i].Init(-3);
+                }
+            }
+            else {
+                for (int i = 0; i < skillDisplays.Length; i++) {
+                    int x = i;          // dumb hack cause unity forgets for loop ints
+                    if (i < 9) {        // TEMPORARY
+                        if (pm.skills[i].skillEnabled == true) {   
+                            colPoints[i / 3]++;
+                            skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
+                        }
+                        else if ((i < 3 || (i >= 3 && colPoints[(i / 3) - 1] > 0))) {
+                            skillDisplays[i].Init(i, pm.skills[i], pm.pmvc.skillSprites[i], pm.skills[i].skillColour,  pm.pmvc.pmdSkillsPanel);
+                        }
+                        else {
+                            skillDisplays[i].Init();
+                        }
+                    } 
                     else {
-                        skillDisplays[i].Init();
+                        skillDisplays[i].Init(-2);
                     }
-                } 
-                else {
-                    skillDisplays[i].Init(-2);
                 }
             }
         }

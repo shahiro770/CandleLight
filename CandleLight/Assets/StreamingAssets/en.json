@@ -1069,7 +1069,7 @@
 		{ "key": "Special0_item", "value": "Wizard's Hat" },
 		{ "key": "Special0_item_des", "value": "It has no magical properties whatsoever. Probably fake." },
 		{ "key": "Special1_item", "value": "Heidi's Ring" },
-		{ "key": "Special1_item_des", "value": "A copper ring of an older style with the name Heidi etched in it." },
+		{ "key": "Special1_item_des", "value": "A copper ring of an older style with some name etched in it." },
 
 		{ "key": "MPC0_use_title", "value": "Calming Vapours" },
 		{ "key": "MPC0_use_des", "value": "Restore half of\nthe user's <color=#502BFF>MP</color>" },
@@ -1133,6 +1133,9 @@
 		{ "key": "dlc_skill_title", "value": "Locked" },
 		{ "key": "dlc_skill_sub", "value": "???" },
 		{ "key": "dlc_skill_des", "value": "This skill will be added in a future content update" },
+		{ "key": "summon_skill_title", "value": "Locked" },
+		{ "key": "summon_skill_sub", "value": "???" },
+		{ "key": "summon_skill_des", "value": "Summons do not have any skills" },
 		{ "key": "fireSlash_skill_title", "value": "Fire Slash" },
 		{ "key": "fireSlash_skill_sub", "value": "Active" },
 		{ "key": "fireSlash_skill_des", "value": "Magical attack with a high chance to <color=#B91D00>burn</color>" },
