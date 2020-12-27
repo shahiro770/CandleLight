@@ -157,6 +157,7 @@ namespace Combat {
             monsterComponent.MultipleLVLUp(EventManager.instance.subAreaProgress);
             monsterComponent.ApplyDifficultyChanges(); 
             monsterComponent.GetBuffs(championBuffs);
+            monsterComponent.md.SetMaterial();
             monsterComponent.md.AddSMDListener(smd);
             monsterComponent.md.SetButtonColourBlock();
             monsterComponent.md.SetInteractable(false, false);
@@ -630,6 +631,7 @@ namespace Combat {
                 selectedMonsterAttackIndex =  activeMonster.lastAttackIndex;
             }
 
+            // TODO: Need to while loop this thing until it find a non-debuff attack that can be used
             print(selectedMonsterAttackIndex);
             if (activeMonster.attacks[selectedMonsterAttackIndex].type == AttackConstants.DEBUFF) {
                 if (pm.GetStatusEffect(activeMonster.attacks[selectedMonsterAttackIndex].seName) != -1) {

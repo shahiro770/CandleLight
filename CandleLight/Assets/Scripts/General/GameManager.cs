@@ -194,7 +194,7 @@ namespace General {
                 gsDataCurrent.mostWAX = gsData.mostWAX;
                 gsDataCurrent.fastestTime = gsData.fastestTime;
             }
-            print(gsDataCurrent.bgmVolume);
+
             gsData = new GeneralSaveData(gsDataCurrent);
             GameManager.instance.SaveGeneralData(gsData);
         }

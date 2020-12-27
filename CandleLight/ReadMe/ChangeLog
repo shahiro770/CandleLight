@@ -15,7 +15,7 @@ Fix: Enummed status effects
 Bug: Make Lesser Wraith Wizard box adjustments for tooltip
 Gear: Membrane Bow 
     - Bleed On Hit 20%
-Sprites Update
+Sprites Updated
     Wraith
     Stranglehead
     Stinger
@@ -46,9 +46,6 @@ Fix: "4 days" now changes depending on subArea (assuming each area is reached in
 Bug: Consumables are worth 0 if they only give status effects
 Fix: Make useCandles tutorial appear for the first character that can use candles
 Fix: Change tutorial prog to 80% when its first visible
-
-JUST FINISHED
--------------
 Bug: Skills panel shows glitch skill on 9th
 Cleanup: Make it so general save data's properties are stored in another gsdata (for organization), so saving gsdata is just replacing the old with the mutable copy
     1) Mutable copy keeps track of any changes player makes
@@ -66,6 +63,10 @@ Bug: WAX values don't update properly with WAX thief
 Bug: Frost Golem skills should have unique message "Summons don't get skills"
 Bug: Empty tooltip bug
 
+JUST FINISHED
+-------------
+
+
 COOKING
 -------
 Bug: Mage and Archer class select buttons can visually be seen de-whitening when swapping between main menu and class select (BUT NOT WARRIOR OR ROGUE?)
@@ -78,6 +79,7 @@ Options: Bloom option (eughhh)
 UI: Add a shader to show champion
 UI: Turn reticle and name red if monster is higher level
 UI: Let player see other status effects from help menu
+Balance: Rework how quality effects gear (e.g. 1 PDEF -> 1 PDEF for low and med, 2 PDEF for high)
 
 Monster: Goo (PDEF 1 MDEF 1) (Random, but won't use metabolize if at full health)
     - Body Rush (physical attack, 50% chance to inflict break)
@@ -215,6 +217,11 @@ New Skills:
 - Seal debuffs a monster -MATK for X turns
 - Evade buffs an ally +DOG for X turns
 
+Changes:
+- Bash instead of 25% chance to stun, has a 60% chance to stagger
+- Whack instead of 25% chance to stun has a 60% chance to stagger
+- 
+
 Skill Trees
 -----------
 Class   
@@ -232,7 +239,7 @@ New Skills:
 
 Changes:
 - Fire Slash replaces Bash
-- Timeless Blade now upgrades Safeguard
+- Timeless Blade now upgrades Safeguard, and slows
 
 Class   
 Mage    Col 0       Col 1               Col 2              Col 3
@@ -243,7 +250,7 @@ Mage    Col 0       Col 1               Col 2              Col 3
 New Skills:
 - Mana Refresh lets all allies (including self) restore 5% MP at the end of their turn in combat
 - Frostfire Nova upgrades Seal, big Aoe attack that hits all monsters and may Freeze or burn (but obv costs like a third of your mp)
-- Wax Conjurer passively makes it every 10 events (while skill is active), add a random candle from the area to your inventory
+- Wax Conjurer passively makes it so every 7 events (while skill is active), add a random candle from the area to your inventory
 
 Changes:
 - Heal upgrades Channel
@@ -256,10 +263,11 @@ Archer      Col 0           Col 1               Col 2               Col 3
             Scavenger       Blooming Fortune    Fleet Footed        Burning Eyes
 
 New Skills:
-- Break Shot replaces Enroot, does physical damage and reduces monster PDEF
-- Adaptable makes using a magical/physical attack grant PATK/MATK up for 1 turn
-- Reanimate upgrades Volley, revives an ally, restoring 25% HP and MP
-- Great Winds passives makes all allies move after archer in turn order (fastest archer if double archer)
+- Poison Arrow replaces Arrow
+- Break Shot replaces Enroot, does physical damage, inflicts PDEF down
+- Adaptable makes using a magical/physical attack grants PATK/MATK up for 1 turn
+- Reanimate upgrades Volley, revives an ally mid-combat, restoring 25% HP and MP
+- Great Winds passives doubles all ally's speed
 - Burning Eyes gives archer advantage for 2 turns on using a candle
 
 Changes:
@@ -275,7 +283,7 @@ New Skills:
 - Fae Tigue replaces Fae Dust, does more magic damage and inflicts weakness instead
 - Twin fang upgrades stab, twice the damage and double chance to proc on-hits
 - Hasten upgrades Evade lets target move twice in one turn, but costs rogue HP instead of MP, ally only
-- Silencer gives rogue on hit silence 
+- Silencer gives rogue on hit silence and passive MATK
 - Angel's Mercy gives all partyMembers passive, once per combat, if an attack would be lethal, grant ally miracle for one turn instead
 
 Changes:

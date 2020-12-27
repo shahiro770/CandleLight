@@ -378,7 +378,7 @@
 		{ "key": "largeTombGreyWastes_event", "value": "Your aimless walking has drawn you to this enormous tombstone. Perhaps something was calling you here. Maybe the path is near?"},
 		{ "key": "largeTombNoMarkings_event", "value": "Just as you turn to leave, a deafening screech fills the sky.\nThe doll is gone. Cries echo behind you. \"Doll? FRIENDS?\"." },
 		{ "key": "wraithWounds_event", "value": "The wraith's spell has lost its effect. But the battle has\ngrieviously injured you. Flaytz is barely standing." },
-		{ "key": "end0GreyWastes_event", "value": "You limp back on to the path." },
+		{ "key": "end0GreyWastes_event", "value": "You limp back onto the path." },
 		{ "key": "end0TombsGreyWastes_event", "value": "Whatever the wraith's intentions were,\nit did bring you to your goal. Hurry." },
 		{ "key": "end1GreyWastes_event", "value": "A lamp post. Are your eyes playing tricks on you?\nThese need constant maintenance. Sydra is close." },
 		{ "key": "end2GreyWastes_event", "value": "The last battle was too much. The blood from your wounds soaks through your clothes. As long as the vial is unscathed..." },

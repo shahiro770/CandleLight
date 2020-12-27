@@ -157,6 +157,12 @@ namespace Characters {
             SetSEHolderSize();
         }
 
+        public void SetMaterial() {
+            if (displayedMonster.isChampion == true) {
+                monsterSprite.material = UIManager.instance.championMat;
+            }
+        }
+
         #endregion
 
         #region [ Section 0 ] Button Interaction

@@ -20,7 +20,7 @@ namespace PlayerUI {
         public ItemSlot hoveredItemSlot;
         public Color32 unusableColour = new Color32(196, 36, 48, 255);      /// <value> Red colour to indicate unusable, stored here to minimize space </value>
         
-        public Color32 tooltipDangerColour = new Color32(116, 1, 18, 200);
+        public Color32 tooltipDangerColour = new Color32(116, 1, 18, 200);          /// <value> Danger colours for monster buttons </value>
         public Color32 tooltipDangerColourFaded = new Color32(116, 1, 18, 128);
         public Color32 tooltipDangerColourVibrant = new Color32(116, 1, 18, 255);
         public Color32 tooltipDangerColourInvisible = new Color32(116, 1, 18, 0);
@@ -35,6 +35,7 @@ namespace PlayerUI {
         public string subtitleColourString = "#B2B2B2";
         public ColorBlock orangeBlock = new ColorBlock();
         public ItemDisplay heldItemDisplay;
+        public Material championMat;
         public bool isTimer;                        /// <value> Flag for if there is a timer in the top left of the screen </value>
         public bool panelButtonsEnabled = true;
         public bool inShop = false;                 /// <value> Flag for if the player is currently in a shop </value>
