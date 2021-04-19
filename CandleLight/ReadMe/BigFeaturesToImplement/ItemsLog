@@ -1,0 +1,95 @@
+ItemsLog
+--------
+Gear: Light Sting (Rogue Weapon)
+    - Poison Chance 10%
+    - PATK 1
+    - MATK 1 
+Gear: Venom Shot (Archer Weapon)
+    - Poison Chance 10%
+    - PATK 1
+    - MATK 1
+Gear: Bone Axe (Warrior Weapon)
+    - PATK 2
+    - Guard On Hit: 20%
+Gear: Bone Staff (Mage Weapon)
+    - MATK 2
+    - Revenge Guard: 33%
+Gear: Root Bow (Archer weapon)
+    - MATK 6
+    - Root On Hit: 20%
+    - Root Plus
+Gear: Root Heart (armor)
+    - HP 20
+    - PDEF 3
+    - Permanently Root
+Gear: Puppet Blade (Warrior weapon)
+    - Seal On Hit: 20%
+    - MATK: 4
+Gear: Anti-Magic Dagger (Rogue weapon)
+    - Seal On Hit: 20%
+    - MATK: 4
+Gear: Pariah's Prayers (Archer weapon)
+    - Seal On Hit: 20%
+    - MATK: 7
+    - MP On Hit: 2
+Gear: White Wind (Archer weapon)
+    - PATK: 4
+    - CRITCHANCE: 3
+    - Revenge Rage 20%
+Gear: Pariah's Garb (Armour)
+    - Revenge Seal: 20%
+    - Revenge MP: 5
+    - MDEF 3
+Gear: Dirt Veil (Armour)
+    - PDEF 1
+    - MDEF 1
+    - HP Regen Doubled
+Gear: 
+Gear: Crimson Rod (Mage weapon)
+    - MATK 5
+    - PATK 5
+    - Bleed On Hit: 50%
+Gear: Bloodstained Cape (armour)
+    - PDEF 2
+    - Revenge Bleed 25%
+Gear: Crimson Orb (Secondary)
+    - Bleed Plus
+    - MP 10
+Gear: Control Bars (Secondary)
+    - Marionnete On Hit: 50%
+    - MP 3
+Gear: Living Garb (Armor)
+    - HP 10
+    - HP on hit: 3
+Gear: Wanderer's Core (Secondary)
+    - MATK 5
+    - Revenge Barrier: 50%
+    - MDEF 2
+Gear: Dagger of Debility (Rogue weapon)
+    - MATK 7
+    - Weakness On Hit: 25%
+    - MP 7
+Gear: Twisted Arbrutis (Armor)
+    - PDEF 3
+    - Revenge Weakness: 33%
+    - MP 10
+Special: Red String
+    A piece of red wool. It pulsates bright red at the same speed as your heart beat.
+    - Lost on death
+Special: Cursed Branch
+    Remnant of a witch's experiment. Is it still alive?
+    - Party Weakness Chance 10%
+Special: Wind Core
+    - PROG losses are halved
+    - Party MDEF 1
+    Sell for 20 WAX (worth 40)
+Candle: Poison Candle
+    - Poison Chance: 10%
+    - Corrosive Fumes: 2 Uses
+        Poison an enemy for 3 turns
+Candle: Cure Candle
+    - Debuff immunity 10% 
+    - Cleansing Vapours: 2 Uses
+        Gain Cure for 3 turns and restore 25% HP
+Candle: Slow Candle
+    - 

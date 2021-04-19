@@ -1,0 +1,446 @@
+Event Log
+---------
+Event: Sludge Pool (Lonely Road) 
+    A massive chunk of the road is gone, a giant pit of sludge is all that can be seen.
+    - Swim (STR 12)
+        Find a dirt veil
+        PROG down
+        Fight a Goo
+    - Go Around (PROG down)
+
+Event: Calcified Spire
+    A gigantic spire made out of bone. There's a candle at the top.
+        Observe
+            "This is the corpse of a bone slime. They explode when they get too large."
+            The spire is absurdly tall. You could climb it, but a well aimed rock could knock the candle down too.
+        Throw (DEX 12)
+            PDEF candle
+            Nothing
+        Climb (STR 12)
+            PDEF candle
+            HP -4
+
+Event: Hornet Nest
+    A nest for hornets. While there are none flying above, the interior chambers tend to be sound proofed.
+        Explore
+            A swarm of hornets!
+                Fight   
+                    Fight 3 hornets
+                Run
+            An abnormally large hornet with a foggy white aura. It is probably their queen.
+                Fight
+                    Fight champion hornet
+                Run
+            This nest was long abandoned. Remains of some dead hornet can be found.
+                Hornet gear low low
+            A poisonous green candle. Someone must've recently placed this here to smoke out all the hornets.
+                Poison candle
+        Leave
+
+
+Event: Tumbleweed Patch (Hill Country) 
+    A huge patch of tumble weeds have gathered in a small valley.
+    - Forage (non combat does not end event)
+        Make medium quality Thornmail
+        Find mana root
+        Nothing
+        Attacked by two tumbled + Rooted for 3 turns 
+    - Hunt (DEX 15) (Failure does not end event)
+        Random 1 monster
+        Progress Down 5
+    - Leave
+
+Event: Blood Cave (Hill Country)
+    A giant cave digs into the side of a mountain. A few bats can be seen flying out of it.
+    - Explore
+        Too dark
+            - Fire (MP 10)
+                Go Deeper
+                    - Talk
+                        EXP 5
+                    - Continue
+                        Powerful bloodfiend
+                            - Fight 
+                                Champion bloodfiend
+                            - Flee
+                                Bleed debuff for 3 turns
+                                Nothing
+                        Sacrificial Pool
+                            - Lot (15 HP)
+                                Crimson Orb (high)
+                            - Little (5 HP)
+                                Bloodstained Cape (med)
+                                Life Candle
+                            - Leave
+                    - Leave
+                        EXP 10
+                MP -10 and leave
+            - Leave
+            - Wander
+                - Attacked by a vampire bat
+                - Random vampire bat/bloodfiend equipment
+                - Nothing
+        Too many bats
+            - Random vampire bat/bloodfiend equipment
+            - Nothing
+                Leave
+    - Leave
+
+Event: Unstrung Puppet (Wraith's Way) 
+    A puppet lying motionless on the ground. Its strings seem disconnected.
+    - Smash (STR 15)
+        Gain multple Low Puppet Knight gear
+    - Scavenge
+        Gain Med Puppet Knight gear
+        Silenced for 2 turns + fight Puppet Knight 
+
+Event: Binding Strings (Wraith's Way)
+    Several puppet strings grab onto you, their control bars dancing across the sky. You're stuck!
+    - Observe
+        A group of knight puppets gather in the distance. Was this a trap?
+            - Break (STR 15)
+                EXP 10
+                Fight 3 knight puppets
+            - Burn (INT 20)
+                EXP 10
+                Fight 3 knight puppets
+            - Flail (LUK 20)
+                EXP 10
+                Fight 3 knight puppets
+        "Holst there's broken puppets all around. These strings are probably what remains of their mana."
+            - Wait
+                Leave
+            - Pull (STR 20)
+                Control Bars med
+            - Burn (INT 20)
+                EXP 10
+
+Event: The Great Spine (Wraith's Way)
+    A massive spine is errected in the ground. Other spinal float around it, completely entranced.
+        - Closer
+            An occasional shock from the spine hits a spinal, causing it vibrate rapidly before leaving.
+            - Break (INT 10)
+                Shock for 3 turns and HP -5
+                Fight a spinal
+                Spine Staff Low
+                    - Break (INT 20)
+                        Shock for 3 turns and HP -10
+                        Fight two spinals
+                        Spine Staff Med
+                            - Break (INT 30)
+                                Spine Staff High
+                                Shock for 3 turns and HP -30
+                                Fight three spinals
+        - Leave
+
+Quest: Threads of Fate
+    Event: Thread of Fate (Wraith's Way) (QUEST)
+        A piece of red string. Where does it go?
+            Take
+                Get red string
+            Leave
+    Event: More Red String (Wraith's Way) (QUEST)
+        More red string?
+            Take
+                Get red string
+            Leave
+    Event: Last Piece (Wraith's Way) (QUEST)
+        A cradle made of red string between two tombs. The threads shimmer here. 
+        A mannequin stands entangled in the threads. It motions you towards it.
+            Greet
+                Quest complete + "...th.re...ad...pe.r...ch..."
+                Rest (One Red String)
+                    HP +30
+                    Nothing
+                Fabric (One Red String)
+                    Gain red spool
+                    Nothing
+                Candle (One Red String)
+                    Gain Life candle
+                    Nothing
+            Leave
+
+Quest: A Small Windfall
+    Event: Curious Wind Sprite
+        A wind sprite! 
+            Observe
+                The most passive of air elementals. Natural eccentrics. It remains still amid the harsh currents.
+            Help?
+                "They're pretty rare these days. Killing one for its core would help us navigate the storm."
+                    Grab
+                        The wind sprite darts away in the direction you believe might be west. that. Chasing after it could take some time.
+                            Chase
+                                Gain quest, PROG -10
+            Leave
+    Event: Wind Wall
+        Its the wind sprite again! Its eyes are filled with sorrow.
+            Grab
+                A powerful force blows you back. The sprite is hiding behind a wall of wind. 
+                    Dismantle (INT 30)
+                        The wind disipates as you break down the spell keeping it together. The sprite flees. (QUEST progress, EXP 10)
+                        The spell keeping this wall up is weak, but your mind is weaker.
+            Leave
+    
+    Event: Tempest Remains
+        The wind sprite! Its staring off in the distance. Now yours chance!
+            Grab
+                EXP 10. The sprite is helpless in your hands. 
+                    Squeeze 
+                        Its body feels hollow. It feels like you're about to pop a balloon. Flaytz shouts at you "Wait Holst, look!".
+                            Look 
+                                Its a giant hand. Flaytz looks dumbfounded "The remains of a tempest."
+                                    Inspect
+                                        "Humanity hasn't seen one of these things in a century. It must've died several days ago if a hand is all thats left."     
+                                            Sprite
+                                                "Do we really need to? The tempest's remains will provide more than enough for us..." The wind sprite is helpless in your hands.
+                                                    Kill
+                                                        "There's no time for mercy? You say that like the queen's words magically justify everything." (Gain Still Core)
+                                                            Scavenge
+                                                                Wind elemental Gear med med  
+                                                    Spare
+                                                        The wind sprite slides out of your hands and then disappears into the storm. Maybe it will look for friendlier companions.
+                                                            Scavenge
+                                                                Wind elemental Gear med med
+                                            Leave
+                                        
+Quest: That Which Taints The Ground
+    Event: Purple Soil
+        The ground here is purple. Strange plants jut out of the ground, but nothing about the soil looks fertile.
+            Inspect
+                Special Item: Cursed Stick "Well this is rare." Flaytz looks at the ground and picks up a decaying branch nearby.
+                    Why?
+                        "I'm sure you know but the Tumbled aren't from here. In fact, they don't occur naturally anywhere in the world!"
+                            What?
+                                "They're the experiments of some witch from lands far north of Anhum. Her footsteps alone would taint the ground beneath her."
+                                    Cool?
+                                        Gain Cursed Stick + Quest + "Ugh, just be on the lookout for more weird looking soil. The witch did more than just turn things purple."
+            Leave
+    
+    Event: Cursed Land
+        More of that purple ground! This time there are several tumbled and goblins standing in it.
+            Observe
+                They all seem stuck to the ground, decomposing into mishapen nightmares. Are those plants the cause? 
+                    Branches
+                        Gain Cursed Stick + There's another one of those sticks on the ground. Flaytz seems mesmerized by it.
+                    Fight
+                        2x Tumbled, 2x goblin (all characters get weakness for 5 turns)
+
+    Event: The Witch's Hut
+        One last patch of purple, but this time there's a house on top! The air is still.
+            Enter (Two Cursed Sticks + quest Complete)
+                EXP 10 "I knew it! We were close to where she lived. This is a once in a lifetime chance! I-" Flaytz runs onto the scene. Might as well look around.
+                    Garden
+                        Tilled and undisturbed quite some time. Why are there no flowers here? 
+                    Sign
+                        Weakness 1 turn + there's no words on the sign, but just looking at it tires your eyes. Some kind of enchantment?
+                    House (Subevent)
+                        Flaytz pushes against the door. "It feels like there's something blocking it on the otherside." Something is very wrong.
+                            Wait
+                                You reach for her, but suddenly the sticks you've been carrying grow and entangle you.
+                                    Flaytz!
+                                        She turns to cut you free, but you're both thrown back as the house violently bursts. 
+                                            Flaytz?!
+                                                She helps you to your feet and cuts off the remaining branches. "I-I'm alright! But..."
+                                                    Look
+                                                        You turn over to see a some arboreal abomination. Its branches flail violently. 
+                                                            Fight
+                                                               
+            EXP 10 + Leave (Quest Complete)
+                Attempting to set foot on the ground fills you with fatigue. "Is there some kind of curse? But there's no flowers nearby..."
+
+    Event: Remains of the Hut
+        With the death of the monster, the ground seems to be returning to normal.
+            Witch?
+                "Looks like she's either been long gone, or long dead. Any hope of finding the truth died with her monster."
+                    Flaytz...
+                        "I just wanted to solve the mystery. One fewer regret." She looks back at the hut. "This might be humanity's last day."
+                            Sigh
+                                EXP 5 - Quest Complete
+                                "I knew you wouldn't understand, but thanks for helping me out. Let's get back on track."
+                            Sorry
+                                EXP 10 - Quest Complete
+                                "Well don't apologize. It's my fault for getting us sidetracked to fulfill some dumb dream of mine. Come on, let's go."
+
+Event: Tumbleweed Tornado (Lost Desert)
+    - Brave (STR 45)
+        EXP + high quality thornmail
+        Debuffed rbw (make new result th`at uses a possible spawned monster's stats to scale a status effect)
+        Fight tumbled and wastes wanderer
+    - Wait
+        PROG -10
+        Debuffed rbw (make new result that uses a possible spawned monster's stats to scale a status effect)
+        Nothing
+
+Event: Whitemane Negotiation (Lost Desert)
+    Two whitemanes are having a fight over some carcass. The challenger is far larger and glistens.
+    - Observe
+        "Whitemanes are fairly territorial, but still opportunistic. If we try to kill one the other might side with us, temporarily."
+    - Stronger
+        Rage for 3 turns + Champion whitemane fight
+    - Weaker
+        Whitemane fight
+    - Carcass (STR 35)
+        High quality bones or rotten meat
+        Champion and normal whitemane fight
+    - Leave
+
+Event: Mana Oasis (Lost Desert)
+    A massive lake of mana. A blue candle is perched on some pillar in the middle.
+        Dip
+            MP +30
+        Candle?
+            "Mana likes to flow from high concentrations to low concentrations. A prolonged swim would be fatal."
+                Rush (STR 35)
+                    Mana Candle
+                    HP -25 MP +99
+                Endure (INT 35)
+                    Mana Candle
+                    HP -25 MP +99
+    Leave
+        
+Event: Grumbled Garden (Lost Desert)
+    A massive garden of thorns. The tumbled here have grown out of control.
+        Around
+            PROG -15
+        Enter (Outcomes are randomized between each option (i.e. left's outcomes might be swapped with right's))
+            This is a massive maze. There's three paths ahead.
+                Left
+                    The briar twists and turns. The wall on the left is lined with seeds.
+                        Left
+                            A grumbled stands by what seems to be the way out. Killing it will weaken this garden.
+                                Fight
+                                Back
+                                    Nothing (The path behind you has closed off, you can't go back!)
+                                    Return to previous subevent
+                    Right
+                        Even the ground is a thorny mess. You see an exit, but the narrow corridor will hurt.
+                            Leave
+                                HP -10
+                            Back
+                    Back
+                        Nothing (The path behind you has closed off, you can't go back!)
+                        Return to previous subevent
+                Right
+                    Right
+                        The branches on the left looked accursed. The right glow bright crimson.
+                            Left
+                                A root staff and a way out? What luck! But why is everything purple?
+                                    Staff
+                                        Root Staff + Weakness for 3 turns
+                                    Leave
+                            Right
+                                You see a crimson orb suspended by roots. Dried blood on the ground suggests you're not the first creature to try and take it.
+                                    Orb
+                                        HP -15, Bleed for 3 turns (tumbled base)
+                                    Leave
+                            Back
+                                Nothing (The path behind you has closed off, you can't go back!)
+                                Return to previous subevent
+                    Center
+                        You see a horde of tumbled patching a gap in the garden's wall. One looks particularly strong.
+                            Fight
+                                4 Tumbled (1 champion)
+                            Back
+                                Nothing (The path behind you has closed off, you can't go back!)
+                                Return to previous subevent
+                    Back
+                        Nothing (The path behind you has closed off, you can't go back!)
+                        Return to previous subevent
+                Center
+                    Left
+                        Its a dead end.
+                            Back
+                    Center
+                        The garden here is decorated with morbid flowers. There is something powerful up ahead.
+                            Center
+                                An enormous grumbled stands at the heart of garden, its attendant caring for it.
+                                    Fight
+                                        Champion grumbled + a tumbled 
+                                            The garden crumbles almost instantaneously, leftover tumbled carried away with the wind.
+                                                Root Heart high
+                                                Leave
+                                    Back
+                                        Nothing (The path behind you has closed off, you can't go back!)
+                                        Return to previous subevent
+                            Back
+                                Nothing (The path behind you has closed off, you can't go back!)
+                                Return to previous subevent
+                    Back
+                        Nothing (The path behind you has closed off, you can't go back!)
+                        Return to previous subevent
+                Back
+                    Nothing (The path behind you has closed off, you can't go back!)
+                    Return to previous subevent
+        Burn (INT 40)
+            PROG -10, Tumbled and Grumbled Gear high high
+            Nothing
+                The older the tumbled the more resistant it is to fire magic. Your fledgling pyromancy does nothing.
+
+Event: Field of Arrows (Graveyard) 
+    A hanged men hangs from a gallow admist a field of arrows, his fingers are pointing at piles of items and a bowl.
+    - Shop
+        Sells random items from the area
+    - Question
+        The men dance and dangle, almost seeming like they want to break free.
+        - Comply (LUK 35)
+            Gain high quality Hanged Man Gear
+            Barrier for 5 turns
+            Fight Champion Hanged Men
+        - Fight
+            Hanged Men
+
+Event: Puppet Show (Graveyard) 
+    A powerful magical barrier blocks the way, several puppets holding it together while putting on a show for other puppets
+    - Destroy (INT 40)
+        - Prog +8, high quality puppet knight and hanged men gear
+        - Fight champion hanged men and two puppet knights
+    - Observe
+        - Watch (LUK 25)
+            - Prog -5, gain barrier for 3 turns
+            - Prog -5, gain silence for 3 turns
+        - Leave
+            - Prog -10
+
+Event: Totally Lost (Lost Desert, Graveyard)
+    You're lost.
+        - Subtheme
+        - Subtheme
+
+Event: Eye of the Storm (Lost Desert, Graveyard)
+    A safe pocket amid the storm, maintained by a powerful wind elemental. The peaceful atmosphere...it feels like you could go anywhere from here.
+    - Fight
+        - Fight Champion Wastes Wanderer 
+    - West
+        - Subarea changes to lost desert
+    - East
+        - Subarea changes to graveyard
+    - Rest
+        Restore HP and MP
+
+Event: Dark Tower (Lost Desert, Graveyard)
+    An enormous tower, dark as the sky, stands tall amidst the storm. How?
+    - Observe
+    - Enter
+        First Floor 
+            - Search
+                Gain Dark Tomb 1
+            - Stairs
+                Second Floor
+                    - Search
+                        Gain Dark Tomb 2
+                    - Stairs
+                        Third Floor
+                            - Place Hand
+                                Broken Seal + Restore HP and MP to full
+                                    - Fight
+                                        Fight ??? (Mini boss cannot flee)
+                            - Leave
+                    - Leave
+            - Leave
+    - Leave
+
+Event: Berserk Ravager (Lost Desert, Graveyard) 
+    See a Ravager losing its mind amongst countless dead Unkindled.
+    - Fight 
+        Fight a Champion Ravager LVL 4
+    - Leave

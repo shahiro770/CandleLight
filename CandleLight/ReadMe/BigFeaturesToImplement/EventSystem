@@ -1,0 +1,359 @@
+Event System
+------------
+All areas will now offer path splitting events that will affect the pool of events seen
+Themes will have a larger sweeping impact, subthemes will guarantee your next event from a pool
+    - Ending a subArea with a certain theme will lock the player into a corresponding theme in the next
+        - e.g. theme A in one subArea locks you into theme A in the next
+    - Theme points
+        - You can either be +2 points or -2 points per subArea
+            - +2 gets you theme A, -2 gets you theme B, but being at +1 or -1 will skew event and monster chances
+        - Subthemes affect the point system
+            - Neutralizing subthemes will do -1 to +1 to theme, whichever brings to 0
+- These pools may also affect your current theme
+- Other changes
+    - Quests events can only occur once
+    - Some quests's later parts can only occur in specific subAreas
+
+Lonely Road
+    Core
+        Combat
+        Nothing
+        Outpost
+        Lost Pouch
+        Grey Merchant
+        Path Split
+    Themes
+        Normal (0)
+            Monsters
+                Goblin
+                Greyhide
+                Goo
+                Giant Spider
+            Events                
+                Goblin Hut
+        Silk Roads (+2)
+            Monsters
+                Greyhide
+                Hornet
+                Giant Spider
+            Events
+                Webbed Arch
+                Hornet Nest
+        Slime Fields (-2)
+            Monsters
+                Goblin
+                Goo
+                Bone Slime
+            Events
+                Sludge Pool
+                Calcified Spire
+
+    Subthemes
+        - Quiet (0)
+            Nothing
+            Outpost
+        - Rocky (0)
+            Goblin Hut
+        - Sludge (-1)
+            Sludge Pool
+        - Bones (-1)
+            Calcified Spire
+        - Trade (0)
+            Outpost
+            Lost Pouch
+            Grey Merchant
+        - Webbed (+1)
+            Webbed Arch
+        - Buzzing (+1)
+            Hornet Nest
+
+Hill Country
+    Core
+        Events
+            Combat
+            Nothing
+            Outpost
+            Outpost Used
+            Grey Merchant
+            Lost Pouch
+            Path Split
+
+    Themes
+        Normal (0)
+            Monsters
+                Goblin
+                Greyhide
+                FloatingArm
+                Vampire Bat
+                The Tumbled
+            Events
+                ArmsAndTheCandle
+                RockOnTheRoad (Normal, Trap, Secret -> Hobgoblin Hideout)
+        Crimson Peaks (-2)
+            Monsters
+                Greyhide
+                FloatingArm
+                VampireBat
+                BloodFiend
+            Events
+                Batswarm
+                Blood Cave
+                Quest: Who is Heidi (Part 1 only)
+        Rugged Troughs (+2)
+            Monsters
+                Goblin
+                FloatingArm
+                Hobgoblin (Mini Boss Only)
+                TheTumbled
+                Imposter Plant
+            Events
+                Quest: That Which Taints The Ground (Parts 1 and 2 only)
+                Tumbleweed Patch
+                RockOnTheRoad (Normal, Trap, Secret -> Hobgoblin Hideout)
+
+    Subthemes
+        - Quiet (0)
+            Nothing
+            Outpost
+        - Trade (0)
+            OutpostUsed
+            Lost Pouch
+            Grey Merchant
+        -  Rocky (-1)
+            RockOnTheRoad (Normal, Trap, Secret -> Hobgoblin Hideout)
+        - Sanguine (+1)
+            Blood Cave
+            Bat Swarm 
+        - Cursed (0)
+            ArmsAndTheCandle
+            Quest: That Which Taints The Ground (Parts 1 and 2 only)
+        - Briar (-1)
+            Tumbleweed Patch
+            Quest: That Which Taints The Ground (Parts 1 and 2 only)
+        - Prowl (+1)
+            Quest: Who is Heidi (Part 1 only)
+
+Wraith's Way
+    Core
+        Events
+            Combat
+            Nothing
+            Outpost 
+            OutpostUsed
+            LostPouch
+            GreyMerchant 
+            PrayerTomb
+            PathSplitThreeWay
+
+    Themes
+        Normal (0)
+            Events
+                DollPouch
+                ArmsAndTheCandle
+            Monsters
+                Greyhide
+                Stranglehead
+                LesserWraith
+                LesserWraithWizard (Quest only)
+                FloatingArm
+        Specter's Grasp (+2)
+            Events
+                SpinalArch
+                The Great Spine
+                Quest: The Wraith Wizard
+            Monsters
+                Stranglehead
+                LesserWraith
+                LesserWraithWizard (Quest only)
+                FloatingArm
+                Spinal
+        Puppet's Playground (-2)
+            Events
+                BrokenPuppet 
+                Binding Strings
+                Quest: Threads of Fate
+            Monsters
+                Greyhide
+                LesserWraith
+                FloatingArm
+                KnightPuppet
+            
+    Subthemes
+        - Quiet (0)
+            Nothing
+            Outpost
+        - Trade (0)
+            OutpostUsed
+            Lost Pouch
+            Grey Merchant
+        - Cursed (0)
+            ArmsAndTheCandle   
+            Doll Pouch
+        - Ghosts (+1)
+            Prayer Tomb
+            Quest: The Wraith Wizard
+        - Puppets (-1)
+            Broken Puppet
+        - Stringy (-1)
+            Quest: Threads of Fate
+            Binding Strings
+        - Cerebral (+1)
+            Spinal Arch
+            The Great Spine
+
+Lost Desert
+    Core
+        Events
+            Combat
+            Nothing
+            OutpostAbandoned
+            Totally Lost
+            DamagedTimeKeeper
+            Eye of the Storm
+            Dark Tower
+            StingerBurrows
+            Mana Oasis
+        Monsters
+            ???
+
+    Themes
+        Normal (0)
+            Events   
+                Berserk Ravager
+                DirtStorm
+                MonsterRemains
+                Quest: A Small Windfall
+            Monsters
+                Greyhide
+                Stinger
+                TheTumbled
+                Ravager
+                WastesWanderer
+        Greyhide's Run (+2)
+            Events
+                HideFromThePack 
+                Quest: Who is Heidi?
+                Whitemane Negotiation
+                DirtStorm
+                MonsterRemains
+            Monsters
+                Greyhide
+                Stinger
+                WhiteMane
+                Vampire Bat
+                WastesWanderer
+        Tumbled Barrens (-2)
+            Events
+                Tumbleweed Patch
+                Tumbleweed Tornado
+                Grumbled Garden
+                Quest: That Which Taints The Ground
+            Monsters
+                TheTumbled
+                TheGrumbled
+                Stinger
+                WastesWanderer
+                ImposterPlant
+
+    Subthemes
+        Quiet (0)
+            Nothing
+            OutpostAbandoned
+        Storm (0)
+            Dirt Storm
+            Eye of the Storm
+            Quest: A Small Windfall
+        Outback (0)
+            Berserk Ravager
+            Stinger Burrows
+            Monster Remains
+        Oasis (0)
+            Mana Oasis
+        Prowl (1)
+            Quest: Who is Heidi?
+            HideFromThePack
+        Pride (1)
+            Whitemane Negotiations
+        Briar (-1)
+            Tumbleweed Patch
+            GrumbledGarden
+            Tumbleweed Tornado
+        Purple (-1)
+            Quest: That Which Taints The Ground
+
+Graveyard
+    Core
+        Events
+            Combat
+            None
+            OutpostAbandoned
+            Totally Lost
+            DirtStorm
+            DamagedTimeKeeper
+            Eye of the Storm
+            Dark Tower
+        Monsters
+            LesserWraithWizard
+            ???
+
+    Themes
+        Normal
+            Events
+                StrangleDance
+                Prayer Tomb
+                Berserk Ravager
+                Quest: A Small Windfall
+            Monsters
+                Stranglehead
+                LesserWraith
+                Ravager
+                WastesWanderer
+                KnightPuppet
+        Lonely Sanctum (+2)
+            Events
+                Prayer Tomb
+                AncientAltar
+                Quest: The Wraith Wizard
+                TombToll
+            Monsters
+                LesserWraith
+                WastesWanderer
+                Ravager
+                Spinal
+                Tombgeist
+        Living Theatre (-2)
+            Events
+                Field of Arrows
+                Puppet Show
+                Broken Puppet
+                Quest: Threads of Fate
+            Monsters
+                Stranglehead
+                WastesWanderer
+                Ravager
+                KnightPuppet
+                HangedMen
+
+    Subthemes
+        Quiet (0)
+            Nothing
+            OutpostAbandoned
+        Storm (0)
+            Dirt Storm
+            Eye of the Storm
+            Quest: A Small Windfall
+        Miracle (+1)
+            Ancient Altar
+        Tombs (+1)
+            Prayer Tomb
+            TombToll
+        Ghosts (+1)
+            Prayer Tomb
+            Quest: The Wraith Wizard
+        Puppets (-1)
+            Puppet Show
+            Broken Puppet
+        Stringy (-1)
+            Quest: Threads of Fate
+        Arrows (-1)
+            Field of Arrows

@@ -16,7 +16,7 @@ namespace Constants {
         POISON,                 /// <value> Lose % of max HP </value>
         TAUNT,                  /// <value> Attacker gains PATK and is forced to attack the caster </value>
         FREEZE,                 /// <value> Reduces PDEF and ACC </value>
-        RAGE,                   /// <value> Gain PATK </value>
+        RAGE,                   /// <value> Increases PATK </value>
         BLEED,                  /// <value> Lose HP equal to % attacker's PATK, restore that much health to the attacker </value>
         WEAKNESS,               /// <value> Reduces PATK </value>
         ADVANTAGE,              /// <value> Gain increased crit chance </value>
@@ -29,7 +29,7 @@ namespace Constants {
         GUARD,                  /// <value> Gains PDEF </value>
         CURE,                   /// <value> Debuffs last half as long </value>
         MIRACLE,                /// <value> User takes no damage from direct attacks </value>
-        ETHEREAL,               /// <value> Gain MATK </value>
+        ETHEREAL,               /// <value> Increases MATK </value>
         FATALWOUND,             /// <value> Game ending debuff </value>
         VAMPIRE,                /// <value> Has bleedPlus (increased bleed damage) </value>
         RBW,                    /// <value> Randomly decide between root, bleed, and weakness </value>
@@ -40,6 +40,7 @@ namespace Constants {
         SILENCE,                /// <value> Decreases MATK </value>
         BREAK,                  /// <value> Decreases PDEF </value>
         TANGIBLE,               /// <value> Decreases MDEF </value>
+        STAGGER,                /// <value> If inflicted a second time while present, converts remaining duration into a stun </value>
         FAMILIAR,               /// <value> Indicates a temporary partyMember </value>
         BOSS,                   /// <value> Makes the monster stronger against shenanigans </value>
         CHAMPIONHP,             /// <value> Bonus HP and HP regen  </value>

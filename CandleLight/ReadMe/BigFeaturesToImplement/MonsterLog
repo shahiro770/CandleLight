@@ -1,0 +1,78 @@
+Monster Log
+-----------
+
+Monster: Goo (PDEF 1 MDEF 1) (Random, but won't use metabolize if at full health)
+    - Body Rush (physical attack, 50% chance to inflict stagger)
+    - Metabolize (Heal and gain Cure for 3 turns) [normal mode only]
+Monster: The Grumbled (PDEF 5 MDEF 2) 
+    - Enroot: Magical attack that guarantees root
+    - Cursed Seeds: Magical attack that damages a character and inflicts rbw
+    - Regrow: Heal and gain regenerate for 3 turns  (make AI prevent use of heal if at > 75% health)
+    - Wildfire: Inflict burn on all characters [normal mode only]
+    - Has root debuff permanently
+Monster: Knight Puppet (PDEF 2 MDEF 1) (Random)
+    - Disrupting Slash: Magical Attack, 50% chance to inflict seal (MATK -30%)
+    - Guarding Stance: Gain Guard for 3 turns
+    - Spell Shield: Restore HP and grant barrier for 3 turns to a random ally [normal mode only]
+Monster: Imposter Plant (PDEF 0 MDEF 2) (Mimic - Only use last attack if ally present)
+    - Bite: Physical attack, 50% chance to inflict break
+    - Enroot: Magical attack that guarantees root
+    - Tendrils: Physical attack that hits all [normal mode only]
+    - Mimic: Use an ally's attack 
+    - Has root debuff permanently
+Monster: Hanged Men (PDEF 2 MDEF 5) (Last on fifth turn)
+    - Silent Arrows: Magical attack, 50% chance to inflict seal (MATK - 30%), hits all party members
+    - Hang: Inflict trap for 3 turns on all enemies
+    - Spell Shield: Restore health to an ally and grant them Barrier
+    - Free Man: Suicides and deals half remaining HP as damage, happens on 5th turn
+Monster: Whitemane (PDEF 4 MDEF 3) (50% to attack the healthiest partyMember, last at 60%)
+    - Bite: Stronger physical attack that has 50% chance to inflict break
+    - Challenge: Taunt for 3 turns
+    - Rampage: Physical attack that hits all party members, 33% chance to stagger)
+    - Enrage: Gain Rage for 3 turns [Normal mode only]
+Monster: Blood Fiend (PDEF 3 MDEF 2) (Last at 30%)
+    - Fang (Physical attack with a chance to bleed for 3 turns)
+    - Chilling Screech (Inflict freeze for 3 turns)
+    - Bloody Flight (Inflict bleed on all other characters for 1 turn)
+    - Has vampire buff permanently
+Monster: Bone Slime (PDEF 1 MDEF 2) (Random, but won't use metabolize if at full health)
+    - Club (Physical attack with a chance to break for 3 turns)
+    - Calcify (Gain Guard for 3 turns)
+    - Metabolize (Heal and gain Cure for 3 turns) [normal mode only]
+Monster: Hornet (PDEF 0 MDEF 2)
+    - Silk Shot (Trap for 3 turns)
+    - Fly (Gain nimble for 3 turns)
+    - Sting (Physical attack with a chance to poison) 
+Monster: ??? (PDEf 5 MDEF 5) (Last every 5 turns)
+    - Origin Ritual (Magical attack that inflicts a burn, freeze, cure, or shock at random)
+    - Oil Form (Heal and gain guard or barrier at random)
+    - Nullify (Purge all debuffs and buffs for all characters)
+Monster: Profane Arbrute (PDEF 5 MDEF 0) (last every 5 turns) (Horror: 25% chance to inflict weakness on any attack)
+    - Smack (Physical attack, same stagger chance) 
+    - Enroot: Magical attack, guranteed to root
+    - Tendrils: Physical attack that hits all
+    - Consume The Accursed: Deals magic damage to all, enemies that have weakness lose the debuff, and heal this for 10 HP each [normal mode only]
+Alternate Final Boss: Wind Witch (10 PDEF 7 MDEF) (Last on fifth turn)
+    - Enroot: Magical Attack with chance to root
+    - Cursed Seeds: Magical attack that damages inflicts rbw
+    - Sprout: Summon The Tumbled 
+    - Tumbleweed Tornado: Sacrifice tumbleweeds doing half their life summed as damage to all partyMembers [normal mode only]
+    - Permanently Root
+Alternate Final Boss: Puppet Master (PDEF 5 MDEF 8) (Last at 60%)
+    - Wicked Dance: Magical attack that may inflict Marionette for 2 turns
+    - Soul Rip: Physical Attack, may inflict tangible for 3 turns
+    - Puppeteer: Summon two puppet knights to fight beside it
+    - Soul Shield: Give itself Miracle for 1 turn [normal mode only]
+Final Boss Text Prompts (Used first time last move is used, and one more at 30% HP):
+    Greyhide Alpha
+        Last Move: The alpha takes a deep breath.
+        30%: The alpha refuses to run.
+    Wraith
+        Last Move: "WHY HIDE INSIDE DOLLS?"
+        30%: "THEY LEFT ME ALONE WHEN NIGHT FELL."
+    Wind Witch
+        Last Move: It utters an awful incantation. The wind sprite shudders. 
+        30%: "Her flowers shouldn't grow here."
+    Puppet Master
+        Last Move: The sound of winding gears grows louder.
+        30%: "...ch-ch-ch-ch-i-i-ld...sc-a-are-d..."
